@@ -33,12 +33,12 @@ g t index =
   writeIOA t index False
 
 main =
-  (array_init_withenv 5 (\ i k ->
+  (array_init_withenv 5 (\ i f ->
                            do printf "%d" (i :: Int) :: IO ()
-                              let l = k + i
-                              let e = (i `rem` 2) == 0
-                              return (l, e)) 0) >>= (\ (h, a) ->
-                                                      do printf "%d " (h::Int) :: IO()
+                              let h = f + i
+                              let k = (i `rem` 2) == 0
+                              return (h, k)) 0) >>= (\ (e, a) ->
+                                                      do printf "%d " (e::Int) :: IO()
                                                          c <- readIOA a 0
                                                          if c
                                                          then printf "True" :: IO ()

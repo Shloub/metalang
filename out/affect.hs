@@ -81,17 +81,17 @@ result t_ t2_ =
 main =
   do t <- mktoto 4
      t2 <- mktoto 5
-     h <- read_int
-     writeIORef (_bar t) h
+     a <- read_int
+     writeIORef (_bar t) a
      skip_whitespaces
-     g <- read_int
-     writeIORef (_blah t) g
+     b <- read_int
+     writeIORef (_blah t) b
      skip_whitespaces
-     f <- read_int
-     writeIORef (_bar t2) f
+     c <- read_int
+     writeIORef (_bar t2) c
      skip_whitespaces
-     e <- read_int
-     writeIORef (_blah t2) e
+     d <- read_int
+     writeIORef (_blah t2) d
      join $ printf "%d%d" <$> ((result t t2)::IO Int) <*> ((readIORef (_blah t))::IO Int)
 
 

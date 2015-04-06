@@ -8,11 +8,11 @@ let main =
                  b
                  )
     ))) in
-    let rec r i =
+    let rec g i =
       (if (i <= (len - 1))
        then (
               (Printf.printf "%d=>%d\n" i tab1.(i));
-              (r (i + 1))
+              (g (i + 1))
               )
        
        else let len = (Scanf.scanf "%d " (fun x -> x)) in
@@ -23,24 +23,24 @@ let main =
                     )
        ))) in
        e)) in
-       let rec m i =
+       let rec h i =
          (if (i <= (len - 2))
-          then let rec o j =
+          then let rec k j =
                  (if (j <= (len - 1))
                   then (
                          (Printf.printf "%d " tab2.(i).(j));
-                         (o (j + 1))
+                         (k (j + 1))
                          )
                   
                   else (
                          (Printf.printf "\n");
-                         (m (i + 1))
+                         (h (i + 1))
                          )
                   ) in
-                 (o 0)
+                 (k 0)
           else ()) in
-         (m 0)) in
-      (r 0)
+         (h 0)) in
+      (g 0)
     )
   
 

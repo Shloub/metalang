@@ -27,26 +27,26 @@ let score () =
     )
   
 let main =
-  let rec e i =
+  let rec d i =
     (if (i <= 55)
      then (if (is_triangular i)
            then (
                   (Printf.printf "%d " i);
-                  (e (i + 1))
+                  (d (i + 1))
                   )
            
-           else (e (i + 1)))
+           else (d (i + 1)))
      else (
             (Printf.printf "\n");
             let sum = 0 in
             Scanf.scanf "%d"
-            (fun  n -> let rec d i sum =
+            (fun  n -> let rec e i sum =
                          (if (i <= n)
                           then let sum = (sum + (score ())) in
-                          (d (i + 1) sum)
+                          (e (i + 1) sum)
                           else (Printf.printf "%d\n" sum)) in
-                         (d 1 sum))
+                         (e 1 sum))
             )
      ) in
-    (e 1)
+    (d 1)
 

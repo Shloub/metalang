@@ -51,13 +51,13 @@ rev empty torev =
 
 test empty =
   do let i = - 1
-     let a c d =
-           if c /= 0
-           then do b <- read_int
-                   if b /= 0
-                   then do f <- cons d b
-                           a b f
-                   else a b d
+     let a b c =
+           if b /= 0
+           then do d <- read_int
+                   if d /= 0
+                   then do e <- cons c d
+                           a d e
+                   else a d c
            else return () in
            a i empty
 

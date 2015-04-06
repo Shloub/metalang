@@ -60,19 +60,19 @@
 (define main
   (let ([x 0])
   (let ([y 0])
-  ((lambda (q) 
-     (let ([x q])
+  ((lambda (e) 
+     (let ([x e])
      (block
        (mread-blank)
-       ((lambda (p) 
-          (let ([y p])
+       ((lambda (f) 
+          (let ([y f])
           (block
             (mread-blank)
             (let ([tab (build-vector y (lambda (i) 
                                          (let ([tab2 (build-vector x (lambda (j) 
                                                                        (let ([tmp (integer->char 0)])
-                                                                       ((lambda (o) 
-                                                                          (let ([tmp o])
+                                                                       ((lambda (g) 
+                                                                          (let ([tmp g])
                                                                           tmp)) (mread-char)))))])
             (block
               (mread-blank)

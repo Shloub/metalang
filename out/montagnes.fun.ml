@@ -26,12 +26,12 @@ let montagnes0 tab len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  f -> let len = f in
+  (fun  c -> let len = c in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i -> let x = 0 in
     Scanf.scanf "%d"
-    (fun  e -> let x = e in
+    (fun  d -> let x = d in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       x

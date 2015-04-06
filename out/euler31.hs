@@ -37,12 +37,12 @@ result sum t maxIndex cache =
       (if sum == 0 || maxIndex == 0
        then return 1
        else do div <- ((quot sum) <$> (readIOA t maxIndex))
-               let a i h =
+               let a i b =
                      if i <= div
-                     then do l <- (((+) h) <$> (join $ result <$> (((-) sum) <$> (((*) i) <$> (readIOA t maxIndex))) <*> return t <*> return (maxIndex - 1) <*> return cache))
-                             a (i + 1) l
-                     else do join $ writeIOA <$> (readIOA cache sum) <*> return maxIndex <*> return h
-                             return h in
+                     then do c <- (((+) b) <$> (join $ result <$> (((-) sum) <$> (((*) i) <$> (readIOA t maxIndex))) <*> return t <*> return (maxIndex - 1) <*> return cache))
+                             a (i + 1) c
+                     else do join $ writeIOA <$> (readIOA cache sum) <*> return maxIndex <*> return b
+                             return b in
                      a 0 0)
 
 main =

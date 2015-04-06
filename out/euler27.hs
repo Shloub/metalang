@@ -32,45 +32,45 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  let e i u =
+  let c i d =
         if i <= max0 - 1
         then ifM (((==) i) <$> (readIOA t i))
-                 (do let v = u + 1
+                 (do let e = d + 1
                      let j = i * i
-                     let f w =
-                           if w < max0 && w > 0
-                           then do writeIOA t w 0
-                                   let x = w + i
-                                   f x
-                           else e (i + 1) v in
+                     let f g =
+                           if g < max0 && g > 0
+                           then do writeIOA t g 0
+                                   let h = g + i
+                                   f h
+                           else c (i + 1) e in
                            f j)
-                 (e (i + 1) u)
-        else return u in
-        e 2 0
+                 (c (i + 1) d)
+        else return d in
+        c 2 0
 
 isPrime n primes len =
-  do let y = if n < 0
-             then let z = - n
-                          in z
+  do let m = if n < 0
+             then let p = - n
+                          in p
              else n
-     let d ba =
-           ifM (((>) y) <$> ((*) <$> (readIOA primes ba) <*> (readIOA primes ba)))
-               (ifM (((==) 0) <$> ((rem y) <$> (readIOA primes ba)))
+     let q r =
+           ifM (((>) m) <$> ((*) <$> (readIOA primes r) <*> (readIOA primes r)))
+               (ifM (((==) 0) <$> ((rem m) <$> (readIOA primes r)))
                     (return False)
-                    (do let bb = ba + 1
-                        d bb))
+                    (do let s = r + 1
+                        q s))
                (return True) in
-           d 0
+           q 0
 
 test a b primes len =
-  let c n =
+  let u n =
         if n <= 200
         then do let j = n * n + a * n + b
                 ifM (fmap not (isPrime j primes len))
                     (return n)
-                    (c (n + 1))
+                    (u (n + 1))
         else return 200 in
-        c 0
+        u 0
 
 main =
   do era <- array_init 1000 (\ j ->
@@ -78,35 +78,35 @@ main =
      nprimes <- eratostene era 1000
      primes <- array_init nprimes (\ o ->
                                      return 0)
-     let s k bc =
+     let v k w =
            if k <= 1000 - 1
            then ifM (((==) k) <$> (readIOA era k))
-                    (do writeIOA primes bc k
-                        let bd = bc + 1
-                        s (k + 1) bd)
-                    (s (k + 1) bc)
-           else do printf "%d == %d\n" (bc::Int) (nprimes::Int) :: IO()
-                   let q b be bf bg bh =
+                    (do writeIOA primes w k
+                        let x = w + 1
+                        v (k + 1) x)
+                    (v (k + 1) w)
+           else do printf "%d == %d\n" (w::Int) (nprimes::Int) :: IO()
+                   let y b z ba bb bc =
                          if b <= 999
                          then ifM (((==) b) <$> (readIOA era b))
-                                  (let r a bi bj bk bl =
-                                         if a <= 999
-                                         then do n1 <- test a b primes nprimes
-                                                 n2 <- test a (- b) primes nprimes
-                                                 (\ (bm, bn, bo, bp) ->
-                                                   if n2 > bn
-                                                   then do let br = - a * b
-                                                           let bt = - b
-                                                           r (a + 1) a n2 bt br
-                                                   else r (a + 1) bm bn bo bp) (if n1 > bj
-                                                                                then let bv = a * b
-                                                                                              in (a, n1, b, bv)
-                                                                                else (bi, bj, bk, bl))
-                                         else q (b + 1) bi bj bk bl in
-                                         r (- 999) be bf bg bh)
-                                  (q (b + 1) be bf bg bh)
-                         else printf "%d %d\n%d\n%d\n" (be::Int) (bg::Int) (bf::Int) (bh::Int) :: IO() in
-                         q 3 0 0 0 0 in
-           s 2 0
+                                  (let bd a be bf bg bh =
+                                          if a <= 999
+                                          then do n1 <- test a b primes nprimes
+                                                  n2 <- test a (- b) primes nprimes
+                                                  (\ (bi, bj, bk, bl) ->
+                                                    if n2 > bj
+                                                    then do let bm = - a * b
+                                                            let bn = - b
+                                                            bd (a + 1) a n2 bn bm
+                                                    else bd (a + 1) bi bj bk bl) (if n1 > bf
+                                                                                  then let bo = a * b
+                                                                                                in (a, n1, b, bo)
+                                                                                  else (be, bf, bg, bh))
+                                          else y (b + 1) be bf bg bh in
+                                          bd (- 999) z ba bb bc)
+                                  (y (b + 1) z ba bb bc)
+                         else printf "%d %d\n%d\n%d\n" (z::Int) (bb::Int) (ba::Int) (bc::Int) :: IO() in
+                         y 3 0 0 0 0 in
+           v 2 0
 
 

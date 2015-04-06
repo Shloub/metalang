@@ -56,8 +56,8 @@ main =
                   then do let j = b + 1
                           a j f h i
                   else a b f h i) (if g == 12
-                                   then let l = e + 1
-                                                in (0, l)
+                                   then let k = e + 1
+                                                in (0, k)
                                    else (g, e))
         else printf "%d\n" (b::Int) :: IO() in
         a 0 1 0 1901

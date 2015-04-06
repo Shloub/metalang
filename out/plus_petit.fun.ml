@@ -28,12 +28,12 @@ let plus_petit0 tab len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  h -> let len = h in
+  (fun  d -> let len = d in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  g -> let tmp = g in
+    (fun  f -> let tmp = f in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp

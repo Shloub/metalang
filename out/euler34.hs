@@ -34,56 +34,56 @@ main :: IO ()
 main =
   do f <- array_init 10 (\ j ->
                            return 1)
-     let r i =
+     let h i =
            if i <= 9
            then do writeIOA f i =<< ((*) <$> (readIOA f i) <*> (((*) i) <$> (readIOA f (i - 1))))
                    printf "%d " =<< ((readIOA f i)::IO Int)
-                   r (i + 1)
+                   h (i + 1)
            else do printf "\n" :: IO ()
-                   let l a s =
+                   let k a l =
                          if a <= 9
-                         then let m b t =
+                         then let m b n =
                                     if b <= 9
-                                    then let n c u =
+                                    then let o c p =
                                                if c <= 9
-                                               then let o d v =
+                                               then let q d r =
                                                           if d <= 9
-                                                          then let p e w =
+                                                          then let s e t =
                                                                      if e <= 9
-                                                                     then let q g x =
+                                                                     then let u g v =
                                                                                 if g <= 9
                                                                                 then do sum <- ((+) <$> ((+) <$> ((+) <$> ((+) <$> ((+) <$> (readIOA f a) <*> (readIOA f b)) <*> (readIOA f c)) <*> (readIOA f d)) <*> (readIOA f e)) <*> (readIOA f g))
                                                                                         let num = ((((a * 10 + b) * 10 + c) * 10 + d) * 10 + e) * 10 + g
-                                                                                        let y = if a == 0
-                                                                                                then let z = sum - 1
+                                                                                        let w = if a == 0
+                                                                                                then let x = sum - 1
                                                                                                              in if b == 0
-                                                                                                                then let ba = z - 1
-                                                                                                                              in if c == 0
-                                                                                                                                 then let bb = ba - 1
-                                                                                                                                               in if d == 0
-                                                                                                                                                  then let bc = bb - 1
-                                                                                                                                                                in bc
-                                                                                                                                                  else bb
-                                                                                                                                 else ba
-                                                                                                                else z
+                                                                                                                then let y = x - 1
+                                                                                                                             in if c == 0
+                                                                                                                                then let z = y - 1
+                                                                                                                                             in if d == 0
+                                                                                                                                                then let ba = z - 1
+                                                                                                                                                              in ba
+                                                                                                                                                else z
+                                                                                                                                else y
+                                                                                                                else x
                                                                                                 else sum
-                                                                                        if (y == num && y /= 1) && y /= 2
-                                                                                        then do let bd = x + num
+                                                                                        if (w == num && w /= 1) && w /= 2
+                                                                                        then do let bb = v + num
                                                                                                 printf "%d " (num::Int) :: IO()
-                                                                                                q (g + 1) bd
-                                                                                        else q (g + 1) x
-                                                                                else p (e + 1) x in
-                                                                                q 0 w
-                                                                     else o (d + 1) w in
-                                                                     p 0 v
-                                                          else n (c + 1) v in
-                                                          o 0 u
-                                               else m (b + 1) u in
-                                               n 0 t
-                                    else l (a + 1) t in
-                                    m 0 s
-                         else printf "\n%d\n" (s::Int) :: IO() in
-                         l 0 0 in
-           r 1
+                                                                                                u (g + 1) bb
+                                                                                        else u (g + 1) v
+                                                                                else s (e + 1) v in
+                                                                                u 0 t
+                                                                     else q (d + 1) t in
+                                                                     s 0 r
+                                                          else o (c + 1) r in
+                                                          q 0 p
+                                               else m (b + 1) p in
+                                               o 0 n
+                                    else k (a + 1) n in
+                                    m 0 l
+                         else printf "\n%d\n" (l::Int) :: IO() in
+                         k 0 0 in
+           h 1
 
 

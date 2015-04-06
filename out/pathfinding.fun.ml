@@ -29,16 +29,16 @@ let main =
   let x = 0 in
   let y = 0 in
   Scanf.scanf "%d"
-  (fun  q -> let x = q in
+  (fun  e -> let x = e in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     Scanf.scanf "%d"
-    (fun  p -> let y = p in
+    (fun  f -> let y = f in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       let tab = (Array.init y (fun  i -> let tab2 = (Array.init x (fun  j -> let tmp = '\000' in
       Scanf.scanf "%c"
-      (fun  o -> let tmp = o in
+      (fun  g -> let tmp = g in
       tmp))) in
       (
         (Scanf.scanf "%[\n \010]" (fun _ -> ()));

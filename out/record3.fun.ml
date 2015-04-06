@@ -19,12 +19,12 @@ let result t len =
 let main =
   let t = (Array.init 4 (fun  i -> (mktoto i))) in
   Scanf.scanf "%d"
-  (fun  e -> (
-               t.(0).bar <- e;
+  (fun  b -> (
+               t.(0).bar <- b;
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                Scanf.scanf "%d"
-               (fun  d -> (
-                            t.(1).blah <- d;
+               (fun  c -> (
+                            t.(1).blah <- c;
                             let titi = (result t 4) in
                             (Printf.printf "%d%d" titi t.(2).blah)
                             )

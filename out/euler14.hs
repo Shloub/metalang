@@ -49,14 +49,14 @@ find n m =
 main =
   do m <- array_init 1000000 (\ j ->
                                 return 0)
-     let c i d e =
+     let a i b c =
            if i <= 999
            then {- normalement on met 999999 mais ça dépasse les int32... -}
                 do n2 <- find i m
-                   if n2 > d
-                   then c (i + 1) n2 i
-                   else c (i + 1) d e
-           else printf "%d\n%d\n" (d::Int) (e::Int) :: IO() in
-           c 1 0 0
+                   if n2 > b
+                   then a (i + 1) n2 i
+                   else a (i + 1) b c
+           else printf "%d\n%d\n" (b::Int) (c::Int) :: IO() in
+           a 1 0 0
 
 

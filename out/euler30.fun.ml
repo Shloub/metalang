@@ -9,17 +9,17 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
  *)
   let p = (Array.init 10 (fun  i -> ((((i * i) * i) * i) * i))) in
   let sum = 0 in
-  let rec j a sum =
+  let rec g a sum =
     (if (a <= 9)
-     then let rec k b sum =
+     then let rec h b sum =
             (if (b <= 9)
-             then let rec l c sum =
+             then let rec j c sum =
                     (if (c <= 9)
-                     then let rec m d sum =
+                     then let rec k d sum =
                             (if (d <= 9)
-                             then let rec n e sum =
+                             then let rec l e sum =
                                     (if (e <= 9)
-                                     then let rec o f sum =
+                                     then let rec m f sum =
                                             (if (f <= 9)
                                              then let s = (((((p.(a) + p.(b)) + p.(c)) + p.(d)) + p.(e)) + p.(f)) in
                                              let r = (((((a + (b * 10)) + (c * 100)) + (d * 1000)) + (e * 10000)) + (f * 100000)) in
@@ -27,20 +27,20 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
                                               then (
                                                      (Printf.printf "%d%d%d%d%d%d %d\n" f e d c b a r);
                                                      let sum = (sum + r) in
-                                                     (o (f + 1) sum)
+                                                     (m (f + 1) sum)
                                                      )
                                               
-                                              else (o (f + 1) sum))
-                                             else (n (e + 1) sum)) in
-                                            (o 0 sum)
-                                     else (m (d + 1) sum)) in
-                                    (n 0 sum)
-                             else (l (c + 1) sum)) in
-                            (m 0 sum)
-                     else (k (b + 1) sum)) in
-                    (l 0 sum)
-             else (j (a + 1) sum)) in
-            (k 0 sum)
+                                              else (m (f + 1) sum))
+                                             else (l (e + 1) sum)) in
+                                            (m 0 sum)
+                                     else (k (d + 1) sum)) in
+                                    (l 0 sum)
+                             else (j (c + 1) sum)) in
+                            (k 0 sum)
+                     else (h (b + 1) sum)) in
+                    (j 0 sum)
+             else (g (a + 1) sum)) in
+            (h 0 sum)
      else (Printf.printf "%d" sum)) in
-    (j 0 sum)
+    (g 0 sum)
 

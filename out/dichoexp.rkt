@@ -33,12 +33,12 @@
 (define main
   (let ([a 0])
   (let ([b 0])
-  ((lambda (d) 
-     (let ([a d])
+  ((lambda (c) 
+     (let ([a c])
      (block
        (mread-blank)
-       ((lambda (c) 
-          (let ([b c])
+       ((lambda (d) 
+          (let ([b d])
           (display (exp0 a b)))) (mread-int))
      ))) (mread-int))))
 )

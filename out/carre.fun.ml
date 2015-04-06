@@ -8,19 +8,19 @@ let main =
                )
   ))) in
   f)) in
-  let rec m ix =
+  let rec h ix =
     (if (ix <= (x - 1))
-     then let rec o iy =
+     then let rec j iy =
             (if (iy <= (y - 1))
              then (if (tab.(iy).(ix) = 1)
                    then (
                           tab.(iy).(ix) <- (((min (((min (tab.(iy).((ix - 1))) (tab.((iy - 1)).(ix))))) (tab.((iy - 1)).((ix - 1))))) + 1);
-                          (o (iy + 1))
+                          (j (iy + 1))
                           )
                    
-                   else (o (iy + 1)))
-             else (m (ix + 1))) in
-            (o 1)
+                   else (j (iy + 1)))
+             else (h (ix + 1))) in
+            (j 1)
      else let rec k jy =
             (if (jy <= (y - 1))
              then let rec l jx =
@@ -38,5 +38,5 @@ let main =
                     (l 0)
              else ()) in
             (k 0)) in
-    (m 1)
+    (h 1)
 

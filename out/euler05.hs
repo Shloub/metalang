@@ -35,41 +35,41 @@ main :: IO ()
 primesfactors n =
   do tab <- array_init (n + 1) (\ i ->
                                   return 0)
-     let f v w =
-           if w /= 1 && v * v <= w
-           then if (w `rem` v) == 0
-                then do writeIOA tab v =<< (((+) 1) <$> (readIOA tab v))
-                        let x = w `quot` v
-                        f v x
-                else do let y = v + 1
-                        f y w
-           else do writeIOA tab w =<< (((+) 1) <$> (readIOA tab w))
+     let c e f =
+           if f /= 1 && e * e <= f
+           then if (f `rem` e) == 0
+                then do writeIOA tab e =<< (((+) 1) <$> (readIOA tab e))
+                        let g = f `quot` e
+                        c e g
+                else do let h = e + 1
+                        c h f
+           else do writeIOA tab f =<< (((+) 1) <$> (readIOA tab f))
                    return tab in
-           f 2 n
+           c 2 n
 
 main =
   do o <- array_init (20 + 1) (\ m ->
                                  return 0)
-     let s i =
+     let p i =
            if i <= 20
            then do t <- primesfactors i
-                   let u j =
+                   let q j =
                          if j <= i
                          then do writeIOA o j =<< ((max <$> (readIOA o j) <*> (readIOA t j)))
-                                 u (j + 1)
-                         else s (i + 1) in
-                         u 1
-           else let p k z =
+                                 q (j + 1)
+                         else p (i + 1) in
+                         q 1
+           else let r k s =
                       if k <= 20
-                      then do r <- readIOA o k
-                              let q l ba =
-                                    if l <= r
-                                    then do let bb = ba * k
-                                            q (l + 1) bb
-                                    else p (k + 1) ba in
-                                    q 1 z
-                      else printf "%d\n" (z::Int) :: IO() in
-                      p 1 1 in
-           s 1
+                      then do u <- readIOA o k
+                              let v l w =
+                                    if l <= u
+                                    then do let x = w * k
+                                            v (l + 1) x
+                                    else r (k + 1) w in
+                                    v 1 s
+                      else printf "%d\n" (s::Int) :: IO() in
+                      r 1 1 in
+           p 1
 
 

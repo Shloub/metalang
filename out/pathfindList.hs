@@ -65,13 +65,13 @@ pathfind_aux cache tab len pos =
            (do writeIOA cache pos (len * 2)
                posval <- pathfind_aux cache tab len =<< (readIOA tab pos)
                oneval <- pathfind_aux cache tab len (pos + 1)
-               let g = if posval < oneval
-                       then let h = 1 + posval
-                                    in h
-                       else let j = 1 + oneval
-                                    in j
-               writeIOA cache pos g
-               return g)
+               let a = if posval < oneval
+                       then let b = 1 + posval
+                                    in b
+                       else let c = 1 + oneval
+                                    in c
+               writeIOA cache pos a
+               return a)
 
 pathfind tab len =
   do cache <- array_init len (\ i ->
@@ -79,13 +79,13 @@ pathfind tab len =
      pathfind_aux cache tab len 0
 
 main =
-  do f <- read_int
+  do d <- read_int
      skip_whitespaces
-     tab <- array_init f (\ i ->
+     tab <- array_init d (\ i ->
                             do e <- read_int
                                skip_whitespaces
                                return e)
-     result <- pathfind tab f
+     result <- pathfind tab d
      printf "%d" (result :: Int) :: IO ()
 
 

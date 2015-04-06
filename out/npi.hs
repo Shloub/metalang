@@ -64,36 +64,36 @@ is_number c =
 npi0 str len =
   do stack <- array_init len (\ i ->
                                 return 0)
-     let d k l =
-           if l < len
-           then ifM (((==) ' ') <$> (readIOA str l))
-                    (do let m = l + 1
-                        d k m)
-                    (ifM ((readIOA str l) >>= is_number)
-                         (let e n o =
-                                ifM (((/=) ' ') <$> (readIOA str o))
-                                    (do p <- ((-) <$> (((+) (n * 10)) <$> (fmap ord (readIOA str o))) <*> (return (ord '0')))
-                                        let q = o + 1
-                                        e p q)
-                                    (do writeIOA stack k n
-                                        let r = k + 1
-                                        d r o) in
-                                e 0 l)
-                         (ifM (((==) '+') <$> (readIOA str l))
-                              (do writeIOA stack (k - 2) =<< ((+) <$> (readIOA stack (k - 2)) <*> (readIOA stack (k - 1)))
-                                  let s = k - 1
-                                  let t = l + 1
-                                  d s t)
-                              (d k l)))
+     let a b d =
+           if d < len
+           then ifM (((==) ' ') <$> (readIOA str d))
+                    (do let e = d + 1
+                        a b e)
+                    (ifM ((readIOA str d) >>= is_number)
+                         (let f g h =
+                                ifM (((/=) ' ') <$> (readIOA str h))
+                                    (do j <- ((-) <$> (((+) (g * 10)) <$> (fmap ord (readIOA str h))) <*> (return (ord '0')))
+                                        let k = h + 1
+                                        f j k)
+                                    (do writeIOA stack b g
+                                        let l = b + 1
+                                        a l h) in
+                                f 0 d)
+                         (ifM (((==) '+') <$> (readIOA str d))
+                              (do writeIOA stack (b - 2) =<< ((+) <$> (readIOA stack (b - 2)) <*> (readIOA stack (b - 1)))
+                                  let m = b - 1
+                                  let n = d + 1
+                                  a m n)
+                              (a b d)))
            else readIOA stack 0 in
-           d 0 0
+           a 0 0
 
 main =
-  do j <- read_int
+  do o <- read_int
      skip_whitespaces
-     tab <- array_init j (\ i ->
+     tab <- array_init o (\ i ->
                             getChar)
-     result <- npi0 tab j
+     result <- npi0 tab o
      printf "%d" (result :: Int) :: IO ()
 
 

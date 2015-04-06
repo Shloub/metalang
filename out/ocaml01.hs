@@ -13,18 +13,18 @@ ifM c i e =
 
 main :: IO ()
 foo () =
-  let c i =
-        if i <= 10
-        then c (i + 1)
-        else return 0 in
-        c 0
-
-bar () =
   let b i =
         if i <= 10
         then b (i + 1)
         else return 0 in
         b 0
+
+bar () =
+  let c i =
+        if i <= 10
+        then c (i + 1)
+        else return 0 in
+        c 0
 
 main =
   return ()

@@ -9,11 +9,11 @@ let main =
   let a = 0 in
   let b = 0 in
   Scanf.scanf "%d"
-  (fun  d -> let a = d in
+  (fun  c -> let a = c in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     Scanf.scanf "%d"
-    (fun  c -> let b = c in
+    (fun  d -> let b = d in
     (Printf.printf "%d" (exp0 a b)))
     )
   )

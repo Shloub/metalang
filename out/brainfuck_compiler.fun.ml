@@ -62,7 +62,7 @@ let main =
       mem.(current_pos) <- (mem.(current_pos) + 1);
       mem.(current_pos) <- (mem.(current_pos) + 1);
       mem.(current_pos) <- (mem.(current_pos) + 1);
-      let rec c current_pos =
+      let rec a current_pos =
         (if (mem.(current_pos) <> 0)
          then (
                 mem.(current_pos) <- (mem.(current_pos) - 1);
@@ -71,13 +71,13 @@ let main =
                   mem.(current_pos) <- (mem.(current_pos) + 1);
                   (Printf.printf "%c" (char_of_int (mem.(current_pos))));
                   let current_pos = (current_pos + 1) in
-                  (c current_pos)
+                  (a current_pos)
                   )
                 
                 )
          
          else ()) in
-        (c current_pos)
+        (a current_pos)
       )
     
     )

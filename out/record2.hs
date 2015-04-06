@@ -65,11 +65,11 @@ result t =
 
 main =
   do t <- mktoto 4
-     b <- read_int
-     writeIORef (_bar t) b
-     skip_whitespaces
      a <- read_int
-     writeIORef (_blah t) a
+     writeIORef (_bar t) a
+     skip_whitespaces
+     b <- read_int
+     writeIORef (_blah t) b
      printf "%d" =<< (result t :: IO Int)
 
 

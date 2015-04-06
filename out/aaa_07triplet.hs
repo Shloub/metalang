@@ -16,21 +16,21 @@ readIOA = readArray
 main :: IO ()
 
 main =
-  let f i =
+  let e i =
         if i <= 3
         then do d <- (join (newListArray . (,) 0 . subtract 1 <$> return 3 <*> fmap (map read . words) getLine))
                 a <- readIOA d 0
                 b <- readIOA d 1
                 c <- readIOA d 2
                 printf "a = %d b = %dc =%d\n" (a::Int) (b::Int) (c::Int) :: IO()
-                f (i + 1)
+                e (i + 1)
         else do l <- (join (newListArray . (,) 0 . subtract 1 <$> return 10 <*> fmap (map read . words) getLine))
-                let e j =
+                let f j =
                       if j <= 9
                       then do printf "%d\n" =<< ((readIOA l j)::IO Int)
-                              e (j + 1)
+                              f (j + 1)
                       else return () in
-                      e 0 in
-        f 1
+                      f 0 in
+        e 1
 
 

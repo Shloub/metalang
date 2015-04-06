@@ -32,15 +32,15 @@ main :: IO ()
 
 
 programme_candidat tableau x y =
-  let b i f =
+  let b i c =
         if i <= y - 1
-        then let c j g =
+        then let d j e =
                    if j <= x - 1
-                   then do h <- (((+) g) <$> (((*) (i * 2 + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
-                           c (j + 1) h
-                   else b (i + 1) g in
-                   c 0 f
-        else return f in
+                   then do f <- (((+) e) <$> (((*) (i * 2 + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
+                           d (j + 1) f
+                   else b (i + 1) e in
+                   d 0 c
+        else return c in
         b 0 0
 
 main =

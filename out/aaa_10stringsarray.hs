@@ -39,12 +39,12 @@ print_toto t =
 main =
   do tab <- array_init 2 (\ i ->
                             idstring "chaine de test")
-     let c j =
+     let a j =
            if j <= 1
            then do ((readIOA tab j) >>= idstring) >>= printstring
-                   c (j + 1)
+                   a (j + 1)
            else do (Toto <$> (newIORef "one") <*> (newIORef 1)) >>= print_toto
                    return () in
-           c 0
+           a 0
 
 

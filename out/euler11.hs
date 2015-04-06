@@ -57,20 +57,20 @@ main =
                                                                          else (- 1, - 1)))
      m <- array_init 20 (\ c ->
                            (join (newListArray . (,) 0 . subtract 1 <$> return 20 <*> fmap (map read . words) getLine)))
-     let h j o =
+     let d j e =
            if j <= 7
            then (readIOA directions j) >>= (\ (dx, dy) ->
-                                             let k x p =
+                                             let f x g =
                                                    if x <= 19
-                                                   then let l y q =
+                                                   then let h y k =
                                                               if y <= 19
-                                                              then do r <- ((max <$> (return q) <*> (find 4 m x y dx dy)))
-                                                                      l (y + 1) r
-                                                              else k (x + 1) q in
-                                                              l 0 p
-                                                   else h (j + 1) p in
-                                                   k 0 o)
-           else printf "%d\n" (o::Int) :: IO() in
-           h 0 0
+                                                              then do l <- ((max <$> (return k) <*> (find 4 m x y dx dy)))
+                                                                      h (y + 1) l
+                                                              else f (x + 1) k in
+                                                              h 0 g
+                                                   else d (j + 1) g in
+                                                   f 0 e)
+           else printf "%d\n" (e::Int) :: IO() in
+           d 0 0
 
 

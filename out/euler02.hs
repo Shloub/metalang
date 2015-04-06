@@ -19,8 +19,8 @@ main =
                         then let i = g + e
                                      in i
                         else g
-                let k = f + e
-                d f k h
+                let j = f + e
+                d f j h
         else printf "%d\n" (g::Int) :: IO() in
         d 1 2 0
 

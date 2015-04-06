@@ -26,47 +26,47 @@ let main =
   let nprimes = (eratostene era maximumprimes) in
   let primes = (Array.init nprimes (fun  o -> 0)) in
   let l = 0 in
-  let rec s k l =
+  let rec c k l =
     (if (k <= (maximumprimes - 1))
      then (if (era.(k) = k)
            then (
                   primes.(l) <- k;
                   let l = (l + 1) in
-                  (s (k + 1) l)
+                  (c (k + 1) l)
                   )
            
-           else (s (k + 1) l))
+           else (c (k + 1) l))
      else (
             (Printf.printf "%d == %d\n" l nprimes);
             let canbe = (Array.init maximumprimes (fun  i_ -> false)) in
-            let rec q i =
+            let rec d i =
               (if (i <= (nprimes - 1))
-               then let rec r j =
+               then let rec e j =
                       (if (j <= (maximumprimes - 1))
                        then let n = (primes.(i) + ((2 * j) * j)) in
                        (if (n < maximumprimes)
                         then (
                                canbe.(n) <- true;
-                               (r (j + 1))
+                               (e (j + 1))
                                )
                         
-                        else (r (j + 1)))
-                       else (q (i + 1))) in
-                      (r 0)
-               else let rec p m =
+                        else (e (j + 1)))
+                       else (d (i + 1))) in
+                      (e 0)
+               else let rec f m =
                       (if (m <= maximumprimes)
                        then let m2 = ((m * 2) + 1) in
                        (if ((m2 < maximumprimes) && (not canbe.(m2)))
                         then (
                                (Printf.printf "%d\n" m2);
-                               (p (m + 1))
+                               (f (m + 1))
                                )
                         
-                        else (p (m + 1)))
+                        else (f (m + 1)))
                        else ()) in
-                      (p 1)) in
-              (q 0)
+                      (f 1)) in
+              (d 0)
             )
      ) in
-    (s 2 l)
+    (c 2 l)
 

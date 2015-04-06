@@ -54,15 +54,15 @@
 )
 (define main
   (let ([len 0])
-  ((lambda (p) 
-     (let ([len p])
+  ((lambda (a) 
+     (let ([len a])
      (block
        (mread-blank)
        (let ([tab (build-vector len (lambda (i) 
                                       (let ([tab2 (build-vector (+ i 1) (lambda (j) 
                                                                           (let ([tmp 0])
-                                                                          ((lambda (o) 
-                                                                             (let ([tmp o])
+                                                                          ((lambda (b) 
+                                                                             (let ([tmp b])
                                                                              (block
                                                                                (mread-blank)
                                                                                tmp
@@ -70,21 +70,21 @@
        tab2)))])
      (block
        (printf "~a\n" (find01 len tab))
-       (letrec ([g (lambda (k) 
+       (letrec ([c (lambda (k) 
                      (if (<= k (- len 1))
-                     (letrec ([h (lambda (l) 
+                     (letrec ([d (lambda (l) 
                                    (if (<= l k)
                                    (block
                                      (printf "~a " (vector-ref (vector-ref tab k) l))
-                                     (h (+ l 1))
+                                     (d (+ l 1))
                                      )
                                    (block
                                      (display "\n")
-                                     (g (+ k 1))
+                                     (c (+ k 1))
                                      )))])
-                     (h 0))
+                     (d 0))
                      '()))])
-     (g 0))
+     (c 0))
   ))
 ))) (mread-int)))
 )

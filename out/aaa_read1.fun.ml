@@ -3,15 +3,15 @@ let main =
   (fun  b -> b))) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let rec e i =
+    let rec c i =
       (if (i <= 11)
        then (
               (Printf.printf "%c" str.(i));
-              (e (i + 1))
+              (c (i + 1))
               )
        
        else ()) in
-      (e 0)
+      (c 0)
     )
   
 

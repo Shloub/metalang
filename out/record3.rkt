@@ -42,13 +42,13 @@
 (define main
   (let ([t0 (build-vector 4 (lambda (i) 
                               (mktoto i)))])
-  ((lambda (e) 
+  ((lambda (b) 
      (block
-       (set-toto-bar! (vector-ref t0 0) e)
+       (set-toto-bar! (vector-ref t0 0) b)
        (mread-blank)
-       ((lambda (d) 
+       ((lambda (c) 
           (block
-            (set-toto-blah! (vector-ref t0 1) d)
+            (set-toto-blah! (vector-ref t0 1) c)
             (let ([titi (result t0 4)])
             (printf "~a~a" titi (toto-blah (vector-ref t0 2))))
             )) (mread-int))

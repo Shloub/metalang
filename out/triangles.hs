@@ -69,13 +69,13 @@ find0 len tab cache x y =
                 (join $ readIOA <$> (readIOA cache y) <*> return x)
                 (do out0 <- find0 len tab cache x (y + 1)
                     out1 <- find0 len tab cache (x + 1) (y + 1)
-                    q <- if out0 > out1
-                         then do r <- (((+) out0) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
-                                 return r
-                         else do s <- (((+) out1) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
-                                 return s
-                    join $ writeIOA <$> (readIOA cache y) <*> return x <*> return q
-                    return q)
+                    a <- if out0 > out1
+                         then do b <- (((+) out0) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
+                                 return b
+                         else do c <- (((+) out1) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
+                                 return c
+                    join $ writeIOA <$> (readIOA cache y) <*> return x <*> return a
+                    return a)
 
 find len tab =
   do tab2 <- array_init len (\ i ->
@@ -85,25 +85,25 @@ find len tab =
      find0 len tab tab2 0 0
 
 main =
-  do p <- read_int
+  do d <- read_int
      skip_whitespaces
-     tab <- array_init p (\ i ->
+     tab <- array_init d (\ i ->
                             do tab2 <- array_init (i + 1) (\ j ->
-                                                             do o <- read_int
+                                                             do e <- read_int
                                                                 skip_whitespaces
-                                                                return o)
+                                                                return e)
                                return tab2)
-     printf "%d\n" =<< ((find p tab)::IO Int)
-     let g k =
-           if k <= p - 1
-           then let h l =
+     printf "%d\n" =<< ((find d tab)::IO Int)
+     let f k =
+           if k <= d - 1
+           then let g l =
                       if l <= k
                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab k) <*> return l)::IO Int)
-                              h (l + 1)
+                              g (l + 1)
                       else do printf "\n" :: IO ()
-                              g (k + 1) in
-                      h 0
+                              f (k + 1) in
+                      g 0
            else return () in
-           g 0
+           f 0
 
 

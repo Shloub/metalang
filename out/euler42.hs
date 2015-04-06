@@ -61,32 +61,32 @@ score () =
   do skip_whitespaces
      len <- read_int
      skip_whitespaces
-     let b i f =
+     let b i d =
            if i <= len
            then do c <- getChar
-                   let g = f + (ord c) - (ord 'A') + 1
+                   let e = d + (ord c) - (ord 'A') + 1
                    {-		print c print " " print sum print " " -}
-                   b (i + 1) g
-           else ifM (is_triangular f)
+                   b (i + 1) e
+           else ifM (is_triangular d)
                     (return 1)
                     (return 0) in
            b 1 0
 
 main =
-  let e i =
+  let f i =
         if i <= 55
         then ifM (is_triangular i)
                  (do printf "%d " (i::Int) :: IO()
-                     e (i + 1))
-                 (e (i + 1))
+                     f (i + 1))
+                 (f (i + 1))
         else do printf "\n" :: IO ()
                 n <- read_int
-                let d h j =
+                let g h j =
                       if h <= n
                       then do k <- (((+) j) <$> (score ()))
-                              d (h + 1) k
+                              g (h + 1) k
                       else printf "%d\n" (j::Int) :: IO() in
-                      d 1 0 in
-        e 1
+                      g 1 0 in
+        f 1
 
 

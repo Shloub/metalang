@@ -29,18 +29,18 @@ let main =
                )
   ))) in
   e)) in
-  let rec o j max0 =
+  let rec g j max0 =
     (if (j <= 7)
-     then ((fun  (dx, dy) -> let rec p x max0 =
+     then ((fun  (dx, dy) -> let rec h x max0 =
                                (if (x <= 19)
-                                then let rec q y max0 =
+                                then let rec k y max0 =
                                        (if (y <= 19)
                                         then let max0 = ((max (max0) ((find 4 m x y dx dy)))) in
-                                        (q (y + 1) max0)
-                                        else (p (x + 1) max0)) in
-                                       (q 0 max0)
-                                else (o (j + 1) max0)) in
-                               (p 0 max0)) directions.(j))
+                                        (k (y + 1) max0)
+                                        else (h (x + 1) max0)) in
+                                       (k 0 max0)
+                                else (g (j + 1) max0)) in
+                               (h 0 max0)) directions.(j))
      else (Printf.printf "%d\n" max0)) in
-    (o 0 max0)
+    (g 0 max0)
 

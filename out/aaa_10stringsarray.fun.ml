@@ -7,11 +7,11 @@ let print_toto t =
   (Printf.printf "%s = %d\n" t.s t.v)
 let main =
   let tab = (Array.init 2 (fun  i -> (idstring "chaine de test"))) in
-  let rec c j =
+  let rec a j =
     (if (j <= 1)
      then (
             (printstring (idstring tab.(j)));
-            (c (j + 1))
+            (a (j + 1))
             )
      
      else (
@@ -20,5 +20,5 @@ let main =
             ()
             )
      ) in
-    (c 0)
+    (a 0)
 

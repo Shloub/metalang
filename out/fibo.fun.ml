@@ -16,7 +16,7 @@ let main =
   let b = 0 in
   let i = 0 in
   Scanf.scanf "%d"
-  (fun  f -> let a = f in
+  (fun  d -> let a = d in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     Scanf.scanf "%d"
@@ -24,7 +24,7 @@ let main =
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       Scanf.scanf "%d"
-      (fun  d -> let i = d in
+      (fun  f -> let i = f in
       (Printf.printf "%d" (fibo0 a b i)))
       )
     )

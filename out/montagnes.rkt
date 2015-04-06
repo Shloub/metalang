@@ -49,14 +49,14 @@
 )
 (define main
   (let ([len 0])
-  ((lambda (f) 
-     (let ([len f])
+  ((lambda (c) 
+     (let ([len c])
      (block
        (mread-blank)
        (let ([tab (build-vector len (lambda (i) 
                                       (let ([x 0])
-                                      ((lambda (e) 
-                                         (let ([x e])
+                                      ((lambda (d) 
+                                         (let ([x d])
                                          (block
                                            (mread-blank)
                                            x

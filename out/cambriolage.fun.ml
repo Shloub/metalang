@@ -1,7 +1,7 @@
 let nbPassePartout n passepartout m serrures =
   let max_ancient = 0 in
   let max_recent = 0 in
-  let rec d i max_ancient max_recent =
+  let rec c i max_ancient max_recent =
     (if (i <= (m - 1))
      then let max_ancient = (if ((serrures.(i).(0) = (- 1)) && (serrures.(i).(1) > max_ancient))
                              then let max_ancient = serrures.(i).(1) in
@@ -9,23 +9,23 @@ let nbPassePartout n passepartout m serrures =
                              else max_ancient) in
      (if ((serrures.(i).(0) = 1) && (serrures.(i).(1) > max_recent))
       then let max_recent = serrures.(i).(1) in
-      (d (i + 1) max_ancient max_recent)
-      else (d (i + 1) max_ancient max_recent))
+      (c (i + 1) max_ancient max_recent)
+      else (c (i + 1) max_ancient max_recent))
      else let max_ancient_pp = 0 in
      let max_recent_pp = 0 in
-     let rec c i max_ancient_pp max_recent_pp =
+     let rec d i max_ancient_pp max_recent_pp =
        (if (i <= (n - 1))
         then let pp = passepartout.(i) in
         (if ((pp.(0) >= max_ancient) && (pp.(1) >= max_recent))
          then 1
          else let max_ancient_pp = ((max (max_ancient_pp) (pp.(0)))) in
          let max_recent_pp = ((max (max_recent_pp) (pp.(1)))) in
-         (c (i + 1) max_ancient_pp max_recent_pp))
+         (d (i + 1) max_ancient_pp max_recent_pp))
         else (if ((max_ancient_pp >= max_ancient) && (max_recent_pp >= max_recent))
               then 2
               else 0)) in
-       (c 0 max_ancient_pp max_recent_pp)) in
-    (d 0 max_ancient max_recent)
+       (d 0 max_ancient_pp max_recent_pp)) in
+    (c 0 max_ancient max_recent)
 let main =
   Scanf.scanf "%d"
   (fun  n -> (

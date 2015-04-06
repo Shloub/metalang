@@ -33,20 +33,20 @@ let main =
   let t = (mktoto 4) in
   let t2 = (mktoto 5) in
   Scanf.scanf "%d"
-  (fun  h -> (
-               t.bar <- h;
+  (fun  a -> (
+               t.bar <- a;
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                Scanf.scanf "%d"
-               (fun  g -> (
-                            t.blah <- g;
+               (fun  b -> (
+                            t.blah <- b;
                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                             Scanf.scanf "%d"
-                            (fun  f -> (
-                                         t2.bar <- f;
+                            (fun  c -> (
+                                         t2.bar <- c;
                                          (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                          Scanf.scanf "%d"
-                                         (fun  e -> (
-                                                      t2.blah <- e;
+                                         (fun  d -> (
+                                                      t2.blah <- d;
                                                       (Printf.printf "%d%d" (result t t2) t.blah)
                                                       )
                                          )

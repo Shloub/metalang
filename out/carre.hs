@@ -39,16 +39,16 @@ main =
      y <- (fmap read getLine)
      tab <- array_init y (\ d ->
                             (join (newListArray . (,) 0 . subtract 1 <$> return x <*> fmap (map read . words) getLine)))
-     let i ix =
+     let e ix =
            if ix <= x - 1
-           then let j iy =
+           then let f iy =
                       if iy <= y - 1
                       then ifM (((==) 1) <$> (join $ readIOA <$> (readIOA tab iy) <*> return ix))
                                (do join $ writeIOA <$> (readIOA tab iy) <*> return ix <*> (((+) 1) <$> ((min <$> (((min <$> (join $ readIOA <$> (readIOA tab iy) <*> return (ix - 1)) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return ix)))) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return (ix - 1)))))
-                                   j (iy + 1))
-                               (j (iy + 1))
-                      else i (ix + 1) in
-                      j 1
+                                   f (iy + 1))
+                               (f (iy + 1))
+                      else e (ix + 1) in
+                      f 1
            else let g jy =
                       if jy <= y - 1
                       then let h jx =
@@ -60,6 +60,6 @@ main =
                                  h 0
                       else return () in
                       g 0 in
-           i 1
+           e 1
 
 

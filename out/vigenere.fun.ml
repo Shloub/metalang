@@ -37,15 +37,15 @@ let main =
                                             (fun  out2 -> out2))) in
                                             (
                                               (crypte taille_cle cle taille message);
-                                              let rec g i =
+                                              let rec b i =
                                                 (if (i <= (taille - 1))
                                                  then (
                                                         (Printf.printf "%c" message.(i));
-                                                        (g (i + 1))
+                                                        (b (i + 1))
                                                         )
                                                  
                                                  else (Printf.printf "\n")) in
-                                                (g 0)
+                                                (b 0)
                                               )
                                             
                                             )

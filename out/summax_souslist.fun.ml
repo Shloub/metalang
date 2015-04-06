@@ -17,12 +17,12 @@ let summax lst len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  e -> let len = e in
+  (fun  b -> let len = b in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  d -> let tmp = d in
+    (fun  c -> let tmp = c in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp

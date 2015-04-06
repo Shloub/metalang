@@ -32,45 +32,45 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  let m i y =
+  let a i b =
         if i <= max0 - 1
         then ifM (((==) i) <$> (readIOA t i))
-                 (do let z = y + 1
+                 (do let c = b + 1
                      let j = i * i
-                     let q ba =
-                           if ba < max0 && ba > 0
-                           then do writeIOA t ba 0
-                                   let bb = ba + i
-                                   q bb
-                           else m (i + 1) z in
-                           q j)
-                 (m (i + 1) y)
-        else return y in
-        m 2 0
+                     let e f =
+                           if f < max0 && f > 0
+                           then do writeIOA t f 0
+                                   let g = f + i
+                                   e g
+                           else a (i + 1) c in
+                           e j)
+                 (a (i + 1) b)
+        else return b in
+        a 2 0
 
 fillPrimesFactors t n primes nprimes =
-  let g i bc =
+  let h i m =
         if i <= nprimes - 1
         then do d <- readIOA primes i
-                let h bd =
-                      if (bd `rem` d) == 0
+                let q r =
+                      if (r `rem` d) == 0
                       then do writeIOA t d =<< (((+) 1) <$> (readIOA t d))
-                              let be = bd `quot` d
-                              h be
-                      else if bd == 1
+                              let s = r `quot` d
+                              q s
+                      else if r == 1
                            then readIOA primes i
-                           else g (i + 1) bd in
-                      h bc
-        else return bc in
-        g 0 n
+                           else h (i + 1) r in
+                      q m
+        else return m in
+        h 0 n
 
 sumdivaux2 t n i =
-  let f bf =
-        ifM ((return (bf < n)) <&&> (((==) 0) <$> (readIOA t bf)))
-            (do let bg = bf + 1
-                f bg)
-            (return bf) in
-        f i
+  let u v =
+        ifM ((return (v < n)) <&&> (((==) 0) <$> (readIOA t v)))
+            (do let w = v + 1
+                u w)
+            (return v) in
+        u i
 
 sumdivaux t n i =
   if i > n
@@ -78,14 +78,14 @@ sumdivaux t n i =
   else ifM (((==) 0) <$> (readIOA t i))
            (sumdivaux t n =<< (sumdivaux2 t n (i + 1)))
            (do o <- sumdivaux t n =<< (sumdivaux2 t n (i + 1))
-               e <- readIOA t i
-               let c j bh bi =
-                     if j <= e
-                     then do let bj = bh + bi
-                             let bk = bi * i
-                             c (j + 1) bj bk
-                     else return ((bh + 1) * o) in
-                     c 1 0 i)
+               x <- readIOA t i
+               let y j z ba =
+                     if j <= x
+                     then do let bb = z + ba
+                             let bc = ba * i
+                             y (j + 1) bb bc
+                     else return ((z + 1) * o) in
+                     y 1 0 i)
 
 sumdiv nprimes primes n =
   do t <- array_init (n + 1) (\ i ->
@@ -99,27 +99,27 @@ main =
      nprimes <- eratostene era 1001
      primes <- array_init nprimes (\ o ->
                                      return 0)
-     let x k bl =
-           if k <= 1001 - 1
-           then ifM (((==) k) <$> (readIOA era k))
-                    (do writeIOA primes bl k
-                        let bm = bl + 1
-                        x (k + 1) bm)
-                    (x (k + 1) bl)
-           else do printf "%d == %d\n" (bl::Int) (nprimes::Int) :: IO()
-                   let w n bn =
-                         if n <= 1000
-                         then do other <- ((-) <$> (sumdiv nprimes primes n) <*> (return n))
-                                 if other > n
-                                 then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> (return other))
-                                         if othersum == n
-                                         then do printf "%d & %d\n" (other::Int) (n::Int) :: IO()
-                                                 let bo = bn + other + n
-                                                 w (n + 1) bo
-                                         else w (n + 1) bn
-                                 else w (n + 1) bn
-                         else printf "\n%d\n" (bn::Int) :: IO() in
-                         w 2 0 in
-           x 2 0
+     let bd k be =
+            if k <= 1001 - 1
+            then ifM (((==) k) <$> (readIOA era k))
+                     (do writeIOA primes be k
+                         let bf = be + 1
+                         bd (k + 1) bf)
+                     (bd (k + 1) be)
+            else do printf "%d == %d\n" (be::Int) (nprimes::Int) :: IO()
+                    let bg n bh =
+                           if n <= 1000
+                           then do other <- ((-) <$> (sumdiv nprimes primes n) <*> (return n))
+                                   if other > n
+                                   then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> (return other))
+                                           if othersum == n
+                                           then do printf "%d & %d\n" (other::Int) (n::Int) :: IO()
+                                                   let bi = bh + other + n
+                                                   bg (n + 1) bi
+                                           else bg (n + 1) bh
+                                   else bg (n + 1) bh
+                           else printf "\n%d\n" (bh::Int) :: IO() in
+                           bg 2 0 in
+            bd 2 0
 
 

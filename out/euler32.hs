@@ -47,66 +47,66 @@ main =
                                  return (i /= 0))
      counted <- array_init 100000 (\ j ->
                                      return False)
-     let l e s =
+     let f e g =
            if e <= 9
            then do writeIOA allowed e False
-                   let m b t =
+                   let h b k =
                          if b <= 9
                          then ifM (readIOA allowed b)
                                   (do writeIOA allowed b False
                                       let be = (b * e) `rem` 10
-                                      u <- ifM (readIOA allowed be)
+                                      l <- ifM (readIOA allowed be)
                                                (do writeIOA allowed be False
-                                                   let p a v =
+                                                   let m a p =
                                                          if a <= 9
                                                          then ifM (readIOA allowed a)
                                                                   (do writeIOA allowed a False
-                                                                      let q c w =
+                                                                      let q c r =
                                                                             if c <= 9
                                                                             then ifM (readIOA allowed c)
                                                                                      (do writeIOA allowed c False
-                                                                                         let r d x =
+                                                                                         let s d t =
                                                                                                if d <= 9
                                                                                                then ifM (readIOA allowed d)
                                                                                                         (do writeIOA allowed d False
                                                                                                             {- 2 * 3 digits -}
                                                                                                             do let product = (a * 10 + b) * (c * 100 + d * 10 + e)
-                                                                                                               y <- ifM ((fmap not (readIOA counted product)) <&&> (okdigits allowed (product `quot` 10)))
+                                                                                                               u <- ifM ((fmap not (readIOA counted product)) <&&> (okdigits allowed (product `quot` 10)))
                                                                                                                         (do writeIOA counted product True
-                                                                                                                            let z = x + product
+                                                                                                                            let v = t + product
                                                                                                                             printf "%d " (product::Int) :: IO()
-                                                                                                                            return z)
-                                                                                                                        (return x)
+                                                                                                                            return v)
+                                                                                                                        (return t)
                                                                                                                {- 1  * 4 digits -}
                                                                                                                do let product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-                                                                                                                  ba <- ifM ((fmap not (readIOA counted product2)) <&&> (okdigits allowed (product2 `quot` 10)))
-                                                                                                                            (do writeIOA counted product2 True
-                                                                                                                                let bb = y + product2
-                                                                                                                                printf "%d " (product2::Int) :: IO()
-                                                                                                                                return bb)
-                                                                                                                            (return y)
+                                                                                                                  w <- ifM ((fmap not (readIOA counted product2)) <&&> (okdigits allowed (product2 `quot` 10)))
+                                                                                                                           (do writeIOA counted product2 True
+                                                                                                                               let x = u + product2
+                                                                                                                               printf "%d " (product2::Int) :: IO()
+                                                                                                                               return x)
+                                                                                                                           (return u)
                                                                                                                   writeIOA allowed d True
-                                                                                                                  r (d + 1) ba)
-                                                                                                        (r (d + 1) x)
+                                                                                                                  s (d + 1) w)
+                                                                                                        (s (d + 1) t)
                                                                                                else do writeIOA allowed c True
-                                                                                                       q (c + 1) x in
-                                                                                               r 1 w)
-                                                                                     (q (c + 1) w)
+                                                                                                       q (c + 1) t in
+                                                                                               s 1 r)
+                                                                                     (q (c + 1) r)
                                                                             else do writeIOA allowed a True
-                                                                                    p (a + 1) w in
-                                                                            q 1 v)
-                                                                  (p (a + 1) v)
+                                                                                    m (a + 1) r in
+                                                                            q 1 p)
+                                                                  (m (a + 1) p)
                                                          else do writeIOA allowed be True
-                                                                 return v in
-                                                         p 1 t)
-                                               (return t)
+                                                                 return p in
+                                                         m 1 k)
+                                               (return k)
                                       writeIOA allowed b True
-                                      m (b + 1) u)
-                                  (m (b + 1) t)
+                                      h (b + 1) l)
+                                  (h (b + 1) k)
                          else do writeIOA allowed e True
-                                 l (e + 1) t in
-                         m 1 s
-           else printf "%d\n" (s::Int) :: IO() in
-           l 1 0
+                                 f (e + 1) k in
+                         h 1 g
+           else printf "%d\n" (g::Int) :: IO() in
+           f 1 0
 
 

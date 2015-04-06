@@ -1,5 +1,5 @@
 let main =
-  let rec h i =
+  let rec e i =
     (if (i <= 3)
      then Scanf.scanf "%d"
      (fun  a -> (
@@ -8,7 +8,7 @@ let main =
                   (fun  b -> (
                                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                (Printf.printf "a = %d b = %d\n" a b);
-                               (h (i + 1))
+                               (e (i + 1))
                                )
                   )
                   )
@@ -19,14 +19,14 @@ let main =
                   d
                   )
      ))) in
-     let rec g j =
+     let rec f j =
        (if (j <= 9)
         then (
                (Printf.printf "%d\n" l.(j));
-               (g (j + 1))
+               (f (j + 1))
                )
         
         else ()) in
-       (g 0)) in
-    (h 1)
+       (f 0)) in
+    (e 1)
 

@@ -32,22 +32,22 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  let a i e =
+  let a i b =
         if i <= max0 - 1
         then ifM (((==) i) <$> (readIOA t i))
-                 (do let f = e + i
+                 (do let c = b + i
                      if (max0 `quot` i) > i
                      then do let j = i * i
-                             let b g =
-                                   if g < max0 && g > 0
-                                   then do writeIOA t g 0
-                                           let h = g + i
-                                           b h
-                                   else a (i + 1) f in
-                                   b j
-                     else a (i + 1) f)
-                 (a (i + 1) e)
-        else return e in
+                             let d e =
+                                   if e < max0 && e > 0
+                                   then do writeIOA t e 0
+                                           let f = e + i
+                                           d f
+                                   else a (i + 1) c in
+                                   d j
+                     else a (i + 1) c)
+                 (a (i + 1) b)
+        else return b in
         a 2 0
 
 main =

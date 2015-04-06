@@ -35,13 +35,13 @@
 )
 (define main
   (let ([t0 (mktoto 4)])
-  ((lambda (b) 
+  ((lambda (a) 
      (block
-       (set-toto-bar! t0 b)
+       (set-toto-bar! t0 a)
        (mread-blank)
-       ((lambda (a) 
+       ((lambda (b) 
           (block
-            (set-toto-blah! t0 a)
+            (set-toto-blah! t0 b)
             (display (result t0))
             )) (mread-int))
      )) (mread-int)))

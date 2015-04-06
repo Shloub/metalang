@@ -40,36 +40,36 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
 -}
   do p <- array_init 10 (\ i ->
                            return (i * i * i * i * i))
-     let j a q =
+     let g a h =
            if a <= 9
-           then let k b t =
+           then let j b k =
                       if b <= 9
-                      then let l c u =
+                      then let l c m =
                                  if c <= 9
-                                 then let m d v =
+                                 then let n d o =
                                             if d <= 9
-                                            then let n e w =
+                                            then let q e t =
                                                        if e <= 9
-                                                       then let o f x =
+                                                       then let u f v =
                                                                   if f <= 9
                                                                   then do s <- ((+) <$> ((+) <$> ((+) <$> ((+) <$> ((+) <$> (readIOA p a) <*> (readIOA p b)) <*> (readIOA p c)) <*> (readIOA p d)) <*> (readIOA p e)) <*> (readIOA p f))
                                                                           let r = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000
                                                                           if s == r && r /= 1
                                                                           then do printf "%d%d%d%d%d%d %d\n" (f::Int) (e::Int) (d::Int) (c::Int) (b::Int) (a::Int) (r::Int) :: IO()
-                                                                                  let y = x + r
-                                                                                  o (f + 1) y
-                                                                          else o (f + 1) x
-                                                                  else n (e + 1) x in
-                                                                  o 0 w
-                                                       else m (d + 1) w in
-                                                       n 0 v
-                                            else l (c + 1) v in
-                                            m 0 u
-                                 else k (b + 1) u in
-                                 l 0 t
-                      else j (a + 1) t in
-                      k 0 q
-           else printf "%d" (q :: Int) :: IO () in
-           j 0 0
+                                                                                  let w = v + r
+                                                                                  u (f + 1) w
+                                                                          else u (f + 1) v
+                                                                  else q (e + 1) v in
+                                                                  u 0 t
+                                                       else n (d + 1) t in
+                                                       q 0 o
+                                            else l (c + 1) o in
+                                            n 0 m
+                                 else j (b + 1) m in
+                                 l 0 k
+                      else g (a + 1) k in
+                      j 0 h
+           else printf "%d" (h :: Int) :: IO () in
+           g 0 0
 
 

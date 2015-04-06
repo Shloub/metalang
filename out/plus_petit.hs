@@ -63,17 +63,17 @@ go0 tab a b =
      then ifM (((==) m) <$> (readIOA tab a))
               (return b)
               (return a)
-     else let c k l =
-                if k < l
-                then do e <- readIOA tab k
+     else let c d f =
+                if d < f
+                then do e <- readIOA tab d
                         if e < m
-                        then do let n = k + 1
-                                c n l
-                        else do let o = l - 1
-                                writeIOA tab k =<< (readIOA tab o)
-                                writeIOA tab o e
-                                c k o
-                else if k < m
+                        then do let g = d + 1
+                                c g f
+                        else do let h = f - 1
+                                writeIOA tab d =<< (readIOA tab h)
+                                writeIOA tab h e
+                                c d h
+                else if d < m
                      then go0 tab a m
                      else go0 tab m b in
                 c a b
@@ -82,12 +82,12 @@ plus_petit0 tab len =
   go0 tab 0 len
 
 main =
-  do h <- read_int
+  do k <- read_int
      skip_whitespaces
-     tab <- array_init h (\ i ->
-                            do g <- read_int
+     tab <- array_init k (\ i ->
+                            do l <- read_int
                                skip_whitespaces
-                               return g)
-     printf "%d" =<< (plus_petit0 tab h :: IO Int)
+                               return l)
+     printf "%d" =<< (plus_petit0 tab k :: IO Int)
 
 

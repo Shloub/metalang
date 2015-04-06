@@ -71,14 +71,14 @@
                                                      out2) (mread-char))))])
           (block
             (crypte taille_cle cle taille message)
-            (letrec ([g (lambda (i) 
+            (letrec ([b (lambda (i) 
                           (if (<= i (- taille 1))
                           (block
                             (display (vector-ref message i))
-                            (g (+ i 1))
+                            (b (+ i 1))
                             )
                           (display "\n")))])
-            (g 0))
+            (b 0))
           ))
      )) (mread-int))
 ))

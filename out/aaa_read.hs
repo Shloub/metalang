@@ -52,16 +52,16 @@ main =
   do len <- read_int
      skip_whitespaces
      printf "%d=len\n" (len::Int) :: IO()
-     let k = len * 2
-     printf "len*2=%d\n" (k::Int) :: IO()
-     let l = k `quot` 2
-     tab <- array_init l (\ i ->
+     let a = len * 2
+     printf "len*2=%d\n" (a::Int) :: IO()
+     let b = a `quot` 2
+     tab <- array_init b (\ i ->
                             do tmpi1 <- read_int
                                skip_whitespaces
                                printf "%d=>%d " (i::Int) (tmpi1::Int) :: IO()
                                return tmpi1)
      printf "\n" :: IO ()
-     tab2 <- array_init l (\ i_ ->
+     tab2 <- array_init b (\ i_ ->
                              do tmpi2 <- read_int
                                 skip_whitespaces
                                 printf "%d==>%d " (i_::Int) (tmpi2::Int) :: IO()
@@ -73,16 +73,16 @@ main =
                                   do tmpc <- getChar
                                      let c = (ord tmpc)
                                      printf "%c:%d " (tmpc::Char) (c::Int) :: IO()
-                                     let m = if tmpc /= ' '
-                                             then let n = ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
-                                                          in n
+                                     let d = if tmpc /= ' '
+                                             then let e = ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
+                                                          in e
                                              else c
-                                     return (chr m))
-     let h j =
+                                     return (chr d))
+     let f j =
            if j <= strlen - 1
            then do printf "%c" =<< (readIOA tab4 j :: IO Char)
-                   h (j + 1)
+                   f (j + 1)
            else return () in
-           h 0
+           f 0
 
 

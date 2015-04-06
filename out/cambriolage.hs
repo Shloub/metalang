@@ -57,29 +57,29 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 main :: IO ()
 
 nbPassePartout n passepartout m serrures =
-  let d i s t =
+  let c i d e =
         if i <= m - 1
-        then do u <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) s) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                         (do v <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                             return v)
-                         (return s)
-                ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) t) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                    (do w <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                        d (i + 1) u w)
-                    (d (i + 1) u t)
-        else let c x y z =
-                   if x <= n - 1
-                   then do pp <- readIOA passepartout x
-                           ifM ((((<=) s) <$> (readIOA pp 0)) <&&> (((<=) t) <$> (readIOA pp 1)))
+        then do f <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) d) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
+                         (do g <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                             return g)
+                         (return d)
+                ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) e) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
+                    (do h <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                        c (i + 1) f h)
+                    (c (i + 1) f e)
+        else let o p q r =
+                   if p <= n - 1
+                   then do pp <- readIOA passepartout p
+                           ifM ((((<=) d) <$> (readIOA pp 0)) <&&> (((<=) e) <$> (readIOA pp 1)))
                                (return 1)
-                               (do ba <- ((max <$> (return y) <*> (readIOA pp 0)))
-                                   bb <- ((max <$> (return z) <*> (readIOA pp 1)))
-                                   c (x + 1) ba bb)
-                   else return (if y >= s && z >= t
+                               (do s <- ((max <$> (return q) <*> (readIOA pp 0)))
+                                   t <- ((max <$> (return r) <*> (readIOA pp 1)))
+                                   o (p + 1) s t)
+                   else return (if q >= d && r >= e
                                 then 2
                                 else 0) in
-                   c 0 0 0 in
-        d 0 0 0
+                   o 0 0 0 in
+        c 0 0 0
 
 main =
   do n <- read_int

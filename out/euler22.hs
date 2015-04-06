@@ -52,22 +52,22 @@ score () =
   do skip_whitespaces
      len <- read_int
      skip_whitespaces
-     let a i d =
+     let a i b =
            if i <= len
            then do c <- getChar
-                   let e = d + (ord c) - (ord 'A') + 1
+                   let d = b + (ord c) - (ord 'A') + 1
                    {-		print c print " " print sum print " " -}
-                   a (i + 1) e
-           else return d in
+                   a (i + 1) d
+           else return b in
            a 1 0
 
 main =
   do n <- read_int
-     let b i f =
+     let e i f =
            if i <= n
            then do g <- (((+) f) <$> (((*) i) <$> (score ())))
-                   b (i + 1) g
+                   e (i + 1) g
            else printf "%d\n" (f::Int) :: IO() in
-           b 1 0
+           e 1 0
 
 

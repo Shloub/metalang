@@ -9,15 +9,15 @@ let main =
                              c
                              else c) in
                     (char_of_int (c))))) in
-                    let rec d j =
+                    let rec a j =
                       (if (j <= (strlen - 1))
                        then (
                               (Printf.printf "%c" tab4.(j));
-                              (d (j + 1))
+                              (a (j + 1))
                               )
                        
                        else ()) in
-                      (d 0)
+                      (a 0)
                     )
   )
 

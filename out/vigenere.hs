@@ -85,11 +85,11 @@ main =
      message <- array_init taille (\ index2 ->
                                      getChar)
      crypte taille_cle cle taille message
-     let g i =
+     let b i =
            if i <= taille - 1
            then do printf "%c" =<< (readIOA message i :: IO Char)
-                   g (i + 1)
+                   b (i + 1)
            else printf "\n" :: IO () in
-           g 0
+           b 0
 
 

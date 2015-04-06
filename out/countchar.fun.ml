@@ -11,12 +11,12 @@ let nth tab tofind len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  f -> let len = f in
+  (fun  b -> let len = b in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tofind = '\000' in
     Scanf.scanf "%c"
-    (fun  e -> let tofind = e in
+    (fun  c -> let tofind = c in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       let tab = (Array.init len (fun  i -> let tmp = '\000' in

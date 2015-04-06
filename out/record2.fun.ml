@@ -13,12 +13,12 @@ let result t =
 let main =
   let t = (mktoto 4) in
   Scanf.scanf "%d"
-  (fun  b -> (
-               t.bar <- b;
+  (fun  a -> (
+               t.bar <- a;
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                Scanf.scanf "%d"
-               (fun  a -> (
-                            t.blah <- a;
+               (fun  b -> (
+                            t.blah <- b;
                             (Printf.printf "%d" (result t))
                             )
                )

@@ -75,9 +75,9 @@ data Move = Move {
 
 print_state g =
   do printf "\n|" :: IO ()
-     let p y =
+     let a y =
            if y <= 2
-           then let q x =
+           then let b x =
                       if x <= 2
                       then do ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
                                   (printf " " :: IO ())
@@ -85,68 +85,68 @@ print_state g =
                                        (printf "O" :: IO ())
                                        (printf "X" :: IO ()))
                               printf "|" :: IO ()
-                              q (x + 1)
+                              b (x + 1)
                       else if y /= 2
                            then do printf "\n|-|-|-|\n|" :: IO ()
-                                   p (y + 1)
-                           else p (y + 1) in
-                      q 0
+                                   a (y + 1)
+                           else a (y + 1) in
+                      b 0
            else printf "\n" :: IO () in
-           p 0
+           a 0
 
 eval0 g =
-  let n y t u =
+  let c y d e =
         if y <= 2
         then do let col = - 1
                 let lin = - 1
-                let o x v w z =
+                let f x h k l =
                       if x <= 2
-                      then do ba <- ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
-                                        (let bb = w + 1
-                                                  in return bb)
-                                        (return w)
+                      then do n <- ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
+                                       (let o = k + 1
+                                                in return o)
+                                       (return k)
                               colv <- join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y
                               linv <- join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return y) <*> return x
-                              let bc = if v == - 1 && colv /= 0
-                                       then colv
-                                       else if colv /= v
-                                            then let be = - 2
-                                                          in be
-                                            else v
-                              if z == - 1 && linv /= 0
-                              then o (x + 1) bc ba linv
-                              else if linv /= z
-                                   then do let bg = - 2
-                                           o (x + 1) bc ba bg
-                                   else o (x + 1) bc ba z
-                      else if v >= 0
-                           then n (y + 1) w v
-                           else if z >= 0
-                                then n (y + 1) w z
-                                else n (y + 1) w u in
-                      o 0 col t lin
-        else let l x bj =
+                              let p = if h == - 1 && colv /= 0
+                                      then colv
+                                      else if colv /= h
+                                           then let q = - 2
+                                                        in q
+                                           else h
+                              if l == - 1 && linv /= 0
+                              then f (x + 1) p n linv
+                              else if linv /= l
+                                   then do let r = - 2
+                                           f (x + 1) p n r
+                                   else f (x + 1) p n l
+                      else if h >= 0
+                           then c (y + 1) k h
+                           else if l >= 0
+                                then c (y + 1) k l
+                                else c (y + 1) k e in
+                      f 0 col d lin
+        else let s x t =
                    if x <= 2
-                   then do bk <- ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 0)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 2)))
-                                     (return x)
-                                     (return bj)
+                   then do u <- ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 0)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 2)))
+                                    (return x)
+                                    (return t)
                            ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 2)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 0)))
-                               (l (x + 1) x)
-                               (l (x + 1) bk)
-                   else do writeIORef (_ended g) (bj /= 0 || t == 0)
-                           if bj == 1
+                               (s (x + 1) x)
+                               (s (x + 1) u)
+                   else do writeIORef (_ended g) (t /= 0 || d == 0)
+                           if t == 1
                            then writeIORef (_note g) 1000
-                           else if bj == 2
+                           else if t == 2
                                 then writeIORef (_note g) (- 1000)
                                 else writeIORef (_note g) 0 in
-                   l 1 u in
-        n 0 0 0
+                   s 1 e in
+        c 0 0 0
 
 apply_move_xy x y g =
-  do bn <- ifM (readIORef (_firstToPlay g))
-               (return 1)
-               (return 2)
-     join $ writeIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y <*> return bn
+  do v <- ifM (readIORef (_firstToPlay g))
+              (return 1)
+              (return 2)
+     join $ writeIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y <*> return v
      writeIORef (_firstToPlay g) =<< (fmap not (readIORef (_firstToPlay g)))
 
 apply_move m g =
@@ -173,49 +173,49 @@ minmax g =
      ifM (readIORef (_ended g))
          (readIORef (_note g))
          (do let maxNote = - 10000
-             bp <- ifM (fmap not (readIORef (_firstToPlay g)))
-                       (return 10000)
-                       (return maxNote)
-             let h x br =
+             w <- ifM (fmap not (readIORef (_firstToPlay g)))
+                      (return 10000)
+                      (return maxNote)
+             let z x ba =
                    if x <= 2
-                   then let k y bs =
-                              if y <= 2
-                              then ifM (can_move_xy x y g)
-                                       (do apply_move_xy x y g
-                                           currentNote <- minmax g
-                                           cancel_move_xy x y g
-                                           {- Minimum ou Maximum selon le coté ou l'on joue-}
-                                           ifM (((==) (currentNote > bs)) <$> (readIORef (_firstToPlay g)))
-                                               (k (y + 1) currentNote)
-                                               (k (y + 1) bs))
-                                       (k (y + 1) bs)
-                              else h (x + 1) bs in
-                              k 0 br
-                   else return br in
-                   h 0 bp)
+                   then let bb y bc =
+                               if y <= 2
+                               then ifM (can_move_xy x y g)
+                                        (do apply_move_xy x y g
+                                            currentNote <- minmax g
+                                            cancel_move_xy x y g
+                                            {- Minimum ou Maximum selon le coté ou l'on joue-}
+                                            ifM (((==) (currentNote > bc)) <$> (readIORef (_firstToPlay g)))
+                                                (bb (y + 1) currentNote)
+                                                (bb (y + 1) bc))
+                                        (bb (y + 1) bc)
+                               else z (x + 1) bc in
+                               bb 0 ba
+                   else return ba in
+                   z 0 w)
 
 play g =
   do minMove <- (Move <$> (newIORef 0) <*> (newIORef 0))
-     let e x bu =
-           if x <= 2
-           then let f y bv =
-                      if y <= 2
-                      then ifM (can_move_xy x y g)
-                               (do apply_move_xy x y g
-                                   currentNote <- minmax g
-                                   printf "%d, %d, %d\n" (x::Int) (y::Int) (currentNote::Int) :: IO()
-                                   cancel_move_xy x y g
-                                   if currentNote < bv
-                                   then do writeIORef (_x minMove) x
-                                           writeIORef (_y minMove) y
-                                           f (y + 1) currentNote
-                                   else f (y + 1) bv)
-                               (f (y + 1) bv)
-                      else e (x + 1) bv in
-                      f 0 bu
-           else do join $ printf "%d%d\n" <$> ((readIORef (_x minMove))::IO Int) <*> ((readIORef (_y minMove))::IO Int)
-                   return minMove in
-           e 0 10000
+     let bd x be =
+            if x <= 2
+            then let bf y bg =
+                        if y <= 2
+                        then ifM (can_move_xy x y g)
+                                 (do apply_move_xy x y g
+                                     currentNote <- minmax g
+                                     printf "%d, %d, %d\n" (x::Int) (y::Int) (currentNote::Int) :: IO()
+                                     cancel_move_xy x y g
+                                     if currentNote < bg
+                                     then do writeIORef (_x minMove) x
+                                             writeIORef (_y minMove) y
+                                             bf (y + 1) currentNote
+                                     else bf (y + 1) bg)
+                                 (bf (y + 1) bg)
+                        else bd (x + 1) bg in
+                        bf 0 be
+            else do join $ printf "%d%d\n" <$> ((readIORef (_x minMove))::IO Int) <*> ((readIORef (_y minMove))::IO Int)
+                    return minMove in
+            bd 0 10000
 
 init0 () =
   do cases <- array_init 3 (\ i ->
@@ -232,27 +232,27 @@ read_move () =
      (Move <$> (newIORef x) <*> (newIORef y))
 
 main =
-  let r i =
-        if i <= 1
-        then do state <- init0 ()
-                join $ apply_move <$> (Move <$> (newIORef 1) <*> (newIORef 1)) <*> return state
-                join $ apply_move <$> (Move <$> (newIORef 0) <*> (newIORef 0)) <*> return state
-                let s () =
-                      ifM (fmap not (readIORef (_ended state)))
-                          (do print_state state
-                              join $ apply_move <$> (play state) <*> return state
-                              eval0 state
-                              print_state state
-                              ifM (fmap not (readIORef (_ended state)))
-                                  (do join $ apply_move <$> (play state) <*> return state
-                                      eval0 state
-                                      s ())
-                                  (s ()))
-                          (do print_state state
-                              printf "%d\n" =<< ((readIORef (_note state))::IO Int)
-                              r (i + 1)) in
-                      s ()
-        else return () in
-        r 0
+  let bh i =
+         if i <= 1
+         then do state <- init0 ()
+                 join $ apply_move <$> (Move <$> (newIORef 1) <*> (newIORef 1)) <*> return state
+                 join $ apply_move <$> (Move <$> (newIORef 0) <*> (newIORef 0)) <*> return state
+                 let bi () =
+                        ifM (fmap not (readIORef (_ended state)))
+                            (do print_state state
+                                join $ apply_move <$> (play state) <*> return state
+                                eval0 state
+                                print_state state
+                                ifM (fmap not (readIORef (_ended state)))
+                                    (do join $ apply_move <$> (play state) <*> return state
+                                        eval0 state
+                                        bi ())
+                                    (bi ()))
+                            (do print_state state
+                                printf "%d\n" =<< ((readIORef (_note state))::IO Int)
+                                bh (i + 1)) in
+                        bi ()
+         else return () in
+         bh 0
 
 

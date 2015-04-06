@@ -26,16 +26,16 @@ let main =
   let nprimes = (eratostene era maximumprimes) in
   let primes = (Array.init nprimes (fun  o -> 0)) in
   let l = 0 in
-  let rec s k l =
+  let rec e k l =
     (if (k <= (maximumprimes - 1))
      then (if (era.(k) = k)
            then (
                   primes.(l) <- k;
                   let l = (l + 1) in
-                  (s (k + 1) l)
+                  (e (k + 1) l)
                   )
            
-           else (s (k + 1) l))
+           else (e (k + 1) l))
      else (
             (Printf.printf "%d == %d\n" l nprimes);
             let sum = (Array.init nprimes (fun  i_ -> primes.(i_))) in
@@ -44,10 +44,10 @@ let main =
             let stop = (maximumprimes - 1) in
             let len = 1 in
             let resp = 1 in
-            let rec q len maxl process resp stop =
+            let rec f len maxl process resp stop =
               (if process
                then let process = false in
-               let rec r i maxl process resp stop =
+               let rec g i maxl process resp stop =
                  (if (i <= stop)
                   then (if ((i + len) < nprimes)
                         then (
@@ -57,19 +57,19 @@ let main =
                                 (if (era.(sum.(i)) = sum.(i))
                                  then let maxl = len in
                                  let resp = sum.(i) in
-                                 (r (i + 1) maxl process resp stop)
-                                 else (r (i + 1) maxl process resp stop))
+                                 (g (i + 1) maxl process resp stop)
+                                 else (g (i + 1) maxl process resp stop))
                                 else let stop = ((min (stop) (i))) in
-                                (r (i + 1) maxl process resp stop))
+                                (g (i + 1) maxl process resp stop))
                                )
                         
-                        else (r (i + 1) maxl process resp stop))
+                        else (g (i + 1) maxl process resp stop))
                   else let len = (len + 1) in
-                  (q len maxl process resp stop)) in
-                 (r 0 maxl process resp stop)
+                  (f len maxl process resp stop)) in
+                 (g 0 maxl process resp stop)
                else (Printf.printf "%d\n%d\n" resp maxl)) in
-              (q len maxl process resp stop)
+              (f len maxl process resp stop)
             )
      ) in
-    (s 2 l)
+    (e 2 l)
 

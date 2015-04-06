@@ -54,21 +54,21 @@
 (define main
   (let ([t0 (mktoto 4)])
   (let ([t2 (mktoto 5)])
-  ((lambda (h) 
+  ((lambda (a) 
      (block
-       (set-toto-bar! t0 h)
+       (set-toto-bar! t0 a)
        (mread-blank)
-       ((lambda (g) 
+       ((lambda (b) 
           (block
-            (set-toto-blah! t0 g)
+            (set-toto-blah! t0 b)
             (mread-blank)
-            ((lambda (f) 
+            ((lambda (c) 
                (block
-                 (set-toto-bar! t2 f)
+                 (set-toto-bar! t2 c)
                  (mread-blank)
-                 ((lambda (e) 
+                 ((lambda (d) 
                     (block
-                      (set-toto-blah! t2 e)
+                      (set-toto-blah! t2 d)
                       (printf "~a~a" (result t0 t2) (toto-blah t0))
                       )) (mread-int))
                )) (mread-int))

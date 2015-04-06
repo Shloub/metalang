@@ -32,26 +32,26 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 divisible n t size =
-  let b i =
+  let a i =
         if i <= size - 1
         then ifM (((==) 0) <$> ((rem n) <$> (readIOA t i)))
                  (return True)
-                 (b (i + 1))
+                 (a (i + 1))
         else return False in
-        b 0
+        a 0
 
 find n t used nth =
-  let a e f =
-        if f /= nth
-        then ifM (divisible e t f)
-                 (do let g = e + 1
-                     a g f)
-                 (do writeIOA t f e
-                     let h = e + 1
-                     let j = f + 1
-                     a h j)
-        else readIOA t (f - 1) in
-        a n used
+  let b c d =
+        if d /= nth
+        then ifM (divisible c t d)
+                 (do let e = c + 1
+                     b e d)
+                 (do writeIOA t d c
+                     let f = c + 1
+                     let g = d + 1
+                     b f g)
+        else readIOA t (d - 1) in
+        b n used
 
 main =
   do t <- array_init 10001 (\ i ->

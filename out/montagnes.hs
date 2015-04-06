@@ -59,31 +59,31 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 main :: IO ()
 montagnes0 tab len =
   do let i = len - 2
-     let a g h k =
-           if g >= 0
-           then do x <- readIOA tab g
-                   let b l =
-                         ifM ((return (l >= 0)) <&&> (((>) x) <$> (readIOA tab (len - l))))
-                             (do let m = l - 1
-                                 b m)
-                             (do let n = l + 1
-                                 writeIOA tab (len - n) x
-                                 let o = if n > k
-                                         then n
-                                         else k
-                                 let q = g - 1
-                                 a q n o) in
-                         b h
-           else return k in
+     let a b c d =
+           if b >= 0
+           then do x <- readIOA tab b
+                   let e f =
+                         ifM ((return (f >= 0)) <&&> (((>) x) <$> (readIOA tab (len - f))))
+                             (do let g = f - 1
+                                 e g)
+                             (do let h = f + 1
+                                 writeIOA tab (len - h) x
+                                 let k = if h > d
+                                         then h
+                                         else d
+                                 let l = b - 1
+                                 a l h k) in
+                         e c
+           else return d in
            a i 1 1
 
 main =
-  do f <- read_int
+  do m <- read_int
      skip_whitespaces
-     tab <- array_init f (\ i ->
-                            do e <- read_int
+     tab <- array_init m (\ i ->
+                            do n <- read_int
                                skip_whitespaces
-                               return e)
-     printf "%d" =<< (montagnes0 tab f :: IO Int)
+                               return n)
+     printf "%d" =<< (montagnes0 tab m :: IO Int)
 
 

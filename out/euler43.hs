@@ -63,95 +63,95 @@ d6 = 5 ou d6 = 0
 -}
   do allowed <- array_init 10 (\ i ->
                                  return True)
-     let c i6 =
+     let a i6 =
            if i6 <= 1
            then do let d6 = i6 * 5
                    ifM (readIOA allowed d6)
                        (do writeIOA allowed d6 False
-                           let d d7 =
+                           let b d7 =
                                  if d7 <= 9
                                  then ifM (readIOA allowed d7)
                                           (do writeIOA allowed d7 False
-                                              let e d8 =
+                                              let c d8 =
                                                     if d8 <= 9
                                                     then ifM (readIOA allowed d8)
                                                              (do writeIOA allowed d8 False
-                                                                 let f d9 =
+                                                                 let d d9 =
                                                                        if d9 <= 9
                                                                        then ifM (readIOA allowed d9)
                                                                                 (do writeIOA allowed d9 False
-                                                                                    let g d10 =
+                                                                                    let e d10 =
                                                                                           if d10 <= 9
                                                                                           then ifM (((&&) (((d8 * 100 + d9 * 10 + d10) `rem` 17) == 0)) <$> (((&&) (((d7 * 100 + d8 * 10 + d9) `rem` 13) == 0)) <$> (((&&) (((d6 * 100 + d7 * 10 + d8) `rem` 11) == 0)) <$> (readIOA allowed d10))))
                                                                                                    (do writeIOA allowed d10 False
-                                                                                                       let h d5 =
+                                                                                                       let f d5 =
                                                                                                              if d5 <= 9
                                                                                                              then ifM (readIOA allowed d5)
                                                                                                                       (do writeIOA allowed d5 False
                                                                                                                           if ((d5 * 100 + d6 * 10 + d7) `rem` 7) == 0
-                                                                                                                          then let j i4 =
+                                                                                                                          then let g i4 =
                                                                                                                                      if i4 <= 4
                                                                                                                                      then do let d4 = i4 * 2
                                                                                                                                              ifM (readIOA allowed d4)
                                                                                                                                                  (do writeIOA allowed d4 False
-                                                                                                                                                     let k d3 =
+                                                                                                                                                     let h d3 =
                                                                                                                                                            if d3 <= 9
                                                                                                                                                            then ifM (readIOA allowed d3)
                                                                                                                                                                     (do writeIOA allowed d3 False
                                                                                                                                                                         if ((d3 + d4 + d5) `rem` 3) == 0
-                                                                                                                                                                        then let l d2 =
+                                                                                                                                                                        then let j d2 =
                                                                                                                                                                                    if d2 <= 9
                                                                                                                                                                                    then ifM (readIOA allowed d2)
                                                                                                                                                                                             (do writeIOA allowed d2 False
-                                                                                                                                                                                                let m d1 =
+                                                                                                                                                                                                let k d1 =
                                                                                                                                                                                                       if d1 <= 9
                                                                                                                                                                                                       then ifM (readIOA allowed d1)
                                                                                                                                                                                                                (do writeIOA allowed d1 False
                                                                                                                                                                                                                    printf "%d%d%d%d%d%d%d%d%d%d + " (d1::Int) (d2::Int) (d3::Int) (d4::Int) (d5::Int) (d6::Int) (d7::Int) (d8::Int) (d9::Int) (d10::Int) :: IO()
                                                                                                                                                                                                                    writeIOA allowed d1 True
-                                                                                                                                                                                                                   m (d1 + 1))
-                                                                                                                                                                                                               (m (d1 + 1))
+                                                                                                                                                                                                                   k (d1 + 1))
+                                                                                                                                                                                                               (k (d1 + 1))
                                                                                                                                                                                                       else do writeIOA allowed d2 True
-                                                                                                                                                                                                              l (d2 + 1) in
-                                                                                                                                                                                                      m 0)
-                                                                                                                                                                                            (l (d2 + 1))
+                                                                                                                                                                                                              j (d2 + 1) in
+                                                                                                                                                                                                      k 0)
+                                                                                                                                                                                            (j (d2 + 1))
                                                                                                                                                                                    else return () in
-                                                                                                                                                                                   l 0
+                                                                                                                                                                                   j 0
                                                                                                                                                                         else return ()
                                                                                                                                                                         writeIOA allowed d3 True
-                                                                                                                                                                        k (d3 + 1))
-                                                                                                                                                                    (k (d3 + 1))
+                                                                                                                                                                        h (d3 + 1))
+                                                                                                                                                                    (h (d3 + 1))
                                                                                                                                                            else do writeIOA allowed d4 True
-                                                                                                                                                                   j (i4 + 1) in
-                                                                                                                                                           k 0)
-                                                                                                                                                 (j (i4 + 1))
+                                                                                                                                                                   g (i4 + 1) in
+                                                                                                                                                           h 0)
+                                                                                                                                                 (g (i4 + 1))
                                                                                                                                      else return () in
-                                                                                                                                     j 0
+                                                                                                                                     g 0
                                                                                                                           else return ()
                                                                                                                           writeIOA allowed d5 True
-                                                                                                                          h (d5 + 1))
-                                                                                                                      (h (d5 + 1))
+                                                                                                                          f (d5 + 1))
+                                                                                                                      (f (d5 + 1))
                                                                                                              else do writeIOA allowed d10 True
-                                                                                                                     g (d10 + 1) in
-                                                                                                             h 0)
-                                                                                                   (g (d10 + 1))
+                                                                                                                     e (d10 + 1) in
+                                                                                                             f 0)
+                                                                                                   (e (d10 + 1))
                                                                                           else do writeIOA allowed d9 True
-                                                                                                  f (d9 + 1) in
-                                                                                          g 1)
-                                                                                (f (d9 + 1))
+                                                                                                  d (d9 + 1) in
+                                                                                          e 1)
+                                                                                (d (d9 + 1))
                                                                        else do writeIOA allowed d8 True
-                                                                               e (d8 + 1) in
-                                                                       f 0)
-                                                             (e (d8 + 1))
+                                                                               c (d8 + 1) in
+                                                                       d 0)
+                                                             (c (d8 + 1))
                                                     else do writeIOA allowed d7 True
-                                                            d (d7 + 1) in
-                                                    e 0)
-                                          (d (d7 + 1))
+                                                            b (d7 + 1) in
+                                                    c 0)
+                                          (b (d7 + 1))
                                  else do writeIOA allowed d6 True
-                                         c (i6 + 1) in
-                                 d 0)
-                       (c (i6 + 1))
+                                         a (i6 + 1) in
+                                 b 0)
+                       (a (i6 + 1))
            else printf "%d\n" (0::Int) :: IO() in
-           c 0
+           a 0
 
 

@@ -26,12 +26,12 @@ let pathfind tab len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  f -> let len = f in
+  (fun  a -> let len = a in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  e -> let tmp = e in
+    (fun  b -> let tmp = b in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp

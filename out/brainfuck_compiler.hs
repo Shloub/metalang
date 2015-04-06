@@ -82,26 +82,26 @@ main =
      writeIOA mem 500 =<< (((+) 1) <$> (readIOA mem 500))
      writeIOA mem 500 =<< (((+) 1) <$> (readIOA mem 500))
      writeIOA mem 500 =<< (((+) 1) <$> (readIOA mem 500))
-     let d = 500 + 1
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-     let c e =
-           ifM (((/=) 0) <$> (readIOA mem e))
-               (do writeIOA mem e =<< ((-) <$> (readIOA mem e) <*> (return 1))
-                   let f = e - 1
-                   writeIOA mem f =<< (((+) 1) <$> (readIOA mem f))
-                   printf "%c" =<< ((fmap chr (readIOA mem f)) :: IO Char)
-                   let g = f + 1
-                   c g)
+     let a = 500 + 1
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     writeIOA mem a =<< (((+) 1) <$> (readIOA mem a))
+     let b c =
+           ifM (((/=) 0) <$> (readIOA mem c))
+               (do writeIOA mem c =<< ((-) <$> (readIOA mem c) <*> (return 1))
+                   let d = c - 1
+                   writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+                   printf "%c" =<< ((fmap chr (readIOA mem d)) :: IO Char)
+                   let e = d + 1
+                   b e)
                (return ()) in
-           c d
+           b a
 
 

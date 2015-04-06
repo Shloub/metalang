@@ -41,13 +41,13 @@
 )
 (define main
   (let ([len 0])
-  ((lambda (f) 
-     (let ([len f])
+  ((lambda (b) 
+     (let ([len b])
      (block
        (mread-blank)
        (let ([tofind (integer->char 0)])
-       ((lambda (e) 
-          (let ([tofind e])
+       ((lambda (c) 
+          (let ([tofind c])
           (block
             (mread-blank)
             (let ([tab (build-vector len (lambda (i) 

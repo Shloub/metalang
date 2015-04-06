@@ -38,29 +38,29 @@ main :: IO ()
 
 
 main =
-  (array_init_withenv 5 (\ j bb ->
+  (array_init_withenv 5 (\ j x ->
                            do c <- getChar
                               let d = (ord c) - (ord '0')
-                              let bc = bb * d
-                              return (bc, d)) 1) >>= (\ (m, last) ->
-                                                       let l k n o p q =
-                                                             if k <= 995
-                                                             then do e <- getChar
-                                                                     let f = (ord e) - (ord '0')
-                                                                     (if f == 0
-                                                                      then return (1, 4)
-                                                                      else do let x = n * f
-                                                                              y <- if q < 0
-                                                                                   then do z <- ((quot x) <$> (readIOA last o))
-                                                                                           return z
-                                                                                   else return x
-                                                                              let ba = q - 1
-                                                                              return (y, ba)) >>= (\ (r, s) ->
-                                                                                                    do writeIOA last o f
-                                                                                                       let t = (o + 1) `rem` 5
-                                                                                                       let u = (max p r)
-                                                                                                       l (k + 1) r t u s)
-                                                             else printf "%d\n" (p::Int) :: IO() in
-                                                             l 1 m 0 m 0)
+                              let y = x * d
+                              return (y, d)) 1) >>= (\ (g, last) ->
+                                                      let h k l m n o =
+                                                            if k <= 995
+                                                            then do e <- getChar
+                                                                    let f = (ord e) - (ord '0')
+                                                                    (if f == 0
+                                                                     then return (1, 4)
+                                                                     else do let t = l * f
+                                                                             u <- if o < 0
+                                                                                  then do v <- ((quot t) <$> (readIOA last m))
+                                                                                          return v
+                                                                                  else return t
+                                                                             let w = o - 1
+                                                                             return (u, w)) >>= (\ (p, q) ->
+                                                                                                  do writeIOA last m f
+                                                                                                     let r = (m + 1) `rem` 5
+                                                                                                     let s = (max n p)
+                                                                                                     h (k + 1) p r s q)
+                                                            else printf "%d\n" (n::Int) :: IO() in
+                                                            h 1 g 0 g 0)
 
 

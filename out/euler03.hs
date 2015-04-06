@@ -15,22 +15,22 @@ main :: IO ()
 
 main =
   do let sqrtia = ((floor . sqrt . fromIntegral) 408464633)
-     let d f g h =
-           if f /= 1
-           then let e i j k l m =
+     let d e f g =
+           if e /= 1
+           then let h i j k l m =
                       if j <= m
                       then (\ (n, o, p, q, r) ->
                              do let s = o + 1
-                                e n s p q r) (if (i `rem` j) == 0
+                                h n s p q r) (if (i `rem` j) == 0
                                               then let t = i `quot` j
-                                                           in let w = ((floor . sqrt . fromIntegral) t)
-                                                                      in (t, t, j, True, w)
+                                                           in let u = ((floor . sqrt . fromIntegral) t)
+                                                                      in (t, t, j, True, u)
                                               else (i, j, k, l, m))
                       else if not l
                            then do printf "%d\n" (i::Int) :: IO()
                                    d 1 k m
                            else d i k m in
-                      e f g g False h
+                      h e f f False g
            else return () in
            d 408464633 2 sqrtia
 
