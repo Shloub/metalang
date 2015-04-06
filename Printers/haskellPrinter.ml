@@ -153,7 +153,7 @@ class haskellPrinter = object(self)
 
   method lang () = "hs"
 
-  val mutable macros = StringMap.empty
+  val mutable macros = Ast.BindingMap.empty
   val mutable side_effects = IntMap.empty
   val mutable typerEnv : Typer.env = Typer.empty
   method getTyperEnv () = typerEnv
@@ -281,8 +281,6 @@ class haskellPrinter = object(self)
         if self#isSideEffect expr then self#expr' ~p f expr
         else parens ~p (fun_priority - 1) f "return %a" self#expr_ expr
 
-  method binding f s = Format.fprintf f "%s" s
-
   method format_type f t = Format.fprintf f "%S" (Printer.format_type t)
 
   method lief ~p f = function
@@ -297,6 +295,12 @@ class haskellPrinter = object(self)
     | E.Enum s -> Format.fprintf f "%s" s
     | E.Binding s -> self#binding f s
 
+  method typename f s = Format.fprintf f "%s" s
+
+  method binding f s = match s with
+  | Ast.UserName s -> Format.fprintf f "%s" s
+  | Ast.InternalName i -> Format.fprintf f "internal_%d" i
+
   method expand_macro_call f name t params code li =
     let lang = self#lang () in
     let canBePure = List.for_all self#isPure li in
@@ -310,7 +314,7 @@ class haskellPrinter = object(self)
         ) None
         code
     in match code_to_expand with
-    | None -> failwith ("no definition for macro "^name^" in language "^lang)
+    | None -> assert false (* TODO *)
     | Some (pr, s) ->
         let listr = List.map
             (fun e ->
@@ -335,7 +339,7 @@ class haskellPrinter = object(self)
     let default () = self#apply_nomacros ~p f e li in
     match E.unfix e with
     | E.Lief ( E.Binding binding ) ->
-      begin match StringMap.find_opt binding macros with
+      begin match Ast.BindingMap.find_opt binding macros with
       | None -> default ()
       | Some ((t, params, code)) -> self#expand_macro_call f binding t params code li
       end
@@ -596,7 +600,7 @@ class haskellPrinter = object(self)
   | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
   | AstFun.DeclareType (name, ty) -> self#toplvl_declarety f name ty
   | AstFun.Macro (name, t, params, code) ->
-      macros <- StringMap.add
+      macros <- Ast.BindingMap.add
         name (t, params, code)
         macros;
       ()

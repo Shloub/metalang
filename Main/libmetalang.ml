@@ -214,6 +214,7 @@ let fun_passes
   let p = MergePrint.apply p in
   let p = if rename then RenameFun.apply p else p in
   let p = if fun_inline then FunInline.apply p else p in
+  let p = RemoveInternalFun.apply p in
   let p = if detect_effects then DetectSideEffect.apply p else p in
   (rec_, ty, p)
 

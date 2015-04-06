@@ -34,12 +34,14 @@ open AstFun
    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
+module BindingMap = Ast.BindingMap
+
 let mapname rename name =
-	if StringMap.mem name rename then
-		let name2 = Fresh.fresh_user () in
-		StringMap.add name name2 rename, name2
+	if BindingMap.mem name rename then
+		let name2 = Fresh.fresh_internal () in
+		BindingMap.add name name2 rename, name2
 	else
-    StringMap.add name name rename, name
+    BindingMap.add name name rename, name
 
 let mapfun f rename transform annot params e =
     let rename, params = List.fold_left_map mapname rename params
@@ -53,11 +55,11 @@ let rec transform rename e =
 	| Expr.FunTuple (params, e) -> mapfun (fun params e -> Expr.FunTuple (params, e)) rename transform annot params e
   | Expr.LetIn (name, v, e) ->
     let rename2, name=
-      if StringMap.mem name rename then
-        let name2 = Fresh.fresh_user () in
-        StringMap.add name name2 rename, name2
+      if BindingMap.mem name rename then
+        let name2 = Fresh.fresh_internal () in
+        BindingMap.add name name2 rename, name2
       else
-        StringMap.add name name rename, name in
+        BindingMap.add name name rename, name in
 		let v = transform rename v in
     let e = transform rename2 e
     in Expr.Fixed.fixa annot (Expr.LetIn (name, v, e))
@@ -69,13 +71,13 @@ let rec transform rename e =
     in Expr.Fixed.fixa annot (Expr.LetRecIn (name, params, v, e))
 
   | Expr.Lief (Expr.Binding name) ->
-    begin match StringMap.find_opt name rename with
+    begin match BindingMap.find_opt name rename with
     | None -> e
     | Some name2 -> Expr.Fixed.fixa annot (Expr.Lief (Expr.Binding name2))
     end
 	| _ -> Expr.Writer.Surface.map (transform rename) e
 
-let tr e = transform StringMap.empty e
+let tr e = transform BindingMap.empty e
 
 let apply p =
   let declarations = List.map (function

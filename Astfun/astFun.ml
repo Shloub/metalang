@@ -32,7 +32,6 @@
 *)
 
 open Stdlib
-open Ast
 
 module Expr = struct
 
@@ -44,7 +43,7 @@ module Expr = struct
   | Integer of int
   | Bool of bool
   | Enum of string
-  | Binding of string
+  | Binding of Ast.varname
 
   type formatPart =
     | IntFormat
@@ -54,11 +53,11 @@ module Expr = struct
 
   type 'a tofix =
   | Skip
-  | LetRecIn of string * string list * 'a * 'a
+  | LetRecIn of Ast.varname * Ast.varname list * 'a * 'a
   | UnOp of 'a * Ast.Expr.unop
   | BinOp of 'a * Ast.Expr.binop * 'a
-  | Fun of string list * 'a
-  | FunTuple of string list * 'a
+  | Fun of Ast.varname list * 'a
+  | FunTuple of Ast.varname list * 'a
   | Apply of 'a * 'a list
   | Tuple of 'a list
   | Lief of lief
@@ -75,7 +74,7 @@ module Expr = struct
   | ArrayInit of 'a * 'a
   | ArrayAccess of 'a * 'a list
   | ArrayAffect of 'a * 'a list * 'a
-  | LetIn of string * 'a * 'a
+  | LetIn of Ast.varname * 'a * 'a
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = 'a tofix
@@ -105,7 +104,7 @@ module Expr = struct
       | MultiPrint (format, li) -> MultiPrint (format, List.map (fun (a, b) -> (f a, b)) li)
       | ArrayAffect (tab, indexes, v) -> ArrayAffect (f tab, List.map f indexes, f v)
       | LetIn (binding, e, b) -> LetIn (binding, f e, f b)
-    let next () = next ()
+    let next () = Ast.next ()
   end)
 
   type t = unit Fixed.t
@@ -239,9 +238,9 @@ end
 type expr = Expr.t
 
 type declaration =
-| Declaration of string * expr
+| Declaration of Ast.varname * expr
 | DeclareType of string * Ast.Type.t
-| Macro of string * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
+| Macro of Ast.varname * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
 
 type opts = { hasSkip : bool; reads : Ast.TypeSet.t }
 type prog = { declarations : declaration list; options : opts ; side_effects : bool IntMap.t }

@@ -49,7 +49,7 @@ class camlFunPrinter = object(self)
 
   method lang () = "ml"
 
-  val mutable macros = StringMap.empty
+  val mutable macros = Ast.BindingMap.empty
 
   val mutable recursives_definitions = StringSet.empty
   method setRecursive b = recursives_definitions <- b
@@ -106,7 +106,11 @@ class camlFunPrinter = object(self)
     let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
     Format.fprintf f "(fun %a -> %a)" pparams () self#expr e
 
-  method binding f s = Format.fprintf f "%s" s
+  method typename f s = Format.fprintf f "%s" s
+
+  method binding f s = match s with
+  | Ast.UserName s -> Format.fprintf f "%s" s
+  | Ast.InternalName i -> Format.fprintf f "internal_%d" i
 
   method print f e ty = match E.unfix e with
   | E.Lief (E.String s) -> Format.fprintf f "(Printf.printf %S)" s
@@ -153,7 +157,7 @@ class camlFunPrinter = object(self)
       ) None
       code
     in match code_to_expand with
-    | None -> failwith ("no definition for macro "^name^" in language "^lang)
+    | None -> assert false (* TODO *)
     | Some s ->
       let listr = List.map
         (fun e ->
@@ -180,7 +184,7 @@ class camlFunPrinter = object(self)
     let default () = self#apply_nomacros f e li in
     match E.unfix e with
     | E.Lief ( E.Binding binding ) ->
-      begin match StringMap.find_opt binding macros with
+      begin match Ast.BindingMap.find_opt binding macros with
       | None -> default ()
       | Some ((t, params, code)) -> self#expand_macro_call f binding t params code li
       end
@@ -320,13 +324,13 @@ class camlFunPrinter = object(self)
       self#binding name pparams () self#expr e
 
   method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>type %a = %a@]@\n"
-    self#binding name self#ptype ty
+    self#typename name self#ptype ty
 
   method decl f d = match d with
   | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
   | AstFun.DeclareType (name, ty) -> self#toplvl_declarety f name ty
   | AstFun.Macro (name, t, params, code) ->
-      macros <- StringMap.add
+      macros <- Ast.BindingMap.add
         name (t, params, code)
         macros;
       ()

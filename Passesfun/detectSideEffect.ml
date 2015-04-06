@@ -49,7 +49,7 @@ let side_effects acc e =
     | Expr.FunTuple _ -> false
     | Expr.Apply (a, li) ->
         begin match Expr.unfix a with
-        | Expr.Lief (Expr.Binding a) ->
+        | Expr.Lief (Expr.Binding (Ast.UserName a)) ->
             if Tags.is_taged ("macro_" ^ a ^ "_pure")
             then
               List.exists (has_side_effects acc) li

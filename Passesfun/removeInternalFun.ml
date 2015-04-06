@@ -1,5 +1,5 @@
 (*
- * Copyright (c) 2012, Prologin
+ * Copyright (c) 2015, Prologin
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,8 +27,7 @@ open Stdlib
 open AstFun
 
 (**
-   Passes de transformations sur l'ast fonctionnel. on inline les expressions de type Lief.
-   à l'avenir, on pourrait le faire sur des expressions plus complexes comme les opérations élémentaires.
+   remplace les noms de variables internes par des noms affichables
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)
@@ -36,38 +35,42 @@ open AstFun
 
 module BindingMap = Ast.BindingMap
 
-
 let rec tr acc e =
+  let process_name acc n = match n with
+  | Ast.UserName _ -> acc, n
+  | Ast.InternalName _ ->
+      let newname = Ast.UserName (Fresh.fresh_user ())  in
+      let acc = BindingMap.add n newname acc in
+      acc, newname in
+  let process_names names acc = 
+    List.fold_left_map process_name acc names in
   let fix e0 = Expr.Fixed.fixa (Expr.Fixed.annot e) e0 in
   match Expr.unfix e with
-  | Expr.Lief (Expr.Binding b) -> begin match BindingMap.find_opt b acc with
-					| None -> e
-					| Some n -> fix n
-				  end
-  | Expr.LetIn (name, ((Expr.Fixed.F (_, Expr.Lief _)) as l), in_) ->
-     let l = tr acc l in
-     let acc = BindingMap.add name (Expr.unfix l) acc in
-     tr acc in_
-  | Expr.LetIn (name, expr, in_) ->
-     let expr = tr acc expr in
-     let acc = BindingMap.remove name acc in
-     let in_ = tr acc in_ in
-     fix (Expr.LetIn (name, expr, in_))
+  | Expr.Lief (Expr.Binding ( (Ast.InternalName _) as n)) ->
+      let newname = BindingMap.find n acc in
+      Expr.Lief (Expr.Binding newname) |> fix
+  | Expr.LetIn ( (Ast.InternalName _) as n, v, in_) ->
+      let newname = Ast.UserName (Fresh.fresh_user ())  in
+      let v = Expr.Writer.Surface.map (tr acc) v in
+      let acc = BindingMap.add n newname acc in
+      let in_ = tr acc in_ in
+      Expr.LetIn (newname, v, in_) |> fix
   | Expr.LetRecIn (name, names, e1, e2) ->
-     let acc = BindingMap.remove name acc in
-     let e2 = tr acc e2 in
-     let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
-     let e1 = tr acc e1 in
-     fix (Expr.LetRecIn (name, names, e1, e2))
+      let acc, newname = process_name acc name in
+      let e2 = tr acc e2 in
+      let acc, names = process_names names acc in
+      let e1 = tr acc e1 in
+      Expr.LetRecIn (newname, names, e1, e2) |> fix
   | Expr.Fun (names, in_) ->
-     let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
-     let in_ = tr acc in_
-     in fix (Expr.Fun (names, in_))
+      let acc, names = process_names names acc in
+      let in_ = tr acc in_ in
+      Expr.Fun (names, in_) |> fix
   | Expr.FunTuple (names, in_) ->
-     let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
-     let in_ = tr acc in_ in
-     fix ( Expr.FunTuple (names, in_))
+      let acc, names = process_names names acc in
+      let in_ = tr acc in_ in
+      Expr.FunTuple (names, in_) |> fix
   | _ -> Expr.Writer.Surface.map (tr acc) e
+
 
 let apply p =
   let declarations = List.map (function
