@@ -39,6 +39,8 @@ class groovyPrinter = object(self)
 
   method limit_nprint () = 254
 
+  method string f s = self#string_nodolar f s
+
   method lang () = "groovy"
 
   method main f main = self#instructions f main

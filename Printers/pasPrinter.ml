@@ -126,10 +126,9 @@ class pasPrinter = object(self)
   method string f i =
     Format.fprintf f "'";
     String.fold_left (fun () c ->
-      let ns = match c with
-        | '\t' | '\r'
-        | '\n' -> "'#"^(string_of_int (int_of_char c))^"'"
-        | _ -> String.of_char c
+      let ns = 
+        if self#is_printable c then String.of_char c
+        else "'#"^(string_of_int (int_of_char c))^"'"
       in Format.fprintf f "%s" ns
     ) () i;
     Format.fprintf f "'"

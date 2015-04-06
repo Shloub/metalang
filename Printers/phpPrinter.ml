@@ -39,6 +39,7 @@ open CPrinter
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+  method string f s = self#string_nodolar f s
 
   method char f c =
     let cs = Printf.sprintf "%C" c in

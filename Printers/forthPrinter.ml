@@ -39,25 +39,10 @@ class forthPrinter = object(self)
 
   method lang () = "fs"
 
-  method string f s = (* rien que les chaines, c'est déjà la fete... *)
-    if s = "" then Format.fprintf f "S\" \"" else
-    let nappend = ref (-1) in
-    let instring = String.fold_left (fun instring -> function
-      | '\n' ->
-          if instring then Format.fprintf f "\" ";
-          nappend := !nappend + 1;
-          Format.fprintf f "NEWLINE";
-          false
-      | c ->
-          if instring then Format.fprintf f "%c" c
-          else begin
-            nappend := !nappend + 1;
-            Format.fprintf f " s\" %c" c
-          end;
-          true ) false s
-    in if instring then
-      Format.fprintf f "\"";
-    print_ntimes !nappend f " S+"
+  method string f s =
+    let s = " " ^ s in
+    let s = Printf.sprintf "%S" s in
+     Format.fprintf f (if String.exists ((=) '\\') s then "S\\%s" else "S%s") s
 
   method field f i = Format.fprintf f "->%s" i
 

@@ -48,11 +48,25 @@ class commonLispPrinter = object(self)
     then Format.fprintf f "#\\%c" x
     else Format.fprintf f "(code-char %d)" (int_of_char c)
 
-  method string f s =
-		let s = List.fold_left (fun s (from, to_) -> String.replace from to_ s) s
-			["\\\"", "\\\\\""] in
-    Format.fprintf f "\"%s\"" s
+  method is_char_printable_instring c =
+    let i = int_of_char c in
+    i > 30 && i < 127 && c != '"' && c != '\\'
 
+  method string f s =
+    if String.for_all self#is_char_printable_instring s then
+      Format.fprintf f "%S" s
+    else
+      Format.fprintf f "(format nil \"%a\"%a)"
+        (fun f s ->
+          String.iter (fun c -> if self#is_char_printable_instring c
+          then Format.fprintf f "%c" c
+          else Format.fprintf f "~C") s
+        ) s
+        (fun f s ->
+          String.iter (fun c -> if not(self#is_char_printable_instring c)
+          then Format.fprintf f " %a" self#char c) s
+        ) s
+        
   method affectop f m = match Mutable.unfix m with
   | Mutable.Array _ | Mutable.Dot _ -> Format.fprintf f "setf"
   | Mutable.Var _ ->  Format.fprintf f "setq"

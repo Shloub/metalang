@@ -103,16 +103,20 @@ class printer = object(self)
   method typename f i = Format.fprintf f "%s" i
   method string f i = Format.fprintf f "%S" i
 
+  method string_nodolar f s =
+    let s = Printf.sprintf "%S" s in
+    Format.fprintf f "%s" (String.replace "$" "\\$" s)
+
   method is_printable_i i =
     let lowerchar = i >= (int_of_char 'a') && i <= (int_of_char 'z') in
     let upperchar = i >= (int_of_char 'A') && i <= (int_of_char 'Z') in
     let digit = i >= (int_of_char '0') && i <= (int_of_char '9') in
     let specials = List.map int_of_char [ ' '; '|';
-					  '"'; '#'; '&'; '(';
+					  '#'; '&'; '(';
 					  ')'; '*'; '+'; ','; '-';
 					  '.'; '/'; ':'; ';'; '<';
 					  '='; '>'; '_'; '|'; '!';
-					  '$'; '%'; '?'; '@'; '[';
+					  '%'; '?'; '@'; '[';
 					  ']'; '^'; '`'; '{';
 					  '}'; '~']
 	in let specials = List.mem i specials

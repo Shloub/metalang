@@ -46,6 +46,8 @@ class perlPrinter = object(self)
 
   method binding f i = Format.fprintf f "$%a" baseprinter#binding i
 
+  method string f s = self#string_nodolar f s
+
   method char f c =
     match c with
     | '$' -> Format.fprintf f "\"\\$\""
