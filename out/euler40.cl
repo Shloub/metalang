@@ -45,16 +45,20 @@
     (format t "~D => ~D~%" i2 (aref t0 i2)))
   (loop for j from 0 to 80 do
     (princ (e t0 j)))
-  (princ (format nil "~C" #\NewLine))
+  (princ "
+")
   (loop for k from 1 to 50 do
     (princ k))
-  (princ (format nil "~C" #\NewLine))
+  (princ "
+")
   (loop for j2 from 169 to 220 do
     (princ (e t0 j2)))
-  (princ (format nil "~C" #\NewLine))
+  (princ "
+")
   (loop for k2 from 90 to 110 do
     (princ k2))
-  (princ (format nil "~C" #\NewLine))
+  (princ "
+")
   (let ((out0 1))
     (loop for l from 0 to 6 do
       (progn

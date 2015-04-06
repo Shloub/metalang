@@ -417,7 +417,8 @@ Modulo
           ))))
     (princ "euler 48 = ")
     (print_bigint sum)
-    (princ (format nil "~C" #\NewLine))
+    (princ "
+")
   )))
 
 (defun euler16 ()
@@ -527,37 +528,43 @@ Modulo
         (print_bigint a)
         (princ ">>1=")
         (print_bigint (bigint_shift a (- 0 1)))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
         (print_bigint a)
         (princ "*")
         (print_bigint b)
         (princ "=")
         (print_bigint (mul_bigint a b))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
         (print_bigint a)
         (princ "*")
         (print_bigint b)
         (princ "=")
         (print_bigint (mul_bigint_cp a b))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
         (print_bigint a)
         (princ "+")
         (print_bigint b)
         (princ "=")
         (print_bigint (add_bigint a b))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
         (print_bigint b)
         (princ "-")
         (print_bigint a)
         (princ "=")
         (print_bigint (sub_bigint b a))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
         (print_bigint a)
         (princ "-")
         (print_bigint b)
         (princ "=")
         (print_bigint (sub_bigint a b))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
         (print_bigint a)
         (princ ">")
         (print_bigint b)
@@ -567,7 +574,8 @@ Modulo
             r
             (princ "True")
             (princ "False"))
-          (princ (format nil "~C" #\NewLine))
+          (princ "
+")
         )))))
 
 

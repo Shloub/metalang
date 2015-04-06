@@ -32,14 +32,16 @@
         c
         (princ "True")
         (princ "False"))
-      (princ (format nil "~C" #\NewLine))
+      (princ "
+")
       (g (id a) 0)
       (let ((d (aref a 0)))
         (if
           d
           (princ "True")
           (princ "False"))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
       )))))
 
 

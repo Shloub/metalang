@@ -106,7 +106,8 @@ on le retrouve ici : http://projecteuler.net/problem=18
       (progn
         (loop for l from 0 to k do
           (format t "~D " (aref (aref tab k) l)))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
       ))
     )))
 

@@ -45,7 +45,8 @@
       (progn
         (loop for k from 0 to (- n 1) do
           (format t "~D " (aref (aref tab m) k)))
-        (princ (format nil "~C" #\NewLine))
+        (princ "
+")
       ))
     (format t "~D~%" (aref (aref tab 0) 0))
     )))

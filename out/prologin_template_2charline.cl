@@ -40,13 +40,15 @@
         (setq out0 (+ out0 (* (char-code (aref tableau1 i)) i)))
         (princ (aref tableau1 i))
       ))
-    (princ (format nil "--~C" #\NewLine))
+    (princ "--
+")
     (loop for j from 0 to (- taille2 1) do
       (progn
         (setq out0 (+ out0 (* (char-code (aref tableau2 j)) j 100)))
         (princ (aref tableau2 j))
       ))
-    (princ (format nil "--~C" #\NewLine))
+    (princ "--
+")
     (return-from programme_candidat out0)
   )))
 

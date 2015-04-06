@@ -72,7 +72,8 @@
                             (return-from lambda_2 (- 0 1))
                           ))
                           ))))
-                (princ (format nil "~C" #\NewLine))
+                (princ "
+")
                 (return-from lambda_1 tmp)
                 )))
               ))))

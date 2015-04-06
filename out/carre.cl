@@ -58,7 +58,8 @@
         (progn
           (loop for jx from 0 to (- x 1) do
             (format t "~D " (aref (aref tab jy) jx)))
-          (princ (format nil "~C" #\NewLine))
+          (princ "
+")
         ))
       ))))
 

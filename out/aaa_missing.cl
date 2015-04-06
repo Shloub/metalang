@@ -43,7 +43,8 @@
       (format t "~D " (aref tab i1))
       (setf (aref tab2 (aref tab i1)) t)
     ))
-  (princ (format nil "~C" #\NewLine))
+  (princ "
+")
   (loop for i2 from 0 to (- len 1) do
     (if
       (not (aref tab2 i2))

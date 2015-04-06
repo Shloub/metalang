@@ -22,7 +22,8 @@
       (format t "~D " (aref f i))
     ))
   (let ((out0 0))
-    (princ (format nil "~C" #\NewLine))
+    (princ "
+")
     (loop for a from 0 to 9 do
       (loop for b from 0 to 9 do
         (loop for c from 0 to 9 do

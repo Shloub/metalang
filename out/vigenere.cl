@@ -88,7 +88,8 @@
       (crypte taille_cle cle taille message)
       (loop for i from 0 to (- taille 1) do
         (princ (aref message i)))
-      (princ (format nil "~C" #\NewLine))
+      (princ "
+")
       )))))
 
 

@@ -57,7 +57,8 @@
     (if
       (is_triangular i)
       (format t "~D " i)))
-  (princ (format nil "~C" #\NewLine))
+  (princ "
+")
   (let ((sum 0))
     (let ((n (mread-int )))
       (loop for i from 1 to n do

@@ -52,7 +52,8 @@ read int, read char et skip
               ))))
     (loop for i from 0 to (- len 1) do
       (format t "~D=>~D " i (aref tab i)))
-    (princ (format nil "~C" #\NewLine))
+    (princ "
+")
     (let
      ((tab2 (array_init
                len
