@@ -1,0 +1,6 @@
+
+main
+  print "tada ' \" \n\r\t $ & todo\n
+{foo} \\${blah}
+blah\n"
+end
