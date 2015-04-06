@@ -44,19 +44,19 @@ create bufferc 128 allot
     8 0 BEGIN 2dup >= WHILE DUP { x }
       sudoku0 x y 9 * + cells +
        @ s>d 0 d.r
-       s"  " TYPE
+      S"  " TYPE
       x 3 % 2 =
       IF
-         s"  " TYPE
+        S"  " TYPE
       THEN
      1 + REPEAT 2DROP
-    NEWLINE TYPE
+    S\" \n" TYPE
     y 3 % 2 =
     IF
-      NEWLINE TYPE
+      S\" \n" TYPE
     THEN
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
 ;
 
 \  dit si les variables sont toutes différentes 
@@ -456,7 +456,7 @@ create bufferc 128 allot
   IF
     sudoku0 print_sudoku
   ELSE
-     s" no solution" NEWLINE S+ TYPE
+    S\" no solution\n" TYPE
   THEN
   ;
 main

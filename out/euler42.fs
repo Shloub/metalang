@@ -57,17 +57,17 @@ create bufferc 128 allot
     i is_triangular
     IF
       i s>d 0 d.r
-       s"  " TYPE
+      S"  " TYPE
     THEN
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   0 { sum }
   read-int { n }
   n 1 BEGIN 2dup >= WHILE DUP { i }
     sum  score + TO sum
    1 + REPEAT 2DROP
   sum s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

@@ -7,14 +7,9 @@
 (progn
   (if
     (f 4)
-    (princ "true <-
- ->
-")
-    (princ "false <-
- ->
-"))
-  (princ "small test end
-")
+    (princ (format nil "true <-~C ->~C" #\NewLine #\NewLine))
+    (princ (format nil "false <-~C ->~C" #\NewLine #\NewLine)))
+  (princ (format nil "small test end~C" #\NewLine))
 )
 
 

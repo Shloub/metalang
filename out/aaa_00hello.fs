@@ -1,5 +1,5 @@
 : main
-   s" Hello World" NEWLINE S+ TYPE
+  S\" Hello World\n" TYPE
   ;
 main
 BYE

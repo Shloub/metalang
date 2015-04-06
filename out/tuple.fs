@@ -22,9 +22,9 @@ end-struct tuple_int_int%
   g ->tuple_int_int_field_0 @ { a }
   g ->tuple_int_int_field_1 @ { b }
   a s>d 0 d.r
-   s"  -- " TYPE
+  S"  -- " TYPE
   b s>d 0 d.r
-   s" --" NEWLINE S+ TYPE
+  S\" --\n" TYPE
   ;
 main
 BYE

@@ -81,7 +81,7 @@ create bufferc 128 allot
     message i cells +
      @ EMIT
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

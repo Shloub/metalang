@@ -31,14 +31,14 @@ create bufferc 128 allot
     tableau1 i cells +
      @ EMIT
    1 + REPEAT 2DROP
-   s" --" NEWLINE S+ TYPE
+  S\" --\n" TYPE
   taille2 1 - 0 BEGIN 2dup >= WHILE DUP { j }
     out0 tableau2 j cells +
  @ j 100 * * + TO out0
     tableau2 j cells +
      @ EMIT
    1 + REPEAT 2DROP
-   s" --" NEWLINE S+ TYPE
+  S\" --\n" TYPE
   out0 exit
 ;
 
@@ -60,7 +60,7 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   skipspaces
   tableau1 taille1 tableau2 taille2 programme_candidat s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

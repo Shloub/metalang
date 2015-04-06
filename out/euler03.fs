@@ -26,7 +26,7 @@
     found INVERT
     IF
       a s>d 0 d.r
-      NEWLINE TYPE
+      S\" \n" TYPE
       1 TO a
     THEN
   REPEAT

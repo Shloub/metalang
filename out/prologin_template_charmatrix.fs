@@ -34,7 +34,7 @@ create bufferc 128 allot
        @ j cells +
        @ EMIT
      1 + REPEAT 2DROP
-     s" --" NEWLINE S+ TYPE
+    S\" --\n" TYPE
    1 + REPEAT 2DROP
   out0 exit
 ;
@@ -57,7 +57,7 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   a { tableau }
   tableau taille_x taille_y programme_candidat s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

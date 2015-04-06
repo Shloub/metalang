@@ -44,7 +44,7 @@
       m s>d 0 d.r
     THEN
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
 ;
 
 : main

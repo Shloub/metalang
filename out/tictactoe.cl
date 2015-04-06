@@ -45,8 +45,7 @@ Tictactoe : un tictactoe avec une IA
 #| On affiche l'état |#
 (defun print_state (g)
 (progn
-  (princ "
-|")
+  (princ (format nil "~C|" #\NewLine))
   (loop for y from 0 to 2 do
     (progn
       (loop for x from 0 to 2 do
@@ -62,12 +61,9 @@ Tictactoe : un tictactoe avec une IA
         ))
       (if
         (not (= y 2))
-        (princ "
-|-|-|-|
-|"))
+        (princ (format nil "~C|-|-|-|~C|" #\NewLine #\NewLine)))
     ))
-  (princ "
-")
+  (princ (format nil "~C" #\NewLine))
 ))
 
 #| On dit qui gagne (info stoquées dans g.ended et g.note ) |#

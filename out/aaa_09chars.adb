@@ -286,9 +286,9 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
   PInt(34);
   PString(new char_array'( To_C("=>")));
-  PChar('"');
+  PChar(Character'Val(34));
   PString(new char_array'( To_C(" ")));
-  PInt(Character'Pos('"'));
+  PInt(Character'Pos(Character'Val(34)));
   PString(new char_array'( To_C(" ")));
   PChar(Character'Val(34));
   PString(new char_array'( To_C("" & Character'Val(10))));
@@ -302,9 +302,9 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
   PInt(36);
   PString(new char_array'( To_C("=>")));
-  PChar('$');
+  PChar(Character'Val(36));
   PString(new char_array'( To_C(" ")));
-  PInt(Character'Pos('$'));
+  PInt(Character'Pos(Character'Val(36)));
   PString(new char_array'( To_C(" ")));
   PChar(Character'Val(36));
   PString(new char_array'( To_C("" & Character'Val(10))));

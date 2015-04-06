@@ -1,4 +1,3 @@
-(princ "Hello World
-")
+(princ (format nil "Hello World~C" #\NewLine))
 
 

@@ -39,14 +39,14 @@
       tab m cells +
        @ k cells +
        @ s>d 0 d.r
-       s"  " TYPE
+      S"  " TYPE
      1 + REPEAT 2DROP
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   tab 0 cells +
    @ 0 cells +
    @ s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

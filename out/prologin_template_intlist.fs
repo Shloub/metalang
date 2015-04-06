@@ -41,7 +41,7 @@ create bufferc 128 allot
     skipspaces
    1 + REPEAT 2DROP
   tableau taille programme_candidat s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

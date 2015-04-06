@@ -22,7 +22,7 @@
   10 0 BEGIN 2dup >= WHILE DUP { k }
     j k + TO j
     j s>d 0 d.r
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   4 { i }
   BEGIN
@@ -34,7 +34,7 @@
   REPEAT
   j s>d 0 d.r
   i s>d 0 d.r
-   s" FIN TEST" NEWLINE S+ TYPE
+  S\" FIN TEST\n" TYPE
   ;
 main
 BYE

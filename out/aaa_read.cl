@@ -56,8 +56,7 @@ read int, read char et skip
                   (return-from lambda_1 tmpi1)
                 )))
               ))))
-    (princ "
-")
+    (princ (format nil "~C" #\NewLine))
     (let
      ((tab2 (array_init
                len

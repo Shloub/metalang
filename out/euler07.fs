@@ -36,7 +36,7 @@
      !
    1 + REPEAT 2DROP
   3 t 1 n find0 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

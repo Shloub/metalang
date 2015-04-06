@@ -34,7 +34,7 @@
   0 t 1 cells +
    !
   t n eratostene s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

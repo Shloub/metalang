@@ -58,8 +58,7 @@
     (if
       (not (aref pris m))
       (princ m)))
-  (princ "
-")
+  (princ (format nil "~C" #\NewLine))
   ))))
 
 (show 10 999999)

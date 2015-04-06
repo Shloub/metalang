@@ -42,8 +42,7 @@
             (setq out0 (+ out0 (* (char-code (aref (aref tableau i) j)) (+ i (* j 2)))))
             (princ (aref (aref tableau i) j))
           ))
-        (princ "--
-")
+        (princ (format nil "--~C" #\NewLine))
       ))
     (return-from programme_candidat out0)
   )))

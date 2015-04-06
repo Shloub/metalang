@@ -68,9 +68,9 @@
     t n 5 // n findPenta2 t n 5 // n 2 // 10 + findHexa2 AND
     IF
       n s>d 0 d.r
-      NEWLINE TYPE
+      S\" \n" TYPE
       t s>d 0 d.r
-      NEWLINE TYPE
+      S\" \n" TYPE
     THEN
    1 + REPEAT 2DROP
   ;

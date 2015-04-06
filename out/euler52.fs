@@ -29,17 +29,17 @@
   num num 2 * num 3 * num 4 * num 6 * num 5 * same_numbers
   IF
     num s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     num 2 * s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     num 3 * s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     num 4 * s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     num 5 * s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     num 6 * s>d 0 d.r
-    NEWLINE TYPE
+    S\" \n" TYPE
   THEN
   ;
 main

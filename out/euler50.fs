@@ -46,9 +46,9 @@
     THEN
    1 + REPEAT 2DROP
   l s>d 0 d.r
-   s"  == " TYPE
+  S"  == " TYPE
   nprimes s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   HERE nprimes cells allot { sum }
   nprimes 1 - 0 BEGIN 2dup >= WHILE DUP { i_ }
     primes i_ cells +
@@ -92,9 +92,9 @@
     len 1 + TO len
   REPEAT
   resp s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   maxl s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

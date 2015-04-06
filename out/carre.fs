@@ -61,9 +61,9 @@ create bufferc 128 allot
       tab jy cells +
        @ jx cells +
        @ s>d 0 d.r
-       s"  " TYPE
+      S"  " TYPE
      1 + REPEAT 2DROP
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   ;
 main

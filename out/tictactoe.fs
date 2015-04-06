@@ -45,32 +45,32 @@ end-struct move%
 \  On affiche l'état 
 
 : print_state { g }
-  NEWLINE s" |" S+ TYPE
+  S\" \n|" TYPE
   2 0 BEGIN 2dup >= WHILE DUP { y }
     2 0 BEGIN 2dup >= WHILE DUP { x }
       g ->cases @ x cells +
        @ y cells +
        @ 0 =
       IF
-         s"  " TYPE
+        S"  " TYPE
       ELSE
         g ->cases @ x cells +
          @ y cells +
          @ 1 =
         IF
-           s" O" TYPE
+          S" O" TYPE
         ELSE
-           s" X" TYPE
+          S" X" TYPE
         THEN
       THEN
-       s" |" TYPE
+      S" |" TYPE
      1 + REPEAT 2DROP
     y 2 <>
     IF
-      NEWLINE s" |-|-|-|" NEWLINE s" |" S+ S+ S+ TYPE
+      S\" \n|-|-|-|\n|" TYPE
     THEN
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
 ;
 
 \  On dit qui gagne (info stoquées dans g.ended et g.note ) 
@@ -249,11 +249,11 @@ end-struct move%
         x y g apply_move_xy
         g minmax { currentNote }
         x s>d 0 d.r
-         s" , " TYPE
+        S" , " TYPE
         y s>d 0 d.r
-         s" , " TYPE
+        S" , " TYPE
         currentNote s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
         x y g cancel_move_xy
         currentNote minNote <
         IF
@@ -266,7 +266,7 @@ end-struct move%
    1 + REPEAT 2DROP
   minMove ->x @ s>d 0 d.r
   minMove ->y @ s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   minMove exit
 ;
 
@@ -326,7 +326,7 @@ end-struct move%
     REPEAT
     state print_state
     state ->note @ s>d 0 d.r
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   ;
 main

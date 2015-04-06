@@ -32,42 +32,42 @@
    1 + REPEAT 2DROP
   8 1 BEGIN 2dup >= WHILE DUP { i2 }
     i2 s>d 0 d.r
-     s"  => " TYPE
+    S"  => " TYPE
     t i2 cells +
      @ s>d 0 d.r
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   80 0 BEGIN 2dup >= WHILE DUP { j }
     t j e s>d 0 d.r
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   50 1 BEGIN 2dup >= WHILE DUP { k }
     k s>d 0 d.r
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   220 169 BEGIN 2dup >= WHILE DUP { j2 }
     t j2 e s>d 0 d.r
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   110 90 BEGIN 2dup >= WHILE DUP { k2 }
     k2 s>d 0 d.r
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   1 { out0 }
   6 0 BEGIN 2dup >= WHILE DUP { l }
     10 l exp0 { puiss }
     t puiss 1 - e { v }
     out0 v * TO out0
-     s" 10^" TYPE
+    S" 10^" TYPE
     l s>d 0 d.r
-     s" =" TYPE
+    S" =" TYPE
     puiss s>d 0 d.r
-     s"  v=" TYPE
+    S"  v=" TYPE
     v s>d 0 d.r
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   out0 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

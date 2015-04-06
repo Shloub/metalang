@@ -77,9 +77,9 @@
     THEN
    1 + REPEAT 2DROP
   l s>d 0 d.r
-   s"  == " TYPE
+  S"  == " TYPE
   nprimes s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   0 { ma }
   0 { mb }
   999 3 BEGIN 2dup >= WHILE DUP { b }
@@ -107,13 +107,13 @@
     THEN
    1 + REPEAT 2DROP
   ma s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   mb s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   max0 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   result s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

@@ -1,9 +1,9 @@
 : main
   3 3 + 5 + 4 + 4 + s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   3 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4 + { one_to_nine }
   one_to_nine s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   one_to_nine 3 + { one_to_ten }
   one_to_ten 6 + 6 + 8 + 8 + 7 + 7 + 9 + 8 + 8 + 6 + { one_to_twenty }
   one_to_twenty 6 9 * + one_to_nine + 6 + { one_to_thirty }
@@ -15,9 +15,9 @@
   one_to_eighty 6 9 * + one_to_nine + 6 + { one_to_ninety }
   one_to_ninety 6 9 * + one_to_nine + { one_to_ninety_nine }
   one_to_ninety_nine s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   100 one_to_nine * one_to_ninety_nine 10 * + 10 9 * 99 * + 7 9 * + 3 + 8 + s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

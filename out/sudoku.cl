@@ -56,15 +56,12 @@
             (= (remainder x 3) 2)
             (princ " "))
         ))
-      (princ "
-")
+      (princ (format nil "~C" #\NewLine))
       (if
         (= (remainder y 3) 2)
-        (princ "
-"))
+        (princ (format nil "~C" #\NewLine)))
     ))
-  (princ "
-")
+  (princ (format nil "~C" #\NewLine))
 ))
 
 #| dit si les variables sont toutes différentes |#
@@ -126,8 +123,7 @@
     (if
       (solve sudoku0)
       (print_sudoku sudoku0)
-      (princ "no solution
-"))
+      (princ (format nil "no solution~C" #\NewLine)))
   ))
 
 

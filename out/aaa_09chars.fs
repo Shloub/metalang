@@ -1,1020 +1,1020 @@
 : main
   1 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   1 EMIT
-   s"  " TYPE
+  S"  " TYPE
   1 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   1 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   2 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   2 EMIT
-   s"  " TYPE
+  S"  " TYPE
   2 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   2 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   3 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   3 EMIT
-   s"  " TYPE
+  S"  " TYPE
   3 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   3 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   4 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   4 EMIT
-   s"  " TYPE
+  S"  " TYPE
   4 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   4 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   5 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   5 EMIT
-   s"  " TYPE
+  S"  " TYPE
   5 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   5 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   6 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   6 EMIT
-   s"  " TYPE
+  S"  " TYPE
   6 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   6 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   7 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   7 EMIT
-   s"  " TYPE
+  S"  " TYPE
   7 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   7 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   8 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   8 EMIT
-   s"  " TYPE
+  S"  " TYPE
   8 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   8 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   9 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   9 EMIT
-   s"  " TYPE
+  S"  " TYPE
   9 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   9 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   10 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   10 EMIT
-   s"  " TYPE
+  S"  " TYPE
   10 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   10 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   11 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   11 EMIT
-   s"  " TYPE
+  S"  " TYPE
   11 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   11 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   12 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   12 EMIT
-   s"  " TYPE
+  S"  " TYPE
   12 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   12 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   13 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   13 EMIT
-   s"  " TYPE
+  S"  " TYPE
   13 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   13 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   14 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   14 EMIT
-   s"  " TYPE
+  S"  " TYPE
   14 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   14 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   15 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   15 EMIT
-   s"  " TYPE
+  S"  " TYPE
   15 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   15 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   16 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   16 EMIT
-   s"  " TYPE
+  S"  " TYPE
   16 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   16 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   17 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   17 EMIT
-   s"  " TYPE
+  S"  " TYPE
   17 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   17 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   18 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   18 EMIT
-   s"  " TYPE
+  S"  " TYPE
   18 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   18 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   19 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   19 EMIT
-   s"  " TYPE
+  S"  " TYPE
   19 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   19 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   20 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   20 EMIT
-   s"  " TYPE
+  S"  " TYPE
   20 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   20 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   21 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   21 EMIT
-   s"  " TYPE
+  S"  " TYPE
   21 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   21 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   22 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   22 EMIT
-   s"  " TYPE
+  S"  " TYPE
   22 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   22 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   23 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   23 EMIT
-   s"  " TYPE
+  S"  " TYPE
   23 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   23 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   24 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   24 EMIT
-   s"  " TYPE
+  S"  " TYPE
   24 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   24 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   25 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   25 EMIT
-   s"  " TYPE
+  S"  " TYPE
   25 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   25 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   26 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   26 EMIT
-   s"  " TYPE
+  S"  " TYPE
   26 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   26 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   27 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   27 EMIT
-   s"  " TYPE
+  S"  " TYPE
   27 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   27 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   28 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   28 EMIT
-   s"  " TYPE
+  S"  " TYPE
   28 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   28 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   29 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   29 EMIT
-   s"  " TYPE
+  S"  " TYPE
   29 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   29 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   30 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   30 EMIT
-   s"  " TYPE
+  S"  " TYPE
   30 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   30 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   31 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   31 EMIT
-   s"  " TYPE
+  S"  " TYPE
   31 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   31 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   32 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   32 EMIT
-   s"  " TYPE
+  S"  " TYPE
   32 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   32 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   33 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   33 EMIT
-   s"  " TYPE
+  S"  " TYPE
   33 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   33 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   34 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   34 EMIT
-   s"  " TYPE
+  S"  " TYPE
   34 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   34 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   35 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   35 EMIT
-   s"  " TYPE
+  S"  " TYPE
   35 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   35 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   36 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   36 EMIT
-   s"  " TYPE
+  S"  " TYPE
   36 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   36 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   37 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   37 EMIT
-   s"  " TYPE
+  S"  " TYPE
   37 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   37 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   38 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   38 EMIT
-   s"  " TYPE
+  S"  " TYPE
   38 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   38 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   39 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   39 EMIT
-   s"  " TYPE
+  S"  " TYPE
   39 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   39 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   40 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   40 EMIT
-   s"  " TYPE
+  S"  " TYPE
   40 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   40 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   41 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   41 EMIT
-   s"  " TYPE
+  S"  " TYPE
   41 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   41 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   42 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   42 EMIT
-   s"  " TYPE
+  S"  " TYPE
   42 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   42 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   43 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   43 EMIT
-   s"  " TYPE
+  S"  " TYPE
   43 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   43 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   44 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   44 EMIT
-   s"  " TYPE
+  S"  " TYPE
   44 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   44 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   45 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   45 EMIT
-   s"  " TYPE
+  S"  " TYPE
   45 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   45 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   46 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   46 EMIT
-   s"  " TYPE
+  S"  " TYPE
   46 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   46 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   47 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   47 EMIT
-   s"  " TYPE
+  S"  " TYPE
   47 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   47 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   48 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 0 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 0 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   48 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   49 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 1 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 1 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   49 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   50 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 2 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 2 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   50 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   51 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 3 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 3 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   51 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   52 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 4 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 4 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   52 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   53 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 5 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 5 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   53 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   54 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 6 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 6 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   54 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   55 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 7 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 7 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   55 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   56 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 8 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 8 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   56 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   57 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] 9 EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] 9 s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   57 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   58 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] : EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] : s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   58 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   59 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] ; EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] ; s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   59 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   60 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] < EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] < s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   60 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   61 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] = EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] = s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   61 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   62 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] > EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] > s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   62 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   63 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] ? EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] ? s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   63 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   64 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] @ EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] @ s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   64 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   65 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] A EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] A s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   65 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   66 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] B EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] B s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   66 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   67 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] C EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] C s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   67 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   68 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] D EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] D s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   68 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   69 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] E EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] E s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   69 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   70 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] F EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] F s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   70 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   71 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] G EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] G s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   71 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   72 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] H EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] H s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   72 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   73 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] I EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] I s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   73 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   74 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] J EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] J s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   74 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   75 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] K EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] K s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   75 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   76 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] L EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] L s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   76 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   77 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] M EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] M s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   77 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   78 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] N EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] N s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   78 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   79 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] O EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] O s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   79 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   80 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] P EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] P s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   80 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   81 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] Q EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] Q s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   81 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   82 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] R EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] R s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   82 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   83 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] S EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] S s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   83 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   84 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] T EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] T s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   84 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   85 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] U EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] U s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   85 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   86 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] V EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] V s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   86 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   87 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] W EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] W s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   87 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   88 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] X EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] X s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   88 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   89 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] Y EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] Y s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   89 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   90 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] Z EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] Z s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   90 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   91 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] [ EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] [ s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   91 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   92 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] \ EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] \ s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   92 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   93 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] ] EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] ] s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   93 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   94 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] ^ EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] ^ s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   94 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   95 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] _ EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] _ s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   95 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   96 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] ` EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] ` s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   96 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   97 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] a EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] a s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   97 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   98 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] b EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] b s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   98 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   99 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] c EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] c s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   99 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   100 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] d EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] d s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   100 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   101 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] e EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] e s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   101 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   102 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] f EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] f s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   102 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   103 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] g EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] g s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   103 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   104 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] h EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] h s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   104 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   105 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] i EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] i s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   105 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   106 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] j EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] j s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   106 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   107 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] k EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] k s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   107 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   108 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] l EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] l s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   108 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   109 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] m EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] m s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   109 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   110 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] n EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] n s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   110 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   111 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] o EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] o s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   111 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   112 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] p EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] p s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   112 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   113 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] q EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] q s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   113 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   114 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] r EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] r s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   114 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   115 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] s EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] s s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   115 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   116 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] t EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] t s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   116 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   117 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] u EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] u s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   117 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   118 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] v EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] v s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   118 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   119 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] w EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] w s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   119 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   120 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] x EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] x s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   120 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   121 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] y EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] y s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   121 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   122 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] z EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] z s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   122 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   123 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] { EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] { s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   123 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   124 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] | EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] | s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   124 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   125 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] } EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] } s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   125 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   126 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char] ~ EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char] ~ s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   126 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   127 s>d 0 d.r
-   s" =>" TYPE
+  S" =>" TYPE
   [char]  EMIT
-   s"  " TYPE
+  S"  " TYPE
   [char]  s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   127 EMIT
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

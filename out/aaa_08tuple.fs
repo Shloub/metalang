@@ -49,11 +49,11 @@ end-struct toto%
   f ->tuple_int_int_field_0 @ { a }
   f ->tuple_int_int_field_1 @ { b }
   a s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   b s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   t ->bar @ s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

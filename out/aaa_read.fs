@@ -34,47 +34,47 @@ create bufferc 128 allot
   read-int { len }
   skipspaces
   len s>d 0 d.r
-   s" =len" NEWLINE S+ TYPE
+  S\" =len\n" TYPE
   len 2 * TO len
-   s" len*2=" TYPE
+  S" len*2=" TYPE
   len s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   len 2 // TO len
   HERE len cells allot { tab }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     read-int { tmpi1 }
     skipspaces
     i s>d 0 d.r
-     s" =>" TYPE
+    S" =>" TYPE
     tmpi1 s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     tmpi1 tab i cells +
      !
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   HERE len cells allot { tab2 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i_ }
     read-int { tmpi2 }
     skipspaces
     i_ s>d 0 d.r
-     s" ==>" TYPE
+    S" ==>" TYPE
     tmpi2 s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     tmpi2 tab2 i_ cells +
      !
    1 + REPEAT 2DROP
   read-int { strlen }
   skipspaces
   strlen s>d 0 d.r
-   s" =strlen" NEWLINE S+ TYPE
+  S\" =strlen\n" TYPE
   HERE strlen cells allot { tab4 }
   strlen 1 - 0 BEGIN 2dup >= WHILE DUP { toto }
     read-char { tmpc }
     tmpc { c }
     tmpc EMIT
-     s" :" TYPE
+    S" :" TYPE
     c s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     tmpc 32 <>
     IF
       c [char] a - 13 + 26 % [char] a + TO c

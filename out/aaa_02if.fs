@@ -9,11 +9,11 @@
 : main
   4 f
   IF
-     s" true <-" NEWLINE s"  ->" NEWLINE S+ S+ S+ TYPE
+    S\" true <-\n ->\n" TYPE
   ELSE
-     s" false <-" NEWLINE s"  ->" NEWLINE S+ S+ S+ TYPE
+    S\" false <-\n ->\n" TYPE
   THEN
-   s" small test end" NEWLINE S+ TYPE
+  S\" small test end\n" TYPE
   ;
 main
 BYE

@@ -31,7 +31,7 @@ create bufferc 128 allot
     tableau i cells +
      @ EMIT
    1 + REPEAT 2DROP
-   s" --" NEWLINE S+ TYPE
+  S\" --\n" TYPE
   out0 exit
 ;
 
@@ -45,7 +45,7 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   skipspaces
   tableau taille programme_candidat s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

@@ -111,7 +111,7 @@
                                               d8 s>d 0 d.r
                                               d9 s>d 0 d.r
                                               d10 s>d 0 d.r
-                                               s"  + " TYPE
+                                              S"  + " TYPE
                                               true allowed d1 cells +
                                                !
                                             THEN
@@ -155,7 +155,7 @@
     THEN
    1 + REPEAT 2DROP
   0 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

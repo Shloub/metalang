@@ -11,13 +11,13 @@
       cc a2b2 = c a > AND
       IF
         a s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
         b s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
         c s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
         a b * c * s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
       THEN
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP

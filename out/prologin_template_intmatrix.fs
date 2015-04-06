@@ -51,7 +51,7 @@ create bufferc 128 allot
      !
    1 + REPEAT 2DROP
   tableau taille_x taille_y programme_candidat s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

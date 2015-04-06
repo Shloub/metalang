@@ -31,10 +31,10 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   t 0 cells +
    @ s>d 0 d.r
-   s"  - " TYPE
+  S"  - " TYPE
   t 1 cells +
    @ s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

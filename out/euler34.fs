@@ -11,10 +11,10 @@
      !
     f i cells +
      @ s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
    1 + REPEAT 2DROP
   0 { out0 }
-  NEWLINE TYPE
+  S\" \n" TYPE
   9 0 BEGIN 2dup >= WHILE DUP { a }
     9 0 BEGIN 2dup >= WHILE DUP { b }
       9 0 BEGIN 2dup >= WHILE DUP { c }
@@ -49,7 +49,7 @@
               IF
                 out0 num + TO out0
                 num s>d 0 d.r
-                 s"  " TYPE
+                S"  " TYPE
               THEN
              1 + REPEAT 2DROP
            1 + REPEAT 2DROP
@@ -57,9 +57,9 @@
        1 + REPEAT 2DROP
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   out0 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

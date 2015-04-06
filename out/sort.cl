@@ -102,14 +102,12 @@
       (bubblesort tab2 len)
       (loop for i from 0 to (- len 1) do
         (format t "~D " (aref tab2 i)))
-      (princ "
-")
+      (princ (format nil "~C" #\NewLine))
       (let ((tab3 (copytab tab len)))
         (qsort0 tab3 len 0 (- len 1))
         (loop for i from 0 to (- len 1) do
           (format t "~D " (aref tab3 i)))
-        (princ "
-")
+        (princ (format nil "~C" #\NewLine))
       )))))
 
 

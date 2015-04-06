@@ -75,7 +75,7 @@ create bufferc 128 allot
       1 NEGATE tmp j cells +
        !
      1 + REPEAT 2DROP
-    NEWLINE TYPE
+    S\" \n" TYPE
     tmp cache i cells +
      !
    1 + REPEAT 2DROP
@@ -88,9 +88,9 @@ create bufferc 128 allot
   read-int { y }
   skipspaces
   x s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   y s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   HERE y cells allot { e }
   y 1 - 0 BEGIN 2dup >= WHILE DUP { f }
     HERE x cells allot { g }

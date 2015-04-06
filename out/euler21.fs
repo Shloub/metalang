@@ -108,9 +108,9 @@
     THEN
    1 + REPEAT 2DROP
   l s>d 0 d.r
-   s"  == " TYPE
+  S"  == " TYPE
   nprimes s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   0 { sum }
   1000 2 BEGIN 2dup >= WHILE DUP { n }
     nprimes primes n sumdiv n - { other }
@@ -120,16 +120,16 @@
       othersum n =
       IF
         other s>d 0 d.r
-         s"  & " TYPE
+        S"  & " TYPE
         n s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
         sum other n + + TO sum
       THEN
     THEN
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   sum s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

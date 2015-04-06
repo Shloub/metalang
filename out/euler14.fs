@@ -52,9 +52,9 @@
     THEN
    1 + REPEAT 2DROP
   max0 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   maxi s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

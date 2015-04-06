@@ -46,9 +46,9 @@
     THEN
    1 + REPEAT 2DROP
   l s>d 0 d.r
-   s"  == " TYPE
+  S"  == " TYPE
   nprimes s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   HERE maximumprimes cells allot { canbe }
   maximumprimes 1 - 0 BEGIN 2dup >= WHILE DUP { i_ }
     false canbe i_ cells +
@@ -71,7 +71,7 @@
      @ INVERT AND
     IF
       m2 s>d 0 d.r
-      NEWLINE TYPE
+      S\" \n" TYPE
     THEN
    1 + REPEAT 2DROP
   ;

@@ -6,7 +6,7 @@
   0 { a }
   a foo
   a s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

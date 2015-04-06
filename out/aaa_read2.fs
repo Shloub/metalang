@@ -33,7 +33,7 @@ create bufferc 128 allot
   read-int { len }
   skipspaces
   len s>d 0 d.r
-   s" =len" NEWLINE S+ TYPE
+  S\" =len\n" TYPE
   HERE len cells allot { tab }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { a }
     read-int tab a cells +
@@ -42,12 +42,12 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     i s>d 0 d.r
-     s" =>" TYPE
+    S" =>" TYPE
     tab i cells +
      @ s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   HERE len cells allot { tab2 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { b }
     read-int tab2 b cells +
@@ -56,15 +56,15 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i_ }
     i_ s>d 0 d.r
-     s" ==>" TYPE
+    S" ==>" TYPE
     tab2 i_ cells +
      @ s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
    1 + REPEAT 2DROP
   read-int { strlen }
   skipspaces
   strlen s>d 0 d.r
-   s" =strlen" NEWLINE S+ TYPE
+  S\" =strlen\n" TYPE
   HERE strlen cells allot { tab4 }
   strlen 1 - 0 BEGIN 2dup >= WHILE DUP { d }
     read-char tab4 d cells +
@@ -76,9 +76,9 @@ create bufferc 128 allot
      @ { tmpc }
     tmpc { c }
     tmpc EMIT
-     s" :" TYPE
+    S" :" TYPE
     c s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     tmpc 32 <>
     IF
       c [char] a - 13 + 26 % [char] a + TO c

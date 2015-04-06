@@ -9,8 +9,7 @@
                                                b
                                                (princ "True")
                                                (princ "False"))
-                                             (princ "
-")
+                                             (princ (format nil "~C" #\NewLine))
                                              (let ((c (eq (= (* 3 (+ 4 5 6) 2) 45) nil)))
                                                (if
                                                  c
@@ -28,8 +27,7 @@
                                                      e
                                                      (princ "True")
                                                      (princ "False"))
-                                                   (princ "
-")
+                                                   (princ (format nil "~C" #\NewLine))
                                                  ))))))
 
 

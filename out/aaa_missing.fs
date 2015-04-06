@@ -35,12 +35,12 @@ create bufferc 128 allot
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i1 }
     tab i1 cells +
      @ s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
     true tab2 tab i1 cells +
      @ cells +
      !
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i2 }
     tab2 i2 cells +
      @ INVERT
@@ -55,7 +55,7 @@ create bufferc 128 allot
   read-int { len }
   skipspaces
   len s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   HERE len cells allot { tab }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { a }
     read-int tab a cells +
@@ -63,7 +63,7 @@ create bufferc 128 allot
     skipspaces
    1 + REPEAT 2DROP
   len tab result s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

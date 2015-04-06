@@ -104,15 +104,15 @@ create bufferc 128 allot
      !
    1 + REPEAT 2DROP
   len tab find01 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   len 1 - 0 BEGIN 2dup >= WHILE DUP { k }
     k 0 BEGIN 2dup >= WHILE DUP { l }
       tab k cells +
        @ l cells +
        @ s>d 0 d.r
-       s"  " TYPE
+      S"  " TYPE
      1 + REPEAT 2DROP
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   ;
 main

@@ -30,13 +30,13 @@ create bufferc 128 allot
     skipspaces
     read-int { c }
     skipspaces
-     s" a = " TYPE
+    S" a = " TYPE
     a s>d 0 d.r
-     s"  b = " TYPE
+    S"  b = " TYPE
     b s>d 0 d.r
-     s" c =" TYPE
+    S" c =" TYPE
     c s>d 0 d.r
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   HERE 10 cells allot { l }
   10 1 - 0 BEGIN 2dup >= WHILE DUP { d }
@@ -47,7 +47,7 @@ create bufferc 128 allot
   9 0 BEGIN 2dup >= WHILE DUP { j }
     l j cells +
      @ s>d 0 d.r
-    NEWLINE TYPE
+    S\" \n" TYPE
    1 + REPEAT 2DROP
   ;
 main

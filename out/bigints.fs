@@ -476,9 +476,9 @@ end-struct bigint%
     sum ibeib add_bigint TO sum
     sum 10 bigint_premiers_chiffres TO sum
    1 + REPEAT 2DROP
-   s" euler 48 = " TYPE
+  S" euler 48 = " TYPE
   sum print_bigint
-  NEWLINE TYPE
+  S\" \n" TYPE
 ;
 
 : euler16 {  }
@@ -575,74 +575,74 @@ end-struct bigint%
 
 : main
    euler29 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   50 read_bigint { sum }
   100 2 BEGIN 2dup >= WHILE DUP { i }
     skipspaces
     50 read_bigint { tmp }
     sum tmp add_bigint TO sum
    1 + REPEAT 2DROP
-   s" euler13 = " TYPE
+  S" euler13 = " TYPE
   sum print_bigint
-  NEWLINE TYPE
-   s" euler25 = " TYPE
+  S\" \n" TYPE
+  S" euler25 = " TYPE
    euler25 s>d 0 d.r
-  NEWLINE TYPE
-   s" euler16 = " TYPE
+  S\" \n" TYPE
+  S" euler16 = " TYPE
    euler16 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
    euler48
-   s" euler20 = " TYPE
+  S" euler20 = " TYPE
    euler20 s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   999999 bigint_of_int { a }
   9951263 bigint_of_int { b }
   a print_bigint
-   s" >>1=" TYPE
+  S" >>1=" TYPE
   a 1 NEGATE bigint_shift print_bigint
-  NEWLINE TYPE
+  S\" \n" TYPE
   a print_bigint
-   s" *" TYPE
+  S" *" TYPE
   b print_bigint
-   s" =" TYPE
+  S" =" TYPE
   a b mul_bigint print_bigint
-  NEWLINE TYPE
+  S\" \n" TYPE
   a print_bigint
-   s" *" TYPE
+  S" *" TYPE
   b print_bigint
-   s" =" TYPE
+  S" =" TYPE
   a b mul_bigint_cp print_bigint
-  NEWLINE TYPE
+  S\" \n" TYPE
   a print_bigint
-   s" +" TYPE
+  S" +" TYPE
   b print_bigint
-   s" =" TYPE
+  S" =" TYPE
   a b add_bigint print_bigint
-  NEWLINE TYPE
+  S\" \n" TYPE
   b print_bigint
-   s" -" TYPE
+  S" -" TYPE
   a print_bigint
-   s" =" TYPE
+  S" =" TYPE
   b a sub_bigint print_bigint
-  NEWLINE TYPE
+  S\" \n" TYPE
   a print_bigint
-   s" -" TYPE
+  S" -" TYPE
   b print_bigint
-   s" =" TYPE
+  S" =" TYPE
   a b sub_bigint print_bigint
-  NEWLINE TYPE
+  S\" \n" TYPE
   a print_bigint
-   s" >" TYPE
+  S" >" TYPE
   b print_bigint
-   s" =" TYPE
+  S" =" TYPE
   a b bigint_gt { r }
   r
   IF
-     s" True" TYPE
+    S" True" TYPE
   ELSE
-     s" False" TYPE
+    S" False" TYPE
   THEN
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

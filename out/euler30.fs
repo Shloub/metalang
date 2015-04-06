@@ -36,9 +36,9 @@
                 c s>d 0 d.r
                 b s>d 0 d.r
                 a s>d 0 d.r
-                 s"  " TYPE
+                S"  " TYPE
                 r s>d 0 d.r
-                NEWLINE TYPE
+                S\" \n" TYPE
                 sum r + TO sum
               THEN
              1 + REPEAT 2DROP

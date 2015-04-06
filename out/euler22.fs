@@ -44,7 +44,7 @@ create bufferc 128 allot
     sum i  score * + TO sum
    1 + REPEAT 2DROP
   sum s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

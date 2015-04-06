@@ -18,26 +18,26 @@
      !
    1 + REPEAT 2DROP
   j s>d 0 d.r
-   s"  " TYPE
+  S"  " TYPE
   a 0 cells +
    @ { c }
   c
   IF
-     s" True" TYPE
+    S" True" TYPE
   ELSE
-     s" False" TYPE
+    S" False" TYPE
   THEN
-  NEWLINE TYPE
+  S\" \n" TYPE
   a id 0 g
   a 0 cells +
    @ { d }
   d
   IF
-     s" True" TYPE
+    S" True" TYPE
   ELSE
-     s" False" TYPE
+    S" False" TYPE
   THEN
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

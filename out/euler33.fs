@@ -25,9 +25,9 @@
           a k * i b * =
           IF
             a s>d 0 d.r
-             s" /" TYPE
+            S" /" TYPE
             b s>d 0 d.r
-            NEWLINE TYPE
+            S\" \n" TYPE
             top a * TO top
             bottom b * TO bottom
           THEN
@@ -36,15 +36,15 @@
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP
   top s>d 0 d.r
-   s" /" TYPE
+  S" /" TYPE
   bottom s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   top bottom pgcd { p }
-   s" pgcd=" TYPE
+  S" pgcd=" TYPE
   p s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   bottom p // s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

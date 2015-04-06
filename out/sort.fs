@@ -118,17 +118,17 @@ create bufferc 128 allot
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     tab2 i cells +
      @ s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   tab len copytab { tab3 }
   tab3 len 0 len 1 - qsort0
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     tab3 i cells +
      @ s>d 0 d.r
-     s"  " TYPE
+    S"  " TYPE
    1 + REPEAT 2DROP
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

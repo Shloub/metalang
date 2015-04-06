@@ -70,9 +70,9 @@ create bufferc 128 allot
   nombre tab len devine0 { a }
   a
   IF
-     s" True" TYPE
+    S" True" TYPE
   ELSE
-     s" False" TYPE
+    S" False" TYPE
   THEN
   ;
 main

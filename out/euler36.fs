@@ -39,13 +39,13 @@
     pow2 d palindrome2
     IF
       d s>d 0 d.r
-      NEWLINE TYPE
+      S\" \n" TYPE
       sum d + TO sum
     THEN
     pow2 d 10 * d + palindrome2
     IF
       d 10 * d + s>d 0 d.r
-      NEWLINE TYPE
+      S\" \n" TYPE
       sum d 10 * d + + TO sum
     THEN
    1 + REPEAT 2DROP
@@ -57,14 +57,14 @@
         pow2 num0 palindrome2
         IF
           num0 s>d 0 d.r
-          NEWLINE TYPE
+          S\" \n" TYPE
           sum num0 + TO sum
         THEN
         a 10000 * b 1000 * + c 100 * + b 10 * + a + { num1 }
         pow2 num1 palindrome2
         IF
           num1 s>d 0 d.r
-          NEWLINE TYPE
+          S\" \n" TYPE
           sum num1 + TO sum
         THEN
        1 + REPEAT 2DROP
@@ -72,21 +72,21 @@
       pow2 num2 palindrome2
       IF
         num2 s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
         sum num2 + TO sum
       THEN
       a 1000 * b 100 * + b 10 * + a + { num3 }
       pow2 num3 palindrome2
       IF
         num3 s>d 0 d.r
-        NEWLINE TYPE
+        S\" \n" TYPE
         sum num3 + TO sum
       THEN
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP
-   s" sum=" TYPE
+  S" sum=" TYPE
   sum s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE

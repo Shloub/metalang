@@ -66,8 +66,7 @@
       (progn
         (loop for j from 0 to (- len 1) do
           (format t "~D " (aref (aref tab2 i) j)))
-        (princ "
-")
+        (princ (format nil "~C" #\NewLine))
       ))
     ))))
 

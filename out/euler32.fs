@@ -100,7 +100,7 @@
                          !
                         count product + TO count
                         product s>d 0 d.r
-                         s"  " TYPE
+                        S"  " TYPE
                       THEN
                       \  1  * 4 digits 
                       
@@ -112,7 +112,7 @@
                          !
                         count product2 + TO count
                         product2 s>d 0 d.r
-                         s"  " TYPE
+                        S"  " TYPE
                       THEN
                       true allowed d cells +
                        !
@@ -137,7 +137,7 @@
      !
    1 + REPEAT 2DROP
   count s>d 0 d.r
-  NEWLINE TYPE
+  S\" \n" TYPE
   ;
 main
 BYE
