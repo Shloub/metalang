@@ -374,6 +374,7 @@ module StringSet = MakeSet (String)
 module type Fixable = sig
   type ('a, 'b) tofix
   val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
+
   val next : unit -> int
 end
 
@@ -384,4 +385,8 @@ module Fix (F : Fixable) = struct
   let fix x = F (F.next (), x)
   let fixa a x = F (a, x)
   let map = F.map
+  let rec dmap f (F(i, x)) = F (i, F.map (fun x -> f (dmap f x)) x)
+  let rec fold f (F(i, x))  = f (F.map (fold f) x)
+
+
 end

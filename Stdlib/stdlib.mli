@@ -432,4 +432,6 @@ sig
   val fix : ('a t , 'a) F.tofix -> 'a t
   val fixa : int -> ('a t , 'a) F.tofix -> 'a t
   val map : ('a -> 'b) -> ('a, 'c) F.tofix -> ('b, 'c) F.tofix
+  val dmap : ('a t -> 'a t) -> 'a t -> 'a t
+  val fold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
 end
