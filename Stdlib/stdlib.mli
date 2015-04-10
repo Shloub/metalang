@@ -433,5 +433,28 @@ sig
   val fixa : int -> ('a t , 'a) F.tofix -> 'a t
   val map : ('a -> 'b) -> ('a, 'c) F.tofix -> ('b, 'c) F.tofix
   val dmap : ('a t -> 'a t) -> 'a t -> 'a t
-  val fold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+  val dfold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+end
+
+module type Fixable2 = sig
+  type ('a, 'b) tofix
+  val foldmap : ('a -> 'b -> 'a * 'd) -> 'a -> ('b, 'c) tofix -> 'a * ('d, 'c) tofix
+  val next : unit -> int
+end
+
+module Fix2 : functor (F : Fixable2 ) ->
+sig
+  type 'a t = F of int * ('a t, 'a) F.tofix
+  val annot : 'a t -> int
+  val unfix : 'a t -> ('a t , 'a) F.tofix
+  val fix : ('a t , 'a) F.tofix -> 'a t
+  val fixa : int -> ('a t , 'a) F.tofix -> 'a t
+  val map : ('a -> 'b) -> ('a, 'c) F.tofix -> ('b, 'c) F.tofix
+  val foldmap : ('a -> 'b -> 'a * 'c) -> 'a -> ('b, 'd) F.tofix -> 'a * ('c, 'd) F.tofix
+
+  val foldmapt : ('a -> 'b t -> 'a * 'b t) -> 'a -> 'b t -> 'a * 'b t
+
+  val fold : ('a -> 'b -> 'a) -> 'a -> ('b, 'd) F.tofix -> 'a
+  val dmap : ('a t -> 'a t) -> 'a t -> 'a t
+  val dfold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
 end

@@ -386,7 +386,31 @@ module Fix (F : Fixable) = struct
   let fixa a x = F (a, x)
   let map = F.map
   let rec dmap f (F(i, x)) = F (i, F.map (fun x -> f (dmap f x)) x)
-  let rec fold f (F(i, x))  = f (F.map (fold f) x)
+  let rec dfold f (F(i, x))  = f (F.map (dfold f) x)
+end
+
+module type Fixable2 = sig
+  type ('a, 'b) tofix
+  val foldmap : ('a -> 'b -> 'a * 'd) -> 'a -> ('b, 'c) tofix -> 'a * ('d, 'c) tofix
+  val next : unit -> int
+end
+
+module Fix2 (F : Fixable2) = struct
+  type 'a t = F of int * ('a t, 'a) F.tofix
+  let annot = function F (i, _) -> i
+  let unfix = function F (_, x) -> x
+  let fix x = F (F.next (), x)
+  let fixa a x = F (a, x)
+
+  let foldmap f acc x = F.foldmap f acc x
+
+  let foldmapt f acc (F (i, x)) = let acc, x = foldmap f acc x in acc, F (i, x)
+
+  let map f x = snd (foldmap (fun acc x -> (), f x) () x)
+  let fold f acc t = fst ( foldmap (fun acc t -> f acc t, t) acc t)
+
+  let rec dmap f (F(i, x)) = F (i, map (fun x -> f (dmap f x)) x)
+  let rec dfold f (F(i, x))  = f (map (dfold f) x)
 
 
 end
