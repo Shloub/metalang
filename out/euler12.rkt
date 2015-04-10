@@ -81,9 +81,6 @@
   (h 2 l)))))))
 )
 (define main
-  (block
-    (printf "~a\n" (find0 500))
-    '()
-    )
+  (printf "~a\n" (find0 500))
 )
 

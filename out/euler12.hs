@@ -100,7 +100,6 @@ find ndiv2 =
            w 2 0
 
 main =
-  do printf "%d\n" =<< ((find 500)::IO Int)
-     return ()
+  printf "%d\n" =<< ((find 500)::IO Int)
 
 

@@ -13,13 +13,13 @@ ifM c i e =
 
 main :: IO ()
 is_pair i =
-  do let a internal_1 = let b = if i < 20
-                                then let c = if i == 22
-                                             then 0
-                                             else 6
-                                             in 8
-                                else 6
-                                in return ((i `rem` 2) == 0)
+  do let a b = let c = if i < 20
+                       then let d = if i == 22
+                                    then 0
+                                    else 6
+                                    in 8
+                       else 6
+                       in return ((i `rem` 2) == 0)
      if i < 10
      then if i == 0
           then return True

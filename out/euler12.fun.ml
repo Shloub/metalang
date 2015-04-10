@@ -76,9 +76,5 @@ let find ndiv2 =
             (p 1)) in
     (h 2 l)
 let main =
-  (
-    (Printf.printf "%d\n" (find 500));
-    ()
-    )
-  
+  (Printf.printf "%d\n" (find 500))
 

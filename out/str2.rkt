@@ -2,9 +2,6 @@
 (require racket/block)
 
 (define main
-  (block
-    (printf "ma petite chaine en or" )
-    '()
-    )
+  (printf "ma petite chaine en or" )
 )
 
