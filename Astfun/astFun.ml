@@ -81,12 +81,26 @@ module Expr = struct
     type ('a, 'b) tofix = ('a, 'b) alias
     let next () = Ast.next ()
 
+type ('a, 'acc) k = 'acc -> 'acc * 'a
+let ret x acc = acc, x
+let (<*>) f g acc =
+  let acc, e1 = f acc in
+  let acc, e2 = g acc in
+  acc, e1 e2
+
+  let fold_left_map f l =
+    ret List.rev
+    <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+
     let foldmap f acc e =
+      let f' x acc = f acc x in
       match e with
-      | LetRecIn (name, params, e1, e2) ->
+      | LetRecIn (name, params, e1, e2) -> (*
           let acc, e1 = f acc e1 in
           let acc, e2 = f acc e2 in
-          acc, LetRecIn (name, params, e1, e2)
+          acc, LetRecIn (name, params, e1, e2) *)
+         ( ret (fun e1 e2 -> LetRecIn (name, params, e1, e2))
+            <*> f' e1 <*> f' e2 ) acc
       | BinOp (a, op, b) ->
           let acc, a = f acc a in
           let acc, b = f acc b in
@@ -102,7 +116,7 @@ module Expr = struct
           acc, FunTuple (params, e)
       | Apply (e, li) ->
           let acc, e = f acc e in
-          let acc, li = List.fold_left_map f acc li in
+          let acc, li = fold_left_map f' li acc in
           acc, Apply (e, li)
       | Tuple li ->
           let acc, li = List.fold_left_map f acc li in
