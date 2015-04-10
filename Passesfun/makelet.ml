@@ -78,7 +78,7 @@ let transform curry e = match Expr.unfix e with
   | _ -> e
 
 let rec tr curry e =
-  let e2 = Expr.Writer.Deep.map (transform curry) (transform curry e)
+  let e2 = Expr.Fixed.Deep.map (transform curry) e
   in if e = e2 then e
     else tr curry e2
 

@@ -56,8 +56,6 @@ let side_effects acc e =
             else true
         | _ -> true
         end
-(*
-      List.exists (has_side_effects acc) li || has_side_effects acc a (* TODO sur l'application de a ... on devrait faire un typage a effets... *) *)
     | Expr.Tuple li ->
       List.exists (has_side_effects acc) li
     | Expr.Lief _ -> false
@@ -68,12 +66,8 @@ let side_effects acc e =
         has_side_effects acc c
     | Expr.Print _ -> true
     | Expr.ReadIn _ -> true
-    | Expr.Block li ->
-      List.exists (has_side_effects acc) li
-    | Expr.Record li ->
-			true
-(*
-      List.exists (fun (e, name) -> has_side_effects acc e) li *)
+    | Expr.Block li -> List.exists (has_side_effects acc) li
+    | Expr.Record li -> true
     | Expr.RecordAffect _ -> true
     | Expr.RecordAccess _ -> true
     | Expr.ArrayInit _ -> true

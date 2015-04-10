@@ -80,7 +80,7 @@ let tr e = match Expr.unfix e with
 
 let apply p =
   let declarations = List.map (function
-  | Declaration (name, e) -> Declaration (name, Expr.Writer.Deep.map tr e)
+  | Declaration (name, e) -> Declaration (name, Expr.Fixed.Deep.map tr e)
   | x -> x
   ) p.declarations
   in {p with declarations = declarations }

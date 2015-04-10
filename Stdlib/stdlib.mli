@@ -449,12 +449,17 @@ sig
   val unfix : 'a t -> ('a t , 'a) F.tofix
   val fix : ('a t , 'a) F.tofix -> 'a t
   val fixa : int -> ('a t , 'a) F.tofix -> 'a t
-  val map : ('a -> 'b) -> ('a, 'c) F.tofix -> ('b, 'c) F.tofix
-  val foldmap : ('a -> 'b -> 'a * 'c) -> 'a -> ('b, 'd) F.tofix -> 'a * ('c, 'd) F.tofix
 
-  val foldmapt : ('a -> 'b t -> 'a * 'b t) -> 'a -> 'b t -> 'a * 'b t
+  module Surface : sig
+    val map : ('a -> 'b) -> ('a, 'c) F.tofix -> ('b, 'c) F.tofix
+    val mapt : ('a t -> 'a t) -> 'a t -> 'a t
+    val foldmap : ('a -> 'b -> 'a * 'c) -> 'a -> ('b, 'd) F.tofix -> 'a * ('c, 'd) F.tofix
+    val foldmapt : ('a -> 'b t -> 'a * 'b t) -> 'a -> 'b t -> 'a * 'b t
+    val fold : ('a -> 'b -> 'a) -> 'a -> ('b, 'd) F.tofix -> 'a
+  end
 
-  val fold : ('a -> 'b -> 'a) -> 'a -> ('b, 'd) F.tofix -> 'a
-  val dmap : ('a t -> 'a t) -> 'a t -> 'a t
-  val dfold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+  module Deep : sig
+    val map : ('a t -> 'a t) -> 'a t -> 'a t
+    val fold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+  end
 end

@@ -177,7 +177,7 @@ module Expr = struct
   module Writer = AstWriter.F (struct
     type 'a alias = t
     type 'a t = 'a alias
-    let foldmap f acc e = Fixed.foldmapt f acc e
+    let foldmap f acc e = Fixed.Surface.foldmapt f acc e
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
   let letin name e1 e2 = fix (LetIn (name, e1, e2) )

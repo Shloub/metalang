@@ -51,7 +51,7 @@ let rec tr acc e =
       Expr.Lief (Expr.Binding newname) |> fix
   | Expr.LetIn ( (Ast.InternalName _) as n, v, in_) ->
       let newname = Ast.UserName (Fresh.fresh_user ())  in
-      let v = Expr.Writer.Surface.map (tr acc) v in
+      let v = tr acc v in
       let acc = BindingMap.add n newname acc in
       let in_ = tr acc in_ in
       Expr.LetIn (newname, v, in_) |> fix
@@ -69,7 +69,7 @@ let rec tr acc e =
       let acc, names = process_names names acc in
       let in_ = tr acc in_ in
       Expr.FunTuple (names, in_) |> fix
-  | _ -> Expr.Writer.Surface.map (tr acc) e
+  | _ -> Expr.Fixed.Surface.mapt (tr acc) e
 
 
 let apply p =

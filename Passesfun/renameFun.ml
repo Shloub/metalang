@@ -75,7 +75,7 @@ let rec transform rename e =
     | None -> e
     | Some name2 -> Expr.Fixed.fixa annot (Expr.Lief (Expr.Binding name2))
     end
-	| _ -> Expr.Writer.Surface.map (transform rename) e
+  | _ -> Expr.Fixed.Surface.mapt (transform rename) e
 
 let tr e = transform BindingMap.empty e
 

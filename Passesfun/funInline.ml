@@ -41,9 +41,9 @@ let rec tr acc e =
   let fix e0 = Expr.Fixed.fixa (Expr.Fixed.annot e) e0 in
   match Expr.unfix e with
   | Expr.Lief (Expr.Binding b) -> begin match BindingMap.find_opt b acc with
-					| None -> e
-					| Some n -> fix n
-				  end
+    | None -> e
+    | Some n -> fix n
+  end
   | Expr.LetIn (name, ((Expr.Fixed.F (_, Expr.Lief _)) as l), in_) ->
      let l = tr acc l in
      let acc = BindingMap.add name (Expr.unfix l) acc in
@@ -67,7 +67,7 @@ let rec tr acc e =
      let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
      let in_ = tr acc in_ in
      fix ( Expr.FunTuple (names, in_))
-  | _ -> Expr.Writer.Surface.map (tr acc) e
+  | _ -> Expr.Fixed.Surface.mapt (tr acc) e
 
 let apply p =
   let declarations = List.map (function

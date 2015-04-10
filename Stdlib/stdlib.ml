@@ -402,15 +402,18 @@ module Fix2 (F : Fixable2) = struct
   let fix x = F (F.next (), x)
   let fixa a x = F (a, x)
 
-  let foldmap f acc x = F.foldmap f acc x
+  module Surface = struct
+    let foldmap f acc x = F.foldmap f acc x
+    let foldmapt f acc (F (i, x)) = let acc, x = foldmap f acc x in acc, F (i, x)
+    let map f x = snd (foldmap (fun acc x -> (), f x) () x)
+    let mapt f (F(i, x)) = F (i, map f x)
+    let fold f acc t = fst ( foldmap (fun acc t -> f acc t, t) acc t)
+  end
 
-  let foldmapt f acc (F (i, x)) = let acc, x = foldmap f acc x in acc, F (i, x)
-
-  let map f x = snd (foldmap (fun acc x -> (), f x) () x)
-  let fold f acc t = fst ( foldmap (fun acc t -> f acc t, t) acc t)
-
-  let rec dmap f (F(i, x)) = F (i, map (fun x -> f (dmap f x)) x)
-  let rec dfold f (F(i, x))  = f (map (dfold f) x)
-
+  module Deep = struct
+    let rec map f (F(i, x)) = F (i, Surface.map (fun x -> f (map f x)) x)
+    let map f x = f (map f x)
+    let rec fold f (F(i, x))  = f (Surface.map (fold f) x)
+  end
 
 end
