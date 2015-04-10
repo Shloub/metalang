@@ -76,35 +76,97 @@ module Expr = struct
   | ArrayAffect of 'a * 'a list * 'a
   | LetIn of Ast.varname * 'a * 'a
 
-  module Fixed = Fix(struct
+  module Fixed = Fix2(struct
     type ('a, 'b) alias = 'a tofix
     type ('a, 'b) tofix = ('a, 'b) alias
-    let map f = function
-      | LetRecIn (name, params, e1, e2) ->
-        LetRecIn (name, params, f e1, f e2)
-      | BinOp (a, op, b) -> BinOp (f a, op, f b)
-      | UnOp (a, op) -> UnOp (f a, op)
-      | Fun (params, e) -> Fun (params, f e)
-      | FunTuple (params, e) -> Fun (params, f e)
-      | Apply (e, li) -> Apply (f e, List.map f li)
-      | Tuple li -> Tuple (List.map f li)
-      | Lief l -> Lief l
-      | Comment (s, c) -> Comment (s, f c)
-      | If (e1, e2, e3) -> If (f e1, f e2, f e3)
-      | Print (e, ty) -> Print (f e, ty)
-      | ReadIn (ty, e) -> ReadIn (ty, f e)
-      | Skip -> Skip
-      | Block li -> Block (List.map f li)
-      | Record li -> Record (List.map (fun (e, s) -> f e, s) li)
-      | RecordAffect (e1, s, e2) -> RecordAffect (f e1, s, f e2)
-      | RecordAccess (e, s) -> RecordAccess (f e, s)
-      | ArrayAccess (tab, indexes) -> ArrayAccess (f tab, List.map f indexes)
-      | ArrayMake (len, lambda, env) -> ArrayMake (f len, f lambda, f env)
-      | ArrayInit (len, lambda) -> ArrayInit (f len, f lambda)
-      | MultiPrint (format, li) -> MultiPrint (format, List.map (fun (a, b) -> (f a, b)) li)
-      | ArrayAffect (tab, indexes, v) -> ArrayAffect (f tab, List.map f indexes, f v)
-      | LetIn (binding, e, b) -> LetIn (binding, f e, f b)
     let next () = Ast.next ()
+
+    let foldmap f acc e =
+      match e with
+      | LetRecIn (name, params, e1, e2) ->
+          let acc, e1 = f acc e1 in
+          let acc, e2 = f acc e2 in
+          acc, LetRecIn (name, params, e1, e2)
+      | BinOp (a, op, b) ->
+          let acc, a = f acc a in
+          let acc, b = f acc b in
+          acc, BinOp (a, op, b)
+      | UnOp (a, op) ->
+          let acc, a = f acc a in
+          acc, UnOp (a, op)
+      | Fun (params, e) ->
+          let acc, e = f acc e in
+          acc, Fun (params, e)
+      | FunTuple (params, e) ->
+          let acc, e = f acc e in
+          acc, FunTuple (params, e)
+      | Apply (e, li) ->
+          let acc, e = f acc e in
+          let acc, li = List.fold_left_map f acc li in
+          acc, Apply (e, li)
+      | Tuple li ->
+          let acc, li = List.fold_left_map f acc li in
+          acc, Tuple li
+      | Lief l -> acc, Lief l
+      | Comment (s, c) ->
+          let acc, c = f acc c in
+          acc, Comment (s, c)
+      | If (e1, e2, e3) ->
+          let acc, e1 = f acc e1 in
+          let acc, e2 = f acc e2 in
+          let acc, e3 = f acc e3 in
+          acc, If (e1, e2, e3)
+      | Print (e, ty) ->
+          let acc, e = f acc e in
+          acc, Print (e, ty)
+      | ReadIn (ty, e) ->
+          let acc, e = f acc e in
+          acc, ReadIn (ty, e)
+      | Skip -> acc, Skip
+      | Block li ->
+          let acc, li = List.fold_left_map f acc li in
+          acc, Block li
+      | Record li ->
+          let acc, li = List.fold_left_map (fun acc (e, s) ->
+            let acc, e = f acc e in
+            acc, (e, s)
+			 ) acc li in
+          acc, Record li
+      | RecordAffect (e1, s, e2) ->
+          let acc, e1 = f acc e1 in
+          let acc, e2 = f acc e2 in
+          acc, RecordAffect (e1, s, e2)
+      | RecordAccess (e, s) ->
+          let acc, e = f acc e in
+          acc, RecordAccess (e, s)
+      | ArrayAccess (tab, indexes) ->
+          let acc, tab = f acc tab in
+          let acc, indexes = List.fold_left_map f acc indexes in
+          acc, ArrayAccess (tab, indexes)
+      | ArrayMake (len, lambda, env) ->
+          let acc, len = f acc len in
+          let acc, env = f acc env in
+          let acc, lambda = f acc lambda in
+          acc, ArrayMake (len, lambda, env)
+      | ArrayInit (len, lambda) ->
+          let acc, len = f acc len in
+          let acc, lambda = f acc lambda in
+          acc, ArrayInit (len, lambda)
+      | ArrayAffect (tab, indexes, v) ->
+          let acc, tab = f acc tab in
+          let acc, indexes = List.fold_left_map f acc indexes in
+          let acc, v = f acc v in
+          acc, ArrayAffect (tab, indexes, v)
+      | LetIn (binding, e, b) ->
+          let acc, e = f acc e in
+          let acc, b = f acc b in
+          acc, LetIn (binding, e, b)
+      | MultiPrint (format, li) ->
+          let acc, li = List.fold_left_map (fun acc (a, b) ->
+            let acc, a = f acc a in
+            acc, (a, b)) acc li in
+          acc, MultiPrint (format, li)
+
   end)
 
   type t = unit Fixed.t
@@ -115,95 +177,7 @@ module Expr = struct
   module Writer = AstWriter.F (struct
     type 'a alias = t
     type 'a t = 'a alias
-    let foldmap f acc e =
-      let annot = Fixed.annot e in
-      let acc, unfixed = match unfix e with
-        | LetRecIn (name, params, e1, e2) ->
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          acc, LetRecIn (name, params, e1, e2)
-        | BinOp (a, op, b) ->
-          let acc, a = f acc a in
-          let acc, b = f acc b in
-          acc, BinOp (a, op, b)
-        | UnOp (a, op) ->
-          let acc, a = f acc a in
-          acc, UnOp (a, op)
-        | Fun (params, e) ->
-          let acc, e = f acc e in
-          acc, Fun (params, e)
-        | FunTuple (params, e) ->
-          let acc, e = f acc e in
-          acc, FunTuple (params, e)
-        | Apply (e, li) ->
-          let acc, e = f acc e in
-          let acc, li = List.fold_left_map f acc li in
-          acc, Apply (e, li)
-        | Tuple li ->
-          let acc, li = List.fold_left_map f acc li in
-          acc, Tuple li
-        | Lief l -> acc, Lief l
-        | Comment (s, c) ->
-          let acc, c = f acc c in
-          acc, Comment (s, c)
-        | If (e1, e2, e3) ->
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          let acc, e3 = f acc e3 in
-          acc, If (e1, e2, e3)
-        | Print (e, ty) ->
-          let acc, e = f acc e in
-          acc, Print (e, ty)
-        | ReadIn (ty, e) ->
-          let acc, e = f acc e in
-          acc, ReadIn (ty, e)
-        | Skip -> acc, Skip
-				| Block li ->
-						let acc, li = List.fold_left_map f acc li in
-						acc, Block li
-				| Record li ->
-						let acc, li = List.fold_left_map (fun acc (e, s) ->
-							let acc, e = f acc e in
-							acc, (e, s)
-																						 ) acc li in
-						acc, Record li
-				| RecordAffect (e1, s, e2) ->
-						let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          acc, RecordAffect (e1, s, e2)
-				| RecordAccess (e, s) ->
-						let acc, e = f acc e in
-						acc, RecordAccess (e, s)
-				| ArrayAccess (tab, indexes) ->
-						let acc, tab = f acc tab in
-						let acc, indexes = List.fold_left_map f acc indexes in
-						acc, ArrayAccess (tab, indexes)
-				| ArrayMake (len, lambda, env) ->
-						let acc, len = f acc len in
-						let acc, env = f acc env in
-						let acc, lambda = f acc lambda in
-						acc, ArrayMake (len, lambda, env)
-        | ArrayInit (len, lambda) ->
-						let acc, len = f acc len in
-						let acc, lambda = f acc lambda in
-						acc, ArrayInit (len, lambda)
-				| ArrayAffect (tab, indexes, v) ->
-						let acc, tab = f acc tab in
-						let acc, indexes = List.fold_left_map f acc indexes in
-						let acc, v = f acc v in
-						acc, ArrayAffect (tab, indexes, v)
-				| LetIn (binding, e, b) ->
-						let acc, e = f acc e in
-						let acc, b = f acc b in
-						acc, LetIn (binding, e, b)
-
-      | MultiPrint (format, li) ->
-	 let acc, li = List.fold_left_map (fun acc (a, b) ->
-					   let acc, a = f acc a in
-					   acc, (a, b)) acc li in
-	 acc, MultiPrint (format, li)
-
-      in acc, fixa annot unfixed
+    let foldmap f acc e = Fixed.foldmapt f acc e
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
   let letin name e1 e2 = fix (LetIn (name, e1, e2) )
