@@ -213,7 +213,7 @@ out/%.class.out : out/%.class
 	$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.js.out : out/%.js
-	node $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	nodejs $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.lua.out : out/%.lua
 	$(lua) $< < tests/prog/$(basename $*).in > $@ || exit 1;
