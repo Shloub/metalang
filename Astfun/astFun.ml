@@ -94,93 +94,33 @@ let (<*>) f g acc =
 
     let foldmap f acc e =
       let f' x acc = f acc x in
+      let f'f (x, a) acc =
+	let acc, x = f acc x in
+	acc, (x, a) in
       match e with
-      | LetRecIn (name, params, e1, e2) -> (*
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          acc, LetRecIn (name, params, e1, e2) *)
-         ( ret (fun e1 e2 -> LetRecIn (name, params, e1, e2))
-            <*> f' e1 <*> f' e2 ) acc
-      | BinOp (a, op, b) ->
-          let acc, a = f acc a in
-          let acc, b = f acc b in
-          acc, BinOp (a, op, b)
-      | UnOp (a, op) ->
-          let acc, a = f acc a in
-          acc, UnOp (a, op)
-      | Fun (params, e) ->
-          let acc, e = f acc e in
-          acc, Fun (params, e)
-      | FunTuple (params, e) ->
-          let acc, e = f acc e in
-          acc, FunTuple (params, e)
-      | Apply (e, li) ->
-          let acc, e = f acc e in
-          let acc, li = fold_left_map f' li acc in
-          acc, Apply (e, li)
-      | Tuple li ->
-          let acc, li = List.fold_left_map f acc li in
-          acc, Tuple li
-      | Lief l -> acc, Lief l
-      | Comment (s, c) ->
-          let acc, c = f acc c in
-          acc, Comment (s, c)
-      | If (e1, e2, e3) ->
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          let acc, e3 = f acc e3 in
-          acc, If (e1, e2, e3)
-      | Print (e, ty) ->
-          let acc, e = f acc e in
-          acc, Print (e, ty)
-      | ReadIn (ty, e) ->
-          let acc, e = f acc e in
-          acc, ReadIn (ty, e)
-      | Skip -> acc, Skip
-      | Block li ->
-          let acc, li = List.fold_left_map f acc li in
-          acc, Block li
-      | Record li ->
-          let acc, li = List.fold_left_map (fun acc (e, s) ->
-            let acc, e = f acc e in
-            acc, (e, s)
-			 ) acc li in
-          acc, Record li
-      | RecordAffect (e1, s, e2) ->
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          acc, RecordAffect (e1, s, e2)
-      | RecordAccess (e, s) ->
-          let acc, e = f acc e in
-          acc, RecordAccess (e, s)
-      | ArrayAccess (tab, indexes) ->
-          let acc, tab = f acc tab in
-          let acc, indexes = List.fold_left_map f acc indexes in
-          acc, ArrayAccess (tab, indexes)
-      | ArrayMake (len, lambda, env) ->
-          let acc, len = f acc len in
-          let acc, env = f acc env in
-          let acc, lambda = f acc lambda in
-          acc, ArrayMake (len, lambda, env)
-      | ArrayInit (len, lambda) ->
-          let acc, len = f acc len in
-          let acc, lambda = f acc lambda in
-          acc, ArrayInit (len, lambda)
-      | ArrayAffect (tab, indexes, v) ->
-          let acc, tab = f acc tab in
-          let acc, indexes = List.fold_left_map f acc indexes in
-          let acc, v = f acc v in
-          acc, ArrayAffect (tab, indexes, v)
-      | LetIn (binding, e, b) ->
-          let acc, e = f acc e in
-          let acc, b = f acc b in
-          acc, LetIn (binding, e, b)
-      | MultiPrint (format, li) ->
-          let acc, li = List.fold_left_map (fun acc (a, b) ->
-            let acc, a = f acc a in
-            acc, (a, b)) acc li in
-          acc, MultiPrint (format, li)
-
+      | LetRecIn (name, params, e1, e2) -> ( ret (fun e1 e2 -> LetRecIn (name, params, e1, e2)) <*> f' e1 <*> f' e2 ) acc
+      | BinOp (a, op, b) -> (ret (fun a b -> BinOp (a, op, b)) <*> f' a <*> f' b ) acc
+      | UnOp (a, op) -> (ret (fun a -> UnOp (a, op)) <*> f' a) acc
+      | Fun (params, e) -> (ret (fun e -> Fun (params, e)) <*> f' e) acc
+      | FunTuple (params, e) -> (ret (fun e -> FunTuple (params, e)) <*> f' e) acc
+      | Apply (e, li) -> (ret (fun e li -> Apply (e, li)) <*> f' e <*> fold_left_map f' li) acc
+      | Tuple li -> (ret (fun li -> Tuple li) <*> fold_left_map f' li) acc
+      | Lief l -> (ret (Lief l)) acc
+      | Comment (s, c) -> (ret (fun c -> Comment (s, c)) <*> f' c) acc
+      | If (e1, e2, e3) -> (ret (fun e1 e2 e3 -> If (e1, e2, e3)) <*> f' e1 <*> f' e2 <*> f' e3) acc
+      | Print (e, ty) -> (ret (fun e -> Print (e, ty)) <*> f' e) acc
+      | ReadIn (ty, e) -> (ret (fun e -> ReadIn (ty, e)) <*> f' e) acc
+      | Skip -> ret Skip acc
+      | Block li -> (ret (fun li -> Block li) <*> fold_left_map f' li) acc
+      | Record li -> (ret (fun li -> Record li) <*> fold_left_map f'f li) acc
+      | RecordAffect (e1, s, e2) -> (ret (fun e1 e2 -> RecordAffect (e1, s, e2)) <*> f' e1 <*> f' e2) acc
+      | RecordAccess (e, s) -> (ret (fun e -> RecordAccess (e, s)) <*> f' e) acc
+      | ArrayAccess (tab, indexes) -> (ret (fun tab indexes -> ArrayAccess (tab, indexes)) <*> f' tab <*> fold_left_map f' indexes) acc
+      | ArrayMake (len, lambda, env) -> (ret (fun len lambda env -> ArrayMake (len, lambda, env)) <*> f' len <*> f' lambda <*> f' env) acc
+      | ArrayInit (len, lambda) -> (ret (fun len lambda -> ArrayInit (len, lambda)) <*> f' len <*> f' lambda) acc
+      | ArrayAffect (tab, indexes, v) -> (ret (fun tab indexes v -> ArrayAffect(tab, indexes, v)) <*> f' tab <*> fold_left_map f' indexes <*> f' v) acc
+      | LetIn (binding, e, b) -> (ret (fun e b -> LetIn (binding, e, b)) <*> f' e <*> f' b) acc
+      | MultiPrint (format, li) -> (ret (fun li -> MultiPrint (format, li)) <*> fold_left_map f'f li) acc
   end)
 
   type t = unit Fixed.t
