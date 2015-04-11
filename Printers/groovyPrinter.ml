@@ -80,7 +80,7 @@ class groovyPrinter = object(self)
 
 
   method print_scanner f () =
-    Format.fprintf f "@[<h>@Field %aScanner scanner = new Scanner(System.in)%a@]"
+    Format.fprintf f "@[<h>@@Field %aScanner scanner = new Scanner(System.in)%a@]"
       self#static ()
       self#separator ()
 
