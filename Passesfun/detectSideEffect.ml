@@ -40,17 +40,16 @@ let (||) a b = match a, b with
   | _, EEffect -> EEffect
   | _ -> EPure
 
-let merge acc1 acc2 = IntMap.merge (fun key e1 e2 -> match e1, e2 with
-						     | Some e1, _ -> Some e1
-						     | None, Some e2 -> Some e2
-						     | _ -> None ) acc1 acc2
+let empty acc = acc
+let add i v acc a = IntMap.add i v (acc a)
+let merge acc1 acc2 map = acc1 (acc2 map)
 
 let side_effects i e =
   let v, acc = match e with
   | Expr.Fun (_, (_, acc)) -> EPure, acc
   | Expr.FunTuple (_, (_, acc)) -> EPure, acc
-  | Expr.Lief (Expr.Binding (Ast.UserName a)) when Tags.is_taged ("macro_" ^ a ^ "_pure") -> EMacro, IntMap.empty
-  | Expr.Lief _ -> EPure, IntMap.empty
+  | Expr.Lief (Expr.Binding (Ast.UserName a)) when Tags.is_taged ("macro_" ^ a ^ "_pure") -> EMacro, empty
+  | Expr.Lief _ -> EPure, empty
   | Expr.Apply ((EMacro, _), _)
   | Expr.LetRecIn _
   | Expr.UnOp _
@@ -62,7 +61,7 @@ let side_effects i e =
   | Expr.Block _ -> Expr.Fixed.Surface.fold
 		      (fun (has, acc) (has2, acc2) ->
 		       has || has2,
-		       merge acc acc2) (EPure, IntMap.empty) e
+		       merge acc acc2) (EPure, empty) e
   | Expr.Skip
   | Expr.Apply _
   | Expr.MultiPrint _
@@ -75,16 +74,16 @@ let side_effects i e =
   | Expr.Print _
   | Expr.ReadIn _
   | Expr.Record _ ->
-     let acc = Expr.Fixed.Surface.fold (fun acc2 (_, acc) -> merge acc acc2) IntMap.empty e in
+     let acc = Expr.Fixed.Surface.fold (fun acc2 (_, acc) -> merge acc acc2) empty e in
     EEffect, acc
-  in v, IntMap.add i v acc
+  in v, add i v acc
 
 let tr e = snd (Expr.Fixed.Deep.folda side_effects e)
 
 let apply p =
   let side_effects = List.fold_left (fun acc e -> match e with
-  | Declaration (name, e) -> merge acc (tr e)
+  | Declaration (name, e) -> tr e acc
   | _ -> acc
-  ) p.side_effects p.declarations
+  ) IntMap.empty p.declarations
   in {p with side_effects = side_effects }
 
