@@ -265,7 +265,11 @@ class haskellPrinter = object(self)
         self#expr e1
         self#expr e2
 
-  method isSideEffect expr = IntMap.find (E.Fixed.annot expr) side_effects
+  method isSideEffect expr = match IntMap.find (E.Fixed.annot expr) side_effects with
+    | AstFun.EMacro -> false
+    | AstFun.EPure -> false
+    | AstFun.EEffect -> true
+
   method isPure expr = not (self#isSideEffect expr)
 
   method eM_ f expr = self#eM' ~p:fun_priority f expr
@@ -639,20 +643,15 @@ class haskellPrinter = object(self)
     side_effects <- prog.AstFun.side_effects;
     let unsafeop op = AstFun.existsExpr (fun e ->
       match E.unfix e with
-      | E.BinOp (a, op, b) ->
-          IntMap.find (E.Fixed.annot a) prog.AstFun.side_effects ||
-          IntMap.find (E.Fixed.annot b) prog.AstFun.side_effects
-        | _ -> false
+      | E.BinOp (a, op, b) -> self#isSideEffect a || self#isSideEffect b
+      | _ -> false
       ) prog.AstFun.declarations
     in
     let need_readint = Ast.TypeSet.mem (Type.integer) prog.AstFun.options.AstFun.reads in
     let ifm = prog.AstFun.options.AstFun.hasSkip || need_readint || AstFun.existsExpr (fun e ->
       match E.unfix e with
-      | E.If (a, b, c) ->
-          IntMap.find (E.Fixed.annot a) prog.AstFun.side_effects ||
-          IntMap.find (E.Fixed.annot b) prog.AstFun.side_effects ||
-          IntMap.find (E.Fixed.annot c) prog.AstFun.side_effects
-        | _ -> false
+      | E.If (a, b, c) -> self#isSideEffect a || self#isSideEffect b || self#isSideEffect c
+      | _ -> false
       ) prog.AstFun.declarations in
     let read_array = AstFun.existsExpr (fun e ->match E.unfix e with
     | E.ArrayAccess _ -> true

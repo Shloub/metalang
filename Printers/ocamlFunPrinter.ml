@@ -302,9 +302,9 @@ class camlFunPrinter = object(self)
         (print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a * %a" fa a fb b)) li
 
   method is_rec name e =
-    E.Writer.Deep.fold (fun acc e -> acc || match E.unfix e with
-    | E.Lief (E.Binding n) -> n = name
-    | _ -> false) false e
+    E.Fixed.Deep.exists (fun e -> match E.unfix e with
+				  | E.Lief (E.Binding n) -> n = name
+				  | _ -> false) e
 
   method extract_fun_params e acc = match E.unfix e with
   | E.Fun ([], e) ->

@@ -26,12 +26,15 @@
 
 (**
    Ce module contient un ast fonctionnel
+   Cet ast est utilisé pour le rendu haskell, ocaml et scheme.
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
+
+type effect = EMacro | EPure | EEffect
 
 module Expr = struct
 
@@ -81,45 +84,43 @@ module Expr = struct
     type ('a, 'b) tofix = ('a, 'b) alias
     let next () = Ast.next ()
 
-type ('a, 'acc) k = 'acc -> 'acc * 'a
-let ret x acc = acc, x
-let (<*>) f g acc =
-  let acc, e1 = f acc in
-  let acc, e2 = g acc in
-  acc, e1 e2
+    let ret x acc = acc, x
+    let (<*>) f g acc =
+      let acc, e1 = f acc in
+      let acc, e2 = g acc in
+      acc, e1 e2
 
-  let fold_left_map f l =
-    ret List.rev
-    <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+    let fold_left_map f l =
+      ret List.rev
+      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
 
     let foldmap f e =
-      let f' x acc = f acc x in
       let f'f (x, a) acc =
-	let acc, x = f acc x in
+	let acc, x = f x acc in
 	acc, (x, a) in
       match e with
-      | LetRecIn (name, params, e1, e2) -> ret (fun e1 e2 -> LetRecIn (name, params, e1, e2)) <*> f' e1 <*> f' e2
-      | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f' a <*> f' b
-      | UnOp (a, op) -> ret (fun a -> UnOp (a, op)) <*> f' a
-      | Fun (params, e) -> ret (fun e -> Fun (params, e)) <*> f' e
-      | FunTuple (params, e) -> ret (fun e -> FunTuple (params, e)) <*> f' e
-      | Apply (e, li) -> ret (fun e li -> Apply (e, li)) <*> f' e <*> fold_left_map f' li
-      | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f' li
+      | LetRecIn (name, params, e1, e2) -> ret (fun e1 e2 -> LetRecIn (name, params, e1, e2)) <*> f e1 <*> f e2
+      | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f a <*> f b
+      | UnOp (a, op) -> ret (fun a -> UnOp (a, op)) <*> f a
+      | Fun (params, e) -> ret (fun e -> Fun (params, e)) <*> f e
+      | FunTuple (params, e) -> ret (fun e -> FunTuple (params, e)) <*> f e
+      | Apply (e, li) -> ret (fun e li -> Apply (e, li)) <*> f e <*> fold_left_map f li
+      | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f li
       | Lief l -> ret (Lief l)
-      | Comment (s, c) -> ret (fun c -> Comment (s, c)) <*> f' c
-      | If (e1, e2, e3) -> ret (fun e1 e2 e3 -> If (e1, e2, e3)) <*> f' e1 <*> f' e2 <*> f' e3
-      | Print (e, ty) -> ret (fun e -> Print (e, ty)) <*> f' e
-      | ReadIn (ty, e) -> ret (fun e -> ReadIn (ty, e)) <*> f' e
+      | Comment (s, c) -> ret (fun c -> Comment (s, c)) <*> f c
+      | If (e1, e2, e3) -> ret (fun e1 e2 e3 -> If (e1, e2, e3)) <*> f e1 <*> f e2 <*> f e3
+      | Print (e, ty) -> ret (fun e -> Print (e, ty)) <*> f e
+      | ReadIn (ty, e) -> ret (fun e -> ReadIn (ty, e)) <*> f e
       | Skip -> ret Skip
-      | Block li -> ret (fun li -> Block li) <*> fold_left_map f' li
+      | Block li -> ret (fun li -> Block li) <*> fold_left_map f li
       | Record li -> ret (fun li -> Record li) <*> fold_left_map f'f li
-      | RecordAffect (e1, s, e2) -> ret (fun e1 e2 -> RecordAffect (e1, s, e2)) <*> f' e1 <*> f' e2
-      | RecordAccess (e, s) -> ret (fun e -> RecordAccess (e, s)) <*> f' e
-      | ArrayAccess (tab, indexes) -> ret (fun tab indexes -> ArrayAccess (tab, indexes)) <*> f' tab <*> fold_left_map f' indexes
-      | ArrayMake (len, lambda, env) -> ret (fun len lambda env -> ArrayMake (len, lambda, env)) <*> f' len <*> f' lambda <*> f' env
-      | ArrayInit (len, lambda) -> ret (fun len lambda -> ArrayInit (len, lambda)) <*> f' len <*> f' lambda
-      | ArrayAffect (tab, indexes, v) -> ret (fun tab indexes v -> ArrayAffect(tab, indexes, v)) <*> f' tab <*> fold_left_map f' indexes <*> f' v
-      | LetIn (binding, e, b) -> ret (fun e b -> LetIn (binding, e, b)) <*> f' e <*> f' b
+      | RecordAffect (e1, s, e2) -> ret (fun e1 e2 -> RecordAffect (e1, s, e2)) <*> f e1 <*> f e2
+      | RecordAccess (e, s) -> ret (fun e -> RecordAccess (e, s)) <*> f e
+      | ArrayAccess (tab, indexes) -> ret (fun tab indexes -> ArrayAccess (tab, indexes)) <*> f tab <*> fold_left_map f indexes
+      | ArrayMake (len, lambda, env) -> ret (fun len lambda env -> ArrayMake (len, lambda, env)) <*> f len <*> f lambda <*> f env
+      | ArrayInit (len, lambda) -> ret (fun len lambda -> ArrayInit (len, lambda)) <*> f len <*> f lambda
+      | ArrayAffect (tab, indexes, v) -> ret (fun tab indexes v -> ArrayAffect(tab, indexes, v)) <*> f tab <*> fold_left_map f indexes <*> f v
+      | LetIn (binding, e, b) -> ret (fun e b -> LetIn (binding, e, b)) <*> f e <*> f b
       | MultiPrint (format, li) -> ret (fun li -> MultiPrint (format, li)) <*> fold_left_map f'f li
   end)
 
@@ -128,11 +129,6 @@ let (<*>) f g acc =
   let unfix = Fixed.unfix
   let fixa : 'a -> 'b -> t = Fixed.fixa
 
-  module Writer = AstWriter.F (struct
-    type 'a alias = t
-    type 'a t = 'a alias
-    let foldmap f acc e = Fixed.Surface.foldmapt f e acc
-  end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
   let letin name e1 e2 = fix (LetIn (name, e1, e2) )
   let lief l = fix (Lief l)
@@ -171,10 +167,11 @@ type declaration =
 | Macro of Ast.varname * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
 
 type opts = { hasSkip : bool; reads : Ast.TypeSet.t }
-type prog = { declarations : declaration list; options : opts ; side_effects : bool IntMap.t }
+type prog = { declarations : declaration list; options : opts ; side_effects : effect IntMap.t }
 
 let existsExpr f li =
-   List.exists (function
-     | Declaration (_, e) -> Expr.Writer.Deep.exists f e
-    | _ -> false
-              ) li
+  List.exists
+    (function
+      | Declaration (_, e) -> Expr.Fixed.Deep.exists f e
+      | _ -> false
+    ) li

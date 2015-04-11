@@ -450,7 +450,7 @@ end
 
 module type Fixable2 = sig
   type ('a, 'b) tofix
-  val foldmap : ('a -> 'b -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
+  val foldmap : ('b -> 'a -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
   val next : unit -> int
 end
 
@@ -464,15 +464,20 @@ module Fix2 (F : Fixable2) = struct
   module Surface = struct
     let foldmap = F.foldmap
     let foldmapt f (F (i, x)) acc = let acc, x = foldmap f x acc in acc, F (i, x)
-    let map f x = snd (foldmap (fun () x -> (), f x) x ())
+    let map f x = snd (foldmap (fun x () -> (), f x) x ())
     let mapt f (F(i, x)) = F (i, map f x)
-    let fold f acc t = fst ( foldmap (fun acc t -> f acc t, t) t acc)
+    let fold f acc t = fst ( foldmap (fun t acc -> f acc t, t) t acc)
   end
 
   module Deep = struct
-    let rec map f (F(i, x)) = F (i, Surface.map (fun x -> f (map f x)) x)
-    let map f x = f (map f x)
+    let rec map f (F(i, x)) = f (F (i, Surface.map (map f) x))
+    let rec mapa f (F(i, x)) =  f i (F (i, Surface.map (mapa f) x))
     let rec fold f (F(i, x))  = f (Surface.map (fold f) x)
+    let rec folda f (F(i, x))  = f i (Surface.map (folda f) x)
+
+    let rec exists f x =
+      if f x then true
+      else fst (Surface.foldmap (fun x acc -> (acc || exists f x), x) (unfix x) false)
   end
 
 end
