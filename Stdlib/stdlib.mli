@@ -438,7 +438,7 @@ end
 
 module type Fixable2 = sig
   type ('a, 'b) tofix
-  val foldmap : ('a -> 'b -> 'a * 'd) -> 'a -> ('b, 'c) tofix -> 'a * ('d, 'c) tofix
+  val foldmap : ('a -> 'b -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
   val next : unit -> int
 end
 
@@ -453,8 +453,8 @@ sig
   module Surface : sig
     val map : ('a -> 'b) -> ('a, 'c) F.tofix -> ('b, 'c) F.tofix
     val mapt : ('a t -> 'a t) -> 'a t -> 'a t
-    val foldmap : ('a -> 'b -> 'a * 'c) -> 'a -> ('b, 'd) F.tofix -> 'a * ('c, 'd) F.tofix
-    val foldmapt : ('a -> 'b t -> 'a * 'b t) -> 'a -> 'b t -> 'a * 'b t
+    val foldmap : ('a -> 'b -> 'a * 'c) -> ('b, 'd) F.tofix -> 'a -> 'a * ('c, 'd) F.tofix
+    val foldmapt : ('a -> 'b t -> 'a * 'b t) -> 'b t -> 'a -> 'a * 'b t
     val fold : ('a -> 'b -> 'a) -> 'a -> ('b, 'd) F.tofix -> 'a
   end
 

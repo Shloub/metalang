@@ -391,7 +391,7 @@ end
 
 module type Fixable2 = sig
   type ('a, 'b) tofix
-  val foldmap : ('a -> 'b -> 'a * 'd) -> 'a -> ('b, 'c) tofix -> 'a * ('d, 'c) tofix
+  val foldmap : ('a -> 'b -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
   val next : unit -> int
 end
 
@@ -403,11 +403,11 @@ module Fix2 (F : Fixable2) = struct
   let fixa a x = F (a, x)
 
   module Surface = struct
-    let foldmap f acc x = F.foldmap f acc x
-    let foldmapt f acc (F (i, x)) = let acc, x = foldmap f acc x in acc, F (i, x)
-    let map f x = snd (foldmap (fun acc x -> (), f x) () x)
+    let foldmap = F.foldmap
+    let foldmapt f (F (i, x)) acc = let acc, x = foldmap f x acc in acc, F (i, x)
+    let map f x = snd (foldmap (fun () x -> (), f x) x ())
     let mapt f (F(i, x)) = F (i, map f x)
-    let fold f acc t = fst ( foldmap (fun acc t -> f acc t, t) acc t)
+    let fold f acc t = fst ( foldmap (fun acc t -> f acc t, t) t acc)
   end
 
   module Deep = struct
