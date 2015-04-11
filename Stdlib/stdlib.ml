@@ -356,8 +356,6 @@ end
 
 module MakeMap (K : Map.OrderedType) = struct
   include Map.Make (K)
-
-  let merge a b = (fun k v acc -> add k v acc) a b
   let to_list map = fold (curry cons) map []
   let from_list xs = List.fold_left (flip (uncurry add)) empty xs
   let find_opt key = Option.catch (find key)
