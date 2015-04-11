@@ -276,7 +276,7 @@ module type SigMap = sig
     val find : key -> 'a t -> 'a
     val map : ('a -> 'b) -> 'a t -> 'b t
     val mapi : (key -> 'a -> 'b) -> 'a t -> 'b t
-    val merge : (key -> 'a -> 'a -> 'a option) -> 'a t -> 'a t -> 'a t
+    val merge : (key -> 'a option -> 'a option -> 'a option) -> 'a t -> 'a t -> 'a t
     val to_list : 'a t -> (key * 'a) list
     val from_list : (key * 'a) list -> 'a t
     val find_opt : key -> 'a t -> 'a option
