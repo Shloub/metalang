@@ -35,7 +35,7 @@ open AstFun
 
 module BindingMap = Ast.BindingMap
 
-let rec tr acc e =
+let tr i e =
   let process_name acc n = match n with
   | Ast.UserName _ -> acc, n
   | Ast.InternalName _ ->
@@ -44,37 +44,35 @@ let rec tr acc e =
       acc, newname in
   let process_names names acc = 
     List.fold_left_map process_name acc names in
-  let fix e0 = Expr.Fixed.fixa (Expr.Fixed.annot e) e0 in
-  match Expr.unfix e with
+  let fix e0 = Expr.Fixed.fixa i e0 in
+  match e with
   | Expr.Lief (Expr.Binding ( (Ast.InternalName _) as n)) ->
-      let newname = BindingMap.find n acc in
-      Expr.Lief (Expr.Binding newname) |> fix
+      (fun acc ->
+       let newname = BindingMap.find n acc in
+       Expr.Lief (Expr.Binding newname) |> fix)
   | Expr.LetIn ( (Ast.InternalName _) as n, v, in_) ->
-      let newname = Ast.UserName (Fresh.fresh_user ())  in
-      let v = tr acc v in
-      let acc = BindingMap.add n newname acc in
-      let in_ = tr acc in_ in
-      Expr.LetIn (newname, v, in_) |> fix
+     (fun acc ->
+      let acc2, newname = process_name acc n in
+      Expr.LetIn (newname, v acc, in_ acc2) |> fix)
   | Expr.LetRecIn (name, names, e1, e2) ->
+     (fun acc ->
       let acc, newname = process_name acc name in
-      let e2 = tr acc e2 in
-      let acc, names = process_names names acc in
-      let e1 = tr acc e1 in
-      Expr.LetRecIn (newname, names, e1, e2) |> fix
+      let acc2, names = process_names names acc in
+      Expr.LetRecIn (newname, names, e1 acc2, e2 acc) |> fix )
   | Expr.Fun (names, in_) ->
+     (fun acc ->
       let acc, names = process_names names acc in
-      let in_ = tr acc in_ in
-      Expr.Fun (names, in_) |> fix
+      Expr.Fun (names, in_ acc) |> fix )
   | Expr.FunTuple (names, in_) ->
+     (fun acc ->
       let acc, names = process_names names acc in
-      let in_ = tr acc in_ in
-      Expr.FunTuple (names, in_) |> fix
-  | _ -> Expr.Fixed.Surface.mapt (tr acc) e
+      Expr.FunTuple (names, in_ acc) |> fix)
+  | _ -> (fun acc -> Expr.Fixed.Surface.map (fun e -> e acc) e |> fix)
 
 
 let apply p =
   let declarations = List.map (function
-  | Declaration (name, e) -> Declaration (name, tr BindingMap.empty e)
+  | Declaration (name, e) -> Declaration (name, Expr.Fixed.Deep.folda tr e BindingMap.empty)
   | x -> x
   ) p.declarations
   in {p with declarations = declarations }
