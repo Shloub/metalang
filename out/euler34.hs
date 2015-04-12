@@ -61,8 +61,7 @@ main =
                                                                                                                              in if c == 0
                                                                                                                                 then let ba = z - 1
                                                                                                                                               in if d == 0
-                                                                                                                                                 then let bb = ba - 1
-                                                                                                                                                               in bb
+                                                                                                                                                 then ba - 1
                                                                                                                                                  else ba
                                                                                                                                 else z
                                                                                                                 else y

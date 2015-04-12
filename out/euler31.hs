@@ -57,9 +57,8 @@ main =
      writeIOA t 6 100
      writeIOA t 7 200
      cache <- array_init 201 (\ j ->
-                                do o <- array_init 8 (\ k ->
-                                                        return 0)
-                                   return o)
+                                array_init 8 (\ k ->
+                                                return 0))
      printf "%d" =<< (result 200 t 7 cache :: IO Int)
 
 

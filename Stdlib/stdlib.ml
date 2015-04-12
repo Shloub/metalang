@@ -474,7 +474,6 @@ module Fix2 (F : Fixable2) = struct
     let rec mapa f (F(i, x)) =  f i (F (i, Surface.map (mapa f) x))
     let rec fold f (F(i, x))  = f (Surface.map (fold f) x)
     let rec folda f (F(i, x))  = f i (Surface.map (folda f) x)
-
     let rec exists f x =
       if f x then true
       else fst (Surface.foldmap (fun x acc -> (acc || exists f x), x) (unfix x) false)

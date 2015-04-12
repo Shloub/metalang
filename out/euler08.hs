@@ -38,11 +38,11 @@ main :: IO ()
 
 
 main =
-  (array_init_withenv 5 (\ j x ->
+  (array_init_withenv 5 (\ j w ->
                            do c <- getChar
                               let d = (ord c) - (ord '0')
-                              let y = x * d
-                              return (y, d)) 1) >>= (\ (g, last) ->
+                              let x = w * d
+                              return (x, d)) 1) >>= (\ (g, last) ->
                                                       let h k l m n o =
                                                             if k <= 995
                                                             then do e <- getChar
@@ -51,8 +51,7 @@ main =
                                                                      then return (1, 4)
                                                                      else do let t = l * f
                                                                              u <- if o < 0
-                                                                                  then do w <- ((quot t) <$> (readIOA last m))
-                                                                                          return w
+                                                                                  then ((quot t) <$> (readIOA last m))
                                                                                   else return t
                                                                              let v = o - 1
                                                                              return (u, v)) >>= (\ (p, q) ->

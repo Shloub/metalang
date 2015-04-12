@@ -35,9 +35,8 @@ main =
   {- normalement on doit mettre 20 mais là on se tape un overflow -}
   do let a = 10 + 1
      tab <- array_init a (\ i ->
-                            do tab2 <- array_init a (\ j ->
-                                                       return 0)
-                               return tab2)
+                            array_init a (\ j ->
+                                            return 0))
      let b l =
            if l <= a - 1
            then do join $ writeIOA <$> (readIOA tab (a - 1)) <*> return l <*> return 1

@@ -62,12 +62,10 @@ data Toto = Toto {
 
 
 mktoto v1 =
-  do t <- (Toto <$> (newIORef v1) <*> (newIORef v1) <*> (newIORef v1))
-     return t
+  (Toto <$> (newIORef v1) <*> (newIORef v1) <*> (newIORef v1))
 
 mktoto2 v1 =
-  do t <- (Toto <$> (newIORef (v1 + 3)) <*> (newIORef (v1 + 2)) <*> (newIORef (v1 + 1)))
-     return t
+  (Toto <$> (newIORef (v1 + 3)) <*> (newIORef (v1 + 2)) <*> (newIORef (v1 + 1)))
 
 result t_ t2_ =
   do t3 <- (Toto <$> (newIORef 0) <*> (newIORef 0) <*> (newIORef 0))
