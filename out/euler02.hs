@@ -16,8 +16,7 @@ main =
   let d e f g =
         if e < 4000000
         then do let h = if (e `rem` 2) == 0
-                        then let j = g + e
-                                     in j
+                        then g + e
                         else g
                 let i = f + e
                 d f i h

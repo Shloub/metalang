@@ -37,8 +37,7 @@ data Intlist = Intlist {
 
 
 cons list i =
-  do out0 <- (Intlist <$> (newIORef i) <*> (newIORef list))
-     return out0
+  (Intlist <$> (newIORef i) <*> (newIORef list))
 
 rev2 empty acc torev =
   if torev == empty

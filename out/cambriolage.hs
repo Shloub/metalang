@@ -60,44 +60,41 @@ nbPassePartout n passepartout m serrures =
   let c i d e =
         if i <= m - 1
         then do f <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) d) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                         (do h <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                             return h)
+                         (join $ readIOA <$> (readIOA serrures i) <*> return 1)
                          (return d)
                 ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) e) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
                     (do g <- join $ readIOA <$> (readIOA serrures i) <*> return 1
                         c (i + 1) f g)
                     (c (i + 1) f e)
-        else let o p q r =
-                   if p <= n - 1
-                   then do pp <- readIOA passepartout p
+        else let h o p q =
+                   if o <= n - 1
+                   then do pp <- readIOA passepartout o
                            ifM ((((<=) d) <$> (readIOA pp 0)) <&&> (((<=) e) <$> (readIOA pp 1)))
                                (return 1)
-                               (do s <- ((max <$> (return q) <*> (readIOA pp 0)))
-                                   t <- ((max <$> (return r) <*> (readIOA pp 1)))
-                                   o (p + 1) s t)
-                   else return (if q >= d && r >= e
+                               (do r <- ((max <$> (return p) <*> (readIOA pp 0)))
+                                   s <- ((max <$> (return q) <*> (readIOA pp 1)))
+                                   h (o + 1) r s)
+                   else return (if p >= d && q >= e
                                 then 2
                                 else 0) in
-                   o 0 0 0 in
+                   h 0 0 0 in
         c 0 0 0
 
 main =
   do n <- read_int
      skip_whitespaces
      passepartout <- array_init n (\ i ->
-                                     do out0 <- array_init 2 (\ j ->
-                                                                do out01 <- read_int
-                                                                   skip_whitespaces
-                                                                   return out01)
-                                        return out0)
+                                     array_init 2 (\ j ->
+                                                     do out01 <- read_int
+                                                        skip_whitespaces
+                                                        return out01))
      m <- read_int
      skip_whitespaces
      serrures <- array_init m (\ k ->
-                                 do out1 <- array_init 2 (\ l ->
-                                                            do out_ <- read_int
-                                                               skip_whitespaces
-                                                               return out_)
-                                    return out1)
+                                 array_init 2 (\ l ->
+                                                 do out_ <- read_int
+                                                    skip_whitespaces
+                                                    return out_))
      printf "%d" =<< (nbPassePartout n passepartout m serrures :: IO Int)
 
 

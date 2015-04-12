@@ -78,9 +78,8 @@ pathfind_aux cache tab x y posX posY =
 
 pathfind tab x y =
   do cache <- array_init y (\ i ->
-                              do tmp <- array_init x (\ j ->
-                                                        return (- 1))
-                                 return tmp)
+                              array_init x (\ j ->
+                                              return (- 1)))
      pathfind_aux cache tab x y 0 0
 
 main =

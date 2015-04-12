@@ -64,8 +64,7 @@ data Toto = Toto {
 
 
 mktoto v1 =
-  do t <- (Toto <$> (newIORef v1) <*> (newIORef 0) <*> (newIORef 0))
-     return t
+  (Toto <$> (newIORef v1) <*> (newIORef 0) <*> (newIORef 0))
 
 result t len =
   let a j b =
