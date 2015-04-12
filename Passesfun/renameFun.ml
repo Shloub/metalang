@@ -43,46 +43,40 @@ let mapname rename name =
 	else
     BindingMap.add name name rename, name
 
-let mapfun f rename transform annot params e =
+let mapfun f fix params e rename =
     let rename, params = List.fold_left_map mapname rename params
-    in let e = transform rename e
-    in Expr.Fixed.fixa annot (f params e)
+    in let e = e rename
+    in fix (f params e)
 
-let rec transform rename e =
-  let annot = Expr.Fixed.annot e in
-  match Expr.unfix e with
-  | Expr.Fun (params, e) -> mapfun (fun params e -> Expr.Fun (params, e)) rename transform annot params e
-	| Expr.FunTuple (params, e) -> mapfun (fun params e -> Expr.FunTuple (params, e)) rename transform annot params e
-  | Expr.LetIn (name, v, e) ->
-    let rename2, name=
-      if BindingMap.mem name rename then
-        let name2 = Fresh.fresh_internal () in
-        BindingMap.add name name2 rename, name2
-      else
-        BindingMap.add name name rename, name in
-		let v = transform rename v in
-    let e = transform rename2 e
-    in Expr.Fixed.fixa annot (Expr.LetIn (name, v, e))
+let transform annot e =
+  let fix = Expr.Fixed.fixa annot in
+  let default acc = Expr.Fixed.Surface.map (fun e -> e acc) e |> fix in
+  match e with
+  | Expr.Fun (params, e) -> mapfun (fun params e -> Expr.Fun (params, e)) fix params e
+  | Expr.FunTuple (params, e) -> mapfun (fun params e -> Expr.FunTuple (params, e)) fix params e
+  | Expr.LetIn (name, v, e) -> (fun rename ->
+				let rename2, name=
+				  if BindingMap.mem name rename then
+				    let name2 = Fresh.fresh_internal () in
+				    BindingMap.add name name2 rename, name2
+				  else
+				    BindingMap.add name name rename, name
+				in fix (Expr.LetIn (name, v rename, e rename2)))
   | Expr.LetRecIn (name, params, v, e) ->
-    let rename2, name = mapname rename name in
-		let rename3, params = List.fold_left_map mapname rename2 params in
-		let v = transform rename3 v in
-    let e = transform rename2 e
-    in Expr.Fixed.fixa annot (Expr.LetRecIn (name, params, v, e))
-
+     (fun rename ->
+      let rename2, name = mapname rename name in
+      let rename3, params = List.fold_left_map mapname rename2 params
+      in fix (Expr.LetRecIn (name, params, v rename3, e rename2)))	
   | Expr.Lief (Expr.Binding name) ->
-    begin match BindingMap.find_opt name rename with
-    | None -> e
-    | Some name2 -> Expr.Fixed.fixa annot (Expr.Lief (Expr.Binding name2))
-    end
-  | _ -> Expr.Fixed.Surface.mapt (transform rename) e
-
-let tr e = transform BindingMap.empty e
-
+     (fun rename -> begin match BindingMap.find_opt name rename with
+			  | None -> default rename
+			  | Some name2 -> fix (Expr.Lief (Expr.Binding name2))
+		    end)
+  | _ -> default
+								    
 let apply p =
   let declarations = List.map (function
-  | Declaration (name, e) ->
-    let e = tr e in Declaration (name, e)
+  | Declaration (name, e) -> Declaration (name, Expr.Fixed.Deep.folda transform e BindingMap.empty)
   | x -> x
   ) p.declarations
   in {p with declarations = declarations }
