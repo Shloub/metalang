@@ -51,11 +51,11 @@ main =
                                                                      then return (1, 4)
                                                                      else do let t = l * f
                                                                              u <- if o < 0
-                                                                                  then do v <- ((quot t) <$> (readIOA last m))
-                                                                                          return v
+                                                                                  then do w <- ((quot t) <$> (readIOA last m))
+                                                                                          return w
                                                                                   else return t
-                                                                             let w = o - 1
-                                                                             return (u, w)) >>= (\ (p, q) ->
+                                                                             let v = o - 1
+                                                                             return (u, v)) >>= (\ (p, q) ->
                                                                                                   do writeIOA last m f
                                                                                                      let r = (m + 1) `rem` 5
                                                                                                      let s = (max n p)

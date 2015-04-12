@@ -127,16 +127,16 @@ add_bigint_positif a b =
   do len <- (((+) 1) <$> ((max <$> (readIORef (_bigint_len a)) <*> (readIORef (_bigint_len b)))))
      (array_init_withenv len (\ i x ->
                                 do y <- ifM (((<) i) <$> (readIORef (_bigint_len a)))
-                                            (do z <- (((+) x) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
-                                                return z)
+                                            (do bf <- (((+) x) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
+                                                return bf)
                                             (return x)
-                                   ba <- ifM (((<) i) <$> (readIORef (_bigint_len b)))
-                                             (do bc <- (((+) y) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
-                                                 return bc)
-                                             (return y)
-                                   let be = ba `quot` 10
-                                   let bf = ba `rem` 10
-                                   return (be, bf)) 0) >>= (\ (s, chiffres) ->
+                                   z <- ifM (((<) i) <$> (readIORef (_bigint_len b)))
+                                            (do be <- (((+) y) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
+                                                return be)
+                                            (return y)
+                                   let ba = z `quot` 10
+                                   let bc = z `rem` 10
+                                   return (ba, bc)) 0) >>= (\ (s, chiffres) ->
                                                              let u v =
                                                                    ifM ((return (v > 0)) <&&> (((==) 0) <$> (readIOA chiffres (v - 1))))
                                                                        (do let w = v - 1
@@ -152,14 +152,14 @@ Pré-requis : a > b
      (array_init_withenv len (\ i bk ->
                                 do tmp <- (((+) bk) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
                                    bl <- ifM (((<) i) <$> (readIORef (_bigint_len b)))
-                                             (do bm <- (((-) tmp) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
-                                                 return bm)
+                                             (do bq <- (((-) tmp) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
+                                                 return bq)
                                              (return tmp)
-                                   (\ (bn, bo) ->
-                                     return (bn, bo)) (if bl < 0
-                                                       then let bp = bl + 10
-                                                                     in let bq = - 1
-                                                                                 in (bq, bp)
+                                   (\ (bm, bn) ->
+                                     return (bm, bn)) (if bl < 0
+                                                       then let bo = bl + 10
+                                                                     in let bp = - 1
+                                                                                 in (bp, bo)
                                                        else (0, bl))) 0) >>= (\ (bg, chiffres) ->
                                                                                let bh bi =
                                                                                       ifM ((return (bi > 0)) <&&> (((==) 0) <$> (readIOA chiffres (bi - 1))))

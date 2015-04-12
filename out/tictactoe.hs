@@ -102,23 +102,23 @@ eval0 g =
                 let f x h k l =
                       if x <= 2
                       then do n <- ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
-                                       (let o = k + 1
-                                                in return o)
+                                       (let r = k + 1
+                                                in return r)
                                        (return k)
                               colv <- join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y
                               linv <- join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return y) <*> return x
-                              let p = if h == - 1 && colv /= 0
+                              let o = if h == - 1 && colv /= 0
                                       then colv
                                       else if colv /= h
                                            then let q = - 2
                                                         in q
                                            else h
                               if l == - 1 && linv /= 0
-                              then f (x + 1) p n linv
+                              then f (x + 1) o n linv
                               else if linv /= l
-                                   then do let r = - 2
-                                           f (x + 1) p n r
-                                   else f (x + 1) p n l
+                                   then do let p = - 2
+                                           f (x + 1) o n p
+                                   else f (x + 1) o n l
                       else if h >= 0
                            then c (y + 1) k h
                            else if l >= 0

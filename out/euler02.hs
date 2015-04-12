@@ -16,11 +16,11 @@ main =
   let d e f g =
         if e < 4000000
         then do let h = if (e `rem` 2) == 0
-                        then let i = g + e
-                                     in i
+                        then let j = g + e
+                                     in j
                         else g
-                let j = f + e
-                d f j h
+                let i = f + e
+                d f i h
         else printf "%d\n" (g::Int) :: IO() in
         d 1 2 0
 

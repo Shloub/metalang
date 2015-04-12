@@ -73,20 +73,20 @@ main =
                                                                                                             do let product = (a * 10 + b) * (c * 100 + d * 10 + e)
                                                                                                                u <- ifM ((fmap not (readIOA counted product)) <&&> (okdigits allowed (product `quot` 10)))
                                                                                                                         (do writeIOA counted product True
-                                                                                                                            let v = t + product
+                                                                                                                            let x = t + product
                                                                                                                             printf "%d " (product::Int) :: IO()
-                                                                                                                            return v)
+                                                                                                                            return x)
                                                                                                                         (return t)
                                                                                                                {- 1  * 4 digits -}
                                                                                                                do let product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-                                                                                                                  w <- ifM ((fmap not (readIOA counted product2)) <&&> (okdigits allowed (product2 `quot` 10)))
+                                                                                                                  v <- ifM ((fmap not (readIOA counted product2)) <&&> (okdigits allowed (product2 `quot` 10)))
                                                                                                                            (do writeIOA counted product2 True
-                                                                                                                               let x = u + product2
+                                                                                                                               let w = u + product2
                                                                                                                                printf "%d " (product2::Int) :: IO()
-                                                                                                                               return x)
+                                                                                                                               return w)
                                                                                                                            (return u)
                                                                                                                   writeIOA allowed d True
-                                                                                                                  s (d + 1) w)
+                                                                                                                  s (d + 1) v)
                                                                                                         (s (d + 1) t)
                                                                                                else do writeIOA allowed c True
                                                                                                        q (c + 1) t in

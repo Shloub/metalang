@@ -60,13 +60,13 @@ main =
                                                                                     if d <= 9
                                                                                     then do o <- ifM (palindrome2 pow2 d)
                                                                                                      (do printf "%d\n" (d::Int) :: IO()
-                                                                                                         let q = m + d
-                                                                                                         return q)
+                                                                                                         let r = m + d
+                                                                                                         return r)
                                                                                                      (return m)
                                                                                             ifM (palindrome2 pow2 (d * 10 + d))
                                                                                                 (do printf "%d\n" ((d * 10 + d)::Int) :: IO()
-                                                                                                    let r = o + d * 10 + d
-                                                                                                    l (d + 1) r)
+                                                                                                    let q = o + d * 10 + d
+                                                                                                    l (d + 1) q)
                                                                                                 (l (d + 1) o)
                                                                                     else let s a0 u =
                                                                                                if a0 <= 4
@@ -78,26 +78,26 @@ main =
                                                                                                                         then do let num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a
                                                                                                                                 z <- ifM (palindrome2 pow2 num0)
                                                                                                                                          (do printf "%d\n" (num0::Int) :: IO()
-                                                                                                                                             let ba = y + num0
-                                                                                                                                             return ba)
+                                                                                                                                             let bb = y + num0
+                                                                                                                                             return bb)
                                                                                                                                          (return y)
                                                                                                                                 let num1 = a * 10000 + b * 1000 + c * 100 + b * 10 + a
                                                                                                                                 ifM (palindrome2 pow2 num1)
                                                                                                                                     (do printf "%d\n" (num1::Int) :: IO()
-                                                                                                                                        let bb = z + num1
-                                                                                                                                        x (c + 1) bb)
+                                                                                                                                        let ba = z + num1
+                                                                                                                                        x (c + 1) ba)
                                                                                                                                     (x (c + 1) z)
                                                                                                                         else do let num2 = a * 100 + b * 10 + a
                                                                                                                                 bc <- ifM (palindrome2 pow2 num2)
                                                                                                                                           (do printf "%d\n" (num2::Int) :: IO()
-                                                                                                                                              let bd = y + num2
-                                                                                                                                              return bd)
+                                                                                                                                              let be = y + num2
+                                                                                                                                              return be)
                                                                                                                                           (return y)
                                                                                                                                 let num3 = a * 1000 + b * 100 + b * 10 + a
                                                                                                                                 ifM (palindrome2 pow2 num3)
                                                                                                                                     (do printf "%d\n" (num3::Int) :: IO()
-                                                                                                                                        let be = bc + num3
-                                                                                                                                        v (b + 1) be)
+                                                                                                                                        let bd = bc + num3
+                                                                                                                                        v (b + 1) bd)
                                                                                                                                     (v (b + 1) bc) in
                                                                                                                         x 0 w
                                                                                                              else s (a0 + 1) w in

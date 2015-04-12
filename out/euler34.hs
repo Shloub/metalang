@@ -55,22 +55,22 @@ main =
                                                                                 then do sum <- ((+) <$> ((+) <$> ((+) <$> ((+) <$> ((+) <$> (readIOA f a) <*> (readIOA f b)) <*> (readIOA f c)) <*> (readIOA f d)) <*> (readIOA f e)) <*> (readIOA f g))
                                                                                         let num = ((((a * 10 + b) * 10 + c) * 10 + d) * 10 + e) * 10 + g
                                                                                         let w = if a == 0
-                                                                                                then let x = sum - 1
+                                                                                                then let y = sum - 1
                                                                                                              in if b == 0
-                                                                                                                then let y = x - 1
+                                                                                                                then let z = y - 1
                                                                                                                              in if c == 0
-                                                                                                                                then let z = y - 1
-                                                                                                                                             in if d == 0
-                                                                                                                                                then let ba = z - 1
-                                                                                                                                                              in ba
-                                                                                                                                                else z
-                                                                                                                                else y
-                                                                                                                else x
+                                                                                                                                then let ba = z - 1
+                                                                                                                                              in if d == 0
+                                                                                                                                                 then let bb = ba - 1
+                                                                                                                                                               in bb
+                                                                                                                                                 else ba
+                                                                                                                                else z
+                                                                                                                else y
                                                                                                 else sum
                                                                                         if (w == num && w /= 1) && w /= 2
-                                                                                        then do let bb = v + num
+                                                                                        then do let x = v + num
                                                                                                 printf "%d " (num::Int) :: IO()
-                                                                                                u (g + 1) bb
+                                                                                                u (g + 1) x
                                                                                         else u (g + 1) v
                                                                                 else s (e + 1) v in
                                                                                 u 0 t
