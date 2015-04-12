@@ -60,12 +60,12 @@ nbPassePartout n passepartout m serrures =
   let c i d e =
         if i <= m - 1
         then do f <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) d) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                         (do g <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                             return g)
+                         (do h <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                             return h)
                          (return d)
                 ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) e) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                    (do h <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                        c (i + 1) f h)
+                    (do g <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                        c (i + 1) f g)
                     (c (i + 1) f e)
         else let o p q r =
                    if p <= n - 1

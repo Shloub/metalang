@@ -50,17 +50,17 @@ eratostene t max0 =
 
 isPrime n primes len =
   do let m = if n < 0
-             then let p = - n
-                          in p
+             then let s = - n
+                          in s
              else n
-     let q r =
-           ifM (((>) m) <$> ((*) <$> (readIOA primes r) <*> (readIOA primes r)))
-               (ifM (((==) 0) <$> ((rem m) <$> (readIOA primes r)))
+     let p q =
+           ifM (((>) m) <$> ((*) <$> (readIOA primes q) <*> (readIOA primes q)))
+               (ifM (((==) 0) <$> ((rem m) <$> (readIOA primes q)))
                     (return False)
-                    (do let s = r + 1
-                        q s))
+                    (do let r = q + 1
+                        p r))
                (return True) in
-           q 0
+           p 0
 
 test a b primes len =
   let u n =

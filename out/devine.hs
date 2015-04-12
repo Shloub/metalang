@@ -63,16 +63,16 @@ devine0 nombre tab len =
            then ifM ((((<) c) <$> (readIOA tab i)) <||> (((>) d) <$> (readIOA tab i)))
                     (return False)
                     (do e <- ifM (((>) nombre) <$> (readIOA tab i))
-                                 (do f <- readIOA tab i
-                                     return f)
-                                 (return d)
-                        g <- ifM (((<) nombre) <$> (readIOA tab i))
                                  (do h <- readIOA tab i
                                      return h)
+                                 (return d)
+                        f <- ifM (((<) nombre) <$> (readIOA tab i))
+                                 (do g <- readIOA tab i
+                                     return g)
                                  (return c)
                         ifM (((&&) (len /= i + 1)) <$> (((==) nombre) <$> (readIOA tab i)))
                             (return False)
-                            (b (i + 1) g e))
+                            (b (i + 1) f e))
            else return True in
            b 2 max0 min0
 
