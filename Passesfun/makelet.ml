@@ -60,6 +60,7 @@ let transform curry e = match Expr.unfix e with
 	| Expr.LetIn (name, v, e) -> List.rev ( (Expr.letin name v (Expr.block (e::tl))) :: acc)
 	| _ -> f (hd::acc) tl
     in Expr.block (f [] li)
+  | Expr.Apply (Expr.Fixed.F (_, Expr.Fun( [x], (Expr.Fixed.F(_, Expr.Lief (Expr.Binding x'))))), [e]) when x = x' -> e
   | Expr.Apply (Expr.Fixed.F (_, Expr.FunTuple ([], e1)), [e2]) -> Expr.block [e2; e1]
   | Expr.FunTuple ([param], e) -> Expr.fun_ [param] e
   | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) when curry ->
