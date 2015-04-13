@@ -14,6 +14,8 @@
 <Printers/*.ml>: use_stdlib, use_ast
 <Eval/*.cmx>: use_passes, use_ast
 <Main/*.native>: use_str
+<Stdlib/unit.byte>: use_str
+
 
 true: annot, bin_annot
 true : use_menhir
