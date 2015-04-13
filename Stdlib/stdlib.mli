@@ -245,7 +245,7 @@ module type SigSet = sig
   val max_elt : t -> elt
   val choose : t -> elt
   val split : elt -> t -> t * bool * t
-  val of_list : elt list -> t
+  val from_list : elt list -> t
 end
 
 module MakeSet : functor (K : Set.OrderedType) -> SigSet with type elt = K.t

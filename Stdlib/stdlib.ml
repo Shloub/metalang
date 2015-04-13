@@ -376,12 +376,12 @@ module type SigSet = sig
   val max_elt : t -> elt
   val choose : t -> elt
   val split : elt -> t -> t * bool * t
-  val of_list : elt list -> t
+  val from_list : elt list -> t
 end
 
 module MakeSet (K : Set.OrderedType) : SigSet with type elt = K.t = struct
   include Set.Make (K)
-  let of_list = List.fold_left (flip add) empty
+  let from_list = List.fold_left (flip add) empty
 end
 
 module type SigMap = sig
