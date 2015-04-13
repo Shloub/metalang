@@ -79,25 +79,17 @@ module Expr = struct
   | ArrayAffect of 'a * 'a list * 'a
   | LetIn of Ast.varname * 'a * 'a
 
-  module Fixed = Fix2(struct
-    type ('a, 'b) alias = 'a tofix
-    type ('a, 'b) tofix = ('a, 'b) alias
-    let next () = Ast.next ()
-
-    let ret x acc = acc, x
-    let (<*>) f g acc =
-      let acc, e1 = f acc in
-      let acc, e2 = g acc in
-      acc, e1 e2
+  module FoldMap = struct
+    type 'a t = 'a tofix
+  module Make(F:Applicative) = struct
+    open F
 
     let fold_left_map f l =
       ret List.rev
       <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
 
     let foldmap f e =
-      let f'f (x, a) acc =
-	let acc, x = f x acc in
-	acc, (x, a) in
+      let f'f (x, a) = ret (fun x -> x, a) <*> f x in
       match e with
       | LetRecIn (name, params, e1, e2) -> ret (fun e1 e2 -> LetRecIn (name, params, e1, e2)) <*> f e1 <*> f e2
       | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f a <*> f b
@@ -122,6 +114,14 @@ module Expr = struct
       | ArrayAffect (tab, indexes, v) -> ret (fun tab indexes v -> ArrayAffect(tab, indexes, v)) <*> f tab <*> fold_left_map f indexes <*> f v
       | LetIn (binding, e, b) -> ret (fun e b -> LetIn (binding, e, b)) <*> f e <*> f b
       | MultiPrint (format, li) -> ret (fun li -> MultiPrint (format, li)) <*> fold_left_map f'f li
+  end
+  end
+  module Fixed = Fix2(struct
+    type ('a, 'b) alias = 'a tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
+    let next () = Ast.next ()
+    module Tools =FromFoldMap(FoldMap)
+    include Tools
   end)
 
   type t = unit Fixed.t
