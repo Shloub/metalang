@@ -448,9 +448,63 @@ module Fix (F : Fixable) = struct
   let rec dfold f (F(i, x))  = f (F.map (dfold f) x)
 end
 
+module type Applicative = sig
+  type 'a t
+  val ret : 'a -> 'a t
+  val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
+end
+
+module Applicatives = struct
+  module FoldMap (Acc : sig type t end) = struct
+    type 'a t = Acc.t -> Acc.t * 'a
+    let ret x acc = acc, x
+    let (<*>) f g acc =
+      let acc, e1 = f acc in
+      let acc, e2 = g acc in
+      acc, e1 e2
+  end
+  module Map = struct
+    type 'a t = 'a
+    let ret x = x
+    let (<*>) f g = f g
+  end
+  module Fold (Acc : sig type t end) = struct
+    type 'a t = (Acc.t -> Acc.t)
+    let ret x acc = acc
+    let (<*>) f g acc =
+      let acc = f acc in
+      let acc = g acc in
+      acc
+  end
+end
+
+module type FoldMapApplicative = sig
+  type 'a t
+  module Make : functor (F:Applicative) -> sig
+    val foldmap : ('a -> 'b F.t) -> 'a t -> 'b t F.t
+  end
+end
+
+module FromFoldMap (F : FoldMapApplicative) = struct
+
+  let foldmap (type acc)  f x =
+    let module M =  F.Make ( Applicatives.FoldMap(struct type t = acc end))
+    in M.foldmap f x
+
+  let fold (type acc) f x =
+    let module M = F.Make (Applicatives.Fold(struct type t = acc end))
+    in M.foldmap f x
+
+  let map f x =
+    let module M = F.Make (Applicatives.Map)
+    in M.foldmap f x
+end
+
 module type Fixable2 = sig
   type ('a, 'b) tofix
   val foldmap : ('b -> 'a -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
+  val fold : ('b -> 'a -> 'a) -> ('b, 'd) tofix -> 'a -> 'a
+  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
   val next : unit -> int
 end
 

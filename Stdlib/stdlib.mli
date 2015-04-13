@@ -292,6 +292,37 @@ module IntMap : SigMap with type key = int
 module StringMap : SigMap with type key = string
 module StringSet : SigSet with type elt = string
 
+(** {Haskell story for children} *)
+
+
+module type Applicative = sig
+  type 'a t
+  val ret : 'a -> 'a t
+  val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
+end
+
+module Applicatives : sig
+  module FoldMap : functor (Acc : sig type t end) -> Applicative
+  module Fold : functor (Acc : sig type t end) -> Applicative
+  module Map: Applicative
+end
+
+module type FoldMapApplicative = sig
+  type 'a t
+  module Make : functor (F:Applicative) -> sig
+    val foldmap : ('a -> 'b F.t) -> 'a t -> 'b t F.t
+  end
+end
+
+module FromFoldMap : functor(F : FoldMapApplicative) -> sig
+  val foldmap : ('a -> 'b -> 'b * 'c) -> 'a F.t -> 'b -> 'b * 'c F.t
+  val fold : ('a -> 'b -> 'b) -> 'a F.t -> 'b -> 'b
+  val map : ('a -> 'b) -> 'a F.t -> 'b F.t
+end
+
+
+
+
 (** {2 Fix module} *)
 (** les modules dérécursivés *)
 
@@ -316,6 +347,8 @@ end
 module type Fixable2 = sig
   type ('a, 'b) tofix
   val foldmap : ('b -> 'a -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
+  val fold : ('b -> 'a -> 'a) -> ('b, 'd) tofix -> 'a -> 'a
+  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
   val next : unit -> int
 end
 
