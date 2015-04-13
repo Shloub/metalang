@@ -94,12 +94,10 @@ let add_bigint_positif a b =
                                    bigint_chiffres=chiffres}) in
                                   (s len)) (Array.init_withenv len (fun  i retenue -> let tmp = retenue in
   let tmp = (if (i < a.bigint_len)
-             then let tmp = (tmp + a.bigint_chiffres.(i)) in
-             tmp
+             then (tmp + a.bigint_chiffres.(i))
              else tmp) in
   let tmp = (if (i < b.bigint_len)
-             then let tmp = (tmp + b.bigint_chiffres.(i)) in
-             tmp
+             then (tmp + b.bigint_chiffres.(i))
              else tmp) in
   let retenue = (tmp / 10) in
   let u = (tmp mod 10) in
@@ -119,8 +117,7 @@ Pré-requis : a > b
                                    bigint_chiffres=chiffres}) in
                                   (v len)) (Array.init_withenv len (fun  i retenue -> let tmp = (retenue + a.bigint_chiffres.(i)) in
   let tmp = (if (i < b.bigint_len)
-             then let tmp = (tmp - b.bigint_chiffres.(i)) in
-             tmp
+             then (tmp - b.bigint_chiffres.(i))
              else tmp) in
   ((fun  (retenue, tmp) -> let w = tmp in
   (retenue, w)) (if (tmp < 0)
@@ -243,8 +240,7 @@ let log10 a =
 let bigint_of_int i =
   let size = (log10 i) in
   let size = (if (i = 0)
-              then let size = 0 in
-              size
+              then 0
               else size) in
   let t = (Array.init size (fun  j -> 0)) in
   let rec bg k i =

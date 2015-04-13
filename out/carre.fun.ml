@@ -1,13 +1,12 @@
 let main =
   let x = (Scanf.scanf "%d " (fun x -> x)) in
   let y = (Scanf.scanf "%d " (fun x -> x)) in
-  let tab = (Array.init y (fun  d -> let f = (Array.init x (fun  g -> Scanf.scanf "%d"
+  let tab = (Array.init y (fun  d -> (Array.init x (fun  g -> Scanf.scanf "%d"
   (fun  e -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                e
                )
-  ))) in
-  f)) in
+  ))))) in
   let rec h ix =
     (if (ix <= (x - 1))
      then let rec j iy =

@@ -42,8 +42,7 @@
                                                                              (let ([i (* i f)])
                                                                              (let ([i 
                                                                              (if (< nskipdiv 0)
-                                                                             (let ([i (quotient i (vector-ref last index))])
-                                                                             i)
+                                                                             (quotient i (vector-ref last index))
                                                                              i)])
                                                                              (let ([nskipdiv (- nskipdiv 1)])
                                                                              (list i nskipdiv)))))))) (mread-char))

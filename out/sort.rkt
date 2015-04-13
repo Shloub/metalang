@@ -23,9 +23,8 @@
 ))
 
 (define (copytab tab len)
-  (let ([o (build-vector len (lambda (i) 
-                               (vector-ref tab i)))])
-  o)
+  (build-vector len (lambda (i) 
+                      (vector-ref tab i)))
 )
 (define (bubblesort tab len)
   (letrec ([a (lambda (i) 

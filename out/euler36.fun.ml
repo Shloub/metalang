@@ -34,8 +34,7 @@ let main =
      then let sum = (if (palindrome2 pow2 d)
                      then (
                             (Printf.printf "%d\n" d);
-                            let sum = (sum + d) in
-                            sum
+                            (sum + d)
                             )
                      
                      else sum) in
@@ -58,8 +57,7 @@ let main =
                         let sum = (if (palindrome2 pow2 num0)
                                    then (
                                           (Printf.printf "%d\n" num0);
-                                          let sum = (sum + num0) in
-                                          sum
+                                          (sum + num0)
                                           )
                                    
                                    else sum) in
@@ -76,8 +74,7 @@ let main =
                         let sum = (if (palindrome2 pow2 num2)
                                    then (
                                           (Printf.printf "%d\n" num2);
-                                          let sum = (sum + num2) in
-                                          sum
+                                          (sum + num2)
                                           )
                                    
                                    else sum) in

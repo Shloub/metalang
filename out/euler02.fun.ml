@@ -5,8 +5,7 @@ let main =
   let rec d a b sum =
     (if (a < 4000000)
      then let sum = (if ((a mod 2) = 0)
-                     then let sum = (sum + a) in
-                     sum
+                     then (sum + a)
                      else sum) in
      let c = a in
      let a = b in

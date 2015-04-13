@@ -32,8 +32,7 @@ let main =
                                                               (if (c = 0)
                                                                then let sum = (sum - 1) in
                                                                (if (d = 0)
-                                                                then let sum = (sum - 1) in
-                                                                sum
+                                                                then (sum - 1)
                                                                 else sum)
                                                                else sum)
                                                               else sum)

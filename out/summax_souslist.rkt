@@ -29,8 +29,7 @@
                 (if (<= i (- len 1))
                 (let ([current (+ current (vector-ref lst i))])
                 (let ([current (if (< current 0)
-                               (let ([current 0])
-                               current)
+                               0
                                current)])
                 (if (< max0 current)
                 (let ([max0 current])

@@ -1,9 +1,8 @@
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;}
 let mktoto v1 =
-  let t = {foo=v1;
+  {foo=v1;
   bar=0;
-  blah=0} in
-  t
+  blah=0}
 let result t =
   (
     t.blah <- (t.blah + 1);

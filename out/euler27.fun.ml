@@ -21,8 +21,7 @@ let eratostene t max0 =
 let isPrime n primes len =
   let i = 0 in
   let n = (if (n < 0)
-           then let n = (- n) in
-           n
+           then (- n)
            else n) in
   let rec e i =
     (if ((primes.(i) * primes.(i)) < n)

@@ -28,8 +28,7 @@
   (letrec ([c (lambda (i max_ancient max_recent) 
                 (if (<= i (- m 1))
                 (let ([max_ancient (if (and (eq? (vector-ref (vector-ref serrures i) 0) (- 1)) (> (vector-ref (vector-ref serrures i) 1) max_ancient))
-                                   (let ([max_ancient (vector-ref (vector-ref serrures i) 1)])
-                                   max_ancient)
+                                   (vector-ref (vector-ref serrures i) 1)
                                    max_ancient)])
                 (if (and (eq? (vector-ref (vector-ref serrures i) 0) 1) (> (vector-ref (vector-ref serrures i) 1) max_recent))
                 (let ([max_recent (vector-ref (vector-ref serrures i) 1)])
@@ -56,24 +55,22 @@
      (block
        (mread-blank)
        (let ([passepartout (build-vector n (lambda (i) 
-                                             (let ([out0 (build-vector 2 (lambda (j) 
-                                                                           ((lambda (out01) 
-                                                                              (block
-                                                                                (mread-blank)
-                                                                                out01
-                                                                                )) (mread-int))))])
-       out0)))])
+                                             (build-vector 2 (lambda (j) 
+                                                               ((lambda (out01) 
+                                                                  (block
+                                                                    (mread-blank)
+                                                                    out01
+                                                                    )) (mread-int))))))])
   ((lambda (m) 
      (block
        (mread-blank)
        (let ([serrures (build-vector m (lambda (k) 
-                                         (let ([out1 (build-vector 2 (lambda (l) 
-                                                                       ((lambda (out_) 
-                                                                          (block
-                                                                            (mread-blank)
-                                                                            out_
-                                                                            )) (mread-int))))])
-       out1)))])
+                                         (build-vector 2 (lambda (l) 
+                                                           ((lambda (out_) 
+                                                              (block
+                                                                (mread-blank)
+                                                                out_
+                                                                )) (mread-int))))))])
   (display (nbPassePartout n passepartout m serrures)))
 )) (mread-int)))
 )) (mread-int))

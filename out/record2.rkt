@@ -24,8 +24,7 @@
 
 (struct toto ([bar #:mutable] [blah #:mutable] [foo #:mutable]))
 (define (mktoto v1)
-  (let ([t0 (toto 0 0 v1)])
-  t0)
+  (toto 0 0 v1)
 )
 (define (result t0)
   (block

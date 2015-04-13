@@ -37,8 +37,7 @@
                               (block
                                 (vector-set! tab (- len j) x)
                                 (let ([max0 (if (> j max0)
-                                            (let ([max0 j])
-                                            max0)
+                                            j
                                             max0)])
                                 (let ([i (- i 1)])
                                 (a i j max0)))

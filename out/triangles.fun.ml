@@ -12,18 +12,15 @@ let rec find0 len tab cache x y =
                let out0 = (find0 len tab cache x (y + 1)) in
                let out1 = (find0 len tab cache (x + 1) (y + 1)) in
                let result = (if (out0 > out1)
-                             then let result = (out0 + tab.(y).(x)) in
-                             result
-                             else let result = (out1 + tab.(y).(x)) in
-                             result) in
+                             then (out0 + tab.(y).(x))
+                             else (out1 + tab.(y).(x))) in
                (
                  cache.(y).(x) <- result;
                  result
                  )
                )))
 let find len tab =
-  let tab2 = (Array.init len (fun  i -> let tab3 = (Array.init (i + 1) (fun  j -> 0)) in
-  tab3)) in
+  let tab2 = (Array.init len (fun  i -> (Array.init (i + 1) (fun  j -> 0)))) in
   (find0 len tab tab2 0 0)
 let main =
   let len = 0 in
@@ -31,15 +28,14 @@ let main =
   (fun  a -> let len = a in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let tab = (Array.init len (fun  i -> let tab2 = (Array.init (i + 1) (fun  j -> let tmp = 0 in
+    let tab = (Array.init len (fun  i -> (Array.init (i + 1) (fun  j -> let tmp = 0 in
     Scanf.scanf "%d"
     (fun  b -> let tmp = b in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp
       )
-    ))) in
-    tab2)) in
+    ))))) in
     (
       (Printf.printf "%d\n" (find len tab));
       let rec c k =

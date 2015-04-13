@@ -37,8 +37,7 @@
                                                       (let ([sum (if (palindrome2 pow2 d)
                                                                  (block
                                                                    (printf "~a\n" d)
-                                                                   (let ([sum (+ sum d)])
-                                                                   sum)
+                                                                   (+ sum d)
                                                                    )
                                                                  sum)])
                                                       (if (palindrome2 pow2 (+ (* d 10) d))
@@ -61,8 +60,7 @@
                                                                                 (if (palindrome2 pow2 num0)
                                                                                 (block
                                                                                 (printf "~a\n" num0)
-                                                                                (let ([sum (+ sum num0)])
-                                                                                sum)
+                                                                                (+ sum num0)
                                                                                 )
                                                                                 sum)])
                                                                                 (let ([num1 (+ (* a 10000) (* b 1000) (* c 100) (* b 10) a)])
@@ -78,8 +76,7 @@
                                                                                 (if (palindrome2 pow2 num2)
                                                                                 (block
                                                                                 (printf "~a\n" num2)
-                                                                                (let ([sum (+ sum num2)])
-                                                                                sum)
+                                                                                (+ sum num2)
                                                                                 )
                                                                                 sum)])
                                                                                 (let ([num3 (+ (* a 1000) (* b 100) (* b 10) a)])

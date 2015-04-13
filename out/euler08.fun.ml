@@ -30,8 +30,7 @@ let main =
         (i, nskipdiv)
         else let i = (i * f) in
         let i = (if (nskipdiv < 0)
-                 then let i = (i / last.(index)) in
-                 i
+                 then (i / last.(index))
                  else i) in
         let nskipdiv = (nskipdiv - 1) in
         (i, nskipdiv))))

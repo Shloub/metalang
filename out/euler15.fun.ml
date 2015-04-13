@@ -2,8 +2,7 @@ let main =
   let n = 10 in
   (*  normalement on doit mettre 20 mais là on se tape un overflow  *)
   let n = (n + 1) in
-  let tab = (Array.init n (fun  i -> let tab2 = (Array.init n (fun  j -> 0)) in
-  tab2)) in
+  let tab = (Array.init n (fun  i -> (Array.init n (fun  j -> 0)))) in
   let rec a l =
     (if (l <= (n - 1))
      then (

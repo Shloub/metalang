@@ -1,6 +1,5 @@
 let copytab tab len =
-  let o = (Array.init len (fun  i -> tab.(i))) in
-  o
+  (Array.init len (fun  i -> tab.(i)))
 let bubblesort tab len =
   let rec a i =
     (if (i <= (len - 1))

@@ -22,8 +22,7 @@ let rec pathfind_aux cache tab x y posX posY =
                             )
                      ))))
 let pathfind tab x y =
-  let cache = (Array.init y (fun  i -> let tmp = (Array.init x (fun  j -> (- 1))) in
-  tmp)) in
+  let cache = (Array.init y (fun  i -> (Array.init x (fun  j -> (- 1))))) in
   (pathfind_aux cache tab x y 0 0)
 let main =
   let x = 0 in
@@ -38,8 +37,7 @@ let main =
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       let tab = (Array.init y (fun  i -> let tab2 = (Array.init x (fun  j -> let tmp = '\000' in
       Scanf.scanf "%c"
-      (fun  g -> let tmp = g in
-      tmp))) in
+      (fun  g -> g))) in
       (
         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
         tab2

@@ -26,8 +26,7 @@ let main =
     t.(5) <- 50;
     t.(6) <- 100;
     t.(7) <- 200;
-    let cache = (Array.init 201 (fun  j -> let o = (Array.init 8 (fun  k -> 0)) in
-    o)) in
+    let cache = (Array.init 201 (fun  j -> (Array.init 8 (fun  k -> 0)))) in
     (Printf.printf "%d" (result 200 t 7 cache))
     )
   

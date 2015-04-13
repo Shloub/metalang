@@ -3,11 +3,9 @@ let is_pair i =
   let a j = let j = 6 in
   let j = (if (i < 20)
            then let j = (if (i = 22)
-                         then let j = 0 in
-                         j
+                         then 0
                          else j) in
-           let j = 8 in
-           j
+           8
            else j) in
   ((i mod 2) = 0) in
   (if (i < 10)

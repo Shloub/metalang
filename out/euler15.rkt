@@ -6,9 +6,8 @@
   ; normalement on doit mettre 20 mais là on se tape un overflow 
   (let ([n (+ n 1)])
   (let ([tab (build-vector n (lambda (i) 
-                               (let ([tab2 (build-vector n (lambda (j) 
-                                                             0))])
-                               tab2)))])
+                               (build-vector n (lambda (j) 
+                                                 0))))])
   (letrec ([a (lambda (l) 
                 (if (<= l (- n 1))
                 (block

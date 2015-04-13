@@ -9,10 +9,8 @@ let rec pathfind_aux cache tab len pos =
                 let oneval = (pathfind_aux cache tab len (pos + 1)) in
                 let out0 = 0 in
                 let out0 = (if (posval < oneval)
-                            then let out0 = (1 + posval) in
-                            out0
-                            else let out0 = (1 + oneval) in
-                            out0) in
+                            then (1 + posval)
+                            else (1 + oneval)) in
                 (
                   cache.(pos) <- out0;
                   out0

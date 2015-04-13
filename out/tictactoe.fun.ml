@@ -39,17 +39,14 @@ let eval0 g =
      let rec d x col freecase lin =
        (if (x <= 2)
         then let freecase = (if (g.cases.(x).(y) = 0)
-                             then let freecase = (freecase + 1) in
-                             freecase
+                             then (freecase + 1)
                              else freecase) in
         let colv = g.cases.(x).(y) in
         let linv = g.cases.(y).(x) in
         let col = (if ((col = (- 1)) && (colv <> 0))
-                   then let col = colv in
-                   col
+                   then colv
                    else (if (colv <> col)
-                         then let col = (- 2) in
-                         col
+                         then (- 2)
                          else col)) in
         (if ((lin = (- 1)) && (linv <> 0))
          then let lin = linv in
@@ -69,8 +66,7 @@ let eval0 g =
      else let rec e x win =
             (if (x <= 2)
              then let win = (if (((g.cases.(0).(0) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(2) = x))
-                             then let win = x in
-                             win
+                             then x
                              else win) in
              (if (((g.cases.(0).(2) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(0) = x))
               then let win = x in
@@ -90,8 +86,7 @@ let eval0 g =
 let apply_move_xy x y g =
   let player = 2 in
   let player = (if g.firstToPlay
-                then let player = 1 in
-                player
+                then 1
                 else player) in
   (
     g.cases.(x).(y) <- player;
@@ -128,8 +123,7 @@ let rec minmax g =
      then g.note
      else let maxNote = (- 10000) in
      let maxNote = (if (not g.firstToPlay)
-                    then let maxNote = 10000 in
-                    maxNote
+                    then 10000
                     else maxNote) in
      let rec f x maxNote =
        (if (x <= 2)
@@ -195,8 +189,7 @@ let play g =
      ) in
     (k 0 minNote)
 let init0 () =
-  let cases = (Array.init 3 (fun  i -> let tab = (Array.init 3 (fun  j -> 0)) in
-  tab)) in
+  let cases = (Array.init 3 (fun  i -> (Array.init 3 (fun  j -> 0)))) in
   {cases=cases;
   firstToPlay=true;
   note=0;
