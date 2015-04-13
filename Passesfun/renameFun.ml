@@ -55,13 +55,13 @@ let transform annot e =
   | Expr.Fun (params, e) -> mapfun (fun params e -> Expr.Fun (params, e)) fix params e
   | Expr.FunTuple (params, e) -> mapfun (fun params e -> Expr.FunTuple (params, e)) fix params e
   | Expr.LetIn (name, v, e) -> (fun rename ->
-				let rename2, name=
-				  if BindingMap.mem name rename then
-				    let name2 = Fresh.fresh_internal () in
-				    BindingMap.add name name2 rename, name2
-				  else
-				    BindingMap.add name name rename, name
-				in fix (Expr.LetIn (name, v rename, e rename2)))
+      let rename2, name=
+        if BindingMap.mem name rename then
+          let name2 = Fresh.fresh_internal () in
+          BindingMap.add name name2 rename, name2
+        else
+          BindingMap.add name name rename, name
+      in fix (Expr.LetIn (name, v rename, e rename2)))
   | Expr.LetRecIn (name, params, v, e) ->
      (fun rename ->
       let rename2, name = mapname rename name in
@@ -69,9 +69,9 @@ let transform annot e =
       in fix (Expr.LetRecIn (name, params, v rename3, e rename2)))	
   | Expr.Lief (Expr.Binding name) ->
      (fun rename -> begin match BindingMap.find_opt name rename with
-			  | None -> default rename
-			  | Some name2 -> fix (Expr.Lief (Expr.Binding name2))
-		    end)
+     | None -> default rename
+     | Some name2 -> fix (Expr.Lief (Expr.Binding name2))
+     end)
   | _ -> default
 								    
 let apply p =
