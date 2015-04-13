@@ -42,8 +42,7 @@ let main =
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i -> let tmp = '\000' in
     Scanf.scanf "%c"
-    (fun  e -> let tmp = e in
-    tmp))) in
+    (fun  e -> e))) in
     let result = (npi0 tab len) in
     (Printf.printf "%d" result)
     )

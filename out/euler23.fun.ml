@@ -96,25 +96,25 @@ let main =
          else (u (r + 1)))
         else let rec v i =
                (if (i <= n)
-                then let rec w j =
+                then let rec x j =
                        (if (j <= n)
                         then (if ((abondant.(i) && abondant.(j)) && ((i + j) <= n))
                               then (
                                      summable.((i + j)) <- true;
-                                     (w (j + 1))
+                                     (x (j + 1))
                                      )
                               
-                              else (w (j + 1)))
+                              else (x (j + 1)))
                         else (v (i + 1))) in
-                       (w 1)
-                else let rec x o sum =
+                       (x 1)
+                else let rec w o sum =
                        (if (o <= n)
                         then (if (not summable.(o))
                               then let sum = (sum + o) in
-                              (x (o + 1) sum)
-                              else (x (o + 1) sum))
+                              (w (o + 1) sum)
+                              else (w (o + 1) sum))
                         else (Printf.printf "\n%d\n" sum)) in
-                       (x 1 sum)) in
+                       (w 1 sum)) in
                (v 1)) in
        (u 2)) in
     (m 2 l)

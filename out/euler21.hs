@@ -103,23 +103,23 @@ main =
             if k <= 1001 - 1
             then ifM (((==) k) <$> (readIOA era k))
                      (do writeIOA primes be k
-                         let bf = be + 1
-                         bd (k + 1) bf)
+                         let bi = be + 1
+                         bd (k + 1) bi)
                      (bd (k + 1) be)
             else do printf "%d == %d\n" (be::Int) (nprimes::Int) :: IO()
-                    let bg n bh =
+                    let bf n bg =
                            if n <= 1000
                            then do other <- ((-) <$> (sumdiv nprimes primes n) <*> (return n))
                                    if other > n
                                    then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> (return other))
                                            if othersum == n
                                            then do printf "%d & %d\n" (other::Int) (n::Int) :: IO()
-                                                   let bi = bh + other + n
-                                                   bg (n + 1) bi
-                                           else bg (n + 1) bh
-                                   else bg (n + 1) bh
-                           else printf "\n%d\n" (bh::Int) :: IO() in
-                           bg 2 0 in
+                                                   let bh = bg + other + n
+                                                   bf (n + 1) bh
+                                           else bf (n + 1) bg
+                                   else bf (n + 1) bg
+                           else printf "\n%d\n" (bg::Int) :: IO() in
+                           bf 2 0 in
             bd 2 0
 
 

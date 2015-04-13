@@ -103,41 +103,41 @@ main =
             if k <= 30001 - 1
             then ifM (((==) k) <$> (readIOA era k))
                      (do writeIOA primes bh k
-                         let bi = bh + 1
-                         bg (k + 1) bi)
+                         let bo = bh + 1
+                         bg (k + 1) bo)
                      (bg (k + 1) bh)
             else {- 28124 ça prend trop de temps mais on arrive a passer le test -}
                  do abondant <- array_init (100 + 1) (\ p ->
                                                         return False)
                     summable <- array_init (100 + 1) (\ q ->
                                                         return False)
-                    let bj r =
+                    let bi r =
                            if r <= 100
                            then do other <- ((-) <$> (sumdiv nprimes primes r) <*> (return r))
                                    if other > r
                                    then do writeIOA abondant r True
-                                           bj (r + 1)
-                                   else bj (r + 1)
-                           else let bk i =
+                                           bi (r + 1)
+                                   else bi (r + 1)
+                           else let bj i =
                                        if i <= 100
-                                       then let bl j =
+                                       then let bn j =
                                                    if j <= 100
                                                    then ifM (((&&) (i + j <= 100)) <$> ((readIOA abondant i) <&&> (readIOA abondant j)))
                                                             (do writeIOA summable (i + j) True
-                                                                bl (j + 1))
-                                                            (bl (j + 1))
-                                                   else bk (i + 1) in
-                                                   bl 1
-                                       else let bm o bn =
+                                                                bn (j + 1))
+                                                            (bn (j + 1))
+                                                   else bj (i + 1) in
+                                                   bn 1
+                                       else let bk o bl =
                                                    if o <= 100
                                                    then ifM (fmap not (readIOA summable o))
-                                                            (do let bo = bn + o
-                                                                bm (o + 1) bo)
-                                                            (bm (o + 1) bn)
-                                                   else printf "\n%d\n" (bn::Int) :: IO() in
-                                                   bm 1 0 in
-                                       bk 1 in
-                           bj 2 in
+                                                            (do let bm = bl + o
+                                                                bk (o + 1) bm)
+                                                            (bk (o + 1) bl)
+                                                   else printf "\n%d\n" (bl::Int) :: IO() in
+                                                   bk 1 0 in
+                                       bj 1 in
+                           bi 2 in
             bg 2 0
 
 

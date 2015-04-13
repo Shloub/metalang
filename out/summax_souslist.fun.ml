@@ -5,8 +5,7 @@ let summax lst len =
     (if (i <= (len - 1))
      then let current = (current + lst.(i)) in
      let current = (if (current < 0)
-                    then let current = 0 in
-                    current
+                    then 0
                     else current) in
      (if (max0 < current)
       then let max0 = current in

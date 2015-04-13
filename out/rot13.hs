@@ -54,15 +54,15 @@ main =
      tab4 <- array_init strlen (\ toto ->
                                   do tmpc <- getChar
                                      let c = (ord tmpc)
-                                     let a = if tmpc /= ' '
+                                     let b = if tmpc /= ' '
                                              then ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
                                              else c
-                                     return (chr a))
-     let b j =
+                                     return (chr b))
+     let a j =
            if j <= strlen - 1
            then do printf "%c" =<< (readIOA tab4 j :: IO Char)
-                   b (j + 1)
+                   a (j + 1)
            else return () in
-           b 0
+           a 0
 
 

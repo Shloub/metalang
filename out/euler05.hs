@@ -39,10 +39,10 @@ primesfactors n =
            if f /= 1 && e * e <= f
            then if (f `rem` e) == 0
                 then do writeIOA tab e =<< (((+) 1) <$> (readIOA tab e))
-                        let g = f `quot` e
-                        c e g
-                else do let h = e + 1
-                        c h f
+                        let h = f `quot` e
+                        c e h
+                else do let g = e + 1
+                        c g f
            else do writeIOA tab f =<< (((+) 1) <$> (readIOA tab f))
                    return tab in
            c 2 n
@@ -53,23 +53,23 @@ main =
      let p i =
            if i <= 20
            then do t <- primesfactors i
-                   let q j =
+                   let x j =
                          if j <= i
                          then do writeIOA o j =<< ((max <$> (readIOA o j) <*> (readIOA t j)))
-                                 q (j + 1)
+                                 x (j + 1)
                          else p (i + 1) in
-                         q 1
-           else let r k s =
+                         x 1
+           else let q k r =
                       if k <= 20
-                      then do u <- readIOA o k
-                              let v l w =
-                                    if l <= u
-                                    then do let x = w * k
-                                            v (l + 1) x
-                                    else r (k + 1) w in
-                                    v 1 s
-                      else printf "%d\n" (s::Int) :: IO() in
-                      r 1 1 in
+                      then do s <- readIOA o k
+                              let u l v =
+                                    if l <= s
+                                    then do let w = v * k
+                                            u (l + 1) w
+                                    else q (k + 1) v in
+                                    u 1 r
+                      else printf "%d\n" (r::Int) :: IO() in
+                      q 1 1 in
            p 1
 
 

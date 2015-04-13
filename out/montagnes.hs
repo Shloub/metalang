@@ -64,15 +64,15 @@ montagnes0 tab len =
            then do x <- readIOA tab b
                    let e f =
                          ifM ((return (f >= 0)) <&&> (((>) x) <$> (readIOA tab (len - f))))
-                             (do let g = f - 1
-                                 e g)
-                             (do let h = f + 1
-                                 writeIOA tab (len - h) x
-                                 let k = if h > d
-                                         then h
+                             (do let l = f - 1
+                                 e l)
+                             (do let g = f + 1
+                                 writeIOA tab (len - g) x
+                                 let h = if g > d
+                                         then g
                                          else d
-                                 let l = b - 1
-                                 a l h k) in
+                                 let k = b - 1
+                                 a k g h) in
                          e c
            else return d in
            a i 1 1

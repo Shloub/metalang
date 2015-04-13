@@ -29,17 +29,17 @@ h i =
 main =
   let d k e =
         if k <= 10
-        then do let f = e + k
-                printf "%d\n" (f::Int) :: IO()
-                d (k + 1) f
-        else let g l m =
-                   if l < 10
-                   then do printf "%d" (l :: Int) :: IO ()
-                           let n = l + 1
-                           let o = m + n
-                           g n o
-                   else printf "%d%dFIN TEST\n" (m::Int) (l::Int) :: IO() in
-                   g 4 e in
+        then do let o = e + k
+                printf "%d\n" (o::Int) :: IO()
+                d (k + 1) o
+        else let f g l =
+                   if g < 10
+                   then do printf "%d" (g :: Int) :: IO ()
+                           let m = g + 1
+                           let n = l + m
+                           f m n
+                   else printf "%d%dFIN TEST\n" (l::Int) (g::Int) :: IO() in
+                   f 4 e in
         d 0 0
 
 

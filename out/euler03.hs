@@ -19,12 +19,12 @@ main =
            if e /= 1
            then let h i j k l m =
                       if j <= m
-                      then (\ (n, o, p, q, r) ->
-                             do let s = o + 1
-                                h n s p q r) (if (i `rem` j) == 0
-                                              then let t = i `quot` j
-                                                           in let u = ((floor . sqrt . fromIntegral) t)
-                                                                      in (t, t, j, True, u)
+                      then (\ (p, q, r, s, t) ->
+                             do let u = q + 1
+                                h p u r s t) (if (i `rem` j) == 0
+                                              then let n = i `quot` j
+                                                           in let o = ((floor . sqrt . fromIntegral) n)
+                                                                      in (n, n, j, True, o)
                                               else (i, j, k, l, m))
                       else if not l
                            then do printf "%d\n" (i::Int) :: IO()

@@ -36,10 +36,8 @@
   (let ([out0 (find0 len tab cache x (+ y 1))])
   (let ([out1 (find0 len tab cache (+ x 1) (+ y 1))])
   (let ([result (if (> out0 out1)
-                (let ([result (+ out0 (vector-ref (vector-ref tab y) x))])
-                result)
-                (let ([result (+ out1 (vector-ref (vector-ref tab y) x))])
-                result))])
+                (+ out0 (vector-ref (vector-ref tab y) x))
+                (+ out1 (vector-ref (vector-ref tab y) x)))])
   (block
     (vector-set! (vector-ref cache y) x result)
     result
@@ -47,9 +45,8 @@
 )
 (define (find01 len tab)
   (let ([tab2 (build-vector len (lambda (i) 
-                                  (let ([tab3 (build-vector (+ i 1) (lambda (j) 
-                                                                      0))])
-                                  tab3)))])
+                                  (build-vector (+ i 1) (lambda (j) 
+                                                          0))))])
 (find0 len tab tab2 0 0))
 )
 (define main
@@ -59,32 +56,31 @@
      (block
        (mread-blank)
        (let ([tab (build-vector len (lambda (i) 
-                                      (let ([tab2 (build-vector (+ i 1) (lambda (j) 
-                                                                          (let ([tmp 0])
-                                                                          ((lambda (b) 
-                                                                             (let ([tmp b])
-                                                                             (block
-                                                                               (mread-blank)
-                                                                               tmp
-                                                                               ))) (mread-int)))))])
-       tab2)))])
+                                      (build-vector (+ i 1) (lambda (j) 
+                                                              (let ([tmp 0])
+                                                              ((lambda (d) 
+                                                                 (let ([tmp d])
+                                                                 (block
+                                                                   (mread-blank)
+                                                                   tmp
+                                                                   ))) (mread-int)))))))])
      (block
        (printf "~a\n" (find01 len tab))
-       (letrec ([c (lambda (k) 
+       (letrec ([b (lambda (k) 
                      (if (<= k (- len 1))
-                     (letrec ([d (lambda (l) 
+                     (letrec ([c (lambda (l) 
                                    (if (<= l k)
                                    (block
                                      (printf "~a " (vector-ref (vector-ref tab k) l))
-                                     (d (+ l 1))
+                                     (c (+ l 1))
                                      )
                                    (block
                                      (display "\n")
-                                     (c (+ k 1))
+                                     (b (+ k 1))
                                      )))])
-                     (d 0))
+                     (c 0))
                      '()))])
-     (c 0))
+     (b 0))
   ))
 ))) (mread-int)))
 )

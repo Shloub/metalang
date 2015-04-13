@@ -86,20 +86,20 @@ main =
      skip_whitespaces
      tab <- array_init b (\ i ->
                             array_init (i + 1) (\ j ->
-                                                  do c <- read_int
+                                                  do e <- read_int
                                                      skip_whitespaces
-                                                     return c))
+                                                     return e))
      printf "%d\n" =<< ((find b tab)::IO Int)
-     let d k =
+     let c k =
            if k <= b - 1
-           then let e l =
+           then let d l =
                       if l <= k
                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab k) <*> return l)::IO Int)
-                              e (l + 1)
+                              d (l + 1)
                       else do printf "\n" :: IO ()
-                              d (k + 1) in
-                      e 0
+                              c (k + 1) in
+                      d 0
            else return () in
-           d 0
+           c 0
 
 

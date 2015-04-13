@@ -63,8 +63,7 @@
                                                     (block
                                                       (printf "~c:~a " tmpc c)
                                                       (let ([c (if (not (eq? tmpc #\Space))
-                                                               (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
-                                                               c)
+                                                               (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))
                                                                c)])
                                                       (integer->char c))
                                                       ))) (mread-char))))])

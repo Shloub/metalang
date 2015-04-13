@@ -21,8 +21,7 @@ let main =
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       let tab = (Array.init len (fun  i -> let tmp = '\000' in
       Scanf.scanf "%c"
-      (fun  d -> let tmp = d in
-      tmp))) in
+      (fun  d -> d))) in
       let result = (nth tab tofind len) in
       (Printf.printf "%d" result)
       )

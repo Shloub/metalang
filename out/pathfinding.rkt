@@ -52,9 +52,8 @@
 )
 (define (pathfind tab x y)
   (let ([cache (build-vector y (lambda (i) 
-                                 (let ([tmp (build-vector x (lambda (j) 
-                                                              (- 1)))])
-                                 tmp)))])
+                                 (build-vector x (lambda (j) 
+                                                   (- 1)))))])
 (pathfind_aux cache tab x y 0 0))
 )
 (define main
@@ -72,8 +71,7 @@
                                          (let ([tab2 (build-vector x (lambda (j) 
                                                                        (let ([tmp (integer->char 0)])
                                                                        ((lambda (g) 
-                                                                          (let ([tmp g])
-                                                                          tmp)) (mread-char)))))])
+                                                                          g) (mread-char)))))])
             (block
               (mread-blank)
               tab2

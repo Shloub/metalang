@@ -5,8 +5,7 @@ let main =
                     let tab4 = (Array.init strlen (fun  toto -> Scanf.scanf "%c"
                     (fun  tmpc -> let c = (int_of_char (tmpc)) in
                     let c = (if (tmpc <> ' ')
-                             then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
-                             c
+                             then ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a')))
                              else c) in
                     (char_of_int (c))))) in
                     let rec a j =

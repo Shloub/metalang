@@ -38,28 +38,28 @@ main :: IO ()
 
 
 main =
-  (array_init_withenv 5 (\ j w ->
+  (array_init_withenv 5 (\ j g ->
                            do c <- getChar
                               let d = (ord c) - (ord '0')
-                              let x = w * d
-                              return (x, d)) 1) >>= (\ (g, last) ->
-                                                      let h k l m n o =
+                              let h = g * d
+                              return (h, d)) 1) >>= (\ (l, last) ->
+                                                      let m k n o p q =
                                                             if k <= 995
                                                             then do e <- getChar
                                                                     let f = (ord e) - (ord '0')
                                                                     (if f == 0
                                                                      then return (1, 4)
-                                                                     else do let t = l * f
-                                                                             u <- if o < 0
-                                                                                  then ((quot t) <$> (readIOA last m))
-                                                                                  else return t
-                                                                             let v = o - 1
-                                                                             return (u, v)) >>= (\ (p, q) ->
-                                                                                                  do writeIOA last m f
-                                                                                                     let r = (m + 1) `rem` 5
-                                                                                                     let s = (max n p)
-                                                                                                     h (k + 1) p r s q)
-                                                            else printf "%d\n" (n::Int) :: IO() in
-                                                            h 1 g 0 g 0)
+                                                                     else do let r = n * f
+                                                                             s <- if q < 0
+                                                                                  then ((quot r) <$> (readIOA last o))
+                                                                                  else return r
+                                                                             let t = q - 1
+                                                                             return (s, t)) >>= (\ (u, v) ->
+                                                                                                  do writeIOA last o f
+                                                                                                     let w = (o + 1) `rem` 5
+                                                                                                     let x = (max p u)
+                                                                                                     m (k + 1) u w x v)
+                                                            else printf "%d\n" (p::Int) :: IO() in
+                                                            m 1 l 0 l 0)
 
 

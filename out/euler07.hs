@@ -44,12 +44,12 @@ find n t used nth =
   let b c d =
         if d /= nth
         then ifM (divisible c t d)
-                 (do let e = c + 1
-                     b e d)
+                 (do let g = c + 1
+                     b g d)
                  (do writeIOA t d c
-                     let f = c + 1
-                     let g = d + 1
-                     b f g)
+                     let e = c + 1
+                     let f = d + 1
+                     b e f)
         else readIOA t (d - 1) in
         b n used
 

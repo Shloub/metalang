@@ -1,11 +1,10 @@
 let read_sudoku () =
-  let out0 = (Array.init (9 * 9) (fun  i -> Scanf.scanf "%d"
+  (Array.init (9 * 9) (fun  i -> Scanf.scanf "%d"
   (fun  k -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                k
                )
-  ))) in
-  out0
+  )))
 let print_sudoku sudoku0 =
   let rec a y =
     (if (y <= 8)

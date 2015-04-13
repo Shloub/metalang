@@ -33,10 +33,8 @@
     (let ([oneval (pathfind_aux cache tab len (+ pos 1))])
     (let ([out0 0])
     (let ([out0 (if (< posval oneval)
-                (let ([out0 (+ 1 posval)])
-                out0)
-                (let ([out0 (+ 1 oneval)])
-                out0))])
+                (+ 1 posval)
+                (+ 1 oneval))])
     (block
       (vector-set! cache pos out0)
       out0

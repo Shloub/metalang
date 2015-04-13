@@ -32,8 +32,7 @@
                                                   (block
                                                     (printf "~c:~a " tmpc c)
                                                     (let ([c (if (not (eq? tmpc #\Space))
-                                                             (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
-                                                             c)
+                                                             (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))
                                                              c)])
                                                     (block
                                                       (vector-set! tab4 i3 (integer->char c))

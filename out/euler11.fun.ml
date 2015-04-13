@@ -22,13 +22,12 @@ let main =
                                                                            then ((- 1), 1)
                                                                            else ((- 1), (- 1))))))))))) in
   let max0 = 0 in
-  let m = (Array.init 20 (fun  c -> let e = (Array.init 20 (fun  f -> Scanf.scanf "%d"
+  let m = (Array.init 20 (fun  c -> (Array.init 20 (fun  f -> Scanf.scanf "%d"
   (fun  d -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                d
                )
-  ))) in
-  e)) in
+  ))))) in
   let rec g j max0 =
     (if (j <= 7)
      then ((fun  (dx, dy) -> let rec h x max0 =

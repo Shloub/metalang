@@ -23,13 +23,12 @@
 ))
 
 (define (read_sudoku _)
-  (let ([out0 (build-vector (* 9 9) (lambda (i) 
-                                      ((lambda (k) 
-                                         (block
-                                           (mread-blank)
-                                           k
-                                           )) (mread-int))))])
-out0)
+  (build-vector (* 9 9) (lambda (i) 
+                          ((lambda (k) 
+                             (block
+                               (mread-blank)
+                               k
+                               )) (mread-int))))
 )
 (define (print_sudoku sudoku0)
   (letrec ([a (lambda (y) 

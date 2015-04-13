@@ -59,25 +59,25 @@ main :: IO ()
 nbPassePartout n passepartout m serrures =
   let c i d e =
         if i <= m - 1
-        then do f <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) d) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
+        then do r <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) d) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
                          (join $ readIOA <$> (readIOA serrures i) <*> return 1)
                          (return d)
                 ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) e) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                    (do g <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                        c (i + 1) f g)
-                    (c (i + 1) f e)
-        else let h o p q =
-                   if o <= n - 1
-                   then do pp <- readIOA passepartout o
+                    (do s <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                        c (i + 1) r s)
+                    (c (i + 1) r e)
+        else let f g h o =
+                   if g <= n - 1
+                   then do pp <- readIOA passepartout g
                            ifM ((((<=) d) <$> (readIOA pp 0)) <&&> (((<=) e) <$> (readIOA pp 1)))
                                (return 1)
-                               (do r <- ((max <$> (return p) <*> (readIOA pp 0)))
-                                   s <- ((max <$> (return q) <*> (readIOA pp 1)))
-                                   h (o + 1) r s)
-                   else return (if p >= d && q >= e
+                               (do p <- ((max <$> (return h) <*> (readIOA pp 0)))
+                                   q <- ((max <$> (return o) <*> (readIOA pp 1)))
+                                   f (g + 1) p q)
+                   else return (if h >= d && o >= e
                                 then 2
                                 else 0) in
-                   h 0 0 0 in
+                   f 0 0 0 in
         c 0 0 0
 
 main =

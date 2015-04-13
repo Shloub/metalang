@@ -6,12 +6,10 @@ let devine0 nombre tab len =
      then (if ((tab.(i) > max0) || (tab.(i) < min0))
            then false
            else let min0 = (if (tab.(i) < nombre)
-                            then let min0 = tab.(i) in
-                            min0
+                            then tab.(i)
                             else min0) in
            let max0 = (if (tab.(i) > nombre)
-                       then let max0 = tab.(i) in
-                       max0
+                       then tab.(i)
                        else max0) in
            (if ((tab.(i) = nombre) && (len <> (i + 1)))
             then false

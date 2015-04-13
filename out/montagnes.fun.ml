@@ -13,8 +13,7 @@ let montagnes0 tab len =
         (
           tab.((len - j)) <- x;
           let max0 = (if (j > max0)
-                      then let max0 = j in
-                      max0
+                      then j
                       else max0) in
           let i = (i - 1) in
           (a i j max0)

@@ -16,13 +16,12 @@ let main =
               )
        
        else let len = (Scanf.scanf "%d " (fun x -> x)) in
-       let tab2 = (Array.init (len - 1) (fun  c -> let e = (Array.init len (fun  f -> Scanf.scanf "%d"
+       let tab2 = (Array.init (len - 1) (fun  c -> (Array.init len (fun  f -> Scanf.scanf "%d"
        (fun  d -> (
                     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                     d
                     )
-       ))) in
-       e)) in
+       ))))) in
        let rec h i =
          (if (i <= (len - 2))
           then let rec k j =

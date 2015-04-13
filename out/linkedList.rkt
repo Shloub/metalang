@@ -21,8 +21,7 @@
 
 (struct intlist ([head #:mutable] [tail #:mutable]))
 (define (cons0 list i)
-  (let ([out0 (intlist i list)])
-  out0)
+  (intlist i list)
 )
 (define (rev2 empty acc torev)
   (if (eq? torev empty)

@@ -29,13 +29,12 @@ let palindrome2 pow2 n =
 let main =
   let p = 1 in
   ((fun  (p, pow2) -> let sum = 0 in
-  let rec g d sum =
+  let rec h d sum =
     (if (d <= 9)
      then let sum = (if (palindrome2 pow2 d)
                      then (
                             (Printf.printf "%d\n" d);
-                            let sum = (sum + d) in
-                            sum
+                            (sum + d)
                             )
                      
                      else sum) in
@@ -43,23 +42,22 @@ let main =
       then (
              (Printf.printf "%d\n" ((d * 10) + d));
              let sum = (sum + ((d * 10) + d)) in
-             (g (d + 1) sum)
+             (h (d + 1) sum)
              )
       
-      else (g (d + 1) sum))
-     else let rec h a0 sum =
+      else (h (d + 1) sum))
+     else let rec l a0 sum =
             (if (a0 <= 4)
              then let a = ((a0 * 2) + 1) in
-             let rec l b sum =
+             let rec m b sum =
                (if (b <= 9)
-                then let rec m c sum =
+                then let rec o c sum =
                        (if (c <= 9)
                         then let num0 = ((((((a * 100000) + (b * 10000)) + (c * 1000)) + (c * 100)) + (b * 10)) + a) in
                         let sum = (if (palindrome2 pow2 num0)
                                    then (
                                           (Printf.printf "%d\n" num0);
-                                          let sum = (sum + num0) in
-                                          sum
+                                          (sum + num0)
                                           )
                                    
                                    else sum) in
@@ -68,16 +66,15 @@ let main =
                          then (
                                 (Printf.printf "%d\n" num1);
                                 let sum = (sum + num1) in
-                                (m (c + 1) sum)
+                                (o (c + 1) sum)
                                 )
                          
-                         else (m (c + 1) sum))
+                         else (o (c + 1) sum))
                         else let num2 = (((a * 100) + (b * 10)) + a) in
                         let sum = (if (palindrome2 pow2 num2)
                                    then (
                                           (Printf.printf "%d\n" num2);
-                                          let sum = (sum + num2) in
-                                          sum
+                                          (sum + num2)
                                           )
                                    
                                    else sum) in
@@ -86,16 +83,16 @@ let main =
                          then (
                                 (Printf.printf "%d\n" num3);
                                 let sum = (sum + num3) in
-                                (l (b + 1) sum)
+                                (m (b + 1) sum)
                                 )
                          
-                         else (l (b + 1) sum))) in
-                       (m 0 sum)
-                else (h (a0 + 1) sum)) in
-               (l 0 sum)
+                         else (m (b + 1) sum))) in
+                       (o 0 sum)
+                else (l (a0 + 1) sum)) in
+               (m 0 sum)
              else (Printf.printf "sum=%d\n" sum)) in
-            (h 0 sum)) in
-    (g 1 sum)) (Array.init_withenv 20 (fun  i p -> let p = (p * 2) in
-  let o = (p / 2) in
-  (p, o)) p))
+            (l 0 sum)) in
+    (h 1 sum)) (Array.init_withenv 20 (fun  i p -> let p = (p * 2) in
+  let g = (p / 2) in
+  (p, g)) p))
 

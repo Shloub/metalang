@@ -7,11 +7,9 @@
              (let ([j 6])
              (let ([j (if (< i 20)
                       (let ([j (if (eq? i 22)
-                               (let ([j 0])
-                               j)
+                               0
                                j)])
-                      (let ([j 8])
-                      j))
+                      8)
                       j)])
              (eq? (remainder i 2) 0))))])
   (if (< i 10)

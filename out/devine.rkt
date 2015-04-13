@@ -30,12 +30,10 @@
                 (if (or (> (vector-ref tab i) max0) (< (vector-ref tab i) min0))
                 #f
                 (let ([min0 (if (< (vector-ref tab i) nombre)
-                            (let ([min0 (vector-ref tab i)])
-                            min0)
+                            (vector-ref tab i)
                             min0)])
                 (let ([max0 (if (> (vector-ref tab i) nombre)
-                            (let ([max0 (vector-ref tab i)])
-                            max0)
+                            (vector-ref tab i)
                             max0)])
                 (if (and (eq? (vector-ref tab i) nombre) (not (eq? len (+ i 1))))
                 #f

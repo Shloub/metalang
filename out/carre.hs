@@ -41,25 +41,25 @@ main =
                             (join (newListArray . (,) 0 . subtract 1 <$> return x <*> fmap (map read . words) getLine)))
      let e ix =
            if ix <= x - 1
-           then let f iy =
+           then let h iy =
                       if iy <= y - 1
                       then ifM (((==) 1) <$> (join $ readIOA <$> (readIOA tab iy) <*> return ix))
                                (do join $ writeIOA <$> (readIOA tab iy) <*> return ix <*> (((+) 1) <$> ((min <$> (((min <$> (join $ readIOA <$> (readIOA tab iy) <*> return (ix - 1)) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return ix)))) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return (ix - 1)))))
-                                   f (iy + 1))
-                               (f (iy + 1))
+                                   h (iy + 1))
+                               (h (iy + 1))
                       else e (ix + 1) in
-                      f 1
-           else let g jy =
+                      h 1
+           else let f jy =
                       if jy <= y - 1
-                      then let h jx =
+                      then let g jx =
                                  if jx <= x - 1
                                  then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab jy) <*> return jx)::IO Int)
-                                         h (jx + 1)
+                                         g (jx + 1)
                                  else do printf "\n" :: IO ()
-                                         g (jy + 1) in
-                                 h 0
+                                         f (jy + 1) in
+                                 g 0
                       else return () in
-                      g 0 in
+                      f 0 in
            e 1
 
 

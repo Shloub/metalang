@@ -60,13 +60,13 @@ main =
            if k <= 6000 - 1
            then ifM (((==) k) <$> (readIOA era k))
                     (do writeIOA primes h k
-                        let p = h + 1
-                        g (k + 1) p)
+                        let s = h + 1
+                        g (k + 1) s)
                     (g (k + 1) h)
            else do printf "%d == %d\n" (h::Int) (nprimes::Int) :: IO()
                    canbe <- array_init 6000 (\ i_ ->
                                                return False)
-                   let q i =
+                   let p i =
                          if i <= nprimes - 1
                          then let r j =
                                     if j <= 6000 - 1
@@ -75,18 +75,18 @@ main =
                                             then do writeIOA canbe n True
                                                     r (j + 1)
                                             else r (j + 1)
-                                    else q (i + 1) in
+                                    else p (i + 1) in
                                     r 0
-                         else let s m =
+                         else let q m =
                                     if m <= 6000
                                     then do let m2 = m * 2 + 1
                                             ifM ((return (m2 < 6000)) <&&> (fmap not (readIOA canbe m2)))
                                                 (do printf "%d\n" (m2::Int) :: IO()
-                                                    s (m + 1))
-                                                (s (m + 1))
+                                                    q (m + 1))
+                                                (q (m + 1))
                                     else return () in
-                                    s 1 in
-                         q 0 in
+                                    q 1 in
+                         p 0 in
            g 2 0
 
 

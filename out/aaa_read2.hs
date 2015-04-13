@@ -43,17 +43,17 @@ main =
                                        then do tmpc <- readIOA tab4 i3
                                                let c = (ord tmpc)
                                                printf "%c:%d " (tmpc::Char) (c::Int) :: IO()
-                                               let e = if tmpc /= ' '
+                                               let f = if tmpc /= ' '
                                                        then ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
                                                        else c
-                                               writeIOA tab4 i3 (chr e)
+                                               writeIOA tab4 i3 (chr f)
                                                d (i3 + 1)
-                                       else let f j =
+                                       else let e j =
                                                   if j <= strlen - 1
                                                   then do printf "%c" =<< (readIOA tab4 j :: IO Char)
-                                                          f (j + 1)
+                                                          e (j + 1)
                                                   else return () in
-                                                  f 0 in
+                                                  e 0 in
                                        d 0 in
                          b 0 in
            a 0

@@ -75,28 +75,28 @@ find ndiv2 =
            if k <= 110 - 1
            then ifM (((==) k) <$> (readIOA era k))
                     (do writeIOA primes x k
-                        let y = x + 1
-                        w (k + 1) y)
+                        let bc = x + 1
+                        w (k + 1) bc)
                     (w (k + 1) x)
-           else let z n =
+           else let y n =
                       if n <= 10000
                       then do primesFactors <- array_init (n + 2) (\ m ->
                                                                      return 0)
                               max0 <- ((max <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)))
                               writeIOA primesFactors 2 =<< ((-) <$> (readIOA primesFactors 2) <*> (return 1))
-                              let ba i bb =
-                                     if i <= max0
-                                     then ifM (((/=) 0) <$> (readIOA primesFactors i))
-                                              (do bc <- (((*) bb) <$> (((+) 1) <$> (readIOA primesFactors i)))
-                                                  ba (i + 1) bc)
-                                              (ba (i + 1) bb)
-                                     else if bb > ndiv2
-                                          then return ((n * (n + 1)) `quot` 2)
-                                          else {- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" -}
-                                               z (n + 1) in
-                                     ba 0 1
+                              let z i ba =
+                                    if i <= max0
+                                    then ifM (((/=) 0) <$> (readIOA primesFactors i))
+                                             (do bb <- (((*) ba) <$> (((+) 1) <$> (readIOA primesFactors i)))
+                                                 z (i + 1) bb)
+                                             (z (i + 1) ba)
+                                    else if ba > ndiv2
+                                         then return ((n * (n + 1)) `quot` 2)
+                                         else {- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" -}
+                                              y (n + 1) in
+                                    z 0 1
                       else return 0 in
-                      z 1 in
+                      y 1 in
            w 2 0
 
 main =
