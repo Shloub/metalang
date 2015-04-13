@@ -518,9 +518,9 @@ module Fix2 (F : Fixable2) = struct
   module Surface = struct
     let foldmap = F.foldmap
     let foldmapt f (F (i, x)) acc = let acc, x = foldmap f x acc in acc, F (i, x)
-    let map f x = snd (foldmap (fun x () -> (), f x) x ())
+    let map = F.map
     let mapt f (F(i, x)) = F (i, map f x)
-    let fold f acc t = fst ( foldmap (fun t acc -> f acc t, t) t acc)
+    let fold f acc x = F.fold (fun x acc -> f acc x) x acc
   end
 
   module Deep = struct
