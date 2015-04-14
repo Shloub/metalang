@@ -38,7 +38,7 @@ open Fresh
 type acc = string list TypeMap.t * Type.t TypeMap.t
 let acc0 = TypeMap.empty, TypeMap.empty
 
-let freshname_ = function
+let freshname = function
   | Type.Integer -> "int"
   | Type.String -> "string"
   | Type.Char -> "char"
@@ -64,9 +64,7 @@ let freshname_ = function
       ) "tuple" li
   | Type.Auto -> "auto"
 
-let rec freshname t =
-  let t = Type.Fixed.Surface.map freshname (Type.unfix t) in
-  freshname_ t
+let freshname t = Type.Fixed.Deep.fold freshname t
 
 let fold_ty tyenv (acc_fields, acc_names, li) t =
   if TypeMap.mem t acc_names then (acc_fields, acc_names, li)
