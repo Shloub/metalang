@@ -428,26 +428,8 @@ module IntMap = MakeMap (Int)
 module StringMap = MakeMap (String)
 module StringSet = MakeSet (String)
 
-(** {2 Fix module} *)
-(** les modules dérécursivés *)
-module type Fixable = sig
-  type ('a, 'b) tofix
-  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
 
-  val next : unit -> int
-end
-
-module Fix (F : Fixable) = struct
-  type 'a t = F of int * ('a t, 'a) F.tofix
-  let annot = function F (i, _) -> i
-  let unfix = function F (_, x) -> x
-  let fix x = F (F.next (), x)
-  let fixa a x = F (a, x)
-  let map = F.map
-  let rec dmap f (F(i, x)) = F (i, F.map (fun x -> f (dmap f x)) x)
-  let rec dfold f (F(i, x))  = f (F.map (dfold f) x)
-end
-
+(** {Some Haskell} *)
 module type Applicative = sig
   type 'a t
   val ret : 'a -> 'a t
@@ -498,6 +480,26 @@ module FromFoldMap (F : FoldMapApplicative) = struct
   let map f x =
     let module M = F.Make (Applicatives.Map)
     in M.foldmap f x
+end
+
+(** {2 Fix module} *)
+(** les modules dérécursivés *)
+module type Fixable = sig
+  type ('a, 'b) tofix
+  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
+
+  val next : unit -> int
+end
+
+module Fix (F : Fixable) = struct
+  type 'a t = F of int * ('a t, 'a) F.tofix
+  let annot = function F (i, _) -> i
+  let unfix = function F (_, x) -> x
+  let fix x = F (F.next (), x)
+  let fixa a x = F (a, x)
+  let map = F.map
+  let rec dmap f (F(i, x)) = F (i, F.map (fun x -> f (dmap f x)) x)
+  let rec dfold f (F(i, x))  = f (F.map (dfold f) x)
 end
 
 module type Fixable2 = sig
