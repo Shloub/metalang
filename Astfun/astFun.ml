@@ -80,8 +80,8 @@ module Expr = struct
   | LetIn of Ast.varname * 'a * 'a
 
   module FoldMap = struct
-    type 'a t = 'a tofix
-  module Make(F:Applicative) = struct
+    type ('a, _) t = 'a tofix
+    module Make(F:Applicative) = struct
     open F
 
     let fold_left_map f l =
@@ -117,8 +117,7 @@ module Expr = struct
   end
   end
   module Fixed = Fix2(struct
-    type ('a, 'b) alias = 'a tofix
-    type ('a, 'b) tofix = ('a, 'b) alias
+    type ('a, 'b) tofix = ('a, 'b) FoldMap.t
     let next () = Ast.next ()
     module Tools =FromFoldMap(FoldMap)
     include Tools

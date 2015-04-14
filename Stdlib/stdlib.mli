@@ -296,28 +296,28 @@ module StringSet : SigSet with type elt = string
 
 
 module type Applicative = sig
-  type 'a t
-  val ret : 'a -> 'a t
-  val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
+  type ('a, 'b) t
+  val ret : 'a -> ('a, 'b) t
+  val (<*>) : ('a -> 'b, 'c) t -> ('a, 'c) t -> ('b, 'c) t
 end
 
 module Applicatives : sig
-  module FoldMap : functor (Acc : sig type t end) -> Applicative
-  module Fold : functor (Acc : sig type t end) -> Applicative
+  module FoldMap : Applicative
+  module Fold : Applicative
   module Map: Applicative
 end
 
 module type FoldMapApplicative = sig
-  type 'a t
+  type ('a, 'b) t
   module Make : functor (F:Applicative) -> sig
-    val foldmap : ('a -> 'b F.t) -> 'a t -> 'b t F.t
+    val foldmap : ('a -> ('b, 'c) F.t) -> ('a, 'd) t -> (('b, 'd) t, 'c) F.t
   end
 end
 
 module FromFoldMap : functor(F : FoldMapApplicative) -> sig
-  val foldmap : ('a -> 'b -> 'b * 'c) -> 'a F.t -> 'b -> 'b * 'c F.t
-  val fold : ('a -> 'b -> 'b) -> 'a F.t -> 'b -> 'b
-  val map : ('a -> 'b) -> 'a F.t -> 'b F.t
+  val foldmap : ('a -> 'b -> 'b * 'c) -> ('a, 'd) F.t -> 'b -> 'b * ('c, 'd) F.t
+  val fold : ('a -> 'b -> 'b) -> ('a, 'c) F.t -> 'b -> 'b
+  val map : ('a -> 'b) -> ('a, 'c) F.t -> ('b, 'c) F.t
 end
 
 

@@ -429,16 +429,17 @@ module StringMap = MakeMap (String)
 module StringSet = MakeSet (String)
 
 
-(** {Some Haskell} *)
+(** {Haskell story for children} *)
+
 module type Applicative = sig
-  type 'a t
-  val ret : 'a -> 'a t
-  val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
+  type ('a, 'b) t
+  val ret : 'a -> ('a, 'b) t
+  val (<*>) : ('a -> 'b, 'c) t -> ('a, 'c) t -> ('b, 'c) t
 end
 
 module Applicatives = struct
-  module FoldMap (Acc : sig type t end) = struct
-    type 'a t = Acc.t -> Acc.t * 'a
+  module FoldMap = struct
+    type ('a, 'b) t = 'b -> 'b * 'a
     let ret x acc = acc, x
     let (<*>) f g acc =
       let acc, e1 = f acc in
@@ -446,12 +447,12 @@ module Applicatives = struct
       acc, e1 e2
   end
   module Map = struct
-    type 'a t = 'a
+    type ('a, _) t = 'a
     let ret x = x
     let (<*>) f g = f g
   end
-  module Fold (Acc : sig type t end) = struct
-    type 'a t = (Acc.t -> Acc.t)
+  module Fold = struct
+    type ('a, 'b) t = 'b -> 'b
     let ret x acc = acc
     let (<*>) f g acc =
       let acc = f acc in
@@ -461,20 +462,20 @@ module Applicatives = struct
 end
 
 module type FoldMapApplicative = sig
-  type 'a t
+  type ('a, 'b) t
   module Make : functor (F:Applicative) -> sig
-    val foldmap : ('a -> 'b F.t) -> 'a t -> 'b t F.t
+    val foldmap : ('a -> ('b, 'c) F.t) -> ('a, 'd) t -> (('b, 'd) t, 'c) F.t
   end
 end
 
 module FromFoldMap (F : FoldMapApplicative) = struct
 
   let foldmap (type acc)  f x =
-    let module M =  F.Make ( Applicatives.FoldMap(struct type t = acc end))
+    let module M =  F.Make ( Applicatives.FoldMap)
     in M.foldmap f x
 
   let fold (type acc) f x =
-    let module M = F.Make (Applicatives.Fold(struct type t = acc end))
+    let module M = F.Make (Applicatives.Fold)
     in M.foldmap f x
 
   let map f x =
