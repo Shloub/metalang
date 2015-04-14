@@ -229,26 +229,35 @@ module Type = struct
   | Tuple of 'a list
   | Auto
 
-  module Fixed = Fix(struct
-    type ('a, 'b) alias = 'a tofix
-    type ('a, 'b) tofix = ('a, 'b) alias
-
-    let map f = function
-      | Auto -> Auto
-      | Integer -> Integer
-      | String -> String
-      | Char -> Char
-      | Array t -> Array (f t)
-      | Void -> Void
-      | Bool -> Bool
-      | Lexems -> Lexems
-      | Struct li ->
-        Struct (List.map (fun (name, t) -> (name, f t)) li)
-      | Named t -> Named t
-      | Enum x -> Enum x
-      | Tuple x -> Tuple (List.map f x)
-
+  module FoldMap = struct
+    type ('a, _) t = 'a tofix
+    module Make(F:Applicative) = struct
+      open F
+      let fold_left_map f l =
+        ret List.rev
+          <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+      let foldmap f e =
+        let f' (a, x) = ret (fun x -> a, x) <*> f x in
+        match e with
+        | Auto -> ret Auto
+        | Integer -> ret Integer
+        | String -> ret String
+        | Void -> ret Void
+        | Bool -> ret Bool
+        | Lexems -> ret Lexems
+        | Named n -> ret (Named n)
+        | Enum e -> ret (Enum e)
+        | Char -> ret Char
+        | Array t -> ret (fun x -> Array x) <*> f t
+        | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f li
+        | Struct li -> ret (fun li -> Struct li) <*>  fold_left_map f' li
+    end
+  end
+  module Fixed = Fix2(struct
+    type ('a, 'b) tofix = ('a, 'b) FoldMap.t
     let next () = next ()
+    module Tools =FromFoldMap(FoldMap)
+    include Tools
   end)
 
   type t = unit Fixed.t
@@ -325,26 +334,7 @@ module Type = struct
   module Writer = AstWriter.F (struct
     type alias = t
     type 'a t = alias
-    let foldmap f acc t =
-      let annot = Fixed.annot t in
-      match unfix t with
-      | Auto | Integer | String | Char | Void
-      | Bool | Named _
-      | Enum _ | Lexems ->
-        acc, t
-      | Array t ->
-        let acc, t = f acc t in
-        acc, Fixed.fixa annot (Array t)
-      | Tuple li ->
-        let acc, li = List.fold_left_map f acc li in
-        acc, Fixed.fixa annot (Tuple (li))
-      | Struct li ->
-        let acc, li = List.fold_left_map
-          (fun acc (name, t) ->
-            let acc, t = f acc t in
-            acc, (name, t)
-          ) acc li
-        in acc, Fixed.fixa annot (Struct li)
+    let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
   end)
 
   let type2String (t : string tofix) : string =
@@ -377,7 +367,7 @@ module Type = struct
     | Named t -> "Named("^t^")"
 
   let rec type_t_to_string (t:t) : string =
-    type2String (Fixed.map type_t_to_string (unfix t))
+    type2String (Fixed.Surface.map type_t_to_string (unfix t))
 
   let bool:t = Bool |> fix
   let integer:t = Integer |> fix

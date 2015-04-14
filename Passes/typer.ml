@@ -49,7 +49,7 @@ let rec is_typed (t : typeContrainte ref) : bool =
   | Unknown _ -> false
   | PreTyped (t, _) ->
     let out = ref true in
-    let _ = Type.Fixed.map (fun t -> if not (is_typed t) then out := false) t in !out
+    let _ = Type.Fixed.Surface.map (fun t -> if not (is_typed t) then out := false) t in !out
   | Typed (t, _) -> true
 
 
@@ -57,7 +57,7 @@ let rec extract_typed (t : typeContrainte ref) : Type.t =
   match !t with
   | Unknown loc -> assert false
   | PreTyped (t, loc) ->
-    let t = Type.Fixed.map extract_typed t |> Type.Fixed.fix in
+    let t = Type.Fixed.Surface.map extract_typed t |> Type.Fixed.fix in
     PosMap.add ( Type.Fixed.annot t ) loc;
     t
   | Typed (t, _) -> t
@@ -96,7 +96,7 @@ let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
   in
   let rec f t = match Type.Fixed.unfix t with
     | Type.Auto -> IntMap.find (Type.Fixed.annot t) env.automap
-    | t -> ref ( PreTyped ( (Type.Fixed.map f t ), loc) )
+    | t -> ref ( PreTyped ( (Type.Fixed.Surface.map f t ), loc) )
   in let t = f t in env, t
 
 (** {2 Printers} *)
@@ -104,7 +104,7 @@ let rec contr2str t =
   match t with
   | Unknown _ -> "*"
   | PreTyped (ty, _) -> "P_"^
-    (Type.type2String (Type.Fixed.map (fun t -> contr2str !t) ty))
+    (Type.type2String (Type.Fixed.Surface.map (fun t -> contr2str !t) ty))
   | Typed (ty, _) -> "T_" ^ (Type.type_t_to_string ty)
 
 (** {2 Error reporters} *)
@@ -197,7 +197,7 @@ let expand env ty loc =
          StringMap.find name env.gamma
        with Not_found ->
          not_found_ty name loc)
-    | x -> Type.Fixed.F (Type.Fixed.annot ty, (Type.Fixed.map f x))
+    | x -> Type.Fixed.F (Type.Fixed.annot ty, (Type.Fixed.Surface.map f x))
   in f ty
 
 (** {2 Unify} *)

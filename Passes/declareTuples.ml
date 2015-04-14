@@ -65,7 +65,7 @@ let freshname_ = function
   | Type.Auto -> "auto"
 
 let rec freshname t =
-  let t = Type.Fixed.map freshname (Type.unfix t) in
+  let t = Type.Fixed.Surface.map freshname (Type.unfix t) in
   freshname_ t
 
 let fold_ty tyenv (acc_fields, acc_names, li) t =
