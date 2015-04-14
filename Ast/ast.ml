@@ -141,34 +141,33 @@ module Mutable = struct
   | Dot of 'mutable_ * fieldname
 
   (** {2 Parcours} *)
-
-  module Fixed = Fix(struct
-    type ('a, 'b) alias = ('a, 'b) tofix
-    type ('a, 'b) tofix = ('a, 'b) alias
-    let map f = function
-      | Var v -> Var v
-      | Array (m, el) -> Array( f m, el)
-      | Dot (m, fi) -> Dot (f m, fi)
+  module FoldMap = struct
+    type ('a, 'b) t = ('a, 'b) tofix
+    module Make(F:Applicative) = struct
+      open F
+      let foldmap f t =
+        match t with
+        | Var v -> ret ( Var v )
+        | Array (v, el) -> ret (fun v -> Array(v, el)) <*> f v
+        | Dot (v, field) -> ret (fun v -> Dot(v, field)) <*> f v
+    end
+  end
+  module Fixed = Fix2(struct
+    type ('a, 'b) tofix = ('a, 'b) FoldMap.t
     let next () = next ()
+    module Tools = FromFoldMap(FoldMap)
+    include Tools
   end)
+
   type 'expr t = 'expr Fixed.t
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
-    type 'a alias = 'a t;;
-    type 'a t = 'a alias;;
-    let foldmap f acc t =
-      let annot = Fixed.annot t in
-      match unfix t with
-      | Var v -> acc, Var v |> Fixed.fixa annot
-      | Array (v, el) ->
-        let acc, v = f acc v in
-        acc, Array (v, el) |> Fixed.fixa annot
-      | Dot (v, field) ->
-        let acc, v = f acc v in
-        acc, Dot (v, field) |> Fixed.fixa annot
+    type 'a alias = 'a t
+    type 'a t = 'a alias
+    let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
   end)
 
   let rec equals cmpe a b = match (unfix a, unfix b) with
@@ -256,7 +255,7 @@ module Type = struct
   module Fixed = Fix2(struct
     type ('a, 'b) tofix = ('a, 'b) FoldMap.t
     let next () = next ()
-    module Tools =FromFoldMap(FoldMap)
+    module Tools = FromFoldMap(FoldMap)
     include Tools
   end)
 
