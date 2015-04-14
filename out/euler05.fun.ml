@@ -24,26 +24,26 @@ let main =
   let rec e i =
     (if (i <= lim)
      then let t = (primesfactors i) in
-     let rec f j =
+     let rec p j =
        (if (j <= i)
         then (
                o.(j) <- ((max (o.(j)) (t.(j))));
-               (f (j + 1))
+               (p (j + 1))
                )
         
         else (e (i + 1))) in
-       (f 1)
+       (p 1)
      else let product = 1 in
-     let rec g k product =
+     let rec f k product =
        (if (k <= lim)
-        then let h = o.(k) in
-        let rec p l product =
-          (if (l <= h)
+        then let g = o.(k) in
+        let rec h l product =
+          (if (l <= g)
            then let product = (product * k) in
-           (p (l + 1) product)
-           else (g (k + 1) product)) in
-          (p 1 product)
+           (h (l + 1) product)
+           else (f (k + 1) product)) in
+          (h 1 product)
         else (Printf.printf "%d\n" product)) in
-       (g 1 product)) in
+       (f 1 product)) in
     (e 1)
 

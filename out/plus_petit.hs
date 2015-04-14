@@ -67,12 +67,12 @@ go0 tab a b =
                 if d < f
                 then do e <- readIOA tab d
                         if e < m
-                        then do let g = d + 1
-                                c g f
-                        else do let h = f - 1
-                                writeIOA tab d =<< (readIOA tab h)
-                                writeIOA tab h e
-                                c d h
+                        then do let h = d + 1
+                                c h f
+                        else do let g = f - 1
+                                writeIOA tab d =<< (readIOA tab g)
+                                writeIOA tab g e
+                                c d g
                 else if d < m
                      then go0 tab a m
                      else go0 tab m b in

@@ -81,14 +81,14 @@ main =
            if k <= 1000 - 1
            then ifM (((==) k) <$> (readIOA era k))
                     (do writeIOA primes v k
-                        let w = v + 1
-                        u (k + 1) w)
+                        let bn = v + 1
+                        u (k + 1) bn)
                     (u (k + 1) v)
            else do printf "%d == %d\n" (v::Int) (nprimes::Int) :: IO()
-                   let x b y z ba bb =
+                   let w b x y z ba =
                          if b <= 999
                          then ifM (((==) b) <$> (readIOA era b))
-                                  (let bc a bd be bf bg =
+                                  (let bb a bc bd be bf =
                                           if a <= 999
                                           then do n1 <- test a b primes nprimes
                                                   n2 <- test a (- b) primes nprimes
@@ -96,16 +96,16 @@ main =
                                                     if n2 > bi
                                                     then do let bl = - a * b
                                                             let bm = - b
-                                                            bc (a + 1) a n2 bm bl
-                                                    else bc (a + 1) bh bi bj bk) (if n1 > be
-                                                                                  then let bn = a * b
-                                                                                                in (a, n1, b, bn)
-                                                                                  else (bd, be, bf, bg))
-                                          else x (b + 1) bd be bf bg in
-                                          bc (- 999) y z ba bb)
-                                  (x (b + 1) y z ba bb)
-                         else printf "%d %d\n%d\n%d\n" (y::Int) (ba::Int) (z::Int) (bb::Int) :: IO() in
-                         x 3 0 0 0 0 in
+                                                            bb (a + 1) a n2 bm bl
+                                                    else bb (a + 1) bh bi bj bk) (if n1 > bd
+                                                                                  then let bg = a * b
+                                                                                                in (a, n1, b, bg)
+                                                                                  else (bc, bd, be, bf))
+                                          else w (b + 1) bc bd be bf in
+                                          bb (- 999) x y z ba)
+                                  (w (b + 1) x y z ba)
+                         else printf "%d %d\n%d\n%d\n" (x::Int) (z::Int) (y::Int) (ba::Int) :: IO() in
+                         w 3 0 0 0 0 in
            u 2 0
 
 

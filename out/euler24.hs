@@ -39,27 +39,27 @@ show0 lim nth =
            if k <= lim - 1
            then do n <- fact (lim - k)
                    let nchiffre = e `quot` n
-                   let f = e `rem` n
-                   let g l h =
+                   let g = e `rem` n
+                   let h l o =
                          if l <= lim - 1
                          then ifM (fmap not (readIOA pris l))
-                                  (do if h == 0
+                                  (do if o == 0
                                       then do printf "%d" (l :: Int) :: IO ()
                                               writeIOA pris l True
                                       else return ()
-                                      let o = h - 1
-                                      g (l + 1) o)
-                                  (g (l + 1) h)
-                         else d (k + 1) f in
-                         g 0 nchiffre
-           else let p m =
+                                      let p = o - 1
+                                      h (l + 1) p)
+                                  (h (l + 1) o)
+                         else d (k + 1) g in
+                         h 0 nchiffre
+           else let f m =
                       if m <= lim - 1
                       then ifM (fmap not (readIOA pris m))
                                (do printf "%d" (m :: Int) :: IO ()
-                                   p (m + 1))
-                               (p (m + 1))
+                                   f (m + 1))
+                               (f (m + 1))
                       else printf "\n" :: IO () in
-                      p 0 in
+                      f 0 in
            d 1 nth
 
 main =

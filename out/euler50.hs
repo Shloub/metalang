@@ -61,32 +61,32 @@ main =
            if k <= 1000001 - 1
            then ifM (((==) k) <$> (readIOA era k))
                     (do writeIOA primes p k
-                        let q = p + 1
-                        m (k + 1) q)
+                        let bf = p + 1
+                        m (k + 1) bf)
                     (m (k + 1) p)
            else do printf "%d == %d\n" (p::Int) (nprimes::Int) :: IO()
                    sum <- array_init nprimes (\ i_ ->
                                                 readIOA primes i_)
                    let stop = 1000001 - 1
-                   let r s u v w x =
-                         if v
-                         then let y i z ba bb bc =
-                                    if i <= bc
-                                    then if i + s < nprimes
-                                         then do writeIOA sum i =<< ((+) <$> (readIOA sum i) <*> (readIOA primes (i + s)))
+                   let q r s u v w =
+                         if u
+                         then let x i y z ba bb =
+                                    if i <= bb
+                                    then if i + r < nprimes
+                                         then do writeIOA sum i =<< ((+) <$> (readIOA sum i) <*> (readIOA primes (i + r)))
                                                  ifM (((>) 1000001) <$> (readIOA sum i))
                                                      (ifM ((==) <$> (readIOA era =<< (readIOA sum i)) <*> (readIOA sum i))
-                                                          (do bd <- readIOA sum i
-                                                              y (i + 1) s True bd bc)
-                                                          (y (i + 1) z True bb bc))
-                                                     (do let be = (min bc i)
-                                                         y (i + 1) z ba bb be)
-                                         else y (i + 1) z ba bb bc
-                                    else do let bf = s + 1
-                                            r bf z ba bb bc in
-                                    y 0 u False w x
-                         else printf "%d\n%d\n" (w::Int) (u::Int) :: IO() in
-                         r 1 0 True 1 stop in
+                                                          (do be <- readIOA sum i
+                                                              x (i + 1) r True be bb)
+                                                          (x (i + 1) y True ba bb))
+                                                     (do let bd = (min bb i)
+                                                         x (i + 1) y z ba bd)
+                                         else x (i + 1) y z ba bb
+                                    else do let bc = r + 1
+                                            q bc y z ba bb in
+                                    x 0 s False v w
+                         else printf "%d\n%d\n" (v::Int) (s::Int) :: IO() in
+                         q 1 0 True 1 stop in
            m 2 0
 
 

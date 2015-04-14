@@ -45,24 +45,24 @@ main =
            else let c o =
                       if o <= a
                       then do let r = a - o
-                              let d p =
+                              let f p =
                                     if p <= a
                                     then do let q = a - p
                                             join $ writeIOA <$> (readIOA tab r) <*> return q <*> ((+) <$> (join $ readIOA <$> (readIOA tab (r + 1)) <*> return q) <*> (join $ readIOA <$> (readIOA tab r) <*> return (q + 1)))
-                                            d (p + 1)
+                                            f (p + 1)
                                     else c (o + 1) in
-                                    d 2
-                      else let e m =
+                                    f 2
+                      else let d m =
                                  if m <= a - 1
-                                 then let f k =
+                                 then let e k =
                                             if k <= a - 1
                                             then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab m) <*> return k)::IO Int)
-                                                    f (k + 1)
+                                                    e (k + 1)
                                             else do printf "\n" :: IO ()
-                                                    e (m + 1) in
-                                            f 0
+                                                    d (m + 1) in
+                                            e 0
                                  else printf "%d\n" =<< ((join $ readIOA <$> (readIOA tab 0) <*> return 0)::IO Int) in
-                                 e 0 in
+                                 d 0 in
                       c 2 in
            b 0
 

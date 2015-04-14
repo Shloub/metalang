@@ -67,23 +67,23 @@ npi0 str len =
      let a b d =
            if d < len
            then ifM (((==) ' ') <$> (readIOA str d))
-                    (do let e = d + 1
-                        a b e)
+                    (do let n = d + 1
+                        a b n)
                     (ifM ((readIOA str d) >>= is_number)
-                         (let f g h =
-                                ifM (((/=) ' ') <$> (readIOA str h))
-                                    (do j <- ((-) <$> (((+) (g * 10)) <$> (fmap ord (readIOA str h))) <*> (return (ord '0')))
-                                        let k = h + 1
-                                        f j k)
-                                    (do writeIOA stack b g
-                                        let l = b + 1
-                                        a l h) in
-                                f 0 d)
+                         (let g h j =
+                                ifM (((/=) ' ') <$> (readIOA str j))
+                                    (do l <- ((-) <$> (((+) (h * 10)) <$> (fmap ord (readIOA str j))) <*> (return (ord '0')))
+                                        let m = j + 1
+                                        g l m)
+                                    (do writeIOA stack b h
+                                        let k = b + 1
+                                        a k j) in
+                                g 0 d)
                          (ifM (((==) '+') <$> (readIOA str d))
                               (do writeIOA stack (b - 2) =<< ((+) <$> (readIOA stack (b - 2)) <*> (readIOA stack (b - 1)))
-                                  let m = b - 1
-                                  let n = d + 1
-                                  a m n)
+                                  let e = b - 1
+                                  let f = d + 1
+                                  a e f)
                               (a b d)))
            else readIOA stack 0 in
            a 0 0

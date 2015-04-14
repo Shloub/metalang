@@ -64,7 +64,7 @@ let main =
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i_ -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  e -> let tmp = e in
+    (fun  g -> let tmp = g in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp
@@ -73,11 +73,11 @@ let main =
     let tab2 = (copytab tab len) in
     (
       (bubblesort tab2 len);
-      let rec f i =
+      let rec e i =
         (if (i <= (len - 1))
          then (
                 (Printf.printf "%d " tab2.(i));
-                (f (i + 1))
+                (e (i + 1))
                 )
          
          else (
@@ -85,20 +85,20 @@ let main =
                 let tab3 = (copytab tab len) in
                 (
                   (qsort0 tab3 len 0 (len - 1));
-                  let rec g i =
+                  let rec f i =
                     (if (i <= (len - 1))
                      then (
                             (Printf.printf "%d " tab3.(i));
-                            (g (i + 1))
+                            (f (i + 1))
                             )
                      
                      else (Printf.printf "\n")) in
-                    (g 0)
+                    (f 0)
                   )
                 
                 )
          ) in
-        (f 0)
+        (e 0)
       )
     
     )

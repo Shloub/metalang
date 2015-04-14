@@ -73,15 +73,15 @@ main =
                                   do tmpc <- getChar
                                      let c = (ord tmpc)
                                      printf "%c:%d " (tmpc::Char) (c::Int) :: IO()
-                                     let d = if tmpc /= ' '
+                                     let e = if tmpc /= ' '
                                              then ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
                                              else c
-                                     return (chr d))
-     let e j =
+                                     return (chr e))
+     let d j =
            if j <= strlen - 1
            then do printf "%c" =<< (readIOA tab4 j :: IO Char)
-                   e (j + 1)
+                   d (j + 1)
            else return () in
-           e 0
+           d 0
 
 

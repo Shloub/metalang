@@ -14,7 +14,7 @@ let show lim nth =
      then let n = (fact (lim - k)) in
      let nchiffre = (nth / n) in
      let nth = (nth mod n) in
-     let rec c l nchiffre =
+     let rec d l nchiffre =
        (if (l <= (lim - 1))
         then (if (not pris.(l))
               then (
@@ -26,23 +26,23 @@ let show lim nth =
                       
                       else ());
                      let nchiffre = (nchiffre - 1) in
-                     (c (l + 1) nchiffre)
+                     (d (l + 1) nchiffre)
                      )
               
-              else (c (l + 1) nchiffre))
+              else (d (l + 1) nchiffre))
         else (b (k + 1) nth)) in
-       (c 0 nchiffre)
-     else let rec d m =
+       (d 0 nchiffre)
+     else let rec c m =
             (if (m <= (lim - 1))
              then (if (not pris.(m))
                    then (
                           (Printf.printf "%d" m);
-                          (d (m + 1))
+                          (c (m + 1))
                           )
                    
-                   else (d (m + 1)))
+                   else (c (m + 1)))
              else (Printf.printf "\n")) in
-            (d 0)) in
+            (c 0)) in
     (b 1 nth)
 let main =
   (

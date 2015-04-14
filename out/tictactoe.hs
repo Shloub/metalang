@@ -99,45 +99,45 @@ eval0 g =
         if y <= 2
         then do let col = - 1
                 let lin = - 1
-                let f x h k l =
+                let l x n o p =
                       if x <= 2
-                      then do n <- ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
-                                       (return (k + 1))
-                                       (return k)
+                      then do q <- ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
+                                       (return (o + 1))
+                                       (return o)
                               colv <- join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y
                               linv <- join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return y) <*> return x
-                              let o = if h == - 1 && colv /= 0
+                              let r = if n == - 1 && colv /= 0
                                       then colv
-                                      else if colv /= h
+                                      else if colv /= n
                                            then - 2
-                                           else h
-                              if l == - 1 && linv /= 0
-                              then f (x + 1) o n linv
-                              else if linv /= l
-                                   then do let p = - 2
-                                           f (x + 1) o n p
-                                   else f (x + 1) o n l
-                      else if h >= 0
-                           then c (y + 1) k h
-                           else if l >= 0
-                                then c (y + 1) k l
-                                else c (y + 1) k e in
-                      f 0 col d lin
-        else let q x r =
+                                           else n
+                              if p == - 1 && linv /= 0
+                              then l (x + 1) r q linv
+                              else if linv /= p
+                                   then do let s = - 2
+                                           l (x + 1) r q s
+                                   else l (x + 1) r q p
+                      else if n >= 0
+                           then c (y + 1) o n
+                           else if p >= 0
+                                then c (y + 1) o p
+                                else c (y + 1) o e in
+                      l 0 col d lin
+        else let f x h =
                    if x <= 2
-                   then do s <- ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 0)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 2)))
+                   then do k <- ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 0)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 2)))
                                     (return x)
-                                    (return r)
+                                    (return h)
                            ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 2)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 0)))
-                               (q (x + 1) x)
-                               (q (x + 1) s)
-                   else do writeIORef (_ended g) (r /= 0 || d == 0)
-                           if r == 1
+                               (f (x + 1) x)
+                               (f (x + 1) k)
+                   else do writeIORef (_ended g) (h /= 0 || d == 0)
+                           if h == 1
                            then writeIORef (_note g) 1000
-                           else if r == 2
+                           else if h == 2
                                 then writeIORef (_note g) (- 1000)
                                 else writeIORef (_note g) 0 in
-                   q 1 e in
+                   f 1 e in
         c 0 0 0
 
 apply_move_xy x y g =

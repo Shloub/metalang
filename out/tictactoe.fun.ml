@@ -36,7 +36,7 @@ let eval0 g =
     (if (y <= 2)
      then let col = (- 1) in
      let lin = (- 1) in
-     let rec d x col freecase lin =
+     let rec e x col freecase lin =
        (if (x <= 2)
         then let freecase = (if (g.cases.(x).(y) = 0)
                              then (freecase + 1)
@@ -50,11 +50,11 @@ let eval0 g =
                          else col)) in
         (if ((lin = (- 1)) && (linv <> 0))
          then let lin = linv in
-         (d (x + 1) col freecase lin)
+         (e (x + 1) col freecase lin)
          else (if (linv <> lin)
                then let lin = (- 2) in
-               (d (x + 1) col freecase lin)
-               else (d (x + 1) col freecase lin)))
+               (e (x + 1) col freecase lin)
+               else (e (x + 1) col freecase lin)))
         else (if (col >= 0)
               then let win = col in
               (c (y + 1) freecase win)
@@ -62,16 +62,16 @@ let eval0 g =
                     then let win = lin in
                     (c (y + 1) freecase win)
                     else (c (y + 1) freecase win)))) in
-       (d 0 col freecase lin)
-     else let rec e x win =
+       (e 0 col freecase lin)
+     else let rec d x win =
             (if (x <= 2)
              then let win = (if (((g.cases.(0).(0) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(2) = x))
                              then x
                              else win) in
              (if (((g.cases.(0).(2) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(0) = x))
               then let win = x in
-              (e (x + 1) win)
-              else (e (x + 1) win))
+              (d (x + 1) win)
+              else (d (x + 1) win))
              else (
                     g.ended <- ((win <> 0) || (freecase = 0));
                     (if (win = 1)
@@ -81,7 +81,7 @@ let eval0 g =
                            else g.note <- 0))
                     )
              ) in
-            (e 1 win)) in
+            (d 1 win)) in
     (c 0 freecase win)
 let apply_move_xy x y g =
   let player = 2 in

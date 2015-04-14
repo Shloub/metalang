@@ -51,13 +51,13 @@ main =
         then do ndays <- ndayinmonth d e
                 let f = (c + ndays) `rem` 7
                 let g = d + 1
-                (\ (h, i) ->
+                (\ (i, j) ->
                   if (f `rem` 7) == 6
-                  then do let j = b + 1
-                          a j f h i
-                  else a b f h i) (if g == 12
-                                   then let k = e + 1
-                                                in (0, k)
+                  then do let k = b + 1
+                          a k f i j
+                  else a b f i j) (if g == 12
+                                   then let h = e + 1
+                                                in (0, h)
                                    else (g, e))
         else printf "%d\n" (b::Int) :: IO() in
         a 0 1 0 1901

@@ -41,30 +41,30 @@ let main =
             let canbe = (Array.init maximumprimes (fun  i_ -> false)) in
             let rec d i =
               (if (i <= (nprimes - 1))
-               then let rec e j =
+               then let rec f j =
                       (if (j <= (maximumprimes - 1))
                        then let n = (primes.(i) + ((2 * j) * j)) in
                        (if (n < maximumprimes)
                         then (
                                canbe.(n) <- true;
-                               (e (j + 1))
+                               (f (j + 1))
                                )
                         
-                        else (e (j + 1)))
+                        else (f (j + 1)))
                        else (d (i + 1))) in
-                      (e 0)
-               else let rec f m =
+                      (f 0)
+               else let rec e m =
                       (if (m <= maximumprimes)
                        then let m2 = ((m * 2) + 1) in
                        (if ((m2 < maximumprimes) && (not canbe.(m2)))
                         then (
                                (Printf.printf "%d\n" m2);
-                               (f (m + 1))
+                               (e (m + 1))
                                )
                         
-                        else (f (m + 1)))
+                        else (e (m + 1)))
                        else ()) in
-                      (f 1)) in
+                      (e 1)) in
               (d 0)
             )
      ) in

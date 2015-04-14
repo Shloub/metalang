@@ -88,8 +88,8 @@
        (mread-blank)
        (let ([tab (build-vector len (lambda (i_) 
                                       (let ([tmp 0])
-                                      ((lambda (e) 
-                                         (let ([tmp e])
+                                      ((lambda (g) 
+                                         (let ([tmp g])
                                          (block
                                            (mread-blank)
                                            tmp
@@ -97,28 +97,28 @@
      (let ([tab2 (copytab tab len)])
      (block
        (bubblesort tab2 len)
-       (letrec ([f (lambda (i) 
+       (letrec ([e (lambda (i) 
                      (if (<= i (- len 1))
                      (block
                        (printf "~a " (vector-ref tab2 i))
-                       (f (+ i 1))
+                       (e (+ i 1))
                        )
                      (block
                        (display "\n")
                        (let ([tab3 (copytab tab len)])
                        (block
                          (qsort0 tab3 len 0 (- len 1))
-                         (letrec ([g (lambda (i) 
+                         (letrec ([f (lambda (i) 
                                        (if (<= i (- len 1))
                                        (block
                                          (printf "~a " (vector-ref tab3 i))
-                                         (g (+ i 1))
+                                         (f (+ i 1))
                                          )
                                        (display "\n")))])
-                         (g 0))
+                         (f 0))
                        ))
                      )))])
-     (f 0))
+     (e 0))
      )))
   ))) (mread-int)))
 )
