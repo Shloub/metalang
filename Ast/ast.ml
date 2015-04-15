@@ -227,14 +227,16 @@ module Type = struct
   | Tuple of 'a list
   | Auto
 
-  module FoldMap = struct
-    type ('a, _) t = 'a tofix
+  module Fixed = Fix2(struct
+    type 'a alias = 'a tofix
+    type ('a, _) tofix = 'a alias
+    let next () = next ()
     module Make(F:Applicative) = struct
       open F
       let fold_left_map f l =
         ret List.rev
           <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
-      let foldmap f e =
+      let foldmap f g e =
         let f' (a, x) = ret (fun x -> a, x) <*> f x in
         match e with
         | Auto -> ret Auto
@@ -250,12 +252,6 @@ module Type = struct
         | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f li
         | Struct li -> ret (fun li -> Struct li) <*>  fold_left_map f' li
     end
-  end
-  module Fixed = Fix2(struct
-    type ('a, 'b) tofix = ('a, 'b) FoldMap.t
-    let next () = next ()
-    module Tools = FromFoldMap(FoldMap)
-    include Tools
   end)
 
   type t = unit Fixed.t
