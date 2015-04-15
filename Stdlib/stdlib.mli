@@ -378,13 +378,13 @@ sig
     val foldmap : ('b -> 'a -> 'a * 'c) -> ('b, 'd) F.tofix -> 'a -> 'a * ('c, 'd) F.tofix
     val foldmapt : ('b t -> 'a -> 'a * 'b t) -> 'b t -> 'a -> 'a * 'b t
     val fold : ('a -> 'b -> 'a) -> 'a -> ('b, 'd) F.tofix -> 'a
-  end
 
-  module Deep : sig
-    val map : ('a t -> 'a t) -> 'a t -> 'a t
-    val fold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
-    val folda : (int -> ('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
-    val exists : ('a t -> bool) -> 'a t -> bool
+    val foldmap2 : ('a -> 'b -> 'b * 'c) ->
+      ('d -> 'b -> 'b * 'e) ->
+        ('a, 'd) F.tofix -> 'b -> 'b * ('c, 'e) F.tofix
+
+    val fold2 : ('a -> 'b -> 'b) -> ('c -> 'b -> 'b) -> ('a, 'c) F.tofix -> 'b -> 'b
+    val map2 : ('a -> 'b) -> ('c -> 'd) -> ('a, 'c) F.tofix -> ('b, 'd) F.tofix
   end
 
   module Apply : functor (A : Applicative) ->
@@ -403,6 +403,25 @@ sig
 
     val map : ('a ->'b A.t) -> 'a t -> 'b t A.t
     val mapi : (int -> 'a ->'b A.t) -> 'a t -> 'b t A.t
+
+  end
+
+  module Deep : sig
+    val map : ('a t -> 'a t) -> 'a t -> 'a t
+    val mapg : ('a -> 'b) -> 'a t -> 'b t
+
+    val map2 :
+        (('c t, 'b) F.tofix -> ('c t, 'c) F.tofix) ->
+          ('a -> 'b) -> 'a t -> 'c t
+
+    val fold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+    val folda : (int -> ('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+    val exists : ('a t -> bool) -> 'a t -> bool
+
+    val foldmap2_topdown :
+        (('a, 'rb) F.tofix -> 'acc -> 'acc * 'a) ->
+          ('b -> 'acc -> 'acc * 'rb) -> 'b t -> 'acc -> 'acc * 'a
+    val fold2_bottomup : (('a, 'rb) F.tofix -> 'a) -> ('b -> 'rb) -> 'b t -> 'a
 
   end
 

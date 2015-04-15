@@ -573,16 +573,6 @@ module Fix2 (F : Fixable2) = struct
     let mapt f (F(i, x)) = F (i, map f x)
   end
 
-  module Deep = struct
-    let rec map f (F(i, x)) = f (F (i, Surface.map (map f) x))
-    let rec mapa f (F(i, x)) = f i (F (i, Surface.map (mapa f) x))
-    let rec fold f (F(i, x))  = f (Surface.map (fold f) x)
-    let rec folda f (F(i, x))  = f i (Surface.map (folda f) x)
-    let rec exists f x =
-      if f x then true
-      else fst (Surface.foldmap (fun x acc -> (acc || exists f x), x) (unfix x) false)
-  end
-
   module Apply (A : Applicative) = struct
     open A
     module M = F.Make(A)
@@ -593,27 +583,27 @@ module Fix2 (F : Fixable2) = struct
     let mapi g t = fm2i (fun i x -> ret (fixa i) <*> x) g t
   end
 
-  module Map = Apply(Applicatives.Map)
+  module Deep = struct
+    let rec map f (F(i, x)) = f (F (i, Surface.map (map f) x))
+    let rec mapa f (F(i, x)) = f i (F (i, Surface.map (mapa f) x))
+    let rec fold f (F(i, x))  = f (Surface.map (fold f) x)
+    let rec folda f (F(i, x))  = f i (Surface.map (folda f) x)
+    let rec exists f x =
+      if f x then true
+      else fst (Surface.foldmap (fun x acc -> (acc || exists f x), x) (unfix x) false)
 
-(*
-  let foldmap2 (type acc)  f g x =
-    let module M =  Apply ( Applicatives.FoldMap(struct type t = acc end))
-    in M.tr2 f g x
+    module Map = Apply(Applicatives.Map)
+    let mapg = Map.map
+    let map2 (type acc) f g x =
+      Map.fm2i (fun i x -> fixa i (f x)) (fun _ -> g) x
 
-  let fold2 (type acc) f g x =
-    let module M = Apply (Applicatives.Fold(struct type t = acc end))
-    in M.tr2 f g x
-*)
+    let fold2_bottomup (type acc) x = Map.fm2 x
 
-  (** Surface *)
+    let foldmap2_topdown (type acc) f =
+      let module Mon = Applicatives.FoldMap(struct type t = acc end) in
+      let module M = Apply (Mon)
+      in M.fm2 (Mon.(=<<) f)
+  end
 
-  let deep_fold2_bottomup (type acc) x =
-    let module M = Apply (Applicatives.Map)
-    in M.fm2 x
-
-  let deep_foldmap2_topdown (type acc) f =
-    let module Mon = Applicatives.FoldMap(struct type t = acc end) in
-    let module M = Apply (Mon)
-    in M.fm2 (Mon.(=<<) f)
 
 end
