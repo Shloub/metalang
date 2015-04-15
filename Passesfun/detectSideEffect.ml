@@ -40,17 +40,22 @@ let (||) a b = match a, b with
   | _, EEffect -> EEffect
   | _ -> EPure
 
-let empty acc = acc
-let add i v acc a = IntMap.add i v (acc a)
-let merge acc1 acc2 map = acc1 (acc2 map)
+  type acc = effect IntMap.t -> effect IntMap.t
+module A = Expr.Fixed.Apply(Applicatives.Accumule(struct
+  type t = effect IntMap.t -> effect IntMap.t
+  let zero acc = acc
+  let merge acc1 acc2 map = acc1 (acc2 map)
+end))
 
-let side_effects i e =
-  let v, acc = match e with
-  | Expr.Fun (_, (_, acc)) -> EPure, acc
-  | Expr.FunTuple (_, (_, acc)) -> EPure, acc
-  | Expr.Lief (Expr.Binding (Ast.UserName a)) when Tags.is_taged ("macro_" ^ a ^ "_pure") -> EMacro, empty
-  | Expr.Lief _ -> EPure, empty
-  | Expr.Apply ((EMacro, _), _)
+let add i v acc a = IntMap.add i v (acc a)
+
+let side_effects : int -> (acc * effect Expr.tofix) -> (acc * effect) = fun i (acc, e) ->
+  let v = match e with
+  | Expr.Fun _ -> EPure
+  | Expr.FunTuple _ -> EPure
+  | Expr.Lief (Expr.Binding (Ast.UserName a)) when Tags.is_taged ("macro_" ^ a ^ "_pure") -> EMacro
+  | Expr.Lief _ -> EPure
+  | Expr.Apply (EMacro, _)
   | Expr.LetRecIn _
   | Expr.UnOp _
   | Expr.BinOp _
@@ -58,10 +63,7 @@ let side_effects i e =
   | Expr.Comment _
   | Expr.LetIn _
   | Expr.If _
-  | Expr.Block _ -> Expr.Fixed.Surface.fold
-		      (fun (has, acc) (has2, acc2) ->
-		       has || has2,
-		       merge acc acc2) (EPure, empty) e
+  | Expr.Block _ -> Expr.Fixed.Surface.fold  (||) EPure e
   | Expr.Skip
   | Expr.Apply _
   | Expr.MultiPrint _
@@ -74,11 +76,10 @@ let side_effects i e =
   | Expr.Print _
   | Expr.ReadIn _
   | Expr.Record _ ->
-     let acc = Expr.Fixed.Surface.fold (fun acc2 (_, acc) -> merge acc acc2) empty e in
-    EEffect, acc
-  in v, add i v acc
+    EEffect
+  in add i v acc, v
 
-let tr e = snd (Expr.Fixed.Deep.folda side_effects e)
+let tr e = fst (A.fm2i side_effects (fun x y -> assert false) e)
 
 let apply p =
   let side_effects = List.fold_left (fun acc e -> match e with
