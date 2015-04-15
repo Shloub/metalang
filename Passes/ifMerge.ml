@@ -90,7 +90,7 @@ let process () i =
       | _ -> f (hd :: acc) tl
   and g instr =
     let annot = Instr.Fixed.annot instr in
-    let instr = Instr.map g (Instr.unfix instr) |> Instr.fixa annot
+    let instr = Instr.Fixed.Surface.mapt g instr
     in
     match Instr.unfix instr with
     | Instr.AllocArray (var, ty, e, Some (var2, li), opt) ->
