@@ -426,7 +426,7 @@ module EvalF (IO : EvalIO) = struct
   let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
     let loc = PosMap.get (Expr.Fixed.annot t) in
     let res x = Result x in
-    match Expr.Fixed.map (fun e -> precompile_expr e env)
+    match Expr.Fixed.Surface.map (fun e -> precompile_expr e env)
       (Expr.Fixed.unfix t) with
       | Expr.Lief l -> precompile_lief env l |> res
       | Expr.BinOp (a, op, b) ->
