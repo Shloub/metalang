@@ -428,60 +428,6 @@ module IntMap = MakeMap (Int)
 module StringMap = MakeMap (String)
 module StringSet = MakeSet (String)
 
-
-(** {Some Haskell} *)
-module type Applicative = sig
-  type 'a t
-  val ret : 'a -> 'a t
-  val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
-end
-
-module Applicatives = struct
-  module FoldMap (Acc : sig type t end) = struct
-    type 'a t = Acc.t -> Acc.t * 'a
-    let ret x acc = acc, x
-    let (<*>) f g acc =
-      let acc, e1 = f acc in
-      let acc, e2 = g acc in
-      acc, e1 e2
-  end
-  module Map = struct
-    type 'a t = 'a
-    let ret x = x
-    let (<*>) f g = f g
-  end
-  module Fold (Acc : sig type t end) = struct
-    type 'a t = (Acc.t -> Acc.t)
-    let ret x acc = acc
-    let (<*>) f g acc =
-      let acc = f acc in
-      let acc = g acc in
-      acc
-  end
-end
-
-module type FoldMapApplicative = sig
-  type 'a t
-  module Make : functor (F:Applicative) -> sig
-    val foldmap : ('a -> 'b F.t) -> 'a t -> 'b t F.t
-  end
-end
-
-module FromFoldMap (F : FoldMapApplicative) = struct
-
-  let foldmap (type acc)  f x =
-    let module M =  F.Make ( Applicatives.FoldMap(struct type t = acc end))
-    in M.foldmap f x
-
-  let fold (type acc) f x =
-    let module M = F.Make (Applicatives.Fold(struct type t = acc end))
-    in M.foldmap f x
-
-  let map f x =
-    let module M = F.Make (Applicatives.Map)
-    in M.foldmap f x
-end
-
 (** {2 Fix module} *)
 (** les modules dérécursivés *)
 module type Fixable = sig
@@ -502,11 +448,87 @@ module Fix (F : Fixable) = struct
   let rec dfold f (F(i, x))  = f (F.map (dfold f) x)
 end
 
+(** {Some Haskell} *)
+module type Applicative = sig
+  type 'a t
+  val ret : 'a -> 'a t
+  val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
+end
+module type Monade = sig
+  include Applicative
+  val (=<<) : ('a -> 'b t) -> 'a t -> 'b t
+end
+
+module Applicatives = struct
+  module FoldMap (Acc : sig type t end) = struct
+    type 'a t = Acc.t -> Acc.t * 'a
+    let ret x acc = acc, x
+    let (<*>) f g acc =
+      let acc, e1 = f acc in
+      let acc, e2 = g acc in
+      acc, e1 e2
+    let (=<<) f t acc =
+      let acc, x = t acc in
+      f x acc
+  end
+  module Map = struct
+    type 'a t = 'a
+    let ret x = x
+    let (<*>) f g = f g
+    let (=<<) f x = f x
+  end
+  module Fold (Acc : sig type t end) = struct
+    type 'a t = (Acc.t -> Acc.t)
+    let ret _ acc = acc
+    let (<*>) f g acc =
+      let acc = f acc in
+      let acc = g acc in
+      acc
+  end
+  module Accumule (Acc : sig type t
+    val merge : t -> t -> t
+    val zero : t
+  end) = struct
+    type 'a t = Acc.t * 'a
+    let ret x = Acc.zero, x
+    let (<*>) (acc1, f1) (acc2, x) = Acc.merge acc1 acc2, f1 x
+  end
+end
+
+module type FoldMapApplicative = sig
+  type 'a t
+  module Make : functor (F:Applicative) -> sig
+    val foldmap : ('a -> 'ra F.t) -> 'a t -> 'ra t F.t
+  end
+end
+
+module FromFoldMap (F : FoldMapApplicative) = struct
+
+  let foldmap (type acc)  f x =
+    let module FoldMap = Applicatives.FoldMap(struct type t = acc end) in
+    let module M =  F.Make (FoldMap)
+    in M.foldmap f x
+
+  let fold (type acc) f x =
+    let module Fold = Applicatives.Fold(struct type t = acc end) in
+    let module M = F.Make (Fold)
+    in M.foldmap f x
+
+  let map f x =
+    let module M = F.Make (Applicatives.Map)
+    in M.foldmap f x
+end
+
+(** {2 Fix module V2} *)
+(** les modules dérécursivés *)
+
 module type Fixable2 = sig
   type ('a, 'b) tofix
-  val foldmap : ('b -> 'a -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
-  val fold : ('b -> 'a -> 'a) -> ('b, 'd) tofix -> 'a -> 'a
-  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
+
+  module Make : functor (F:Applicative) -> sig
+    val foldmap : ('a -> 'ra F.t) -> ('b -> 'rb F.t) -> ('a, 'b) tofix -> ('ra, 'rb) tofix F.t
+  end
+
   val next : unit -> int
 end
 
@@ -518,21 +540,80 @@ module Fix2 (F : Fixable2) = struct
   let fixa a x = F (a, x)
 
   module Surface = struct
-    let foldmap = F.foldmap
+
+    let foldmap2 (type acc) f g x =
+      let module FoldMap = F.Make(Applicatives.FoldMap(struct type t = acc end) ) in
+      FoldMap.foldmap f g x
+
+    let fold2 (type acc) f g x =
+      let module Fold = F.Make(Applicatives.Fold(struct type t = acc end) ) in
+      Fold.foldmap f g x
+
+    let map2 f g x =
+      let module Map = F.Make(Applicatives.Map) in
+      Map.foldmap f g x
+
+    let foldmap (type acc) f x =
+      let module FoldMap = Applicatives.FoldMap(struct type t = acc end) in
+      let module M = F.Make(FoldMap) in
+      M.foldmap f FoldMap.ret x
+
+    let fold (type acc) f x =
+      let module Fold = Applicatives.Fold(struct type t = acc end) in
+      let module M = F.Make(Fold) in
+      M.foldmap f Fold.ret x
+
+    let map f x =
+      let module M = F.Make(Applicatives.Map) in
+      M.foldmap f Applicatives.Map.ret x
+
+    let fold f acc x = fold (fun acc x -> f x acc) x acc
+
     let foldmapt f (F (i, x)) acc = let acc, x = foldmap f x acc in acc, F (i, x)
-    let map = F.map
     let mapt f (F(i, x)) = F (i, map f x)
-    let fold f acc x = F.fold (fun x acc -> f acc x) x acc
   end
 
   module Deep = struct
     let rec map f (F(i, x)) = f (F (i, Surface.map (map f) x))
-    let rec mapa f (F(i, x)) =  f i (F (i, Surface.map (mapa f) x))
+    let rec mapa f (F(i, x)) = f i (F (i, Surface.map (mapa f) x))
     let rec fold f (F(i, x))  = f (Surface.map (fold f) x)
     let rec folda f (F(i, x))  = f i (Surface.map (folda f) x)
     let rec exists f x =
       if f x then true
       else fst (Surface.foldmap (fun x acc -> (acc || exists f x), x) (unfix x) false)
   end
+
+  module Apply (A : Applicative) = struct
+    open A
+    module M = F.Make(A)
+    let rec fm2 f g (F(i, x)) = f (M.foldmap (fm2 f g) g x)
+    let rec fm2i f g (F(i, x)) = f i (M.foldmap (fm2i f g) (g i) x)
+    let rec fm f x = fm2 f ret x 
+    let map g t = fm2i (fun i x -> ret (fixa i) <*> x) (fun _ -> g) t
+    let mapi g t = fm2i (fun i x -> ret (fixa i) <*> x) g t
+  end
+
+  module Map = Apply(Applicatives.Map)
+
+(*
+  let foldmap2 (type acc)  f g x =
+    let module M =  Apply ( Applicatives.FoldMap(struct type t = acc end))
+    in M.tr2 f g x
+
+  let fold2 (type acc) f g x =
+    let module M = Apply (Applicatives.Fold(struct type t = acc end))
+    in M.tr2 f g x
+*)
+
+  (** Surface *)
+
+  let deep_fold2_bottomup (type acc) x =
+    let module M = Apply (Applicatives.Map)
+    in M.fm2 x
+
+  let deep_foldmap2_topdown (type acc) f =
+    let module Mon = Applicatives.FoldMap(struct type t = acc end) in
+    let module M = Apply (Mon)
+    in M.fm2 (Mon.(=<<) f)
 
 end
