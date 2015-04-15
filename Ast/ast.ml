@@ -125,6 +125,20 @@ module Lexems = struct
     | Token t -> Token t
     | UnQuote li ->
       UnQuote (List.map (map_expr f) li)
+
+  module Apply (F:Applicative) = struct
+    open F
+
+    let fold_left_map f l =
+      ret List.rev
+      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+
+    let rec map_expr f g = function
+      | Expr e -> ret (fun e -> Expr e) <*> f e
+      | Token t -> ret (fun t -> Token t) <*> g t
+      | UnQuote li -> ret (fun li -> UnQuote li) <*> fold_left_map (map_expr f g) li
+  end
+
 end
 
 (**
