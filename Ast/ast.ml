@@ -568,6 +568,44 @@ module Instr = struct
   | StdinSep
   | Unquote of 'expr
 
+  module Fixed = Fix2(struct
+    type ('a,'b) alias = ('a, 'b) tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
+    let next () = next ()
+    module Make(F:Applicative) = struct
+      open F
+      module Mut = Mutable.Fixed.Apply(F)
+
+    let fold_left_map f l =
+      ret List.rev
+      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+
+      let foldmap f g t =
+        let g' (a, x) = ret (fun x -> a, x) <*> g x in
+        let g'' (x, a) = ret (fun x -> x, a) <*> g x in
+        match t with
+        | Declare (a, b, c, d) -> ret (fun c -> Declare (a, b, c, d)) <*> g c 
+        | Affect (m, e) -> ret (fun m e -> Affect (m, e)) <*> Mut.map g m <*> g e
+        | Comment s -> ret (Comment s)
+        | Loop (var, e1, e2, li) -> ret (fun e1 e2 li -> Loop (var, e1, e2, li)) <*> g e1 <*> g e2 <*> fold_left_map f li
+        | While (e, li) -> ret (fun e li -> While (e, li)) <*> g e <*> fold_left_map f li 
+        | If (e, cif, celse) -> ret (fun e cif celse -> If (e, cif, celse)) <*> g e <*> fold_left_map f cif <*> fold_left_map f celse
+        | Return e -> ret (fun e -> Return e) <*> g e
+        | AllocArray (b, t, l, Some ((b2, li)), opt) -> ret (fun l li -> AllocArray (b, t, l, Some((b2, li)), opt)) <*> g l <*> fold_left_map f li
+        | AllocArray (a, b, c, None, opt) -> ret (fun c -> AllocArray (a, b, c, None, opt)) <*> g c
+        | AllocRecord (a, b, c, opt) -> ret (fun c -> AllocRecord (a, b, c, opt)) <*> fold_left_map g' c
+        | Print (a, b) -> ret (fun b -> Print (a, b)) <*> g b
+        | Read (a, b) -> ret ( fun b -> Read (a, b) ) <*> Mut.map g b
+        | DeclRead (a, b, opt) -> ret (DeclRead (a, b, opt))
+        | Call (a, b) -> ret (fun b -> Call (a, b)) <*> fold_left_map g b
+        | StdinSep -> ret StdinSep
+        | Unquote e -> ret (fun e -> Unquote e) <*> g e
+        | Untuple (lis, e, opt) -> ret (fun e -> Untuple (lis, e, opt)) <*> g e
+        | Tag e -> ret (Tag e)
+        | AllocArrayConst (v, t, e1, e2, d) -> ret (fun e1 -> AllocArrayConst (v, t, e1, e2, d)) <*> g e1
+    end
+  end)
+
   let fold_map_bloc f acc t = match t with
     | Declare (a, b, c, d) -> acc, Declare (a, b, c, d)
     | Affect (var, e) -> acc, Affect (var, e)
@@ -629,12 +667,6 @@ module Instr = struct
   let map f t =
     map_bloc (List.map f) t
 
-  module Fixed = Fix(struct
-    type ('a, 'b) alias = ('a, 'b) tofix
-    type ('a, 'b) tofix = ('a, 'b) alias
-    let map = map
-    let next () = next ()
-  end)
   type 'a t = 'a Fixed.t
   let fixa = Fixed.fixa
   let fix = Fixed.fix
