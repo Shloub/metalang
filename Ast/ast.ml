@@ -141,22 +141,21 @@ module Mutable = struct
   | Dot of 'mutable_ * fieldname
 
   (** {2 Parcours} *)
-  module FoldMap = struct
-    type ('a, 'b) t = ('a, 'b) tofix
+  module Fixed = Fix2( struct
+    let next () = next ()
+    type ('a, 'b) alias = ('a, 'b) tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
     module Make(F:Applicative) = struct
       open F
-      let foldmap f t =
+      let fold_left_map f l =
+        ret List.rev
+          <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+      let foldmap f g t =
         match t with
         | Var v -> ret ( Var v )
-        | Array (v, el) -> ret (fun v -> Array(v, el)) <*> f v
+        | Array (v, el) -> ret (fun v el -> Array(v, el)) <*> f v <*> fold_left_map g el
         | Dot (v, field) -> ret (fun v -> Dot(v, field)) <*> f v
     end
-  end
-  module Fixed = Fix2(struct
-    type ('a, 'b) tofix = ('a, 'b) FoldMap.t
-    let next () = next ()
-    module Tools = FromFoldMap(FoldMap)
-    include Tools
   end)
 
   type 'expr t = 'expr Fixed.t
