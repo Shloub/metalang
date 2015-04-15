@@ -345,8 +345,7 @@ module Type = struct
     let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
   end)
 
-  let type2String (t : string tofix) : string =
-    match t with
+  let type2String = function
     | Auto -> "Auto"
     | Integer -> "Integer"
     | String -> "String"
@@ -374,8 +373,7 @@ module Type = struct
       in "Struct("^str^")"
     | Named t -> "Named("^t^")"
 
-  let rec type_t_to_string (t:t) : string =
-    type2String (Fixed.Surface.map type_t_to_string (unfix t))
+  let type_t_to_string t = Fixed.Deep.fold type2String t
 
   let bool:t = Bool |> fix
   let integer:t = Integer |> fix
