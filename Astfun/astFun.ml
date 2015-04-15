@@ -79,16 +79,21 @@ module Expr = struct
   | ArrayAffect of 'a * 'a list * 'a
   | LetIn of Ast.varname * 'a * 'a
 
-  module FoldMap = struct
-    type 'a t = 'a tofix
-  module Make(F:Applicative) = struct
+  module Fixed = Fix2(struct
+
+    type ('a, 'b) alias = 'a tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
+
+    let next () = Ast.next ()
+
+    module Make(F:Applicative) = struct
     open F
 
     let fold_left_map f l =
       ret List.rev
       <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
 
-    let foldmap f e =
+    let foldmap f g e =
       let f'f (x, a) = ret (fun x -> x, a) <*> f x in
       match e with
       | LetRecIn (name, params, e1, e2) -> ret (fun e1 e2 -> LetRecIn (name, params, e1, e2)) <*> f e1 <*> f e2
@@ -115,13 +120,6 @@ module Expr = struct
       | LetIn (binding, e, b) -> ret (fun e b -> LetIn (binding, e, b)) <*> f e <*> f b
       | MultiPrint (format, li) -> ret (fun li -> MultiPrint (format, li)) <*> fold_left_map f'f li
   end
-  end
-  module Fixed = Fix2(struct
-    type ('a, 'b) alias = 'a tofix
-    type ('a, 'b) tofix = ('a, 'b) alias
-    let next () = Ast.next ()
-    module Tools =FromFoldMap(FoldMap)
-    include Tools
   end)
 
   type t = unit Fixed.t
