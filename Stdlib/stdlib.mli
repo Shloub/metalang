@@ -300,24 +300,33 @@ module type Applicative = sig
   val ret : 'a -> 'a t
   val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
 end
+module type Monade = sig
+  include Applicative
+  val (=<<) : ('a -> 'b t) -> 'a t -> 'b t
+end
 
 module Applicatives : sig
-  module FoldMap : functor (Acc : sig type t end) -> Applicative
+  module FoldMap : functor (Acc : sig type t end) -> Monade
   module Fold : functor (Acc : sig type t end) -> Applicative
-  module Map: Applicative
+  module Map: Monade
+  module Accumule : functor (Acc : sig type t 
+    val merge : t -> t -> t
+    val zero : t
+  end) -> Applicative with type 'a t = Acc.t * 'a
 end
 
 module type FoldMapApplicative = sig
   type 'a t
   module Make : functor (F:Applicative) -> sig
-    val foldmap : ('a -> 'b F.t) -> 'a t -> 'b t F.t
+    val foldmap : ('a -> 'ra F.t) -> 'a t -> 'ra t F.t
   end
 end
 
 module FromFoldMap : functor(F : FoldMapApplicative) -> sig
-  val foldmap : ('a -> 'b -> 'b * 'c) -> 'a F.t -> 'b -> 'b * 'c F.t
-  val fold : ('a -> 'b -> 'b) -> 'a F.t -> 'b -> 'b
+  val foldmap : ('b -> 'a -> 'a * 'd) -> 'b F.t -> 'a -> 'a * 'd F.t
+  val fold : ('b -> 'a -> 'a) -> 'b F.t -> 'a -> 'a
   val map : ('a -> 'b) -> 'a F.t -> 'b F.t
+
 end
 
 
@@ -346,14 +355,17 @@ end
 
 module type Fixable2 = sig
   type ('a, 'b) tofix
-  val foldmap : ('b -> 'a -> 'a * 'd) -> ('b, 'c) tofix -> 'a -> 'a * ('d, 'c) tofix
-  val fold : ('b -> 'a -> 'a) -> ('b, 'd) tofix -> 'a -> 'a
-  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
+
+  module Make : functor (F:Applicative) -> sig
+    val foldmap : ('a -> 'ra F.t) -> ('b -> 'rb F.t) -> ('a, 'b) tofix -> ('ra, 'rb) tofix F.t
+  end
+
   val next : unit -> int
 end
 
 module Fix2 : functor (F : Fixable2 ) ->
 sig
+
   type 'a t = F of int * ('a t, 'a) F.tofix
   val annot : 'a t -> int
   val unfix : 'a t -> ('a t , 'a) F.tofix
@@ -374,4 +386,24 @@ sig
     val folda : (int -> ('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
     val exists : ('a t -> bool) -> 'a t -> bool
   end
+
+  module Apply : functor (A : Applicative) ->
+  sig
+    module M :
+      sig
+        val foldmap :
+          ('a -> 'ra A.t) ->
+          ('b -> 'rb A.t) -> ('a, 'b) F.tofix -> ('ra, 'rb) F.tofix A.t
+      end
+    val fm2 :
+      (('a, 'b) F.tofix A.t -> 'a A.t) -> ('c -> 'b A.t) -> 'c t -> 'a A.t
+    val fm2i :
+      (int -> ('a, 'b) F.tofix A.t -> 'a A.t) -> (int -> 'c -> 'b A.t) -> 'c t -> 'a A.t
+    val fm : (('a, 'b) F.tofix A.t -> 'a A.t) -> 'b t -> 'a A.t
+
+    val map : ('a ->'b A.t) -> 'a t -> 'b t A.t
+    val mapi : (int -> 'a ->'b A.t) -> 'a t -> 'b t A.t
+
+  end
+
 end
