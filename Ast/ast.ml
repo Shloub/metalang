@@ -211,7 +211,7 @@ module Mutable = struct
       let acc, li = List.fold_left_map f acc li in
       acc, Fixed.fixa annot (Array (mut, li) )
 
-  let map_expr f m = foldmap_expr (fun () e -> (), f e) () m |> snd
+  let map_expr f m = Fixed.Deep.mapg f m
 
   (** {2 utils} *)
 
