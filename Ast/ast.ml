@@ -435,57 +435,45 @@ module Expr = struct
 
   (** {2 parcours} *)
 
-  module Fixed = Fix(struct
-    type ('a, 'b) alias = ('a, 'b) tofix
+  module Fixed = Fix2(struct
+    type ('a,'b) alias = ('a, 'b) tofix
     type ('a, 'b) tofix = ('a, 'b) alias
-    let map f = function
-      | BinOp (a, op, b) -> BinOp ((f a), op, f b)
-      | UnOp (a, op) -> UnOp((f a), op)
-      | Lief l -> Lief l
-      | Access m ->
-        let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
-        Access m2
-      | Call (n, li) -> Call (n, List.map f li)
-      | Lexems x -> Lexems (List.map (Lexems.map_expr f) x)
-      | Tuple e -> Tuple (List.map f e)
-      | Record li -> Record (List.map (fun (n, e) -> n, f e) li)
-
     let next () = next ()
+    module Make(F:Applicative) = struct
+      open F
+      module Mut = Mutable.Fixed.Apply(F)
+      module Lex = Lexems.Apply(F)
+
+    let fold_left_map f l =
+      ret List.rev
+      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+
+      let foldmap f g t = match t with
+      | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f a <*> f b
+      | UnOp (a, op) -> ret (fun a -> UnOp(a, op)) <*> f a
+      | Lief l -> ret (Lief l)
+      | Call (n, li) -> ret (fun x ->  Call (n, x)) <*> fold_left_map f li
+      | Tuple e -> ret (fun e -> Tuple e)  <*> fold_left_map f e
+      | Record li ->
+          let f' (a, x) = ret (fun x -> a, x) <*> f x in
+          ret (fun e -> Record e) <*>  fold_left_map f' li
+      | Access m ->
+          let annot = Mutable.Fixed.annot m in
+          ret (fun m -> Access m) <*> Mut.map f m
+      | Lexems x -> ret (fun x -> Lexems x) <*> fold_left_map (Lex.map_expr f g) x
+
+    end
   end)
+
   type 'a t = 'a Fixed.t
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
-    type 'a alias = 'a t;;
-    type 'a t = 'a alias;;
-    let foldmap f acc t =
-      let annot = Fixed.annot t in
-      match unfix t with
-      | UnOp (a, op) ->
-        let acc, a = f acc a in
-        (acc, Fixed.fixa annot (UnOp(a, op)))
-      | BinOp (a, op, b) ->
-        let acc, a = f acc a in
-        let acc, b = f acc b in
-        (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
-      | Lief _ -> acc, t
-      | Access m ->
-        let acc, m = Mutable.foldmap_expr f acc m in
-        acc, Fixed.fixa annot (Access m)
-      | Call (name, li) ->
-        let acc, li = List.fold_left_map f acc li in
-        (acc, Fixed.fixa annot (Call(name, li)) )
-      | Lexems x -> acc, Fixed.fixa annot (Lexems x)
-      | Tuple li ->
-        let acc, li = List.fold_left_map f acc li in
-        acc, Fixed.fixa annot (Tuple li)
-      | Record li ->
-        let acc, li = List.fold_left_map (fun acc (n, e) ->
-          let acc, e = f acc e in
-          acc, (n, e)) acc li in
-        acc, Fixed.fixa annot (Record li)
+    type 'a alias = 'a t
+    type 'a t = 'a alias
+    let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
   end)
 
   (** {2 utils} *)
