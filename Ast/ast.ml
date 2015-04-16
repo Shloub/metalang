@@ -466,6 +466,18 @@ module Expr = struct
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
+  let add_bindings x =
+    Fixed.Deep.fold
+      (function
+        | Access m ->
+            Mutable.Fixed.Deep.fold (function
+              | Mutable.Var v -> (fun acc -> BindingSet.add v acc)
+              | x -> Mutable.Fixed.Surface.fold (fun a b -> a @* b) (fun x -> x) x
+                                    ) m
+        | x -> (fun acc -> Fixed.Surface.fold (fun acc f -> f acc) acc x)
+      ) x
+  let bindings x = add_bindings x BindingSet.empty
+    
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
     type 'a alias = 'a t
@@ -603,6 +615,41 @@ module Instr = struct
     end
   end)
 
+  type 'a t = 'a Fixed.t
+  let fixa = Fixed.fixa
+  let fix = Fixed.fix
+  let unfix = Fixed.unfix
+
+  let add_bindings (x: 'a Expr.t t) =
+    let fli li acc = List.fold_left (fun acc f -> f acc) acc li in
+    let mut m acc = Mutable.fold_expr (fun acc e -> e acc) acc m in
+    Fixed.Deep.fold2_bottomup
+      (function
+        | Declare (n, _, e, _)
+        | AllocArray (n, _, e, None, _)
+        | AllocArrayConst (n, _, e, _, _) ->  e @* BindingSet.add n
+        | Affect (m, e) -> e @* mut m
+        | Loop (v, e, f, li) -> e @* f @* BindingSet.add v @* (fun acc -> List.fold_left (fun acc f -> f acc) acc li)
+        | While (e, li) -> e @* fli li
+        | Comment _
+        | Tag _ -> (fun acc -> acc)
+        | AllocArray (n, _, e, Some (n2, li), _) -> e @* BindingSet.add n @* BindingSet.add n2 @* fli li
+        | AllocRecord (n, _, li, _) ->BindingSet.add n @* (fun acc -> List.fold_left (fun acc (_, f) -> f acc) acc li)
+        | If (e, l1, l2) -> e @* fli l1 @* fli l2
+        | Call (_, eli) -> (fun acc -> List.fold_left (fun acc f -> f acc) acc eli)
+        | Return e
+        | Print (_, e) -> e
+        | Read (_, m) -> mut m
+        | DeclRead (_, v, _) -> BindingSet.add v
+        | Untuple (li, e, _) -> e @* (fun acc -> List.fold_left (fun acc (_, v) -> BindingSet.add v acc) acc li)
+        | Unquote e -> e
+        | x -> (fun acc -> Fixed.Surface.fold (fun acc f -> f acc) acc x)
+      )
+      Expr.add_bindings x
+
+  let bindings x = add_bindings x BindingSet.empty
+
+
   let fold_map_bloc f acc t = match t with
     | Declare (a, b, c, d) -> acc, Declare (a, b, c, d)
     | Affect (var, e) -> acc, Affect (var, e)
@@ -660,14 +707,6 @@ module Instr = struct
     | Untuple (lis, e, opt) -> Untuple (lis, e, opt)
     | Tag e -> Tag e
     | AllocArrayConst (v, t, e1, e2, d) -> AllocArrayConst (v, t, e1, e2, d)
-
-  let map f t =
-    map_bloc (List.map f) t
-
-  type 'a t = 'a Fixed.t
-  let fixa = Fixed.fixa
-  let fix = Fixed.fix
-  let unfix = Fixed.unfix
 
   let rec deep_map_bloc f t =
     map_bloc (
