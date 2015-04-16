@@ -200,18 +200,15 @@ module Mutable = struct
     | _ -> false
 
   let rec foldmap_expr f acc mut =
-    let annot = Fixed.annot mut in
-    match Fixed.unfix mut with
-    | Var v -> acc, Fixed.fixa annot (Var v)
-    | Dot (m, field) ->
-      let acc, m = foldmap_expr f acc m in
-      acc, Fixed.fixa annot (Dot (m, field))
-    | Array (mut, li) ->
-      let acc, mut = foldmap_expr f acc mut in
-      let acc, li = List.fold_left_map f acc li in
-      acc, Fixed.fixa annot (Array (mut, li) )
+    Fixed.Deep.foldmap2i_topdown
+      (fun i x acc -> acc, Fixed.fixa i x)
+      (fun x acc -> f acc x) mut acc
 
   let map_expr f m = Fixed.Deep.mapg f m
+
+  let fold_expr f acc i =
+    fst (foldmap_expr (fun acc i -> f acc i, i) acc i)
+
 
   (** {2 utils} *)
 
