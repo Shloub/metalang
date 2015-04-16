@@ -774,78 +774,25 @@ module Instr = struct
       | Read _ | DeclRead _ | Untuple _ | Call _ | Unquote _ | Tag _ -> acc, t
   end)
 
-  let foldmap_expr
-      f acc instruction =
-    Writer.Deep.foldmap
-      (fun acc i ->
-        let a = Fixed.annot i in
-        let out, i =
-          match unfix i with
-          | Declare (v, t, e, opt) ->
-            let acc, e = f acc e in
-            acc, Declare (v, t, e, opt)
-          | Affect (m, e) ->
-            let acc, m = Mutable.foldmap_expr f acc m in
-            let acc, e = f acc e in
-            acc, Affect (m, e)
-          | Loop (v, e1, e2, li) ->
-            let acc, e1 = f acc e1 in
-            let acc, e2 = f acc e2 in
-            acc, Loop(v, e1, e2, li)
-          | While (e, li) ->
-            let acc, e = f acc e in
-            acc, While (e, li)
-          | Comment s -> acc, Comment s
-          | Return e ->
-            let acc, e = f acc e in
-            acc, Return e
-          | AllocArray (v, t, e, liopt, opt) ->
-            let acc, e = f acc e in
-            acc, AllocArray (v, t, e, liopt, opt)
-          | AllocRecord (v, t, el, opt) ->
-            let acc, el = List.fold_left_map
-              (fun acc (field, e) ->
-                let acc, e = f acc e
-                in acc, (field, e))
-              acc el
-            in acc, AllocRecord (v, t, el, opt)
-          | If (e, li1, li2) ->
-            let acc, e = f acc e in
-            acc, If (e, li1, li2)
-          | Call (funname, li) ->
-            let acc, li = List.fold_left_map f acc li in
-            acc, Call (funname, li)
-          | Print (t, e) ->
-            let acc, e = f acc e in
-            acc, Print (t, e)
-          | Untuple (li, e, opt) ->
-            let acc, e = f acc e in
-            acc, Untuple (li, e, opt)
-          | Read (t, m) ->
-            let acc, m = Mutable.foldmap_expr f acc m in
-            acc, Read (t, m)
-          | DeclRead (t, m, opt) ->
-            acc, DeclRead (t, m, opt)
-          | AllocArrayConst (v, t, e1, e2, d) ->
-              let acc, e1 = f acc e1 in
-              acc, AllocArrayConst (v, t, e1, e2, d)
-          | StdinSep -> acc, StdinSep
-          | Unquote e -> acc, Unquote e
-          | Tag e -> acc, Tag e
-        in out, fixa a i
-      ) acc instruction
+  let map_expr : (('a -> 'b) -> 'a t -> 'b t) = Fixed.Deep.mapg
 
-  let map_expr : (('a -> 'b) -> 'a t -> 'b t) = fun f i ->
-    let f2 () e = (), (f e) in
-    let (), i = foldmap_expr f2 () i
-    in i
+(* does not work
+  let fold_expr f acc i =
+    Fixed.Deep.fold
+      (fun i acc ->
+        Fixed.Surface.fold2
+          (fun i acc -> acc)
+          (fun e acc -> f acc e)
+          i acc
+      ) i acc *)
 
-  let remexpr : ('a t -> unit t) = fun i -> map_expr (fun e -> ()) i
+  let foldmap_expr f acc i =
+    Fixed.Deep.foldmap2i_topdown
+      (fun i x acc -> acc, fixa i x)
+      (fun x acc -> f acc x) i acc
 
   let fold_expr f acc i =
-    let f2 acc e = (f acc e), e in
-    let acc, _ = foldmap_expr f2 acc i
-    in acc
+    fst (foldmap_expr (fun acc i -> f acc i, i) acc i)
 
 end
 
