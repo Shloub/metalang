@@ -416,11 +416,17 @@ sig
 
     val fold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
     val folda : (int -> ('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+
     val exists : ('a t -> bool) -> 'a t -> bool
+
+    val foldmap2i_topdown :
+        (int -> ('a, 'rb) F.tofix -> 'acc -> 'acc * 'a) ->
+          ('b -> 'acc -> 'acc * 'rb) -> 'b t -> 'acc -> 'acc * 'a
 
     val foldmap2_topdown :
         (('a, 'rb) F.tofix -> 'acc -> 'acc * 'a) ->
           ('b -> 'acc -> 'acc * 'rb) -> 'b t -> 'acc -> 'acc * 'a
+
     val fold2_bottomup : (('a, 'rb) F.tofix -> 'a) -> ('b -> 'rb) -> 'b t -> 'a
 
   end
