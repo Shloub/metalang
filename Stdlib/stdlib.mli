@@ -430,6 +430,8 @@ sig
         (('a, 'rb) F.tofix -> 'acc -> 'acc * 'a) ->
           ('b -> 'acc -> 'acc * 'rb) -> 'b t -> 'acc -> 'acc * 'a
 
+    val foldg : ('a -> 'b -> 'b) -> 'a t -> 'b -> 'b
+
     val fold2_bottomup : (('a, 'rb) F.tofix -> 'a) -> ('b -> 'rb) -> 'b t -> 'a
 
   end
