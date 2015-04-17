@@ -454,9 +454,15 @@ module type Applicative = sig
   val ret : 'a -> 'a t
   val (<*>) : ('a -> 'b) t -> 'a t -> 'b t
 end
+
 module type Monade = sig
   include Applicative
   val (=<<) : ('a -> 'b t) -> 'a t -> 'b t
+end
+
+module ListApp (F:Applicative) = struct
+  open F
+  let fold_left_map f l = List.fold_right (fun x xs -> ret cons <*> f x <*> xs) l (ret [])
 end
 
 module Applicatives = struct

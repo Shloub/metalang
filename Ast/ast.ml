@@ -161,9 +161,8 @@ module Mutable = struct
     type ('a, 'b) tofix = ('a, 'b) alias
     module Make(F:Applicative) = struct
       open F
-      let fold_left_map f l =
-        ret List.rev
-          <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+      module LF = ListApp(F)
+      open LF
       let foldmap f g t =
         match t with
         | Var v -> ret ( Var v )
@@ -244,9 +243,8 @@ module Type = struct
     let next () = next ()
     module Make(F:Applicative) = struct
       open F
-      let fold_left_map f l =
-        ret List.rev
-          <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+      module LF = ListApp(F)
+      open LF
       let foldmap f g e =
         let f' (a, x) = ret (fun x -> a, x) <*> f x in
         match e with
@@ -440,10 +438,8 @@ module Expr = struct
       open F
       module Mut = Mutable.Fixed.Apply(F)
       module Lex = Lexems.Apply(F)
-
-    let fold_left_map f l =
-      ret List.rev
-      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+      module LF = ListApp(F)
+      open LF
 
       let foldmap f g t = match t with
       | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f a <*> f b
@@ -584,11 +580,9 @@ module Instr = struct
     module Make(F:Applicative) = struct
       open F
       module Mut = Mutable.Fixed.Apply(F)
-
-    let fold_left_map f l =
-      ret List.rev
-      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
-
+      module LF = ListApp(F)
+      open LF
+        
       let foldmap f g t =
         let g' (a, x) = ret (fun x -> a, x) <*> g x in
         let g'' (x, a) = ret (fun x -> x, a) <*> g x in
