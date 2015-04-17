@@ -740,32 +740,9 @@ module Instr = struct
 
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
-    type 'a alias = 'a t;;
-    type 'a t = 'a alias;;
-    let foldmap f acc t =
-      let annot = Fixed.annot t in
-      match unfix t with
-      | StdinSep -> acc, t
-      | Declare (_, _, _, _) -> acc, t
-      | Affect (_, _) -> acc, t
-      | Comment _ -> acc, t
-      | Loop (var, e1, e2, li) ->
-        let acc, li = List.fold_left_map f acc li in
-        acc, Fixed.fixa annot (Loop(var, e1, e2, li))
-      | While (e, li) ->
-        let acc, li = List.fold_left_map f acc li in
-        acc, Fixed.fixa annot (While (e, li))
-      | If (e, cif, celse) ->
-        let acc, cif = List.fold_left_map f acc cif in
-        let acc, celse = List.fold_left_map f acc celse in
-        acc, Fixed.fixa annot (If(e, cif, celse))
-      | Return e -> acc, t
-      | AllocArray (_, _, _, None, _) -> acc, t
-      | AllocArray (b, t, l, Some (b2, li), opt) ->
-        let acc, li = List.fold_left_map f acc li in
-        acc, Fixed.fixa annot (AllocArray (b, t, l, Some (b2, li), opt ))
-      | AllocRecord (_, _, _, _) | AllocArrayConst _ | Print _
-      | Read _ | DeclRead _ | Untuple _ | Call _ | Unquote _ | Tag _ -> acc, t
+    type 'a alias = 'a t
+    type 'a t = 'a alias
+    let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
   end)
 
   let map_expr : (('a -> 'b) -> 'a t -> 'b t) = Fixed.Deep.mapg
