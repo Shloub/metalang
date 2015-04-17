@@ -305,6 +305,9 @@ module type Monade = sig
   val (=<<) : ('a -> 'b t) -> 'a t -> 'b t
 end
 
+module ListApp : functor (F : Applicative) ->
+  sig val fold_left_map : ('a -> 'b F.t) -> 'a list -> 'b list F.t end
+
 module Applicatives : sig
   module FoldMap : functor (Acc : sig type t end) -> Monade
   module Fold : functor (Acc : sig type t end) -> Applicative
