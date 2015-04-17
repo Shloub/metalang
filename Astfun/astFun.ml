@@ -87,12 +87,9 @@ module Expr = struct
     let next () = Ast.next ()
 
     module Make(F:Applicative) = struct
-    open F
-
-    let fold_left_map f l =
-      ret List.rev
-      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
-
+      open F
+      module LF = ListApp(F)
+      open LF
     let foldmap f g e =
       let f'f (x, a) = ret (fun x -> x, a) <*> f x in
       match e with
