@@ -36,28 +36,7 @@ let print_option (f : Format.formatter -> 'a -> unit) t obj =
   | None -> ()
   | Some s -> f t s
 
-let print_list
-    (func : Format.formatter -> 'a -> unit)
-    (sep :
-       Format.formatter ->
-     (Format.formatter -> 'a -> unit) -> 'a ->
-     (Format.formatter -> 'a list -> unit) -> 'a list ->
-     unit
-    )
-    (f : Format.formatter)
-    (li : 'a list)
-    : unit
-    =
-  let rec p t = function
-    | [] -> ()
-    | [hd] -> func t hd
-    | hd::tl ->
-      sep
-        t
-        func hd
-        p tl
-  in p f li
-
+let print_list = Printers.print_list
 
 let sep format f pa a pb b = Format.fprintf f format pa a pb b
 let nosep f = sep "%a%a" f

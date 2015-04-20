@@ -620,6 +620,18 @@ module Fix2 (F : Fixable2) = struct
       let module M = Apply (Mon)
       in M.fm2 (fun f x -> f x) g
   end
+end
 
 
+module Printers = struct
+  let print_list func sep f li =
+    let rec p t = function
+      | [] -> ()
+      | [hd] -> func t hd
+      | hd::tl ->
+          sep
+            t
+            func hd
+            p tl
+    in p f li
 end
