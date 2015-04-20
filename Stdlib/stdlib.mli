@@ -437,3 +437,10 @@ sig
   end
 
 end
+module Printers : sig
+  val print_list :
+    ('a -> 'b -> unit) ->
+    ('a ->
+     ('a -> 'b -> unit) -> 'b -> ('a -> 'b list -> unit) -> 'b list -> unit) ->
+    'a -> 'b list -> unit
+end
