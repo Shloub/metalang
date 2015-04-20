@@ -309,9 +309,9 @@ module ListApp : functor (F : Applicative) ->
   sig val fold_left_map : ('a -> 'b F.t) -> 'a list -> 'b list F.t end
 
 module Applicatives : sig
-  module FoldMap : functor (Acc : sig type t end) -> Monade
-  module Fold : functor (Acc : sig type t end) -> Applicative
-  module Map: Monade
+  module FoldMap : functor (Acc : sig type t end) -> Monade with type 'a t = Acc.t -> Acc.t * 'a
+  module Fold : functor (Acc : sig type t end) -> Applicative with type 'a t = Acc.t -> Acc.t
+  module Map: Monade with type 'a t = 'a
   module Accumule : functor (Acc : sig type t 
     val merge : t -> t -> t
     val zero : t
