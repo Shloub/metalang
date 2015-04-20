@@ -40,6 +40,10 @@ let get_username = function
   | UserName s -> Some s
   | InternalName _ -> None
 
+let debug_varname f = function
+  | UserName s -> Format.fprintf f "UserName %S" s
+  | InternalName i -> Format.fprintf f "InternalName %d" i
+
 type typename = string
 type funname = string
 type fieldname = string
@@ -141,6 +145,10 @@ module Lexems = struct
 
 end
 
+let punitlist f li =
+  Format.fprintf f "[@[%a@]]"
+    (Printers.print_list (fun f i -> i f ()) (fun f -> Format.fprintf f "%a;@ %a")) li
+
 (**
    mutable module
    this module contains mutable values like array, records and variables
@@ -153,6 +161,11 @@ module Mutable = struct
     Var of varname
   | Array of 'mutable_ * 'expr list
   | Dot of 'mutable_ * fieldname
+
+  let pdebug f = function
+    | Var v -> Format.fprintf f "Var (%a)" debug_varname v
+    | Array (m, li) -> Format.fprintf f "Array (%a, [%a])" m () punitlist li
+    | Dot (m, fi) -> Format.fprintf f "Dot(%a, %s)" m () fi
 
   (** {2 Parcours} *)
   module Fixed = Fix2( struct
@@ -205,9 +218,7 @@ module Mutable = struct
 
   let map_expr f m = Fixed.Deep.mapg f m
 
-  let fold_expr f acc i =
-    fst (foldmap_expr (fun acc i -> f acc i, i) acc i)
-
+  let fold_expr f acc i = Fixed.Deep.foldg (fun x acc -> f acc x) i acc
 
   (** {2 utils} *)
 
@@ -403,6 +414,9 @@ module Expr = struct
     Neg (** integer *)
   | Not (** boolean *)
 
+  let pdebug_unop f op = Format.fprintf f (match op with
+  | Neg -> "Neg" | Not -> "Not")
+
   (** binary operators *)
   type binop =
   | Add | Sub | Mul | Div (* int *)
@@ -411,12 +425,25 @@ module Expr = struct
   | Lower | LowerEq | Higher | HigherEq (* 'a *)
   | Eq | Diff (* 'a *)
 
+  let pdebug_binop f op = Format.fprintf f (match op with
+  | Add -> "Add" | Sub -> "Sub" | Mul -> "Mul"
+  | Div -> "Div" | Mod -> "Mod" | Or -> "Or" | And -> "And"
+  | Lower -> "Lower" | LowerEq -> "LowerEq" | Higher -> "Higher" | HigherEq -> "HigherEq"
+  | Eq -> "Eq" | Diff -> "Diff")
+
   type lief =
   | Char of char
   | String of string
   | Integer of int
   | Bool of bool
   | Enum of string (** enumerateur *)
+
+  let pdebug_lief f = function
+    | Char c -> Format.fprintf f "Char %C" c
+    | String s -> Format.fprintf f "String %S" s
+    | Integer i -> Format.fprintf f "Integer %i" i
+    | Bool b -> Format.fprintf f "Bool %b" b
+    | Enum s -> Format.fprintf f "Enum %S" s
 
   type ('a, 'lex) tofix =
     BinOp of 'a * binop * 'a (** operations binaires *)
@@ -427,6 +454,19 @@ module Expr = struct
   | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
   | Tuple of 'a list
   | Record of (fieldname * 'a) list
+
+let pdebug f = function
+  | BinOp(a, op, b) -> Format.fprintf f "E.BinOp(%a, %a, %a)" a () pdebug_binop op b ()
+  | UnOp(a, unop) -> Format.fprintf f "E.UnOp(%a, %a)" a () pdebug_unop unop
+  | Lief l -> Format.fprintf f "E.Lief(%a)" pdebug_lief l
+  | Access mut ->
+      let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
+      Format.fprintf f "E.Access(%a)" mut ()
+  | Call (name, li) -> Format.fprintf f "E.Call(%S, %a)" name punitlist li
+  | Lexems li -> assert false (* TODO *)
+  | Tuple li -> Format.fprintf f "E.Tuple(%a)" punitlist li
+  | Record li -> Format.fprintf f "E.Record(%a)" punitlist (List.map (fun (field, e) f () ->
+      Format.fprintf f "(%S, %a)" field e ()) li)
 
   (** {2 parcours} *)
 
@@ -461,6 +501,9 @@ module Expr = struct
   type 'a t = 'a Fixed.t
   let fix = Fixed.fix
   let unfix = Fixed.unfix
+
+
+  let pdebug_deep f e = Fixed.Deep.fold (fun e f () -> pdebug f e) e f ()
 
   let add_bindings x =
     Fixed.Deep.fold
@@ -553,6 +596,9 @@ module Instr = struct
       useless = true
     }
 
+  let popt f opt =
+    Format.fprintf f "{useless=%b}" opt.useless
+
   type ('a, 'expr) tofix =
     Declare of varname * Type.t * 'expr * declaration_option
   | Affect of 'expr Mutable.t * 'expr
@@ -573,46 +619,112 @@ module Instr = struct
   | StdinSep
   | Unquote of 'expr
 
+  let pdebug f = function
+  | Declare (va, ty, e, opt) -> Format.fprintf f "I.Declare(%a, %s, %a, %a)"
+        debug_varname va
+        (Type.type_t_to_string ty)
+        e ()
+        popt opt
+  | Affect (mut, e) ->
+      let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
+      Format.fprintf f "I.Affect(%a, %a)" mut () e ()
+  | Loop (var, e1, e2, li) ->
+      Format.fprintf f "I.Loop(%a, %a, %a, %a)"
+        debug_varname var
+        e1 () e2 () punitlist li
+  | While (e, li) -> Format.fprintf f "I.While(%a, %a)" e () punitlist li
+  | Comment(s) -> Format.fprintf f "I.Comment(%S)" s
+  | Tag(s) -> Format.fprintf f "I.Tag(%S)" s
+  | Return(e) -> Format.fprintf f "I.Return(%a)" e ()
+  | AllocArray(name, ty, e, None, opt) ->
+      Format.fprintf f "I.AllocArray(%a, %s, %a, None, %a)"
+        debug_varname name
+        (Type.type_t_to_string ty)
+        e ()
+        popt opt
+  | AllocArray(name, ty, e, Some(name2, li), opt) ->
+      Format.fprintf f "I.AllocArray(%a, %s, %a, Some(%a, %a), %a)"
+        debug_varname name
+        (Type.type_t_to_string ty)
+        e ()
+        debug_varname name2
+        punitlist li
+        popt opt
+  | AllocArrayConst(name, ty, e, lief, opt) ->
+      Format.fprintf f "I.AllocArrayConst(%a, %s, %a, %a, %a)" debug_varname name
+        (Type.type_t_to_string ty)
+        e ()
+        Expr.pdebug_lief lief
+        popt opt
+  | AllocRecord(name, ty, li, opt) -> Format.fprintf f "I.AllocRecord(%a, %s, %a, %a)"
+        debug_varname name
+        (Type.type_t_to_string ty)
+        punitlist (List.map (fun (a, b) f () -> Format.fprintf f "(%S,@ %a)" a b () ) li)
+        popt opt
+  | If(e, a, b) -> Format.fprintf f "I.If(@[%a,@\n%a,@\n%a@])" e () punitlist a punitlist b
+  | Call(name, li) -> Format.fprintf f "I.Call(%S, %a)" name punitlist li
+  | Print(ty, e) -> Format.fprintf f "I.Print(%s, %a)" (Type.type_t_to_string ty) e ()
+  | Read(ty, mut) ->
+      let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
+      Format.fprintf f "I.Mut(%s, %a)" (Type.type_t_to_string ty) mut ()
+  | DeclRead(ty, name, opt) ->
+      Format.fprintf f "I.DeclRead(%s, %a, %a)" (Type.type_t_to_string ty)
+        debug_varname name
+        popt opt
+  | Untuple(li, e, opt) -> Format.fprintf f "I.Untuple(%a, %a, %a)"
+        punitlist (List.map (fun (ty, name) f () -> Format.fprintf f "(%s,@ %a)"
+            (Type.type_t_to_string ty)
+            debug_varname name) li)
+        e () popt opt
+  | StdinSep -> Format.fprintf f "StdinSep"
+  | Unquote(e) -> Format.fprintf f "I.Unquote(%a)" e ()
+
+  module Make(F:Applicative) = struct
+    open F
+    module Mut = Mutable.Fixed.Apply(F)
+    module LF = ListApp(F)
+    open LF
+    let foldmap_bloc f g t =
+      let g' (a, x) = ret (fun x -> a, x) <*> g x in
+      let g'' (x, a) = ret (fun x -> x, a) <*> g x in
+      match t with
+      | Declare (a, b, c, d) -> ret (fun c -> Declare (a, b, c, d)) <*> g c 
+      | Affect (m, e) -> ret (fun m e -> Affect (m, e)) <*> Mut.map g m <*> g e
+      | Comment s -> ret (Comment s)
+      | Loop (var, e1, e2, li) -> ret (fun e1 e2 li -> Loop (var, e1, e2, li)) <*> g e1 <*> g e2 <*> f li
+      | While (e, li) -> ret (fun e li -> While (e, li)) <*> g e <*> f li 
+      | If (e, cif, celse) -> ret (fun e cif celse -> If (e, cif, celse)) <*> g e <*> f cif <*> f celse
+      | Return e -> ret (fun e -> Return e) <*> g e
+      | AllocArray (b, t, l, Some ((b2, li)), opt) -> ret (fun l li -> AllocArray (b, t, l, Some((b2, li)), opt)) <*> g l <*> f li
+      | AllocArray (a, b, c, None, opt) -> ret (fun c -> AllocArray (a, b, c, None, opt)) <*> g c
+      | AllocRecord (a, b, c, opt) -> ret (fun c -> AllocRecord (a, b, c, opt)) <*> fold_left_map g' c
+      | Print (a, b) -> ret (fun b -> Print (a, b)) <*> g b
+      | Read (a, b) -> ret ( fun b -> Read (a, b) ) <*> Mut.map g b
+      | DeclRead (a, b, opt) -> ret (DeclRead (a, b, opt))
+      | Call (a, b) -> ret (fun b -> Call (a, b)) <*> fold_left_map g b
+      | StdinSep -> ret StdinSep
+      | Unquote e -> ret (fun e -> Unquote e) <*> g e
+      | Untuple (lis, e, opt) -> ret (fun e -> Untuple (lis, e, opt)) <*> g e
+      | Tag e -> ret (Tag e)
+      | AllocArrayConst (v, t, e1, e2, d) -> ret (fun e1 -> AllocArrayConst (v, t, e1, e2, d)) <*> g e1
+    let foldmap f g t = foldmap_bloc (fold_left_map f) g t   
+  end
   module Fixed = Fix2(struct
     type ('a,'b) alias = ('a, 'b) tofix
     type ('a, 'b) tofix = ('a, 'b) alias
     let next () = next ()
-    module Make(F:Applicative) = struct
-      open F
-      module Mut = Mutable.Fixed.Apply(F)
-      module LF = ListApp(F)
-      open LF
-        
-      let foldmap f g t =
-        let g' (a, x) = ret (fun x -> a, x) <*> g x in
-        let g'' (x, a) = ret (fun x -> x, a) <*> g x in
-        match t with
-        | Declare (a, b, c, d) -> ret (fun c -> Declare (a, b, c, d)) <*> g c 
-        | Affect (m, e) -> ret (fun m e -> Affect (m, e)) <*> Mut.map g m <*> g e
-        | Comment s -> ret (Comment s)
-        | Loop (var, e1, e2, li) -> ret (fun e1 e2 li -> Loop (var, e1, e2, li)) <*> g e1 <*> g e2 <*> fold_left_map f li
-        | While (e, li) -> ret (fun e li -> While (e, li)) <*> g e <*> fold_left_map f li 
-        | If (e, cif, celse) -> ret (fun e cif celse -> If (e, cif, celse)) <*> g e <*> fold_left_map f cif <*> fold_left_map f celse
-        | Return e -> ret (fun e -> Return e) <*> g e
-        | AllocArray (b, t, l, Some ((b2, li)), opt) -> ret (fun l li -> AllocArray (b, t, l, Some((b2, li)), opt)) <*> g l <*> fold_left_map f li
-        | AllocArray (a, b, c, None, opt) -> ret (fun c -> AllocArray (a, b, c, None, opt)) <*> g c
-        | AllocRecord (a, b, c, opt) -> ret (fun c -> AllocRecord (a, b, c, opt)) <*> fold_left_map g' c
-        | Print (a, b) -> ret (fun b -> Print (a, b)) <*> g b
-        | Read (a, b) -> ret ( fun b -> Read (a, b) ) <*> Mut.map g b
-        | DeclRead (a, b, opt) -> ret (DeclRead (a, b, opt))
-        | Call (a, b) -> ret (fun b -> Call (a, b)) <*> fold_left_map g b
-        | StdinSep -> ret StdinSep
-        | Unquote e -> ret (fun e -> Unquote e) <*> g e
-        | Untuple (lis, e, opt) -> ret (fun e -> Untuple (lis, e, opt)) <*> g e
-        | Tag e -> ret (Tag e)
-        | AllocArrayConst (v, t, e1, e2, d) -> ret (fun e1 -> AllocArrayConst (v, t, e1, e2, d)) <*> g e1
-    end
+    module Make = Make
   end)
 
   type 'a t = 'a Fixed.t
   let fixa = Fixed.fixa
   let fix = Fixed.fix
   let unfix = Fixed.unfix
+
+  let pdebug_exprinstr f i =
+    Fixed.Deep.fold2_bottomup (fun i f () -> pdebug f i) (fun e f () -> Expr.pdebug_deep f e) i f ()
+  let debug_shape f i = pdebug f (Fixed.Surface.map2 (fun _ _ () -> ()) (fun _ _ () -> ()) i)
+
 
   let add_bindings (x: 'a Expr.t t) =
     let fli li acc = List.fold_left (fun acc f -> f acc) acc li in
@@ -643,64 +755,15 @@ module Instr = struct
 
   let bindings x = add_bindings x BindingSet.empty
 
+  let fold_map_bloc (type acc) f ac t =
+    let module A = Applicatives.FoldMap(struct type t = acc end) in
+    let module M = Make(A) in
+    M.foldmap_bloc (fun a acc -> f acc a) A.ret t ac
 
-  let fold_map_bloc f acc t = match t with
-    | Declare (a, b, c, d) -> acc, Declare (a, b, c, d)
-    | Affect (var, e) -> acc, Affect (var, e)
-    | Comment s -> acc, Comment s
-    | Loop (var, e1, e2, li) ->
-      let acc, li = f acc li in
-      acc, Loop (var, e1, e2, li)
-    | While (e, li) ->
-      let acc, li = f acc li in
-      acc, While (e, li)
-    | If (e, cif, celse) ->
-      let acc, cif = f acc cif in
-      let acc, celse = f acc celse in
-      acc, If (e, cif, celse)
-    | Return e -> acc, Return e
-    | AllocArray (b, t, l, Some ((b2, li)), opt) ->
-      let acc, li = f acc li in
-      acc, AllocArray (b, t, l, Some((b2, li)), opt)
-    | AllocArray (a, b, c, None, opt) ->
-      acc, AllocArray (a, b, c, None, opt)
-    | AllocRecord (a, b, c, opt) ->
-      acc, AllocRecord (a, b, c, opt)
-    | Print (a, b) -> acc, Print (a, b)
-    | Read (a, b) -> acc, Read (a, b)
-    | DeclRead (a, b, opt) -> acc, DeclRead (a, b, opt)
-    | Call (a, b) -> acc, Call (a, b)
-    | StdinSep -> acc, StdinSep
-    | Unquote e -> acc, Unquote e
-    | Untuple (lis, e, opt) -> acc, Untuple (lis, e, opt)
-    | Tag e -> acc, Tag e
-    | AllocArrayConst (v, t, e1, e2, d) -> acc, AllocArrayConst (v, t, e1, e2, d)
-
-  let map_bloc f t = match t with
-    | Declare (a, b, c, d) -> Declare (a, b, c, d)
-    | Affect (var, e) -> Affect (var, e)
-    | Comment s -> Comment s
-    | Loop (var, e1, e2, li) ->
-      Loop (var, e1, e2, f li)
-    | While (e, li) -> While (e, f li)
-    | If (e, cif, celse) ->
-      If (e, f cif, f celse)
-    | Return e -> Return e
-    | AllocArray (b, t, l, Some ((b2, li)), opt) ->
-      AllocArray (b, t, l, Some((b2, f li)), opt)
-    | AllocArray (a, b, c, None, opt) ->
-      AllocArray (a, b, c, None, opt)
-    | AllocRecord (a, b, c, opt) ->
-      AllocRecord (a, b, c, opt)
-    | Print (a, b) -> Print (a, b)
-    | Read (a, b) -> Read (a, b)
-    | DeclRead (a, b, opt) -> DeclRead (a, b, opt)
-    | Call (a, b) -> Call (a, b)
-    | StdinSep -> StdinSep
-    | Unquote e -> Unquote e
-    | Untuple (lis, e, opt) -> Untuple (lis, e, opt)
-    | Tag e -> Tag e
-    | AllocArrayConst (v, t, e1, e2, d) -> AllocArrayConst (v, t, e1, e2, d)
+  let map_bloc f t =
+    let module A = Applicatives.Map in
+    let module M = Make(A) in
+    M.foldmap_bloc f A.ret t
 
   let rec deep_map_bloc f t =
     map_bloc (
@@ -747,23 +810,12 @@ module Instr = struct
 
   let map_expr : (('a -> 'b) -> 'a t -> 'b t) = Fixed.Deep.mapg
 
-(* does not work
-  let fold_expr f acc i =
-    Fixed.Deep.fold
-      (fun i acc ->
-        Fixed.Surface.fold2
-          (fun i acc -> acc)
-          (fun e acc -> f acc e)
-          i acc
-      ) i acc *)
-
   let foldmap_expr f acc i =
     Fixed.Deep.foldmap2i_topdown
       (fun i x acc -> acc, fixa i x)
       (fun x acc -> f acc x) i acc
 
-  let fold_expr f acc i =
-    fst (foldmap_expr (fun acc i -> f acc i, i) acc i)
+  let fold_expr f acc i = Fixed.Deep.foldg (fun x acc -> f acc x) i acc
 
 end
 
