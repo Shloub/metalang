@@ -158,7 +158,7 @@ let getinfos instrs =
   getinfos infos None instrs
 
 let replace_name name e li =
-  List.map (fun i -> Instr.map_expr (fun e2 -> Expr.Writer.Deep.map
+  List.map (fun i -> Instr.Fixed.Deep.mapg (fun e2 -> Expr.Writer.Deep.map
     (fun e2 -> match Expr.unfix e2 with
     | Expr.Access m ->
       begin match Mutable.unfix m with

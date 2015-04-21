@@ -51,14 +51,14 @@ let rec iter li =
       | _ -> ()
       end;
     ) i;
-    Instr.fold_expr (fun acc e ->
+    Instr.Fixed.Deep.foldg (fun e acc ->
       Expr.Writer.Deep.iter (fun e ->
         match Expr.unfix e with
         | Expr.BinOp(_, Expr.Div, _) -> tag "__internal__div"
         | Expr.BinOp(_, Expr.Mod, _) -> tag "__internal__mod"
         | _ -> ()
       ) e
-    ) () i
+    ) i ()
   ) li
 
 let process acc p =

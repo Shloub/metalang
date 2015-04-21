@@ -132,10 +132,8 @@ module Lexems = struct
 
   module Apply (F:Applicative) = struct
     open F
-
-    let fold_left_map f l =
-      ret List.rev
-      <*> List.fold_left (fun xs x -> ret cons <*> f x <*> xs ) (ret []) l
+    module LF = ListApp(F)
+    open LF
 
     let rec map_expr f g = function
       | Expr e -> ret (fun e -> Expr e) <*> f e
@@ -210,15 +208,6 @@ module Mutable = struct
       if equals cmpe m1 m2 then String.equals field1 field2
       else false
     | _ -> false
-
-  let rec foldmap_expr f acc mut =
-    Fixed.Deep.foldmap2i_topdown
-      (fun i x acc -> acc, Fixed.fixa i x)
-      (fun x acc -> f acc x) mut acc
-
-  let map_expr f m = Fixed.Deep.mapg f m
-
-  let fold_expr f acc i = Fixed.Deep.foldg (fun x acc -> f acc x) i acc
 
   (** {2 utils} *)
 
@@ -526,7 +515,7 @@ let pdebug f = function
 
   (** {2 utils} *)
 
-let lief l = fix (Lief l)
+  let lief l = fix (Lief l)
 
   let bool b = lief (Bool b)
 
@@ -551,20 +540,6 @@ let lief l = fix (Lief l)
   let div e1 e2 = binop Div e1 e2
 
   let call name li = fix ( Call(name, li))
-
-  let default_value t = match Type.unfix t with
-    | Type.Integer -> integer 0
-    | Type.String -> string ""
-    | Type.Char -> char '_'
-    | Type.Array _ -> failwith ("new array is not an expression")
-    | Type.Lexems -> failwith ("lexems is not an expression")
-    | Type.Void -> failwith ("no dummy expression for void")
-    | Type.Bool -> bool false
-    | Type.Named _ -> failwith ("new named is not an expression")
-    | Type.Auto -> failwith ("auto is not an expression")
-    | Type.Struct _ -> failwith ("new struct is not an expression")
-    | Type.Enum _ -> failwith ("new enum is not an expression")
-    | Type.Tuple _ -> failwith ("new tuple is not an expression")
 
   let is_integer i e = match unfix e with
   | Lief (Integer i2) when i = i2 -> true
@@ -728,7 +703,7 @@ module Instr = struct
 
   let add_bindings (x: 'a Expr.t t) =
     let fli li acc = List.fold_left (fun acc f -> f acc) acc li in
-    let mut m acc = Mutable.fold_expr (fun acc e -> e acc) acc m in
+    let mut = Mutable.Fixed.Deep.foldg (fun e acc -> e acc) in
     Fixed.Deep.fold2_bottomup
       (function
         | Declare (n, _, e, _)
@@ -793,11 +768,8 @@ module Instr = struct
     AllocRecord(binding, t, fields, opt) |> fix
   let alloc_array_lambda binding t len b e opt =
     AllocArray(binding, t, len, Some ( (b, e) ), opt ) |> fix
-
-
   let alloc_array_lambda_opt binding t len lambda opt =
     AllocArray(binding, t, len, lambda, opt ) |> fix
-
   let if_ e cif celse =
     If (e, cif, celse) |> fix
 
@@ -807,16 +779,6 @@ module Instr = struct
     type 'a t = 'a alias
     let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
   end)
-
-  let map_expr : (('a -> 'b) -> 'a t -> 'b t) = Fixed.Deep.mapg
-
-  let foldmap_expr f acc i =
-    Fixed.Deep.foldmap2i_topdown
-      (fun i x acc -> acc, fixa i x)
-      (fun x acc -> f acc x) i acc
-
-  let fold_expr f acc i = Fixed.Deep.foldg (fun x acc -> f acc x) i acc
-
 end
 
 module Prog = struct

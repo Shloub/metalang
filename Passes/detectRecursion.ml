@@ -45,12 +45,12 @@ let is_rec funname instrs =
       | Instr.Call (name, _) -> acc || name = funname
       | _ -> acc
       ) false i ||
-        Instr.fold_expr (fun acc e ->
+        Instr.Fixed.Deep.foldg (fun e acc ->
           Expr.Writer.Deep.fold (fun acc e -> match Expr.unfix e with
           | Expr.Call (name, _) -> acc || name = funname
           | _ -> acc
           ) acc e
-        ) false i
+        ) i false
     in List.fold_left (fun acc i -> acc || is_rec i) false instrs
 
 let process_main acc instrs = acc, instrs

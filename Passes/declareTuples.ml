@@ -84,14 +84,11 @@ let process_t tyenv acc t =
   let acc = fold_ty tyenv acc t in
   Type.Writer.Deep.fold (fold_ty tyenv) acc t
 
-let folde tyenv acc e =
-  process_t tyenv acc (Typer.get_type tyenv e)
+let folde tyenv acc e = process_t tyenv acc (Typer.get_type tyenv e)
 
-let process_e tyenv acc e =
-  Expr.Writer.Deep.fold (folde tyenv) acc e
+let process_e tyenv e acc = Expr.Writer.Deep.fold (folde tyenv) acc e
 
-let process_i tyenv acc i =
-  Instr.fold_expr (process_e tyenv) acc i
+let process_i tyenv acc i = Instr.Fixed.Deep.foldg (process_e tyenv) i acc
 
 let process_li tyenv acc li=
   List.fold_left (process_i tyenv) acc li

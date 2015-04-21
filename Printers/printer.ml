@@ -66,7 +66,7 @@ class printer = object(self)
         (fold_expr acc e) e
     in
     let fold_instr acc i =
-      let acc = Instr.fold_expr dfold_expr acc i in
+      let acc = Instr.Fixed.Deep.foldg (fun e acc -> dfold_expr acc e) i acc in
       Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
       | Instr.Affect (m, e) ->
         begin match Mutable.unfix m with

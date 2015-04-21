@@ -620,7 +620,7 @@ module EvalF (IO : EvalIO) = struct
         execenv.(r) <- eval_expr execenv e
       in env, f
     | Instr.Affect (mutable_, e) ->
-      let mutable_ = Mutable.map_expr (fun f -> f env) mutable_ in
+      let mutable_ = Mutable.Fixed.Deep.mapg (fun f -> f env) mutable_ in
       let mut = mut_setval env mutable_ in
       let e = e env in
       env, (fun execenv -> mut execenv (eval_expr execenv e))
@@ -725,7 +725,7 @@ module EvalF (IO : EvalIO) = struct
         print t e
       in env, f
     | Instr.Read (t, mut) ->
-      let mut = Mutable.map_expr (fun f -> f env) mut in
+      let mut = Mutable.Fixed.Deep.mapg (fun f -> f env) mut in
       let mut = mut_setval env mut
       in env, (fun execenv ->
         read t (fun value -> mut execenv value))
@@ -773,7 +773,7 @@ module EvalF (IO : EvalIO) = struct
   and precompile_instr i =
     let i' = match Instr.unfix i with
       | Instr.Declare (v, t, e, opt) -> Instr.Declare (v, t, precompile_expr e, opt)
-      | Instr.Affect (mut, e) -> Instr.Affect (Mutable.map_expr precompile_expr
+      | Instr.Affect (mut, e) -> Instr.Affect (Mutable.Fixed.Deep.mapg precompile_expr
                                                  mut, precompile_expr e)
       | Instr.Loop (v, e1, e2, li) ->
         Instr.Loop (v,
@@ -799,7 +799,7 @@ module EvalF (IO : EvalIO) = struct
         Instr.If (precompile_expr e, precompile_instrs l1, precompile_instrs l2)
       | Instr.Call (name, li) -> Instr.Call (name, List.map precompile_expr li)
       | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
-      | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
+      | Instr.Read (t, mut) -> Instr.Read (t, Mutable.Fixed.Deep.mapg precompile_expr mut)
       | Instr.DeclRead (t, v, opt) -> Instr.DeclRead (t, v, opt)
       | Instr.Untuple (li, e, opt) -> Instr.Untuple (li, precompile_expr e, opt)
       | Instr.StdinSep -> Instr.StdinSep
@@ -883,8 +883,8 @@ let eval_prog t p = EVAL.eval_prog t p
 *)
 module EvalConstantes = struct
 
-  let process_expr acc e =
-    let f acc e = match Expr.Fixed.unfix e with
+  let process_expr e acc =
+    let f e acc = match e with
       | Expr.Call ("instant", [param]) ->
         let new_expr = match EVAL.precompile_eval_expr acc param with
           | Integer x -> Expr.integer x
@@ -892,9 +892,9 @@ module EvalConstantes = struct
           | Char x -> Expr.char x
           | String x -> Expr.string x
           | _ -> raise (Error (fun f -> Format.fprintf f "type error...")) (* TODO *)
-        in acc, Expr.Fixed.fixa (Expr.Fixed.annot param) (Expr.unfix new_expr)
-      | _ -> acc, e
-    in Expr.Writer.Deep.foldmap f acc e
+        in acc, (Expr.unfix new_expr)
+      | e -> acc, e
+    in Expr.Fixed.Deep.foldmap_topdown f e acc
 
   let collect_instr acc (i:Utils.instr) =
     let f (i:Utils.instr) :
@@ -920,7 +920,7 @@ module EvalConstantes = struct
     let i = Instr.deep_map_bloc g (Instr.unfix i) |> Instr.fixa
         (Instr.Fixed.annot i) in
     let li = f i in
-    List.fold_left_map (Instr.foldmap_expr process_expr) acc li
+    List.fold_left_map (fun acc x -> Instr.Fixed.Deep.foldmapg process_expr x acc) acc li
 
   let process_main acc m =
     let acc, m = List.fold_left_map collect_instr acc m
