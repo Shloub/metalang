@@ -619,6 +619,10 @@ module Fix2 (F : Fixable2) = struct
       let module Mon = Applicatives.Fold(struct type t = acc end) in
       let module M = Apply (Mon)
       in M.fm2 (fun f x -> f x) g
+
+
+    let foldmapg f x acc = foldmap2i_topdown (fun i x acc -> acc, fixa i x) f x acc
+
   end
 end
 

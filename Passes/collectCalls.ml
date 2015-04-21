@@ -39,7 +39,7 @@ type 'a acc = StringSet.t
 
 let init_acc () = StringSet.empty
 
-let process_expr acc e =
+let process_expr e acc =
   let f acc e = match Expr.Fixed.unfix e with
     | Expr.Call (funname, _) -> StringSet.add funname acc
     | e -> acc
@@ -52,7 +52,7 @@ let collect_instr acc i =
     | _ -> acc
   in
   let acc = Instr.Writer.Deep.fold f acc i
-  in Instr.fold_expr process_expr acc i
+  in Instr.Fixed.Deep.foldg process_expr i acc
 
 let process_main acc m = (List.fold_left collect_instr acc m), m
 

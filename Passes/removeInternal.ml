@@ -72,7 +72,7 @@ let fold_map_instr acc instr =
 let fold_map_instr acc instr =
   let acc, instr = fold_map_instr acc instr in
   let acc, instr = Instr.Writer.Deep.foldmap fold_map_instr acc instr in
-  let instr = Instr.map_expr (map_expr acc) instr in
+  let instr = Instr.Fixed.Deep.mapg (map_expr acc) instr in
   acc, instr
 
 let rec fold_map_instrs acc (instrs : Utils.instr list) =

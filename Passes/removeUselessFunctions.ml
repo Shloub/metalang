@@ -36,7 +36,7 @@ open PassesUtils
 
 let apply prog funs =
   let go f (li, used_functions) = match f with
-    | Prog.Unquote e -> f::li, CollectCalls.process_expr used_functions e
+    | Prog.Unquote e -> f::li, CollectCalls.process_expr e used_functions
     | Prog.DeclarFun (v, _,_, _, _)
     | Prog.Macro (v, _, _, _) ->
       if StringSet.mem v used_functions

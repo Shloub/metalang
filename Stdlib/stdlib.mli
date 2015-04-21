@@ -433,7 +433,7 @@ sig
     val foldg : ('a -> 'b -> 'b) -> 'a t -> 'b -> 'b
 
     val fold2_bottomup : (('a, 'rb) F.tofix -> 'a) -> ('b -> 'rb) -> 'b t -> 'a
-
+    val foldmapg : ('b -> 'a -> 'a * 'c) -> 'b t -> 'a -> 'a * 'c t
   end
 
 end

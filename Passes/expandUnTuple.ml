@@ -95,7 +95,7 @@ let mapi acc i =
   in Instr.fixa (Instr.Fixed.annot i) i0
 
 let mapti i tyenv acc =
-  let i = Instr.map_expr (mapde tyenv acc) i in
+  let i = Instr.Fixed.Deep.mapg (mapde tyenv acc) i in
   Instr.Writer.Deep.map (mapi acc) i
 
 let process (tyenv, acc) p =

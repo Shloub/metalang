@@ -620,7 +620,7 @@ module EvalF (IO : EvalIO) = struct
         execenv.(r) <- eval_expr execenv e
       in env, f
     | Instr.Affect (mutable_, e) ->
-      let mutable_ = Mutable.map_expr (fun f -> f env) mutable_ in
+      let mutable_ = Mutable.Fixed.Deep.mapg (fun f -> f env) mutable_ in
       let mut = mut_setval env mutable_ in
       let e = e env in
       env, (fun execenv -> mut execenv (eval_expr execenv e))
@@ -725,7 +725,7 @@ module EvalF (IO : EvalIO) = struct
         print t e
       in env, f
     | Instr.Read (t, mut) ->
-      let mut = Mutable.map_expr (fun f -> f env) mut in
+      let mut = Mutable.Fixed.Deep.mapg (fun f -> f env) mut in
       let mut = mut_setval env mut
       in env, (fun execenv ->
         read t (fun value -> mut execenv value))
@@ -773,7 +773,7 @@ module EvalF (IO : EvalIO) = struct
   and precompile_instr i =
     let i' = match Instr.unfix i with
       | Instr.Declare (v, t, e, opt) -> Instr.Declare (v, t, precompile_expr e, opt)
-      | Instr.Affect (mut, e) -> Instr.Affect (Mutable.map_expr precompile_expr
+      | Instr.Affect (mut, e) -> Instr.Affect (Mutable.Fixed.Deep.mapg precompile_expr
                                                  mut, precompile_expr e)
       | Instr.Loop (v, e1, e2, li) ->
         Instr.Loop (v,
@@ -799,7 +799,7 @@ module EvalF (IO : EvalIO) = struct
         Instr.If (precompile_expr e, precompile_instrs l1, precompile_instrs l2)
       | Instr.Call (name, li) -> Instr.Call (name, List.map precompile_expr li)
       | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
-      | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
+      | Instr.Read (t, mut) -> Instr.Read (t, Mutable.Fixed.Deep.mapg precompile_expr mut)
       | Instr.DeclRead (t, v, opt) -> Instr.DeclRead (t, v, opt)
       | Instr.Untuple (li, e, opt) -> Instr.Untuple (li, precompile_expr e, opt)
       | Instr.StdinSep -> Instr.StdinSep

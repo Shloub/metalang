@@ -54,10 +54,10 @@ let rec process_mutable acc m =
   let f acc m = match Mutable.Fixed.unfix m with
     (*       | Mutable.Dot (m, f) -> *)
     | Mutable.Array (m, li) ->
-      List.fold_left process_expr acc li
+      List.fold_right process_expr li acc
     | e -> acc
   in Mutable.Writer.Deep.fold f acc m
-and process_expr acc e =
+and process_expr e acc =
   let f acc e = match Expr.Fixed.unfix e with
     (*      | Expr.Enum s -> TODO *)
     | Expr.Access m -> process_mutable acc m
@@ -73,7 +73,7 @@ let collect_instr acc i =
     | _ -> acc
   in
   let acc = Instr.Writer.Deep.fold f acc i
-  in Instr.fold_expr process_expr acc i
+  in Instr.Fixed.Deep.foldg process_expr i acc
 
 let process_main acc m = (List.fold_left collect_instr acc m), m
 

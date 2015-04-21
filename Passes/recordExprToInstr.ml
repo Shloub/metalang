@@ -55,7 +55,7 @@ and process tyenv acc e =
   let acc, e = foldmapexpr tyenv acc e in
   Expr.Writer.Deep.foldmap (foldmapexpr tyenv) acc e
 
-let process_mut tyenv acc m = Mutable.foldmap_expr (process tyenv) acc m
+let process_mut tyenv acc m = Mutable.Fixed.Deep.foldmapg (fun e acc -> process tyenv acc e) m acc
 
 let expand tyenv i = match Instr.unfix i with
   | Instr.Declare (n, t, (Expr.Fixed.F (_, Expr.Record li) ), opt) ->

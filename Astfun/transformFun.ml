@@ -275,35 +275,7 @@ let rec expr e =
   | A.Expr.Record r -> F.Expr.record (List.map (fun (a, b) -> b, a) r)
   | A.Expr.Lexems _ -> assert false
 
-let rec instr_to_finstr i =
-  let f e = expr e in
-  (* let i2 = A.Instr.map_expr f i in *)
-  let unfixed = match A.Instr.unfix i with
-  | A.Instr.Declare (vn, t, e, opt) -> A.Instr.Declare (vn, t, f e, opt)
-  | A.Instr.Affect (mut, e) -> A.Instr.Affect (A.Mutable.map_expr f mut, f e)
-  | A.Instr.Loop (varname, e1, e2, li) -> A.Instr.Loop (varname, f e1, f e2, List.map instr_to_finstr li)
-  | A.Instr.While (e, li) -> A.Instr.While (f e, List.map instr_to_finstr li)
-  | A.Instr.Comment s -> A.Instr.Comment s
-  | A.Instr.Tag s -> A.Instr.Tag s
-  | A.Instr.Return e -> A.Instr.Return (f e)
-  | A.Instr.AllocArrayConst (varname, ty, e, l, opt) ->
-      A.Instr.AllocArrayConst(varname, ty, f e, l, opt)
-  | A.Instr.AllocArray (varname, ty, e, opt, opt2) ->
-    A.Instr.AllocArray (varname, ty, f e, Option.map (fun (name, li) ->
-      name, List.map instr_to_finstr li) opt, opt2)
-  | A.Instr.AllocRecord (varname, ty, li, opt) ->
-    A.Instr.AllocRecord (varname, ty, List.map (fun (field, e) -> field, f e) li, opt)
-  | A.Instr.If (e, l1, l2) ->
-    A.Instr.If (f e, List.map instr_to_finstr l1, List.map instr_to_finstr l2)
-  | A.Instr.Call (funname, li) ->
-    A.Instr.Call (funname, List.map f li)
-  | A.Instr.Print (ty, e) -> A.Instr.Print (ty, f e)
-  | A.Instr.Read (ty, mut) -> A.Instr.Read (ty, A.Mutable.map_expr f mut)
-  | A.Instr.DeclRead (ty, name, opt) -> A.Instr.DeclRead (ty, name, opt)
-  | A.Instr.Untuple (li, e, opt) -> A.Instr.Untuple (li, f e, opt)
-  | A.Instr.StdinSep -> A.Instr.StdinSep
-  | A.Instr.Unquote e -> A.Instr.Unquote (f e)
-  in A.Instr.fixa (A.Instr.Fixed.annot i) unfixed
+let rec instr_to_finstr i = A.Instr.Fixed.Deep.mapg expr i
 
 let instrs suite contsuite contreturn env li =
   let li = List.map instr_to_finstr li in
