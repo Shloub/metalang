@@ -422,12 +422,71 @@ module EvalF (IO : EvalIO) = struct
         | _ -> assert false
         end
 
+(** execute a call *)
+  let eval_call env name params : execenv -> result =
+    try
+      let r = StringMap.find name env.functions in
+      let params = Array.of_list params in
+      let nparams = Array.length params - 1 in
+      (fun ex_execenv ->
+        let (nvars, instrs) = !r in
+        if nvars < (Array.length params) then
+          err_bad_arg_number name nvars (Array.length params);
+        let eenv:execenv = init_eenv nvars in
+        let () = for i = 0 to nparams do
+            eenv.(i) <- eval_expr ex_execenv params.(i)
+          done
+        in try
+             instrs eenv; Nil
+          with Return e -> e
+      )
+    with Not_found ->
+      (fun execenv ->
+        match name, (List.map (eval_expr execenv) params) with
+        | "int_of_char", [param] ->
+          Integer (int_of_char (get_char param))
+        | "char_of_int", [param] ->
+          Char (char_of_int (get_integer param))
+        | "sqrt_", [param] ->
+          Integer (int_of_float (sqrt (float_of_int (get_integer param))))
+        | _ -> failwith ("The Macro "^name^" cannot be evaluated with"
+                         ^(string_of_int (List.length params))^" arguments")
+      )
+  
+  let mut_val (env:env) (mut : precompiledExpr Mutable.t)
+      : execenv -> result =
+    let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
+    Mutable.Fixed.Deep.fold (function
+    | Mutable.Var v ->
+      begin try
+              let out = BindingMap.find v env.vars in fun execenv ->
+                execenv.(out)
+        with Not_found ->
+          let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
+          raise (Error (fun f -> Format.fprintf f "Cannot find var %a %a\n" pvar v ploc loc))
+      end
+    | Mutable.Array (m, li) ->
+      List.fold_left
+        (fun m index execenv ->
+          (get_array (m execenv)).(get_integer (eval_expr execenv index))
+        )
+        m
+        li
+    | Mutable.Dot (m, field) ->
+      let index = index_for_field env field loc in
+      (fun execenv ->
+        match m execenv with
+        | Record map ->
+          map.(index)
+        | x ->
+          raise (Error (fun f -> Format.fprintf f "Got %s expected Record\n" (typeof x)))
+      )) mut
+
   (** precompile an expression *)
   let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
     let loc = PosMap.get (Expr.Fixed.annot t) in
     let res x = Result x in
-    match Expr.Fixed.Surface.map (fun e -> precompile_expr e env)
-      (Expr.Fixed.unfix t) with
+    Expr.Fixed.Deep.fold (function
       | Expr.Lief l -> precompile_lief env l |> res
       | Expr.BinOp (a, op, b) ->
         binop loc op a b
@@ -460,7 +519,6 @@ module EvalF (IO : EvalIO) = struct
         let index = Array.of_list index in
         let fields = Array.of_list fields in
         let len = Array.length fields in
-
         let f execenv =
           let record = Array.make len Nil in
           let () = for i = 0 to len - 1 do
@@ -476,7 +534,7 @@ module EvalF (IO : EvalIO) = struct
         WithEnv (fun execenv ->
           call execenv
         )
-      | Expr.Lexems l -> precompiledExpr_of_lexems_list l env
+      | Expr.Lexems l -> precompiledExpr_of_lexems_list l env ) t
   (** precompile an expression from a token list *)
   and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
     let li = List.map (fun l -> match l with
@@ -499,7 +557,7 @@ module EvalF (IO : EvalIO) = struct
     ) li
     in flatten_lexems li
 
-  and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
+  let mut_setval (env:env) (mut : precompiledExpr Mutable.t)
       : execenv -> result -> unit =
     let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
     match Mutable.unfix mut with
@@ -535,70 +593,11 @@ module EvalF (IO : EvalIO) = struct
         | x ->
           raise (Error (fun f -> Format.fprintf f "Got %s expected Record\n" (typeof x)))
       )
-  and mut_val (env:env) (mut : precompiledExpr Mutable.t)
-      : execenv -> result =
-    let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
-    match Mutable.unfix mut with
-    | Mutable.Var v ->
-      begin try
-              let out = BindingMap.find v env.vars in fun execenv ->
-                execenv.(out)
-        with Not_found ->
-          let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
-          raise (Error (fun f -> Format.fprintf f "Cannot find var %a %a\n" pvar v ploc loc))
-      end
-    | Mutable.Array (m, li) ->
-      let m = mut_val env m in
-      List.fold_left
-        (fun m index execenv ->
-          (get_array (m execenv)).(get_integer (eval_expr execenv index))
-        )
-        m
-        li
-    | Mutable.Dot (m, field) ->
-      let index = index_for_field env field loc in
-      let m = mut_val env m in
-      (fun execenv ->
-        match m execenv with
-        | Record map ->
-          map.(index)
-        | x ->
-          raise (Error (fun f -> Format.fprintf f "Got %s expected Record\n" (typeof x)))
-      )
-  (** execute a call *)
-  and eval_call env name params : execenv -> result =
-    try
-      let r = StringMap.find name env.functions in
-      let params = Array.of_list params in
-      let nparams = Array.length params - 1 in
-      (fun ex_execenv ->
-        let (nvars, instrs) = !r in
-        if nvars < (Array.length params) then
-          err_bad_arg_number name nvars (Array.length params);
-        let eenv:execenv = init_eenv nvars in
-        let () = for i = 0 to nparams do
-            eenv.(i) <- eval_expr ex_execenv params.(i)
-          done
-        in try
-             instrs eenv; Nil
-          with Return e -> e
-      )
-    with Not_found ->
-      (fun execenv ->
-        match name, (List.map (eval_expr execenv) params) with
-        | "int_of_char", [param] ->
-          Integer (int_of_char (get_char param))
-        | "char_of_int", [param] ->
-          Char (char_of_int (get_integer param))
-        | "sqrt_", [param] ->
-          Integer (int_of_float (sqrt (float_of_int (get_integer param))))
-        | _ -> failwith ("The Macro "^name^" cannot be evaluated with"
-                         ^(string_of_int (List.length params))^" arguments")
-      )
+
   (** instruction evaluator : returns a tuple (environment * execution
       lambda )
   *)
-  and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
+  let rec eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
       (env * (execenv -> unit))
       =
     let loc = Ast.PosMap.get (Instr.Fixed.annot instr) in
@@ -766,46 +765,13 @@ module EvalF (IO : EvalIO) = struct
        in env, fun execenv ->
          Array.iter (fun f -> f execenv) arr
 
-  (** precompile a list of instructions*)
-  let rec precompile_instrs li =
-    List.map precompile_instr li
   (** precompile an instruction *)
-  and precompile_instr i =
-    let i' = match Instr.unfix i with
-      | Instr.Declare (v, t, e, opt) -> Instr.Declare (v, t, precompile_expr e, opt)
-      | Instr.Affect (mut, e) -> Instr.Affect (Mutable.Fixed.Deep.mapg precompile_expr
-                                                 mut, precompile_expr e)
-      | Instr.Loop (v, e1, e2, li) ->
-        Instr.Loop (v,
-                    precompile_expr e1,
-                    precompile_expr e2,
-                    precompile_instrs li)
-      | Instr.While (e, li) ->
-        Instr.While (precompile_expr e, precompile_instrs li)
-      | Instr.Comment s -> Instr.Comment s
-      | Instr.Return e -> Instr.Return (precompile_expr e)
-      | Instr.AllocArrayConst (v, t, e, l, opt) ->
-          Instr.AllocArrayConst (v, t, precompile_expr e, l, opt)
-      | Instr.AllocArray (v, t, e, opt, opt2) ->
-        let opt = match opt with
-          | None -> None
-          | Some ((v, li)) -> Some (v, precompile_instrs li)
-        in Instr.AllocArray(v, t, precompile_expr e, opt, opt2)
-      | Instr.AllocRecord (v, t, li, opt) ->
-        let li = List.map
-          (fun (name, e) -> (name, precompile_expr e)) li
-        in Instr.AllocRecord (v, t, li, opt)
-      | Instr.If (e, l1, l2) ->
-        Instr.If (precompile_expr e, precompile_instrs l1, precompile_instrs l2)
-      | Instr.Call (name, li) -> Instr.Call (name, List.map precompile_expr li)
-      | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
-      | Instr.Read (t, mut) -> Instr.Read (t, Mutable.Fixed.Deep.mapg precompile_expr mut)
-      | Instr.DeclRead (t, v, opt) -> Instr.DeclRead (t, v, opt)
-      | Instr.Untuple (li, e, opt) -> Instr.Untuple (li, precompile_expr e, opt)
-      | Instr.StdinSep -> Instr.StdinSep
-      | Instr.Unquote li -> assert false
-      | Instr.Tag s -> Instr.Tag s
-    in Instr.fixa (Instr.Fixed.annot i) i'
+  let precompile_instr i =
+    Instr.Fixed.Deep.mapg precompile_expr i
+
+  (** precompile a list of instructions*)
+  let precompile_instrs li =
+    List.map precompile_instr li
 
   (** compile a function into a lambda *)
   let compile_fun env var t li instrs =
@@ -850,8 +816,6 @@ module EvalF (IO : EvalIO) = struct
          let env, f = eval_instrs {env with nvars = 0} (precompile_instrs instrs)
          in f (init_eenv ( env.nvars + 1 ))
        | None -> ()
-
-
 end
 
 (** module for evaluation in console environment (stdin and stdout
