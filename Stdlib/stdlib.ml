@@ -604,6 +604,7 @@ module Fix2 (F : Fixable2) = struct
       Map.fm2i (fun i x -> fixa i (f x)) (fun _ -> g) x
 
     let fold2_bottomup (type acc) x = Map.fm2 x
+    let fold2i_bottomup (type acc) f g x = Map.fm2i f (fun _ -> g) x
 
     let foldmap2_topdown (type acc) f =
       let module Mon = Applicatives.FoldMap(struct type t = acc end) in
