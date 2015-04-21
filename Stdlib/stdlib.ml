@@ -620,8 +620,10 @@ module Fix2 (F : Fixable2) = struct
       let module M = Apply (Mon)
       in M.fm2 (fun f x -> f x) g
 
-
     let foldmapg f x acc = foldmap2i_topdown (fun i x acc -> acc, fixa i x) f x acc
+    let foldmap_topdown f x acc = foldmap2i_topdown
+        (fun i x acc -> let acc, x = f x acc in acc, fixa i x)
+        (fun x acc -> acc, x) x acc
 
   end
 end

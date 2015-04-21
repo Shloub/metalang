@@ -883,8 +883,8 @@ let eval_prog t p = EVAL.eval_prog t p
 *)
 module EvalConstantes = struct
 
-  let process_expr acc e =
-    let f acc e = match Expr.Fixed.unfix e with
+  let process_expr e acc =
+    let f e acc = match e with
       | Expr.Call ("instant", [param]) ->
         let new_expr = match EVAL.precompile_eval_expr acc param with
           | Integer x -> Expr.integer x
@@ -892,9 +892,9 @@ module EvalConstantes = struct
           | Char x -> Expr.char x
           | String x -> Expr.string x
           | _ -> raise (Error (fun f -> Format.fprintf f "type error...")) (* TODO *)
-        in acc, Expr.Fixed.fixa (Expr.Fixed.annot param) (Expr.unfix new_expr)
-      | _ -> acc, e
-    in Expr.Writer.Deep.foldmap f acc e
+        in acc, (Expr.unfix new_expr)
+      | e -> acc, e
+    in Expr.Fixed.Deep.foldmap_topdown f e acc
 
   let collect_instr acc (i:Utils.instr) =
     let f (i:Utils.instr) :
@@ -920,7 +920,7 @@ module EvalConstantes = struct
     let i = Instr.deep_map_bloc g (Instr.unfix i) |> Instr.fixa
         (Instr.Fixed.annot i) in
     let li = f i in
-    List.fold_left_map (Instr.foldmap_expr process_expr) acc li
+    List.fold_left_map (fun acc x -> Instr.Fixed.Deep.foldmapg process_expr x acc) acc li
 
   let process_main acc m =
     let acc, m = List.fold_left_map collect_instr acc m

@@ -768,11 +768,8 @@ module Instr = struct
     AllocRecord(binding, t, fields, opt) |> fix
   let alloc_array_lambda binding t len b e opt =
     AllocArray(binding, t, len, Some ( (b, e) ), opt ) |> fix
-
-
   let alloc_array_lambda_opt binding t len lambda opt =
     AllocArray(binding, t, len, lambda, opt ) |> fix
-
   let if_ e cif celse =
     If (e, cif, celse) |> fix
 
@@ -782,9 +779,6 @@ module Instr = struct
     type 'a t = 'a alias
     let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
   end)
-
-  let foldmap_expr f acc i = Fixed.Deep.foldmapg (fun i acc -> f acc i) i acc
-
 end
 
 module Prog = struct
