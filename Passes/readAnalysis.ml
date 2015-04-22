@@ -35,17 +35,8 @@ open Fresh
 open PassesUtils
 
 let hasSkip li =
-  let f acc i =
-    match Instr.unfix i with
-    | Instr.StdinSep -> true
-    | _ -> acc
-  in
-  List.fold_left
-    (fun acc i ->
-      Instr.Writer.Deep.fold
-        f
-        (f acc i) i)
-    false li
+  List.exists (Instr.Fixed.Deep.exists
+                 (fun i -> match Instr.unfix i with Instr.StdinSep -> true | _ -> false)) li
 
 let hasSkip_progitem li =
   List.fold_right
