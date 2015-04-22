@@ -440,8 +440,51 @@ sig
     val fold2i_bottomup : (int -> ('a, 'rb) F.tofix -> 'a) -> ('b -> 'rb) -> 'b t -> 'a
     val foldmapg : ('b -> 'a -> 'a * 'c) -> 'b t -> 'a -> 'a * 'c t
   end
+end
+
+module type Fixable3 = sig
+  type ('a, 'b, 'c) tofix
+  module Make : functor (F:Applicative) -> sig
+    val foldmap :
+        ('a -> 'ra F.t) ->
+          ('b -> 'rb F.t) ->
+            ('c -> 'rc F.t) -> ('a, 'b, 'c) tofix -> ('ra, 'rb, 'rc) tofix F.t
+  end
+  val next : unit -> int
+end
+
+module Fix3 : functor (F : Fixable3 ) ->
+sig
+  type ('a, 'b) t = F of int * (('a, 'b) t, 'a, 'b) F.tofix
+  val annot : ('a, 'b) t -> int
+  val unfix : ('a, 'b) t -> (('a, 'b) t , 'a, 'b) F.tofix
+  val fix : (('a, 'b) t , 'a, 'b) F.tofix -> ('a, 'b) t
+  val fixa : int -> (('a, 'b) t , 'a, 'b) F.tofix -> ('a, 'b) t
+
+  module Apply : functor (A : Applicative) -> sig
+    module M :
+      sig
+        val foldmap :
+          ('a -> 'ra A.t) ->
+          ('b -> 'rb A.t) ->
+          ('c -> 'rc A.t) ->
+          ('a, 'b, 'c) F.tofix -> ('ra, 'rb, 'rc) F.tofix A.t
+      end
+    val fm3i :
+      (int -> ('a, 'b, 'c) F.tofix A.t -> 'd) ->
+      ('e -> 'b A.t) -> ('f -> 'c A.t) -> ('e, 'f) t -> 'd
+  end
+
+  module Deep : sig
+    val map3i :
+    (int ->
+     ('a, 'b, 'c) F.tofix Applicatives.Map.t -> (('d, 'e) t, 'd, 'e) F.tofix) ->
+    ('f -> 'b Applicatives.Map.t) ->
+    ('g -> 'c Applicatives.Map.t) -> ('f, 'g) t -> ('d, 'e) t
+  end
 
 end
+
 module Printers : sig
   val print_list :
     ('a -> 'b -> unit) ->
