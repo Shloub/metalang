@@ -630,6 +630,39 @@ module Fix2 (F : Fixable2) = struct
 end
 
 
+module type FixableN = sig
+  type ('a, 'b, 'c) tofix
+  module Make : functor (F:Applicative) -> sig
+    val foldmap :
+        ('a -> 'ra F.t) ->
+          ('b -> 'rb F.t) ->
+            ('c -> 'rc F.t) -> ('a, 'b, 'c) tofix -> ('ra, 'rb, 'rc) tofix F.t
+  end
+  val next : unit -> int
+end
+
+module FixN (F : Fixable3) = struct
+  type ('a, 'b) t = F of int * (('a, 'b) t, 'a, 'b) F.tofix
+  let annot = function F (i, _) -> i
+  let unfix = function F (_, x) -> x
+  let fix x = F (F.next (), x)
+  let fixa a x = F (a, x)
+
+  module Apply (A : Applicative) = struct
+    open A
+    module M = F.Make(A)
+    let rec fm3i f g h (F(i, x)) = f i (M.foldmap (fm2i f g h) g h x)
+  end
+
+  module Deep = struct
+    module Map = Apply(Applicatives.Map)
+    let mapg = Map.map
+    let map3i (type acc) f g h x =
+      Map.fm3i (fun i x -> fixa i (f i x)) g h x
+  end
+
+end
+
 module Printers = struct
   let print_list func sep f li =
     let rec p t = function
