@@ -116,32 +116,36 @@ end
 *)
 module Lexems = struct
 
-  type ('token, 'expr) t =
-  | Expr of 'expr
-  | Token of 'token
-  | UnQuote of ('token, 'expr) t list
+  type ('lexem, 'expr, 'token) tofix =
+    | Expr of 'expr
+    | Token of 'token
+    | UnQuote of 'lexem list
+
+  module Fixed = Fix3( struct
+    let next () = next ()
+    type ('a, 'b, 'c) alias = ('a, 'b, 'c) tofix
+    type ('a, 'b, 'c) tofix = ('a, 'b, 'c) alias
+    module Make(F:Applicative) = struct
+      open F
+      module LF = ListApp(F)
+      open LF
+      let foldmap f g h = function
+        | Expr e -> ret (fun e -> Expr e) <*> g e
+        | Token t -> ret (fun t -> Token t) <*> h t
+        | UnQuote li -> ret (fun li -> UnQuote li) <*> fold_left_map f li
+    end
+  end)
+  type ('expr, 'token) t = ('expr, 'token) Fixed.t
+  let fix = Fixed.fix
+  let unfix = Fixed.unfix
 
   let token t = Token t
   let unquote li = UnQuote li
 
-  let rec map_expr f = function
-    | Expr e -> Expr (f e)
-    | Token t -> Token t
-    | UnQuote li ->
-      UnQuote (List.map (map_expr f) li)
-
-  module Apply (F:Applicative) = struct
-    open F
-    module LF = ListApp(F)
-    open LF
-
-    let rec map_expr f g = function
-      | Expr e -> ret (fun e -> Expr e) <*> f e
-      | Token t -> ret (fun t -> Token t) <*> g t
-      | UnQuote li -> ret (fun li -> UnQuote li) <*> fold_left_map (map_expr f g) li
-  end
+  let rec map_expr f = Fixed.Deep.mapg f
 
 end
+
 
 let punitlist f li =
   Format.fprintf f "[@[%a@]]"
