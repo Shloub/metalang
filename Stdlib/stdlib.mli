@@ -440,8 +440,51 @@ sig
     val fold2i_bottomup : (int -> ('a, 'rb) F.tofix -> 'a) -> ('b -> 'rb) -> 'b t -> 'a
     val foldmapg : ('b -> 'a -> 'a * 'c) -> 'b t -> 'a -> 'a * 'c t
   end
-
 end
+
+module MKArrow : functor (App : Applicative) ->
+  sig
+    type (_, _) arrow =
+        Id : ('x, 'x) arrow
+      | Arrow : ('x -> 'y App.t) * ('p, 'q) arrow -> ('x * 'p, 'y * 'q) arrow
+    val arrow : ('a -> 'b App.t) -> ('a * 'c, 'b * 'c) arrow
+    val carrow :
+      ('a -> 'b App.t) -> ('c, 'd) arrow -> ('a * 'c, 'b * 'd) arrow
+    val extract :
+      ('a * 'x, 'b * 'y) arrow -> ('a -> 'b App.t) * ('x, 'y) arrow
+  end
+
+module type FixableN = sig
+  type 'a tofix
+  module Make : functor (App:Applicative) -> sig
+    val foldmap : ('a, 'ra) MKArrow(App).arrow -> 'a tofix -> 'ra tofix App.t
+  end
+  val next : unit -> int
+end
+
+module FixN : functor (F : FixableN) -> sig
+  type 'a t = Fix of int * ('a t * 'a) F.tofix
+  val annot : 'a t -> int
+  val unfix : 'a t -> ('a t * 'a) F.tofix
+  val fix : ('a t * 'a) F.tofix -> 'a t
+  val fixa : int -> ('a t * 'a) F.tofix -> 'a t
+
+    module Apply :
+      functor (App : Applicative) ->
+        sig
+          module M :
+            sig
+              val foldmap : ('a, 'ra) MKArrow(App).arrow -> 'a F.tofix -> 'ra F.tofix App.t
+            end
+          val foldi : (int -> ('a * 'b) F.tofix App.t -> 'a App.t) -> 'b t -> 'a App.t
+          val map : ('a, 'b) MKArrow(App).arrow -> 'a t -> 'b t App.t
+        end
+
+  module Deep : sig
+    val mapg : ('a -> 'b) -> ('a * 'x) t -> ('b * 'x) t
+  end
+end
+
 module Printers : sig
   val print_list :
     ('a -> 'b -> unit) ->

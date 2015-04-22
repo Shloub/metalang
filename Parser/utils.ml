@@ -71,13 +71,13 @@ let rec string_of_lexem f = function
   | EOF -> Format.fprintf f "ENF_OF_FILE"
   | END_QUOTE -> Format.fprintf f "} "
   | TAG ->  Format.fprintf f "tag "
-and lexems f (li : (Parser.token, Parser.token Ast.Expr.t) Ast.Lexems.t list )  =
+and lexems f li  =
   let rec h f = function
-    | [] -> ()
+    | [] -> Format.fprintf f ""
     | hd::tl ->
       Format.fprintf f "%a %a" g hd h tl
-  and g f = function
-    | Ast.Lexems.Expr e -> () (* TODO *)
+  and g f x = match Ast.Lexems.unfix x with
+    | Ast.Lexems.Expr e -> Format.fprintf f "(* TODO *)"
     | Ast.Lexems.Token t -> string_of_lexem f t
     | Ast.Lexems.UnQuote li -> Format.fprintf f "${%a}" h li
   in Format.fprintf f "{%a}" h li

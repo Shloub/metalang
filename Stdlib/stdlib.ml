@@ -629,6 +629,54 @@ module Fix2 (F : Fixable2) = struct
   end
 end
 
+module MKArrow (App:Applicative) = struct
+  type (_, _) arrow =
+      Id : ('x, 'x) arrow
+    | Arrow :
+        ('x -> 'y App.t) 
+        * ('p, 'q) arrow
+      -> ('x * 'p, 'y * 'q) arrow
+          
+  let arrow f = Arrow (f, Id)
+      
+  let carrow f g = Arrow(f, g)
+      
+  let extract : type a b x y . (a * x, b * y) arrow -> (a -> b App.t) * (x, y) arrow  = function
+    | Id -> App.ret, Id
+    | Arrow (f, x) -> f, x
+end
+
+module type FixableN = sig
+  type 'a tofix
+  module Make : functor (App:Applicative) -> sig
+    val foldmap : ('a, 'ra) MKArrow(App).arrow -> 'a tofix -> 'ra tofix App.t
+  end
+  val next : unit -> int
+end
+
+module FixN (F : FixableN) = struct
+  type 'a t = Fix of int * ('a t * 'a) F.tofix
+  
+  let annot = function Fix (i, _) -> i
+  let unfix = function Fix (_, x) -> x
+  let fix x = Fix (F.next (), x)
+  let fixa a x = Fix (a, x)
+
+  module Apply (App : Applicative) = struct
+    open App
+    module M = F.Make(App)
+    module Arrow = MKArrow(App)
+    let rec foldi f (Fix (i, x)) = f i (M.foldmap (Arrow.arrow (foldi f)) x)
+    let rec map arrow (Fix (i, x)) =
+      ret (fun x -> Fix (i, x)) <*> M.foldmap (Arrow.carrow (map arrow) arrow) x
+  end
+
+  module Deep = struct
+    module Map = Apply(Applicatives.Map)
+    let mapg g x= Map.map (Map.Arrow.arrow g) x
+  end
+
+end
 
 module Printers = struct
   let print_list func sep f li =

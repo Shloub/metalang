@@ -116,32 +116,50 @@ end
 *)
 module Lexems = struct
 
-  type ('token, 'expr) t =
-  | Expr of 'expr
-  | Token of 'token
-  | UnQuote of ('token, 'expr) t list
+  type ('lexem, 'expr, 'token) tofix =
+    | Expr of 'expr
+    | Token of 'token
+    | UnQuote of 'lexem list
 
-  let token t = Token t
-  let unquote li = UnQuote li
+  module P = struct
+    let next () = next ()
+    type ('a, 'b, 'c) alias = ('a, 'b, 'c) tofix
+    type _ tofix = T : ('a, 'b, 'c) alias -> ( 'a * ('b * ('c * 'z))) tofix
+    module Make(App:Applicative) = struct
+      open App
+      module LF = ListApp(App)
+      open LF
 
-  let rec map_expr f = function
-    | Expr e -> Expr (f e)
-    | Token t -> Token t
-    | UnQuote li ->
-      UnQuote (List.map (map_expr f) li)
+      module Arrow = MKArrow(App)
+      open Arrow
 
-  module Apply (F:Applicative) = struct
-    open F
-    module LF = ListApp(F)
-    open LF
+      let foldmap0 f g h = function
+        | Expr e -> ret (fun e -> ( Expr e)) <*> g e
+        | Token t -> ret (fun t ->  (Token t)) <*> h t
+        | UnQuote li -> ret (fun li ->  (UnQuote li)) <*> fold_left_map f li
 
-    let rec map_expr f g = function
-      | Expr e -> ret (fun e -> Expr e) <*> f e
-      | Token t -> ret (fun t -> Token t) <*> g t
-      | UnQuote li -> ret (fun li -> UnQuote li) <*> fold_left_map (map_expr f g) li
+      let foldmap : type a b . (a, b) arrow -> a tofix -> b tofix App.t = fun arr (T x) ->
+        match arr with
+        | Id -> App.ret (T x)
+        | Arrow (f, Id) -> App.ret (fun x -> T x) <*> foldmap0 f App.ret App.ret x
+        | Arrow (f, Arrow (g, Id)) -> App.ret (fun x -> T x) <*> foldmap0 f g App.ret x
+        | Arrow (f, Arrow (g, Arrow (h, Id))) -> App.ret (fun x -> T x) <*> foldmap0 f g h x
+    end 
   end
+  module Fixed = FixN(P)
+  type void
+  type ('lex, 'expr) t = ('expr * ('lex * void)) Fixed.t
+  let fix x = Fixed.fix (P.T x)
+  let unfix x = match Fixed.unfix x with P.T x -> x
+
+  let token t = fix (Token t)
+  let unquote li = fix( UnQuote li)
+
+  let rec map_expr : ('expra -> 'exprb) -> ('lex, 'expra) t  -> ('lex, 'exprb) t 
+      = fun f x -> Fixed.Deep.mapg f x
 
 end
+
 
 let punitlist f li =
   Format.fprintf f "[@[%a@]]"
@@ -466,9 +484,11 @@ let pdebug f = function
     module Make(F:Applicative) = struct
       open F
       module Mut = Mutable.Fixed.Apply(F)
-      module Lex = Lexems.Apply(F)
+      module Lex = Lexems.Fixed.Apply(F)
       module LF = ListApp(F)
       open LF
+
+      module Arrow = MKArrow(F)
 
       let foldmap f g t = match t with
       | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f a <*> f b
@@ -482,7 +502,8 @@ let pdebug f = function
       | Access m ->
           let annot = Mutable.Fixed.annot m in
           ret (fun m -> Access m) <*> Mut.map f m
-      | Lexems x -> ret (fun x -> Lexems x) <*> fold_left_map (Lex.map_expr f g) x
+      | Lexems x -> ret (fun x -> Lexems x) <*> fold_left_map
+            (Lex.map (Arrow.carrow f (Arrow.arrow g))) x
 
     end
   end)
