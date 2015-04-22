@@ -36,11 +36,9 @@ open Warner
 open Fresh
 open PassesUtils
 
-let mapt (_, acc) t =
-  try TypeMap.find t acc with Not_found -> t
+let mapt (_, acc) t = Option.default t (TypeMap.find_opt t acc)
 
-let mapt t p =
-  Type.Writer.Deep.map (mapt p) t
+let mapt t p = Type.Fixed.Deep.map (mapt p) t
 
 let maptli li acc = List.map (fun (x, t) -> x, mapt t acc ) li
 
@@ -53,6 +51,7 @@ let name_of_field (i: int) (t : Type.t) (acc, _) =
 
 let locate loc instr =
   PosMap.add (Instr.Fixed.annot instr) loc; instr
+
 (* TODO positions *)
 let rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
   | Instr.Untuple (li, e, opt) ->
@@ -69,8 +68,9 @@ let rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
   | j -> [i]
 
 let rewrite acc i =
+  let annot = Instr.Fixed.annot i in
   let i = Instr.deep_map_bloc (List.collect (rewrite acc)) (Instr.unfix i)
-  in rewrite acc (Instr.fix i)
+  in rewrite acc (Instr.fixa annot i)
 
 type acc0 = Typer.env * DeclareTuples.acc
 type 'lex acc = Typer.env * DeclareTuples.acc
@@ -84,19 +84,15 @@ let mape tyenv (mapfields, _) e =
     Expr.record (List.combine fieldsnames li)
   | _ -> e
 
-let mapde tyenv acc e = Expr.Writer.Deep.map (mape tyenv acc) e
+let mapde tyenv acc e = Expr.Fixed.Deep.map (mape tyenv acc) e
 
-let mapi acc i =
-  let i0 = match Instr.unfix i with
-    | Instr.Declare (v, t, e, option) -> Instr.Declare (v, mapt t acc, e, option)
-    | Instr.AllocArray (v, t, e, opt, optd) -> Instr.AllocArray (v, mapt t acc, e, opt, optd)
-    | Instr.AllocRecord (v, t, li, opt) -> Instr.AllocRecord (v, mapt t acc, li, opt)
-    | x -> x
-  in Instr.fixa (Instr.Fixed.annot i) i0
+let mapi acc = function
+  | Instr.Declare (v, t, e, option) -> Instr.Declare (v, mapt t acc, e, option)
+  | Instr.AllocArray (v, t, e, opt, optd) -> Instr.AllocArray (v, mapt t acc, e, opt, optd)
+  | Instr.AllocRecord (v, t, li, opt) -> Instr.AllocRecord (v, mapt t acc, li, opt)
+  | x -> x
 
-let mapti i tyenv acc =
-  let i = Instr.Fixed.Deep.mapg (mapde tyenv acc) i in
-  Instr.Writer.Deep.map (mapi acc) i
+let mapti i tyenv acc = Instr.Fixed.Deep.map2 (mapi acc) (mapde tyenv acc) i
 
 let process (tyenv, acc) p =
   match p with
