@@ -46,55 +46,42 @@ let ftype acc e =
 
 let count_type e = ftype (Type.Writer.Deep.fold ftype 0 e) e
 
-let rec fmut acc e =
-  let acc = if Ast.PosMap.mem (Mutable.Fixed.annot e) then acc
-    else acc + 1
-  in match Mutable.unfix e with
-  | Mutable.Array (_, li) -> acc + count_exprs li
-  | _ -> acc
+let fmut m = Mutable.Fixed.Deep.folda (fun i m ->
+  let acc = if Ast.PosMap.mem i then 0 else 1
+  in match m with
+  | Mutable.Array (_, li) -> List.fold_left (+) acc li
+  | _ -> acc ) m
 
-and count_mut e = fmut (Mutable.Writer.Deep.fold fmut 0 e) e
-
-and fexpr acc e =
-  let acc = if Ast.PosMap.mem (Expr.Fixed.annot e) then acc
-    else acc + 1
-  in match Expr.unfix e with
-  | Expr.Access mut -> acc + count_mut mut
-  | _ -> acc
-
-and count_expr e = fexpr (Expr.Writer.Deep.fold fexpr 0 e) e
-and count_exprs e = List.fold_left (fun acc e -> acc + count_expr e) 0 e
+let fexpr e = Expr.Fixed.Deep.folda (fun i e ->
+  let acc = if Ast.PosMap.mem i then 0
+  else 1
+  in match e with
+  | Expr.Access mut -> acc + fmut mut
+  | _ -> Expr.Fixed.Surface.fold (+) acc e) e
 
 let count_tys e = List.fold_left (fun acc e -> acc + count_type e) 0 e
 
 
-let finstr acc (i: 'a Ast.Instr.t) =
-  let acc = if Ast.PosMap.mem (Instr.Fixed.annot i) then acc
-    else acc + 1
-  in match Instr.unfix i with
-  | Instr.Tag _ | Instr.Comment _ -> acc
-  | Instr.Declare (_, t, e, _) -> acc + count_type t + count_expr e
-  | Instr.Affect (m, e) -> acc + count_expr e + count_mut m
-  | Instr.Loop (_, e1, e2, _) -> acc + count_expr e1 + count_expr e2
-  | Instr.While (e, _) -> acc + count_expr e
-  | Instr.Return e -> acc + count_expr e
-  | Instr.AllocArray (_, t, e, _, _) -> acc + count_type t + count_expr e
-  | Instr.AllocArrayConst (_, t, e, _, _) -> acc + count_type t + count_expr e
-  | Instr.AllocRecord (_, t, li, _) -> acc + count_type t + count_exprs (List.map snd li)
-  | Instr.If (e, _, _) -> acc + count_expr e
-  | Instr.Call (_, li) ->acc + count_exprs li
-  | Instr.Print (t, e) -> acc + count_type t + count_expr e
-  | Instr.Read (t, e) -> acc + count_type t + count_mut e
-  | Instr.DeclRead (t, _, _) -> acc + count_type t
-  | Instr.StdinSep -> acc
-  | Instr.Unquote e -> acc + count_expr e
-  | Instr.Untuple (vars, e, _) -> acc + count_expr e
+let finstr i =
+  Instr.Fixed.Deep.fold2i_bottomup
+    (fun annot instr ->
+      let acc = if Ast.PosMap.mem annot then 0
+      else 1
+      in match instr with
+      | Instr.Affect (m, e) -> acc + e + fmut m
+      | Instr.Read (t, e) -> acc + count_type t + fmut e
+      | Instr.Declare (_, t, e, _) -> acc + count_type t + e
+      | Instr.AllocArray (_, t, e, _, _) -> acc + count_type t + e
+      | Instr.AllocArrayConst (_, t, e, _, _) -> acc + count_type t + e
+      | Instr.AllocRecord (_, t, li, _) -> count_type t + List.fold_left (fun acc (_, e) -> acc + e) acc li
+      | Instr.Print (t, e) -> acc + count_type t + e
+      | Instr.DeclRead (t, _, _) -> acc + count_type t
+      | _ -> Instr.Fixed.Surface.fold (+) acc instr
+    )
+    fexpr i
 
 let count (li: 'a Ast.Expr.t Ast.Instr.t list) =
-  List.fold_left
-    (fun acc i ->
-      finstr (Instr.Writer.Deep.fold finstr acc i) i
-    ) 0 li
+  List.fold_left (fun acc i -> acc + finstr i) 0 li
 
 let process acc p =
   match p with

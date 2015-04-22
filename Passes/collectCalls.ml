@@ -31,7 +31,6 @@
 open Stdlib
 
 open Ast
-open Fresh
 open PassesUtils
 
 type acc0 = unit
@@ -40,18 +39,16 @@ type 'a acc = StringSet.t
 let init_acc () = StringSet.empty
 
 let process_expr e acc =
-  let f acc e = match Expr.Fixed.unfix e with
-    | Expr.Call (funname, _) -> StringSet.add funname acc
-    | e -> acc
-  in Expr.Writer.Deep.fold f acc e
+  Expr.Fixed.Deep.fold (fun e acc -> match e with
+  | Expr.Call (funname, exprs) -> List.fold_left (fun acc e -> e acc) (StringSet.add funname acc) exprs
+  | e -> Expr.Fixed.Surface.fold (fun acc e -> e acc) acc e
+) e acc
 
 let collect_instr acc i =
-  let f acc i =
-    match Instr.unfix i with
-    | Instr.Call (name, li) -> StringSet.add name acc
-    | _ -> acc
-  in
-  let acc = Instr.Writer.Deep.fold f acc i
+  let acc = Instr.Fixed.Deep.fold (fun i acc -> 
+    match i with
+    | Instr.Call (name, _) -> StringSet.add name acc
+    | e -> Instr.Fixed.Surface.fold (fun acc e -> e acc) acc e) i acc
   in Instr.Fixed.Deep.foldg process_expr i acc
 
 let process_main acc m = (List.fold_left collect_instr acc m), m
