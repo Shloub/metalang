@@ -537,7 +537,7 @@ module EvalF (IO : EvalIO) = struct
       | Expr.Lexems l -> precompiledExpr_of_lexems_list l env ) t
   (** precompile an expression from a token list *)
   and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
-    let li = List.map (fun l -> match l with
+    let li = List.map (fun l -> match Lexems.unfix l with
       | Lexems.Expr e -> e
       | Lexems.Token t -> Result (Lexems [t])
       | Lexems.UnQuote e ->

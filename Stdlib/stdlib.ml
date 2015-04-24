@@ -629,36 +629,51 @@ module Fix2 (F : Fixable2) = struct
   end
 end
 
+module MKArrow (App:Applicative) = struct
+  type (_, _) arrow =
+      Id : ('x, 'x) arrow
+    | Arrow :
+        ('x -> 'y App.t) 
+        * ('p, 'q) arrow
+      -> ('x * 'p, 'y * 'q) arrow
+          
+  let arrow f = Arrow (f, Id)
+      
+  let carrow f g = Arrow(f, g)
+      
+  let extract : type a b x y . (a * x, b * y) arrow -> (a -> b App.t) * (x, y) arrow  = function
+    | Id -> App.ret, Id
+    | Arrow (f, x) -> f, x
+end
 
 module type FixableN = sig
-  type ('a, 'b, 'c) tofix
-  module Make : functor (F:Applicative) -> sig
-    val foldmap :
-        ('a -> 'ra F.t) ->
-          ('b -> 'rb F.t) ->
-            ('c -> 'rc F.t) -> ('a, 'b, 'c) tofix -> ('ra, 'rb, 'rc) tofix F.t
+  type 'a tofix
+  module Make : functor (App:Applicative) -> sig
+    val foldmap : ('a, 'ra) MKArrow(App).arrow -> 'a tofix -> 'ra tofix App.t
   end
   val next : unit -> int
 end
 
-module FixN (F : Fixable3) = struct
-  type ('a, 'b) t = F of int * (('a, 'b) t, 'a, 'b) F.tofix
-  let annot = function F (i, _) -> i
-  let unfix = function F (_, x) -> x
-  let fix x = F (F.next (), x)
-  let fixa a x = F (a, x)
+module FixN (F : FixableN) = struct
+  type 'a t = Fix of int * ('a t * 'a) F.tofix
+  
+  let annot = function Fix (i, _) -> i
+  let unfix = function Fix (_, x) -> x
+  let fix x = Fix (F.next (), x)
+  let fixa a x = Fix (a, x)
 
-  module Apply (A : Applicative) = struct
-    open A
-    module M = F.Make(A)
-    let rec fm3i f g h (F(i, x)) = f i (M.foldmap (fm2i f g h) g h x)
+  module Apply (App : Applicative) = struct
+    open App
+    module M = F.Make(App)
+    module Arrow = MKArrow(App)
+    let rec foldi f (Fix (i, x)) = f i (M.foldmap (Arrow.arrow (foldi f)) x)
+    let rec map arrow (Fix (i, x)) =
+      ret (fun x -> Fix (i, x)) <*> M.foldmap (Arrow.carrow (map arrow) arrow) x
   end
 
   module Deep = struct
     module Map = Apply(Applicatives.Map)
-    let mapg = Map.map
-    let map3i (type acc) f g h x =
-      Map.fm3i (fun i x -> fixa i (f i x)) g h x
+    let mapg g x= Map.map (Map.Arrow.arrow g) x
   end
 
 end
