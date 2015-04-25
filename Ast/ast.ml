@@ -127,11 +127,8 @@ module Lexems = struct
     type _ tofix = T : ('a, 'b, 'c) alias -> ( 'a * ('b * ('c * 'z))) tofix
     module Make(App:Applicative) = struct
       open App
-      module LF = ListApp(App)
-      open LF
-
-      module Arrow = MKArrow(App)
-      open Arrow
+      include ListApp(App)
+      include MKArrow(App)
 
       let foldmap0 f g h = function
         | Expr e -> ret (fun e -> ( Expr e)) <*> g e
@@ -154,9 +151,6 @@ module Lexems = struct
 
   let token t = fix (Token t)
   let unquote li = fix( UnQuote li)
-
-  let rec map_expr : ('expra -> 'exprb) -> ('lex, 'expra) t  -> ('lex, 'exprb) t 
-      = fun f x -> Fixed.Deep.mapg f x
 
 end
 
@@ -190,8 +184,7 @@ module Mutable = struct
     type ('a, 'b) tofix = ('a, 'b) alias
     module Make(F:Applicative) = struct
       open F
-      module LF = ListApp(F)
-      open LF
+      include ListApp(F)
       let foldmap f g t =
         match t with
         | Var v -> ret ( Var v )
@@ -261,8 +254,7 @@ module Type = struct
     let next () = next ()
     module Make(F:Applicative) = struct
       open F
-      module LF = ListApp(F)
-      open LF
+      include ListApp(F)
       let foldmap f g e =
         let f' (a, x) = ret (fun x -> a, x) <*> f x in
         match e with
@@ -350,13 +342,6 @@ module Type = struct
     | Named n1, Named n2 -> String.compare n1 n2
     | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
         Auto | Lexems | Integer | String | Tuple _) -> 1
-
-  (** module de réécriture et de parcours d'AST *)
-  module Writer = AstWriter.F (struct
-    type alias = t
-    type 'a t = alias
-    let foldmap f acc t = Fixed.Surface.foldmapt (fun x acc -> f acc x) t acc
-  end)
 
   let type2String = function
     | Auto -> "Auto"
@@ -485,9 +470,7 @@ let pdebug f = function
       open F
       module Mut = Mutable.Fixed.Apply(F)
       module Lex = Lexems.Fixed.Apply(F)
-      module LF = ListApp(F)
-      open LF
-
+      include ListApp(F)
       module Arrow = MKArrow(F)
 
       let foldmap f g t = match t with
@@ -678,8 +661,7 @@ module Instr = struct
   module Make(F:Applicative) = struct
     open F
     module Mut = Mutable.Fixed.Apply(F)
-    module LF = ListApp(F)
-    open LF
+    include ListApp(F)
     let foldmap_bloc f g t =
       let g' (a, x) = ret (fun x -> a, x) <*> g x in
       let g'' (x, a) = ret (fun x -> x, a) <*> g x in

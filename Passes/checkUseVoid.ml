@@ -34,13 +34,12 @@ open Ast
 open Fresh
 open PassesUtils
 
-let rec check ty loc =
-  if Type.unfix ty = Type.Void then
+let  check ty loc =
+  if Type.Fixed.Deep.exists (fun ty -> Type.unfix ty = Type.Void) ty
+  then
     raise (Warner.Error (fun f ->
       Format.fprintf f "Forbiden use of void type %a@\n"
-        Warner.ploc loc
-    ) )
-  else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
+        Warner.ploc loc))
 
 let collectDefReturn env li =
   let f () i =

@@ -868,7 +868,7 @@ module EvalConstantes = struct
         begin match Expr.unfix e with
         | Expr.Lexems li ->
           let li = List.map
-            (Lexems.map_expr (fun x -> EVAL.precompile_expr x acc)
+            (Lexems.Fixed.Deep.mapg (fun x -> EVAL.precompile_expr x acc)
             ) li in
           let execenv = init_eenv 0 in
           EVAL.precompiledExpr_of_lexems_list li acc
@@ -906,8 +906,7 @@ module EvalConstantes = struct
       begin match Expr.unfix e with
       | Expr.Lexems li ->
         let li = List.map
-          (Lexems.map_expr (fun x -> EVAL.precompile_expr x acc)
-          ) li in
+          (Lexems.Fixed.Deep.mapg (fun x -> EVAL.precompile_expr x acc)) li in
         let execenv = init_eenv 0 in
          EVAL.precompiledExpr_of_lexems_list li acc
          |> eval_expr execenv |> get_tokens |> w

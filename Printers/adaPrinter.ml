@@ -311,7 +311,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
         super#typename name
 
   method declare_type declared_types f t =
-    Type.Writer.Deep.fold (fun declared_types t -> self#declare_type0 declared_types f t) declared_types t
+    Type.Fixed.Deep.fold_acc (fun declared_types t -> self#declare_type0 declared_types f t) declared_types t
 
   method settypes d = declared_types <- d
 

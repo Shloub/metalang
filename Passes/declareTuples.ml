@@ -66,23 +66,30 @@ let freshname = function
 
 let freshname t = Type.Fixed.Deep.fold freshname t
 
-let fold_ty tyenv (acc_fields, acc_names, li) t =
-  if TypeMap.mem t acc_names then (acc_fields, acc_names, li)
-  else match Type.unfix t with
+let fold_ty tyenv torig t ((_, acc_names, _) as acc) =
+  let default acc t = Type.Fixed.Surface.fold (fun acc f -> f acc) acc t in
+  if TypeMap.mem torig acc_names then acc
+  else match t with
   | Type.Tuple l ->
-    let prefix =  freshname t in
+      let (acc_fields, acc_names, li) = default acc t in
+    let prefix =  freshname torig in
     let lnames = List.mapi (fun i _ -> prefix^"_field_" ^ (string_of_int i) ) l in
-    let acc_fields = TypeMap.add t lnames acc_fields in
-    let ty = Type.struct_ (List.combine lnames l) in
+    let acc_fields = TypeMap.add torig lnames acc_fields in
+    let lorig = match Type.unfix torig with
+    | Type.Tuple l -> l
+    | _ -> assert false
+    in
+    let ty = Type.struct_ (List.combine lnames lorig) in
     let tynamed = Type.named prefix in
-    let acc_names = TypeMap.add t tynamed acc_names in
+    let acc_names = TypeMap.add torig tynamed acc_names in
     let declaration = Prog.DeclareType ( prefix, ty ) in
     acc_fields, acc_names, declaration :: li
-  | _ -> acc_fields, (TypeMap.add t t acc_names), li
+  | _ ->
+      let (acc_fields, acc_names, li) = default acc t in
+      acc_fields, (TypeMap.add torig torig acc_names), li
 
 let process_t tyenv acc t =
-  let acc = fold_ty tyenv acc t in
-  Type.Writer.Deep.fold (fold_ty tyenv) acc t
+  Type.Fixed.Deep.foldorig (fold_ty tyenv) t acc
 
 let folde tyenv acc e = process_t tyenv acc (Typer.get_type tyenv e)
 
