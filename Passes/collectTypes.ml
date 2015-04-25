@@ -41,39 +41,27 @@ let init_acc tyenv = tyenv, TypeSet.empty
 
 let rec collect_type acc t =
   let loc = Ast.PosMap.get (Type.Fixed.annot t) in
-  let f (tyenv, acc) t =
-    if TypeSet.mem t acc then (tyenv, acc) else
-      match Type.Fixed.unfix t with
+  let f orig t (tyenv, acc) =
+    if TypeSet.mem orig acc then (tyenv, acc) else
+      match t with
       | Type.Named n ->
-        let acc = TypeSet.add t acc in
-        collect_type (tyenv, acc) (Typer.expand tyenv t loc)
-      | x -> tyenv, TypeSet.add t acc
-  in Type.Writer.Deep.fold f acc t
-
-let rec process_mutable acc m =
-  let f acc m = match Mutable.Fixed.unfix m with
-    (*       | Mutable.Dot (m, f) -> *)
-    | Mutable.Array (m, li) ->
-      List.fold_right process_expr li acc
-    | e -> acc
-  in Mutable.Writer.Deep.fold f acc m
-and process_expr e acc =
-  let f acc e = match Expr.Fixed.unfix e with
-    (*      | Expr.Enum s -> TODO *)
-    | Expr.Access m -> process_mutable acc m
-    | e -> acc
-  in Expr.Writer.Deep.fold f acc e
+        let acc = TypeSet.add orig acc in
+        collect_type (tyenv, acc) (Typer.expand tyenv orig loc)
+      | _ ->
+          let acc =TypeSet.add orig acc in
+          Type.Fixed.Surface.fold (fun acc f -> f acc) (tyenv, acc) t
+  in Type.Fixed.Deep.foldorig f t acc
 
 let collect_instr acc i =
   let f acc i =
     match Instr.unfix i with
-    | Instr.Declare (_, ty, _, _) -> collect_type acc ty
-    | Instr.AllocRecord (_, ty, _, _) -> collect_type acc ty
-    | Instr.AllocArray (_, ty, _, _, _) -> collect_type acc ty
+    | Instr.Declare (_, ty, _, _)
+    | Instr.AllocRecord (_, ty, _, _)
+    | Instr.AllocArray (_, ty, _, _, _)
+    | Instr.AllocArrayConst (_, ty, _, _, _)
+    | Instr.DeclRead (ty, _, _) -> collect_type acc ty
     | _ -> acc
-  in
-  let acc = Instr.Writer.Deep.fold f acc i
-  in Instr.Fixed.Deep.foldg process_expr i acc
+  in Instr.Writer.Deep.fold f acc i
 
 let process_main acc m = (List.fold_left collect_instr acc m), m
 

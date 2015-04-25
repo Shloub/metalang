@@ -92,7 +92,7 @@ let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
       in env
     | _ -> env
   in
-  let env = Type.Writer.Deep.fold fold (fold env t) t
+  let env = Type.Fixed.Deep.fold_acc fold env t
   in
   let rec f t = match Type.Fixed.unfix t with
     | Type.Auto -> IntMap.find (Type.Fixed.annot t) env.automap
@@ -763,7 +763,7 @@ let map_ty env prog =
         let (_, _, name) =StringMap.find name env.fields in
         Type.named name
       | _ -> t
-    in Type.Writer.Deep.map f (f ty)
+    in Type.Fixed.Deep.map f ty
   in
   let f instr =
     let a = Instr.Fixed.annot instr in

@@ -39,12 +39,10 @@ type 'a acc = int
 
 let init_acc () = 0
 
-let ftype acc e =
-  let acc = if Ast.PosMap.mem (Type.Fixed.annot e) then acc
-    else acc + 1
-  in acc
-
-let count_type e = ftype (Type.Writer.Deep.fold ftype 0 e) e
+let count_type e =
+  Type.Fixed.Deep.foldmap2i_topdown (fun i _ acc ->
+    (if Ast.PosMap.mem i then acc else acc + 1), ())
+    (fun b acc -> acc, b) e 0 |> fst
 
 let fmut m = Mutable.Fixed.Deep.folda (fun i m ->
   let acc = if Ast.PosMap.mem i then 0 else 1

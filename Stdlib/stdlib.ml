@@ -585,6 +585,7 @@ module Fix2 (F : Fixable2) = struct
     let rec fm2 f g (F(i, x)) = f (M.foldmap (fm2 f g) g x)
     let rec fm2i f g (F(i, x)) = f i (M.foldmap (fm2i f g) (g i) x)
     let rec fm f x = fm2 f ret x 
+    let rec fmi f x = fm2i f (fun _ -> ret) x 
     let map g t = fm2i (fun i x -> ret (fixa i) <*> x) (fun _ -> g) t
     let mapi g t = fm2i (fun i x -> ret (fixa i) <*> x) g t
   end
@@ -593,6 +594,14 @@ module Fix2 (F : Fixable2) = struct
     let rec map f (F(i, x)) = f (F (i, Surface.map (map f) x))
     let rec mapa f (F(i, x)) = f i (F (i, Surface.map (mapa f) x))
     let rec fold f (F(i, x))  = f (Surface.map (fold f) x)
+
+    let rec fold_acc f acc ((F(i, x)) as orig) =
+      let acc = Surface.fold (fun acc x ->
+        let acc = fold_acc f acc x in
+        f acc orig) acc x
+      in f acc orig
+
+    let rec foldorig f (F(i, x) as orig)  = f orig (Surface.map (foldorig f) x)
     let rec folda f (F(i, x))  = f i (Surface.map (folda f) x)
     let rec exists f x =
       if f x then true

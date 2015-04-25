@@ -232,7 +232,7 @@ class pasPrinter = object(self)
         self#bloc elsecase
 
   method declare_type declared_types f t =
-    Type.Writer.Deep.fold (fun declared_types t ->
+    Type.Fixed.Deep.fold_acc (fun declared_types t ->
       match Type.unfix t with
 (*
       | Type.String ->

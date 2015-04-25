@@ -418,6 +418,9 @@ sig
           ('a -> 'b) -> 'a t -> 'c t
 
     val fold : (('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
+    val fold_acc : ('a -> 'b t -> 'a) -> 'a -> 'b t -> 'a
+    val foldorig : ('a t -> ('b, 'a) F.tofix -> 'b) -> 'a t -> 'b
+
     val folda : (int -> ('a, 'b) F.tofix -> 'a) -> 'b t -> 'a
 
     val exists : ('a t -> bool) -> 'a t -> bool
