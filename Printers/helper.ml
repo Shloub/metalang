@@ -83,3 +83,55 @@ let contains_instr f prog =
     (List.exists (function Ast.Prog.DeclarFun (_, _, _, instrs, _) -> cli instrs | _ -> false)
     prog.Ast.Prog.funs)
 
+
+let print_varname f = function
+  | Ast.UserName v -> Format.fprintf f "$%s" v
+  | Ast.InternalName _ -> assert false
+
+let print_mut m f () = match m with
+| Ast.Mutable.Var v -> Format.fprintf f "$%a" print_varname v
+| Ast.Mutable.Array (m, fi) -> Format.fprintf f "%a%a" m ()
+      (print_list (fun f a -> Format.fprintf f "[%a]" a ()) nosep) fi
+| Ast.Mutable.Dot (m, field) -> Format.fprintf f "%a[%S]" m () field
+ 
+let parens (pa:int) pb f format =
+  if pa < pb then Format.fprintf f "(%a)" (fun f -> Format.fprintf f format)
+  else Format.fprintf f format
+
+let print_op f op =
+  Format.fprintf f (match op with
+  | Ast.Expr.Add -> "+"
+  | Ast.Expr.Sub -> "-"
+  | Ast.Expr.Mul -> "*"
+  | Ast.Expr.Div -> "/"
+  | Ast.Expr.Mod -> "%%"
+  | Ast.Expr.Or -> "||"
+  | Ast.Expr.And -> "&&"
+  | Ast.Expr.Lower -> "<"
+  | Ast.Expr.LowerEq -> "<="
+  | Ast.Expr.Higher -> ">"
+  | Ast.Expr.HigherEq -> ">="
+  | Ast.Expr.Eq -> "=="
+  | Ast.Expr.Diff -> "!=")
+
+
+let prio_binop = function
+    | Ast.Expr.Add -> -1, -2, -2
+    | Ast.Expr.Sub -> -1, -2, -1
+    | Ast.Expr.Mul -> 0, -1, -1
+    | Ast.Expr.Div -> -10, 15, 15
+    | Ast.Expr.Mod -> -10, 15, 15
+    | Ast.Expr.Or -> -8, -8, -8
+    | Ast.Expr.And -> -10, -10, -10
+    | Ast.Expr.Lower -> -5, -5, -5
+    | Ast.Expr.LowerEq -> -5, -5, -5
+    | Ast.Expr.Higher -> -5, -5, -5
+    | Ast.Expr.HigherEq -> -5, -5, -5
+    | Ast.Expr.Eq -> -6, -5, -5
+    | Ast.Expr.Diff -> -5, -5, -5
+
+
+let print_expr e f prio_parent = match e with
+| Ast.Expr.BinOp (a, op, b) ->
+    let prio, prio_left, prio_right = prio_binop op in
+    parens prio prio_parent f "%a %a %a" a prio_left print_op op b prio_right
