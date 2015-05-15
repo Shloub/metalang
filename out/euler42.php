@@ -44,7 +44,7 @@ function score(){
   for ($i = 1 ; $i <= $len; $i++)
   {
     $c = nextChar();
-    $sum += (ord($c) - ord("A")) + 1;
+    $sum += ord($c) - ord("A") + 1;
     /*		print c print " " print sum print " " */
   }
   if (is_triangular($sum))

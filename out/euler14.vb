@@ -3,7 +3,7 @@ Imports System
 Module euler14
 
   Function next0(ByVal n as Integer) As Integer
-    If (n Mod 2) = 0 Then
+    If n Mod 2 = 0 Then
       Return n \ 2
     Else
       Return 3 * n + 1

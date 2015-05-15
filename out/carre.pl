@@ -11,8 +11,7 @@ foreach my $ix (1 .. $x - 1) {
   foreach my $iy (1 .. $y - 1) {
     if ($tab->[$iy]->[$ix] eq 1) {
       $tab->[$iy]->[$ix] =
-      min($tab->[$iy]->[$ix - 1], $tab->[$iy - 1]->[$ix], $tab->[$iy - 1]->[$ix - 1]) +
-      1;
+      min($tab->[$iy]->[$ix - 1], $tab->[$iy - 1]->[$ix], $tab->[$iy - 1]->[$ix - 1]) + 1;
     }
   }
 }

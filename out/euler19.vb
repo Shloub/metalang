@@ -3,7 +3,7 @@ Imports System
 Module euler19
 
   Function is_leap(ByVal year as Integer) As Boolean
-    Return (year Mod 400) = 0 OrElse ((year Mod 100) <> 0 AndAlso (year Mod 4) = 0)
+    Return year Mod 400 = 0 OrElse year Mod 100 <> 0 AndAlso year Mod 4 = 0
   End Function
   
   Function ndayinmonth(ByVal month as Integer, ByVal year as Integer) As Integer
@@ -55,7 +55,7 @@ Module euler19
         month = 0
         year = year + 1
       End If
-      If (dayofweek Mod 7) = 6 Then
+      If dayofweek Mod 7 = 6 Then
         count = count + 1
       End If
     Loop

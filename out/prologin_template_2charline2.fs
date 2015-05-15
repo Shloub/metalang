@@ -26,17 +26,13 @@ create bufferc 128 allot
 : programme_candidat { tableau1 taille1 tableau2 taille2 }
   0 { out0 }
   taille1 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    out0 tableau1 i cells +
- @ i * + TO out0
-    tableau1 i cells +
-     @ EMIT
+    out0 tableau1  i cells +  @ i * + TO out0
+    tableau1  i cells +  @ EMIT
    1 + REPEAT 2DROP
   S\" --\n" TYPE
   taille2 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    out0 tableau2 j cells +
- @ j 100 * * + TO out0
-    tableau2 j cells +
-     @ EMIT
+    out0 tableau2  j cells +  @ j 100 * * + TO out0
+    tableau2  j cells +  @ EMIT
    1 + REPEAT 2DROP
   S\" --\n" TYPE
   out0 exit
@@ -49,14 +45,12 @@ create bufferc 128 allot
   skipspaces
   HERE taille1 cells allot { tableau1 }
   taille1 1 - 0 BEGIN 2dup >= WHILE DUP { a }
-    read-char tableau1 a cells +
-     !
+    read-char tableau1  a cells +  !
    1 + REPEAT 2DROP
   skipspaces
   HERE taille2 cells allot { tableau2 }
   taille2 1 - 0 BEGIN 2dup >= WHILE DUP { b }
-    read-char tableau2 b cells +
-     !
+    read-char tableau2  b cells +  !
    1 + REPEAT 2DROP
   skipspaces
   tableau1 taille1 tableau2 taille2 programme_candidat s>d 0 d.r

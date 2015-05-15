@@ -4,7 +4,7 @@ Module euler07
 
   Function divisible(ByVal n as Integer, ByRef t as Integer(), ByVal size as Integer) As Boolean
     For  i As Integer  = 0 to  size - 1
-      If (n Mod t(i)) = 0 Then
+      If n Mod t(i) = 0 Then
         Return true
       End If
     Next

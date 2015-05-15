@@ -8,7 +8,7 @@ sub remainder {
 sub divisible{
   my($n, $t, $size) = @_;
   foreach my $i (0 .. $size - 1) {
-    if ((remainder($n, $t->[$i])) eq 0) {
+    if (remainder($n, $t->[$i]) eq 0) {
       return 1;
     }
   }

@@ -42,7 +42,7 @@ begin
   n := b;
   for i in integer range 0..nprimes - 1 loop
     d := primes(i);
-    while (n rem d) = 0 loop
+    while n rem d = 0 loop
       t(d) := t(d) + 1;
       n := n / d;
     end loop;
@@ -154,14 +154,14 @@ begin
   end loop;
   for i in integer range 1..n loop
     for j in integer range 1..n loop
-      if abondant(i) and then abondant(j) and then i + j <= n
+      if (abondant(i) and then abondant(j)) and then i + j <= n
       then
         summable(i + j) := TRUE;
       end if;
     end loop;
   end loop;
   for o in integer range 1..n loop
-    if (not summable(o))
+    if not summable(o)
     then
       sum := sum + o;
     end if;

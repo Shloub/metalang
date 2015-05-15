@@ -15,7 +15,7 @@ def e( t, n ):
         nombre = exp0(10, i - 1) + math.trunc(n / i)
         chiffre = i - 1 - mod(n, i)
         return mod(math.trunc(nombre / exp0(10, chiffre)), 10)
-    return -(1)
+    return -1
 
 t = [None] * 9
 for i in range(0, 9):

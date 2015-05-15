@@ -17,16 +17,16 @@ Object subclass: devine [
     ]
   ]
    devine0: nombre tab: tab len: len [|min0 max0|
-    min0 := (tab at: (0 + 1)).
-    max0 := (tab at: (1 + 1)).
+    min0 := tab at: (0 + 1).
+    max0 := tab at: (1 + 1).
     (2 to: (len - 1)) do: [:i|
-      ((((tab at: (i + 1)) > max0)) or: [((tab at: (i + 1)) < min0)])
+      (((tab at: (i + 1)) > max0) or: [(tab at: (i + 1)) < min0])
         ifTrue:[^ false].
       ((tab at: (i + 1)) < nombre)
         ifTrue:[min0 :=  (tab at: (i + 1)).].
       ((tab at: (i + 1)) > nombre)
         ifTrue:[max0 :=  (tab at: (i + 1)).].
-      (((tab at: (i + 1)) = nombre) & (len ~= (i + 1)))
+      (((tab at: (i + 1)) = nombre) and: [len ~= (i + 1)])
         ifTrue:[^ false].
     ].
     ^ true

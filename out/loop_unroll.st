@@ -6,23 +6,23 @@ Il effectue du loop unrolling
   main [
     |j|j := 0.
     j :=  0.
-    (j) display.
+    j display.
     '
 ' display.
     j :=  1.
-    (j) display.
+    j display.
     '
 ' display.
     j :=  2.
-    (j) display.
+    j display.
     '
 ' display.
     j :=  3.
-    (j) display.
+    j display.
     '
 ' display.
     j :=  4.
-    (j) display.
+    j display.
     '
 ' display.
     ]

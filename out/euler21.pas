@@ -33,7 +33,7 @@ begin
   for i := 0 to  nprimes - 1 do
   begin
     d := primes[i];
-    while (n Mod d) = 0 do
+    while n Mod d = 0 do
     begin
       t[d] := t[d] + 1;
       n := n Div d;

@@ -44,7 +44,7 @@ def find0( len, tab, cache, x, y ):
     if y == len - 1:
       return tab[y][x]
     elif x > y:
-      return -(10000)
+      return -10000
     elif cache[y][x] != 0:
       return cache[y][x]
     result = 0

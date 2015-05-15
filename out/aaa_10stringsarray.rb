@@ -18,7 +18,5 @@ tab = [*0..2 - 1].map { |i|
 for j in (0 ..  1) do
   printstring(idstring(tab[j]))
 end
-print_toto({
-  "s" => "one",
-  "v" => 1})
+print_toto({"s" => "one", "v" => 1})
 

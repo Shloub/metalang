@@ -17,7 +17,7 @@ end;
 
 function triangle(n : in Integer) return Integer is
 begin
-  if (n rem 2) = 0
+  if n rem 2 = 0
   then
     return (n / 2) * (n + 1);
   else
@@ -27,7 +27,7 @@ end;
 
 function penta(n : in Integer) return Integer is
 begin
-  if (n rem 2) = 0
+  if n rem 2 = 0
   then
     return (n / 2) * (3 * n - 1);
   else

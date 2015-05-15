@@ -38,8 +38,7 @@
             9 0 BEGIN 2dup >= WHILE DUP { e }
               a d * 10 a e * b d * + * + 100 a f * b e * + c d * + * + 1000 c e * b f * + * + 10000 c * f * +
               { mul }
-              0 mul chiffre 5 mul chiffre = 1 mul chiffre 4 mul chiffre = AND 2 mul chiffre 
-              3 mul chiffre = AND
+              0 mul chiffre 5 mul chiffre = 1 mul chiffre 4 mul chiffre = AND 2 mul chiffre 3 mul chiffre = AND
               IF
                 mul m max TO m
               THEN

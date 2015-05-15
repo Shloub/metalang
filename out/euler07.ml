@@ -3,7 +3,7 @@ exception Found_1 of bool
 let divisible n t size =
   try
   for i = 0 to size - 1 do
-    if (n mod t.(i)) = 0 then
+    if n mod t.(i) = 0 then
       raise (Found_1(true))
   done;
   false

@@ -2,7 +2,7 @@ program euler14;
 
 function next0(n : Longint) : Longint;
 begin
-  if (n Mod 2) = 0
+  if n Mod 2 = 0
   then
     begin
       exit(n Div 2);

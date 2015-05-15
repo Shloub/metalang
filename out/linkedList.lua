@@ -7,24 +7,26 @@ function readint()
 end
 
 function cons( list, i )
-  local out0 = {head=i,
-                tail=list}
+  local out0 = {head=i, tail=list}
   return out0
 end
 
-function rev2( empty, acc, torev )
-  if torev == empty
+function is_empty( foo )
+  return true
+end
+
+function rev2( acc, torev )
+  if is_empty(torev)
   then
     return acc
   else
-    local acc2 = {head=torev.head,
-                  tail=acc}
-    return rev2(empty, acc, torev.tail)
+    local acc2 = {head=torev.head, tail=acc}
+    return rev2(acc, torev.tail)
   end
 end
 
 function rev( empty, torev )
-  return rev2(empty, empty, torev)
+  return rev2(empty, torev)
 end
 
 function test( empty )

@@ -71,7 +71,7 @@ for toto in range(0, strlen):
   c = ord(tmpc)
   print("%c:%d " % ( tmpc, c ), end='')
   if tmpc != ' ':
-    c = mod((c - ord('a')) + 13, 26) + ord('a')
+    c = mod(c - ord('a') + 13, 26) + ord('a')
   tab4[toto] = c
 for j in range(0, strlen):
   print("%c" % tab4[j], end='')

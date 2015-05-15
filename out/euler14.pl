@@ -7,8 +7,8 @@ sub remainder {
 
 sub next0{
   my($n) = @_;
-  if ((remainder($n, 2)) eq 0) {
-    return int(($n) / (2));
+  if (remainder($n, 2) eq 0) {
+    return int($n / 2);
   }else{
     return 3 * $n + 1;
   }

@@ -31,11 +31,11 @@ function read_int_(){
 function result(len, tab){
   var tab2 = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
-    tab2[i] = 0;
+    tab2[i] = false;
   for (var i1 = 0 ; i1 <= len - 1; i1++)
   {
     util.print(tab[i1], " ");
-    tab2[tab[i1]] = 1;
+    tab2[tab[i1]] = true;
   }
   util.print("\n");
   for (var i2 = 0 ; i2 <= len - 1; i2++)

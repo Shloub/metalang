@@ -21,19 +21,19 @@ function pathfind_aux( cache, tab, x, y, posX, posY )
     return 0
   elseif posX < 0 or posY < 0 or posX >= x or posY >= y then
     return x * y * 10
-  elseif tab[posY][posX] == 35 then
+  elseif tab[posY + 1][posX + 1] == 35 then
     return x * y * 10
-  elseif cache[posY][posX] ~= -1
+  elseif cache[posY + 1][posX + 1] ~= -1
   then
-    return cache[posY][posX]
+    return cache[posY + 1][posX + 1]
   else
-    cache[posY][posX] = x * y * 10;
+    cache[posY + 1][posX + 1] = x * y * 10;
     local val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY)
     local val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
     local val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
     local val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
     local out0 = 1 + math.min(val1, val2, val3, val4)
-    cache[posY][posX] = out0;
+    cache[posY + 1][posX + 1] = out0;
     return out0
   end
 end
@@ -43,9 +43,9 @@ function pathfind( tab, x, y )
   for i = 0,y - 1 do
     local tmp = {}
     for j = 0,x - 1 do
-      tmp[j] = -1;
+      tmp[j + 1] = -1;
     end
-    cache[i] = tmp;
+    cache[i + 1] = tmp;
   end
   return pathfind_aux(cache, tab, x, y, 0, 0)
 end
@@ -63,10 +63,10 @@ for i = 0,y - 1 do
   for j = 0,x - 1 do
     local tmp = 0
     tmp = readchar()
-    tab2[j] = tmp;
+    tab2[j + 1] = tmp;
   end
   stdinsep()
-  tab[i] = tab2;
+  tab[i + 1] = tab2;
 end
 local result = pathfind(tab, x, y)
 io.write(result)

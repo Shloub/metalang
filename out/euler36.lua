@@ -5,17 +5,17 @@ end
 function palindrome2( pow2, n )
   local t = {}
   for i = 0,20 - 1 do
-    t[i] = (math.mod(trunc(n / pow2[i]), 2)) == 1;
+    t[i + 1] = math.mod(trunc(n / pow2[i + 1]), 2) == 1;
   end
   local nnum = 0
   for j = 1,19 do
-    if t[j]
+    if t[j + 1]
     then
       nnum = j;
     end
   end
   for k = 0,trunc(nnum / 2) do
-    if t[k] ~= t[nnum - k]
+    if t[k + 1] ~= t[nnum - k + 1]
     then
       return false
     end
@@ -28,7 +28,7 @@ local p = 1
 local pow2 = {}
 for i = 0,20 - 1 do
   p = p * 2;
-  pow2[i] = trunc(p / 2);
+  pow2[i + 1] = trunc(p / 2);
 end
 local sum = 0
 for d = 1,9 do

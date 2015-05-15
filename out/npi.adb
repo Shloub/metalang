@@ -23,8 +23,7 @@ begin
 end;
 function is_number(c : in Character) return Boolean is
 begin
-  return Character'Pos(c) <= Character'Pos('9') and then Character'Pos(c) >=
-  Character'Pos('0');
+  return Character'Pos(c) <= Character'Pos('9') and then Character'Pos(c) >= Character'Pos('0');
 end;
 
 --

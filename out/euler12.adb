@@ -53,7 +53,7 @@ begin
   n := e;
   for i in integer range 0..nprimes - 1 loop
     d := primes(i);
-    while (n rem d) = 0 loop
+    while n rem d = 0 loop
       t(d) := t(d) + 1;
       n := n / d;
     end loop;
@@ -109,7 +109,7 @@ begin
     end loop;
     if ndivs > ndiv2
     then
-      return (n * (n + 1)) / 2;
+      return n * (n + 1) / 2;
     end if;
     -- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
     

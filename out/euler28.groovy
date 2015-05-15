@@ -22,7 +22,7 @@ int sumdiag(int n)
   int sum = 1
   for (int i = 0 ; i <= nterms - 2; i ++)
   {
-    int d = 2 * (1 + (int)(i / 4))
+    int d = 2 * (1 + i.intdiv(4))
     un += d;
     /* print int d print "=>" print un print " " */
     sum += un;

@@ -32,7 +32,7 @@ Object subclass: prologin_template_intlist [
       tableau at: (a + 1) put: self read_int.
       self skip.
     ].
-    ((self programme_candidat: tableau taille: taille)) display.
+    (self programme_candidat: tableau taille: taille) display.
     '
 ' display.
     ]

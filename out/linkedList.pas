@@ -62,11 +62,16 @@ begin
   exit(out0);
 end;
 
-function rev2(empty : intlist; acc : intlist; torev : intlist) : intlist;
+function is_empty(foo : intlist) : boolean;
+begin
+  exit(true);
+end;
+
+function rev2(acc : intlist; torev : intlist) : intlist;
 var
   acc2 : intlist;
 begin
-  if torev = empty
+  if is_empty(torev)
   then
     begin
       exit(acc);
@@ -76,13 +81,13 @@ begin
       new(acc2);
       acc2^.head := torev^.head;
       acc2^.tail := acc;
-      exit(rev2(empty, acc, torev^.tail));
+      exit(rev2(acc, torev^.tail));
     end;
 end;
 
 function rev(empty : intlist; torev : intlist) : intlist;
 begin
-  exit(rev2(empty, empty, torev));
+  exit(rev2(empty, torev));
 end;
 
 procedure test(empty : intlist);

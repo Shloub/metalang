@@ -29,7 +29,7 @@ function sumdiv( n )
   --[[ On déclare un entier qui contiendra la somme --]]
   for i = 1,n do
     --[[ La boucle : i est le diviseur potentiel--]]
-    if (math.mod(n, i)) == 0
+    if math.mod(n, i) == 0
     then
       --[[ Si i divise --]]
       out0 = out0 + i;

@@ -6,7 +6,7 @@ a = 1
 b = 2
 sum = 0
 while a < 4000000 do
-  if (mod(a, 2)) == 0 then
+  if mod(a, 2) == 0 then
     sum += a
   end
   c = a

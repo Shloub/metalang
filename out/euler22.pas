@@ -83,7 +83,7 @@ begin
   for i := 1 to  len do
   begin
     c := read_char_();
-    sum := sum + (ord(c) - ord(#65)) + 1;
+    sum := sum + ord(c) - ord(#65) + 1;
     {		print c print " " print sum print " " }
   end;
   exit(sum);

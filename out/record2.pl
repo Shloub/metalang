@@ -20,9 +20,7 @@ sub readspaces {
 
 sub mktoto{
   my($v1) = @_;
-  my $t = {"foo" => $v1,
-           "bar" => 0,
-           "blah" => 0};
+  my $t = {"foo" => $v1, "bar" => 0, "blah" => 0};
   return $t;
 }
 

@@ -160,7 +160,7 @@ End Sub
           End If
           If tmp < 0 Then
             tmp = tmp + 10
-            retenue = - 1
+            retenue = -1
           Else
             retenue = 0
           End If
@@ -286,9 +286,9 @@ End Sub
               ' Algorithme de Karatsuba 
               
               Dim split As Integer = Math.Min(aa.bigint_len, bb.bigint_len) \ 2
-              Dim a As bigint = bigint_shift(aa, - split)
+              Dim a As bigint = bigint_shift(aa, -split)
               Dim b As bigint = bigint_premiers_chiffres(aa, split)
-              Dim c As bigint = bigint_shift(bb, - split)
+              Dim c As bigint = bigint_shift(bb, -split)
               Dim d As bigint = bigint_premiers_chiffres(bb, split)
               Dim amoinsb As bigint = sub_bigint(a, b)
               Dim cmoinsd As bigint = sub_bigint(c, d)
@@ -366,7 +366,7 @@ End Sub
               Function bigint_exp(ByRef a as bigint, ByVal b as Integer) As bigint
                 If b = 1 Then
                   Return a
-                ElseIf (b Mod 2) = 0 Then
+                ElseIf b Mod 2 = 0 Then
                   Return bigint_exp(mul_bigint(a, a), b \ 2)
                 Else
                   Return mul_bigint(a, bigint_exp(a, b - 1))
@@ -377,7 +377,7 @@ End Sub
                 a = bigint_premiers_chiffres(a, 10)
                 If b = 1 Then
                   Return a
-                ElseIf (b Mod 2) = 0 Then
+                ElseIf b Mod 2 = 0 Then
                   Return bigint_exp_10chiffres(mul_bigint(a, a), b \ 2)
                 Else
                   Return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
@@ -485,7 +485,7 @@ End Sub
                   Dim b As bigint = bigint_of_int(9951263)
                   print_bigint(a)
                   Console.Write(">>1=")
-                  print_bigint(bigint_shift(a, - 1))
+                  print_bigint(bigint_shift(a, -1))
                   Console.Write(Chr(10))
                   print_bigint(a)
                   Console.Write("*")

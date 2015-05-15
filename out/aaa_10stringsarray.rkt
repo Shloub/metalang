@@ -14,16 +14,15 @@
 (define main
   (let ([tab (build-vector 2 (lambda (i) 
                                (idstring "chaine de test")))])
-  (letrec ([a (lambda (j) 
-                (if (<= j 1)
-                (block
-                  (printstring (idstring (vector-ref tab j)))
-                  (a (+ j 1))
-                  )
-                (block
-                  (print_toto (toto "one" 1))
-                  '()
-                  )))])
-  (a 0)))
+  (letrec ([a (lambda (j) (if (<= j 1)
+                          (block
+                            (printstring (idstring (vector-ref tab j)))
+                            (a (+ j 1))
+                            )
+                          (block
+                            (print_toto (toto "one" 1))
+                            '()
+                            )))])
+    (a 0)))
 )
 

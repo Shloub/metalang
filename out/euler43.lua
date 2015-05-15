@@ -30,87 +30,86 @@ d6 = 5 ou d6 = 0
 --]]
 local allowed = {}
 for i = 0,10 - 1 do
-  allowed[i] = true;
+  allowed[i + 1] = true;
 end
 for i6 = 0,1 do
   local d6 = i6 * 5
-  if allowed[d6]
+  if allowed[d6 + 1]
   then
-    allowed[d6] = false;
+    allowed[d6 + 1] = false;
     for d7 = 0,9 do
-      if allowed[d7]
+      if allowed[d7 + 1]
       then
-        allowed[d7] = false;
+        allowed[d7 + 1] = false;
         for d8 = 0,9 do
-          if allowed[d8]
+          if allowed[d8 + 1]
           then
-            allowed[d8] = false;
+            allowed[d8 + 1] = false;
             for d9 = 0,9 do
-              if allowed[d9]
+              if allowed[d9 + 1]
               then
-                allowed[d9] = false;
+                allowed[d9 + 1] = false;
                 for d10 = 1,9 do
-                  if allowed[d10] and (math.mod(d6 * 100 + d7 * 10 + d8, 11)) ==
-                  0 and (math.mod(d7 * 100 + d8 * 10 + d9, 13)) == 0 and
-                  (math.mod(d8 * 100 + d9 * 10 + d10, 17)) == 0
+                  if
+                  allowed[d10 + 1] and math.mod(d6 * 100 + d7 * 10 + d8, 11) == 0 and math.mod(d7 * 100 + d8 * 10 + d9, 13) == 0 and math.mod(d8 * 100 + d9 * 10 + d10, 17) == 0
                   then
-                    allowed[d10] = false;
+                    allowed[d10 + 1] = false;
                     for d5 = 0,9 do
-                      if allowed[d5]
+                      if allowed[d5 + 1]
                       then
-                        allowed[d5] = false;
-                        if (math.mod(d5 * 100 + d6 * 10 + d7, 7)) == 0
+                        allowed[d5 + 1] = false;
+                        if math.mod(d5 * 100 + d6 * 10 + d7, 7) == 0
                         then
                           for i4 = 0,4 do
                             local d4 = i4 * 2
-                            if allowed[d4]
+                            if allowed[d4 + 1]
                             then
-                              allowed[d4] = false;
+                              allowed[d4 + 1] = false;
                               for d3 = 0,9 do
-                                if allowed[d3]
+                                if allowed[d3 + 1]
                                 then
-                                  allowed[d3] = false;
-                                  if (math.mod(d3 + d4 + d5, 3)) == 0
+                                  allowed[d3 + 1] = false;
+                                  if math.mod(d3 + d4 + d5, 3) == 0
                                   then
                                     for d2 = 0,9 do
-                                      if allowed[d2]
+                                      if allowed[d2 + 1]
                                       then
-                                        allowed[d2] = false;
+                                        allowed[d2 + 1] = false;
                                         for d1 = 0,9 do
-                                          if allowed[d1]
+                                          if allowed[d1 + 1]
                                           then
-                                            allowed[d1] = false;
+                                            allowed[d1 + 1] = false;
                                             io.write(string.format("%d%d%d%d%d%d%d%d%d%d + ", d1, d2, d3, d4, d5, d6, d7, d8, d9, d10))
-                                            allowed[d1] = true;
+                                            allowed[d1 + 1] = true;
                                           end
                                         end
-                                        allowed[d2] = true;
+                                        allowed[d2 + 1] = true;
                                       end
                                     end
                                   end
-                                  allowed[d3] = true;
+                                  allowed[d3 + 1] = true;
                                 end
                               end
-                              allowed[d4] = true;
+                              allowed[d4 + 1] = true;
                             end
                           end
                         end
-                        allowed[d5] = true;
+                        allowed[d5 + 1] = true;
                       end
                     end
-                    allowed[d10] = true;
+                    allowed[d10 + 1] = true;
                   end
                 end
-                allowed[d9] = true;
+                allowed[d9 + 1] = true;
               end
             end
-            allowed[d8] = true;
+            allowed[d8 + 1] = true;
           end
         end
-        allowed[d7] = true;
+        allowed[d7 + 1] = true;
       end
     end
-    allowed[d6] = true;
+    allowed[d6 + 1] = true;
   end
 end
 io.write(string.format("%d\n", 0))

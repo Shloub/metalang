@@ -85,7 +85,7 @@ end;
 
 procedure print_bigint(a : in bigint_PTR) is
 begin
-  if (not a.bigint_sign)
+  if not a.bigint_sign
   then
     PChar('-');
   end if;
@@ -122,11 +122,11 @@ function bigint_gt(a : in bigint_PTR; b : in bigint_PTR) return Boolean is
 begin
   -- Renvoie vrai si a > b 
   
-  if a.bigint_sign and then (not b.bigint_sign)
+  if a.bigint_sign and then not b.bigint_sign
   then
     return TRUE;
   else
-    if (not a.bigint_sign) and then b.bigint_sign
+    if not a.bigint_sign and then b.bigint_sign
     then
       return FALSE;
     else
@@ -136,7 +136,7 @@ begin
       else
         if a.bigint_len < b.bigint_len
         then
-          return (not a.bigint_sign);
+          return not a.bigint_sign;
         else
           for i in integer range 0..a.bigint_len - 1 loop
             j := a.bigint_len - 1 - i;
@@ -146,7 +146,7 @@ begin
             else
               if a.bigint_chiffres(j) < b.bigint_chiffres(j)
               then
-                return (not a.bigint_sign);
+                return not a.bigint_sign;
               end if;
             end if;
           end loop;
@@ -159,7 +159,7 @@ end;
 
 function bigint_lt(a : in bigint_PTR; b : in bigint_PTR) return Boolean is
 begin
-  return (not bigint_gt(a, b));
+  return not bigint_gt(a, b);
 end;
 
 function add_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
@@ -240,7 +240,7 @@ function neg_bigint(a : in bigint_PTR) return bigint_PTR is
   h : bigint_PTR;
 begin
   h := new bigint;
-  h.bigint_sign := (not a.bigint_sign);
+  h.bigint_sign := not a.bigint_sign;
   h.bigint_len := a.bigint_len;
   h.bigint_chiffres := a.bigint_chiffres;
   return h;
@@ -318,8 +318,7 @@ begin
     end if;
   end loop;
   m := new bigint;
-  m.bigint_sign := a.bigint_sign =
-  b.bigint_sign;
+  m.bigint_sign := a.bigint_sign = b.bigint_sign;
   m.bigint_len := len;
   m.bigint_chiffres := chiffres;
   return m;
@@ -355,8 +354,7 @@ begin
   end loop;
   p := new bigint;
   p.bigint_sign := a.bigint_sign;
-  p.bigint_len := a.bigint_len +
-  i;
+  p.bigint_len := a.bigint_len + i;
   p.bigint_chiffres := chiffres;
   return p;
 end;
@@ -459,7 +457,7 @@ begin
   a := w;
   one := bigint_of_int(1);
   out0 := one;
-  while (not bigint_eq(a, one)) loop
+  while not bigint_eq(a, one) loop
     out0 := mul_bigint(a, out0);
     a := sub_bigint(a, one);
   end loop;
@@ -494,7 +492,7 @@ begin
   then
     return a;
   else
-    if (b rem 2) = 0
+    if b rem 2 = 0
     then
       return bigint_exp(mul_bigint(a, a), b / 2);
     else
@@ -512,7 +510,7 @@ begin
   then
     return a;
   else
-    if (b rem 2) = 0
+    if b rem 2 = 0
     then
       return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
     else

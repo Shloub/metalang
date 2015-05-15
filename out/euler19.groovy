@@ -2,7 +2,7 @@ import java.util.*
 
 boolean is_leap(int year)
 {
-  return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0)
+  return year % 400 == 0 || year % 100 != 0 && year % 4 == 0
 }
 
 int ndayinmonth(int month, int year)
@@ -56,7 +56,7 @@ while (year != 2001)
     month = 0
     year ++;
   }
-  if ((dayofweek % 7) == 6)
+  if (dayofweek % 7 == 6)
     count ++;
 }
 System.out.printf("%s\n", count);

@@ -14,7 +14,7 @@ func main() {
   for i := 0 ; i <= 5 - 1; i++ {
     fmt.Printf("%d", i);
       j += i;
-      a[i] = (i % 2) == 0;
+      a[i] = i % 2 == 0;
   }
   fmt.Printf("%d ", j);
   var c bool = a[0]

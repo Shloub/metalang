@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int is_leap(int year){
-  return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0);
+  return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
 }
 
 int ndayinmonth(int month, int year){
@@ -54,7 +54,7 @@ int main(void){
       month = 0;
       year ++;
     }
-    if ((dayofweek % 7) == 6)
+    if (dayofweek % 7 == 6)
       count ++;
   }
   printf("%d\n", count);

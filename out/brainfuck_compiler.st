@@ -69,12 +69,12 @@ et qui produit les macros metalang correspondante
     mem at: (current_pos + 1) put:  ((mem at: (current_pos + 1)) + 1).
     mem at: (current_pos + 1) put:  ((mem at: (current_pos + 1)) + 1).
     mem at: (current_pos + 1) put:  ((mem at: (current_pos + 1)) + 1).
-    [((mem at: (current_pos + 1)) ~= 0)] whileTrue:
+    [(mem at: (current_pos + 1)) ~= 0] whileTrue:
     [
     mem at: (current_pos + 1) put:  ((mem at: (current_pos + 1)) - 1).
     current_pos :=  (current_pos - 1).
     mem at: (current_pos + 1) put:  ((mem at: (current_pos + 1)) + 1).
-    ((((mem at: (current_pos + 1))) asCharacter)) display.
+    ((mem at: (current_pos + 1)) asCharacter) display.
     current_pos :=  (current_pos + 1).
     ].
     ]

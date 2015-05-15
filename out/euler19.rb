@@ -3,7 +3,7 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 def is_leap( year )
-    return ((mod(year, 400)) == 0 || ((mod(year, 100)) != 0 && (mod(year, 4)) == 0))
+    return (mod(year, 400) == 0 || mod(year, 100) != 0 && mod(year, 4) == 0)
 end
 
 def ndayinmonth( month, year )
@@ -56,7 +56,7 @@ while year != 2001 do
     month = 0
     year += 1
   end
-  if (mod(dayofweek, 7)) == 6 then
+  if mod(dayofweek, 7) == 6 then
     count += 1
   end
 end

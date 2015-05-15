@@ -54,7 +54,7 @@ func main() {
       var c int = (int)(tmpc)
       fmt.Printf("%c:%d ", tmpc, c);
       if tmpc != ' ' {
-        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+        c = (c - (int)('a') + 13) % 26 + (int)('a');
       }
       tab4[i3] = (byte)(c);
   }

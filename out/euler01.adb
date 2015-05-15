@@ -19,7 +19,7 @@ end;
 begin
   sum := 0;
   for i in integer range 0..999 loop
-    if (i rem 3) = 0 or else (i rem 5) = 0
+    if i rem 3 = 0 or else i rem 5 = 0
     then
       sum := sum + i;
     end if;

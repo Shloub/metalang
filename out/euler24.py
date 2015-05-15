@@ -17,13 +17,13 @@ def show( lim, nth ):
       nchiffre = math.trunc(nth / n)
       nth = mod(nth, n)
       for l in range(0, lim):
-        if not (pris[l]):
+        if not pris[l]:
           if nchiffre == 0:
             print("%d" % l, end='')
             pris[l] = True
           nchiffre -= 1
     for m in range(0, lim):
-      if not (pris[m]):
+      if not pris[m]:
         print("%d" % m, end='')
     print("")
 

@@ -209,13 +209,13 @@ D'ou le nom de la fonction. */
     $retenue = 0;
     for ($j = 0 ; $j < $b["bigint_len"]; $j++)
     {
-      $chiffres[$i + $j] = $chiffres[$i + $j] + $retenue +
-      $b["bigint_chiffres"][$j] * $a["bigint_chiffres"][$i];
+      $chiffres[$i + $j] =
+      $chiffres[$i + $j] + $retenue + $b["bigint_chiffres"][$j] * $a["bigint_chiffres"][$i];
       $retenue = intval($chiffres[$i + $j] / 10);
       $chiffres[$i + $j] = $chiffres[$i + $j] % 10;
     }
-    $chiffres[$i + $b["bigint_len"]] = $chiffres[$i + $b["bigint_len"]] +
-    $retenue;
+    $chiffres[$i + $b["bigint_len"]] =
+    $chiffres[$i + $b["bigint_len"]] + $retenue;
   }
   $chiffres[$a["bigint_len"] + $b["bigint_len"]] =
   intval($chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] / 10);
@@ -347,7 +347,7 @@ function euler20(){
 function &bigint_exp(&$a, $b){
   if ($b == 1)
     return $a;
-  else if (($b % 2) == 0)
+  else if ($b % 2 == 0)
     return bigint_exp(mul_bigint($a, $a), intval($b / 2));
   else
     return mul_bigint($a, bigint_exp($a, $b - 1));
@@ -357,7 +357,7 @@ function &bigint_exp_10chiffres(&$a, $b){
   $a = bigint_premiers_chiffres($a, 10);
   if ($b == 1)
     return $a;
-  else if (($b % 2) == 0)
+  else if ($b % 2 == 0)
     return bigint_exp_10chiffres(mul_bigint($a, $a), intval($b / 2));
   else
     return mul_bigint($a, bigint_exp_10chiffres($a, $b - 1));

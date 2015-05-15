@@ -22,9 +22,7 @@ begin
   let num = 142857 in
   if same_numbers num (num * 2) (num * 3) (num * 4) (num * 6) (num * 5) then
     begin
-      Printf.printf "%d %d %d %d %d %d\n" num (num * 2) (num * 3) (num * 4) (num *
-                                                                              5) (num *
-                                                                                6)
+      Printf.printf "%d %d %d %d %d %d\n" num (num * 2) (num * 3) (num * 4) (num * 5) (num * 6)
     end
 end
  

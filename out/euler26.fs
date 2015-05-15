@@ -7,14 +7,12 @@
     a b // { chiffre }
     a b % { reste }
     len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-      restes i cells +
-       @ reste =
+      restes  i cells +  @ reste =
       IF
         DROP DROP len i - exit
       THEN
      1 + REPEAT 2DROP
-    reste restes len cells +
-     !
+    reste restes  len cells +  !
     len 1 + TO len
     reste 10 * TO a
   REPEAT
@@ -24,8 +22,7 @@
 : main
   HERE 1000 cells allot { t }
   1000 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    0 t j cells +
-     !
+    0 t  j cells +  !
    1 + REPEAT 2DROP
   0 { m }
   0 { mi }

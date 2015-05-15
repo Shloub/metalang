@@ -15,7 +15,7 @@ begin
     then
       begin
         n := n + 1;
-        if (max0 Div i) > i
+        if max0 Div i > i
         then
           begin
             j := i * i;
@@ -90,7 +90,7 @@ begin
     process := false;
     for i := 0 to  stop do
     begin
-      if (i + len) < nprimes
+      if i + len < nprimes
       then
         begin
           sum[i] := sum[i] + primes[i + len];

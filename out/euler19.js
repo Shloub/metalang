@@ -1,6 +1,6 @@
 var util = require("util");
 function is_leap(year){
-  return (~~(year % 400)) == 0 || ((~~(year % 100)) != 0 && (~~(year % 4)) == 0);
+  return ~~(year % 400) == 0 || ~~(year % 100) != 0 && ~~(year % 4) == 0;
 }
 
 function ndayinmonth(month, year){
@@ -51,7 +51,7 @@ while (year != 2001)
     month = 0;
     year ++;
   }
-  if ((~~(dayofweek % 7)) == 6)
+  if (~~(dayofweek % 7) == 6)
     count ++;
 }
 util.print(count, "\n");

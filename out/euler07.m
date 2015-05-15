@@ -5,7 +5,7 @@
 int divisible(int n, int* t, int size){
   int i;
   for (i = 0 ; i < size; i++)
-    if ((n % t[i]) == 0)
+    if (n % t[i] == 0)
     return 1;
   return 0;
 }

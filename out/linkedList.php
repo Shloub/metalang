@@ -21,8 +21,12 @@ function &cons(&$list, $i){
   return $out0;
 }
 
-function &rev2(&$empty, &$acc, &$torev){
-  if ($torev == $empty)
+function is_empty(&$foo){
+  return true;
+}
+
+function &rev2(&$acc, &$torev){
+  if (is_empty($torev))
     return $acc;
   else
   {
@@ -31,12 +35,12 @@ function &rev2(&$empty, &$acc, &$torev){
       "tail"=>$acc
     );
     
-    return rev2($empty, $acc, $torev["tail"]);
+    return rev2($acc, $torev["tail"]);
   }
 }
 
 function &rev(&$empty, &$torev){
-  return rev2($empty, $empty, $torev);
+  return rev2($empty, $torev);
 }
 
 function test(&$empty){

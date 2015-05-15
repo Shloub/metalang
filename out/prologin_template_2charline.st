@@ -27,14 +27,14 @@ Object subclass: prologin_template_2charline [
    programme_candidat: tableau1 taille1: taille1 tableau2: tableau2 taille2: taille2 [|out0|
     out0 := 0.
     (0 to: (taille1 - 1)) do: [:i|
-      out0 :=  (out0 + ((((tableau1 at: (i + 1))) asciiValue) * i)).
-      ((tableau1 at: (i + 1))) display.
+      out0 :=  (out0 + (((tableau1 at: (i + 1)) asciiValue) * i)).
+      (tableau1 at: (i + 1)) display.
     ].
     '--
 ' display.
     (0 to: (taille2 - 1)) do: [:j|
-      out0 :=  (out0 + ((((tableau2 at: (j + 1))) asciiValue) * (j * 100))).
-      ((tableau2 at: (j + 1))) display.
+      out0 :=  (out0 + (((tableau2 at: (j + 1)) asciiValue) * (j * 100))).
+      (tableau2 at: (j + 1)) display.
     ].
     '--
 ' display.
@@ -56,7 +56,7 @@ Object subclass: prologin_template_2charline [
       tableau2 at: (b + 1) put: self read_char.
     ].
     self skip.
-    ((self programme_candidat: tableau1 taille1: taille1 tableau2: tableau2 taille2: taille2)) display.
+    (self programme_candidat: tableau1 taille1: taille1 tableau2: tableau2 taille2: taille2) display.
     '
 ' display.
     ]

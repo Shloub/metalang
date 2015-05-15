@@ -13,7 +13,5 @@ for i in range(0, 2):
   tab[i] = idstring("chaine de test")
 for j in range(0, 1 + 1):
   printstring(idstring(tab[j]))
-print_toto({
-  "s":"one",
-  "v":1})
+print_toto({"s":"one", "v":1})
 

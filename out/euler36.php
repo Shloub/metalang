@@ -2,7 +2,7 @@
 function palindrome2(&$pow2, $n){
   $t = array();
   for ($i = 0 ; $i < 20; $i++)
-    $t[$i] = ((intval($n / $pow2[$i])) % 2) == 1;
+    $t[$i] = intval($n / $pow2[$i]) % 2 == 1;
   $nnum = 0;
   for ($j = 1 ; $j <= 19; $j++)
     if ($t[$j])

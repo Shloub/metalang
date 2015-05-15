@@ -48,12 +48,9 @@ function mktoto2(v1 : in Integer) return toto_PTR is
   t : toto_PTR;
 begin
   t := new toto;
-  t.foo := v1 +
-  3;
-  t.bar := v1 +
-  2;
-  t.blah := v1 +
-  1;
+  t.foo := v1 + 3;
+  t.bar := v1 + 2;
+  t.blah := v1 + 1;
   return t;
 end;
 

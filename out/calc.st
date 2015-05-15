@@ -7,7 +7,7 @@ La suite de fibonaci
     a2 := a.
     b2 := b.
     (0 to: (i + 1)) do: [:j|
-      (j) display.
+      j display.
       out_ :=  (out_ + a2).
       tmp := b2.
       b2 :=  (b2 + a2).
@@ -17,7 +17,7 @@ La suite de fibonaci
   ]
   
   main [
-    ((self fibo: 1 b: 2 i: 4)) display.
+    (self fibo: 1 b: 2 i: 4) display.
     ]
 ]
 Eval [ (calc new) main. ]

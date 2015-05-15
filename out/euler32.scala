@@ -59,7 +59,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
         if (allowed(b))
       {
         allowed(b) = false;
-        var be: Int = (b * e) % 10;
+        var be: Int = b * e % 10;
         if (allowed(be))
         {
           allowed(be) = false;

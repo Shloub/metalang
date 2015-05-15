@@ -57,24 +57,14 @@ d6 = 5 ou d6 = 0
             {
               allowed[d9] = false;
               for (int d10 = 1 ; d10 <= 9; d10 ++)
-                if (allowed[d10] && ((d6 * 100 + d7 * 10 + d8) % 11) == 0 && ((d7 *
-                                                                                100 +
-                                                                                d8 *
-                                                                                10 +
-                                                                                d9) %
-                                                                               13) == 0 && ((d8 *
-                                                                                100 +
-                                                                                d9 *
-                                                                                10 +
-                                                                                d10) %
-                                                                                17) == 0)
+                if (allowed[d10] && (d6 * 100 + d7 * 10 + d8) % 11 == 0 && (d7 * 100 + d8 * 10 + d9) % 13 == 0 && (d8 * 100 + d9 * 10 + d10) % 17 == 0)
               {
                 allowed[d10] = false;
                 for (int d5 = 0 ; d5 <= 9; d5 ++)
                   if (allowed[d5])
                 {
                   allowed[d5] = false;
-                  if (((d5 * 100 + d6 * 10 + d7) % 7) == 0)
+                  if ((d5 * 100 + d6 * 10 + d7) % 7 == 0)
                     for (int i4 = 0 ; i4 <= 4; i4 ++)
                     {
                       int d4 = i4 * 2;
@@ -85,7 +75,7 @@ d6 = 5 ou d6 = 0
                           if (allowed[d3])
                         {
                           allowed[d3] = false;
-                          if (((d3 + d4 + d5) % 3) == 0)
+                          if ((d3 + d4 + d5) % 3 == 0)
                             for (int d2 = 0 ; d2 <= 9; d2 ++)
                               if (allowed[d2])
                           {

@@ -19,7 +19,7 @@ function fillPrimesFactors(&$t, $n, &$primes, $nprimes){
   for ($i = 0 ; $i < $nprimes; $i++)
   {
     $d = $primes[$i];
-    while (($n % $d) == 0)
+    while ($n % $d == 0)
     {
       $t[$d] = $t[$d] + 1;
       $n = intval($n / $d);

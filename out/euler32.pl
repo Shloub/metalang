@@ -37,7 +37,7 @@ sub okdigits{
     my $digit = remainder($n, 10);
     if ($ok->[$digit]) {
       $ok->[$digit] = ();
-      my $o = okdigits($ok, int(($n) / (10)));
+      my $o = okdigits($ok, int($n / 10));
       $ok->[$digit] = 1;
       return $o;
     }else{
@@ -75,7 +75,7 @@ foreach my $e (1 .. 9) {
                     # 2 * 3 digits 
                     
                     my $product = ($a * 10 + $b) * ($c * 100 + $d * 10 + $e);
-                    if (!$counted->[$product] && okdigits($allowed, int(($product) / (10)))) {
+                    if (!$counted->[$product] && okdigits($allowed, int($product / 10))) {
                       $counted->[$product] = 1;
                       $count = $count + $product;
                       print($product, " ");
@@ -83,7 +83,7 @@ foreach my $e (1 .. 9) {
                     # 1  * 4 digits 
                     
                     my $product2 = $b * ($a * 1000 + $c * 100 + $d * 10 + $e);
-                    if (!$counted->[$product2] && okdigits($allowed, int(($product2) / (10)))) {
+                    if (!$counted->[$product2] && okdigits($allowed, int($product2 / 10))) {
                       $counted->[$product2] = 1;
                       $count = $count + $product2;
                       print($product2, " ");

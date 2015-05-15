@@ -22,7 +22,7 @@ bool isPrime(int n, std::vector<int> * primes, int len){
     n = -n;
   while (primes->at(i) * primes->at(i) < n)
   {
-    if ((n % primes->at(i)) == 0)
+    if (n % primes->at(i) == 0)
       return false;
     i ++;
   }

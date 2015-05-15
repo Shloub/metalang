@@ -44,7 +44,6 @@ begin
   one_to_ninety_nine := one_to_ninety + 6 * 9 + one_to_nine;
   PInt(one_to_ninety_nine);
   PString(new char_array'( To_C("" & Character'Val(10))));
-  PInt(100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 3 +
-  8);
+  PInt(100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 3 + 8);
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;

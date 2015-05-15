@@ -4,7 +4,7 @@ local b = 2
 local sum = 0
 while a < 4000000
 do
-if (math.mod(a, 2)) == 0
+if math.mod(a, 2) == 0
 then
   sum = sum + a;
 end

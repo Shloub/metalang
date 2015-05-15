@@ -1,6 +1,6 @@
 function is_leap( year )
-  return (math.mod(year, 400)) == 0 or
-  ((math.mod(year, 100)) ~= 0 and (math.mod(year, 4)) == 0)
+  return
+  math.mod(year, 400) == 0 or math.mod(year, 100) ~= 0 and math.mod(year, 4) == 0
 end
 
 function ndayinmonth( month, year )
@@ -54,7 +54,7 @@ then
   month = 0;
   year = year + 1;
 end
-if (math.mod(dayofweek, 7)) == 6
+if math.mod(dayofweek, 7) == 6
 then
   count = count + 1;
 end

@@ -14,7 +14,7 @@ object euler03
       var found: Boolean = false;
       while (b <= sqrtia)
       {
-        if ((a % b) == 0)
+        if (a % b == 0)
         {
           a = a / b;
           b0 = b;

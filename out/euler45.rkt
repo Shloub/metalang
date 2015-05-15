@@ -37,16 +37,15 @@
   (findHexa2 n a c))))))
 )
 (define main
-  (letrec ([d (lambda (n) 
-                (if (<= n 55385)
-                (let ([t0 (triangle n)])
-                (if (and (findPenta2 t0 (quotient n 5) n) (findHexa2 t0 (quotient n 5) (+ (quotient n 2) 10)))
-                (block
-                  (printf "~a\n~a\n" n t0)
-                  (d (+ n 1))
-                  )
-                (d (+ n 1))))
-                '()))])
-  (d 285))
+  (letrec ([d (lambda (n) (if (<= n 55385)
+                          (let ([t0 (triangle n)])
+                          (if (and (findPenta2 t0 (quotient n 5) n) (findHexa2 t0 (quotient n 5) (+ (quotient n 2) 10)))
+                          (block
+                            (printf "~a\n~a\n" n t0)
+                            (d (+ n 1))
+                            )
+                          (d (+ n 1))))
+                          '()))])
+    (d 285))
 )
 

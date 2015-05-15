@@ -1,4 +1,4 @@
 <?php
 
-$foo_val = Foo;
+$foo_val = "Foo";
 ?>

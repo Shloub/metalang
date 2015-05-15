@@ -43,7 +43,7 @@ def score(  ):
     sum = 0
     for i in range(1, 1 + len):
       c=readchar()
-      sum += (ord(c) - ord('A')) + 1
+      sum += ord(c) - ord('A') + 1
       """		print c print " " print sum print " " """
     return sum
 

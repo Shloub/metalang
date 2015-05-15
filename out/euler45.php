@@ -1,16 +1,16 @@
 <?php
 function triangle($n){
-  if (($n % 2) == 0)
-    return (intval($n / 2)) * ($n + 1);
+  if ($n % 2 == 0)
+    return intval($n / 2) * ($n + 1);
   else
-    return $n * (intval(($n + 1) / 2));
+    return $n * intval(($n + 1) / 2);
 }
 
 function penta($n){
-  if (($n % 2) == 0)
-    return (intval($n / 2)) * (3 * $n - 1);
+  if ($n % 2 == 0)
+    return intval($n / 2) * (3 * $n - 1);
   else
-    return (intval((3 * $n - 1) / 2)) * $n;
+    return intval((3 * $n - 1) / 2) * $n;
 }
 
 function hexa($n){
@@ -46,8 +46,7 @@ function findHexa2($n, $a, $b){
 for ($n = 285 ; $n <= 55385; $n++)
 {
   $t = triangle($n);
-  if (findPenta2($t, intval($n / 5), $n) && findHexa2($t, intval($n /
-                                            5), intval($n / 2) + 10))
+  if (findPenta2($t, intval($n / 5), $n) && findHexa2($t, intval($n / 5), intval($n / 2) + 10))
   {
     echo $n, "\n", $t, "\n";
   }

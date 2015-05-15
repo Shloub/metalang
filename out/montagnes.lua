@@ -16,13 +16,13 @@ function montagnes0( tab, len )
   local i = len - 2
   while i >= 0
   do
-  local x = tab[i]
-  while j >= 0 and x > tab[len - j]
+  local x = tab[i + 1]
+  while j >= 0 and x > tab[len - j + 1]
   do
   j = j - 1;
   end
   j = j + 1;
-  tab[len - j] = x;
+  tab[len - j + 1] = x;
   if j > max0
   then
     max0 = j;
@@ -41,6 +41,6 @@ for i = 0,len - 1 do
   local x = 0
   x = readint()
   stdinsep()
-  tab[i] = x;
+  tab[i + 1] = x;
 end
 io.write(montagnes0(tab, len))

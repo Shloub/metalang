@@ -4,7 +4,7 @@ def mod(x, y)
 end
 def palindrome2( pow2, n )
     t = [*0..20 - 1].map { |i|
-      next ((mod((n.to_f / pow2[i]).to_i, 2)) == 1)
+      next (mod((n.to_f / pow2[i]).to_i, 2) == 1)
       }
     nnum = 0
     for j in (1 ..  19) do

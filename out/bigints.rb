@@ -13,14 +13,11 @@ def read_bigint( len )
       chiffres[i] = chiffres[len - 1 - i]
       chiffres[len - 1 - i] = tmp
     end
-    return ({
-      "bigint_sign" => true,
-      "bigint_len" => len,
-      "bigint_chiffres" => chiffres})
+    return ({"bigint_sign" => true, "bigint_len" => len, "bigint_chiffres" => chiffres})
 end
 
 def print_bigint( a )
-    if not(a["bigint_sign"]) then
+    if !a["bigint_sign"] then
       printf "%c", "-"
     end
     for i in (0 ..  a["bigint_len"] - 1) do
@@ -54,22 +51,22 @@ def bigint_gt( a, b )
  Renvoie vrai si a > b 
 =end
 
-    if a["bigint_sign"] && not(b["bigint_sign"]) then
+    if a["bigint_sign"] && !b["bigint_sign"] then
       return (true)
-    elsif not(a["bigint_sign"]) && b["bigint_sign"] then
+    elsif !a["bigint_sign"] && b["bigint_sign"] then
       return (false)
     else
       if a["bigint_len"] > b["bigint_len"] then
         return (a["bigint_sign"])
       elsif a["bigint_len"] < b["bigint_len"] then
-        return (not(a["bigint_sign"]))
+        return (!a["bigint_sign"])
       else
         for i in (0 ..  a["bigint_len"] - 1) do
           j = a["bigint_len"] - 1 - i
           if a["bigint_chiffres"][j] > b["bigint_chiffres"][j] then
             return (a["bigint_sign"])
           elsif a["bigint_chiffres"][j] < b["bigint_chiffres"][j] then
-            return (not(a["bigint_sign"]))
+            return (!a["bigint_sign"])
           end
         end
       end
@@ -78,7 +75,7 @@ def bigint_gt( a, b )
 end
 
 def bigint_lt( a, b )
-    return (not(bigint_gt(a, b)))
+    return (!bigint_gt(a, b))
 end
 
 def add_bigint_positif( a, b )
@@ -103,10 +100,7 @@ def add_bigint_positif( a, b )
     while len > 0 && chiffres[len - 1] == 0 do
       len -= 1
     end
-    return ({
-      "bigint_sign" => true,
-      "bigint_len" => len,
-      "bigint_chiffres" => chiffres})
+    return ({"bigint_sign" => true, "bigint_len" => len, "bigint_chiffres" => chiffres})
 end
 
 def sub_bigint_positif( a, b )
@@ -135,17 +129,11 @@ Pré-requis : a > b
     while len > 0 && chiffres[len - 1] == 0 do
       len -= 1
     end
-    return ({
-      "bigint_sign" => true,
-      "bigint_len" => len,
-      "bigint_chiffres" => chiffres})
+    return ({"bigint_sign" => true, "bigint_len" => len, "bigint_chiffres" => chiffres})
 end
 
 def neg_bigint( a )
-    return ({
-      "bigint_sign" => not(a["bigint_sign"]),
-      "bigint_len" => a["bigint_len"],
-      "bigint_chiffres" => a["bigint_chiffres"]})
+    return ({"bigint_sign" => !a["bigint_sign"], "bigint_len" => a["bigint_len"], "bigint_chiffres" => a["bigint_chiffres"]})
 end
 
 def add_bigint( a, b )
@@ -212,10 +200,7 @@ D'ou le nom de la fonction.
         len -= 1
       end
     end
-    return ({
-      "bigint_sign" => a["bigint_sign"] == b["bigint_sign"],
-      "bigint_len" => len,
-      "bigint_chiffres" => chiffres})
+    return ({"bigint_sign" => a["bigint_sign"] == b["bigint_sign"], "bigint_len" => len, "bigint_chiffres" => chiffres})
 end
 
 def bigint_premiers_chiffres( a, i )
@@ -223,10 +208,7 @@ def bigint_premiers_chiffres( a, i )
     while len != 0 && a["bigint_chiffres"][len - 1] == 0 do
       len -= 1
     end
-    return ({
-      "bigint_sign" => a["bigint_sign"],
-      "bigint_len" => len,
-      "bigint_chiffres" => a["bigint_chiffres"]})
+    return ({"bigint_sign" => a["bigint_sign"], "bigint_len" => len, "bigint_chiffres" => a["bigint_chiffres"]})
 end
 
 def bigint_shift( a, i )
@@ -237,10 +219,7 @@ def bigint_shift( a, i )
         next (0)
       end
       }
-    return ({
-      "bigint_sign" => a["bigint_sign"],
-      "bigint_len" => a["bigint_len"] + i,
-      "bigint_chiffres" => chiffres})
+    return ({"bigint_sign" => a["bigint_sign"], "bigint_len" => a["bigint_len"] + i, "bigint_chiffres" => chiffres})
 end
 
 def mul_bigint( aa, bb )
@@ -304,16 +283,13 @@ def bigint_of_int( i )
       t[k] = mod(i, 10)
       i = (i.to_f / 10).to_i
     end
-    return ({
-      "bigint_sign" => true,
-      "bigint_len" => size,
-      "bigint_chiffres" => t})
+    return ({"bigint_sign" => true, "bigint_len" => size, "bigint_chiffres" => t})
 end
 
 def fact_bigint( a )
     one = bigint_of_int(1)
     out0 = one
-    while not(bigint_eq(a, one)) do
+    while !bigint_eq(a, one) do
       out0 = mul_bigint(a, out0)
       a = sub_bigint(a, one)
     end
@@ -347,7 +323,7 @@ end
 def bigint_exp( a, b )
     if b == 1 then
       return (a)
-    elsif (mod(b, 2)) == 0 then
+    elsif mod(b, 2) == 0 then
       return (bigint_exp(mul_bigint(a, a), (b.to_f / 2).to_i))
     else
       return (mul_bigint(a, bigint_exp(a, b - 1)))
@@ -358,7 +334,7 @@ def bigint_exp_10chiffres( a, b )
     a = bigint_premiers_chiffres(a, 10)
     if b == 1 then
       return (a)
-    elsif (mod(b, 2)) == 0 then
+    elsif mod(b, 2) == 0 then
       return (bigint_exp_10chiffres(mul_bigint(a, a), (b.to_f / 2).to_i))
     else
       return (mul_bigint(a, bigint_exp_10chiffres(a, b - 1)))

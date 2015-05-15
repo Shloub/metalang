@@ -35,7 +35,7 @@ begin
     end if;
     j := 8;
   end if;
-  return (i rem 2) = 0;
+  return i rem 2 = 0;
 end;
 
 

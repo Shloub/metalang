@@ -3,18 +3,18 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 def triangle( n )
-    if (mod(n, 2)) == 0 then
-      return (((n.to_f / 2).to_i) * (n + 1))
+    if mod(n, 2) == 0 then
+      return ((n.to_f / 2).to_i * (n + 1))
     else
-      return (n * (((n + 1).to_f / 2).to_i))
+      return (n * ((n + 1).to_f / 2).to_i)
     end
 end
 
 def penta( n )
-    if (mod(n, 2)) == 0 then
-      return (((n.to_f / 2).to_i) * (3 * n - 1))
+    if mod(n, 2) == 0 then
+      return ((n.to_f / 2).to_i * (3 * n - 1))
     else
-      return ((((3 * n - 1).to_f / 2).to_i) * n)
+      return (((3 * n - 1).to_f / 2).to_i * n)
     end
 end
 

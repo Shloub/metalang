@@ -68,7 +68,7 @@ var
   out0 : Longint;
   posval : Longint;
 begin
-  if pos >= (len - 1) then
+  if pos >= len - 1 then
     begin
       exit(0);
     end

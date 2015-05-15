@@ -18,7 +18,7 @@ public class euler22
     for (int i = 1 ; i <= len; i ++)
     {
       char c = scanner.findWithinHorizon(".", 1).charAt(0);
-      sum += ((int)(c) - (int)('A')) + 1;
+      sum += (int)(c) - (int)('A') + 1;
       /*		print c print " " print sum print " " */
     }
     return sum;

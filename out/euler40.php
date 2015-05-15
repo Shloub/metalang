@@ -14,7 +14,7 @@ function e(&$t, $n){
   {
     $nombre = exp0(10, $i - 1) + intval($n / $i);
     $chiffre = $i - 1 - $n % $i;
-    return (intval($nombre / exp0(10, $chiffre))) % 10;
+    return intval($nombre / exp0(10, $chiffre)) % 10;
   }
   return -1;
 }

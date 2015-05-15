@@ -37,6 +37,6 @@ foreach my $i (1 .. 9) {
 }
 print($top, "/", $bottom, "\n");
 my $p = pgcd($top, $bottom);
-print("pgcd=", $p, "\n", int(($bottom) / ($p)), "\n");
+print("pgcd=", $p, "\n", int($bottom / $p), "\n");
 
 

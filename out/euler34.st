@@ -6,7 +6,7 @@ Object subclass: euler34 [
     ].
     (1 to: 9) do: [:i|
       f at: (i + 1) put:  ((f at: (i + 1)) * (i * (f at: i))).
-      ((f at: (i + 1))) display.
+      (f at: (i + 1)) display.
       ' ' display.
     ].
     out0 := 0.
@@ -18,8 +18,8 @@ Object subclass: euler34 [
           (0 to: 9) do: [:d|
             (0 to: 9) do: [:e|
               (0 to: 9) do: [:g|
-                sum := ((f at: (a + 1)) + (f at: (b + 1)) + (f at: (c + 1)) + (f at: (d + 1)) + (f at: (e + 1)) + (f at: (g + 1))).
-                num := (a * 10 + b * 10 + c * 10 + d * 10 + e * 10 + g).
+                sum := (f at: (a + 1)) + (f at: (b + 1)) + (f at: (c + 1)) + (f at: (d + 1)) + (f at: (e + 1)) + (f at: (g + 1)).
+                num := a * 10 + b * 10 + c * 10 + d * 10 + e * 10 + g.
                 (a = 0)
                   ifTrue:[
                          sum :=  (sum - 1).
@@ -34,10 +34,10 @@ Object subclass: euler34 [
                                     ].
                            ].
                   ].
-                (((sum = num) & (sum ~= 1)) & (sum ~= 2))
+                (((sum = num) and: [sum ~= 1]) and: [sum ~= 2])
                   ifTrue:[
                          out0 :=  (out0 + num).
-                         (num) display.
+                         num display.
                          ' ' display.
                   ].
               ].
@@ -48,7 +48,7 @@ Object subclass: euler34 [
     ].
     '
 ' display.
-    (out0) display.
+    out0 display.
     '
 ' display.
     ]

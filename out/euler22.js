@@ -40,7 +40,7 @@ function score(){
   for (var i = 1 ; i <= len; i++)
   {
     c=read_char_();
-    sum += (c.charCodeAt(0) - 'A'.charCodeAt(0)) + 1;
+    sum += c.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
     /*		print c print " " print sum print " " */
   }
   return sum;

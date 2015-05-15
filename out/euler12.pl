@@ -27,10 +27,10 @@ sub fillPrimesFactors{
   my($t, $n, $primes, $nprimes) = @_;
   foreach my $i (0 .. $nprimes - 1) {
     my $d = $primes->[$i];
-    while ((remainder($n, $d)) eq 0)
+    while (remainder($n, $d) eq 0)
     {
       $t->[$d] = $t->[$d] + 1;
-      $n = int(($n) / ($d));
+      $n = int($n / $d);
     }
     if ($n eq 1) {
       return $primes->[$i];
@@ -72,7 +72,7 @@ sub find{
       }
     }
     if ($ndivs > $ndiv2) {
-      return int(($n * ($n + 1)) / (2));
+      return int($n * ($n + 1) / 2);
     }
     # print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
     

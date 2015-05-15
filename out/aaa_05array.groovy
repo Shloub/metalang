@@ -18,7 +18,7 @@ for (int i = 0 ; i < 5; i++)
 {
   print(i)
   j += i;
-  a[i] = (i % 2) == 0
+  a[i] = i % 2 == 0
 }
 System.out.printf("%s ", j);
 boolean c = a[0]

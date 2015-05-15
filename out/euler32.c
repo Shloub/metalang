@@ -58,7 +58,7 @@ int main(void){
       if (allowed[b])
     {
       allowed[b] = 0;
-      int be = (b * e) % 10;
+      int be = b * e % 10;
       if (allowed[be])
       {
         allowed[be] = 0;

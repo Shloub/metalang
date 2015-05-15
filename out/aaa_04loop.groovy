@@ -8,7 +8,7 @@ boolean h(int i)
   int j = i - 2
   while (j <= i + 2)
   {
-    if ((i % j) == 5)
+    if (i % j == 5)
       return true
     j ++;
   }

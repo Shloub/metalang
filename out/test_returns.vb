@@ -24,7 +24,7 @@ Module test_returns
       End If
       j = 8
     End If
-    Return (i Mod 2) = 0
+    Return i Mod 2 = 0
   End Function
   
   

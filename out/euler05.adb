@@ -39,7 +39,7 @@ begin
   end loop;
   d := 2;
   while n /= 1 and then d * d <= n loop
-    if (n rem d) = 0
+    if n rem d = 0
     then
       tab(d) := tab(d) + 1;
       n := n / d;

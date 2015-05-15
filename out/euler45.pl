@@ -7,19 +7,19 @@ sub remainder {
 
 sub triangle{
   my($n) = @_;
-  if ((remainder($n, 2)) eq 0) {
-    return (int(($n) / (2))) * ($n + 1);
+  if (remainder($n, 2) eq 0) {
+    return int($n / 2) * ($n + 1);
   }else{
-    return $n * (int(($n + 1) / (2)));
+    return $n * int(($n + 1) / 2);
   }
 }
 
 sub penta{
   my($n) = @_;
-  if ((remainder($n, 2)) eq 0) {
-    return (int(($n) / (2))) * (3 * $n - 1);
+  if (remainder($n, 2) eq 0) {
+    return int($n / 2) * (3 * $n - 1);
   }else{
-    return (int((3 * $n - 1) / (2))) * $n;
+    return int((3 * $n - 1) / 2) * $n;
   }
 }
 
@@ -33,7 +33,7 @@ sub findPenta2{
   if ($b eq $a + 1) {
     return penta($a) eq $n || penta($b) eq $n;
   }
-  my $c = int(($a + $b) / (2));
+  my $c = int(($a + $b) / 2);
   my $p = penta($c);
   if ($p eq $n) {
     return 1;
@@ -49,7 +49,7 @@ sub findHexa2{
   if ($b eq $a + 1) {
     return hexa($a) eq $n || hexa($b) eq $n;
   }
-  my $c = int(($a + $b) / (2));
+  my $c = int(($a + $b) / 2);
   my $p = hexa($c);
   if ($p eq $n) {
     return 1;
@@ -62,8 +62,7 @@ sub findHexa2{
 
 foreach my $n (285 .. 55385) {
   my $t = triangle($n);
-  if (findPenta2($t, int(($n) / (5)), $n) && findHexa2($t, int(($n) / (5)), int(($n) / (2)) +
-                                             10)) {
+  if (findPenta2($t, int($n / 5), $n) && findHexa2($t, int($n / 5), int($n / 2) + 10)) {
     print($n, "\n", $t, "\n");
   }
 }

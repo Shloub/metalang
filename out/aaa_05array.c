@@ -17,7 +17,7 @@ int main(void){
   {
     printf("%d", i);
     j += i;
-    a[i] = (i % 2) == 0;
+    a[i] = i % 2 == 0;
   }
   printf("%d ", j);
   int c = a[0];

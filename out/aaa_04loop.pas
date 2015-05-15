@@ -8,9 +8,9 @@ begin
     if i % j == 5 then return true end
   end }
   j := i - 2;
-  while j <= (i + 2) do
+  while j <= i + 2 do
   begin
-    if (i Mod j) = 5
+    if i Mod j = 5
     then
       begin
         exit(true);

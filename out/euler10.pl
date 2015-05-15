@@ -6,7 +6,7 @@ sub eratostene{
   foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
       $sum = $sum + $i;
-      if (int(($max0) / ($i)) > $i) {
+      if (int($max0 / $i) > $i) {
         my $j = $i * $i;
         while ($j < $max0 && $j > 0)
         {

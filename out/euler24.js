@@ -12,7 +12,7 @@ function show(lim, nth){
     t[i] = i;
   var pris = new Array(lim);
   for (var j = 0 ; j <= lim - 1; j++)
-    pris[j] = 0;
+    pris[j] = false;
   for (var k = 1 ; k <= lim - 1; k++)
   {
     var n = fact(lim - k);
@@ -24,7 +24,7 @@ function show(lim, nth){
       if (nchiffre == 0)
       {
         util.print(l);
-        pris[l] = 1;
+        pris[l] = true;
       }
       nchiffre --;
     }

@@ -27,18 +27,22 @@ def read_int() : Int = {
     return out0;
   }
   
-  def rev2(empty : Intlist, acc : Intlist, torev : Intlist): Intlist = {
-    if (torev == empty)
+  def is_empty(foo : Intlist): Boolean = {
+    return true;
+  }
+  
+  def rev2(acc : Intlist, torev : Intlist): Intlist = {
+    if (is_empty(torev))
       return acc;
     else
     {
       var acc2: Intlist = new Intlist(torev.head, acc);
-      return rev2(empty, acc, torev.tail);
+      return rev2(acc, torev.tail);
     }
   }
   
   def rev(empty : Intlist, torev : Intlist): Intlist = {
-    return rev2(empty, empty, torev);
+    return rev2(empty, torev);
   }
   
   def test(empty : Intlist){

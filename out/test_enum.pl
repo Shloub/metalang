@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
 
-my $foo_val = Foo;
+my $foo_val = "Foo";
 
 

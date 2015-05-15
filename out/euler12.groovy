@@ -22,7 +22,7 @@ int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
   for (int i = 0 ; i < nprimes; i++)
   {
     int d = primes[i]
-    while ((n % d) == 0)
+    while (n % d == 0)
     {
       t[d] = t[d] + 1
       n /= d;
@@ -62,7 +62,7 @@ int find(int ndiv2)
       if (primesFactors[i] != 0)
       ndivs *= 1 + primesFactors[i];
     if (ndivs > ndiv2)
-      return (int)((n * (n + 1)) / 2)
+      return (n * (n + 1)).intdiv(2)
     /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
   }
   return 0

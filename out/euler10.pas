@@ -14,7 +14,7 @@ begin
     then
       begin
         sum := sum + i;
-        if (max0 Div i) > i
+        if max0 Div i > i
         then
           begin
             j := i * i;

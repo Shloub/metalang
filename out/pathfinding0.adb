@@ -58,7 +58,7 @@ begin
   then
     return 0;
   else
-    if posX < 0 or else posY < 0 or else posX >= x or else posY >= y
+    if ((posX < 0 or else posY < 0) or else posX >= x) or else posY >= y
     then
       return x * y * 10;
     else

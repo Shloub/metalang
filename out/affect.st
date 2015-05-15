@@ -55,11 +55,11 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t3 :=  t2.
     t :=  t2.
     t2 :=  t3.
-    t blah:  ((t blah) + 1).
+    t blah:  (t blah + 1).
     len := 1.
     cache0 := Array new: len.
     (0 to: (len - 1)) do: [:i|
-      cache0 at: (i + 1) put:  (0-(i)).
+      cache0 at: (i + 1) put:  (0 - i).
     ].
     cache1 := Array new: len.
     (0 to: (len - 1)) do: [:j|
@@ -68,7 +68,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     cache2 := cache0.
     cache0 :=  cache1.
     cache2 :=  cache0.
-    ^ ((t foo) + ((t blah) * (t bar)) + ((t bar) * (t foo)))
+    ^ t foo + (t blah * t bar) + (t bar * t foo)
   ]
   
   main [
@@ -81,8 +81,8 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t2 bar: self read_int.
     self skip.
     t2 blah: self read_int.
-    ((self result: t t2_: t2)) display.
-    ((t blah)) display.
+    (self result: t t2_: t2) display.
+    t blah display.
     ]
 ]
 Eval [ (affect new) main. ]

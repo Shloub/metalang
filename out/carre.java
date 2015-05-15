@@ -23,8 +23,7 @@ public class carre
       for (int iy = 1 ; iy < y; iy++)
         if (tab[iy][ix] == 1)
       tab[iy][ix] =
-      Math.min(Math.min(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) +
-      1;
+      Math.min(Math.min(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1;
     for (int jy = 0 ; jy < y; jy++)
     {
       for (int jx = 0 ; jx < x; jx++)

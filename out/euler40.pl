@@ -20,9 +20,9 @@ sub e{
     if ($n >= $t->[$i] * $i) {
       $n = $n - $t->[$i] * $i;
     }else{
-      my $nombre = exp0(10, $i - 1) + int(($n) / ($i));
+      my $nombre = exp0(10, $i - 1) + int($n / $i);
       my $chiffre = $i - 1 - remainder($n, $i);
-      return remainder(int(($nombre) / (exp0(10, $chiffre))), 10);
+      return remainder(int($nombre / exp0(10, $chiffre)), 10);
     }
   }
   return -1;

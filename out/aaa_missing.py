@@ -8,9 +8,9 @@ def result( len, tab ):
       tab2[tab[i1]] = True
     print("")
     for i2 in range(0, len):
-      if not (tab2[i2]):
+      if not tab2[i2]:
         return i2
-    return -(1)
+    return -1
 
 len = int(input())
 print("%d\n" % ( len ), end='')

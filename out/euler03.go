@@ -11,7 +11,7 @@ func main() {
     var b int = b0
     var found bool = false
     for b <= sqrtia{
-      if (a % b) == 0 {
+      if a % b == 0 {
         a /= b;
           b0 = b;
           b = a;

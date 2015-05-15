@@ -1,6 +1,6 @@
 let rec find n m x y dx dy =
   if x < 0 || x = 20 || y < 0 || y = 20 then
-    -1
+    - 1
   else if n = 0 then
     1
   else
@@ -14,17 +14,17 @@ begin
     else if i = 1 then
       (1, 0)
     else if i = 2 then
-      (0, -1)
+      (0, - 1)
     else if i = 3 then
-      (-1, 0)
+      (- 1, 0)
     else if i = 4 then
       (1, 1)
     else if i = 5 then
-      (1, -1)
+      (1, - 1)
     else if i = 6 then
-      (-1, 1)
+      (- 1, 1)
     else
-      (-1, -1)) in
+      (- 1, - 1)) in
   let max0 = ref( 0 ) in
   let m = Array.init 20 (fun _c ->
     let e = Array.init 20 (fun _f ->

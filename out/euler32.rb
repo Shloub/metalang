@@ -75,7 +75,7 @@ for e in (1 ..  9) do
 =end
 
                     product = (a * 10 + b) * (c * 100 + d * 10 + e)
-                    if not(counted[product]) && okdigits(allowed, (product.to_f / 10).to_i) then
+                    if !counted[product] && okdigits(allowed, (product.to_f / 10).to_i) then
                       counted[product] = true
                       count += product
                       printf "%d ", product
@@ -86,7 +86,7 @@ for e in (1 ..  9) do
 =end
 
                     product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-                    if not(counted[product2]) && okdigits(allowed, (product2.to_f / 10).to_i) then
+                    if !counted[product2] && okdigits(allowed, (product2.to_f / 10).to_i) then
                       counted[product2] = true
                       count += product2
                       printf "%d ", product2

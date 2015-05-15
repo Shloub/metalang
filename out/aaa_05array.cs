@@ -21,7 +21,7 @@ public class aaa_05array
     {
       Console.Write(i);
       j += i;
-      a[i] = (i % 2) == 0;
+      a[i] = i % 2 == 0;
     }
     Console.Write("" + j + " ");
     bool c = a[0];

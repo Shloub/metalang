@@ -65,7 +65,7 @@ End Function
     ElseIf i <= Asc("z"C) AndAlso i >= Asc("a"C) Then
       Return i - Asc("a"C)
     Else
-      Return - 1
+      Return -1
     End If
   End Function
   
@@ -76,7 +76,7 @@ End Function
   Sub crypte(ByVal taille_cle as Integer, ByRef cle as Char(), ByVal taille as Integer, ByRef message as Char())
     For  i As Integer  = 0 to  taille - 1
       Dim lettre As Integer = position_alphabet(message(i))
-      If lettre <> - 1 Then
+      If lettre <> -1 Then
         Dim addon As Integer = position_alphabet(cle(i Mod taille_cle))
         Dim new0 As Integer = (addon + lettre) Mod 26
         message(i) = of_position_alphabet(new0)

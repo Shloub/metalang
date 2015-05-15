@@ -14,20 +14,24 @@ struct intlist * cons(struct intlist * list, int i){
   return out0;
 }
 
-struct intlist * rev2(struct intlist * empty, struct intlist * acc, struct intlist * torev){
-  if (torev == empty)
+int is_empty(struct intlist * foo){
+  return 1;
+}
+
+struct intlist * rev2(struct intlist * acc, struct intlist * torev){
+  if (is_empty(torev))
     return acc;
   else
   {
     struct intlist * acc2 = malloc (sizeof(acc2) );
     acc2->head=torev->head;
     acc2->tail=acc;
-    return rev2(empty, acc, torev->tail);
+    return rev2(acc, torev->tail);
   }
 }
 
 struct intlist * rev(struct intlist * empty, struct intlist * torev){
-  return rev2(empty, empty, torev);
+  return rev2(empty, torev);
 }
 
 void test(struct intlist * empty){

@@ -15,7 +15,7 @@ tab4 = [*0..strlen - 1].map { |toto|
   tmpc=scanf("%c")[0]
   c = tmpc.ord
   if tmpc != " " then
-    c = mod((c - "a".ord) + 13, 26) + "a".ord
+    c = mod(c - "a".ord + 13, 26) + "a".ord
   end
   next ((c).chr)
   }

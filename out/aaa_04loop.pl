@@ -14,7 +14,7 @@ sub h{
   my $j = $i - 2;
   while ($j <= $i + 2)
   {
-    if ((remainder($i, $j)) eq 5) {
+    if (remainder($i, $j) eq 5) {
       return 1;
     }
     $j = $j + 1;

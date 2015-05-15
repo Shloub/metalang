@@ -50,24 +50,28 @@ End Function
     Return out0
   End Function
   
-  Function rev2(ByRef empty as intlist, ByRef acc as intlist, ByRef torev as intlist) As intlist
-    If Object.ReferenceEquals(torev, empty) Then
+  Function is_empty(ByRef foo as intlist) As Boolean
+    Return true
+  End Function
+  
+  Function rev2(ByRef acc as intlist, ByRef torev as intlist) As intlist
+    If is_empty(torev) Then
       Return acc
     Else
       Dim acc2 As intlist = new intlist()
       acc2.head = torev.head
       acc2.tail = acc
-      Return rev2(empty, acc, torev.tail)
+      Return rev2(acc, torev.tail)
     End If
   End Function
   
   Function rev(ByRef empty as intlist, ByRef torev as intlist) As intlist
-    Return rev2(empty, empty, torev)
+    Return rev2(empty, torev)
   End Function
   
   Sub test(ByRef empty as intlist)
     Dim list As intlist = empty
-    Dim i As Integer = - 1
+    Dim i As Integer = -1
     Do While i <> 0
       i = readInt()
       If i <> 0 Then

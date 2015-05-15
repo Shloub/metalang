@@ -9,7 +9,7 @@ int result(int sum, int[] t, int maxIndex, int[][] cache)
   else
   {
     int out0 = 0
-    int div = (int)(sum / t[maxIndex])
+    int div = sum.intdiv(t[maxIndex])
     for (int i = 0 ; i <= div; i ++)
       out0 += result(sum - i * t[maxIndex], t, maxIndex - 1, cache);
     cache[sum][maxIndex] = out0

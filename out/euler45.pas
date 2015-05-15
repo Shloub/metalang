@@ -2,7 +2,7 @@ program euler45;
 
 function triangle(n : Longint) : Longint;
 begin
-  if (n Mod 2) = 0
+  if n Mod 2 = 0
   then
     begin
       exit((n Div 2) * (n + 1));
@@ -15,7 +15,7 @@ end;
 
 function penta(n : Longint) : Longint;
 begin
-  if (n Mod 2) = 0
+  if n Mod 2 = 0
   then
     begin
       exit((n Div 2) * (3 * n - 1));
@@ -36,7 +36,7 @@ var
   c : Longint;
   p : Longint;
 begin
-  if b = (a + 1)
+  if b = a + 1
   then
     begin
       exit((penta(a) = n) or (penta(b) = n));
@@ -63,7 +63,7 @@ var
   c : Longint;
   p : Longint;
 begin
-  if b = (a + 1)
+  if b = a + 1
   then
     begin
       exit((hexa(a) = n) or (hexa(b) = n));

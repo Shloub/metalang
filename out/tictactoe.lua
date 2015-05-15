@@ -22,9 +22,9 @@ function print_state( g )
   io.write("\n|")
   for y = 0,2 do
     for x = 0,2 do
-      if g.cases[x][y] == 0 then
+      if g.cases[x + 1][y + 1] == 0 then
         io.write(" ")
-      elseif g.cases[x][y] == 1
+      elseif g.cases[x + 1][y + 1] == 1
       then
         io.write("O")
       else
@@ -48,12 +48,12 @@ function eval0( g )
     local col = -1
     local lin = -1
     for x = 0,2 do
-      if g.cases[x][y] == 0
+      if g.cases[x + 1][y + 1] == 0
       then
         freecase = freecase + 1;
       end
-      local colv = g.cases[x][y]
-      local linv = g.cases[y][x]
+      local colv = g.cases[x + 1][y + 1]
+      local linv = g.cases[y + 1][x + 1]
       if col == -1 and colv ~= 0 then
         col = colv;
       elseif colv ~= col
@@ -75,11 +75,13 @@ function eval0( g )
     end
   end
   for x = 1,2 do
-    if g.cases[0][0] == x and g.cases[1][1] == x and g.cases[2][2] == x
+    if
+    g.cases[0 + 1][0 + 1] == x and g.cases[1 + 1][1 + 1] == x and g.cases[2 + 1][2 + 1] == x
     then
       win = x;
     end
-    if g.cases[0][2] == x and g.cases[1][1] == x and g.cases[2][0] == x
+    if
+    g.cases[0 + 1][2 + 1] == x and g.cases[1 + 1][1 + 1] == x and g.cases[2 + 1][0 + 1] == x
     then
       win = x;
     end
@@ -102,7 +104,7 @@ function apply_move_xy( x, y, g )
   then
     player = 1;
   end
-  g.cases[x][y] = player;
+  g.cases[x + 1][y + 1] = player;
   g.firstToPlay = not(g.firstToPlay);
 end
 
@@ -111,7 +113,7 @@ function apply_move( m, g )
 end
 
 function cancel_move_xy( x, y, g )
-  g.cases[x][y] = 0;
+  g.cases[x + 1][y + 1] = 0;
   g.firstToPlay = not(g.firstToPlay);
   g.ended = false;
 end
@@ -121,7 +123,7 @@ function cancel_move( m, g )
 end
 
 function can_move_xy( x, y, g )
-  return g.cases[x][y] == 0
+  return g.cases[x + 1][y + 1] == 0
 end
 
 function can_move( m, g )
@@ -150,7 +152,7 @@ function minmax( g )
         local currentNote = minmax(g)
         cancel_move_xy(x, y, g);
         --[[ Minimum ou Maximum selon le coté ou l'on joue--]]
-        if (currentNote > maxNote) == g.firstToPlay
+        if currentNote > maxNote == g.firstToPlay
         then
           maxNote = currentNote;
         end
@@ -164,8 +166,7 @@ end
 Renvoie le coup de l'IA
 --]]
 function play( g )
-  local minMove = {x=0,
-                   y=0}
+  local minMove = {x=0, y=0}
   local minNote = 10000
   for x = 0,2 do
     for y = 0,2 do
@@ -193,14 +194,11 @@ function init0(  )
   for i = 0,3 - 1 do
     local tab = {}
     for j = 0,3 - 1 do
-      tab[j] = 0;
+      tab[j + 1] = 0;
     end
-    cases[i] = tab;
+    cases[i + 1] = tab;
   end
-  return {cases=cases,
-          firstToPlay=true,
-          note=0,
-          ended=false}
+  return {cases=cases, firstToPlay=true, note=0, ended=false}
 end
 
 function read_move(  )
@@ -208,17 +206,14 @@ function read_move(  )
   stdinsep()
   local y = readint()
   stdinsep()
-  return {x=x,
-          y=y}
+  return {x=x, y=y}
 end
 
 
 for i = 0,1 do
   local state = init0()
-  apply_move({x=1,
-              y=1}, state);
-  apply_move({x=0,
-              y=0}, state);
+  apply_move({x=1, y=1}, state);
+  apply_move({x=0, y=0}, state);
   while not(state.ended)
   do
   print_state(state);

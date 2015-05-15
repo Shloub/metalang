@@ -17,25 +17,28 @@ sub readint {
 
 sub cons{
   my($list, $i) = @_;
-  my $out0 = {"head" => $i,
-              "tail" => $list};
+  my $out0 = {"head" => $i, "tail" => $list};
   return $out0;
 }
 
+sub is_empty{
+  my($foo) = @_;
+  return 1;
+}
+
 sub rev2{
-  my($empty, $acc, $torev) = @_;
-  if ($torev eq $empty) {
+  my($acc, $torev) = @_;
+  if (is_empty($torev)) {
     return $acc;
   }else{
-    my $acc2 = {"head" => $torev->{"head"},
-                "tail" => $acc};
-    return rev2($empty, $acc, $torev->{"tail"});
+    my $acc2 = {"head" => $torev->{"head"}, "tail" => $acc};
+    return rev2($acc, $torev->{"tail"});
   }
 }
 
 sub rev{
   my($empty, $torev) = @_;
-  return rev2($empty, $empty, $torev);
+  return rev2($empty, $torev);
 }
 
 sub test{

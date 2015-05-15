@@ -23,31 +23,22 @@ create bufferc 128 allot
   0 BEGIN current-char [char] 0 >= current-char [char] 9 <= AND
   WHILE 10 * current-char [char] 0 - + next-char REPEAT * ;
 : devine0 { nombre tab len }
-  tab 0 cells +
-   @ { min0 }
-  tab 1 cells +
-   @ { max0 }
+  tab  0 cells +  @ { min0 }
+  tab  1 cells +  @ { max0 }
   len 1 - 2 BEGIN 2dup >= WHILE DUP { i }
-    tab i cells +
-     @ max0 > tab i cells +
-     @ min0 < OR
+    tab  i cells +  @ max0 > tab  i cells +  @ min0 < OR
     IF
       DROP DROP false exit
     THEN
-    tab i cells +
-     @ nombre <
+    tab  i cells +  @ nombre <
     IF
-      tab i cells +
-       @ TO min0
+      tab  i cells +  @ TO min0
     THEN
-    tab i cells +
-     @ nombre >
+    tab  i cells +  @ nombre >
     IF
-      tab i cells +
-       @ TO max0
+      tab  i cells +  @ TO max0
     THEN
-    tab i cells +
-     @ nombre = len i 1 + <> AND
+    tab  i cells +  @ nombre = len i 1 + <> AND
     IF
       DROP DROP false exit
     THEN
@@ -64,8 +55,7 @@ create bufferc 128 allot
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     read-int { tmp }
     skipspaces
-    tmp tab i cells +
-     !
+    tmp tab  i cells +  !
    1 + REPEAT 2DROP
   nombre tab len devine0 { a }
   a

@@ -22,9 +22,9 @@ Object subclass: dichoexp [
     ((b rem: 2) = 0)
       ifTrue:[
              o := (self exp0: a b: (b quo: 2)).
-             ^ (o * o)
+             ^ o * o
       ]
-      ifFalse:[^ (a * (self exp0: a b: (b - 1)))].
+      ifFalse:[^ a * (self exp0: a b: (b - 1))].
   ]
   
   main [
@@ -33,7 +33,7 @@ Object subclass: dichoexp [
     a := self read_int.
     self skip.
     b := self read_int.
-    ((self exp0: a b: b)) display.
+    (self exp0: a b: b) display.
     ]
 ]
 Eval [ (dichoexp new) main. ]

@@ -10,7 +10,7 @@ begin
   let a = Array.init 5 (fun i ->
     Printf.printf "%d" i;
     j := (!j) + i;
-    (i mod 2) = 0) in
+    i mod 2 = 0) in
   Printf.printf "%d " (!j);
   let c = a.(0) in
   if c then

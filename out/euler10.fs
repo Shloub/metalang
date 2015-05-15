@@ -2,8 +2,7 @@
 : eratostene { t max0 }
   0 { sum }
   max0 1 - 2 BEGIN 2dup >= WHILE DUP { i }
-    t i cells +
-     @ i =
+    t  i cells +  @ i =
     IF
       sum i + TO sum
       max0 i // i >
@@ -12,8 +11,7 @@
         BEGIN
           j max0 < j 0 > AND
         WHILE
-          0 t j cells +
-           !
+          0 t  j cells +  !
           j i + TO j
         REPEAT
       THEN
@@ -28,11 +26,9 @@
   
   HERE n cells allot { t }
   n 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    i t i cells +
-     !
+    i t  i cells +  !
    1 + REPEAT 2DROP
-  0 t 1 cells +
-   !
+  0 t  1 cells +  !
   t n eratostene s>d 0 d.r
   S\" \n" TYPE
   ;

@@ -7,7 +7,7 @@ var
 begin
   for i := 0 to  size - 1 do
   begin
-    if (n Mod t[i]) = 0
+    if n Mod t[i] = 0
     then
       begin
         exit(true);

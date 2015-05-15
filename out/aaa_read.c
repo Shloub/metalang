@@ -37,7 +37,7 @@ int main(void){
     int c = (int)(tmpc);
     printf("%c:%d ", tmpc, c);
     if (tmpc != ' ')
-      c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+      c = (c - (int)('a') + 13) % 26 + (int)('a');
     tab4[toto] = (char)(c);
   }
   for (j = 0 ; j < strlen; j++)

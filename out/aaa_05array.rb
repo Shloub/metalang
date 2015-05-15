@@ -14,7 +14,7 @@ j = 0
 a = [*0..5 - 1].map { |i|
   printf "%d", i
   j += i
-  next ((mod(i, 2)) == 0)
+  next (mod(i, 2) == 0)
   }
 printf "%d ", j
 c = a[0]

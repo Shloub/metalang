@@ -2,7 +2,7 @@ Object subclass: euler33 [
    pgcd: a b: b [|reste d c|
     c := ((a) min: (b)).
     d := ((a) max: (b)).
-    reste := (d rem: c).
+    reste := d rem: c.
     (reste = 0)
       ifTrue:[^ c]
       ifFalse:[^ (self pgcd: c b: reste)].
@@ -14,15 +14,15 @@ Object subclass: euler33 [
     (1 to: 9) do: [:i|
       (1 to: 9) do: [:j|
         (1 to: 9) do: [:k|
-          ((i ~= j) & (j ~= k))
+          ((i ~= j) and: [j ~= k])
             ifTrue:[
-                   a := (i * 10 + j).
-                   b := (j * 10 + k).
+                   a := i * 10 + j.
+                   b := j * 10 + k.
                    (a * k = (i * b))
                      ifTrue:[
-                            (a) display.
+                            a display.
                             '/' display.
-                            (b) display.
+                            b display.
                             '
 ' display.
                             top :=  (top * a).
@@ -32,14 +32,14 @@ Object subclass: euler33 [
         ].
       ].
     ].
-    (top) display.
+    top display.
     '/' display.
-    (bottom) display.
+    bottom display.
     '
 ' display.
     p := (self pgcd: top b: bottom).
     'pgcd=' display.
-    (p) display.
+    p display.
     '
 ' display.
     (bottom quo: p) display.

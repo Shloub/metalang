@@ -31,12 +31,12 @@ read int, read char et skip
   main [
     |tmpi2 tmpi1 tmpc tab4 tab2 tab strlen len c|len := self read_int.
     self skip.
-    (len) display.
+    len display.
     '=len
 ' display.
     len :=  (len * 2).
     'len*2=' display.
-    (len) display.
+    len display.
     '
 ' display.
     len :=  (len quo: 2).
@@ -44,9 +44,9 @@ read int, read char et skip
     (0 to: (len - 1)) do: [:i|
       tmpi1 := self read_int.
       self skip.
-      (i) display.
+      i display.
       '=>' display.
-      (tmpi1) display.
+      tmpi1 display.
       ' ' display.
       tab at: (i + 1) put:  tmpi1.
     ].
@@ -56,31 +56,31 @@ read int, read char et skip
     (0 to: (len - 1)) do: [:i_|
       tmpi2 := self read_int.
       self skip.
-      (i_) display.
+      i_ display.
       '==>' display.
-      (tmpi2) display.
+      tmpi2 display.
       ' ' display.
       tab2 at: (i_ + 1) put:  tmpi2.
     ].
     strlen := self read_int.
     self skip.
-    (strlen) display.
+    strlen display.
     '=strlen
 ' display.
     tab4 := Array new: strlen.
     (0 to: (strlen - 1)) do: [:toto|
       tmpc := self read_char.
       c := ((tmpc) asciiValue).
-      (tmpc) display.
+      tmpc display.
       ':' display.
-      (c) display.
+      c display.
       ' ' display.
       (tmpc ~= $ )
         ifTrue:[c :=  (((c - (($a) asciiValue) + 13) rem: 26) + (($a) asciiValue)).].
       tab4 at: (toto + 1) put:  ((c) asCharacter).
     ].
     (0 to: (strlen - 1)) do: [:j|
-      ((tab4 at: (j + 1))) display.
+      (tab4 at: (j + 1)) display.
     ].
     ]
 ]

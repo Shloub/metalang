@@ -15,7 +15,7 @@ func e(t []int, n int) int{
       } else {
         var nombre int = exp0(10, i - 1) + n / i
         var chiffre int = i - 1 - n % i
-        return (nombre / exp0(10, chiffre)) % 10
+        return nombre / exp0(10, chiffre) % 10
       }
   }
   return -1

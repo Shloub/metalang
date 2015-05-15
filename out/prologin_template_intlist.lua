@@ -1,17 +1,15 @@
 
 function readintline()
   local tab = {}
-  local i = 0
   for a in string.gmatch(io.read("*l"), "-?%d+") do
-    tab[i] = tonumber(a)
-    i = i + 1
+    table.insert(tab, tonumber(a))
   end
   return tab
 end
 function programme_candidat( tableau, taille )
   local out0 = 0
   for i = 0,taille - 1 do
-    out0 = out0 + tableau[i];
+    out0 = out0 + tableau[i + 1];
   end
   return out0
 end

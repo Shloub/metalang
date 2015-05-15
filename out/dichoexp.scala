@@ -25,7 +25,7 @@ def skip() {
   def exp0(a : Int, b : Int): Int = {
     if (b == 0)
       return 1;
-    if ((b % 2) == 0)
+    if (b % 2 == 0)
     {
       var o: Int = exp0(a, b / 2);
       return o * o;

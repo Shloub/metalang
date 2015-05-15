@@ -1,5 +1,5 @@
 let is_leap year =
-  (year mod 400) = 0 || ((year mod 100) <> 0 && (year mod 4) = 0)
+  year mod 400 = 0 || year mod 100 <> 0 && year mod 4 = 0
 
 let ndayinmonth month year =
   if month = 0 then
@@ -51,7 +51,7 @@ begin
           month := 0;
           year := (!year) + 1
         end;
-      if ((!dayofweek) mod 7) = 6 then
+      if (!dayofweek) mod 7 = 6 then
         count := (!count) + 1
   done;
   Printf.printf "%d\n" (!count)

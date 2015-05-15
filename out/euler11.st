@@ -24,11 +24,11 @@ Object subclass: euler11 [
     ]
   ]
    find: n m: m x: x y: y dx: dx dy: dy [
-    ((((x < 0) | (x = 20)) | (y < 0)) | (y = 20))
-      ifTrue:[^ (0-(1))]
+    ((((x < 0) or: [x = 20]) or: [y < 0]) or: [y = 20])
+      ifTrue:[^ 0 - 1]
       ifFalse:[(n = 0)
                 ifTrue:[^ 1]
-                ifFalse:[^ (((m at: (y + 1)) at: (x + 1)) * (self find: (n - 1) m: m x: (x + dx) y: (y + dy) dx: dx dy: dy))].].
+                ifFalse:[^ ((m at: (y + 1)) at: (x + 1)) * (self find: (n - 1) m: m x: (x + dx) y: (y + dy) dx: dx dy: dy)].].
   ]
   
   
@@ -53,13 +53,13 @@ Object subclass: euler11 [
                             ifTrue:[
                                    e := tuple_int_int new.
                                    e tuple_int_int_field_0: 0.
-                                   e tuple_int_int_field_1: (0-(1)).
+                                   e tuple_int_int_field_1: (0 - 1).
                                    directions at: (i + 1) put:  e.
                             ]
                             ifFalse:[(i = 3)
                                       ifTrue:[
                                              f := tuple_int_int new.
-                                             f tuple_int_int_field_0: (0-(1)).
+                                             f tuple_int_int_field_0: (0 - 1).
                                              f tuple_int_int_field_1: 0.
                                              directions at: (i + 1) put:  f.
                                       ]
@@ -74,20 +74,20 @@ Object subclass: euler11 [
                                                           ifTrue:[
                                                                  h := tuple_int_int new.
                                                                  h tuple_int_int_field_0: 1.
-                                                                 h tuple_int_int_field_1: (0-(1)).
+                                                                 h tuple_int_int_field_1: (0 - 1).
                                                                  directions at: (i + 1) put:  h.
                                                           ]
                                                           ifFalse:[(i = 6)
                                                                     ifTrue:[
                                                                            k := tuple_int_int new.
-                                                                           k tuple_int_int_field_0: (0-(1)).
+                                                                           k tuple_int_int_field_0: (0 - 1).
                                                                            k tuple_int_int_field_1: 1.
                                                                            directions at: (i + 1) put:  k.
                                                                     ]
                                                                     ifFalse:[
                                                                             l := tuple_int_int new.
-                                                                            l tuple_int_int_field_0: (0-(1)).
-                                                                            l tuple_int_int_field_1: (0-(1)).
+                                                                            l tuple_int_int_field_0: (0 - 1).
+                                                                            l tuple_int_int_field_1: (0 - 1).
                                                                             directions at: (i + 1) put:  l.
                                                                     ].].].].].].].
     ].
@@ -102,16 +102,16 @@ Object subclass: euler11 [
       m at: (o + 1) put:  p.
     ].
     (0 to: 7) do: [:j|
-      r := (directions at: (j + 1)).
-      dx := (r tuple_int_int_field_0).
-      dy := (r tuple_int_int_field_1).
+      r := directions at: (j + 1).
+      dx := r tuple_int_int_field_0.
+      dy := r tuple_int_int_field_1.
       (0 to: 19) do: [:x|
         (0 to: 19) do: [:y|
           max0 :=  ((max0) max: ((self find: 4 m: m x: x y: y dx: dx dy: dy))).
         ].
       ].
     ].
-    (max0) display.
+    max0 display.
     '
 ' display.
     ]

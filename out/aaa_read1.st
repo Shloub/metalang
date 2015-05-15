@@ -21,7 +21,7 @@ Object subclass: aaa_read1 [
     ].
     self skip.
     (0 to: 11) do: [:i|
-      ((str at: (i + 1))) display.
+      (str at: (i + 1)) display.
     ].
     ]
 ]

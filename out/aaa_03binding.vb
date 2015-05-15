@@ -4,7 +4,7 @@ Module aaa_03binding
 
   Function g(ByVal i as Integer) As Integer
     Dim j As Integer = i * 4
-    If (j Mod 2) = 1 Then
+    If j Mod 2 = 1 Then
       Return 0
     End If
     Return j

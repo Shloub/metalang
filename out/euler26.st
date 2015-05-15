@@ -2,13 +2,13 @@ Object subclass: euler26 [
    periode: restes c: c d: d b: b [|reste len chiffre a|
     len := c.
     a := d.
-    [(a ~= 0)] whileTrue:
+    [a ~= 0] whileTrue:
     [
-    chiffre := (a quo: b).
-    reste := (a rem: b).
+    chiffre := a quo: b.
+    reste := a rem: b.
     (0 to: (len - 1)) do: [:i|
       ((restes at: (i + 1)) = reste)
-        ifTrue:[^ (len - i)].
+        ifTrue:[^ len - i].
     ].
     restes at: (len + 1) put:  reste.
     len :=  (len + 1).
@@ -32,10 +32,10 @@ Object subclass: euler26 [
                m :=  p.
         ].
     ].
-    (mi) display.
+    mi display.
     '
 ' display.
-    (m) display.
+    m display.
     '
 ' display.
     ]

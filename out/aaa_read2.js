@@ -72,7 +72,7 @@ for (var i3 = 0 ; i3 <= strlen - 1; i3++)
   var c = tmpc.charCodeAt(0);
   util.print(tmpc, ":", c, " ");
   if (tmpc != ' ')
-    c = ~~(((c - 'a'.charCodeAt(0)) + 13) % 26) + 'a'.charCodeAt(0);
+    c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
   tab4[i3] = String.fromCharCode(c);
 }
 for (var j = 0 ; j <= strlen - 1; j++)

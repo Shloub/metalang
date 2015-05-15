@@ -1,7 +1,7 @@
 package main
 import "fmt"
 func is_leap(year int) bool{
-  return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0)
+  return year % 400 == 0 || year % 100 != 0 && year % 4 == 0
 }
 
 func ndayinmonth(month int, year int) int{
@@ -51,7 +51,7 @@ func main() {
       month = 0;
         year ++;
     }
-    if (dayofweek % 7) == 6 {
+    if dayofweek % 7 == 6 {
       count ++;
     }
   }

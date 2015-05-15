@@ -8,12 +8,12 @@ function periode( restes, len, a, b )
   local chiffre = trunc(a / b)
   local reste = math.mod(a, b)
   for i = 0,len - 1 do
-    if restes[i] == reste
+    if restes[i + 1] == reste
     then
       return len - i
     end
   end
-  restes[len] = reste;
+  restes[len + 1] = reste;
   len = len + 1;
   a = reste * 10;
   end
@@ -23,7 +23,7 @@ end
 
 local t = {}
 for j = 0,1000 - 1 do
-  t[j] = 0;
+  t[j + 1] = 0;
 end
 local m = 0
 local mi = 0

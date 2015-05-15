@@ -20,7 +20,7 @@ my $a = [];
 foreach my $i (0 .. 5 - 1) {
   print $i;
   $j = $j + $i;
-  $a->[$i] = (remainder($i, 2)) eq 0;
+  $a->[$i] = remainder($i, 2) eq 0;
 }
 print($j, " ");
 my $c = $a->[0];

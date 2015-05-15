@@ -13,12 +13,12 @@ end
 function pathfind_aux( cache, tab, len, pos )
   if pos >= len - 1 then
     return 0
-  elseif cache[pos] ~= -1
+  elseif cache[pos + 1] ~= -1
   then
-    return cache[pos]
+    return cache[pos + 1]
   else
-    cache[pos] = len * 2;
-    local posval = pathfind_aux(cache, tab, len, tab[pos])
+    cache[pos + 1] = len * 2;
+    local posval = pathfind_aux(cache, tab, len, tab[pos + 1])
     local oneval = pathfind_aux(cache, tab, len, pos + 1)
     local out0 = 0
     if posval < oneval
@@ -27,7 +27,7 @@ function pathfind_aux( cache, tab, len, pos )
     else
       out0 = 1 + oneval;
     end
-    cache[pos] = out0;
+    cache[pos + 1] = out0;
     return out0
   end
 end
@@ -35,7 +35,7 @@ end
 function pathfind( tab, len )
   local cache = {}
   for i = 0,len - 1 do
-    cache[i] = -1;
+    cache[i + 1] = -1;
   end
   return pathfind_aux(cache, tab, len, 0)
 end
@@ -49,7 +49,7 @@ for i = 0,len - 1 do
   local tmp = 0
   tmp = readint()
   stdinsep()
-  tab[i] = tmp;
+  tab[i + 1] = tmp;
 end
 local result = pathfind(tab, len)
 io.write(result)

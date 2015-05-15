@@ -46,7 +46,7 @@ def position_alphabet( c ):
     elif i <= ord('z') and i >= ord('a'):
       return i - ord('a')
     else:
-      return -(1)
+      return -1
 
 def of_position_alphabet( c ):
     return c + ord('a')
@@ -54,7 +54,7 @@ def of_position_alphabet( c ):
 def crypte( taille_cle, cle, taille, message ):
     for i in range(0, taille):
       lettre = position_alphabet(message[i])
-      if lettre != -(1):
+      if lettre != -1:
         addon = position_alphabet(cle[mod(i, taille_cle)])
         new0 = mod(addon + lettre, 26)
         message[i] = of_position_alphabet(new0)

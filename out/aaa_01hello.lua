@@ -6,7 +6,7 @@ end
 io.write("Hello World")
 local a = 5
 io.write(string.format("%d \n%dfoo", (4 + 6) * 2, a))
-local b = 1 + trunc(((1 + 1) * 2 * (3 + 8)) / 4) - (1 - 2) - 3 == 12 and true
+local b = 1 + trunc((1 + 1) * 2 * (3 + 8) / 4) - (1 - 2) - 3 == 12 and true
 if b
 then
   io.write("True")
@@ -21,19 +21,24 @@ then
 else
   io.write("False")
 end
-io.write(string.format("%d%d", trunc((trunc((4 + 1) / 3)) / (2 + 1)), trunc((trunc(
-                                                                              (4 *
-                                                                                1) / 3)) / (2 *
-                                                                                1))))
-local d = not(not(a == 0) and not(a == 4))
+io.write(" ")
+local d = (2 == 1) == false
 if d
 then
   io.write("True")
 else
   io.write("False")
 end
-local e = true and not(false) and not(true and false)
+io.write(string.format(" %d%d", trunc(trunc((4 + 1) / 3) / (2 + 1)), trunc(trunc(4 * 1 / 3) / 2 * 1)))
+local e = not(not(a == 0) and not(a == 4))
 if e
+then
+  io.write("True")
+else
+  io.write("False")
+end
+local f = true and not(false) and not(true and false)
+if f
 then
   io.write("True")
 else

@@ -14,9 +14,9 @@ begin
     tab[i] := 0;
   end;
   d := 2;
-  while (n <> 1) and ((d * d) <= n) do
+  while (n <> 1) and (d * d <= n) do
   begin
-    if (n Mod d) = 0
+    if n Mod d = 0
     then
       begin
         tab[d] := tab[d] + 1;

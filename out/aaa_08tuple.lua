@@ -9,7 +9,6 @@ end
 
 
 local bar_ = tonumber(io.read('*l'))
-local t = {foo=readintline(),
-           bar=bar_}
+local t = {foo=readintline(), bar=bar_}
 a, b = unpack(t.foo)
 io.write(string.format("%d %d %d\n", a, b, t.bar))

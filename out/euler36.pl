@@ -9,7 +9,7 @@ sub palindrome2{
   my($pow2, $n) = @_;
   my $t = [];
   foreach my $i (0 .. 20 - 1) {
-    $t->[$i] = (remainder(int(($n) / ($pow2->[$i])), 2)) eq 1;
+    $t->[$i] = remainder(int($n / $pow2->[$i]), 2) eq 1;
   }
   my $nnum = 0;
   foreach my $j (1 .. 19) {
@@ -17,7 +17,7 @@ sub palindrome2{
       $nnum = $j;
     }
   }
-  foreach my $k (0 .. int(($nnum) / (2))) {
+  foreach my $k (0 .. int($nnum / 2)) {
     if ($t->[$k] ne $t->[$nnum - $k]) {
       return ();
     }
@@ -29,7 +29,7 @@ my $p = 1;
 my $pow2 = [];
 foreach my $i (0 .. 20 - 1) {
   $p = $p * 2;
-  $pow2->[$i] = int(($p) / (2));
+  $pow2->[$i] = int($p / 2);
 }
 my $sum = 0;
 foreach my $d (1 .. 9) {

@@ -135,11 +135,11 @@ begin
     end if;
   end loop;
   for x in integer range 1..2 loop
-    if g.cases(0)(0) = x and then g.cases(1)(1) = x and then g.cases(2)(2) = x
+    if (g.cases(0)(0) = x and then g.cases(1)(1) = x) and then g.cases(2)(2) = x
     then
       win := x;
     end if;
-    if g.cases(0)(2) = x and then g.cases(1)(1) = x and then g.cases(2)(0) = x
+    if (g.cases(0)(2) = x and then g.cases(1)(1) = x) and then g.cases(2)(0) = x
     then
       win := x;
     end if;
@@ -169,7 +169,7 @@ begin
     player := 1;
   end if;
   g.cases(x)(y) := player;
-  g.firstToPlay := (not g.firstToPlay);
+  g.firstToPlay := not g.firstToPlay;
 end;
 
 procedure apply_move(m : in move_PTR; g : in gamestate_PTR) is
@@ -180,7 +180,7 @@ end;
 procedure cancel_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) is
 begin
   g.cases(x)(y) := 0;
-  g.firstToPlay := (not g.firstToPlay);
+  g.firstToPlay := not g.firstToPlay;
   g.ended := FALSE;
 end;
 
@@ -213,7 +213,7 @@ begin
     return g.note;
   end if;
   maxNote := (-10000);
-  if (not g.firstToPlay)
+  if not g.firstToPlay
   then
     maxNote := 10000;
   end if;
@@ -328,12 +328,12 @@ begin
     d.x := 0;
     d.y := 0;
     apply_move(d, state);
-    while (not state.ended) loop
+    while not state.ended loop
       print_state(state);
       apply_move(play(state), state);
       eval0(state);
       print_state(state);
-      if (not state.ended)
+      if not state.ended
       then
         apply_move(play(state), state);
         eval0(state);

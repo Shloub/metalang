@@ -18,18 +18,25 @@
           (if c
           (display "True")
           (display "False"))
-          (printf "~a~a" (quotient (quotient (+ 4 1) 3) (+ 2 1)) (quotient (quotient (* 4 1) 3) (* 2 1)))
-          (let ([d (not (and (not (eq? a 0)) (not (eq? a 4))))])
+          (display " ")
+          (let ([d (eq? (eq? 2 1) #f)])
           (block
             (if d
             (display "True")
             (display "False"))
-            (let ([e (and #t (not #f) (not (and #t #f)))])
+            (printf " ~a~a" (quotient (quotient (+ 4 1) 3) (+ 2 1)) (quotient (quotient (* 4 1) 3) (* 2 1)))
+            (let ([e (not (and (not (eq? a 0)) (not (eq? a 4))))])
             (block
               (if e
               (display "True")
               (display "False"))
-              (display "\n")
+              (let ([f (and #t (not #f) (not (and #t #f)))])
+              (block
+                (if f
+                (display "True")
+                (display "False"))
+                (display "\n")
+                ))
               ))
             ))
           ))

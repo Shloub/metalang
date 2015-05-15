@@ -12,7 +12,7 @@ def h( i )
 
     j = i - 2
     while j <= i + 2 do
-      if (mod(i, j)) == 5 then
+      if mod(i, j) == 5 then
         return (true)
       end
       j += 1

@@ -14,7 +14,7 @@ int main(void){
     scanf("%c", &tmpc);
     int c = (int)(tmpc);
     if (tmpc != ' ')
-      c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+      c = (c - (int)('a') + 13) % 26 + (int)('a');
     tab4[toto] = (char)(c);
   }
   for (j = 0 ; j < strlen; j++)

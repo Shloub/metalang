@@ -5,9 +5,9 @@ int exp0(int a, int b)
 {
   if (b == 0)
     return 1
-  if ((b % 2) == 0)
+  if (b % 2 == 0)
   {
-    int o = exp0(a, (int)(b / 2))
+    int o = exp0(a, b.intdiv(2))
     return o * o
   }
   else

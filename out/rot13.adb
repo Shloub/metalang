@@ -41,7 +41,7 @@ begin
     c := Character'Pos(tmpc);
     if tmpc /= ' '
     then
-      c := ((c - Character'Pos('a')) + 13) rem 26 + Character'Pos('a');
+      c := (c - Character'Pos('a') + 13) rem 26 + Character'Pos('a');
     end if;
     tab4(toto) := Character'Val(c);
   end loop;

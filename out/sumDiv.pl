@@ -48,7 +48,7 @@ sub sumdiv{
   foreach my $i (1 .. $n) {
     # La boucle : i est le diviseur potentiel
     
-    if ((remainder($n, $i)) eq 0) {
+    if (remainder($n, $i) eq 0) {
       # Si i divise 
       
       $out0 = $out0 + $i;

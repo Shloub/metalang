@@ -44,7 +44,7 @@ begin
     nth := nth Mod n;
     for l := 0 to  lim - 1 do
     begin
-      if not pris[l]
+      if not(pris[l])
       then
         begin
           if nchiffre = 0
@@ -59,7 +59,7 @@ begin
   end;
   for m := 0 to  lim - 1 do
   begin
-    if not pris[m]
+    if not(pris[m])
     then
       begin
         Write(m);

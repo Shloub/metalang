@@ -61,13 +61,13 @@ for e in range(1, 1 + 9):
                     allowed[d] = False
                     """ 2 * 3 digits """
                     product = (a * 10 + b) * (c * 100 + d * 10 + e)
-                    if not (counted[product]) and okdigits(allowed, math.trunc(product / 10)):
+                    if not counted[product] and okdigits(allowed, math.trunc(product / 10)):
                       counted[product] = True
                       count += product
                       print("%d " % ( product ), end='')
                     """ 1  * 4 digits """
                     product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-                    if not (counted[product2]) and okdigits(allowed, math.trunc(product2 / 10)):
+                    if not counted[product2] and okdigits(allowed, math.trunc(product2 / 10)):
                       counted[product2] = True
                       count += product2
                       print("%d " % ( product2 ), end='')

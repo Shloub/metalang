@@ -48,7 +48,7 @@ int main(){
     int c = (int)(tmpc);
     std::cout << tmpc << ":" << c << " ";
     if (tmpc != ' ')
-      c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+      c = (c - (int)('a') + 13) % 26 + (int)('a');
     tab4->at(i3) = (char)(c);
   }
   for (int j = 0 ; j < strlen; j++)

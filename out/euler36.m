@@ -6,7 +6,7 @@ int palindrome2(int* pow2, int n){
   int k, j, i;
   int *t = calloc( 20 , sizeof(int));
   for (i = 0 ; i < 20; i++)
-    t[i] = ((n / pow2[i]) % 2) == 1;
+    t[i] = n / pow2[i] % 2 == 1;
   int nnum = 0;
   for (j = 1 ; j <= 19; j++)
     if (t[j])

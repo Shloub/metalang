@@ -29,17 +29,14 @@ create bufferc 128 allot
   BEGIN
     i 0 >=
   WHILE
-    tab i cells +
-     @ { x }
+    tab  i cells +  @ { x }
     BEGIN
-      j 0 >= x tab len j - cells +
-       @ > AND
+      j 0 >= x tab  len j - cells +  @ > AND
     WHILE
       j 1 - TO j
     REPEAT
     j 1 + TO j
-    x tab len j - cells +
-     !
+    x tab  len j - cells +  !
     j max0 >
     IF
       j TO max0
@@ -58,8 +55,7 @@ create bufferc 128 allot
     0 { x }
     read-int TO x
     skipspaces
-    x tab i cells +
-     !
+    x tab  i cells +  !
    1 + REPEAT 2DROP
   tab len montagnes0 s>d 0 d.r
   ;

@@ -18,7 +18,7 @@ object aaa_05array
     {
       printf("%d", i);
       j = j + i;
-      a(i) = (i % 2) == 0;
+      a(i) = i % 2 == 0;
     }
     printf("%d ", j);
     var c: Boolean = a(0);

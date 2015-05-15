@@ -32,7 +32,7 @@ read int, read char et skip
       int c = (int)(tmpc);
       Console.Write("" + tmpc + ":" + c + " ");
       if (tmpc != (char)32)
-        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+        c = (c - (int)('a') + 13) % 26 + (int)('a');
       tab4[i3] = (char)(c);
     }
     for (int j = 0 ; j < strlen; j++)

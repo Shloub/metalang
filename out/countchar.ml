@@ -10,10 +10,10 @@ let () =
 begin
   let len = ref( 0 ) in
   Scanf.scanf "%d " (fun v_0 -> len := v_0);
-  let tofind = ref( '\x00' ) in
+  let tofind = ref( '\000' ) in
   Scanf.scanf "%c " (fun v_0 -> tofind := v_0);
   let tab = Array.init (!len) (fun _i ->
-    let tmp = ref( '\x00' ) in
+    let tmp = ref( '\000' ) in
     Scanf.scanf "%c" (fun v_0 -> tmp := v_0);
     (!tmp)) in
   let result = nth tab (!tofind) (!len) in

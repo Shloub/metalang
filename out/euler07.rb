@@ -4,7 +4,7 @@ def mod(x, y)
 end
 def divisible( n, t, size )
     for i in (0 ..  size - 1) do
-      if (mod(n, t[i])) == 0 then
+      if mod(n, t[i]) == 0 then
         return (true)
       end
     end

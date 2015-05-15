@@ -3,7 +3,7 @@ function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
 function next0( n )
-  if (math.mod(n, 2)) == 0
+  if math.mod(n, 2) == 0
   then
     return trunc(n / 2)
   else
@@ -16,19 +16,19 @@ function find( n, m )
     return 1
   elseif n >= 1000000 then
     return 1 + find(next0(n), m)
-  elseif m[n] ~= 0
+  elseif m[n + 1] ~= 0
   then
-    return m[n]
+    return m[n + 1]
   else
-    m[n] = 1 + find(next0(n), m);
-    return m[n]
+    m[n + 1] = 1 + find(next0(n), m);
+    return m[n + 1]
   end
 end
 
 
 local m = {}
 for j = 0,1000000 - 1 do
-  m[j] = 0;
+  m[j + 1] = 0;
 end
 local max0 = 0
 local maxi = 0

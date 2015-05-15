@@ -3,7 +3,7 @@ begin
   Printf.printf "Hello World";
   let a = 5 in
   Printf.printf "%d \n%dfoo" ((4 + 6) * 2) a;
-  let b = 1 + ((1 + 1) * 2 * (3 + 8)) / 4 - (1 - 2) - 3 = 12 && true in
+  let b = 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 = 12 && true in
   if b then
     Printf.printf "True"
   else
@@ -14,14 +14,20 @@ begin
     Printf.printf "True"
   else
     Printf.printf "False";
-  Printf.printf "%d%d" (((4 + 1) / 3) / (2 + 1)) (((4 * 1) / 3) / (2 * 1));
-  let d = not (not (a = 0) && not (a = 4)) in
+  Printf.printf " ";
+  let d = (2 = 1) = false in
   if d then
     Printf.printf "True"
   else
     Printf.printf "False";
-  let e = true && not false && not (true && false) in
+  Printf.printf " %d%d" ((4 + 1) / 3 / (2 + 1)) (4 * 1 / 3 / 2 * 1);
+  let e = not (not (a = 0) && not (a = 4)) in
   if e then
+    Printf.printf "True"
+  else
+    Printf.printf "False";
+  let f = true && not false && not (true && false) in
+  if f then
     Printf.printf "True"
   else
     Printf.printf "False";

@@ -27,8 +27,7 @@ create bufferc 128 allot
   a b + 2 // { m }
   a m =
   IF
-    tab a cells +
-     @ m =
+    tab  a cells +  @ m =
     IF
       b exit
     ELSE
@@ -40,18 +39,14 @@ create bufferc 128 allot
   BEGIN
     i j <
   WHILE
-    tab i cells +
-     @ { e }
+    tab  i cells +  @ { e }
     e m <
     IF
       i 1 + TO i
     ELSE
       j 1 - TO j
-      tab j cells +
-       @ tab i cells +
-       !
-      e tab j cells +
-       !
+      tab  j cells +  @ tab  i cells +  !
+      e tab  j cells +  !
     THEN
   REPEAT
   i m <
@@ -75,8 +70,7 @@ create bufferc 128 allot
     0 { tmp }
     read-int TO tmp
     skipspaces
-    tmp tab i cells +
-     !
+    tmp tab  i cells +  !
    1 + REPEAT 2DROP
   tab len plus_petit0 s>d 0 d.r
   ;

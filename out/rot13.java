@@ -23,7 +23,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
       char tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
       int c = (int)(tmpc);
       if (tmpc != ' ')
-        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+        c = (c - (int)('a') + 13) % 26 + (int)('a');
       tab4[toto] = (char)(c);
     }
     for (int j = 0 ; j < strlen; j++)

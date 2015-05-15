@@ -19,7 +19,7 @@ sub readspaces {
 
 sub go0{
   my($tab, $a, $b) = @_;
-  my $m = int(($a + $b) / (2));
+  my $m = int(($a + $b) / 2);
   if ($a eq $m) {
     if ($tab->[$a] eq $m) {
       return $b;

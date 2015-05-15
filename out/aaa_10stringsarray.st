@@ -12,15 +12,15 @@ Object subclass: aaa_10stringsarray [
   ]
   
    printstring: s  [
-    ((self idstring: s)) display.
+    (self idstring: s) display.
     '
 ' display.
   ]
   
    print_toto: t  [
-    ((t s)) display.
+    t s display.
     ' = ' display.
-    ((t v)) display.
+    t v display.
     '
 ' display.
   ]

@@ -15,7 +15,7 @@ def eratostene( t, max0 ):
 def fillPrimesFactors( t, n, primes, nprimes ):
     for i in range(0, nprimes):
       d = primes[i]
-      while ((mod(n, d)) == 0):
+      while (mod(n, d) == 0):
         t[d] = t[d] + 1
         n = math.trunc(n / d)
       if n == 1:
@@ -43,7 +43,7 @@ def find( ndiv2 ):
         if primesFactors[i] != 0:
           ndivs *= 1 + primesFactors[i]
       if ndivs > ndiv2:
-        return math.trunc((n * (n + 1)) / 2)
+        return math.trunc(n * (n + 1) / 2)
       """ print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" """
     return 0
 

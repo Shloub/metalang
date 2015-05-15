@@ -30,7 +30,7 @@ begin
     b := b0;
     found := FALSE;
     while b <= sqrtia loop
-      if (a rem b) = 0
+      if a rem b = 0
       then
         a := a / b;
         b0 := b;
@@ -40,7 +40,7 @@ begin
       end if;
       b := b + 1;
     end loop;
-    if (not found)
+    if not found
     then
       PInt(a);
       PString(new char_array'( To_C("" & Character'Val(10))));

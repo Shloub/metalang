@@ -53,19 +53,12 @@ foreach my $i6 (0 .. 1) {
               if ($allowed->[$d9]) {
                 $allowed->[$d9] = ();
                 foreach my $d10 (1 .. 9) {
-                  if ($allowed->[$d10] && (remainder($d6 * 100 + $d7 * 10 +
-                                            $d8, 11)) eq 0 && (remainder($d7 *
-                                                                100 + $d8 * 10 +
-                                                                $d9, 13)) eq 0 && (remainder($d8 *
-                                                                                100 +
-                                                                                $d9 *
-                                                                                10 +
-                                                                                $d10, 17)) eq 0) {
+                  if ($allowed->[$d10] && remainder($d6 * 100 + $d7 * 10 + $d8, 11) eq 0 && remainder($d7 * 100 + $d8 * 10 + $d9, 13) eq 0 && remainder($d8 * 100 + $d9 * 10 + $d10, 17) eq 0) {
                     $allowed->[$d10] = ();
                     foreach my $d5 (0 .. 9) {
                       if ($allowed->[$d5]) {
                         $allowed->[$d5] = ();
-                        if ((remainder($d5 * 100 + $d6 * 10 + $d7, 7)) eq 0) {
+                        if (remainder($d5 * 100 + $d6 * 10 + $d7, 7) eq 0) {
                           foreach my $i4 (0 .. 4) {
                             my $d4 = $i4 * 2;
                             if ($allowed->[$d4]) {
@@ -73,7 +66,7 @@ foreach my $i6 (0 .. 1) {
                               foreach my $d3 (0 .. 9) {
                                 if ($allowed->[$d3]) {
                                   $allowed->[$d3] = ();
-                                  if ((remainder($d3 + $d4 + $d5, 3)) eq 0) {
+                                  if (remainder($d3 + $d4 + $d5, 3) eq 0) {
                                     foreach my $d2 (0 .. 9) {
                                       if ($allowed->[$d2]) {
                                         $allowed->[$d2] = ();

@@ -2,8 +2,8 @@ import java.util.*
 
 int next0(int n)
 {
-  if ((n % 2) == 0)
-    return (int)(n / 2)
+  if (n % 2 == 0)
+    return n.intdiv(2)
   else
     return 3 * n + 1
 }

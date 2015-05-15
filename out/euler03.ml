@@ -10,7 +10,7 @@ begin
       let found = ref( false ) in
       while (!b) <= (!sqrtia)
       do
-          if ((!a) mod (!b)) = 0 then
+          if (!a) mod (!b) = 0 then
             begin
               a := (!a) / (!b);
               b0 := (!b);

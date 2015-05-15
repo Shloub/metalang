@@ -41,7 +41,7 @@ type u is Array (Integer range <>) of s_PTR;
 type u_PTR is access u;
 function find(n : in Integer; m : in u_PTR; x : in Integer; y : in Integer; dx : in Integer; dy : in Integer) return Integer is
 begin
-  if x < 0 or else x = 20 or else y < 0 or else y = 20
+  if ((x < 0 or else x = 20) or else y < 0) or else y = 20
   then
     return (-1);
   else

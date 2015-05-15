@@ -23,23 +23,28 @@ begin
   return out0;
 end;
 
-function rev2(empty : in intlist_PTR; acc : in intlist_PTR; torev : in intlist_PTR) return intlist_PTR is
+function is_empty(foo : in intlist_PTR) return Boolean is
+begin
+  return TRUE;
+end;
+
+function rev2(acc : in intlist_PTR; torev : in intlist_PTR) return intlist_PTR is
   acc2 : intlist_PTR;
 begin
-  if torev = empty
+  if is_empty(torev)
   then
     return acc;
   else
     acc2 := new intlist;
     acc2.head := torev.head;
     acc2.tail := acc;
-    return rev2(empty, acc, torev.tail);
+    return rev2(acc, torev.tail);
   end if;
 end;
 
 function rev(empty : in intlist_PTR; torev : in intlist_PTR) return intlist_PTR is
 begin
-  return rev2(empty, empty, torev);
+  return rev2(empty, torev);
 end;
 
 procedure test(empty : in intlist_PTR) is

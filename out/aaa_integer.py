@@ -19,5 +19,5 @@ print("%d\n" % ( i ), end='')
 """
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
 """
-print("%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n" % ( (math.trunc(117 / 17)), (math.trunc(117 / -(17))), (math.trunc(-(117) / 17)), (math.trunc(-(117) / -(17))), (mod(117, 17)), (mod(117, -(17))), (mod(-(117), 17)), (mod(-(117), -(17))) ), end='')
+print("%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n" % ( math.trunc(117 / 17), math.trunc(117 / -17), math.trunc(-117 / 17), math.trunc(-117 / -17), mod(117, 17), mod(117, -17), mod(-117, 17), mod(-117, -17) ), end='')
 

@@ -26,11 +26,11 @@ on le retrouve ici : http://projecteuler.net/problem=18
 	Cette fonction est récursive
 	"
     (y = (len - 1))
-      ifTrue:[^ ((tab at: (y + 1)) at: (x + 1))]
+      ifTrue:[^ (tab at: (y + 1)) at: (x + 1)]
       ifFalse:[(x > y)
-                ifTrue:[^ (0-(10000))]
+                ifTrue:[^ 0 - 10000]
                 ifFalse:[(((cache at: (y + 1)) at: (x + 1)) ~= 0)
-                          ifTrue:[^ ((cache at: (y + 1)) at: (x + 1))].].].
+                          ifTrue:[^ (cache at: (y + 1)) at: (x + 1)].].].
     result := 0.
     out0 := (self find0: len tab: tab cache: cache x: x y: (y + 1)).
     out1 := (self find0: len tab: tab cache: cache x: (x + 1) y: (y + 1)).
@@ -68,12 +68,12 @@ on le retrouve ici : http://projecteuler.net/problem=18
       ].
       tab at: (i + 1) put:  tab2.
     ].
-    ((self find: len tab: tab)) display.
+    (self find: len tab: tab) display.
     '
 ' display.
     (0 to: (len - 1)) do: [:k|
       (0 to: k) do: [:l|
-        (((tab at: (k + 1)) at: (l + 1))) display.
+        ((tab at: (k + 1)) at: (l + 1)) display.
         ' ' display.
       ].
       '

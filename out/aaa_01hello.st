@@ -1,32 +1,38 @@
 Object subclass: aaa_01hello [
   main [
-    |e d c b a|'Hello World' display.
+    |f e d c b a|'Hello World' display.
     a := 5.
     (4 + 6 * 2) display.
     ' ' display.
     '
 ' display.
-    (a) display.
+    a display.
     'foo' display.
     '' display.
-    b := ((1 + ((1 + 1 * 2 * (3 + 8)) quo: 4) - (1 - 2) - 3 = 12) & true).
+    b := (1 + ((1 + 1 * 2 * (3 + 8)) quo: 4) - (1 - 2) - 3 = 12) and: [true].
     b
       ifTrue:['True' display.]
       ifFalse:['False' display.].
     '
 ' display.
-    c := (3 * (4 + 5 + 6) * 2 = 45 = false).
+    c := 3 * (4 + 5 + 6) * 2 = 45 = false.
     c
       ifTrue:['True' display.]
       ifFalse:['False' display.].
-    (((4 + 1) quo: 3) quo: (2 + 1)) display.
-    (((4 * 1) quo: 3) quo: (2 * 1)) display.
-    d := ((((((a = 0)) not) & (((a = 4)) not))) not).
+    ' ' display.
+    d := 2 = 1 = false.
     d
       ifTrue:['True' display.]
       ifFalse:['False' display.].
-    e := ((true & ((false) not)) & (((true & false)) not)).
+    ' ' display.
+    (((4 + 1) quo: 3) quo: (2 + 1)) display.
+    (((4 * 1) quo: 3) quo: (2 * 1)) display.
+    e := (((a = 0) not) and: [(a = 4) not]) not.
     e
+      ifTrue:['True' display.]
+      ifFalse:['False' display.].
+    f := (true and: [false not]) and: [(true and: [false]) not].
+    f
       ifTrue:['True' display.]
       ifFalse:['False' display.].
     '

@@ -45,7 +45,7 @@ def sumdiv( n )
  La boucle : i est le diviseur potentiel
 =end
 
-      if (mod(n, i)) == 0 then
+      if mod(n, i) == 0 then
         
 =begin
  Si i divise 

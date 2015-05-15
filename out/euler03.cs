@@ -15,7 +15,7 @@ public class euler03
       bool found = false;
       while (b <= sqrtia)
       {
-        if ((a % b) == 0)
+        if (a % b == 0)
         {
           a /= b;
           b0 = b;

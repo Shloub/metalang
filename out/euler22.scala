@@ -37,7 +37,7 @@ def skip() {
     for (i <- 1 to len)
     {
       var c = read_char()
-      sum = sum + ((c).toInt - ('A').toInt) + 1;
+      sum = sum + (c).toInt - ('A').toInt + 1;
       /*		print c print " " print sum print " " */
     }
     return sum;

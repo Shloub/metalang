@@ -14,7 +14,7 @@ function e(t, n){
   {
     var nombre = exp0(10, i - 1) + ~~(n / i);
     var chiffre = i - 1 - ~~(n % i);
-    return ~~((~~(nombre / exp0(10, chiffre))) % 10);
+    return ~~(~~(nombre / exp0(10, chiffre)) % 10);
   }
   return -1;
 }

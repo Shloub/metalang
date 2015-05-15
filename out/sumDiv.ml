@@ -19,7 +19,7 @@ let sumdiv n =
   (* On déclare un entier qui contiendra la somme *)
   for i = 1 to n do
     (* La boucle : i est le diviseur potentiel*)
-    if (n mod i) = 0 then
+    if n mod i = 0 then
       begin
         (* Si i divise *)
         out0 := (!out0) + i

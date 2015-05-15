@@ -20,7 +20,7 @@ public class euler40
     {
       int nombre = exp0(10, i - 1) + n / i;
       int chiffre = i - 1 - n % i;
-      return (nombre / exp0(10, chiffre)) % 10;
+      return nombre / exp0(10, chiffre) % 10;
     }
     return -1;
   }

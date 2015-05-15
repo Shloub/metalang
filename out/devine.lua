@@ -11,22 +11,22 @@ function stdinsep()
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
 function devine0( nombre, tab, len )
-  local min0 = tab[0]
-  local max0 = tab[1]
+  local min0 = tab[0 + 1]
+  local max0 = tab[1 + 1]
   for i = 2,len - 1 do
-    if tab[i] > max0 or tab[i] < min0
+    if tab[i + 1] > max0 or tab[i + 1] < min0
     then
       return false
     end
-    if tab[i] < nombre
+    if tab[i + 1] < nombre
     then
-      min0 = tab[i];
+      min0 = tab[i + 1];
     end
-    if tab[i] > nombre
+    if tab[i + 1] > nombre
     then
-      max0 = tab[i];
+      max0 = tab[i + 1];
     end
-    if tab[i] == nombre and len ~= i + 1
+    if tab[i + 1] == nombre and len ~= i + 1
     then
       return false
     end
@@ -43,7 +43,7 @@ local tab = {}
 for i = 0,len - 1 do
   local tmp = readint()
   stdinsep()
-  tab[i] = tmp;
+  tab[i + 1] = tmp;
 end
 local a = devine0(nombre, tab, len)
 if a

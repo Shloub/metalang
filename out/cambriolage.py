@@ -36,7 +36,7 @@ def nbPassePartout( n, passepartout, m, serrures ):
     max_ancient = 0
     max_recent = 0
     for i in range(0, m):
-      if serrures[i][0] == -(1) and serrures[i][1] > max_ancient:
+      if serrures[i][0] == -1 and serrures[i][1] > max_ancient:
         max_ancient = serrures[i][1]
       if serrures[i][0] == 1 and serrures[i][1] > max_recent:
         max_recent = serrures[i][1]

@@ -5,7 +5,7 @@ Module euler11
 
   Function find(ByVal n as Integer, ByRef m as Integer()(), ByVal x as Integer, ByVal y as Integer, ByVal dx as Integer, ByVal dy as Integer) As Integer
     If x < 0 OrElse x = 20 OrElse y < 0 OrElse y = 20 Then
-      Return - 1
+      Return -1
     ElseIf n = 0 Then
       Return 1
     Else
@@ -34,11 +34,11 @@ Module euler11
       ElseIf i = 2 Then
         Dim e As tuple_int_int = new tuple_int_int()
         e.tuple_int_int_field_0 = 0
-        e.tuple_int_int_field_1 = - 1
+        e.tuple_int_int_field_1 = -1
         directions(i) = e
       ElseIf i = 3 Then
         Dim f As tuple_int_int = new tuple_int_int()
-        f.tuple_int_int_field_0 = - 1
+        f.tuple_int_int_field_0 = -1
         f.tuple_int_int_field_1 = 0
         directions(i) = f
       ElseIf i = 4 Then
@@ -49,17 +49,17 @@ Module euler11
       ElseIf i = 5 Then
         Dim h As tuple_int_int = new tuple_int_int()
         h.tuple_int_int_field_0 = 1
-        h.tuple_int_int_field_1 = - 1
+        h.tuple_int_int_field_1 = -1
         directions(i) = h
       ElseIf i = 6 Then
         Dim k As tuple_int_int = new tuple_int_int()
-        k.tuple_int_int_field_0 = - 1
+        k.tuple_int_int_field_0 = -1
         k.tuple_int_int_field_1 = 1
         directions(i) = k
       Else
         Dim l As tuple_int_int = new tuple_int_int()
-        l.tuple_int_int_field_0 = - 1
-        l.tuple_int_int_field_1 = - 1
+        l.tuple_int_int_field_0 = -1
+        l.tuple_int_int_field_1 = -1
         directions(i) = l
       End If
     Next

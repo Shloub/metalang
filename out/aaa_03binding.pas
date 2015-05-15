@@ -5,7 +5,7 @@ var
   j : Longint;
 begin
   j := i * 4;
-  if (j Mod 2) = 1
+  if j Mod 2 = 1
   then
     begin
       exit(0);

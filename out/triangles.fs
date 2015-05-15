@@ -35,21 +35,15 @@ create bufferc 128 allot
   
   y len 1 - =
   IF
-    tab y cells +
-     @ x cells +
-     @ exit
+    tab  y cells +  @  x cells +  @ exit
   ELSE
     x y >
     IF
       10000 NEGATE exit
     ELSE
-      cache y cells +
-       @ x cells +
-       @ 0 <>
+      cache  y cells +  @  x cells +  @ 0 <>
       IF
-        cache y cells +
-         @ x cells +
-         @ exit
+        cache  y cells +  @  x cells +  @ exit
       THEN
     THEN
   THEN
@@ -58,17 +52,11 @@ create bufferc 128 allot
   len tab cache x 1 + y 1 + find0 { out1 }
   out0 out1 >
   IF
-    out0 tab y cells +
-     @ x cells +
-     @ + TO result
+    out0 tab  y cells +  @  x cells +  @ + TO result
   ELSE
-    out1 tab y cells +
-     @ x cells +
-     @ + TO result
+    out1 tab  y cells +  @  x cells +  @ + TO result
   THEN
-  result cache y cells +
-   @ x cells +
-   !
+  result cache  y cells +  @  x cells +  !
   result exit
 ;
 
@@ -77,11 +65,9 @@ create bufferc 128 allot
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     HERE i 1 + cells allot { tab3 }
     i 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-      0 tab3 j cells +
-       !
+      0 tab3  j cells +  !
      1 + REPEAT 2DROP
-    tab3 tab2 i cells +
-     !
+    tab3 tab2  i cells +  !
    1 + REPEAT 2DROP
   len tab tab2 0 0 find0 exit
 ;
@@ -97,19 +83,15 @@ create bufferc 128 allot
       0 { tmp }
       read-int TO tmp
       skipspaces
-      tmp tab2 j cells +
-       !
+      tmp tab2  j cells +  !
      1 + REPEAT 2DROP
-    tab2 tab i cells +
-     !
+    tab2 tab  i cells +  !
    1 + REPEAT 2DROP
   len tab find01 s>d 0 d.r
   S\" \n" TYPE
   len 1 - 0 BEGIN 2dup >= WHILE DUP { k }
     k 0 BEGIN 2dup >= WHILE DUP { l }
-      tab k cells +
-       @ l cells +
-       @ s>d 0 d.r
+      tab  k cells +  @  l cells +  @ s>d 0 d.r
       S"  " TYPE
      1 + REPEAT 2DROP
     S\" \n" TYPE

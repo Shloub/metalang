@@ -26,7 +26,7 @@ sub show{
   }
   foreach my $k (1 .. $lim - 1) {
     my $n = fact($lim - $k);
-    my $nchiffre = int(($nth) / ($n));
+    my $nchiffre = int($nth / $n);
     $nth = remainder($nth, $n);
     foreach my $l (0 .. $lim - 1) {
       if (!$pris->[$l]) {

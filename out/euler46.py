@@ -31,6 +31,6 @@ for i in range(0, nprimes):
       canbe[n] = True
 for m in range(1, 1 + maximumprimes):
   m2 = m * 2 + 1
-  if m2 < maximumprimes and not (canbe[m2]):
+  if m2 < maximumprimes and not canbe[m2]:
     print("%d\n" % ( m2 ), end='')
 

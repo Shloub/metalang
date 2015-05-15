@@ -17,10 +17,10 @@ let e t n =
       begin
         let nombre = exp0 10 (i - 1) + (!n) / i in
         let chiffre = i - 1 - (!n) mod i in
-        raise (Found_1((nombre / exp0 10 chiffre) mod 10))
+        raise (Found_1(nombre / exp0 10 chiffre mod 10))
       end
   done;
-  -1
+  - 1
   with Found_1 (out) -> out
 
 let () =

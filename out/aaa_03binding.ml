@@ -1,6 +1,6 @@
 let g i =
   let j = i * 4 in
-  if (j mod 2) = 1 then
+  if j mod 2 = 1 then
     0
   else
     j

@@ -21,10 +21,10 @@ let isPrime n primes _len =
   try
   let i = ref( 0 ) in
   if (!n) < 0 then
-    n := -(!n);
+    n := - (!n);
   while primes.((!i)) * primes.((!i)) < (!n)
   do
-      if ((!n) mod primes.((!i))) = 0 then
+      if (!n) mod primes.((!i)) = 0 then
         raise (Found_1(false));
       i := (!i) + 1
   done;
@@ -65,9 +65,9 @@ begin
   let mb = ref( 0 ) in
   for b = 3 to 999 do
     if era.(b) = b then
-      for a = -999 to 999 do
+      for a = - 999 to 999 do
         let n1 = test a b primes nprimes in
-        let n2 = test a (-b) primes nprimes in
+        let n2 = test a (- b) primes nprimes in
         if n1 > (!max0) then
           begin
             max0 := n1;
@@ -78,9 +78,9 @@ begin
         if n2 > (!max0) then
           begin
             max0 := n2;
-            result := -a * b;
+            result := - a * b;
             ma := a;
-            mb := -b
+            mb := - b
           end
       done
   done;

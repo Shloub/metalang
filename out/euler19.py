@@ -2,7 +2,7 @@ import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
 def is_leap( year ):
-    return (mod(year, 400)) == 0 or ((mod(year, 100)) != 0 and (mod(year, 4)) == 0)
+    return mod(year, 400) == 0 or mod(year, 100) != 0 and mod(year, 4) == 0
 
 def ndayinmonth( month, year ):
     if month == 0:
@@ -46,7 +46,7 @@ while (year != 2001):
   if month == 12:
     month = 0
     year += 1
-  if (mod(dayofweek, 7)) == 6:
+  if mod(dayofweek, 7) == 6:
     count += 1
 print("%d\n" % ( count ), end='')
 

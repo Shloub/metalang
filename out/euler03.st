@@ -4,11 +4,11 @@ Object subclass: euler03 [
     b0 := 2.
     a := 408464633.
     sqrtia := ((a) sqrt floor).
-    [(a ~= 1)] whileTrue:
+    [a ~= 1] whileTrue:
     [
     b := b0.
     found := false.
-    [(b <= sqrtia)] whileTrue:
+    [b <= sqrtia] whileTrue:
     [
     ((a rem: b) = 0)
       ifTrue:[
@@ -20,9 +20,9 @@ Object subclass: euler03 [
       ].
     b :=  (b + 1).
     ].
-    ((found) not)
+    (found not)
       ifTrue:[
-             (a) display.
+             a display.
              '
 ' display.
              a :=  1.

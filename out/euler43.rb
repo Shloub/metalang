@@ -52,12 +52,12 @@ for i6 in (0 ..  1) do
               if allowed[d9] then
                 allowed[d9] = false
                 for d10 in (1 ..  9) do
-                  if allowed[d10] && (mod(d6 * 100 + d7 * 10 + d8, 11)) == 0 && (mod(d7 * 100 + d8 * 10 + d9, 13)) == 0 && (mod(d8 * 100 + d9 * 10 + d10, 17)) == 0 then
+                  if allowed[d10] && mod(d6 * 100 + d7 * 10 + d8, 11) == 0 && mod(d7 * 100 + d8 * 10 + d9, 13) == 0 && mod(d8 * 100 + d9 * 10 + d10, 17) == 0 then
                     allowed[d10] = false
                     for d5 in (0 ..  9) do
                       if allowed[d5] then
                         allowed[d5] = false
-                        if (mod(d5 * 100 + d6 * 10 + d7, 7)) == 0 then
+                        if mod(d5 * 100 + d6 * 10 + d7, 7) == 0 then
                           for i4 in (0 ..  4) do
                             d4 = i4 * 2
                             if allowed[d4] then
@@ -65,7 +65,7 @@ for i6 in (0 ..  1) do
                               for d3 in (0 ..  9) do
                                 if allowed[d3] then
                                   allowed[d3] = false
-                                  if (mod(d3 + d4 + d5, 3)) == 0 then
+                                  if mod(d3 + d4 + d5, 3) == 0 then
                                     for d2 in (0 ..  9) do
                                       if allowed[d2] then
                                         allowed[d2] = false

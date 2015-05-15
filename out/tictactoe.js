@@ -113,7 +113,7 @@ function apply_move(m, g){
 function cancel_move_xy(x, y, g){
   g.cases[x][y] = 0;
   g.firstToPlay = !g.firstToPlay;
-  g.ended = 0;
+  g.ended = false;
 }
 
 function cancel_move(m, g){
@@ -146,7 +146,7 @@ function minmax(g){
     var currentNote = minmax(g);
     cancel_move_xy(x, y, g);
     /* Minimum ou Maximum selon le coté ou l'on joue*/
-    if ((currentNote > maxNote) == g.firstToPlay)
+    if (currentNote > maxNote == g.firstToPlay)
       maxNote = currentNote;
   }
   return maxNote;
@@ -191,9 +191,9 @@ function init0(){
   }
   var a = {
     cases : cases,
-    firstToPlay : 1,
+    firstToPlay : true,
     note : 0,
-    ended : 0
+    ended : false
   };
   return a;
 }

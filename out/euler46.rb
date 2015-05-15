@@ -45,7 +45,7 @@ for i in (0 ..  nprimes - 1) do
 end
 for m in (1 ..  maximumprimes) do
   m2 = m * 2 + 1
-  if m2 < maximumprimes && not(canbe[m2]) then
+  if m2 < maximumprimes && !canbe[m2] then
     printf "%d\n", m2
   end
 end

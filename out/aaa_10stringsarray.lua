@@ -14,10 +14,9 @@ end
 
 local tab = {}
 for i = 0,2 - 1 do
-  tab[i] = idstring("chaine de test");
+  tab[i + 1] = idstring("chaine de test");
 end
 for j = 0,1 do
-  printstring(idstring(tab[j]));
+  printstring(idstring(tab[j + 1]));
 end
-print_toto({s="one",
-            v=1});
+print_toto({s="one", v=1});

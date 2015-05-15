@@ -39,14 +39,13 @@
                                                       (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))
                                                       c)])
                                              (integer->char c)))) (mread-char))))])
-     (letrec ([a (lambda (j) 
-                   (if (<= j (- strlen 1))
-                   (block
-                     (display (vector-ref tab4 j))
-                     (a (+ j 1))
-                     )
-                   '()))])
-     (a 0)))
-)) (mread-int))
+     (letrec ([a (lambda (j) (if (<= j (- strlen 1))
+                             (block
+                               (display (vector-ref tab4 j))
+                               (a (+ j 1))
+                               )
+                             '()))])
+       (a 0)))
+  )) (mread-int))
 )
 

@@ -1,6 +1,6 @@
 Object subclass: euler19 [
    is_leap: year  [
-    ^ (((year rem: 400) = 0) | (((year rem: 100) ~= 0) & ((year rem: 4) = 0)))
+    ^ ((year rem: 400) = 0) or: [((year rem: 100) ~= 0) and: [(year rem: 4) = 0]]
   ]
   
    ndayinmonth: month year: year [
@@ -39,7 +39,7 @@ Object subclass: euler19 [
     dayofweek := 1.
     " 01-01-1901 : mardi "
     count := 0.
-    [(year ~= 2001)] whileTrue:
+    [year ~= 2001] whileTrue:
     [
     ndays := (self ndayinmonth: month year: year).
     dayofweek :=  ((dayofweek + ndays) rem: 7).
@@ -52,7 +52,7 @@ Object subclass: euler19 [
     ((dayofweek rem: 7) = 6)
       ifTrue:[count :=  (count + 1).].
     ].
-    (count) display.
+    count display.
     '
 ' display.
     ]

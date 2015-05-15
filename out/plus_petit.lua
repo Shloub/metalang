@@ -18,7 +18,7 @@ function go0( tab, a, b )
   local m = trunc((a + b) / 2)
   if a == m
   then
-    if tab[a] == m
+    if tab[a + 1] == m
     then
       return b
     else
@@ -29,14 +29,14 @@ function go0( tab, a, b )
   local j = b
   while i < j
   do
-  local e = tab[i]
+  local e = tab[i + 1]
   if e < m
   then
     i = i + 1;
   else
     j = j - 1;
-    tab[i] = tab[j];
-    tab[j] = e;
+    tab[i + 1] = tab[j + 1];
+    tab[j + 1] = e;
   end
   end
   if i < m
@@ -60,6 +60,6 @@ for i = 0,len - 1 do
   local tmp = 0
   tmp = readint()
   stdinsep()
-  tab[i] = tmp;
+  tab[i + 1] = tmp;
 end
 io.write(plus_petit0(tab, len))

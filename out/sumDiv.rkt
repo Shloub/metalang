@@ -38,18 +38,17 @@
   ; On désire renvoyer la somme des diviseurs 
   (let ([out0 0])
   ; On déclare un entier qui contiendra la somme 
-  (letrec ([b (lambda (i out0) 
-                (if (<= i n)
-                ; La boucle : i est le diviseur potentiel
-                (if (eq? (remainder n i) 0)
-                ; Si i divise 
-                (let ([out0 (+ out0 i)])
-                ; On incrémente 
-                (b (+ i 1) out0))
-                ; nop 
-                (b (+ i 1) out0))
-                out0))])
-  (b 1 out0)))
+  (letrec ([b (lambda (i out0) (if (<= i n)
+                               ; La boucle : i est le diviseur potentiel
+                               (if (eq? (remainder n i) 0)
+                               ; Si i divise 
+                               (let ([out0 (+ out0 i)])
+                               ; On incrémente 
+                               (b (+ i 1) out0))
+                               ; nop 
+                               (b (+ i 1) out0))
+                               out0))])
+    (b 1 out0)))
 )
 (define main
   ; Programme principal 

@@ -21,7 +21,7 @@ let fillPrimesFactors t n primes nprimes =
   try
   for i = 0 to nprimes - 1 do
     let d = primes.(i) in
-    while ((!n) mod d) = 0
+    while (!n) mod d = 0
     do
         t.(d) <- t.(d) + 1;
         n := (!n) / d

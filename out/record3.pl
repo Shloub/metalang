@@ -20,9 +20,7 @@ sub readspaces {
 
 sub mktoto{
   my($v1) = @_;
-  my $t = {"foo" => $v1,
-           "bar" => 0,
-           "blah" => 0};
+  my $t = {"foo" => $v1, "bar" => 0, "blah" => 0};
   return $t;
 }
 
@@ -31,8 +29,8 @@ sub result{
   my $out0 = 0;
   foreach my $j (0 .. $len - 1) {
     $t->[$j]->{"blah"} = $t->[$j]->{"blah"} + 1;
-    $out0 = $out0 + $t->[$j]->{"foo"} + $t->[$j]->{"blah"} * $t->[$j]->{"bar"} +
-    $t->[$j]->{"bar"} * $t->[$j]->{"foo"};
+    $out0 =
+    $out0 + $t->[$j]->{"foo"} + $t->[$j]->{"blah"} * $t->[$j]->{"bar"} + $t->[$j]->{"bar"} * $t->[$j]->{"foo"};
   }
   return $out0;
 }

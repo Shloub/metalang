@@ -1,12 +1,12 @@
 Object subclass: euler31 [
    result: sum t: t maxIndex: maxIndex cache: cache [|out0 div|
     (((cache at: (sum + 1)) at: (maxIndex + 1)) ~= 0)
-      ifTrue:[^ ((cache at: (sum + 1)) at: (maxIndex + 1))]
-      ifFalse:[((sum = 0) | (maxIndex = 0))
+      ifTrue:[^ (cache at: (sum + 1)) at: (maxIndex + 1)]
+      ifFalse:[((sum = 0) or: [maxIndex = 0])
                 ifTrue:[^ 1]
                 ifFalse:[
                         out0 := 0.
-                        div := (sum quo: (t at: (maxIndex + 1))).
+                        div := sum quo: (t at: (maxIndex + 1)).
                         (0 to: div) do: [:i|
                           out0 :=  (out0 + (self result: (sum - (i * (t at: (maxIndex + 1)))) t: t maxIndex: (maxIndex - 1) cache: cache)).
                         ].
@@ -36,7 +36,7 @@ Object subclass: euler31 [
       ].
       cache at: (j + 1) put:  o.
     ].
-    ((self result: 200 t: t maxIndex: 7 cache: cache)) display.
+    (self result: 200 t: t maxIndex: 7 cache: cache) display.
     ]
 ]
 Eval [ (euler31 new) main. ]

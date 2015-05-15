@@ -38,7 +38,7 @@ Module aaa_read2
       Console.Write(c)
       Console.Write(" ")
       If tmpc <> Chr(32) Then
-        c = ((c - Asc("a"C)) + 13) Mod 26 + Asc("a"C)
+        c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)
       End If
       tab4(i3) = Chr(c)
     Next

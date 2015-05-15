@@ -68,7 +68,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
       char tmpc = readChar();
       int c = (int)(tmpc);
       if (tmpc != (char)32)
-        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+        c = (c - (int)('a') + 13) % 26 + (int)('a');
       tab4[toto] = (char)(c);
     }
     for (int j = 0 ; j < strlen; j++)

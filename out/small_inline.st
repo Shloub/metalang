@@ -22,9 +22,9 @@ Object subclass: small_inline [
       t at: (d + 1) put: self read_int.
       self skip.
     ].
-    ((t at: (0 + 1))) display.
+    (t at: (0 + 1)) display.
     ' - ' display.
-    ((t at: (1 + 1))) display.
+    (t at: (1 + 1)) display.
     '
 ' display.
     ]

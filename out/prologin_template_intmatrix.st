@@ -40,7 +40,7 @@ Object subclass: prologin_template_intmatrix [
       ].
       tableau at: (a + 1) put:  b.
     ].
-    ((self programme_candidat: tableau x: taille_x y: taille_y)) display.
+    (self programme_candidat: tableau x: taille_x y: taille_y) display.
     '
 ' display.
     ]

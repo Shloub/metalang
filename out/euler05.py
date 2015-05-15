@@ -5,7 +5,7 @@ def primesfactors( n ):
     tab = [0] * (n + 1)
     d = 2
     while (n != 1 and d * d <= n):
-      if (mod(n, d)) == 0:
+      if mod(n, d) == 0:
         tab[d] = tab[d] + 1
         n = math.trunc(n / d)
       else:

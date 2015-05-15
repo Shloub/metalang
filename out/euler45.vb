@@ -3,7 +3,7 @@ Imports System
 Module euler45
 
   Function triangle(ByVal n as Integer) As Integer
-    If (n Mod 2) = 0 Then
+    If n Mod 2 = 0 Then
       Return (n \ 2) * (n + 1)
     Else
       Return n * ((n + 1) \ 2)
@@ -11,7 +11,7 @@ Module euler45
   End Function
   
   Function penta(ByVal n as Integer) As Integer
-    If (n Mod 2) = 0 Then
+    If n Mod 2 = 0 Then
       Return (n \ 2) * (3 * n - 1)
     Else
       Return ((3 * n - 1) \ 2) * n

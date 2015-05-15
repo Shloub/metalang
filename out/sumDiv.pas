@@ -80,7 +80,7 @@ begin
   for i := 1 to  n do
   begin
     { La boucle : i est le diviseur potentiel}
-    if (n Mod i) = 0
+    if n Mod i = 0
     then
       begin
         { Si i divise }

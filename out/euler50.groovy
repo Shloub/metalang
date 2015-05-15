@@ -7,7 +7,7 @@ int eratostene(int[] t, int max0)
     if (t[i] == i)
   {
     n ++;
-    if ((int)(max0 / i) > i)
+    if (max0.intdiv(i) > i)
     {
       int j = i * i
       while (j < max0 && j > 0)

@@ -5,7 +5,7 @@ let position_alphabet c =
   else if i <= int_of_char ('z') && i >= int_of_char ('a') then
     i - int_of_char ('a')
   else
-    -1
+    - 1
 
 let of_position_alphabet c =
   char_of_int (c + int_of_char ('a'))
@@ -13,7 +13,7 @@ let of_position_alphabet c =
 let crypte taille_cle cle taille message =
   for i = 0 to taille - 1 do
     let lettre = position_alphabet message.(i) in
-    if lettre <> -1 then
+    if lettre <> - 1 then
       begin
         let addon = position_alphabet cle.(i mod taille_cle) in
         let new0 = (addon + lettre) mod 26 in

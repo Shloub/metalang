@@ -19,7 +19,7 @@ object euler40
     {
       var nombre: Int = exp0(10, i - 1) + n / i;
       var chiffre: Int = i - 1 - n % i;
-      return (nombre / exp0(10, chiffre)) % 10;
+      return nombre / exp0(10, chiffre) % 10;
     }
     return -1;
   }

@@ -5,11 +5,9 @@ type toto = {
 };;
 
 let mktoto v1 =
-  let t = {
-    foo=v1;
-    bar=0;
-    blah=0;
-  } in
+  let t = {foo=v1;
+  bar=0;
+  blah=0} in
   t
 
 let result t len =

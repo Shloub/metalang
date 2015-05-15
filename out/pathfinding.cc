@@ -52,7 +52,7 @@ int main(){
     std::vector<char > *tab2 = new std::vector<char>( x );
     for (int j = 0 ; j < x; j++)
     {
-      char tmp = '\x00';
+      char tmp = '\u0000';
       std::cin >> tmp >> std::noskipws;
       tab2->at(j) = tmp;
     }

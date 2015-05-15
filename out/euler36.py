@@ -4,7 +4,7 @@ def mod(x, y):
 def palindrome2( pow2, n ):
     t = [None] * 20
     for i in range(0, 20):
-      t[i] = (mod(math.trunc(n / pow2[i]), 2)) == 1
+      t[i] = mod(math.trunc(n / pow2[i]), 2) == 1
     nnum = 0
     for j in range(1, 1 + 19):
       if t[j]:
@@ -25,7 +25,7 @@ for d in range(1, 1 + 9):
     print("%d\n" % ( d ), end='')
     sum += d
   if palindrome2(pow2, d * 10 + d):
-    print("%d\n" % ( (d * 10 + d) ), end='')
+    print("%d\n" % ( d * 10 + d ), end='')
     sum += d * 10 + d
 for a0 in range(0, 1 + 4):
   a = a0 * 2 + 1

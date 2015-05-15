@@ -28,7 +28,7 @@ begin
   then
     return 1;
   end if;
-  if (b rem 2) = 0
+  if b rem 2 = 0
   then
     o := exp0(a, b / 2);
     return o * o;

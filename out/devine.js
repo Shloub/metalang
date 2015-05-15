@@ -32,15 +32,15 @@ function devine0(nombre, tab, len){
   for (var i = 2 ; i <= len - 1; i++)
   {
     if (tab[i] > max0 || tab[i] < min0)
-      return 0;
+      return false;
     if (tab[i] < nombre)
       min0 = tab[i];
     if (tab[i] > nombre)
       max0 = tab[i];
     if (tab[i] == nombre && len != i + 1)
-      return 0;
+      return false;
   }
-  return 1;
+  return true;
 }
 
 nombre=read_int_();

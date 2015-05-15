@@ -42,8 +42,7 @@ function same_numbers(a : in Integer; b : in Integer; c : in Integer; d : in Int
   ca : Integer;
 begin
   ca := chiffre_sort(a);
-  return ca = chiffre_sort(b) and then ca = chiffre_sort(c) and then ca =
-  chiffre_sort(d) and then ca = chiffre_sort(e) and then ca = chiffre_sort(f);
+  return (((ca = chiffre_sort(b) and then ca = chiffre_sort(c)) and then ca = chiffre_sort(d)) and then ca = chiffre_sort(e)) and then ca = chiffre_sort(f);
 end;
 
 

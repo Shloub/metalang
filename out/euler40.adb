@@ -40,7 +40,7 @@ begin
     else
       nombre := exp0(10, i - 1) + n / i;
       chiffre := i - 1 - n rem i;
-      return (nombre / exp0(10, chiffre)) rem 10;
+      return nombre / exp0(10, chiffre) rem 10;
     end if;
   end loop;
   return (-1);

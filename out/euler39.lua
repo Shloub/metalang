@@ -1,7 +1,7 @@
 
 local t = {}
 for i = 0,1001 - 1 do
-  t[i] = 0;
+  t[i + 1] = 0;
 end
 for a = 1,1000 do
   for b = 1,1000 do
@@ -12,14 +12,14 @@ for a = 1,1000 do
       local p = a + b + c
       if p <= 1000
       then
-        t[p] = t[p] + 1;
+        t[p + 1] = t[p + 1] + 1;
       end
     end
   end
 end
 local j = 0
 for k = 1,1000 do
-  if t[k] > t[j]
+  if t[k + 1] > t[j + 1]
   then
     j = k;
   end

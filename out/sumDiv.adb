@@ -48,7 +48,7 @@ begin
   for i in integer range 1..n loop
     -- La boucle : i est le diviseur potentiel
     
-    if (n rem i) = 0
+    if n rem i = 0
     then
       -- Si i divise 
       

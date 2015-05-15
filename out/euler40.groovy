@@ -15,9 +15,9 @@ int e(int[] t, int n)
     n -= t[i] * i;
   else
   {
-    int nombre = exp0(10, i - 1) + (int)(n / i)
+    int nombre = exp0(10, i - 1) + n.intdiv(i)
     int chiffre = i - 1 - n % i
-    return ((int)(nombre / exp0(10, chiffre))) % 10
+    return nombre.intdiv(exp0(10, chiffre)) % 10
   }
   return -1
 }

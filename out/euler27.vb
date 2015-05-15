@@ -20,10 +20,10 @@ Module euler27
   Function isPrime(ByVal n as Integer, ByRef primes as Integer(), ByVal len as Integer) As Boolean
     Dim i As Integer = 0
     If n < 0 Then
-      n = - n
+      n = -n
     End If
     Do While primes(i) * primes(i) < n
-      If (n Mod primes(i)) = 0 Then
+      If n Mod primes(i) = 0 Then
         Return false
       End If
       i = i + 1
@@ -67,9 +67,9 @@ Module euler27
     Dim mb As Integer = 0
     For  b As Integer  = 3 to  999
       If era(b) = b Then
-        For  a As Integer  = - 999 to  999
+        For  a As Integer  = -999 to  999
           Dim n1 As Integer = test(a, b, primes, nprimes)
-          Dim n2 As Integer = test(a, - b, primes, nprimes)
+          Dim n2 As Integer = test(a, -b, primes, nprimes)
           If n1 > max0 Then
             max0 = n1
             result = a * b
@@ -78,9 +78,9 @@ Module euler27
           End If
           If n2 > max0 Then
             max0 = n2
-            result = - a * b
+            result = -a * b
             ma = a
-            mb = - b
+            mb = -b
           End If
         Next
       End If

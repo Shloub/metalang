@@ -14,7 +14,7 @@ Bigint read_bigint(int len)
     char c = scanner.findWithinHorizon(".", 1).charAt(0);
     chiffres[j] = (0+c)
   }
-  for (int i = 0 ; i <= (int)((len - 1) / 2); i ++)
+  for (int i = 0 ; i <= (len - 1).intdiv(2); i ++)
   {
     int tmp = chiffres[i]
     chiffres[i] = chiffres[len - 1 - i]
@@ -95,7 +95,7 @@ Bigint add_bigint_positif(Bigint a, Bigint b)
       tmp += a.bigint_chiffres[i];
     if (i < b.bigint_len)
       tmp += b.bigint_chiffres[i];
-    retenue = (int)(tmp / 10)
+    retenue = tmp.intdiv(10)
     chiffres[i] = tmp % 10
   }
   while (len > 0 && chiffres[len - 1] == 0)
@@ -193,15 +193,15 @@ D'ou le nom de la fonction. */
     int retenue = 0
     for (int j = 0 ; j < b.bigint_len; j++)
     {
-      chiffres[i + j] = chiffres[i + j] + retenue + b.bigint_chiffres[j] *
-      a.bigint_chiffres[i]
-      retenue = (int)(chiffres[i + j] / 10)
+      chiffres[i + j] =
+      chiffres[i + j] + retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i]
+      retenue = chiffres[i + j].intdiv(10)
       chiffres[i + j] = chiffres[i + j] % 10
     }
     chiffres[i + b.bigint_len] = chiffres[i + b.bigint_len] + retenue
   }
   chiffres[a.bigint_len + b.bigint_len] =
-  (int)(chiffres[a.bigint_len + b.bigint_len - 1] / 10)
+  chiffres[a.bigint_len + b.bigint_len - 1].intdiv(10)
   chiffres[a.bigint_len + b.bigint_len - 1] =
   chiffres[a.bigint_len + b.bigint_len - 1] % 10
   for (int l = 0 ; l <= 2; l ++)
@@ -250,7 +250,7 @@ Bigint mul_bigint(Bigint aa, Bigint bb)
   else if (aa.bigint_len < 3 || bb.bigint_len < 3)
     return mul_bigint_cp(aa, bb)
   /* Algorithme de Karatsuba */
-  int split = (int)(Math.min(aa.bigint_len, bb.bigint_len) / 2)
+  int split = Math.min(aa.bigint_len, bb.bigint_len).intdiv(2)
   Bigint a = bigint_shift(aa, -split)
   Bigint b = bigint_premiers_chiffres(aa, split)
   Bigint c = bigint_shift(bb, -split)
@@ -333,8 +333,8 @@ Bigint bigint_exp(Bigint a, int b)
 {
   if (b == 1)
     return a
-  else if ((b % 2) == 0)
-    return bigint_exp(mul_bigint(a, a), (int)(b / 2))
+  else if (b % 2 == 0)
+    return bigint_exp(mul_bigint(a, a), b.intdiv(2))
   else
     return mul_bigint(a, bigint_exp(a, b - 1))
 }
@@ -344,8 +344,8 @@ Bigint bigint_exp_10chiffres(Bigint a, int b)
   a = bigint_premiers_chiffres(a, 10)
   if (b == 1)
     return a
-  else if ((b % 2) == 0)
-    return bigint_exp_10chiffres(mul_bigint(a, a), (int)(b / 2))
+  else if (b % 2 == 0)
+    return bigint_exp_10chiffres(mul_bigint(a, a), b.intdiv(2))
   else
     return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
 }

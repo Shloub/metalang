@@ -4,7 +4,7 @@ public class euler19
 {
   static bool is_leap(int year)
   {
-    return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0);
+    return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
   }
   
   static int ndayinmonth(int month, int year)
@@ -59,7 +59,7 @@ public class euler19
         month = 0;
         year ++;
       }
-      if ((dayofweek % 7) == 6)
+      if (dayofweek % 7 == 6)
         count ++;
     }
     Console.Write("" + count + "\n");

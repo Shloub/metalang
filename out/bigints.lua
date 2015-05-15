@@ -19,16 +19,14 @@ function read_bigint( len )
   local chiffres = {}
   for j = 0,len - 1 do
     local c = readchar()
-    chiffres[j] = c;
+    chiffres[j + 1] = c;
   end
   for i = 0,trunc((len - 1) / 2) do
-    local tmp = chiffres[i]
-    chiffres[i] = chiffres[len - 1 - i];
-    chiffres[len - 1 - i] = tmp;
+    local tmp = chiffres[i + 1]
+    chiffres[i + 1] = chiffres[len - 1 - i + 1];
+    chiffres[len - 1 - i + 1] = tmp;
   end
-  return {bigint_sign=true,
-          bigint_len=len,
-          bigint_chiffres=chiffres}
+  return {bigint_sign=true, bigint_len=len, bigint_chiffres=chiffres}
 end
 
 function print_bigint( a )
@@ -37,7 +35,7 @@ function print_bigint( a )
     io.write(string.format("%c", 45))
   end
   for i = 0,a.bigint_len - 1 do
-    io.write(a.bigint_chiffres[a.bigint_len - 1 - i])
+    io.write(a.bigint_chiffres[a.bigint_len - 1 - i + 1])
   end
 end
 
@@ -50,7 +48,7 @@ function bigint_eq( a, b )
     return false
   else
     for i = 0,a.bigint_len - 1 do
-      if a.bigint_chiffres[i] ~= b.bigint_chiffres[i]
+      if a.bigint_chiffres[i + 1] ~= b.bigint_chiffres[i + 1]
       then
         return false
       end
@@ -75,9 +73,9 @@ function bigint_gt( a, b )
     else
       for i = 0,a.bigint_len - 1 do
         local j = a.bigint_len - 1 - i
-        if a.bigint_chiffres[j] > b.bigint_chiffres[j] then
+        if a.bigint_chiffres[j + 1] > b.bigint_chiffres[j + 1] then
           return a.bigint_sign
-        elseif a.bigint_chiffres[j] < b.bigint_chiffres[j]
+        elseif a.bigint_chiffres[j + 1] < b.bigint_chiffres[j + 1]
         then
           return not(a.bigint_sign)
         end
@@ -100,22 +98,20 @@ function add_bigint_positif( a, b )
     local tmp = retenue
     if i < a.bigint_len
     then
-      tmp = tmp + a.bigint_chiffres[i];
+      tmp = tmp + a.bigint_chiffres[i + 1];
     end
     if i < b.bigint_len
     then
-      tmp = tmp + b.bigint_chiffres[i];
+      tmp = tmp + b.bigint_chiffres[i + 1];
     end
     retenue = trunc(tmp / 10);
-    chiffres[i] = math.mod(tmp, 10);
+    chiffres[i + 1] = math.mod(tmp, 10);
   end
-  while len > 0 and chiffres[len - 1] == 0
+  while len > 0 and chiffres[len] == 0
   do
   len = len - 1;
   end
-  return {bigint_sign=true,
-          bigint_len=len,
-          bigint_chiffres=chiffres}
+  return {bigint_sign=true, bigint_len=len, bigint_chiffres=chiffres}
 end
 
 function sub_bigint_positif( a, b )
@@ -126,10 +122,10 @@ Pré-requis : a > b
   local retenue = 0
   local chiffres = {}
   for i = 0,len - 1 do
-    local tmp = retenue + a.bigint_chiffres[i]
+    local tmp = retenue + a.bigint_chiffres[i + 1]
     if i < b.bigint_len
     then
-      tmp = tmp - b.bigint_chiffres[i];
+      tmp = tmp - b.bigint_chiffres[i + 1];
     end
     if tmp < 0
     then
@@ -138,22 +134,18 @@ Pré-requis : a > b
     else
       retenue = 0;
     end
-    chiffres[i] = tmp;
+    chiffres[i + 1] = tmp;
   end
-  while len > 0 and chiffres[len - 1] == 0
+  while len > 0 and chiffres[len] == 0
   do
   len = len - 1;
   end
-  return {bigint_sign=true,
-          bigint_len=len,
-          bigint_chiffres=chiffres}
+  return {bigint_sign=true, bigint_len=len, bigint_chiffres=chiffres}
 end
 
 function neg_bigint( a )
   return
-  {bigint_sign=not(a.bigint_sign),
-   bigint_len=a.bigint_len,
-   bigint_chiffres=a.bigint_chiffres}
+  {bigint_sign=not(a.bigint_sign), bigint_len=a.bigint_len, bigint_chiffres=a.bigint_chiffres}
 end
 
 function add_bigint( a, b )
@@ -195,45 +187,40 @@ D'ou le nom de la fonction. --]]
   local len = a.bigint_len + b.bigint_len + 1
   local chiffres = {}
   for k = 0,len - 1 do
-    chiffres[k] = 0;
+    chiffres[k + 1] = 0;
   end
   for i = 0,a.bigint_len - 1 do
     local retenue = 0
     for j = 0,b.bigint_len - 1 do
-      chiffres[i + j] = chiffres[i + j] + retenue + b.bigint_chiffres[j] *
-      a.bigint_chiffres[i];
-      retenue = trunc(chiffres[i + j] / 10);
-      chiffres[i + j] = math.mod(chiffres[i + j], 10);
+      chiffres[i + j + 1] =
+      chiffres[i + j + 1] + retenue + b.bigint_chiffres[j + 1] * a.bigint_chiffres[i + 1];
+      retenue = trunc(chiffres[i + j + 1] / 10);
+      chiffres[i + j + 1] = math.mod(chiffres[i + j + 1], 10);
     end
-    chiffres[i + b.bigint_len] = chiffres[i + b.bigint_len] + retenue;
+    chiffres[i + b.bigint_len + 1] = chiffres[i + b.bigint_len + 1] + retenue;
   end
-  chiffres[a.bigint_len + b.bigint_len] = trunc(chiffres[a.bigint_len +
-  b.bigint_len - 1] / 10);
-  chiffres[a.bigint_len + b.bigint_len - 1] = math.mod(chiffres[a.bigint_len +
-  b.bigint_len - 1], 10);
+  chiffres[a.bigint_len + b.bigint_len + 1] =
+  trunc(chiffres[a.bigint_len + b.bigint_len] / 10);
+  chiffres[a.bigint_len + b.bigint_len] =
+  math.mod(chiffres[a.bigint_len + b.bigint_len], 10);
   for l = 0,2 do
-    if len ~= 0 and chiffres[len - 1] == 0
+    if len ~= 0 and chiffres[len] == 0
     then
       len = len - 1;
     end
   end
   return
-  {bigint_sign=a.bigint_sign ==
-   b.bigint_sign,
-   bigint_len=len,
-   bigint_chiffres=chiffres}
+  {bigint_sign=a.bigint_sign == b.bigint_sign, bigint_len=len, bigint_chiffres=chiffres}
 end
 
 function bigint_premiers_chiffres( a, i )
   local len = math.min(i, a.bigint_len)
-  while len ~= 0 and a.bigint_chiffres[len - 1] == 0
+  while len ~= 0 and a.bigint_chiffres[len] == 0
   do
   len = len - 1;
   end
   return
-  {bigint_sign=a.bigint_sign,
-   bigint_len=len,
-   bigint_chiffres=a.bigint_chiffres}
+  {bigint_sign=a.bigint_sign, bigint_len=len, bigint_chiffres=a.bigint_chiffres}
 end
 
 function bigint_shift( a, i )
@@ -241,15 +228,13 @@ function bigint_shift( a, i )
   for k = 0,a.bigint_len + i - 1 do
     if k >= i
     then
-      chiffres[k] = a.bigint_chiffres[k - i];
+      chiffres[k + 1] = a.bigint_chiffres[k - i + 1];
     else
-      chiffres[k] = 0;
+      chiffres[k + 1] = 0;
     end
   end
   return
-  {bigint_sign=a.bigint_sign,
-   bigint_len=a.bigint_len + i,
-   bigint_chiffres=chiffres}
+  {bigint_sign=a.bigint_sign, bigint_len=a.bigint_len + i, bigint_chiffres=chiffres}
 end
 
 function mul_bigint( aa, bb )
@@ -300,15 +285,13 @@ function bigint_of_int( i )
   end
   local t = {}
   for j = 0,size - 1 do
-    t[j] = 0;
+    t[j + 1] = 0;
   end
   for k = 0,size - 1 do
-    t[k] = math.mod(i, 10);
+    t[k + 1] = math.mod(i, 10);
     i = trunc(i / 10);
   end
-  return {bigint_sign=true,
-          bigint_len=size,
-          bigint_chiffres=t}
+  return {bigint_sign=true, bigint_len=size, bigint_chiffres=t}
 end
 
 function fact_bigint( a )
@@ -325,7 +308,7 @@ end
 function sum_chiffres_bigint( a )
   local out0 = 0
   for i = 0,a.bigint_len - 1 do
-    out0 = out0 + a.bigint_chiffres[i];
+    out0 = out0 + a.bigint_chiffres[i + 1];
   end
   return out0
 end
@@ -341,7 +324,7 @@ end
 function bigint_exp( a, b )
   if b == 1 then
     return a
-  elseif (math.mod(b, 2)) == 0
+  elseif math.mod(b, 2) == 0
   then
     return bigint_exp(mul_bigint(a, a), trunc(b / 2))
   else
@@ -353,7 +336,7 @@ function bigint_exp_10chiffres( a, b )
   a = bigint_premiers_chiffres(a, 10);
   if b == 1 then
     return a
-  elseif (math.mod(b, 2)) == 0
+  elseif math.mod(b, 2) == 0
   then
     return bigint_exp_10chiffres(mul_bigint(a, a), trunc(b / 2))
   else
@@ -402,33 +385,33 @@ function euler29(  )
   local maxB = 5
   local a_bigint = {}
   for j = 0,maxA + 1 - 1 do
-    a_bigint[j] = bigint_of_int(j * j);
+    a_bigint[j + 1] = bigint_of_int(j * j);
   end
   local a0_bigint = {}
   for j2 = 0,maxA + 1 - 1 do
-    a0_bigint[j2] = bigint_of_int(j2);
+    a0_bigint[j2 + 1] = bigint_of_int(j2);
   end
   local b = {}
   for k = 0,maxA + 1 - 1 do
-    b[k] = 2;
+    b[k + 1] = 2;
   end
   local n = 0
   local found = true
   while found
   do
-  local min0 = a0_bigint[0]
+  local min0 = a0_bigint[0 + 1]
   found = false;
   for i = 2,maxA do
-    if b[i] <= maxB
+    if b[i + 1] <= maxB
     then
       if found
       then
-        if bigint_lt(a_bigint[i], min0)
+        if bigint_lt(a_bigint[i + 1], min0)
         then
-          min0 = a_bigint[i];
+          min0 = a_bigint[i + 1];
         end
       else
-        min0 = a_bigint[i];
+        min0 = a_bigint[i + 1];
         found = true;
       end
     end
@@ -437,10 +420,10 @@ function euler29(  )
   then
     n = n + 1;
     for l = 2,maxA do
-      if bigint_eq(a_bigint[l], min0) and b[l] <= maxB
+      if bigint_eq(a_bigint[l + 1], min0) and b[l + 1] <= maxB
       then
-        b[l] = b[l] + 1;
-        a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
+        b[l + 1] = b[l + 1] + 1;
+        a_bigint[l + 1] = mul_bigint(a_bigint[l + 1], a0_bigint[l + 1]);
       end
     end
   end

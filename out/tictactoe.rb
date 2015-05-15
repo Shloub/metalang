@@ -106,7 +106,7 @@ def apply_move_xy( x, y, g )
       player = 1
     end
     g["cases"][x][y] = player
-    g["firstToPlay"] = not(g["firstToPlay"])
+    g["firstToPlay"] = !g["firstToPlay"]
 end
 
 def apply_move( m, g )
@@ -115,7 +115,7 @@ end
 
 def cancel_move_xy( x, y, g )
     g["cases"][x][y] = 0
-    g["firstToPlay"] = not(g["firstToPlay"])
+    g["firstToPlay"] = !g["firstToPlay"]
     g["ended"] = false
 end
 
@@ -144,7 +144,7 @@ def minmax( g )
       return (g["note"])
     end
     maxNote = -10000
-    if not(g["firstToPlay"]) then
+    if !g["firstToPlay"] then
       maxNote = 10000
     end
     for x in (0 ..  2) do
@@ -158,7 +158,7 @@ def minmax( g )
  Minimum ou Maximum selon le coté ou l'on joue
 =end
 
-          if (currentNote > maxNote) == g["firstToPlay"] then
+          if currentNote > maxNote == g["firstToPlay"] then
             maxNote = currentNote
           end
         end
@@ -175,9 +175,7 @@ Renvoie le coup de l'IA
 =end
 
 def play( g )
-    minMove = {
-      "x" => 0,
-      "y" => 0}
+    minMove = {"x" => 0, "y" => 0}
     minNote = 10000
     for x in (0 ..  2) do
       for y in (0 ..  2) do
@@ -205,11 +203,7 @@ def init0(  )
         }
       next (tab)
       }
-    return ({
-      "cases" => cases,
-      "firstToPlay" => true,
-      "note" => 0,
-      "ended" => false})
+    return ({"cases" => cases, "firstToPlay" => true, "note" => 0, "ended" => false})
 end
 
 def read_move(  )
@@ -217,25 +211,19 @@ def read_move(  )
     scanf("%*\n")
     y=scanf("%d")[0]
     scanf("%*\n")
-    return ({
-      "x" => x,
-      "y" => y})
+    return ({"x" => x, "y" => y})
 end
 
 for i in (0 ..  1) do
   state = init0()
-  apply_move({
-    "x" => 1,
-    "y" => 1}, state)
-  apply_move({
-    "x" => 0,
-    "y" => 0}, state)
-  while not(state["ended"]) do
+  apply_move({"x" => 1, "y" => 1}, state)
+  apply_move({"x" => 0, "y" => 0}, state)
+  while !state["ended"] do
     print_state(state)
     apply_move(play(state), state)
     eval0(state)
     print_state(state)
-    if not(state["ended"]) then
+    if !state["ended"] then
       apply_move(play(state), state)
       eval0(state)
     end

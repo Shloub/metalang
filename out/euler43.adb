@@ -73,17 +73,15 @@ begin
                 then
                   allowed(d9) := FALSE;
                   for d10 in integer range 1..9 loop
-                    if allowed(d10) and then
-                    ((d6 * 100 + d7 * 10 + d8) rem 11) = 0 and then
-                    ((d7 * 100 + d8 * 10 + d9) rem 13) = 0 and then
-                    ((d8 * 100 + d9 * 10 + d10) rem 17) = 0
+                    if
+                    ((allowed(d10) and then (d6 * 100 + d7 * 10 + d8) rem 11 = 0) and then (d7 * 100 + d8 * 10 + d9) rem 13 = 0) and then (d8 * 100 + d9 * 10 + d10) rem 17 = 0
                     then
                       allowed(d10) := FALSE;
                       for d5 in integer range 0..9 loop
                         if allowed(d5)
                         then
                           allowed(d5) := FALSE;
-                          if ((d5 * 100 + d6 * 10 + d7) rem 7) = 0
+                          if (d5 * 100 + d6 * 10 + d7) rem 7 = 0
                           then
                             for i4 in integer range 0..4 loop
                               d4 := i4 * 2;
@@ -94,7 +92,7 @@ begin
                                   if allowed(d3)
                                   then
                                     allowed(d3) := FALSE;
-                                    if ((d3 + d4 + d5) rem 3) = 0
+                                    if (d3 + d4 + d5) rem 3 = 0
                                     then
                                       for d2 in integer range 0..9 loop
                                         if allowed(d2)

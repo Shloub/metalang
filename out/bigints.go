@@ -246,7 +246,7 @@ func bigint_premiers_chiffres(a * bigint, i int) * bigint{
 }
 
 func bigint_shift(a * bigint, i int) * bigint{
-  var chiffres []int = make([]int, ((*a).bigint_len + i))
+  var chiffres []int = make([]int, (*a).bigint_len + i)
   for k := 0 ; k <= (*a).bigint_len + i - 1; k++ {
     if k >= i {
         chiffres[k] = (*a).bigint_chiffres[k - i];
@@ -347,7 +347,7 @@ func euler20() int{
 func bigint_exp(a * bigint, b int) * bigint{
   if b == 1 {
     return a
-  } else if (b % 2) == 0 {
+  } else if b % 2 == 0 {
     return bigint_exp(mul_bigint(a, a), b / 2)
   } else {
     return mul_bigint(a, bigint_exp(a, b - 1))
@@ -358,7 +358,7 @@ func bigint_exp_10chiffres(a * bigint, b int) * bigint{
   a = bigint_premiers_chiffres(a, 10);
   if b == 1 {
     return a
-  } else if (b % 2) == 0 {
+  } else if b % 2 == 0 {
     return bigint_exp_10chiffres(mul_bigint(a, a), b / 2)
   } else {
     return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
@@ -403,15 +403,15 @@ func euler25() int{
 func euler29() int{
   var maxA int = 5
   var maxB int = 5
-  var a_bigint []* bigint = make([]* bigint, (maxA + 1))
+  var a_bigint []* bigint = make([]* bigint, maxA + 1)
   for j := 0 ; j <= maxA + 1 - 1; j++ {
     a_bigint[j] = bigint_of_int(j * j);
   }
-  var a0_bigint []* bigint = make([]* bigint, (maxA + 1))
+  var a0_bigint []* bigint = make([]* bigint, maxA + 1)
   for j2 := 0 ; j2 <= maxA + 1 - 1; j2++ {
     a0_bigint[j2] = bigint_of_int(j2);
   }
-  var b []int = make([]int, (maxA + 1))
+  var b []int = make([]int, maxA + 1)
   for k := 0 ; k <= maxA + 1 - 1; k++ {
     b[k] = 2;
   }

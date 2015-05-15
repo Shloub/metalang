@@ -24,7 +24,7 @@ Object subclass: test_returns [
                ifTrue:[j :=  0.].
              j :=  8.
       ].
-    ^ ((i rem: 2) = 0)
+    ^ (i rem: 2) = 0
   ]
   
   main [

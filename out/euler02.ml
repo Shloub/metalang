@@ -5,7 +5,7 @@ begin
   let sum = ref( 0 ) in
   while (!a) < 4000000
   do
-      if ((!a) mod 2) = 0 then
+      if (!a) mod 2 = 0 then
         sum := (!sum) + (!a);
       let c = (!a) in
       a := (!b);

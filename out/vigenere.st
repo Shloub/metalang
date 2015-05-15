@@ -26,24 +26,24 @@ Object subclass: vigenere [
   ]
    position_alphabet: c  [|i|
     i := ((c) asciiValue).
-    (((i <= (($Z) asciiValue))) and: [(i >= (($A) asciiValue))])
-      ifTrue:[^ (i - (($A) asciiValue))]
-      ifFalse:[(((i <= (($z) asciiValue))) and: [(i >= (($a) asciiValue))])
-                ifTrue:[^ (i - (($a) asciiValue))]
-                ifFalse:[^ (0-(1))].].
+    ((i <= (($Z) asciiValue)) and: [i >= (($A) asciiValue)])
+      ifTrue:[^ i - (($A) asciiValue)]
+      ifFalse:[((i <= (($z) asciiValue)) and: [i >= (($a) asciiValue)])
+                ifTrue:[^ i - (($a) asciiValue)]
+                ifFalse:[^ 0 - 1].].
   ]
   
    of_position_alphabet: c  [
-    ^ (((c + (($a) asciiValue))) asCharacter)
+    ^ ((c + (($a) asciiValue)) asCharacter)
   ]
   
    crypte: taille_cle cle: cle taille: taille message: message [|new0 lettre addon|
     (0 to: (taille - 1)) do: [:i|
       lettre := (self position_alphabet: (message at: (i + 1))).
-      (lettre ~= (0-(1)))
+      (lettre ~= (0 - 1))
         ifTrue:[
                addon := (self position_alphabet: (cle at: ((i rem: taille_cle) + 1))).
-               new0 := ((addon + lettre) rem: 26).
+               new0 := (addon + lettre) rem: 26.
                message at: (i + 1) put:  (self of_position_alphabet: new0).
         ].
     ].
@@ -67,7 +67,7 @@ Object subclass: vigenere [
     ].
     (self crypte: taille_cle cle: cle taille: taille message: message).
     (0 to: (taille - 1)) do: [:i|
-      ((message at: (i + 1))) display.
+      (message at: (i + 1)) display.
     ].
     '
 ' display.

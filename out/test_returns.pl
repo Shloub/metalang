@@ -28,7 +28,7 @@ sub is_pair{
     }
     $j = 8;
   }
-  return (remainder($i, 2)) eq 0;
+  return remainder($i, 2) eq 0;
 }
 
 

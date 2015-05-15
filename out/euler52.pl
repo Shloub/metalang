@@ -10,10 +10,10 @@ sub chiffre_sort{
   if ($a < 10) {
     return $a;
   }else{
-    my $b = chiffre_sort(int(($a) / (10)));
+    my $b = chiffre_sort(int($a / 10));
     my $c = remainder($a, 10);
     my $d = remainder($b, 10);
-    my $e = int(($b) / (10));
+    my $e = int($b / 10);
     if ($c < $d) {
       return $c + $b * 10;
     }else{

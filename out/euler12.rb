@@ -20,7 +20,7 @@ end
 def fillPrimesFactors( t, n, primes, nprimes )
     for i in (0 ..  nprimes - 1) do
       d = primes[i]
-      while (mod(n, d)) == 0 do
+      while mod(n, d) == 0 do
         t[d] = t[d] + 1
         n = (n.to_f / d).to_i
       end
@@ -60,7 +60,7 @@ def find( ndiv2 )
         end
       end
       if ndivs > ndiv2 then
-        return (((n * (n + 1)).to_f / 2).to_i)
+        return ((n * (n + 1).to_f / 2).to_i)
       end
       
 =begin

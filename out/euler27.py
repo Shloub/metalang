@@ -15,9 +15,9 @@ def eratostene( t, max0 ):
 def isPrime( n, primes, len ):
     i = 0
     if n < 0:
-      n = -(n)
+      n = -n
     while (primes[i] * primes[i] < n):
-      if (mod(n, primes[i])) == 0:
+      if mod(n, primes[i]) == 0:
         return False
       i += 1
     return True
@@ -25,7 +25,7 @@ def isPrime( n, primes, len ):
 def test( a, b, primes, len ):
     for n in range(0, 1 + 200):
       j = n * n + a * n + b
-      if not (isPrime(j, primes, len)):
+      if not isPrime(j, primes, len):
         return n
     return 200
 
@@ -47,9 +47,9 @@ ma = 0
 mb = 0
 for b in range(3, 1 + 999):
   if era[b] == b:
-    for a in range(-(999), 1 + 999):
+    for a in range(-999, 1 + 999):
       n1 = test(a, b, primes, nprimes)
-      n2 = test(a, -(b), primes, nprimes)
+      n2 = test(a, -b, primes, nprimes)
       if n1 > max0:
         max0 = n1
         result = a * b
@@ -57,8 +57,8 @@ for b in range(3, 1 + 999):
         mb = b
       if n2 > max0:
         max0 = n2
-        result = -(a) * b
+        result = -a * b
         ma = a
-        mb = -(b)
+        mb = -b
 print("%d %d\n%d\n%d\n" % ( ma, mb, max0, result ), end='')
 

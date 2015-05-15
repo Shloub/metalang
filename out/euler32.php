@@ -52,7 +52,7 @@ for ($e = 1 ; $e <= 9; $e++)
     if ($allowed[$b])
   {
     $allowed[$b] = false;
-    $be = ($b * $e) % 10;
+    $be = $b * $e % 10;
     if ($allowed[$be])
     {
       $allowed[$be] = false;
@@ -78,8 +78,7 @@ for ($e = 1 ; $e <= 9; $e++)
             }
             /* 1  * 4 digits */
             $product2 = $b * ($a * 1000 + $c * 100 + $d * 10 + $e);
-            if (!$counted[$product2] && okdigits($allowed, intval($product2 /
-                                        10)))
+            if (!$counted[$product2] && okdigits($allowed, intval($product2 / 10)))
             {
               $counted[$product2] = true;
               $count += $product2;

@@ -41,7 +41,7 @@ Object subclass: summax_souslist [
       tab at: (i + 1) put:  tmp.
     ].
     result := (self summax: tab len: len).
-    (result) display.
+    result display.
     ]
 ]
 Eval [ (summax_souslist new) main. ]

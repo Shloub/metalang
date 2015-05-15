@@ -27,7 +27,7 @@ func main() {
     fmt.Fscanf(reader, "%c", &tmpc)
       var c int = (int)(tmpc)
       if tmpc != ' ' {
-        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+        c = (c - (int)('a') + 13) % 26 + (int)('a');
       }
       tab4[toto] = (byte)(c);
   }

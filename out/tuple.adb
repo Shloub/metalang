@@ -32,10 +32,8 @@ begin
   a := c.tuple_int_int_field_0;
   b := c.tuple_int_int_field_1;
   d := new tuple_int_int;
-  d.tuple_int_int_field_0 := a +
-  1;
-  d.tuple_int_int_field_1 := b +
-  1;
+  d.tuple_int_int_field_0 := a + 1;
+  d.tuple_int_int_field_1 := b + 1;
   return d;
 end;
 

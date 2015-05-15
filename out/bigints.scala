@@ -324,7 +324,7 @@ Modulo
   def bigint_exp(a : Bigint, b : Int): Bigint = {
     if (b == 1)
       return a;
-    else if ((b % 2) == 0)
+    else if (b % 2 == 0)
       return bigint_exp(mul_bigint(a, a), b / 2);
     else
       return mul_bigint(a, bigint_exp(a, b - 1));
@@ -335,7 +335,7 @@ Modulo
     a = bigint_premiers_chiffres(a, 10);
     if (b == 1)
       return a;
-    else if ((b % 2) == 0)
+    else if (b % 2 == 0)
       return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
     else
       return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));

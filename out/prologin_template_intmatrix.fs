@@ -26,9 +26,7 @@ create bufferc 128 allot
   0 { out0 }
   y 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     x 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-      out0 tableau i cells +
-       @ j cells +
-       @ i 2 * j + * + TO out0
+      out0 tableau  i cells +  @  j cells +  @ i 2 * j + * + TO out0
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP
   out0 exit
@@ -43,12 +41,10 @@ create bufferc 128 allot
   taille_y 1 - 0 BEGIN 2dup >= WHILE DUP { a }
     HERE taille_x cells allot { b }
     taille_x 1 - 0 BEGIN 2dup >= WHILE DUP { c }
-      read-int b c cells +
-       !
+      read-int b  c cells +  !
       skipspaces
      1 + REPEAT 2DROP
-    b tableau a cells +
-     !
+    b tableau  a cells +  !
    1 + REPEAT 2DROP
   tableau taille_x taille_y programme_candidat s>d 0 d.r
   S\" \n" TYPE

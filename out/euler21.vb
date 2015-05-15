@@ -20,7 +20,7 @@ Module euler21
   Function fillPrimesFactors(ByRef t as Integer(), ByVal n as Integer, ByRef primes as Integer(), ByVal nprimes as Integer) As Integer
     For  i As Integer  = 0 to  nprimes - 1
       Dim d As Integer = primes(i)
-      Do While (n Mod d) = 0
+      Do While n Mod d = 0
         t(d) = t(d) + 1
         n = n \ d
       Loop

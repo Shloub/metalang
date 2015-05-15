@@ -31,10 +31,7 @@ public class euler52
     int num = 142857;
     if (same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5))
     {
-      Console.Write("" + num + " " + (num * 2) + " " + (num * 3) + " " + (num *
-                                                                           4) + " " + (num *
-                                                                                5) + " " + (num *
-                                                                                6) + "\n");
+      Console.Write("" + num + " " + (num * 2) + " " + (num * 3) + " " + (num * 4) + " " + (num * 5) + " " + (num * 6) + "\n");
     }
   }
   

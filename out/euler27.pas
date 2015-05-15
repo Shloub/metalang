@@ -35,9 +35,9 @@ begin
     begin
       n := -n;
     end;
-  while (primes[i] * primes[i]) < n do
+  while primes[i] * primes[i] < n do
   begin
-    if (n Mod primes[i]) = 0
+    if n Mod primes[i] = 0
     then
       begin
         exit(false);
@@ -55,7 +55,7 @@ begin
   for n := 0 to  200 do
   begin
     j := n * n + a * n + b;
-    if not isPrime(j, primes, len)
+    if not(isPrime(j, primes, len))
     then
       begin
         exit(n);

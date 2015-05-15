@@ -92,7 +92,7 @@ End Function
     Dim len As Integer = 1
     Dim cache0(len) As Integer
     For  i As Integer  = 0 to  len - 1
-      cache0(i) = - i
+      cache0(i) = -i
     Next
     Dim cache1(len) As Integer
     For  j As Integer  = 0 to  len - 1

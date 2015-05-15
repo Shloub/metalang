@@ -24,7 +24,7 @@ begin
   
   j := i - 2;
   while j <= i + 2 loop
-    if (i rem j) = 5
+    if i rem j = 5
     then
       return TRUE;
     end if;

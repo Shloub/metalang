@@ -25,11 +25,11 @@ Object subclass: aaa_07triplet [
                c := self read_int.
                self skip.
                'a = ' display.
-               (a) display.
+               a display.
                ' b = ' display.
-               (b) display.
+               b display.
                'c =' display.
-               (c) display.
+               c display.
                '
 ' display.
     ].
@@ -39,7 +39,7 @@ Object subclass: aaa_07triplet [
       self skip.
     ].
     (0 to: 9) do: [:j|
-      ((l at: (j + 1))) display.
+      (l at: (j + 1)) display.
       '
 ' display.
     ].

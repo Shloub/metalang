@@ -15,11 +15,11 @@ Object subclass: euler28 [
 
 "
    sumdiag: n  [|un sum nterms d|
-    nterms := (n * 2 - 1).
+    nterms := n * 2 - 1.
     un := 1.
     sum := 1.
     (0 to: (nterms - 2)) do: [:i|
-      d := (2 * (1 + (i quo: 4))).
+      d := 2 * (1 + (i quo: 4)).
       un :=  (un + d).
       " print int d print ""=>"" print un print "" "" "
       sum :=  (sum + un).
@@ -28,7 +28,7 @@ Object subclass: euler28 [
   ]
   
   main [
-    ((self sumdiag: 1001)) display.
+    (self sumdiag: 1001) display.
     ]
 ]
 Eval [ (euler28 new) main. ]

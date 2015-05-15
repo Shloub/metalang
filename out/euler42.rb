@@ -19,7 +19,7 @@ def score(  )
     sum = 0
     for i in (1 ..  len) do
       c=scanf("%c")[0]
-      sum += (c.ord - "A".ord) + 1
+      sum += c.ord - "A".ord + 1
       
 =begin
 		print c print " " print sum print " " 

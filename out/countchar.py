@@ -46,12 +46,12 @@ def nth( tab, tofind, len ):
 len = 0
 len=readint()
 stdinsep()
-tofind = '\x00'
+tofind = '\u0000'
 tofind=readchar()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  tmp = '\x00'
+  tmp = '\u0000'
   tmp=readchar()
   tab[i] = tmp
 result = nth(tab, tofind, len)

@@ -33,7 +33,7 @@ foreach my $k (1 .. 995) {
   }else{
     $i = $i * $f;
     if ($nskipdiv < 0) {
-      $i = int(($i) / ($last->[$index]));
+      $i = int($i / $last->[$index]);
     }
     $nskipdiv = $nskipdiv - 1;
   }

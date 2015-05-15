@@ -37,7 +37,7 @@ begin
   for i in integer range 0..5 - 1 loop
     PInt(i);
     j := j + i;
-    a(i) := (i rem 2) = 0;
+    a(i) := i rem 2 = 0;
   end loop;
   PInt(j);
   PString(new char_array'( To_C(" ")));

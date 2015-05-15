@@ -9,7 +9,7 @@ sub periode{
   my($restes, $len, $a, $b) = @_;
   while ($a ne 0)
   {
-    my $chiffre = int(($a) / ($b));
+    my $chiffre = int($a / $b);
     my $reste = remainder($a, $b);
     foreach my $i (0 .. $len - 1) {
       if ($restes->[$i] eq $reste) {

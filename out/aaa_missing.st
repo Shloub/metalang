@@ -25,23 +25,23 @@ Object subclass: aaa_missing [
       tab2 at: (i + 1) put:  false.
     ].
     (0 to: (len - 1)) do: [:i1|
-      ((tab at: (i1 + 1))) display.
+      (tab at: (i1 + 1)) display.
       ' ' display.
       tab2 at: ((tab at: (i1 + 1)) + 1) put:  true.
     ].
     '
 ' display.
     (0 to: (len - 1)) do: [:i2|
-      (((tab2 at: (i2 + 1))) not)
+      ((tab2 at: (i2 + 1)) not)
         ifTrue:[^ i2].
     ].
-    ^ (0-(1))
+    ^ 0 - 1
   ]
   
   main [
     |tab len|len := self read_int.
     self skip.
-    (len) display.
+    len display.
     '
 ' display.
     tab := Array new: len.
@@ -49,7 +49,7 @@ Object subclass: aaa_missing [
       tab at: (a + 1) put: self read_int.
       self skip.
     ].
-    ((self result: len tab: tab)) display.
+    (self result: len tab: tab) display.
     '
 ' display.
     ]

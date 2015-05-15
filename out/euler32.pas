@@ -88,7 +88,7 @@ begin
       then
         begin
           allowed[b] := false;
-          be := (b * e) Mod 10;
+          be := b * e Mod 10;
           if allowed[be]
           then
             begin
@@ -113,8 +113,7 @@ begin
                                 allowed[d] := false;
                                 { 2 * 3 digits }
                                 product := (a * 10 + b) * (c * 100 + d * 10 + e);
-                                if not counted[product] and okdigits(allowed, product
-                                                            Div 10)
+                                if not(counted[product]) and okdigits(allowed, product Div 10)
                                 then
                                   begin
                                     counted[product] := true;
@@ -123,10 +122,8 @@ begin
                                     Write(' ');
                                   end;
                                 { 1  * 4 digits }
-                                product2 := b * (a * 1000 + c * 100 + d * 10 +
-                                                  e);
-                                if not counted[product2] and okdigits(allowed, product2
-                                                             Div 10)
+                                product2 := b * (a * 1000 + c * 100 + d * 10 + e);
+                                if not(counted[product2]) and okdigits(allowed, product2 Div 10)
                                 then
                                   begin
                                     counted[product2] := true;

@@ -26,10 +26,10 @@ sub fillPrimesFactors{
   my($t, $n, $primes, $nprimes) = @_;
   foreach my $i (0 .. $nprimes - 1) {
     my $d = $primes->[$i];
-    while ((remainder($n, $d)) eq 0)
+    while (remainder($n, $d) eq 0)
     {
       $t->[$d] = $t->[$d] + 1;
-      $n = int(($n) / ($d));
+      $n = int($n / $d);
     }
     if ($n eq 1) {
       return $primes->[$i];

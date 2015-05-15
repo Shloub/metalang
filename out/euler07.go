@@ -2,7 +2,7 @@ package main
 import "fmt"
 func divisible(n int, t []int, size int) bool{
   for i := 0 ; i <= size - 1; i++ {
-    if (n % t[i]) == 0 {
+    if n % t[i] == 0 {
         return true
       }
   }

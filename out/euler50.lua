@@ -5,7 +5,7 @@ end
 function eratostene( t, max0 )
   local n = 0
   for i = 2,max0 - 1 do
-    if t[i] == i
+    if t[i + 1] == i
     then
       n = n + 1;
       if trunc(max0 / i) > i
@@ -13,7 +13,7 @@ function eratostene( t, max0 )
         local j = i * i
         while j < max0 and j > 0
         do
-        t[j] = 0;
+        t[j + 1] = 0;
         j = j + i;
         end
       end
@@ -26,25 +26,25 @@ end
 local maximumprimes = 1000001
 local era = {}
 for j = 0,maximumprimes - 1 do
-  era[j] = j;
+  era[j + 1] = j;
 end
 local nprimes = eratostene(era, maximumprimes)
 local primes = {}
 for o = 0,nprimes - 1 do
-  primes[o] = 0;
+  primes[o + 1] = 0;
 end
 local l = 0
 for k = 2,maximumprimes - 1 do
-  if era[k] == k
+  if era[k + 1] == k
   then
-    primes[l] = k;
+    primes[l + 1] = k;
     l = l + 1;
   end
 end
 io.write(string.format("%d == %d\n", l, nprimes))
 local sum = {}
 for i_ = 0,nprimes - 1 do
-  sum[i_] = primes[i_];
+  sum[i_ + 1] = primes[i_ + 1];
 end
 local maxl = 0
 local process = true
@@ -57,14 +57,14 @@ process = false;
 for i = 0,stop do
   if i + len < nprimes
   then
-    sum[i] = sum[i] + primes[i + len];
-    if maximumprimes > sum[i]
+    sum[i + 1] = sum[i + 1] + primes[i + len + 1];
+    if maximumprimes > sum[i + 1]
     then
       process = true;
-      if era[sum[i]] == sum[i]
+      if era[sum[i + 1] + 1] == sum[i + 1]
       then
         maxl = len;
-        resp = sum[i];
+        resp = sum[i + 1];
       end
     else
       stop = math.min(stop, i);

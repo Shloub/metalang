@@ -23,17 +23,26 @@
   ELSE
     S" False" TYPE
   THEN
-  4 1 + 3 // 2 1 + // s>d 0 d.r
-  4 1 * 3 // 2 1 * // s>d 0 d.r
-  a 0 = INVERT a 4 = INVERT AND INVERT { d }
+  S"  " TYPE
+  2 1 = false = { d }
   d
   IF
     S" True" TYPE
   ELSE
     S" False" TYPE
   THEN
-  true false INVERT AND true false AND INVERT AND { e }
+  S"  " TYPE
+  4 1 + 3 // 2 1 + // s>d 0 d.r
+  4 1 * 3 // 2 1 * // s>d 0 d.r
+  a 0 = INVERT a 4 = INVERT AND INVERT { e }
   e
+  IF
+    S" True" TYPE
+  ELSE
+    S" False" TYPE
+  THEN
+  true false INVERT AND true false AND INVERT AND { f }
+  f
   IF
     S" True" TYPE
   ELSE

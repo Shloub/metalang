@@ -18,7 +18,7 @@ def is_pair( i ):
       if i == 22:
         j = 0
       j = 8
-    return (mod(i, 2)) == 0
+    return mod(i, 2) == 0
 
 
 

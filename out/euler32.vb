@@ -58,7 +58,7 @@ Module euler32
       For  b As Integer  = 1 to  9
         If allowed(b) Then
           allowed(b) = false
-          Dim be As Integer = (b * e) Mod 10
+          Dim be As Integer = b * e Mod 10
           If allowed(be) Then
             allowed(be) = false
             For  a As Integer  = 1 to  9

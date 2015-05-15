@@ -68,7 +68,7 @@ read int, read char et skip
       var c: Int = (tmpc).toInt;
       printf("%c:%d ", tmpc, c);
       if (tmpc != ' ')
-        c = ((c - ('a').toInt) + 13) % 26 + ('a').toInt;
+        c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
       tab4(toto) = (c).toChar;
     }
     for (j <- 0 to strlen - 1)

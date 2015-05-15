@@ -57,7 +57,7 @@ End Function
     Dim max_ancient As Integer = 0
     Dim max_recent As Integer = 0
     For  i As Integer  = 0 to  m - 1
-      If serrures(i)(0) = - 1 AndAlso serrures(i)(1) > max_ancient Then
+      If serrures(i)(0) = -1 AndAlso serrures(i)(1) > max_ancient Then
         max_ancient = serrures(i)(1)
       End If
       If serrures(i)(0) = 1 AndAlso serrures(i)(1) > max_recent Then

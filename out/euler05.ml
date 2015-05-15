@@ -4,7 +4,7 @@ let primesfactors n =
   let d = ref( 2 ) in
   while (!n) <> 1 && (!d) * (!d) <= (!n)
   do
-      if ((!n) mod (!d)) = 0 then
+      if (!n) mod (!d) = 0 then
         begin
           tab.((!d)) <- tab.((!d)) + 1;
           n := (!n) / (!d)

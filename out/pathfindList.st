@@ -19,8 +19,8 @@ Object subclass: pathfindList [
    pathfind_aux: cache tab: tab len: len pos: pos [|posval out0 oneval|
     (pos >= (len - 1))
       ifTrue:[^ 0]
-      ifFalse:[((cache at: (pos + 1)) ~= (0-(1)))
-                ifTrue:[^ (cache at: (pos + 1))]
+      ifFalse:[((cache at: (pos + 1)) ~= (0 - 1))
+                ifTrue:[^ cache at: (pos + 1)]
                 ifFalse:[
                         cache at: (pos + 1) put:  (len * 2).
                         posval := (self pathfind_aux: cache tab: tab len: len pos: (tab at: (pos + 1))).
@@ -37,7 +37,7 @@ Object subclass: pathfindList [
    pathfind: tab len: len [|cache|
     cache := Array new: len.
     (0 to: (len - 1)) do: [:i|
-      cache at: (i + 1) put:  (0-(1)).
+      cache at: (i + 1) put:  (0 - 1).
     ].
     ^ (self pathfind_aux: cache tab: tab len: len pos: 0)
   ]
@@ -54,7 +54,7 @@ Object subclass: pathfindList [
       tab at: (i + 1) put:  tmp.
     ].
     result := (self pathfind: tab len: len).
-    (result) display.
+    result display.
     ]
 ]
 Eval [ (pathfindList new) main. ]

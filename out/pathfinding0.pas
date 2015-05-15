@@ -82,7 +82,7 @@ var
   val3 : Longint;
   val4 : Longint;
 begin
-  if (posX = (x - 1)) and (posY = (y - 1)) then
+  if (posX = x - 1) and (posY = y - 1) then
     begin
       exit(0);
     end

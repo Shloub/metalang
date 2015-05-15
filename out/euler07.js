@@ -1,9 +1,9 @@
 var util = require("util");
 function divisible(n, t, size){
   for (var i = 0 ; i <= size - 1; i++)
-    if ((~~(n % t[i])) == 0)
-    return 1;
-  return 0;
+    if (~~(n % t[i]) == 0)
+    return true;
+  return false;
 }
 
 function find(n, t, used, nth){

@@ -39,7 +39,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
       tab4 at: (toto + 1) put:  ((c) asCharacter).
     ].
     (0 to: (strlen - 1)) do: [:j|
-      ((tab4 at: (j + 1))) display.
+      (tab4 at: (j + 1)) display.
     ].
     ]
 ]

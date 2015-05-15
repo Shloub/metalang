@@ -25,21 +25,21 @@ Object subclass: pathfinding0 [
     ]
   ]
    pathfind_aux: cache tab: tab x: x y: y posX: posX posY: posY [|val4 val3 val2 val1 out0|
-    ((posX = (x - 1)) & (posY = (y - 1)))
+    ((posX = (x - 1)) and: [posY = (y - 1)])
       ifTrue:[^ 0]
-      ifFalse:[((((posX < 0) | (posY < 0)) | (posX >= x)) | (posY >= y))
-                ifTrue:[^ (x * y * 10)]
+      ifFalse:[((((posX < 0) or: [posY < 0]) or: [posX >= x]) or: [posY >= y])
+                ifTrue:[^ x * y * 10]
                 ifFalse:[(((tab at: (posY + 1)) at: (posX + 1)) = $#)
-                          ifTrue:[^ (x * y * 10)]
-                          ifFalse:[(((cache at: (posY + 1)) at: (posX + 1)) ~= (0-(1)))
-                                    ifTrue:[^ ((cache at: (posY + 1)) at: (posX + 1))]
+                          ifTrue:[^ x * y * 10]
+                          ifFalse:[(((cache at: (posY + 1)) at: (posX + 1)) ~= (0 - 1))
+                                    ifTrue:[^ (cache at: (posY + 1)) at: (posX + 1)]
                                     ifFalse:[
                                             (cache at: (posY + 1)) at: (posX + 1) put:  (x * y * 10).
                                             val1 := (self pathfind_aux: cache tab: tab x: x y: y posX: (posX + 1) posY: posY).
                                             val2 := (self pathfind_aux: cache tab: tab x: x y: y posX: (posX - 1) posY: posY).
                                             val3 := (self pathfind_aux: cache tab: tab x: x y: y posX: posX posY: (posY - 1)).
                                             val4 := (self pathfind_aux: cache tab: tab x: x y: y posX: posX posY: (posY + 1)).
-                                            out0 := (1 + ((((((val1) min: (val2))) min: (val3))) min: (val4))).
+                                            out0 := 1 + ((((((val1) min: (val2))) min: (val3))) min: (val4)).
                                             (cache at: (posY + 1)) at: (posX + 1) put:  out0.
                                             ^ out0
                                     ].].].].
@@ -50,8 +50,8 @@ Object subclass: pathfinding0 [
     (0 to: (y - 1)) do: [:i|
       tmp := Array new: x.
       (0 to: (x - 1)) do: [:j|
-        (((tab at: (i + 1)) at: (j + 1))) display.
-        tmp at: (j + 1) put:  (0-(1)).
+        ((tab at: (i + 1)) at: (j + 1)) display.
+        tmp at: (j + 1) put:  (0 - 1).
       ].
       '
 ' display.
@@ -65,9 +65,9 @@ Object subclass: pathfinding0 [
     self skip.
     y := self read_int.
     self skip.
-    (x) display.
+    x display.
     ' ' display.
-    (y) display.
+    y display.
     '
 ' display.
     e := Array new: y.
@@ -81,7 +81,7 @@ Object subclass: pathfinding0 [
     ].
     tab := e.
     result := (self pathfind: tab x: x y: y).
-    (result) display.
+    result display.
     ]
 ]
 Eval [ (pathfinding0 new) main. ]

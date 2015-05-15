@@ -1,7 +1,7 @@
 <?php
 function divisible($n, &$t, $size){
   for ($i = 0 ; $i < $size; $i++)
-    if (($n % $t[$i]) == 0)
+    if ($n % $t[$i] == 0)
     return true;
   return false;
 }

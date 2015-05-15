@@ -10,7 +10,7 @@ let rec find0 len tab cache x y =
   if y = len - 1 then
     tab.(y).(x)
   else if x > y then
-    -10000
+    - 10000
   else if cache.(y).(x) <> 0 then
     cache.(y).(x)
   else

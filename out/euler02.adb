@@ -24,7 +24,7 @@ begin
   b := 2;
   sum := 0;
   while a < 4000000 loop
-    if (a rem 2) = 0
+    if a rem 2 = 0
     then
       sum := sum + a;
     end if;

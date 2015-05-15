@@ -19,7 +19,7 @@ function fillPrimesFactors(t, n, primes, nprimes){
   for (var i = 0 ; i <= nprimes - 1; i++)
   {
     var d = primes[i];
-    while ((~~(n % d)) == 0)
+    while (~~(n % d) == 0)
     {
       t[d] = t[d] + 1;
       n = ~~(n / d);

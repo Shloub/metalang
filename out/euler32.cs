@@ -61,7 +61,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
         if (allowed[b])
       {
         allowed[b] = false;
-        int be = (b * e) % 10;
+        int be = b * e % 10;
         if (allowed[be])
         {
           allowed[be] = false;

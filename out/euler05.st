@@ -6,7 +6,7 @@ Object subclass: euler05 [
       tab at: (i + 1) put:  0.
     ].
     d := 2.
-    [((n ~= 1) & (d * d <= n))] whileTrue:
+    [(n ~= 1) and: [d * d <= n]] whileTrue:
     [((n rem: d) = 0)
       ifTrue:[
              tab at: (d + 1) put:  ((tab at: (d + 1)) + 1).
@@ -26,7 +26,7 @@ Object subclass: euler05 [
     (1 to: lim) do: [:i|
       t := (self primesfactors: i).
       (1 to: i) do: [:j|
-        o at: (j + 1) put:  (((o at: (j + 1))) max: ((t at: (j + 1)))).
+        o at: (j + 1) put:  ((o at: (j + 1)) max: (t at: (j + 1))).
       ].
     ].
     product := 1.
@@ -35,7 +35,7 @@ Object subclass: euler05 [
         product :=  (product * k).
       ].
     ].
-    (product) display.
+    product display.
     '
 ' display.
     ]

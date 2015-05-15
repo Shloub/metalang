@@ -34,7 +34,7 @@ d6 = 5 ou d6 = 0
       allowed at: (i + 1) put:  true.
     ].
     (0 to: 1) do: [:i6|
-      d6 := (i6 * 5).
+      d6 := i6 * 5.
       (allowed at: (d6 + 1))
         ifTrue:[
                allowed at: (d6 + 1) put:  false.
@@ -51,7 +51,7 @@ d6 = 5 ou d6 = 0
                                          ifTrue:[
                                                 allowed at: (d9 + 1) put:  false.
                                                 (1 to: 9) do: [:d10|
-                                                  ((((allowed at: (d10 + 1)) & (((d6 * 100 + (d7 * 10) + d8) rem: 11) = 0)) & (((d7 * 100 + (d8 * 10) + d9) rem: 13) = 0)) & (((d8 * 100 + (d9 * 10) + d10) rem: 17) = 0))
+                                                  ((((allowed at: (d10 + 1)) and: [((d6 * 100 + (d7 * 10) + d8) rem: 11) = 0]) and: [((d7 * 100 + (d8 * 10) + d9) rem: 13) = 0]) and: [((d8 * 100 + (d9 * 10) + d10) rem: 17) = 0])
                                                     ifTrue:[
                                                            allowed at: (d10 + 1) put:  false.
                                                            (0 to: 9) do: [:d5|
@@ -60,7 +60,7 @@ d6 = 5 ou d6 = 0
                                                                       allowed at: (d5 + 1) put:  false.
                                                                       (((d5 * 100 + (d6 * 10) + d7) rem: 7) = 0)
                                                                         ifTrue:[(0 to: 4) do: [:i4|
-                                                                                  d4 := (i4 * 2).
+                                                                                  d4 := i4 * 2.
                                                                                   (allowed at: (d4 + 1))
                                                                                     ifTrue:[
                                                                                            allowed at: (d4 + 1) put:  false.
@@ -77,16 +77,16 @@ d6 = 5 ou d6 = 0
                                                                                                                              (allowed at: (d1 + 1))
                                                                                                                                ifTrue:[
                                                                                                                                       allowed at: (d1 + 1) put:  false.
-                                                                                                                                      (d1) display.
-                                                                                                                                      (d2) display.
-                                                                                                                                      (d3) display.
-                                                                                                                                      (d4) display.
-                                                                                                                                      (d5) display.
-                                                                                                                                      (d6) display.
-                                                                                                                                      (d7) display.
-                                                                                                                                      (d8) display.
-                                                                                                                                      (d9) display.
-                                                                                                                                      (d10) display.
+                                                                                                                                      d1 display.
+                                                                                                                                      d2 display.
+                                                                                                                                      d3 display.
+                                                                                                                                      d4 display.
+                                                                                                                                      d5 display.
+                                                                                                                                      d6 display.
+                                                                                                                                      d7 display.
+                                                                                                                                      d8 display.
+                                                                                                                                      d9 display.
+                                                                                                                                      d10 display.
                                                                                                                                       ' + ' display.
                                                                                                                                       allowed at: (d1 + 1) put:  true.
                                                                                                                                ].

@@ -26,7 +26,7 @@ func eratostene(t []int, max0 int) int{
 func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   for i := 0 ; i <= nprimes - 1; i++ {
     var d int = primes[i]
-      for (n % d) == 0{
+      for n % d == 0{
         t[d] = t[d] + 1;
         n /= d;
       }
@@ -56,7 +56,7 @@ func find(ndiv2 int) int{
       }
   }
   for n := 1 ; n <= 10000; n++ {
-    var primesFactors []int = make([]int, (n + 2))
+    var primesFactors []int = make([]int, n + 2)
       for m := 0 ; m <= n + 2 - 1; m++ {
         primesFactors[m] = 0;
       }
@@ -69,7 +69,7 @@ func find(ndiv2 int) int{
           }
       }
       if ndivs > ndiv2 {
-        return (n * (n + 1)) / 2
+        return n * (n + 1) / 2
       }
       /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
   }

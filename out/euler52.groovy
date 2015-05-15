@@ -6,10 +6,10 @@ int chiffre_sort(int a)
     return a
   else
   {
-    int b = chiffre_sort((int)(a / 10))
+    int b = chiffre_sort(a.intdiv(10))
     int c = a % 10
     int d = b % 10
-    int e = (int)(b / 10)
+    int e = b.intdiv(10)
     if (c < d)
       return c + b * 10
     else

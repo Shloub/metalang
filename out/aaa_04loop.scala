@@ -8,7 +8,7 @@ object aaa_04loop
     var j: Int = i - 2;
     while (j <= i + 2)
     {
-      if ((i % j) == 5)
+      if (i % j == 5)
         return true;
       j = j + 1;
     }

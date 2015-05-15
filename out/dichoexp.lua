@@ -19,7 +19,7 @@ function exp0( a, b )
   then
     return 1
   end
-  if (math.mod(b, 2)) == 0
+  if math.mod(b, 2) == 0
   then
     local o = exp0(a, trunc(b / 2))
     return o * o

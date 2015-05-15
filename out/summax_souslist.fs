@@ -26,8 +26,7 @@ create bufferc 128 allot
   0 { current }
   0 { max0 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    current lst i cells +
-     @ + TO current
+    current lst  i cells +  @ + TO current
     current 0 <
     IF
       0 TO current
@@ -49,8 +48,7 @@ create bufferc 128 allot
     0 { tmp }
     read-int TO tmp
     skipspaces
-    tmp tab i cells +
-     !
+    tmp tab  i cells +  !
    1 + REPEAT 2DROP
   tab len summax { result }
   result s>d 0 d.r

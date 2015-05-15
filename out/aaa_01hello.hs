@@ -24,13 +24,18 @@ main =
      if c
      then printf "True" :: IO ()
      else printf "False" :: IO ()
-     printf "%d%d" ((((4 + 1) `quot` 3) `quot` (2 + 1))::Int) ((((4 * 1) `quot` 3) `quot` (2 * 1))::Int) :: IO()
-     let d = not (not (5 == 0) && not (5 == 4))
+     printf " " :: IO ()
+     let d = (2 == 1) == False
      if d
      then printf "True" :: IO ()
      else printf "False" :: IO ()
-     let e = (True && not False) && not (True && False)
+     printf " %d%d" ((((4 + 1) `quot` 3) `quot` (2 + 1))::Int) ((((4 * 1) `quot` 3) `quot` (2 * 1))::Int) :: IO()
+     let e = not (not (5 == 0) && not (5 == 4))
      if e
+     then printf "True" :: IO ()
+     else printf "False" :: IO ()
+     let f = (True && not False) && not (True && False)
+     if f
      then printf "True" :: IO ()
      else printf "False" :: IO ()
      printf "\n" :: IO ()

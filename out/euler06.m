@@ -5,9 +5,9 @@
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int lim = 100;
-  int sum = (lim * (lim + 1)) / 2;
+  int sum = lim * (lim + 1) / 2;
   int carressum = sum * sum;
-  int sumcarres = (lim * (lim + 1) * (2 * lim + 1)) / 6;
+  int sumcarres = lim * (lim + 1) * (2 * lim + 1) / 6;
   printf("%d", carressum - sumcarres);
   [pool drain];
   return 0;

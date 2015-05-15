@@ -9,7 +9,7 @@ Module aaa_04loop
     
     Dim j As Integer = i - 2
     Do While j <= i + 2
-      If (i Mod j) = 5 Then
+      If i Mod j = 5 Then
         Return true
       End If
       j = j + 1

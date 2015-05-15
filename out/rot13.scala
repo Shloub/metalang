@@ -42,7 +42,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
       var tmpc = read_char()
       var c: Int = (tmpc).toInt;
       if (tmpc != ' ')
-        c = ((c - ('a').toInt) + 13) % 26 + ('a').toInt;
+        c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
       tab4(toto) = (c).toChar;
     }
     for (j <- 0 to strlen - 1)

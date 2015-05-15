@@ -1,7 +1,7 @@
 let rec pathfind_aux cache tab len pos =
   if pos >= len - 1 then
     0
-  else if cache.(pos) <> -1 then
+  else if cache.(pos) <> - 1 then
     cache.(pos)
   else
     begin
@@ -19,7 +19,7 @@ let rec pathfind_aux cache tab len pos =
 
 let pathfind tab len =
   let cache = Array.init len (fun _i ->
-    -1) in
+    - 1) in
   pathfind_aux cache tab len 0
 
 let () =

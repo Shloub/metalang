@@ -15,7 +15,7 @@ def eratostene( t, max0 ):
 def fillPrimesFactors( t, n, primes, nprimes ):
     for i in range(0, nprimes):
       d = primes[i]
-      while ((mod(n, d)) == 0):
+      while (mod(n, d) == 0):
         t[d] = t[d] + 1
         n = math.trunc(n / d)
       if n == 1:
@@ -71,7 +71,7 @@ for i in range(1, 1 + n):
     if abondant[i] and abondant[j] and i + j <= n:
       summable[i + j] = True
 for o in range(1, 1 + n):
-  if not (summable[o]):
+  if not summable[o]:
     sum += o
 print("\n%d\n" % ( sum ), end='')
 

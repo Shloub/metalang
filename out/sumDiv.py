@@ -47,7 +47,7 @@ def sumdiv( n ):
     """ On déclare un entier qui contiendra la somme """
     for i in range(1, 1 + n):
       """ La boucle : i est le diviseur potentiel"""
-      if (mod(n, i)) == 0:
+      if mod(n, i) == 0:
         """ Si i divise """
         out0 += i
         """ On incrémente """

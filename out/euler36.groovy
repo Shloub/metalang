@@ -4,12 +4,12 @@ boolean palindrome2(int[] pow2, int n)
 {
   boolean[] t = new boolean[20]
   for (int i = 0 ; i < 20; i++)
-    t[i] = (((int)(n / pow2[i])) % 2) == 1
+    t[i] = n.intdiv(pow2[i]) % 2 == 1
   int nnum = 0
   for (int j = 1 ; j <= 19; j ++)
     if (t[j])
     nnum = j
-  for (int k = 0 ; k <= (int)(nnum / 2); k ++)
+  for (int k = 0 ; k <= nnum.intdiv(2); k ++)
     if (t[k] != t[nnum - k])
     return false
   return true
@@ -22,7 +22,7 @@ int[] pow2 = new int[20]
 for (int i = 0 ; i < 20; i++)
 {
   p *= 2;
-  pow2[i] = (int)(p / 2)
+  pow2[i] = p.intdiv(2)
 }
 int sum = 0
 for (int d = 1 ; d <= 9; d ++)

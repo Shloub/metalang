@@ -13,7 +13,7 @@ begin
   SetLength(t, 20);
   for i := 0 to  20 - 1 do
   begin
-    t[i] := ((n Div pow2[i]) Mod 2) = 1;
+    t[i] := n Div pow2[i] Mod 2 = 1;
   end;
   nnum := 0;
   for j := 1 to  19 do

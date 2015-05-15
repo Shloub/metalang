@@ -25,7 +25,7 @@ begin
   begin
     Write(i);
     j := j + i;
-    a[i] := (i Mod 2) = 0;
+    a[i] := i Mod 2 = 0;
   end;
   Write(j);
   Write(' ');

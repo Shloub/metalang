@@ -23,7 +23,7 @@ def isPrime( n, primes, len )
       n = -n
     end
     while primes[i] * primes[i] < n do
-      if (mod(n, primes[i])) == 0 then
+      if mod(n, primes[i]) == 0 then
         return (false)
       end
       i += 1
@@ -34,7 +34,7 @@ end
 def test( a, b, primes, len )
     for n in (0 ..  200) do
       j = n * n + a * n + b
-      if not(isPrime(j, primes, len)) then
+      if !isPrime(j, primes, len) then
         return (n)
       end
     end

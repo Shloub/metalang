@@ -3,7 +3,7 @@ object aaa_03binding
   
   def g(i : Int): Int = {
     var j: Int = i * 4;
-    if ((j % 2) == 1)
+    if (j % 2 == 1)
       return 0;
     return j;
   }

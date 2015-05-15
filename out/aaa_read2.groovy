@@ -37,7 +37,7 @@ for (int i3 = 0 ; i3 < strlen; i3++)
   int c = (0+tmpc)
   System.out.printf("%s:%s ", tmpc, c);
   if (tmpc != (char)' ')
-    c = ((c - (0+(char)'a')) + 13) % 26 + (0+(char)'a')
+    c = (c - (0+(char)'a') + 13) % 26 + (0+(char)'a')
   tab4[i3] = (char)(c)
 }
 for (int j = 0 ; j < strlen; j++)

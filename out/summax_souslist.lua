@@ -14,7 +14,7 @@ function summax( lst, len )
   local current = 0
   local max0 = 0
   for i = 0,len - 1 do
-    current = current + lst[i];
+    current = current + lst[i + 1];
     if current < 0
     then
       current = 0;
@@ -36,7 +36,7 @@ for i = 0,len - 1 do
   local tmp = 0
   tmp = readint()
   stdinsep()
-  tab[i] = tmp;
+  tab[i + 1] = tmp;
 end
 local result = summax(tab, len)
 io.write(result)

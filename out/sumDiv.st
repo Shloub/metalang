@@ -49,7 +49,7 @@ Object subclass: sumDiv [
     n := 0.
     n := self read_int.
     " Lecture de l'entier "
-    ((self sumdiv: n)) display.
+    (self sumdiv: n) display.
     ]
 ]
 Eval [ (sumDiv new) main. ]

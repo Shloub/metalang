@@ -5,8 +5,8 @@ Object subclass: euler23 [
       ((t at: (i + 1)) = i)
         ifTrue:[
                n :=  (n + 1).
-               j := (i * i).
-               [((j < max0) & (j > 0))] whileTrue:
+               j := i * i.
+               [(j < max0) and: [j > 0]] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -19,21 +19,21 @@ Object subclass: euler23 [
    fillPrimesFactors: t a: a primes: primes nprimes: nprimes [|n d|
     n := a.
     (0 to: (nprimes - 1)) do: [:i|
-      d := (primes at: (i + 1)).
-      [((n rem: d) = 0)] whileTrue:
+      d := primes at: (i + 1).
+      [(n rem: d) = 0] whileTrue:
       [
       t at: (d + 1) put:  ((t at: (d + 1)) + 1).
       n :=  (n quo: d).
       ].
       (n = 1)
-        ifTrue:[^ (primes at: (i + 1))].
+        ifTrue:[^ primes at: (i + 1)].
     ].
     ^ n
   ]
   
    sumdivaux2: t n: n b: b [|i|
     i := b.
-    [(((i < n)) and: [((t at: (i + 1)) = 0)])] whileTrue:
+    [(i < n) and: [(t at: (i + 1)) = 0]] whileTrue:
     [i :=  (i + 1).].
     ^ i
   ]
@@ -51,7 +51,7 @@ Object subclass: euler23 [
                           out0 :=  (out0 + p).
                           p :=  (p * i).
                         ].
-                        ^ (out0 + 1 * o)
+                        ^ out0 + 1 * o
                 ].].
   ]
   
@@ -95,23 +95,23 @@ Object subclass: euler23 [
     ].
     sum := 0.
     (2 to: n) do: [:r|
-      other := ((self sumdiv: nprimes primes: primes n: r) - r).
+      other := (self sumdiv: nprimes primes: primes n: r) - r.
       (other > r)
         ifTrue:[abondant at: (r + 1) put:  true.].
     ].
     (1 to: n) do: [:i|
       (1 to: n) do: [:j|
-        ((((abondant at: (i + 1))) and: [(abondant at: (j + 1))]) & (i + j <= n))
+        (((abondant at: (i + 1)) and: [abondant at: (j + 1)]) and: [i + j <= n])
           ifTrue:[summable at: (i + j + 1) put:  true.].
       ].
     ].
     (1 to: n) do: [:o|
-      (((summable at: (o + 1))) not)
+      ((summable at: (o + 1)) not)
         ifTrue:[sum :=  (sum + o).].
     ].
     '
 ' display.
-    (sum) display.
+    sum display.
     '
 ' display.
     ]

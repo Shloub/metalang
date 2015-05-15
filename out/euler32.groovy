@@ -33,7 +33,7 @@ boolean okdigits(boolean[] ok, int n)
     if (ok[digit])
     {
       ok[digit] = false
-      boolean o = okdigits(ok, (int)(n / 10))
+      boolean o = okdigits(ok, n.intdiv(10))
       ok[digit] = true
       return o
     }
@@ -58,7 +58,7 @@ for (int e = 1 ; e <= 9; e ++)
     if (allowed[b])
   {
     allowed[b] = false
-    int be = (b * e) % 10
+    int be = b * e % 10
     if (allowed[be])
     {
       allowed[be] = false
@@ -76,7 +76,7 @@ for (int e = 1 ; e <= 9; e ++)
             allowed[d] = false
             /* 2 * 3 digits */
             int product = (a * 10 + b) * (c * 100 + d * 10 + e)
-            if (!counted[product] && okdigits(allowed, (int)(product / 10)))
+            if (!counted[product] && okdigits(allowed, product.intdiv(10)))
             {
               counted[product] = true
               count += product;
@@ -84,7 +84,7 @@ for (int e = 1 ; e <= 9; e ++)
             }
             /* 1  * 4 digits */
             int product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-            if (!counted[product2] && okdigits(allowed, (int)(product2 / 10)))
+            if (!counted[product2] && okdigits(allowed, product2.intdiv(10)))
             {
               counted[product2] = true
               count += product2;

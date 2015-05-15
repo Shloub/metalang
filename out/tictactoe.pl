@@ -161,7 +161,7 @@ sub minmax{
         cancel_move_xy($x, $y, $g);
         # Minimum ou Maximum selon le coté ou l'on joue
         
-        if (($currentNote > $maxNote) eq $g->{"firstToPlay"}) {
+        if ($currentNote > $maxNote eq $g->{"firstToPlay"}) {
           $maxNote = $currentNote;
         }
       }
@@ -176,8 +176,7 @@ sub minmax{
 
 sub play{
   my($g) = @_;
-  my $minMove = {"x" => 0,
-                 "y" => 0};
+  my $minMove = {"x" => 0, "y" => 0};
   my $minNote = 10000;
   foreach my $x (0 .. 2) {
     foreach my $y (0 .. 2) {
@@ -207,10 +206,7 @@ sub init0{
     }
     $cases->[$i] = $tab;
   }
-  return {"cases" => $cases,
-          "firstToPlay" => 1,
-          "note" => 0,
-          "ended" => ()};
+  return {"cases" => $cases, "firstToPlay" => 1, "note" => 0, "ended" => ()};
 }
 
 sub read_move{
@@ -218,16 +214,13 @@ sub read_move{
   readspaces();
   my $y = readint();
   readspaces();
-  return {"x" => $x,
-          "y" => $y};
+  return {"x" => $x, "y" => $y};
 }
 
 foreach my $i (0 .. 1) {
   my $state = init0();
-  apply_move({"x" => 1,
-              "y" => 1}, $state);
-  apply_move({"x" => 0,
-              "y" => 0}, $state);
+  apply_move({"x" => 1, "y" => 1}, $state);
+  apply_move({"x" => 0, "y" => 0}, $state);
   while (!$state->{"ended"})
   {
     print_state($state);

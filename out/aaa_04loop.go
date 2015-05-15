@@ -6,7 +6,7 @@ func h(i int) bool{
   end */
   var j int = i - 2
   for j <= i + 2{
-    if (i % j) == 5 {
+    if i % j == 5 {
       return true
     }
     j ++;

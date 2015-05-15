@@ -7,7 +7,7 @@ def h( i ):
   end """
     j = i - 2
     while (j <= i + 2):
-      if (mod(i, j)) == 5:
+      if mod(i, j) == 5:
         return True
       j += 1
     return False

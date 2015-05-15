@@ -1,16 +1,16 @@
 var util = require("util");
 function triangle(n){
-  if ((~~(n % 2)) == 0)
-    return (~~(n / 2)) * (n + 1);
+  if (~~(n % 2) == 0)
+    return ~~(n / 2) * (n + 1);
   else
-    return n * (~~((n + 1) / 2));
+    return n * ~~((n + 1) / 2);
 }
 
 function penta(n){
-  if ((~~(n % 2)) == 0)
-    return (~~(n / 2)) * (3 * n - 1);
+  if (~~(n % 2) == 0)
+    return ~~(n / 2) * (3 * n - 1);
   else
-    return (~~((3 * n - 1) / 2)) * n;
+    return ~~((3 * n - 1) / 2) * n;
 }
 
 function hexa(n){
@@ -23,7 +23,7 @@ function findPenta2(n, a, b){
   var c = ~~((a + b) / 2);
   var p = penta(c);
   if (p == n)
-    return 1;
+    return true;
   else if (p < n)
     return findPenta2(n, c, b);
   else
@@ -36,7 +36,7 @@ function findHexa2(n, a, b){
   var c = ~~((a + b) / 2);
   var p = hexa(c);
   if (p == n)
-    return 1;
+    return true;
   else if (p < n)
     return findHexa2(n, c, b);
   else

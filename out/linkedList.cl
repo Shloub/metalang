@@ -26,18 +26,21 @@
   (return-from cons0 out0)
 )))
 
-(defun rev2 (empty acc torev)
+(defun is_empty (foo)
+(return-from is_empty t))
+
+(defun rev2 (acc torev)
 (if
-  (eq torev empty)
+  (is_empty torev)
   (return-from rev2 acc)
   (progn
     (let ((acc2 (make-intlist :head (intlist-head torev)
                               :tail acc)))
-    (return-from rev2 (rev2 empty acc (intlist-tail torev)))
+    (return-from rev2 (rev2 acc (intlist-tail torev)))
   ))))
 
 (defun rev (empty torev)
-(return-from rev (rev2 empty empty torev)))
+(return-from rev (rev2 empty torev)))
 
 (defun test (empty)
 (progn

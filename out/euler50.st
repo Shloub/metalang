@@ -7,8 +7,8 @@ Object subclass: euler50 [
                n :=  (n + 1).
                ((max0 quo: i) > i)
                  ifTrue:[
-                        j := (i * i).
-                        [((j < max0) & (j > 0))] whileTrue:
+                        j := i * i.
+                        [(j < max0) and: [j > 0]] whileTrue:
                         [
                         t at: (j + 1) put:  0.
                         j :=  (j + i).
@@ -38,9 +38,9 @@ Object subclass: euler50 [
                l :=  (l + 1).
         ].
     ].
-    (l) display.
+    l display.
     ' == ' display.
-    (nprimes) display.
+    nprimes display.
     '
 ' display.
     sum := Array new: nprimes.
@@ -49,7 +49,7 @@ Object subclass: euler50 [
     ].
     maxl := 0.
     process := true.
-    stop := (maximumprimes - 1).
+    stop := maximumprimes - 1.
     len := 1.
     resp := 1.
     [process] whileTrue:
@@ -73,10 +73,10 @@ Object subclass: euler50 [
     ].
     len :=  (len + 1).
     ].
-    (resp) display.
+    resp display.
     '
 ' display.
-    (maxl) display.
+    maxl display.
     '
 ' display.
     ]

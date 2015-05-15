@@ -36,13 +36,13 @@ for (var k = 2 ; k <= maximumprimes - 1; k++)
 util.print(l, " == ", nprimes, "\n");
 var canbe = new Array(maximumprimes);
 for (var i_ = 0 ; i_ <= maximumprimes - 1; i_++)
-  canbe[i_] = 0;
+  canbe[i_] = false;
 for (var i = 0 ; i <= nprimes - 1; i++)
   for (var j = 0 ; j <= maximumprimes - 1; j++)
   {
     var n = primes[i] + 2 * j * j;
     if (n < maximumprimes)
-      canbe[n] = 1;
+      canbe[n] = true;
 }
 for (var m = 1 ; m <= maximumprimes; m++)
 {

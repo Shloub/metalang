@@ -19,18 +19,18 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
           (0 to: 9) do: [:d|
             (0 to: 9) do: [:e|
               (0 to: 9) do: [:f|
-                s := ((p at: (a + 1)) + (p at: (b + 1)) + (p at: (c + 1)) + (p at: (d + 1)) + (p at: (e + 1)) + (p at: (f + 1))).
-                r := (a + (b * 10) + (c * 100) + (d * 1000) + (e * 10000) + (f * 100000)).
-                ((s = r) & (r ~= 1))
+                s := (p at: (a + 1)) + (p at: (b + 1)) + (p at: (c + 1)) + (p at: (d + 1)) + (p at: (e + 1)) + (p at: (f + 1)).
+                r := a + (b * 10) + (c * 100) + (d * 1000) + (e * 10000) + (f * 100000).
+                ((s = r) and: [r ~= 1])
                   ifTrue:[
-                         (f) display.
-                         (e) display.
-                         (d) display.
-                         (c) display.
-                         (b) display.
-                         (a) display.
+                         f display.
+                         e display.
+                         d display.
+                         c display.
+                         b display.
+                         a display.
                          ' ' display.
-                         (r) display.
+                         r display.
                          '
 ' display.
                          sum :=  (sum + r).
@@ -41,7 +41,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
         ].
       ].
     ].
-    (sum) display.
+    sum display.
     ]
 ]
 Eval [ (euler30 new) main. ]

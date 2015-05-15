@@ -79,22 +79,7 @@ d6 = 5 ou d6 = 0
                           allowed[d9] := false;
                           for d10 := 1 to  9 do
                           begin
-                            if allowed[d10] and (((d6 * 100 + d7 * 10 + d8) Mod
-                                                   11) = 0) and (((d7 * 100 + d8
-                                                                    * 10 + d9)
-                                                                   Mod 13) = 0) and (((d8
-                                                                                *
-                                                                                100
-                                                                                +
-                                                                                d9
-                                                                                *
-                                                                                10
-                                                                                +
-                                                                                d10)
-                                                                                Mod
-                                                                                17)
-                                                                                =
-                                                                                0)
+                            if allowed[d10] and ((d6 * 100 + d7 * 10 + d8) Mod 11 = 0) and ((d7 * 100 + d8 * 10 + d9) Mod 13 = 0) and ((d8 * 100 + d9 * 10 + d10) Mod 17 = 0)
                             then
                               begin
                                 allowed[d10] := false;
@@ -104,7 +89,7 @@ d6 = 5 ou d6 = 0
                                   then
                                     begin
                                       allowed[d5] := false;
-                                      if ((d5 * 100 + d6 * 10 + d7) Mod 7) = 0
+                                      if (d5 * 100 + d6 * 10 + d7) Mod 7 = 0
                                       then
                                         begin
                                           for i4 := 0 to  4 do
@@ -120,7 +105,7 @@ d6 = 5 ou d6 = 0
                                                   then
                                                     begin
                                                       allowed[d3] := false;
-                                                      if ((d3 + d4 + d5) Mod 3) = 0
+                                                      if (d3 + d4 + d5) Mod 3 = 0
                                                       then
                                                         begin
                                                           for d2 := 0 to  9 do

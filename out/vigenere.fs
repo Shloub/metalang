@@ -45,15 +45,12 @@ create bufferc 128 allot
 
 : crypte { taille_cle cle taille message }
   taille 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    message i cells +
-     @ position_alphabet { lettre }
+    message  i cells +  @ position_alphabet { lettre }
     lettre 1 NEGATE <>
     IF
-      cle i taille_cle % cells +
-       @ position_alphabet { addon }
+      cle  i taille_cle % cells +  @ position_alphabet { addon }
       addon lettre + 26 % { new0 }
-      new0 of_position_alphabet message i cells +
-       !
+      new0 of_position_alphabet message  i cells +  !
     THEN
    1 + REPEAT 2DROP
 ;
@@ -64,8 +61,7 @@ create bufferc 128 allot
   HERE taille_cle cells allot { cle }
   taille_cle 1 - 0 BEGIN 2dup >= WHILE DUP { index }
     read-char { out0 }
-    out0 cle index cells +
-     !
+    out0 cle  index cells +  !
    1 + REPEAT 2DROP
   skipspaces
   read-int { taille }
@@ -73,13 +69,11 @@ create bufferc 128 allot
   HERE taille cells allot { message }
   taille 1 - 0 BEGIN 2dup >= WHILE DUP { index2 }
     read-char { out2 }
-    out2 message index2 cells +
-     !
+    out2 message  index2 cells +  !
    1 + REPEAT 2DROP
   taille_cle cle taille message crypte
   taille 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    message i cells +
-     @ EMIT
+    message  i cells +  @ EMIT
    1 + REPEAT 2DROP
   S\" \n" TYPE
   ;

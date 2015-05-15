@@ -2,7 +2,7 @@ package main
 import "fmt"
 func g(i int) int{
   var j int = i * 4
-  if (j % 2) == 1 {
+  if j % 2 == 1 {
     return 0
   }
   return j

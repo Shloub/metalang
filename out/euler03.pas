@@ -20,7 +20,7 @@ begin
     found := false;
     while b <= sqrtia do
     begin
-      if (a Mod b) = 0
+      if a Mod b = 0
       then
         begin
           a := a Div b;
@@ -31,7 +31,7 @@ begin
         end;
       b := b + 1;
     end;
-    if not found
+    if not(found)
     then
       begin
         Write(a);

@@ -27,7 +27,7 @@ Object subclass: euler36 [
     (1 to: 9) do: [:d|
       (self palindrome2: pow2 n: d)
         ifTrue:[
-               (d) display.
+               d display.
                '
 ' display.
                sum :=  (sum + d).
@@ -41,38 +41,38 @@ Object subclass: euler36 [
         ].
     ].
     (0 to: 4) do: [:a0|
-      a := (a0 * 2 + 1).
+      a := a0 * 2 + 1.
       (0 to: 9) do: [:b|
         (0 to: 9) do: [:c|
-          num0 := (a * 100000 + (b * 10000) + (c * 1000) + (c * 100) + (b * 10) + a).
+          num0 := a * 100000 + (b * 10000) + (c * 1000) + (c * 100) + (b * 10) + a.
           (self palindrome2: pow2 n: num0)
             ifTrue:[
-                   (num0) display.
+                   num0 display.
                    '
 ' display.
                    sum :=  (sum + num0).
             ].
-          num1 := (a * 10000 + (b * 1000) + (c * 100) + (b * 10) + a).
+          num1 := a * 10000 + (b * 1000) + (c * 100) + (b * 10) + a.
           (self palindrome2: pow2 n: num1)
             ifTrue:[
-                   (num1) display.
+                   num1 display.
                    '
 ' display.
                    sum :=  (sum + num1).
             ].
         ].
-        num2 := (a * 100 + (b * 10) + a).
+        num2 := a * 100 + (b * 10) + a.
         (self palindrome2: pow2 n: num2)
           ifTrue:[
-                 (num2) display.
+                 num2 display.
                  '
 ' display.
                  sum :=  (sum + num2).
           ].
-        num3 := (a * 1000 + (b * 100) + (b * 10) + a).
+        num3 := a * 1000 + (b * 100) + (b * 10) + a.
         (self palindrome2: pow2 n: num3)
           ifTrue:[
-                 (num3) display.
+                 num3 display.
                  '
 ' display.
                  sum :=  (sum + num3).
@@ -80,7 +80,7 @@ Object subclass: euler36 [
       ].
     ].
     'sum=' display.
-    (sum) display.
+    sum display.
     '
 ' display.
     ]

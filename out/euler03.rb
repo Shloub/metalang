@@ -10,7 +10,7 @@ while a != 1 do
   b = b0
   found = false
   while b <= sqrtia do
-    if (mod(a, b)) == 0 then
+    if mod(a, b) == 0 then
       a = (a.to_f / b).to_i
       b0 = b
       b = a
@@ -19,7 +19,7 @@ while a != 1 do
     end
     b += 1
   end
-  if not(found) then
+  if !found then
     printf "%d\n", a
     a = 1
   end

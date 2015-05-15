@@ -88,15 +88,9 @@ var
   t : toto;
 begin
   new(t);
-  t^.foo := v1
-  +
-  3;
-  t^.bar := v1
-  +
-  2;
-  t^.blah := v1
-  +
-  1;
+  t^.foo := v1 + 3;
+  t^.bar := v1 + 2;
+  t^.blah := v1 + 1;
   exit(t);
 end;
 

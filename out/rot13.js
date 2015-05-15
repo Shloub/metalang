@@ -42,7 +42,7 @@ for (var toto = 0 ; toto <= strlen - 1; toto++)
   tmpc=read_char_();
   var c = tmpc.charCodeAt(0);
   if (tmpc != ' ')
-    c = ~~(((c - 'a'.charCodeAt(0)) + 13) % 26) + 'a'.charCodeAt(0);
+    c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
   tab4[toto] = String.fromCharCode(c);
 }
 for (var j = 0 ; j <= strlen - 1; j++)

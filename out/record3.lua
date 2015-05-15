@@ -12,17 +12,16 @@ function stdinsep()
 end
 
 function mktoto( v1 )
-  local t = {foo=v1,
-             bar=0,
-             blah=0}
+  local t = {foo=v1, bar=0, blah=0}
   return t
 end
 
 function result( t, len )
   local out0 = 0
   for j = 0,len - 1 do
-    t[j].blah = t[j].blah + 1;
-    out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
+    t[j + 1].blah = t[j + 1].blah + 1;
+    out0 =
+    out0 + t[j + 1].foo + t[j + 1].blah * t[j + 1].bar + t[j + 1].bar * t[j + 1].foo;
   end
   return out0
 end
@@ -30,10 +29,10 @@ end
 
 local t = {}
 for i = 0,4 - 1 do
-  t[i] = mktoto(i);
+  t[i + 1] = mktoto(i);
 end
-t[0].bar = readint()
+t[0 + 1].bar = readint()
 stdinsep()
-t[1].blah = readint()
+t[1 + 1].blah = readint()
 local titi = result(t, 4)
-io.write(string.format("%d%d", titi, t[2].blah))
+io.write(string.format("%d%d", titi, t[2 + 1].blah))

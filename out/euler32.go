@@ -54,7 +54,7 @@ func main() {
       for b := 1 ; b <= 9; b++ {
         if allowed[b] {
             allowed[b] = false;
-              var be int = (b * e) % 10
+              var be int = b * e % 10
               if allowed[be] {
                 allowed[be] = false;
                   for a := 1 ; a <= 9; a++ {

@@ -57,7 +57,7 @@ End Function
     If b = 0 Then
       Return 1
     End If
-    If (b Mod 2) = 0 Then
+    If b Mod 2 = 0 Then
       Dim o As Integer = exp0(a, b \ 2)
       Return o * o
     Else

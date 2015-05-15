@@ -13,7 +13,7 @@ end
 function copytab( tab, len )
   local o = {}
   for i = 0,len - 1 do
-    o[i] = tab[i];
+    o[i + 1] = tab[i + 1];
   end
   return o
 end
@@ -21,11 +21,11 @@ end
 function bubblesort( tab, len )
   for i = 0,len - 1 do
     for j = i + 1,len - 1 do
-      if tab[i] > tab[j]
+      if tab[i + 1] > tab[j + 1]
       then
-        local tmp = tab[i]
-        tab[i] = tab[j];
-        tab[j] = tmp;
+        local tmp = tab[i + 1]
+        tab[i + 1] = tab[j + 1];
+        tab[j + 1] = tmp;
       end
     end
   end
@@ -39,21 +39,21 @@ function qsort0( tab, len, i, j )
     --[[ pivot : tab[0] --]]
     while i ~= j
     do
-    if tab[i] > tab[j]
+    if tab[i + 1] > tab[j + 1]
     then
       if i == j - 1
       then
         --[[ on inverse simplement--]]
-        local tmp = tab[i]
-        tab[i] = tab[j];
-        tab[j] = tmp;
+        local tmp = tab[i + 1]
+        tab[i + 1] = tab[j + 1];
+        tab[j + 1] = tmp;
         i = i + 1;
       else
         --[[ on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] --]]
-        local tmp = tab[i]
-        tab[i] = tab[j];
-        tab[j] = tab[i + 1];
-        tab[i + 1] = tmp;
+        local tmp = tab[i + 1]
+        tab[i + 1] = tab[j + 1];
+        tab[j + 1] = tab[i + 1 + 1];
+        tab[i + 1 + 1] = tmp;
         i = i + 1;
       end
     else
@@ -74,17 +74,17 @@ for i_ = 0,len - 1 do
   local tmp = 0
   tmp = readint()
   stdinsep()
-  tab[i_] = tmp;
+  tab[i_ + 1] = tmp;
 end
 local tab2 = copytab(tab, len)
 bubblesort(tab2, len);
 for i = 0,len - 1 do
-  io.write(string.format("%d ", tab2[i]))
+  io.write(string.format("%d ", tab2[i + 1]))
 end
 io.write("\n")
 local tab3 = copytab(tab, len)
 qsort0(tab3, len, 0, len - 1);
 for i = 0,len - 1 do
-  io.write(string.format("%d ", tab3[i]))
+  io.write(string.format("%d ", tab3[i + 1]))
 end
 io.write("\n")

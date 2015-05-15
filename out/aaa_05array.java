@@ -22,7 +22,7 @@ public class aaa_05array
     {
       System.out.printf("%d", i);
       j += i;
-      a[i] = (i % 2) == 0;
+      a[i] = i % 2 == 0;
     }
     System.out.printf("%d ", j);
     boolean c = a[0];

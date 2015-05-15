@@ -23,7 +23,7 @@ function score(  )
   local sum = 0
   for i = 1,len do
     local c = readchar()
-    sum = sum + (c - 65) + 1;
+    sum = sum + c - 65 + 1;
     --[[		print c print " " print sum print " " --]]
   end
   return sum

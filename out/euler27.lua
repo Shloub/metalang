@@ -1,13 +1,13 @@
 function eratostene( t, max0 )
   local n = 0
   for i = 2,max0 - 1 do
-    if t[i] == i
+    if t[i + 1] == i
     then
       n = n + 1;
       local j = i * i
       while j < max0 and j > 0
       do
-      t[j] = 0;
+      t[j + 1] = 0;
       j = j + i;
       end
     end
@@ -21,9 +21,9 @@ function isPrime( n, primes, len )
   then
     n = -n;
   end
-  while primes[i] * primes[i] < n
+  while primes[i + 1] * primes[i + 1] < n
   do
-  if (math.mod(n, primes[i])) == 0
+  if math.mod(n, primes[i + 1]) == 0
   then
     return false
   end
@@ -47,20 +47,20 @@ end
 local maximumprimes = 1000
 local era = {}
 for j = 0,maximumprimes - 1 do
-  era[j] = j;
+  era[j + 1] = j;
 end
 local result = 0
 local max0 = 0
 local nprimes = eratostene(era, maximumprimes)
 local primes = {}
 for o = 0,nprimes - 1 do
-  primes[o] = 0;
+  primes[o + 1] = 0;
 end
 local l = 0
 for k = 2,maximumprimes - 1 do
-  if era[k] == k
+  if era[k + 1] == k
   then
-    primes[l] = k;
+    primes[l + 1] = k;
     l = l + 1;
   end
 end
@@ -68,7 +68,7 @@ io.write(string.format("%d == %d\n", l, nprimes))
 local ma = 0
 local mb = 0
 for b = 3,999 do
-  if era[b] == b
+  if era[b + 1] == b
   then
     for a = -999,999 do
       local n1 = test(a, b, primes, nprimes)

@@ -2,15 +2,15 @@ var util = require("util");
 function palindrome2(pow2, n){
   var t = new Array(20);
   for (var i = 0 ; i <= 20 - 1; i++)
-    t[i] = (~~((~~(n / pow2[i])) % 2)) == 1;
+    t[i] = ~~(~~(n / pow2[i]) % 2) == 1;
   var nnum = 0;
   for (var j = 1 ; j <= 19; j++)
     if (t[j])
     nnum = j;
   for (var k = 0 ; k <= ~~(nnum / 2); k++)
     if (t[k] != t[nnum - k])
-    return 0;
-  return 1;
+    return false;
+  return true;
 }
 
 var p = 1;

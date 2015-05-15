@@ -24,5 +24,5 @@ for i in range(1, 1 + 9):
           bottom *= b
 print("%d/%d\n" % ( top, bottom ), end='')
 p = pgcd(top, bottom)
-print("pgcd=%d\n%d\n" % ( p, (math.trunc(bottom / p)) ), end='')
+print("pgcd=%d\n%d\n" % ( p, math.trunc(bottom / p) ), end='')
 

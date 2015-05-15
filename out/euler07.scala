@@ -4,7 +4,7 @@ object euler07
   def divisible(n : Int, t : Array[Int], size : Int): Boolean = {
     var i: Int=0;
     for (i <- 0 to size - 1)
-      if ((n % t(i)) == 0)
+      if (n % t(i) == 0)
       return true;
     return false;
   }

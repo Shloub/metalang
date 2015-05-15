@@ -31,5 +31,5 @@ for (int i = 1 ; i <= 9; i ++)
 }
 System.out.printf("%s/%s\n", top, bottom);
 int p = pgcd(top, bottom)
-System.out.printf("pgcd=%s\n%s\n", p, (int)(bottom / p));
+System.out.printf("pgcd=%s\n%s\n", p, bottom.intdiv(p));
 

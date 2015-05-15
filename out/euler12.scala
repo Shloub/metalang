@@ -31,7 +31,7 @@ object euler12
     for (i <- 0 to nprimes - 1)
     {
       var d: Int = primes(i);
-      while ((n % d) == 0)
+      while (n % d == 0)
       {
         t(d) = t(d) + 1;
         n = n / d;
@@ -76,7 +76,7 @@ object euler12
         if (primesFactors(i) != 0)
         ndivs = ndivs * (1 + primesFactors(i));
       if (ndivs > ndiv2)
-        return (n * (n + 1)) / 2;
+        return n * (n + 1) / 2;
       /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
     }
     return 0;

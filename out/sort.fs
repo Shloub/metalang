@@ -25,9 +25,7 @@ create bufferc 128 allot
 : copytab { tab len }
   HERE len cells allot { o }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    tab i cells +
-     @ o i cells +
-     !
+    tab  i cells +  @ o  i cells +  !
    1 + REPEAT 2DROP
   o exit
 ;
@@ -35,17 +33,11 @@ create bufferc 128 allot
 : bubblesort { tab len }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     len 1 - i 1 + BEGIN 2dup >= WHILE DUP { j }
-      tab i cells +
-       @ tab j cells +
-       @ >
+      tab  i cells +  @ tab  j cells +  @ >
       IF
-        tab i cells +
-         @ { tmp }
-        tab j cells +
-         @ tab i cells +
-         !
-        tmp tab j cells +
-         !
+        tab  i cells +  @ { tmp }
+        tab  j cells +  @ tab  i cells +  !
+        tmp tab  j cells +  !
       THEN
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP
@@ -61,35 +53,23 @@ create bufferc 128 allot
     BEGIN
       i j <>
     WHILE
-      tab i cells +
-       @ tab j cells +
-       @ >
+      tab  i cells +  @ tab  j cells +  @ >
       IF
         i j 1 - =
         IF
           \  on inverse simplement
           
-          tab i cells +
-           @ { tmp }
-          tab j cells +
-           @ tab i cells +
-           !
-          tmp tab j cells +
-           !
+          tab  i cells +  @ { tmp }
+          tab  j cells +  @ tab  i cells +  !
+          tmp tab  j cells +  !
           i 1 + TO i
         ELSE
           \  on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
           
-          tab i cells +
-           @ { tmp }
-          tab j cells +
-           @ tab i cells +
-           !
-          tab i 1 + cells +
-           @ tab j cells +
-           !
-          tmp tab i 1 + cells +
-           !
+          tab  i cells +  @ { tmp }
+          tab  j cells +  @ tab  i cells +  !
+          tab  i 1 + cells +  @ tab  j cells +  !
+          tmp tab  i 1 + cells +  !
           i 1 + TO i
         THEN
       ELSE
@@ -110,22 +90,19 @@ create bufferc 128 allot
     0 { tmp }
     read-int TO tmp
     skipspaces
-    tmp tab i_ cells +
-     !
+    tmp tab  i_ cells +  !
    1 + REPEAT 2DROP
   tab len copytab { tab2 }
   tab2 len bubblesort
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    tab2 i cells +
-     @ s>d 0 d.r
+    tab2  i cells +  @ s>d 0 d.r
     S"  " TYPE
    1 + REPEAT 2DROP
   S\" \n" TYPE
   tab len copytab { tab3 }
   tab3 len 0 len 1 - qsort0
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    tab3 i cells +
-     @ s>d 0 d.r
+    tab3  i cells +  @ s>d 0 d.r
     S"  " TYPE
    1 + REPEAT 2DROP
   S\" \n" TYPE

@@ -2,7 +2,7 @@ object euler19
 {
   
   def is_leap(year : Int): Boolean = {
-    return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0);
+    return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
   }
   
   def ndayinmonth(month : Int, year : Int): Int = {
@@ -56,7 +56,7 @@ object euler19
         month = 0;
         year = year + 1;
       }
-      if ((dayofweek % 7) == 6)
+      if (dayofweek % 7 == 6)
         count = count + 1;
     }
     printf("%d\n", count);

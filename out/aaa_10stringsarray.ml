@@ -19,9 +19,7 @@ begin
   for j = 0 to 1 do
     printstring (idstring tab.(j))
   done;
-  print_toto {
-    s="one";
-    v=1;
-  }
+  print_toto {s="one";
+  v=1}
 end
  

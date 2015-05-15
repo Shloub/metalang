@@ -3,9 +3,6 @@ let foo a =
   ()
 let main =
   let a = 0 in
-  (
-    (foo a);
-    (Printf.printf "%d\n" a)
-    )
-  
+  ( foo a;
+    Printf.printf "%d\n" a)
 

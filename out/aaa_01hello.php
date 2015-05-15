@@ -2,7 +2,7 @@
 echo "Hello World";
 $a = 5;
 echo (4 + 6) * 2, " ", "\n", $a, "foo", "";
-$b = 1 + intval(((1 + 1) * 2 * (3 + 8)) / 4) - (1 - 2) - 3 == 12 && true;
+$b = 1 + intval((1 + 1) * 2 * (3 + 8) / 4) - (1 - 2) - 3 == 12 && true;
 if ($b)
   echo "True";
 else
@@ -13,15 +13,20 @@ if ($c)
   echo "True";
 else
   echo "False";
-echo intval((intval((4 + 1) / 3)) / (2 + 1)), intval((intval((4 * 1) / 3)) / (2 *
-                                                                               1));
-$d = !(!($a == 0) && !($a == 4));
+echo " ";
+$d = (2 == 1) == false;
 if ($d)
   echo "True";
 else
   echo "False";
-$e = true && !false && !(true && false);
+echo " ", intval(intval((4 + 1) / 3) / (2 + 1)), intval(intval(4 * 1 / 3) / 2 * 1);
+$e = !(!($a == 0) && !($a == 4));
 if ($e)
+  echo "True";
+else
+  echo "False";
+$f = true && !false && !(true && false);
+if ($f)
   echo "True";
 else
   echo "False";

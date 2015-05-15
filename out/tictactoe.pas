@@ -214,7 +214,7 @@ begin
       player := 1;
     end;
   g^.cases[x][y] := player;
-  g^.firstToPlay := not g^.firstToPlay;
+  g^.firstToPlay := not(g^.firstToPlay);
 end;
 
 procedure apply_move(m : move; g : gamestate);
@@ -225,7 +225,7 @@ end;
 procedure cancel_move_xy(x : Longint; y : Longint; g : gamestate);
 begin
   g^.cases[x][y] := 0;
-  g^.firstToPlay := not g^.firstToPlay;
+  g^.firstToPlay := not(g^.firstToPlay);
   g^.ended := false;
 end;
 
@@ -261,7 +261,7 @@ begin
       exit(g^.note);
     end;
   maxNote := -10000;
-  if not g^.firstToPlay
+  if not(g^.firstToPlay)
   then
     begin
       maxNote := 10000;
@@ -397,13 +397,13 @@ begin
     d^.x := 0;
     d^.y := 0;
     apply_move(d, state);
-    while not state^.ended do
+    while not(state^.ended) do
     begin
       print_state(state);
       apply_move(play(state), state);
       eval0(state);
       print_state(state);
-      if not state^.ended
+      if not(state^.ended)
       then
         begin
           apply_move(play(state), state);

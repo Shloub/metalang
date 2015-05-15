@@ -26,8 +26,7 @@ create bufferc 128 allot
 : nth { tab tofind len }
   0 { out0 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    tab i cells +
-     @ tofind =
+    tab  i cells +  @ tofind =
     IF
       out0 1 + TO out0
     THEN
@@ -46,8 +45,7 @@ create bufferc 128 allot
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     0 { tmp }
     read-char TO tmp
-    tmp tab i cells +
-     !
+    tmp tab  i cells +  !
    1 + REPEAT 2DROP
   tab tofind len nth { result }
   result s>d 0 d.r

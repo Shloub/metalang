@@ -6,25 +6,25 @@ local tab = {}
 for i = 0,n - 1 do
   local tab2 = {}
   for j = 0,n - 1 do
-    tab2[j] = 0;
+    tab2[j + 1] = 0;
   end
-  tab[i] = tab2;
+  tab[i + 1] = tab2;
 end
 for l = 0,n - 1 do
-  tab[n - 1][l] = 1;
-  tab[l][n - 1] = 1;
+  tab[n][l + 1] = 1;
+  tab[l + 1][n] = 1;
 end
 for o = 2,n do
   local r = n - o
   for p = 2,n do
     local q = n - p
-    tab[r][q] = tab[r + 1][q] + tab[r][q + 1];
+    tab[r + 1][q + 1] = tab[r + 1 + 1][q + 1] + tab[r + 1][q + 1 + 1];
   end
 end
 for m = 0,n - 1 do
   for k = 0,n - 1 do
-    io.write(string.format("%d ", tab[m][k]))
+    io.write(string.format("%d ", tab[m + 1][k + 1]))
   end
   io.write("\n")
 end
-io.write(string.format("%d\n", tab[0][0]))
+io.write(string.format("%d\n", tab[0 + 1][0 + 1]))

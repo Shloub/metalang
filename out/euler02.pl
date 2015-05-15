@@ -10,7 +10,7 @@ my $b = 2;
 my $sum = 0;
 while ($a < 4000000)
 {
-  if ((remainder($a, 2)) eq 0) {
+  if (remainder($a, 2) eq 0) {
     $sum = $sum + $a;
   }
   my $c = $a;

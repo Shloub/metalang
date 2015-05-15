@@ -54,8 +54,8 @@ sub npi0{
       $stack->[$ptrStack] = $num;
       $ptrStack = $ptrStack + 1;
     }elsif ($str->[$ptrStr] eq "+") {
-      $stack->[$ptrStack - 2] = $stack->[$ptrStack - 2] + $stack->[$ptrStack -
-      1];
+      $stack->[$ptrStack - 2] =
+      $stack->[$ptrStack - 2] + $stack->[$ptrStack - 1];
       $ptrStack = $ptrStack - 1;
       $ptrStr = $ptrStr + 1;
     }

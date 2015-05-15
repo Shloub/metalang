@@ -33,7 +33,7 @@ begin
   for i := 0 to  nprimes - 1 do
   begin
     d := primes[i];
-    while (n Mod d) = 0 do
+    while n Mod d = 0 do
     begin
       t[d] := t[d] + 1;
       n := n Div d;
@@ -172,7 +172,7 @@ begin
   begin
     for j := 1 to  n do
     begin
-      if abondant[i] and abondant[j] and ((i + j) <= n)
+      if abondant[i] and abondant[j] and (i + j <= n)
       then
         begin
           summable[i + j] := true;
@@ -181,7 +181,7 @@ begin
   end;
   for o := 1 to  n do
   begin
-    if not summable[o]
+    if not(summable[o])
     then
       begin
         sum := sum + o;

@@ -11,7 +11,7 @@ public class aaa_04loop
     int j = i - 2;
     while (j <= i + 2)
     {
-      if ((i % j) == 5)
+      if (i % j == 5)
         return true;
       j ++;
     }

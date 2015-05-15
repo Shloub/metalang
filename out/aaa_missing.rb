@@ -16,7 +16,7 @@ def result( len, tab )
     end
     print "\n"
     for i2 in (0 ..  len - 1) do
-      if not(tab2[i2]) then
+      if !tab2[i2] then
         return (i2)
       end
     end

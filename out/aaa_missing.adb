@@ -47,7 +47,7 @@ begin
   end loop;
   PString(new char_array'( To_C("" & Character'Val(10))));
   for i2 in integer range 0..len - 1 loop
-    if (not tab2(i2))
+    if not tab2(i2)
     then
       return i2;
     end if;

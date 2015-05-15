@@ -28,8 +28,8 @@ Object subclass: prologin_template_charmatrix [
     out0 := 0.
     (0 to: (taille_y - 1)) do: [:i|
       (0 to: (taille_x - 1)) do: [:j|
-        out0 :=  (out0 + (((((tableau at: (i + 1)) at: (j + 1))) asciiValue) * (i + (j * 2)))).
-        (((tableau at: (i + 1)) at: (j + 1))) display.
+        out0 :=  (out0 + ((((tableau at: (i + 1)) at: (j + 1)) asciiValue) * (i + (j * 2)))).
+        ((tableau at: (i + 1)) at: (j + 1)) display.
       ].
       '--
 ' display.
@@ -52,7 +52,7 @@ Object subclass: prologin_template_charmatrix [
       a at: (b + 1) put:  c.
     ].
     tableau := a.
-    ((self programme_candidat: tableau taille_x: taille_x taille_y: taille_y)) display.
+    (self programme_candidat: tableau taille_x: taille_x taille_y: taille_y) display.
     '
 ' display.
     ]

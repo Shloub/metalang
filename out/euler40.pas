@@ -22,7 +22,7 @@ var
 begin
   for i := 1 to  8 do
   begin
-    if n >= (t[i] * i)
+    if n >= t[i] * i
     then
       begin
         n := n - t[i] * i;
@@ -31,7 +31,7 @@ begin
       begin
         nombre := exp0(10, i - 1) + n Div i;
         chiffre := i - 1 - n Mod i;
-        exit((nombre Div exp0(10, chiffre)) Mod 10);
+        exit(nombre Div exp0(10, chiffre) Mod 10);
       end;
   end;
   exit(-1);

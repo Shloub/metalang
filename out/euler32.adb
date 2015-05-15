@@ -84,7 +84,7 @@ begin
       if allowed(b)
       then
         allowed(b) := FALSE;
-        be := (b * e) rem 10;
+        be := b * e rem 10;
         if allowed(be)
         then
           allowed(be) := FALSE;
@@ -103,8 +103,8 @@ begin
                       -- 2 * 3 digits 
                       
                       product := (a * 10 + b) * (c * 100 + d * 10 + e);
-                      if (not counted(product)) and then
-                      okdigits(allowed, product / 10)
+                      if
+                      not counted(product) and then okdigits(allowed, product / 10)
                       then
                         counted(product) := TRUE;
                         count := count + product;
@@ -114,8 +114,8 @@ begin
                       -- 1  * 4 digits 
                       
                       product2 := b * (a * 1000 + c * 100 + d * 10 + e);
-                      if (not counted(product2)) and then
-                      okdigits(allowed, product2 / 10)
+                      if
+                      not counted(product2) and then okdigits(allowed, product2 / 10)
                       then
                         counted(product2) := TRUE;
                         count := count + product2;

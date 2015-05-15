@@ -5,7 +5,7 @@ public class euler07
   static bool divisible(int n, int[] t, int size)
   {
     for (int i = 0 ; i < size; i++)
-      if ((n % t[i]) == 0)
+      if (n % t[i] == 0)
       return true;
     return false;
   }

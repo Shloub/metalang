@@ -15,9 +15,9 @@ sub primesfactors{
   my $d = 2;
   while ($n ne 1 && $d * $d <= $n)
   {
-    if ((remainder($n, $d)) eq 0) {
+    if (remainder($n, $d) eq 0) {
       $tab->[$d] = $tab->[$d] + 1;
-      $n = int(($n) / ($d));
+      $n = int($n / $d);
     }else{
       $d = $d + 1;
     }

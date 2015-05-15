@@ -10,7 +10,7 @@ Object subclass: euler07 [
    find: a t: t b: b nth: nth [|used n|
     n := a.
     used := b.
-    [(used ~= nth)] whileTrue:
+    [used ~= nth] whileTrue:
     [(self divisible: n t: t size: used)
       ifTrue:[n :=  (n + 1).]
       ifFalse:[
@@ -18,7 +18,7 @@ Object subclass: euler07 [
               n :=  (n + 1).
               used :=  (used + 1).
       ].].
-    ^ (t at: used)
+    ^ t at: used
   ]
   
   main [
@@ -27,7 +27,7 @@ Object subclass: euler07 [
     (0 to: (n - 1)) do: [:i|
       t at: (i + 1) put:  2.
     ].
-    ((self find: 3 t: t b: 1 nth: n)) display.
+    (self find: 3 t: t b: 1 nth: n) display.
     '
 ' display.
     ]

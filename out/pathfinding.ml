@@ -5,7 +5,7 @@ let rec pathfind_aux cache tab x y posX posY =
     x * y * 10
   else if tab.(posY).(posX) = '#' then
     x * y * 10
-  else if cache.(posY).(posX) <> -1 then
+  else if cache.(posY).(posX) <> - 1 then
     cache.(posY).(posX)
   else
     begin
@@ -22,7 +22,7 @@ let rec pathfind_aux cache tab x y posX posY =
 let pathfind tab x y =
   let cache = Array.init y (fun _i ->
     let tmp = Array.init x (fun _j ->
-      -1) in
+      - 1) in
     tmp) in
   pathfind_aux cache tab x y 0 0
 
@@ -34,7 +34,7 @@ begin
                                        y := v_1);
   let tab = Array.init (!y) (fun _i ->
     let tab2 = Array.init (!x) (fun _j ->
-      let tmp = ref( '\x00' ) in
+      let tmp = ref( '\000' ) in
       Scanf.scanf "%c" (fun v_0 -> tmp := v_0);
       (!tmp)) in
     Scanf.scanf " " (fun () -> ());

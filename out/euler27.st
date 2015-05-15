@@ -5,8 +5,8 @@ Object subclass: euler27 [
       ((t at: (i + 1)) = i)
         ifTrue:[
                n :=  (n + 1).
-               j := (i * i).
-               [((j < max0) & (j > 0))] whileTrue:
+               j := i * i.
+               [(j < max0) and: [j > 0]] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -20,8 +20,8 @@ Object subclass: euler27 [
     n := c.
     i := 0.
     (n < 0)
-      ifTrue:[n :=  (0-(n)).].
-    [((primes at: (i + 1)) * (primes at: (i + 1)) < n)] whileTrue:
+      ifTrue:[n :=  (0 - n).].
+    [(primes at: (i + 1)) * (primes at: (i + 1)) < n] whileTrue:
     [
     ((n rem: (primes at: (i + 1))) = 0)
       ifTrue:[^ false].
@@ -32,8 +32,8 @@ Object subclass: euler27 [
   
    test: a b: b primes: primes len: len [|j|
     (0 to: 200) do: [:n|
-      j := (n * n + (a * n) + b).
-      (((self isPrime: j primes: primes len: len)) not)
+      j := n * n + (a * n) + b.
+      ((self isPrime: j primes: primes len: len) not)
         ifTrue:[^ n].
     ].
     ^ 200
@@ -60,18 +60,18 @@ Object subclass: euler27 [
                l :=  (l + 1).
         ].
     ].
-    (l) display.
+    l display.
     ' == ' display.
-    (nprimes) display.
+    nprimes display.
     '
 ' display.
     ma := 0.
     mb := 0.
     (3 to: 999) do: [:b|
       ((era at: (b + 1)) = b)
-        ifTrue:[((0-(999)) to: 999) do: [:a|
+        ifTrue:[((0 - 999) to: 999) do: [:a|
                   n1 := (self test: a b: b primes: primes len: nprimes).
-                  n2 := (self test: a b: (0-(b)) primes: primes len: nprimes).
+                  n2 := (self test: a b: (0 - b) primes: primes len: nprimes).
                   (n1 > max0)
                     ifTrue:[
                            max0 :=  n1.
@@ -82,21 +82,21 @@ Object subclass: euler27 [
                   (n2 > max0)
                     ifTrue:[
                            max0 :=  n2.
-                           result :=  ((0-(a)) * b).
+                           result :=  ((0 - a) * b).
                            ma :=  a.
-                           mb :=  (0-(b)).
+                           mb :=  (0 - b).
                     ].
                ].].
     ].
-    (ma) display.
+    ma display.
     ' ' display.
-    (mb) display.
+    mb display.
     '
 ' display.
-    (max0) display.
+    max0 display.
     '
 ' display.
-    (result) display.
+    result display.
     '
 ' display.
     ]

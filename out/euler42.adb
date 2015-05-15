@@ -48,7 +48,7 @@ begin
   sum := 0;
   for i in integer range 1..len loop
     Get(c);
-    sum := sum + (Character'Pos(c) - Character'Pos('A')) + 1;
+    sum := sum + Character'Pos(c) - Character'Pos('A') + 1;
     --		print c print " " print sum print " " 
     
   end loop;

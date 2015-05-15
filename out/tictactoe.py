@@ -60,21 +60,21 @@ def eval0( g ):
     win = 0
     freecase = 0
     for y in range(0, 1 + 2):
-      col = -(1)
-      lin = -(1)
+      col = -1
+      lin = -1
       for x in range(0, 1 + 2):
         if g["cases"][x][y] == 0:
           freecase += 1
         colv = g["cases"][x][y]
         linv = g["cases"][y][x]
-        if col == -(1) and colv != 0:
+        if col == -1 and colv != 0:
           col = colv
         elif colv != col:
-          col = -(2)
-        if lin == -(1) and linv != 0:
+          col = -2
+        if lin == -1 and linv != 0:
           lin = linv
         elif linv != lin:
-          lin = -(2)
+          lin = -2
       if col >= 0:
         win = col
       elif lin >= 0:
@@ -88,7 +88,7 @@ def eval0( g ):
     if win == 1:
       g["note"] = 1000
     elif win == 2:
-      g["note"] = -(1000)
+      g["note"] = -1000
     else:
       g["note"] = 0
 
@@ -98,14 +98,14 @@ def apply_move_xy( x, y, g ):
     if g["firstToPlay"]:
       player = 1
     g["cases"][x][y] = player
-    g["firstToPlay"] = not (g["firstToPlay"])
+    g["firstToPlay"] = not g["firstToPlay"]
 
 def apply_move( m, g ):
     apply_move_xy(m["x"], m["y"], g)
 
 def cancel_move_xy( x, y, g ):
     g["cases"][x][y] = 0
-    g["firstToPlay"] = not (g["firstToPlay"])
+    g["firstToPlay"] = not g["firstToPlay"]
     g["ended"] = False
 
 def cancel_move( m, g ):
@@ -124,8 +124,8 @@ def minmax( g ):
     eval0(g)
     if g["ended"]:
       return g["note"]
-    maxNote = -(10000)
-    if not (g["firstToPlay"]):
+    maxNote = -10000
+    if not g["firstToPlay"]:
       maxNote = 10000
     for x in range(0, 1 + 2):
       for y in range(0, 1 + 2):
@@ -142,9 +142,7 @@ def minmax( g ):
 Renvoie le coup de l'IA
 """
 def play( g ):
-    minMove = {
-      "x":0,
-      "y":0}
+    minMove = {"x":0, "y":0}
     minNote = 10000
     for x in range(0, 1 + 2):
       for y in range(0, 1 + 2):
@@ -165,35 +163,25 @@ def init0(  ):
     for i in range(0, 3):
       tab = [0] * 3
       cases[i] = tab
-    return {
-      "cases":cases,
-      "firstToPlay":True,
-      "note":0,
-      "ended":False}
+    return {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
 
 def read_move(  ):
     x=readint()
     stdinsep()
     y=readint()
     stdinsep()
-    return {
-      "x":x,
-      "y":y}
+    return {"x":x, "y":y}
 
 for i in range(0, 1 + 1):
   state = init0()
-  apply_move({
-    "x":1,
-    "y":1}, state)
-  apply_move({
-    "x":0,
-    "y":0}, state)
-  while (not (state["ended"])):
+  apply_move({"x":1, "y":1}, state)
+  apply_move({"x":0, "y":0}, state)
+  while (not state["ended"]):
     print_state(state)
     apply_move(play(state), state)
     eval0(state)
     print_state(state)
-    if not (state["ended"]):
+    if not state["ended"]:
       apply_move(play(state), state)
       eval0(state)
   print_state(state)

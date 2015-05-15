@@ -46,7 +46,7 @@ begin
     n := (-n);
   end if;
   while primes(i) * primes(i) < n loop
-    if (n rem primes(i)) = 0
+    if n rem primes(i) = 0
     then
       return FALSE;
     end if;
@@ -60,7 +60,7 @@ function test(a : in Integer; b : in Integer; primes : in c_PTR; len : in Intege
 begin
   for n in integer range 0..200 loop
     j := n * n + a * n + b;
-    if (not isPrime(j, primes, len))
+    if not isPrime(j, primes, len)
     then
       return n;
     end if;

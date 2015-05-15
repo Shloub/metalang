@@ -87,7 +87,7 @@ begin
   Write(''#10'');
   for i2 := 0 to  len - 1 do
   begin
-    if not tab2[i2]
+    if not(tab2[i2])
     then
       begin
         exit(i2);

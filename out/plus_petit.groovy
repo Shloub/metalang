@@ -3,7 +3,7 @@ import java.util.*
 
 int go0(int[] tab, int a, int b)
 {
-  int m = (int)((a + b) / 2)
+  int m = (a + b).intdiv(2)
   if (a == m)
   {
     if (tab[a] == m)

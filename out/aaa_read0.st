@@ -19,7 +19,7 @@ Object subclass: aaa_read0 [
   main [
     |len|len := self read_int.
     self skip.
-    (len) display.
+    len display.
     '
 ' display.
     ]

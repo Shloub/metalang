@@ -43,7 +43,7 @@ def pathfind_aux( cache, tab, x, y, posX, posY ):
       return x * y * 10
     elif tab[posY][posX] == '#':
       return x * y * 10
-    elif cache[posY][posX] != -(1):
+    elif cache[posY][posX] != -1:
       return cache[posY][posX]
     else:
       cache[posY][posX] = x * y * 10
@@ -60,7 +60,7 @@ def pathfind( tab, x, y ):
     for i in range(0, y):
       tmp = [None] * x
       for j in range(0, x):
-        tmp[j] = -(1)
+        tmp[j] = -1
       cache[i] = tmp
     return pathfind_aux(cache, tab, x, y, 0, 0)
 
@@ -74,7 +74,7 @@ tab = [None] * y
 for i in range(0, y):
   tab2 = [None] * x
   for j in range(0, x):
-    tmp = '\x00'
+    tmp = '\u0000'
     tmp=readchar()
     tab2[j] = tmp
   stdinsep()

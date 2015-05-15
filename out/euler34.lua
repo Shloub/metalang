@@ -1,11 +1,11 @@
 
 local f = {}
 for j = 0,10 - 1 do
-  f[j] = 1;
+  f[j + 1] = 1;
 end
 for i = 1,9 do
-  f[i] = f[i] * i * f[i - 1];
-  io.write(string.format("%d ", f[i]))
+  f[i + 1] = f[i + 1] * i * f[i];
+  io.write(string.format("%d ", f[i + 1]))
 end
 local out0 = 0
 io.write("\n")
@@ -15,7 +15,7 @@ for a = 0,9 do
       for d = 0,9 do
         for e = 0,9 do
           for g = 0,9 do
-            local sum = f[a] + f[b] + f[c] + f[d] + f[e] + f[g]
+            local sum = f[a + 1] + f[b + 1] + f[c + 1] + f[d + 1] + f[e + 1] + f[g + 1]
             local num = ((((a * 10 + b) * 10 + c) * 10 + d) * 10 + e) * 10 + g
             if a == 0
             then

@@ -25,25 +25,29 @@ Object subclass: linkedList [
     ^ out0
   ]
   
-   rev2: empty acc: acc torev: torev [|acc2|
-    (torev = empty)
+   is_empty: foo  [
+    ^ true
+  ]
+  
+   rev2: acc torev: torev [|acc2|
+    (self is_empty: torev)
       ifTrue:[^ acc]
       ifFalse:[
               acc2 := intlist new.
-              acc2 head: (torev head).
+              acc2 head: torev head.
               acc2 tail: acc.
-              ^ (self rev2: empty acc: acc torev: (torev tail))
+              ^ (self rev2: acc torev: torev tail)
       ].
   ]
   
    rev: empty torev: torev [
-    ^ (self rev2: empty acc: empty torev: torev)
+    ^ (self rev2: empty torev: torev)
   ]
   
    test: empty  [|list i|
     list := empty.
-    i := (0-(1)).
-    [(i ~= 0)] whileTrue:
+    i := 0 - 1.
+    [i ~= 0] whileTrue:
     [
     i := self read_int.
     (i ~= 0)

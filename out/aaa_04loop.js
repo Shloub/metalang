@@ -6,11 +6,11 @@ function h(i){
   var j = i - 2;
   while (j <= i + 2)
   {
-    if ((~~(i % j)) == 5)
-      return 1;
+    if (~~(i % j) == 5)
+      return true;
     j ++;
   }
-  return 0;
+  return false;
 }
 
 var j = 0;

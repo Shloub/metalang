@@ -26,7 +26,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
     (n = 0)
       ifTrue:[^ true]
       ifFalse:[
-              digit := (n rem: 10).
+              digit := n rem: 10.
               (ok at: (digit + 1))
                 ifTrue:[
                        ok at: (digit + 1) put:  false.
@@ -54,7 +54,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
         (allowed at: (b + 1))
           ifTrue:[
                  allowed at: (b + 1) put:  false.
-                 be := ((b * e) rem: 10).
+                 be := (b * e) rem: 10.
                  (allowed at: (be + 1))
                    ifTrue:[
                           allowed at: (be + 1) put:  false.
@@ -71,21 +71,21 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                                     ifTrue:[
                                                            allowed at: (d + 1) put:  false.
                                                            " 2 * 3 digits "
-                                                           product := (a * 10 + b * (c * 100 + (d * 10) + e)).
-                                                           (((((counted at: (product + 1))) not)) and: [(self okdigits: allowed n: (product quo: 10))])
+                                                           product := a * 10 + b * (c * 100 + (d * 10) + e).
+                                                           (((counted at: (product + 1)) not) and: [(self okdigits: allowed n: (product quo: 10))])
                                                              ifTrue:[
                                                                     counted at: (product + 1) put:  true.
                                                                     count :=  (count + product).
-                                                                    (product) display.
+                                                                    product display.
                                                                     ' ' display.
                                                              ].
                                                            " 1  * 4 digits "
-                                                           product2 := (b * (a * 1000 + (c * 100) + (d * 10) + e)).
-                                                           (((((counted at: (product2 + 1))) not)) and: [(self okdigits: allowed n: (product2 quo: 10))])
+                                                           product2 := b * (a * 1000 + (c * 100) + (d * 10) + e).
+                                                           (((counted at: (product2 + 1)) not) and: [(self okdigits: allowed n: (product2 quo: 10))])
                                                              ifTrue:[
                                                                     counted at: (product2 + 1) put:  true.
                                                                     count :=  (count + product2).
-                                                                    (product2) display.
+                                                                    product2 display.
                                                                     ' ' display.
                                                              ].
                                                            allowed at: (d + 1) put:  true.
@@ -104,7 +104,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
       ].
       allowed at: (e + 1) put:  true.
     ].
-    (count) display.
+    count display.
     '
 ' display.
     ]

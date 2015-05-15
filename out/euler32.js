@@ -24,19 +24,19 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 */
 function okdigits(ok, n){
   if (n == 0)
-    return 1;
+    return true;
   else
   {
     var digit = ~~(n % 10);
     if (ok[digit])
     {
-      ok[digit] = 0;
+      ok[digit] = false;
       var o = okdigits(ok, ~~(n / 10));
-      ok[digit] = 1;
+      ok[digit] = true;
       return o;
     }
     else
-      return 0;
+      return false;
   }
 }
 
@@ -46,35 +46,35 @@ for (var i = 0 ; i <= 10 - 1; i++)
   allowed[i] = i != 0;
 var counted = new Array(100000);
 for (var j = 0 ; j <= 100000 - 1; j++)
-  counted[j] = 0;
+  counted[j] = false;
 for (var e = 1 ; e <= 9; e++)
 {
-  allowed[e] = 0;
+  allowed[e] = false;
   for (var b = 1 ; b <= 9; b++)
     if (allowed[b])
   {
-    allowed[b] = 0;
-    var be = ~~((b * e) % 10);
+    allowed[b] = false;
+    var be = ~~(b * e % 10);
     if (allowed[be])
     {
-      allowed[be] = 0;
+      allowed[be] = false;
       for (var a = 1 ; a <= 9; a++)
         if (allowed[a])
       {
-        allowed[a] = 0;
+        allowed[a] = false;
         for (var c = 1 ; c <= 9; c++)
           if (allowed[c])
         {
-          allowed[c] = 0;
+          allowed[c] = false;
           for (var d = 1 ; d <= 9; d++)
             if (allowed[d])
           {
-            allowed[d] = 0;
+            allowed[d] = false;
             /* 2 * 3 digits */
             var product = (a * 10 + b) * (c * 100 + d * 10 + e);
             if (!counted[product] && okdigits(allowed, ~~(product / 10)))
             {
-              counted[product] = 1;
+              counted[product] = true;
               count += product;
               util.print(product, " ");
             }
@@ -82,21 +82,21 @@ for (var e = 1 ; e <= 9; e++)
             var product2 = b * (a * 1000 + c * 100 + d * 10 + e);
             if (!counted[product2] && okdigits(allowed, ~~(product2 / 10)))
             {
-              counted[product2] = 1;
+              counted[product2] = true;
               count += product2;
               util.print(product2, " ");
             }
-            allowed[d] = 1;
+            allowed[d] = true;
           }
-          allowed[c] = 1;
+          allowed[c] = true;
         }
-        allowed[a] = 1;
+        allowed[a] = true;
       }
-      allowed[be] = 1;
+      allowed[be] = true;
     }
-    allowed[b] = 1;
+    allowed[b] = true;
   }
-  allowed[e] = 1;
+  allowed[e] = true;
 }
 util.print(count, "\n");
 

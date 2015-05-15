@@ -26,31 +26,31 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 function npi0( str, len )
   local stack = {}
   for i = 0,len - 1 do
-    stack[i] = 0;
+    stack[i + 1] = 0;
   end
   local ptrStack = 0
   local ptrStr = 0
   while ptrStr < len
   do
-  if str[ptrStr] == 32 then
+  if str[ptrStr + 1] == 32 then
     ptrStr = ptrStr + 1;
-  elseif is_number(str[ptrStr]) then
+  elseif is_number(str[ptrStr + 1]) then
     local num = 0
-    while str[ptrStr] ~= 32
+    while str[ptrStr + 1] ~= 32
     do
-    num = num * 10 + str[ptrStr] - 48;
+    num = num * 10 + str[ptrStr + 1] - 48;
     ptrStr = ptrStr + 1;
     end
-    stack[ptrStack] = num;
+    stack[ptrStack + 1] = num;
     ptrStack = ptrStack + 1;
-  elseif str[ptrStr] == 43
+  elseif str[ptrStr + 1] == 43
   then
-    stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+    stack[ptrStack - 2 + 1] = stack[ptrStack - 2 + 1] + stack[ptrStack];
     ptrStack = ptrStack - 1;
     ptrStr = ptrStr + 1;
   end
   end
-  return stack[0]
+  return stack[0 + 1]
 end
 
 
@@ -61,7 +61,7 @@ local tab = {}
 for i = 0,len - 1 do
   local tmp = 0
   tmp = readchar()
-  tab[i] = tmp;
+  tab[i + 1] = tmp;
 end
 local result = npi0(tab, len)
 io.write(result)

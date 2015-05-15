@@ -7,8 +7,7 @@ sub remainder {
 
 sub is_leap{
   my($year) = @_;
-  return (remainder($year, 400)) eq 0 || ((remainder($year, 100)) ne 0 &&
-                                           (remainder($year, 4)) eq 0);
+  return remainder($year, 400) eq 0 || remainder($year, 100) ne 0 && remainder($year, 4) eq 0;
 }
 
 sub ndayinmonth{
@@ -60,7 +59,7 @@ while ($year ne 2001)
     $month = 0;
     $year = $year + 1;
   }
-  if ((remainder($dayofweek, 7)) eq 6) {
+  if (remainder($dayofweek, 7) eq 6) {
     $count = $count + 1;
   }
 }

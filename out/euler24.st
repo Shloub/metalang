@@ -19,14 +19,14 @@ Object subclass: euler24 [
     ].
     (1 to: (lim - 1)) do: [:k|
       n := (self fact: (lim - k)).
-      nchiffre := (nth quo: n).
+      nchiffre := nth quo: n.
       nth :=  (nth rem: n).
       (0 to: (lim - 1)) do: [:l|
-        (((pris at: (l + 1))) not)
+        ((pris at: (l + 1)) not)
           ifTrue:[
                  (nchiffre = 0)
                    ifTrue:[
-                          (l) display.
+                          l display.
                           pris at: (l + 1) put:  true.
                    ].
                  nchiffre :=  (nchiffre - 1).
@@ -34,8 +34,8 @@ Object subclass: euler24 [
       ].
     ].
     (0 to: (lim - 1)) do: [:m|
-      (((pris at: (m + 1))) not)
-        ifTrue:[(m) display.].
+      ((pris at: (m + 1)) not)
+        ifTrue:[m display.].
     ].
     '
 ' display.

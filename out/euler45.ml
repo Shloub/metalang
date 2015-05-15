@@ -1,11 +1,11 @@
 let triangle n =
-  if (n mod 2) = 0 then
+  if n mod 2 = 0 then
     (n / 2) * (n + 1)
   else
     n * ((n + 1) / 2)
 
 let penta n =
-  if (n mod 2) = 0 then
+  if n mod 2 = 0 then
     (n / 2) * (3 * n - 1)
   else
     ((3 * n - 1) / 2) * n

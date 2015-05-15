@@ -113,7 +113,7 @@ begin
         if tab[i] > tab[j]
         then
           begin
-            if i = (j - 1)
+            if i = j - 1
             then
               begin
                 { on inverse simplement}

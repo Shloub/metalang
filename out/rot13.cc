@@ -14,7 +14,7 @@ int main(){
     std::cin >> tmpc >> std::noskipws;
     int c = (int)(tmpc);
     if (tmpc != ' ')
-      c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+      c = (c - (int)('a') + 13) % 26 + (int)('a');
     tab4->at(toto) = (char)(c);
   }
   for (int j = 0 ; j < strlen; j++)

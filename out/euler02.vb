@@ -8,7 +8,7 @@ Module euler02
     Dim b As Integer = 2
     Dim sum As Integer = 0
     Do While a < 4000000
-      If (a Mod 2) = 0 Then
+      If a Mod 2 = 0 Then
         sum = sum + a
       End If
       Dim c As Integer = a

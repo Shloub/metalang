@@ -3,7 +3,7 @@ Object subclass: euler02 [
     |sum c b a|a := 1.
     b := 2.
     sum := 0.
-    [(a < 4000000)] whileTrue:
+    [a < 4000000] whileTrue:
     [
     ((a rem: 2) = 0)
       ifTrue:[sum :=  (sum + a).].
@@ -11,7 +11,7 @@ Object subclass: euler02 [
     a :=  b.
     b :=  (b + c).
     ].
-    (sum) display.
+    sum display.
     '
 ' display.
     ]

@@ -17,8 +17,7 @@ end;
 
 function is_leap(year : in Integer) return Boolean is
 begin
-  return (year rem 400) = 0 or else
-  ((year rem 100) /= 0 and then (year rem 4) = 0);
+  return year rem 400 = 0 or else (year rem 100 /= 0 and then year rem 4 = 0);
 end;
 
 function ndayinmonth(month : in Integer; year : in Integer) return Integer is
@@ -112,7 +111,7 @@ begin
       month := 0;
       year := year + 1;
     end if;
-    if (dayofweek rem 7) = 6
+    if dayofweek rem 7 = 6
     then
       count := count + 1;
     end if;

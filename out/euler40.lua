@@ -12,9 +12,9 @@ end
 
 function e( t, n )
   for i = 1,8 do
-    if n >= t[i] * i
+    if n >= t[i + 1] * i
     then
-      n = n - t[i] * i;
+      n = n - t[i + 1] * i;
     else
       local nombre = exp0(10, i - 1) + trunc(n / i)
       local chiffre = i - 1 - math.mod(n, i)
@@ -27,10 +27,10 @@ end
 
 local t = {}
 for i = 0,9 - 1 do
-  t[i] = exp0(10, i) - exp0(10, i - 1);
+  t[i + 1] = exp0(10, i) - exp0(10, i - 1);
 end
 for i2 = 1,8 do
-  io.write(string.format("%d => %d\n", i2, t[i2]))
+  io.write(string.format("%d => %d\n", i2, t[i2 + 1]))
 end
 for j = 0,80 do
   io.write(e(t, j))

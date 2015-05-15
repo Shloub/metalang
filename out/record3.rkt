@@ -28,15 +28,14 @@
 )
 (define (result t0 len)
   (let ([out0 0])
-  (letrec ([a (lambda (j out0) 
-                (if (<= j (- len 1))
-                (block
-                  (set-toto-blah! (vector-ref t0 j) (+ (toto-blah (vector-ref t0 j)) 1))
-                  (let ([out0 (+ out0 (toto-foo (vector-ref t0 j)) (* (toto-blah (vector-ref t0 j)) (toto-bar (vector-ref t0 j))) (* (toto-bar (vector-ref t0 j)) (toto-foo (vector-ref t0 j))))])
-                  (a (+ j 1) out0))
-                  )
-                out0))])
-  (a 0 out0)))
+  (letrec ([a (lambda (j out0) (if (<= j (- len 1))
+                               (block
+                                 (set-toto-blah! (vector-ref t0 j) (+ (toto-blah (vector-ref t0 j)) 1))
+                                 (let ([out0 (+ out0 (toto-foo (vector-ref t0 j)) (* (toto-blah (vector-ref t0 j)) (toto-bar (vector-ref t0 j))) (* (toto-bar (vector-ref t0 j)) (toto-foo (vector-ref t0 j))))])
+                                 (a (+ j 1) out0))
+                                 )
+                               out0))])
+    (a 0 out0)))
 )
 (define main
   (let ([t0 (build-vector 4 (lambda (i) 

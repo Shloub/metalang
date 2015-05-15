@@ -4,30 +4,29 @@ type intlist = {
 };;
 
 let cons list i =
-  let out0 = {
-    head=i;
-    tail=list;
-  } in
+  let out0 = {head=i;
+  tail=list} in
   out0
 
-let rec rev2 empty acc torev =
-  if torev = empty then
+let is_empty _foo =
+  true
+
+let rec rev2 acc torev =
+  if is_empty torev then
     acc
   else
     begin
-      let _acc2 = {
-        head=torev.head;
-        tail=acc;
-      } in
-      rev2 empty acc torev.tail
+      let _acc2 = {head=torev.head;
+      tail=acc} in
+      rev2 acc torev.tail
     end
 
 let rev empty torev =
-  rev2 empty empty torev
+  rev2 empty torev
 
 let test empty =
   let list = ref( empty ) in
-  let i = ref( -1 ) in
+  let i = ref( - 1 ) in
   while (!i) <> 0
   do
       Scanf.scanf "%d" (fun v_0 -> i := v_0);

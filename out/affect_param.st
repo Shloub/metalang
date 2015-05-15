@@ -7,7 +7,7 @@ Object subclass: affect_param [
   main [
     |a|a := 0.
     (self foo: a).
-    (a) display.
+    a display.
     '
 ' display.
     ]

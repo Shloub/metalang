@@ -31,7 +31,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes){
   for (i = 0 ; i < nprimes; i++)
   {
     int d = primes[i];
-    while ((n % d) == 0)
+    while (n % d == 0)
     {
       t[d] = t[d] + 1;
       n /= d;
@@ -64,15 +64,14 @@ int find(int ndiv2){
     int *primesFactors = calloc( n + 2 , sizeof(int));
     for (m = 0 ; m < n + 2; m++)
       primesFactors[m] = 0;
-    int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n +
-                                                                           1, primes, nprimes));
+    int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] --;
     int ndivs = 1;
     for (i = 0 ; i <= max0; i++)
       if (primesFactors[i] != 0)
       ndivs *= 1 + primesFactors[i];
     if (ndivs > ndiv2)
-      return (n * (n + 1)) / 2;
+      return n * (n + 1) / 2;
     /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
   }
   return 0;

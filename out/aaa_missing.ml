@@ -15,7 +15,7 @@ let result len tab =
     if not tab2.(i2) then
       raise (Found_1(i2))
   done;
-  -1
+  - 1
   with Found_1 (out) -> out
 
 let () =

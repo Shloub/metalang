@@ -36,13 +36,11 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   HERE 10 cells allot { l }
   10 1 - 0 BEGIN 2dup >= WHILE DUP { c }
-    read-int l c cells +
-     !
+    read-int l  c cells +  !
     skipspaces
    1 + REPEAT 2DROP
   9 0 BEGIN 2dup >= WHILE DUP { j }
-    l j cells +
-     @ s>d 0 d.r
+    l  j cells +  @ s>d 0 d.r
     S\" \n" TYPE
    1 + REPEAT 2DROP
   ;

@@ -1,13 +1,13 @@
 Object subclass: aaa_03binding [
    g: i  [|j|
-    j := (i * 4).
+    j := i * 4.
     ((j rem: 2) = 1)
       ifTrue:[^ 0].
     ^ j
   ]
   
    h: i  [
-    (i) display.
+    i display.
     '
 ' display.
   ]

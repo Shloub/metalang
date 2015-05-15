@@ -30,7 +30,7 @@ begin
     let c = ref( int_of_char (tmpc) ) in
     Printf.printf "%c:%d " tmpc (!c);
     if tmpc <> ' ' then
-      c := (((!c) - int_of_char ('a')) + 13) mod 26 + int_of_char ('a');
+      c := ((!c) - int_of_char ('a') + 13) mod 26 + int_of_char ('a');
     tab4.(i3) <- char_of_int ((!c))
   done;
   for j = 0 to strlen - 1 do

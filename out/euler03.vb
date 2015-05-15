@@ -12,7 +12,7 @@ Module euler03
       Dim b As Integer = b0
       Dim found As Boolean = false
       Do While b <= sqrtia
-        If (a Mod b) = 0 Then
+        If a Mod b = 0 Then
           a = a \ b
           b0 = b
           b = a

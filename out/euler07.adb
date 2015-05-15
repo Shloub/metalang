@@ -19,7 +19,7 @@ type a_PTR is access a;
 function divisible(n : in Integer; t : in a_PTR; size : in Integer) return Boolean is
 begin
   for i in integer range 0..size - 1 loop
-    if (n rem t(i)) = 0
+    if n rem t(i) = 0
     then
       return TRUE;
     end if;

@@ -18,12 +18,8 @@ begin
   a := c^.tuple_int_int_field_0;
   b := c^.tuple_int_int_field_1;
   new(d);
-  d^.tuple_int_int_field_0 := a
-  +
-  1;
-  d^.tuple_int_int_field_1 := b
-  +
-  1;
+  d^.tuple_int_int_field_0 := a + 1;
+  d^.tuple_int_int_field_1 := b + 1;
   exit(d);
 end;
 

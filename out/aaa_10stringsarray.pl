@@ -23,7 +23,6 @@ foreach my $i (0 .. 2 - 1) {
 foreach my $j (0 .. 1) {
   printstring(idstring($tab->[$j]));
 }
-print_toto({"s" => "one",
-            "v" => 1});
+print_toto({"s" => "one", "v" => 1});
 
 

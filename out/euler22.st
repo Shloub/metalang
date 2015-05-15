@@ -43,7 +43,7 @@ Object subclass: euler22 [
     (1 to: n) do: [:i|
       sum :=  (sum + (i * (self score))).
     ].
-    (sum) display.
+    sum display.
     '
 ' display.
     ]

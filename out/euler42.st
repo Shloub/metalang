@@ -29,8 +29,8 @@ Object subclass: euler42 [
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    "
-    a := (((n * 2)) sqrt floor).
-    ^ (a * (a + 1) = (n * 2))
+    a := ((n * 2) sqrt floor).
+    ^ a * (a + 1) = (n * 2)
   ]
   
   score [|sum len c|
@@ -52,7 +52,7 @@ Object subclass: euler42 [
     |sum n|(1 to: 55) do: [:i|
              (self is_triangular: i)
                ifTrue:[
-                      (i) display.
+                      i display.
                       ' ' display.
                ].
     ].
@@ -63,7 +63,7 @@ Object subclass: euler42 [
     (1 to: n) do: [:i|
       sum :=  (sum + (self score)).
     ].
-    (sum) display.
+    sum display.
     '
 ' display.
     ]

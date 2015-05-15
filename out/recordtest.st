@@ -31,7 +31,7 @@ Object subclass: recordtest [
     param bar: self read_int.
     self skip.
     param foo: self read_int.
-    ((param bar) + ((param foo) * (param bar))) display.
+    (param bar + (param foo * param bar)) display.
     ]
 ]
 Eval [ (recordtest new) main. ]

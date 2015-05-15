@@ -26,7 +26,7 @@ object test_returns
         j = 0;
       j = 8;
     }
-    return (i % 2) == 0;
+    return i % 2 == 0;
   }
   
   

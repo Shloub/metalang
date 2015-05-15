@@ -22,7 +22,7 @@ func score() int{
   for i := 1 ; i <= len; i++ {
     var c byte
     fmt.Fscanf(reader, "%c", &c)
-      sum += ((int)(c) - (int)('A')) + 1;
+      sum += (int)(c) - (int)('A') + 1;
       /*		print c print " " print sum print " " */
   }
   return sum

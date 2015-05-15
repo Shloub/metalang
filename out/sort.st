@@ -29,7 +29,7 @@ Object subclass: sort [
       ((i + 1) to: (len - 1)) do: [:j|
         ((tab at: (i + 1)) > (tab at: (j + 1)))
           ifTrue:[
-                 tmp := (tab at: (i + 1)).
+                 tmp := tab at: (i + 1).
                  tab at: (i + 1) put:  (tab at: (j + 1)).
                  tab at: (j + 1) put:  tmp.
           ].
@@ -45,19 +45,19 @@ Object subclass: sort [
              i0 := i.
              j0 := j.
              " pivot : tab[0] "
-             [(i ~= j)] whileTrue:
+             [i ~= j] whileTrue:
              [((tab at: (i + 1)) > (tab at: (j + 1)))
                ifTrue:[(i = (j - 1))
                         ifTrue:[
                                " on inverse simplement"
-                               tmp := (tab at: (i + 1)).
+                               tmp := tab at: (i + 1).
                                tab at: (i + 1) put:  (tab at: (j + 1)).
                                tab at: (j + 1) put:  tmp.
                                i :=  (i + 1).
                         ]
                         ifFalse:[
                                 " on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] "
-                                tmp := (tab at: (i + 1)).
+                                tmp := tab at: (i + 1).
                                 tab at: (i + 1) put:  (tab at: (j + 1)).
                                 tab at: (j + 1) put:  (tab at: (i + 1 + 1)).
                                 tab at: (i + 1 + 1) put:  tmp.
@@ -83,7 +83,7 @@ Object subclass: sort [
     tab2 := (self copytab: tab len: len).
     (self bubblesort: tab2 len: len).
     (0 to: (len - 1)) do: [:i|
-      ((tab2 at: (i + 1))) display.
+      (tab2 at: (i + 1)) display.
       ' ' display.
     ].
     '
@@ -91,7 +91,7 @@ Object subclass: sort [
     tab3 := (self copytab: tab len: len).
     (self qsort0: tab3 len: len a: 0 b: (len - 1)).
     (0 to: (len - 1)) do: [:i|
-      ((tab3 at: (i + 1))) display.
+      (tab3 at: (i + 1)) display.
       ' ' display.
     ].
     '

@@ -2,7 +2,7 @@ program euler19;
 
 function is_leap(year : Longint) : boolean;
 begin
-  exit(((year Mod 400) = 0) or (((year Mod 100) <> 0) and ((year Mod 4) = 0)));
+  exit((year Mod 400 = 0) or (year Mod 100 <> 0) and (year Mod 4 = 0));
 end;
 
 function ndayinmonth(month : Longint; year : Longint) : Longint;
@@ -91,7 +91,7 @@ begin
         month := 0;
         year := year + 1;
       end;
-    if (dayofweek Mod 7) = 6
+    if dayofweek Mod 7 = 6
     then
       begin
         count := count + 1;

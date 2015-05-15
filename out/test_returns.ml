@@ -26,7 +26,7 @@ let is_pair i =
         j := 0;
       j := 8
     end;
-  (i mod 2) = 0
+  i mod 2 = 0
   with Found_1 (out) -> out
 
 let () =

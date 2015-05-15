@@ -41,7 +41,7 @@ La suite de fibonaci
     b := self read_int.
     self skip.
     i := self read_int.
-    ((self fibo0: a b: b i: i)) display.
+    (self fibo0: a b: b i: i) display.
     ]
 ]
 Eval [ (fibo new) main. ]

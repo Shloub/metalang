@@ -2,7 +2,7 @@ require "scanf.rb"
 print "Hello World"
 a = 5
 printf "%d \n%dfoo", (4 + 6) * 2, a
-b = 1 + (((1 + 1) * 2 * (3 + 8)).to_f / 4).to_i - (1 - 2) - 3 == 12 && true
+b = 1 + ((1 + 1) * 2 * (3 + 8).to_f / 4).to_i - (1 - 2) - 3 == 12 && true
 if b then
   print "True"
 else
@@ -15,15 +15,22 @@ if c then
 else
   print "False"
 end
-printf "%d%d", ((((4 + 1).to_f / 3).to_i).to_f / (2 + 1)).to_i, ((((4 * 1).to_f / 3).to_i).to_f / (2 * 1)).to_i
-d = not(not(a == 0) && not(a == 4))
+print " "
+d = (2 == 1) == false
 if d then
   print "True"
 else
   print "False"
 end
-e = true && not(false) && not(true && false)
+printf " %d%d", (((4 + 1).to_f / 3).to_i.to_f / (2 + 1)).to_i, ((4 * 1.to_f / 3).to_i.to_f / 2 * 1).to_i
+e = !(!(a == 0) && !(a == 4))
 if e then
+  print "True"
+else
+  print "False"
+end
+f = true && !false && !(true && false)
+if f then
   print "True"
 else
   print "False"

@@ -24,14 +24,12 @@ sub read_bigint{
     my $c = readchar();
     $chiffres->[$j] = ord($c);
   }
-  foreach my $i (0 .. int(($len - 1) / (2))) {
+  foreach my $i (0 .. int(($len - 1) / 2)) {
     my $tmp = $chiffres->[$i];
     $chiffres->[$i] = $chiffres->[$len - 1 - $i];
     $chiffres->[$len - 1 - $i] = $tmp;
   }
-  return {"bigint_sign" => 1,
-          "bigint_len" => $len,
-          "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => 1, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
 
 sub print_bigint{
@@ -40,9 +38,7 @@ sub print_bigint{
     print "-";
   }
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
-    print $a->{"bigint_chiffres"}->[$a->{"bigint_len"} -
-    1 -
-    $i];
+    print $a->{"bigint_chiffres"}->[$a->{"bigint_len"} - 1 - $i];
   }
 }
 
@@ -111,16 +107,14 @@ sub add_bigint_positif{
     if ($i < $b->{"bigint_len"}) {
       $tmp = $tmp + $b->{"bigint_chiffres"}->[$i];
     }
-    $retenue = int(($tmp) / (10));
+    $retenue = int($tmp / 10);
     $chiffres->[$i] = remainder($tmp, 10);
   }
   while ($len > 0 && $chiffres->[$len - 1] eq 0)
   {
     $len = $len - 1;
   }
-  return {"bigint_sign" => 1,
-          "bigint_len" => $len,
-          "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => 1, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
 
 sub sub_bigint_positif{
@@ -149,16 +143,12 @@ sub sub_bigint_positif{
   {
     $len = $len - 1;
   }
-  return {"bigint_sign" => 1,
-          "bigint_len" => $len,
-          "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => 1, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
 
 sub neg_bigint{
   my($a) = @_;
-  return {"bigint_sign" => !$a->{"bigint_sign"},
-          "bigint_len" => $a->{"bigint_len"},
-          "bigint_chiffres" => $a->{"bigint_chiffres"}};
+  return {"bigint_sign" => !$a->{"bigint_sign"}, "bigint_len" => $a->{"bigint_len"}, "bigint_chiffres" => $a->{"bigint_chiffres"}};
 }
 
 sub add_bigint{
@@ -207,16 +197,16 @@ sub mul_bigint_cp{
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     my $retenue = 0;
     foreach my $j (0 .. $b->{"bigint_len"} - 1) {
-      $chiffres->[$i + $j] = $chiffres->[$i + $j] + $retenue +
-      $b->{"bigint_chiffres"}->[$j] * $a->{"bigint_chiffres"}->[$i];
-      $retenue = int(($chiffres->[$i + $j]) / (10));
+      $chiffres->[$i + $j] =
+      $chiffres->[$i + $j] + $retenue + $b->{"bigint_chiffres"}->[$j] * $a->{"bigint_chiffres"}->[$i];
+      $retenue = int($chiffres->[$i + $j] / 10);
       $chiffres->[$i + $j] = remainder($chiffres->[$i + $j], 10);
     }
-    $chiffres->[$i + $b->{"bigint_len"}] = $chiffres->[$i +
-    $b->{"bigint_len"}] + $retenue;
+    $chiffres->[$i + $b->{"bigint_len"}] =
+    $chiffres->[$i + $b->{"bigint_len"}] + $retenue;
   }
   $chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"}] =
-  int(($chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1]) / (10));
+  int($chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1] / 10);
   $chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1] =
   remainder($chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1], 10);
   foreach my $l (0 .. 2) {
@@ -224,9 +214,7 @@ sub mul_bigint_cp{
       $len = $len - 1;
     }
   }
-  return {"bigint_sign" => $a->{"bigint_sign"} eq $b->{"bigint_sign"},
-          "bigint_len" => $len,
-          "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => $a->{"bigint_sign"} eq $b->{"bigint_sign"}, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
 
 sub bigint_premiers_chiffres{
@@ -236,9 +224,7 @@ sub bigint_premiers_chiffres{
   {
     $len = $len - 1;
   }
-  return {"bigint_sign" => $a->{"bigint_sign"},
-          "bigint_len" => $len,
-          "bigint_chiffres" => $a->{"bigint_chiffres"}};
+  return {"bigint_sign" => $a->{"bigint_sign"}, "bigint_len" => $len, "bigint_chiffres" => $a->{"bigint_chiffres"}};
 }
 
 sub bigint_shift{
@@ -251,9 +237,7 @@ sub bigint_shift{
       $chiffres->[$k] = 0;
     }
   }
-  return {"bigint_sign" => $a->{"bigint_sign"},
-          "bigint_len" => $a->{"bigint_len"} + $i,
-          "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => $a->{"bigint_sign"}, "bigint_len" => $a->{"bigint_len"} + $i, "bigint_chiffres" => $chiffres};
 }
 
 sub mul_bigint{
@@ -267,7 +251,7 @@ sub mul_bigint{
   }
   # Algorithme de Karatsuba 
   
-  my $split = int((min($aa->{"bigint_len"}, $bb->{"bigint_len"})) / (2));
+  my $split = int(min($aa->{"bigint_len"}, $bb->{"bigint_len"}) / 2);
   my $a = bigint_shift($aa, -$split);
   my $b = bigint_premiers_chiffres($aa, $split);
   my $c = bigint_shift($bb, -$split);
@@ -293,7 +277,7 @@ sub log10{
   my $out0 = 1;
   while ($a >= 10)
   {
-    $a = int(($a) / (10));
+    $a = int($a / 10);
     $out0 = $out0 + 1;
   }
   return $out0;
@@ -311,11 +295,9 @@ sub bigint_of_int{
   }
   foreach my $k (0 .. $size - 1) {
     $t->[$k] = remainder($i, 10);
-    $i = int(($i) / (10));
+    $i = int($i / 10);
   }
-  return {"bigint_sign" => 1,
-          "bigint_len" => $size,
-          "bigint_chiffres" => $t};
+  return {"bigint_sign" => 1, "bigint_len" => $size, "bigint_chiffres" => $t};
 }
 
 sub fact_bigint{
@@ -353,8 +335,8 @@ sub bigint_exp{
   my($a, $b) = @_;
   if ($b eq 1) {
     return $a;
-  }elsif ((remainder($b, 2)) eq 0) {
-    return bigint_exp(mul_bigint($a, $a), int(($b) / (2)));
+  }elsif (remainder($b, 2) eq 0) {
+    return bigint_exp(mul_bigint($a, $a), int($b / 2));
   }else{
     return mul_bigint($a, bigint_exp($a, $b - 1));
   }
@@ -365,8 +347,8 @@ sub bigint_exp_10chiffres{
   $a = bigint_premiers_chiffres($a, 10);
   if ($b eq 1) {
     return $a;
-  }elsif ((remainder($b, 2)) eq 0) {
-    return bigint_exp_10chiffres(mul_bigint($a, $a), int(($b) / (2)));
+  }elsif (remainder($b, 2) eq 0) {
+    return bigint_exp_10chiffres(mul_bigint($a, $a), int($b / 2));
   }else{
     return mul_bigint($a, bigint_exp_10chiffres($a, $b - 1));
   }

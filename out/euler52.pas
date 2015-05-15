@@ -35,12 +35,7 @@ var
   ca : Longint;
 begin
   ca := chiffre_sort(a);
-  exit((ca = chiffre_sort(b)) and (ca = chiffre_sort(c)) and (ca =
-                                                               chiffre_sort(d)) and (ca
-                                                                                =
-                                                                                chiffre_sort(e)) and (ca
-                                                                                =
-                                                                                chiffre_sort(f)));
+  exit((ca = chiffre_sort(b)) and (ca = chiffre_sort(c)) and (ca = chiffre_sort(d)) and (ca = chiffre_sort(e)) and (ca = chiffre_sort(f)));
 end;
 
 

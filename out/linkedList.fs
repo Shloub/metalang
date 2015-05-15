@@ -31,20 +31,24 @@ end-struct intlist%
   out0 exit
 ;
 
-: rev2 recursive { empty acc torev }
-  torev empty =
+: is_empty { foo }
+  true exit
+;
+
+: rev2 recursive { acc torev }
+  torev is_empty
   IF
     acc exit
   ELSE
     intlist% %allot { acc2 }
     torev ->head @ acc2 ->head !
     acc acc2 ->tail !
-    empty acc torev ->tail @ rev2 exit
+    acc torev ->tail @ rev2 exit
   THEN
 ;
 
 : rev { empty torev }
-  empty empty torev rev2 exit
+  empty torev rev2 exit
 ;
 
 : test { empty }

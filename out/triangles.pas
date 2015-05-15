@@ -77,7 +77,7 @@ begin
   {
 	Cette fonction est récursive
 	}
-  if y = (len - 1) then
+  if y = len - 1 then
     begin
       exit(tab[y][x]);
     end

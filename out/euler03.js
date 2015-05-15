@@ -6,16 +6,16 @@ var sqrtia = Math.floor(Math.sqrt(a));
 while (a != 1)
 {
   var b = b0;
-  var found = 0;
+  var found = false;
   while (b <= sqrtia)
   {
-    if ((~~(a % b)) == 0)
+    if (~~(a % b) == 0)
     {
       a = ~~(a / b);
       b0 = b;
       b = a;
       sqrtia = Math.floor(Math.sqrt(a));
-      found = 1;
+      found = true;
     }
     b ++;
   }

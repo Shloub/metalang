@@ -3,7 +3,7 @@ def mod(x, y):
   return x - y * math.trunc(x / y)
 def divisible( n, t, size ):
     for i in range(0, size):
-      if (mod(n, t[i])) == 0:
+      if mod(n, t[i]) == 0:
         return True
     return False
 

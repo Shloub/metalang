@@ -19,7 +19,7 @@ void show(int lim, int nth)
   for (int k = 1 ; k < lim; k++)
   {
     int n = fact(lim - k)
-    int nchiffre = (int)(nth / n)
+    int nchiffre = nth.intdiv(n)
     nth %= n;
     for (int l = 0 ; l < lim; l++)
       if (!pris[l])

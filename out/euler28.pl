@@ -22,7 +22,7 @@ sub sumdiag{
   my $un = 1;
   my $sum = 1;
   foreach my $i (0 .. $nterms - 2) {
-    my $d = 2 * (1 + int(($i) / (4)));
+    my $d = 2 * (1 + int($i / 4));
     $un = $un + $d;
     # print int d print "=>" print un print " " 
     

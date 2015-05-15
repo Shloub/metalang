@@ -7,7 +7,7 @@ object euler36
     var i: Int=0;
     var t :Array[Boolean] = new Array[Boolean](20);
     for (i <- 0 to 20 - 1)
-      t(i) = ((n / pow2(i)) % 2) == 1;
+      t(i) = n / pow2(i) % 2 == 1;
     var nnum: Int = 0;
     for (j <- 1 to 19)
       if (t(j))

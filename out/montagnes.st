@@ -19,11 +19,11 @@ Object subclass: montagnes [
    montagnes0: tab len: len [|x max0 j i|
     max0 := 1.
     j := 1.
-    i := (len - 2).
-    [(i >= 0)] whileTrue:
+    i := len - 2.
+    [i >= 0] whileTrue:
     [
-    x := (tab at: (i + 1)).
-    [(((j >= 0)) and: [(x > (tab at: (len - j + 1)))])] whileTrue:
+    x := tab at: (i + 1).
+    [(j >= 0) and: [x > (tab at: (len - j + 1))]] whileTrue:
     [j :=  (j - 1).].
     j :=  (j + 1).
     tab at: (len - j + 1) put:  x.
@@ -45,7 +45,7 @@ Object subclass: montagnes [
       self skip.
       tab at: (i + 1) put:  x.
     ].
-    ((self montagnes0: tab len: len)) display.
+    (self montagnes0: tab len: len) display.
     ]
 ]
 Eval [ (montagnes new) main. ]

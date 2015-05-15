@@ -84,7 +84,7 @@ procedure print_bigint(a : bigint);
 var
   i : Longint;
 begin
-  if not a^.bigint_sign
+  if not(a^.bigint_sign)
   then
     begin
       Write(#45);
@@ -129,11 +129,11 @@ var
   j : Longint;
 begin
   { Renvoie vrai si a > b }
-  if a^.bigint_sign and not b^.bigint_sign then
+  if a^.bigint_sign and not(b^.bigint_sign) then
     begin
       exit(true);
     end
-  else if not a^.bigint_sign and b^.bigint_sign
+  else if not(a^.bigint_sign) and b^.bigint_sign
   then
     begin
       exit(false);
@@ -147,7 +147,7 @@ begin
       else if a^.bigint_len < b^.bigint_len
       then
         begin
-          exit(not a^.bigint_sign);
+          exit(not(a^.bigint_sign));
         end
       else
         begin
@@ -161,7 +161,7 @@ begin
             else if a^.bigint_chiffres[j] < b^.bigint_chiffres[j]
             then
               begin
-                exit(not a^.bigint_sign);
+                exit(not(a^.bigint_sign));
               end;;
           end;
         end;;
@@ -171,7 +171,7 @@ end;
 
 function bigint_lt(a : bigint; b : bigint) : boolean;
 begin
-  exit(not bigint_gt(a, b));
+  exit(not(bigint_gt(a, b)));
 end;
 
 function add_bigint_positif(a : bigint; b : bigint) : bigint;
@@ -265,7 +265,7 @@ var
   h : bigint;
 begin
   new(h);
-  h^.bigint_sign := not a^.bigint_sign;
+  h^.bigint_sign := not(a^.bigint_sign);
   h^.bigint_len := a^.bigint_len;
   h^.bigint_chiffres := a^.bigint_chiffres;
   exit(h);
@@ -361,9 +361,7 @@ D'ou le nom de la fonction. }
       end;
   end;
   new(m);
-  m^.bigint_sign := a^.bigint_sign
-  =
-  b^.bigint_sign;
+  m^.bigint_sign := a^.bigint_sign = b^.bigint_sign;
   m^.bigint_len := len;
   m^.bigint_chiffres := chiffres;
   exit(m);
@@ -407,9 +405,7 @@ begin
   end;
   new(p);
   p^.bigint_sign := a^.bigint_sign;
-  p^.bigint_len := a^.bigint_len
-  +
-  i;
+  p^.bigint_len := a^.bigint_len + i;
   p^.bigint_chiffres := chiffres;
   exit(p);
 end;
@@ -512,7 +508,7 @@ var
 begin
   one := bigint_of_int(1);
   out0 := one;
-  while not bigint_eq(a, one) do
+  while not(bigint_eq(a, one)) do
   begin
     out0 := mul_bigint(a, out0);
     a := sub_bigint(a, one);
@@ -550,7 +546,7 @@ begin
     begin
       exit(a);
     end
-  else if (b Mod 2) = 0
+  else if b Mod 2 = 0
   then
     begin
       exit(bigint_exp(mul_bigint(a, a), b Div 2));
@@ -568,7 +564,7 @@ begin
     begin
       exit(a);
     end
-  else if (b Mod 2) = 0
+  else if b Mod 2 = 0
   then
     begin
       exit(bigint_exp_10chiffres(mul_bigint(a, a), b Div 2));

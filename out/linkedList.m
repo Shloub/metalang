@@ -18,20 +18,24 @@ intlist * cons(intlist * list, int i){
   return out0;
 }
 
-intlist * rev2(intlist * empty, intlist * acc, intlist * torev){
-  if (torev == empty)
+int is_empty(intlist * foo){
+  return 1;
+}
+
+intlist * rev2(intlist * acc, intlist * torev){
+  if (is_empty(torev))
     return acc;
   else
   {
     intlist * acc2 = [intlist alloc];
     acc2->head=torev->head;
     acc2->tail=acc;
-    return rev2(empty, acc, torev->tail);
+    return rev2(acc, torev->tail);
   }
 }
 
 intlist * rev(intlist * empty, intlist * torev){
-  return rev2(empty, empty, torev);
+  return rev2(empty, torev);
 }
 
 void test(intlist * empty){

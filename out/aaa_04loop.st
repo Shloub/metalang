@@ -3,8 +3,8 @@ Object subclass: aaa_04loop [
     "  for j = i - 2 to i + 2 do
     if i % j == 5 then return true end
   end "
-    j := (i - 2).
-    [(j <= (i + 2))] whileTrue:
+    j := i - 2.
+    [j <= (i + 2)] whileTrue:
     [
     ((i rem: j) = 5)
       ifTrue:[^ true].
@@ -17,19 +17,19 @@ Object subclass: aaa_04loop [
     |j i|j := 0.
     (0 to: 10) do: [:k|
       j :=  (j + k).
-      (j) display.
+      j display.
       '
 ' display.
     ].
     i := 4.
-    [(i < 10)] whileTrue:
+    [i < 10] whileTrue:
     [
-    (i) display.
+    i display.
     i :=  (i + 1).
     j :=  (j + i).
     ].
-    (j) display.
-    (i) display.
+    j display.
+    i display.
     'FIN TEST
 ' display.
     ]

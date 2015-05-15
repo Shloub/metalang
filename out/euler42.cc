@@ -18,7 +18,7 @@ int score(){
   for (int i = 1 ; i <= len; i ++)
   {
     std::cin >> c >> std::noskipws;
-    sum += ((int)(c) - (int)('A')) + 1;
+    sum += (int)(c) - (int)('A') + 1;
     /*		print c print " " print sum print " " */
   }
   if (is_triangular(sum))

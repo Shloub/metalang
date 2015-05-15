@@ -8,7 +8,7 @@ begin
     let tmpc = Scanf.scanf "%c" (fun v_0 -> v_0) in
     let c = ref( int_of_char (tmpc) ) in
     if tmpc <> ' ' then
-      c := (((!c) - int_of_char ('a')) + 13) mod 26 + int_of_char ('a');
+      c := ((!c) - int_of_char ('a') + 13) mod 26 + int_of_char ('a');
     char_of_int ((!c))) in
   for j = 0 to strlen - 1 do
     Printf.printf "%c" tab4.(j)

@@ -43,11 +43,7 @@ int main(void){
           for (b = 0 ; b <= 9; b++)
             for (e = 0 ; e <= 9; e++)
             {
-              int mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e +
-                                                               c * d) + 1000 * (c *
-                                                                                e +
-                                                                                b *
-                                                                                f) + 10000 * c * f;
+              int mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
               if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
                 m = max2_(mul, m);
   }

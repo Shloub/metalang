@@ -1,0 +1,13 @@
+
+def void test(array<int> tab, int len)
+  for i = 0 to len - 1 do
+    print tab[i] print " "
+  end
+  print "\n"
+end
+
+main
+  def array<int> t[5] with i do return 1 end
+  test(t, 5)
+
+end

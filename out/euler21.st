@@ -5,8 +5,8 @@ Object subclass: euler21 [
       ((t at: (i + 1)) = i)
         ifTrue:[
                n :=  (n + 1).
-               j := (i * i).
-               [((j < max0) & (j > 0))] whileTrue:
+               j := i * i.
+               [(j < max0) and: [j > 0]] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -19,21 +19,21 @@ Object subclass: euler21 [
    fillPrimesFactors: t a: a primes: primes nprimes: nprimes [|n d|
     n := a.
     (0 to: (nprimes - 1)) do: [:i|
-      d := (primes at: (i + 1)).
-      [((n rem: d) = 0)] whileTrue:
+      d := primes at: (i + 1).
+      [(n rem: d) = 0] whileTrue:
       [
       t at: (d + 1) put:  ((t at: (d + 1)) + 1).
       n :=  (n quo: d).
       ].
       (n = 1)
-        ifTrue:[^ (primes at: (i + 1))].
+        ifTrue:[^ primes at: (i + 1)].
     ].
     ^ n
   ]
   
    sumdivaux2: t n: n b: b [|i|
     i := b.
-    [(((i < n)) and: [((t at: (i + 1)) = 0)])] whileTrue:
+    [(i < n) and: [(t at: (i + 1)) = 0]] whileTrue:
     [i :=  (i + 1).].
     ^ i
   ]
@@ -51,7 +51,7 @@ Object subclass: euler21 [
                           out0 :=  (out0 + p).
                           p :=  (p * i).
                         ].
-                        ^ (out0 + 1 * o)
+                        ^ out0 + 1 * o
                 ].].
   ]
   
@@ -83,22 +83,22 @@ Object subclass: euler21 [
                l :=  (l + 1).
         ].
     ].
-    (l) display.
+    l display.
     ' == ' display.
-    (nprimes) display.
+    nprimes display.
     '
 ' display.
     sum := 0.
     (2 to: 1000) do: [:n|
-      other := ((self sumdiv: nprimes primes: primes n: n) - n).
+      other := (self sumdiv: nprimes primes: primes n: n) - n.
       (other > n)
         ifTrue:[
-               othersum := ((self sumdiv: nprimes primes: primes n: other) - other).
+               othersum := (self sumdiv: nprimes primes: primes n: other) - other.
                (othersum = n)
                  ifTrue:[
-                        (other) display.
+                        other display.
                         ' & ' display.
-                        (n) display.
+                        n display.
                         '
 ' display.
                         sum :=  (sum + (other + n)).
@@ -107,7 +107,7 @@ Object subclass: euler21 [
     ].
     '
 ' display.
-    (sum) display.
+    sum display.
     '
 ' display.
     ]

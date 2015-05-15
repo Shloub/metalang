@@ -19,7 +19,7 @@ function fillPrimesFactors(t, n, primes, nprimes){
   for (var i = 0 ; i <= nprimes - 1; i++)
   {
     var d = primes[i];
-    while ((~~(n % d)) == 0)
+    while (~~(n % d) == 0)
     {
       t[d] = t[d] + 1;
       n = ~~(n / d);
@@ -58,7 +58,7 @@ function find(ndiv2){
       if (primesFactors[i] != 0)
       ndivs *= 1 + primesFactors[i];
     if (ndivs > ndiv2)
-      return ~~((n * (n + 1)) / 2);
+      return ~~(n * (n + 1) / 2);
     /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
   }
   return 0;

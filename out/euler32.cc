@@ -56,7 +56,7 @@ int main(){
       if (allowed->at(b))
     {
       allowed->at(b) = false;
-      int be = (b * e) % 10;
+      int be = b * e % 10;
       if (allowed->at(be))
       {
         allowed->at(be) = false;

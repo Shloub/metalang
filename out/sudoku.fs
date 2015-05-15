@@ -31,8 +31,7 @@ create bufferc 128 allot
   9 9 * 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     read-int { k }
     skipspaces
-    k out0 i cells +
-     !
+    k out0  i cells +  !
    1 + REPEAT 2DROP
   out0 exit
 ;
@@ -42,8 +41,7 @@ create bufferc 128 allot
 : print_sudoku { sudoku0 }
   8 0 BEGIN 2dup >= WHILE DUP { y }
     8 0 BEGIN 2dup >= WHILE DUP { x }
-      sudoku0 x y 9 * + cells +
-       @ s>d 0 d.r
+      sudoku0  x y 9 * + cells +  @ s>d 0 d.r
       S"  " TYPE
       x 3 % 2 =
       IF
@@ -67,8 +65,7 @@ create bufferc 128 allot
 
 : sudoku_done { s }
   80 0 BEGIN 2dup >= WHILE DUP { i }
-    s i cells +
-     @ 0 =
+    s  i cells +  @ 0 =
     IF
       DROP DROP false exit
     THEN
@@ -81,339 +78,15 @@ create bufferc 128 allot
 : sudoku_error { s }
   false { out1 }
   8 0 BEGIN 2dup >= WHILE DUP { x }
-    out1 s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 + cells +
-     @ = AND OR s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 2 * + cells +
-     @ = AND OR s x 9 + cells +
-     @ 0 <> s x 9 + cells +
-     @ s x 9 2 * + cells +
-     @ = AND OR s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 3 * + cells +
-     @ = AND OR s x 9 + cells +
-     @ 0 <> s x 9 + cells +
-     @ s x 9 3 * + cells +
-     @ = AND OR s x 9 2 * + cells +
-     @ 0 <> s x 9 2 * + cells +
-     @ s x 9 3 * + cells +
-     @ = AND OR s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 4 * + cells +
-     @ = AND OR s x 9 + cells +
-     @ 0 <> s x 9 + cells +
-     @ s x 9 4 * + cells +
-     @ = AND OR s x 9 2 * + cells +
-     @ 0 <> s x 9 2 * + cells +
-     @ s x 9 4 * + cells +
-     @ = AND OR s x 9 3 * + cells +
-     @ 0 <> s x 9 3 * + cells +
-     @ s x 9 4 * + cells +
-     @ = AND OR s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 5 * + cells +
-     @ = AND OR s x 9 + cells +
-     @ 0 <> s x 9 + cells +
-     @ s x 9 5 * + cells +
-     @ = AND OR s x 9 2 * + cells +
-     @ 0 <> s x 9 2 * + cells +
-     @ s x 9 5 * + cells +
-     @ = AND OR s x 9 3 * + cells +
-     @ 0 <> s x 9 3 * + cells +
-     @ s x 9 5 * + cells +
-     @ = AND OR s x 9 4 * + cells +
-     @ 0 <> s x 9 4 * + cells +
-     @ s x 9 5 * + cells +
-     @ = AND OR s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 6 * + cells +
-     @ = AND OR s x 9 + cells +
-     @ 0 <> s x 9 + cells +
-     @ s x 9 6 * + cells +
-     @ = AND OR s x 9 2 * + cells +
-     @ 0 <> s x 9 2 * + cells +
-     @ s x 9 6 * + cells +
-     @ = AND OR s x 9 3 * + cells +
-     @ 0 <> s x 9 3 * + cells +
-     @ s x 9 6 * + cells +
-     @ = AND OR s x 9 4 * + cells +
-     @ 0 <> s x 9 4 * + cells +
-     @ s x 9 6 * + cells +
-     @ = AND OR s x 9 5 * + cells +
-     @ 0 <> s x 9 5 * + cells +
-     @ s x 9 6 * + cells +
-     @ = AND OR s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 7 * + cells +
-     @ = AND OR s x 9 + cells +
-     @ 0 <> s x 9 + cells +
-     @ s x 9 7 * + cells +
-     @ = AND OR s x 9 2 * + cells +
-     @ 0 <> s x 9 2 * + cells +
-     @ s x 9 7 * + cells +
-     @ = AND OR s x 9 3 * + cells +
-     @ 0 <> s x 9 3 * + cells +
-     @ s x 9 7 * + cells +
-     @ = AND OR s x 9 4 * + cells +
-     @ 0 <> s x 9 4 * + cells +
-     @ s x 9 7 * + cells +
-     @ = AND OR s x 9 5 * + cells +
-     @ 0 <> s x 9 5 * + cells +
-     @ s x 9 7 * + cells +
-     @ = AND OR s x 9 6 * + cells +
-     @ 0 <> s x 9 6 * + cells +
-     @ s x 9 7 * + cells +
-     @ = AND OR s x cells +
-     @ 0 <> s x cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR s x 9 + cells +
-     @ 0 <> s x 9 + cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR s x 9 2 * + cells +
-     @ 0 <> s x 9 2 * + cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR s x 9 3 * + cells +
-     @ 0 <> s x 9 3 * + cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR s x 9 4 * + cells +
-     @ 0 <> s x 9 4 * + cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR s x 9 5 * + cells +
-     @ 0 <> s x 9 5 * + cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR s x 9 6 * + cells +
-     @ 0 <> s x 9 6 * + cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR s x 9 7 * + cells +
-     @ 0 <> s x 9 7 * + cells +
-     @ s x 9 8 * + cells +
-     @ = AND OR TO out1
+    out1 s  x cells +  @ 0 <> s  x cells +  @ s  x 9 + cells +  @ = AND OR s  x cells +  @ 0 <> s  x cells +  @ s  x 9 2 * + cells +  @ = AND OR s  x 9 + cells +  @ 0 <> s  x 9 + cells +  @ s  x 9 2 * + cells +  @ = AND OR s  x cells +  @ 0 <> s  x cells +  @ s  x 9 3 * + cells +  @ = AND OR s  x 9 + cells +  @ 0 <> s  x 9 + cells +  @ s  x 9 3 * + cells +  @ = AND OR s  x 9 2 * + cells +  @ 0 <> s  x 9 2 * + cells +  @ s  x 9 3 * + cells +  @ = AND OR s  x cells +  @ 0 <> s  x cells +  @ s  x 9 4 * + cells +  @ = AND OR s  x 9 + cells +  @ 0 <> s  x 9 + cells +  @ s  x 9 4 * + cells +  @ = AND OR s  x 9 2 * + cells +  @ 0 <> s  x 9 2 * + cells +  @ s  x 9 4 * + cells +  @ = AND OR s  x 9 3 * + cells +  @ 0 <> s  x 9 3 * + cells +  @ s  x 9 4 * + cells +  @ = AND OR s  x cells +  @ 0 <> s  x cells +  @ s  x 9 5 * + cells +  @ = AND OR s  x 9 + cells +  @ 0 <> s  x 9 + cells +  @ s  x 9 5 * + cells +  @ = AND OR s  x 9 2 * + cells +  @ 0 <> s  x 9 2 * + cells +  @ s  x 9 5 * + cells +  @ = AND OR s  x 9 3 * + cells +  @ 0 <> s  x 9 3 * + cells +  @ s  x 9 5 * + cells +  @ = AND OR s  x 9 4 * + cells +  @ 0 <> s  x 9 4 * + cells +  @ s  x 9 5 * + cells +  @ = AND OR s  x cells +  @ 0 <> s  x cells +  @ s  x 9 6 * + cells +  @ = AND OR s  x 9 + cells +  @ 0 <> s  x 9 + cells +  @ s  x 9 6 * + cells +  @ = AND OR s  x 9 2 * + cells +  @ 0 <> s  x 9 2 * + cells +  @ s  x 9 6 * + cells +  @ = AND OR s  x 9 3 * + cells +  @ 0 <> s  x 9 3 * + cells +  @ s  x 9 6 * + cells +  @ = AND OR s  x 9 4 * + cells +  @ 0 <> s  x 9 4 * + cells +  @ s  x 9 6 * + cells +  @ = AND OR s  x 9 5 * + cells +  @ 0 <> s  x 9 5 * + cells +  @ s  x 9 6 * + cells +  @ = AND OR s  x cells +  @ 0 <> s  x cells +  @ s  x 9 7 * + cells +  @ = AND OR s  x 9 + cells +  @ 0 <> s  x 9 + cells +  @ s  x 9 7 * + cells +  @ = AND OR s  x 9 2 * + cells +  @ 0 <> s  x 9 2 * + cells +  @ s  x 9 7 * + cells +  @ = AND OR s  x 9 3 * + cells +  @ 0 <> s  x 9 3 * + cells +  @ s  x 9 7 * + cells +  @ = AND OR s  x 9 4 * + cells +  @ 0 <> s  x 9 4 * + cells +  @ s  x 9 7 * + cells +  @ = AND OR s  x 9 5 * + cells +  @ 0 <> s  x 9 5 * + cells +  @ s  x 9 7 * + cells +  @ = AND OR s  x 9 6 * + cells +  @ 0 <> s  x 9 6 * + cells +  @ s  x 9 7 * + cells +  @ = AND OR s  x cells +  @ 0 <> s  x cells +  @ s  x 9 8 * + cells +  @ = AND OR s  x 9 + cells +  @ 0 <> s  x 9 + cells +  @ s  x 9 8 * + cells +  @ = AND OR s  x 9 2 * + cells +  @ 0 <> s  x 9 2 * + cells +  @ s  x 9 8 * + cells +  @ = AND OR s  x 9 3 * + cells +  @ 0 <> s  x 9 3 * + cells +  @ s  x 9 8 * + cells +  @ = AND OR s  x 9 4 * + cells +  @ 0 <> s  x 9 4 * + cells +  @ s  x 9 8 * + cells +  @ = AND OR s  x 9 5 * + cells +  @ 0 <> s  x 9 5 * + cells +  @ s  x 9 8 * + cells +  @ = AND OR s  x 9 6 * + cells +  @ 0 <> s  x 9 6 * + cells +  @ s  x 9 8 * + cells +  @ = AND OR s  x 9 7 * + cells +  @ 0 <> s  x 9 7 * + cells +  @ s  x 9 8 * + cells +  @ = AND OR TO out1
    1 + REPEAT 2DROP
   false { out2 }
   8 0 BEGIN 2dup >= WHILE DUP { x }
-    out2 s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 1 + cells +
-     @ = AND OR s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 2 + cells +
-     @ = AND OR s x 9 * 1 + cells +
-     @ 0 <> s x 9 * 1 + cells +
-     @ s x 9 * 2 + cells +
-     @ = AND OR s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 3 + cells +
-     @ = AND OR s x 9 * 1 + cells +
-     @ 0 <> s x 9 * 1 + cells +
-     @ s x 9 * 3 + cells +
-     @ = AND OR s x 9 * 2 + cells +
-     @ 0 <> s x 9 * 2 + cells +
-     @ s x 9 * 3 + cells +
-     @ = AND OR s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 4 + cells +
-     @ = AND OR s x 9 * 1 + cells +
-     @ 0 <> s x 9 * 1 + cells +
-     @ s x 9 * 4 + cells +
-     @ = AND OR s x 9 * 2 + cells +
-     @ 0 <> s x 9 * 2 + cells +
-     @ s x 9 * 4 + cells +
-     @ = AND OR s x 9 * 3 + cells +
-     @ 0 <> s x 9 * 3 + cells +
-     @ s x 9 * 4 + cells +
-     @ = AND OR s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 5 + cells +
-     @ = AND OR s x 9 * 1 + cells +
-     @ 0 <> s x 9 * 1 + cells +
-     @ s x 9 * 5 + cells +
-     @ = AND OR s x 9 * 2 + cells +
-     @ 0 <> s x 9 * 2 + cells +
-     @ s x 9 * 5 + cells +
-     @ = AND OR s x 9 * 3 + cells +
-     @ 0 <> s x 9 * 3 + cells +
-     @ s x 9 * 5 + cells +
-     @ = AND OR s x 9 * 4 + cells +
-     @ 0 <> s x 9 * 4 + cells +
-     @ s x 9 * 5 + cells +
-     @ = AND OR s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 6 + cells +
-     @ = AND OR s x 9 * 1 + cells +
-     @ 0 <> s x 9 * 1 + cells +
-     @ s x 9 * 6 + cells +
-     @ = AND OR s x 9 * 2 + cells +
-     @ 0 <> s x 9 * 2 + cells +
-     @ s x 9 * 6 + cells +
-     @ = AND OR s x 9 * 3 + cells +
-     @ 0 <> s x 9 * 3 + cells +
-     @ s x 9 * 6 + cells +
-     @ = AND OR s x 9 * 4 + cells +
-     @ 0 <> s x 9 * 4 + cells +
-     @ s x 9 * 6 + cells +
-     @ = AND OR s x 9 * 5 + cells +
-     @ 0 <> s x 9 * 5 + cells +
-     @ s x 9 * 6 + cells +
-     @ = AND OR s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 7 + cells +
-     @ = AND OR s x 9 * 1 + cells +
-     @ 0 <> s x 9 * 1 + cells +
-     @ s x 9 * 7 + cells +
-     @ = AND OR s x 9 * 2 + cells +
-     @ 0 <> s x 9 * 2 + cells +
-     @ s x 9 * 7 + cells +
-     @ = AND OR s x 9 * 3 + cells +
-     @ 0 <> s x 9 * 3 + cells +
-     @ s x 9 * 7 + cells +
-     @ = AND OR s x 9 * 4 + cells +
-     @ 0 <> s x 9 * 4 + cells +
-     @ s x 9 * 7 + cells +
-     @ = AND OR s x 9 * 5 + cells +
-     @ 0 <> s x 9 * 5 + cells +
-     @ s x 9 * 7 + cells +
-     @ = AND OR s x 9 * 6 + cells +
-     @ 0 <> s x 9 * 6 + cells +
-     @ s x 9 * 7 + cells +
-     @ = AND OR s x 9 * cells +
-     @ 0 <> s x 9 * cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR s x 9 * 1 + cells +
-     @ 0 <> s x 9 * 1 + cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR s x 9 * 2 + cells +
-     @ 0 <> s x 9 * 2 + cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR s x 9 * 3 + cells +
-     @ 0 <> s x 9 * 3 + cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR s x 9 * 4 + cells +
-     @ 0 <> s x 9 * 4 + cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR s x 9 * 5 + cells +
-     @ 0 <> s x 9 * 5 + cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR s x 9 * 6 + cells +
-     @ 0 <> s x 9 * 6 + cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR s x 9 * 7 + cells +
-     @ 0 <> s x 9 * 7 + cells +
-     @ s x 9 * 8 + cells +
-     @ = AND OR TO out2
+    out2 s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 1 + cells +  @ = AND OR s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 2 + cells +  @ = AND OR s  x 9 * 1 + cells +  @ 0 <> s  x 9 * 1 + cells +  @ s  x 9 * 2 + cells +  @ = AND OR s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 3 + cells +  @ = AND OR s  x 9 * 1 + cells +  @ 0 <> s  x 9 * 1 + cells +  @ s  x 9 * 3 + cells +  @ = AND OR s  x 9 * 2 + cells +  @ 0 <> s  x 9 * 2 + cells +  @ s  x 9 * 3 + cells +  @ = AND OR s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 4 + cells +  @ = AND OR s  x 9 * 1 + cells +  @ 0 <> s  x 9 * 1 + cells +  @ s  x 9 * 4 + cells +  @ = AND OR s  x 9 * 2 + cells +  @ 0 <> s  x 9 * 2 + cells +  @ s  x 9 * 4 + cells +  @ = AND OR s  x 9 * 3 + cells +  @ 0 <> s  x 9 * 3 + cells +  @ s  x 9 * 4 + cells +  @ = AND OR s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 5 + cells +  @ = AND OR s  x 9 * 1 + cells +  @ 0 <> s  x 9 * 1 + cells +  @ s  x 9 * 5 + cells +  @ = AND OR s  x 9 * 2 + cells +  @ 0 <> s  x 9 * 2 + cells +  @ s  x 9 * 5 + cells +  @ = AND OR s  x 9 * 3 + cells +  @ 0 <> s  x 9 * 3 + cells +  @ s  x 9 * 5 + cells +  @ = AND OR s  x 9 * 4 + cells +  @ 0 <> s  x 9 * 4 + cells +  @ s  x 9 * 5 + cells +  @ = AND OR s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 6 + cells +  @ = AND OR s  x 9 * 1 + cells +  @ 0 <> s  x 9 * 1 + cells +  @ s  x 9 * 6 + cells +  @ = AND OR s  x 9 * 2 + cells +  @ 0 <> s  x 9 * 2 + cells +  @ s  x 9 * 6 + cells +  @ = AND OR s  x 9 * 3 + cells +  @ 0 <> s  x 9 * 3 + cells +  @ s  x 9 * 6 + cells +  @ = AND OR s  x 9 * 4 + cells +  @ 0 <> s  x 9 * 4 + cells +  @ s  x 9 * 6 + cells +  @ = AND OR s  x 9 * 5 + cells +  @ 0 <> s  x 9 * 5 + cells +  @ s  x 9 * 6 + cells +  @ = AND OR s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 7 + cells +  @ = AND OR s  x 9 * 1 + cells +  @ 0 <> s  x 9 * 1 + cells +  @ s  x 9 * 7 + cells +  @ = AND OR s  x 9 * 2 + cells +  @ 0 <> s  x 9 * 2 + cells +  @ s  x 9 * 7 + cells +  @ = AND OR s  x 9 * 3 + cells +  @ 0 <> s  x 9 * 3 + cells +  @ s  x 9 * 7 + cells +  @ = AND OR s  x 9 * 4 + cells +  @ 0 <> s  x 9 * 4 + cells +  @ s  x 9 * 7 + cells +  @ = AND OR s  x 9 * 5 + cells +  @ 0 <> s  x 9 * 5 + cells +  @ s  x 9 * 7 + cells +  @ = AND OR s  x 9 * 6 + cells +  @ 0 <> s  x 9 * 6 + cells +  @ s  x 9 * 7 + cells +  @ = AND OR s  x 9 * cells +  @ 0 <> s  x 9 * cells +  @ s  x 9 * 8 + cells +  @ = AND OR s  x 9 * 1 + cells +  @ 0 <> s  x 9 * 1 + cells +  @ s  x 9 * 8 + cells +  @ = AND OR s  x 9 * 2 + cells +  @ 0 <> s  x 9 * 2 + cells +  @ s  x 9 * 8 + cells +  @ = AND OR s  x 9 * 3 + cells +  @ 0 <> s  x 9 * 3 + cells +  @ s  x 9 * 8 + cells +  @ = AND OR s  x 9 * 4 + cells +  @ 0 <> s  x 9 * 4 + cells +  @ s  x 9 * 8 + cells +  @ = AND OR s  x 9 * 5 + cells +  @ 0 <> s  x 9 * 5 + cells +  @ s  x 9 * 8 + cells +  @ = AND OR s  x 9 * 6 + cells +  @ 0 <> s  x 9 * 6 + cells +  @ s  x 9 * 8 + cells +  @ = AND OR s  x 9 * 7 + cells +  @ 0 <> s  x 9 * 7 + cells +  @ s  x 9 * 8 + cells +  @ = AND OR TO out2
    1 + REPEAT 2DROP
   false { out3 }
   8 0 BEGIN 2dup >= WHILE DUP { x }
-    out3 s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ 0 <> s x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ 0 <> s x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ 0 <> s x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +
-     @ s x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +
-     @ = AND OR TO out3
+    out3 s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ 0 <> s  x 3 % 3 * 1 + 9 * x 3 // 3 * + 2 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ 0 <> s  x 3 % 3 * 2 + 9 * x 3 // 3 * + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ 0 <> s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 1 + cells +  @ s  x 3 % 3 * 2 + 9 * x 3 // 3 * + 2 + cells +  @ = AND OR TO out3
    1 + REPEAT 2DROP
   out1 out2 OR out3 OR exit
 ;
@@ -430,19 +103,16 @@ create bufferc 128 allot
     true exit
   THEN
   80 0 BEGIN 2dup >= WHILE DUP { i }
-    sudoku0 i cells +
-     @ 0 =
+    sudoku0  i cells +  @ 0 =
     IF
       9 1 BEGIN 2dup >= WHILE DUP { p }
-        p sudoku0 i cells +
-         !
+        p sudoku0  i cells +  !
         sudoku0 solve
         IF
           DROP DROP DROP DROP true exit
         THEN
        1 + REPEAT 2DROP
-      0 sudoku0 i cells +
-       !
+      0 sudoku0  i cells +  !
       DROP DROP false exit
     THEN
    1 + REPEAT 2DROP

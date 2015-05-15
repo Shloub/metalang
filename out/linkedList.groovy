@@ -13,22 +13,27 @@ Intlist cons(Intlist list, int i)
   return out0
 }
 
-Intlist rev2(Intlist empty, Intlist acc, Intlist torev)
+boolean is_empty(Intlist foo)
 {
-  if (torev == empty)
+  return true
+}
+
+Intlist rev2(Intlist acc, Intlist torev)
+{
+  if (is_empty(torev))
     return acc
   else
   {
     Intlist acc2 = new Intlist()
     acc2.head = torev.head
     acc2.tail = acc
-    return rev2(empty, acc, torev.tail)
+    return rev2(acc, torev.tail)
   }
 }
 
 Intlist rev(Intlist empty, Intlist torev)
 {
-  return rev2(empty, empty, torev)
+  return rev2(empty, torev)
 }
 
 void test(Intlist empty)

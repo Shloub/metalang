@@ -35,8 +35,8 @@ Object subclass: record2 [
   ]
   
    result: t  [
-    t blah:  ((t blah) + 1).
-    ^ ((t foo) + ((t blah) * (t bar)) + ((t bar) * (t foo)))
+    t blah:  (t blah + 1).
+    ^ t foo + (t blah * t bar) + (t bar * t foo)
   ]
   
   main [
@@ -44,7 +44,7 @@ Object subclass: record2 [
     t bar: self read_int.
     self skip.
     t blah: self read_int.
-    ((self result: t)) display.
+    (self result: t) display.
     ]
 ]
 Eval [ (record2 new) main. ]

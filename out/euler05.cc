@@ -12,7 +12,7 @@ std::vector<int> * primesfactors(int n){
   std::fill(tab->begin(), tab->end(), 0);
   int d = 2;
   while (n != 1 && d * d <= n)
-    if ((n % d) == 0)
+    if (n % d == 0)
   {
     tab->at(d) = tab->at(d) + 1;
     n /= d;

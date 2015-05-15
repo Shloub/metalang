@@ -50,7 +50,7 @@ begin
     nchiffre := nth / n;
     nth := nth rem n;
     for l in integer range 0..lim - 1 loop
-      if (not pris(l))
+      if not pris(l)
       then
         if nchiffre = 0
         then
@@ -62,7 +62,7 @@ begin
     end loop;
   end loop;
   for m in integer range 0..lim - 1 loop
-    if (not pris(m))
+    if not pris(m)
     then
       PInt(m);
     end if;

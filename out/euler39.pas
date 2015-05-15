@@ -25,7 +25,7 @@ begin
     begin
       c2 := a * a + b * b;
       c := Floor(Sqrt(c2));
-      if (c * c) = c2
+      if c * c = c2
       then
         begin
           p := a + b + c;

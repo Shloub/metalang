@@ -12,9 +12,7 @@ function stdinsep()
 end
 
 function mktoto( v1 )
-  local t = {foo=v1,
-             bar=0,
-             blah=0}
+  local t = {foo=v1, bar=0, blah=0}
   return t
 end
 

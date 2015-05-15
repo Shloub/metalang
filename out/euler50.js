@@ -38,20 +38,20 @@ var sum = new Array(nprimes);
 for (var i_ = 0 ; i_ <= nprimes - 1; i_++)
   sum[i_] = primes[i_];
 var maxl = 0;
-var process = 1;
+var process = true;
 var stop = maximumprimes - 1;
 var len = 1;
 var resp = 1;
 while (process)
 {
-  process = 0;
+  process = false;
   for (var i = 0 ; i <= stop; i++)
     if (i + len < nprimes)
   {
     sum[i] = sum[i] + primes[i + len];
     if (maximumprimes > sum[i])
     {
-      process = 1;
+      process = true;
       if (era[sum[i]] == sum[i])
       {
         maxl = len;

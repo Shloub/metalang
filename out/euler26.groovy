@@ -4,7 +4,7 @@ int periode(int[] restes, int len, int a, int b)
 {
   while (a != 0)
   {
-    int chiffre = (int)(a / b)
+    int chiffre = a.intdiv(b)
     int reste = a % b
     for (int i = 0 ; i < len; i++)
       if (restes[i] == reste)

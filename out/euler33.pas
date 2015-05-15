@@ -45,7 +45,7 @@ begin
           begin
             a := i * 10 + j;
             b := j * 10 + k;
-            if (a * k) = (i * b)
+            if a * k = i * b
             then
               begin
                 Write(a);

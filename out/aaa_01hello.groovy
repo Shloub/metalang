@@ -5,7 +5,7 @@ import java.util.*
 print("Hello World")
 int a = 5
 System.out.printf("%s \n%sfoo", (4 + 6) * 2, a);
-boolean b = 1 + (int)(((1 + 1) * 2 * (3 + 8)) / 4) - (1 - 2) - 3 == 12 && true
+boolean b = 1 + ((1 + 1) * 2 * (3 + 8)).intdiv(4) - (1 - 2) - 3 == 12 && true
 if (b)
   print("True")
 else
@@ -16,17 +16,20 @@ if (c)
   print("True")
 else
   print("False")
-System.out.printf("%s%s", (int)(((int)((4 + 1) / 3)) / (2 + 1)), (int)(((int)((4 *
-                                                                                1) /
-                                                                         3)) / (2 *
-                                                                                1)));
-boolean d = !(!(a == 0) && !(a == 4))
+print(" ")
+boolean d = (2 == 1) == false
 if (d)
   print("True")
 else
   print("False")
-boolean e = true && !false && !(true && false)
+System.out.printf(" %s%s", (4 + 1).intdiv(3).intdiv(2 + 1), (4 * 1).intdiv(3).intdiv(2 * 1));
+boolean e = !(!(a == 0) && !(a == 4))
 if (e)
+  print("True")
+else
+  print("False")
+boolean f = true && !false && !(true && false)
+if (f)
   print("True")
 else
   print("False")

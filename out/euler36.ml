@@ -3,7 +3,7 @@ exception Found_1 of bool
 let palindrome2 pow2 n =
   try
   let t = Array.init 20 (fun i ->
-    ((n / pow2.(i)) mod 2) = 1) in
+    n / pow2.(i) mod 2 = 1) in
   let nnum = ref( 0 ) in
   for j = 1 to 19 do
     if t.(j) then

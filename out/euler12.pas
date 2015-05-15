@@ -34,7 +34,7 @@ begin
   for i := 0 to  nprimes - 1 do
   begin
     d := primes[i];
-    while (n Mod d) = 0 do
+    while n Mod d = 0 do
     begin
       t[d] := t[d] + 1;
       n := n Div d;
@@ -108,7 +108,7 @@ begin
     if ndivs > ndiv2
     then
       begin
-        exit((n * (n + 1)) Div 2);
+        exit(n * (n + 1) Div 2);
       end;
     { print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" }
   end;

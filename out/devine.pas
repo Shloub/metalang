@@ -87,7 +87,7 @@ begin
       begin
         max0 := tab[i];
       end;
-    if (tab[i] = nombre) and (len <> (i + 1))
+    if (tab[i] = nombre) and (len <> i + 1)
     then
       begin
         exit(false);

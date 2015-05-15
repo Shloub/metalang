@@ -99,23 +99,23 @@ End Function
     Dim win As Integer = 0
     Dim freecase As Integer = 0
     For  y As Integer  = 0 to  2
-      Dim col As Integer = - 1
-      Dim lin As Integer = - 1
+      Dim col As Integer = -1
+      Dim lin As Integer = -1
       For  x As Integer  = 0 to  2
         If g.cases(x)(y) = 0 Then
           freecase = freecase + 1
         End If
         Dim colv As Integer = g.cases(x)(y)
         Dim linv As Integer = g.cases(y)(x)
-        If col = - 1 AndAlso colv <> 0 Then
+        If col = -1 AndAlso colv <> 0 Then
           col = colv
         ElseIf colv <> col Then
-          col = - 2
+          col = -2
         End If
-        If lin = - 1 AndAlso linv <> 0 Then
+        If lin = -1 AndAlso linv <> 0 Then
           lin = linv
         ElseIf linv <> lin Then
-          lin = - 2
+          lin = -2
         End If
       Next
       If col >= 0 Then
@@ -136,7 +136,7 @@ End Function
     If win = 1 Then
       g.note = 1000
     ElseIf win = 2 Then
-      g.note = - 1000
+      g.note = -1000
     Else
       g.note = 0
     End If
@@ -184,7 +184,7 @@ End Function
     If g.ended Then
       Return g.note
     End If
-    Dim maxNote As Integer = - 10000
+    Dim maxNote As Integer = -10000
     If Not g.firstToPlay Then
       maxNote = 10000
     End If
@@ -196,7 +196,7 @@ End Function
           cancel_move_xy(x, y, g)
           ' Minimum ou Maximum selon le coté ou l'on joue
           
-          If (currentNote > maxNote) = g.firstToPlay Then
+          If currentNote > maxNote = g.firstToPlay Then
             maxNote = currentNote
           End If
         End If

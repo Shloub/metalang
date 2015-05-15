@@ -70,7 +70,7 @@ begin
     begin
       exit(1);
     end;
-  if (b Mod 2) = 0
+  if b Mod 2 = 0
   then
     begin
       o := exp0(a, b Div 2);

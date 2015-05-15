@@ -65,7 +65,7 @@ End Function
     Dim sum As Integer = 0
     For  i As Integer  = 1 to  len
       Dim c As Char = readChar()
-      sum = sum + (Asc(c) - Asc("A"C)) + 1
+      sum = sum + Asc(c) - Asc("A"C) + 1
       '		print c print " " print sum print " " 
       
     Next

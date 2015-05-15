@@ -1,20 +1,20 @@
 Object subclass: euler14 [
    next0: n  [
     ((n rem: 2) = 0)
-      ifTrue:[^ (n quo: 2)]
-      ifFalse:[^ (3 * n + 1)].
+      ifTrue:[^ n quo: 2]
+      ifFalse:[^ 3 * n + 1].
   ]
   
    find: n m: m [
     (n = 1)
       ifTrue:[^ 1]
       ifFalse:[(n >= 1000000)
-                ifTrue:[^ (1 + (self find: (self next0: n) m: m))]
+                ifTrue:[^ 1 + (self find: (self next0: n) m: m)]
                 ifFalse:[((m at: (n + 1)) ~= 0)
-                          ifTrue:[^ (m at: (n + 1))]
+                          ifTrue:[^ m at: (n + 1)]
                           ifFalse:[
                                   m at: (n + 1) put:  (1 + (self find: (self next0: n) m: m)).
-                                  ^ (m at: (n + 1))
+                                  ^ m at: (n + 1)
                           ].].].
   ]
   
@@ -34,10 +34,10 @@ Object subclass: euler14 [
                maxi :=  i.
         ].
     ].
-    (max0) display.
+    max0 display.
     '
 ' display.
-    (maxi) display.
+    maxi display.
     '
 ' display.
     ]

@@ -25,7 +25,7 @@ for ($i3 = 0 ; $i3 < $strlen; $i3++)
   $c = ord($tmpc);
   echo $tmpc, ":", $c, " ";
   if ($tmpc != " ")
-    $c = (($c - ord("a")) + 13) % 26 + ord("a");
+    $c = ($c - ord("a") + 13) % 26 + ord("a");
   $tab4[$i3] = chr($c);
 }
 for ($j = 0 ; $j < $strlen; $j++)

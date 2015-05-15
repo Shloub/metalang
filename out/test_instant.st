@@ -1,6 +1,6 @@
 Object subclass: test_instant [
    foo: a b: b [
-    ^ (a + b)
+    ^ a + b
   ]
   
   main [

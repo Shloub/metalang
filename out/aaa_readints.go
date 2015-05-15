@@ -29,7 +29,7 @@ func main() {
   }
   fmt.Fscanf(reader, "%d", &len)
   skip()
-  var tab2 [][]int = make([][]int, (len - 1))
+  var tab2 [][]int = make([][]int, len - 1)
   for b := 0 ; b <= len - 1 - 1; b++ {
     var c []int = make([]int, len)
       for d := 0 ; d <= len - 1; d++ {

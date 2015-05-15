@@ -29,7 +29,7 @@ function read_bigint(len){
     chiffres[len - 1 - i] = tmp;
   }
   var e = {
-    bigint_sign : 1,
+    bigint_sign : true,
     bigint_len : len,
     bigint_chiffres : chiffres
   };
@@ -46,24 +46,24 @@ function print_bigint(a){
 function bigint_eq(a, b){
   /* Renvoie vrai si a = b */
   if (a.bigint_sign != b.bigint_sign)
-    return 0;
+    return false;
   else if (a.bigint_len != b.bigint_len)
-    return 0;
+    return false;
   else
   {
     for (var i = 0 ; i <= a.bigint_len - 1; i++)
       if (a.bigint_chiffres[i] != b.bigint_chiffres[i])
-      return 0;
-    return 1;
+      return false;
+    return true;
   }
 }
 
 function bigint_gt(a, b){
   /* Renvoie vrai si a > b */
   if (a.bigint_sign && !b.bigint_sign)
-    return 1;
+    return true;
   else if (!a.bigint_sign && b.bigint_sign)
-    return 0;
+    return false;
   else
   {
     if (a.bigint_len > b.bigint_len)
@@ -79,7 +79,7 @@ function bigint_gt(a, b){
         else if (a.bigint_chiffres[j] < b.bigint_chiffres[j])
           return !a.bigint_sign;
     }
-    return 1;
+    return true;
   }
 }
 
@@ -105,7 +105,7 @@ function add_bigint_positif(a, b){
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
   var f = {
-    bigint_sign : 1,
+    bigint_sign : true,
     bigint_len : len,
     bigint_chiffres : chiffres
   };
@@ -136,7 +136,7 @@ Pré-requis : a > b
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
   var g = {
-    bigint_sign : 1,
+    bigint_sign : true,
     bigint_len : len,
     bigint_chiffres : chiffres
   };
@@ -195,17 +195,17 @@ D'ou le nom de la fonction. */
     var retenue = 0;
     for (var j = 0 ; j <= b.bigint_len - 1; j++)
     {
-      chiffres[i + j] = chiffres[i + j] + retenue + b.bigint_chiffres[j] *
-      a.bigint_chiffres[i];
+      chiffres[i + j] =
+      chiffres[i + j] + retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i];
       retenue = ~~(chiffres[i + j] / 10);
       chiffres[i + j] = ~~(chiffres[i + j] % 10);
     }
     chiffres[i + b.bigint_len] = chiffres[i + b.bigint_len] + retenue;
   }
-  chiffres[a.bigint_len + b.bigint_len] = ~~(chiffres[a.bigint_len +
-  b.bigint_len - 1] / 10);
-  chiffres[a.bigint_len + b.bigint_len - 1] = ~~(chiffres[a.bigint_len +
-  b.bigint_len - 1] % 10);
+  chiffres[a.bigint_len + b.bigint_len] =
+  ~~(chiffres[a.bigint_len + b.bigint_len - 1] / 10);
+  chiffres[a.bigint_len + b.bigint_len - 1] =
+  ~~(chiffres[a.bigint_len + b.bigint_len - 1] % 10);
   for (var l = 0 ; l <= 2; l++)
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
@@ -294,7 +294,7 @@ function bigint_of_int(i){
     i = ~~(i / 10);
   }
   var q = {
-    bigint_sign : 1,
+    bigint_sign : true,
     bigint_len : size,
     bigint_chiffres : t
   };
@@ -330,7 +330,7 @@ function euler20(){
 function bigint_exp(a, b){
   if (b == 1)
     return a;
-  else if ((~~(b % 2)) == 0)
+  else if (~~(b % 2) == 0)
     return bigint_exp(mul_bigint(a, a), ~~(b / 2));
   else
     return mul_bigint(a, bigint_exp(a, b - 1));
@@ -340,7 +340,7 @@ function bigint_exp_10chiffres(a, b){
   a = bigint_premiers_chiffres(a, 10);
   if (b == 1)
     return a;
-  else if ((~~(b % 2)) == 0)
+  else if (~~(b % 2) == 0)
     return bigint_exp_10chiffres(mul_bigint(a, a), ~~(b / 2));
   else
     return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
@@ -396,11 +396,11 @@ function euler29(){
   for (var k = 0 ; k <= maxA + 1 - 1; k++)
     b[k] = 2;
   var n = 0;
-  var found = 1;
+  var found = true;
   while (found)
   {
     var min0 = a0_bigint[0];
-    found = 0;
+    found = false;
     for (var i = 2 ; i <= maxA; i++)
       if (b[i] <= maxB)
     {
@@ -412,7 +412,7 @@ function euler29(){
       else
       {
         min0 = a_bigint[i];
-        found = 1;
+        found = true;
       }
     }
     if (found)

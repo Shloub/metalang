@@ -26,7 +26,7 @@ func sumdiv(n int) int{
   /* On déclare un entier qui contiendra la somme */
   for i := 1 ; i <= n; i++ {
     /* La boucle : i est le diviseur potentiel*/
-      if (n % i) == 0 {
+      if n % i == 0 {
         /* Si i divise */
           out0 += i;
           /* On incrémente */

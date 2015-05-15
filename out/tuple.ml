@@ -4,7 +4,7 @@ let f tuple0 =
 
 let () =
 begin
-  let t = f ((0, 1)) in
+  let t = f (0, 1) in
   let (a, b) = t in
   Printf.printf "%d -- %d--\n" a b
 end

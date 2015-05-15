@@ -3,7 +3,7 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 def next0( n )
-    if (mod(n, 2)) == 0 then
+    if mod(n, 2) == 0 then
       return ((n.to_f / 2).to_i)
     else
       return (3 * n + 1)

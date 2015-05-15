@@ -20,7 +20,7 @@ Module euler12
   Function fillPrimesFactors(ByRef t as Integer(), ByVal n as Integer, ByRef primes as Integer(), ByVal nprimes as Integer) As Integer
     For  i As Integer  = 0 to  nprimes - 1
       Dim d As Integer = primes(i)
-      Do While (n Mod d) = 0
+      Do While n Mod d = 0
         t(d) = t(d) + 1
         n = n \ d
       Loop
@@ -63,7 +63,7 @@ Module euler12
         End If
       Next
       If ndivs > ndiv2 Then
-        Return (n * (n + 1)) \ 2
+        Return n * (n + 1) \ 2
       End If
       ' print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
       

@@ -13,11 +13,9 @@ let read_bigint len =
     chiffres.(i) <- chiffres.(len - 1 - i);
     chiffres.(len - 1 - i) <- tmp
   done;
-  {
-    bigint_sign=true;
-    bigint_len=len;
-    bigint_chiffres=chiffres;
-  }
+  {bigint_sign=true;
+  bigint_len=len;
+  bigint_chiffres=chiffres}
 
 let print_bigint a =
   if not a.bigint_sign then
@@ -91,11 +89,9 @@ let add_bigint_positif a b =
   do
       len := (!len) - 1
   done;
-  {
-    bigint_sign=true;
-    bigint_len=(!len);
-    bigint_chiffres=chiffres;
-  }
+  {bigint_sign=true;
+  bigint_len=(!len);
+  bigint_chiffres=chiffres}
 
 let sub_bigint_positif a b =
   (* Une soustraction ou on en a rien a faire des signes
@@ -110,7 +106,7 @@ Pré-requis : a > b
     if (!tmp) < 0 then
       begin
         tmp := (!tmp) + 10;
-        retenue := -1
+        retenue := - 1
       end
     else
       retenue := 0;
@@ -119,18 +115,14 @@ Pré-requis : a > b
   do
       len := (!len) - 1
   done;
-  {
-    bigint_sign=true;
-    bigint_len=(!len);
-    bigint_chiffres=chiffres;
-  }
+  {bigint_sign=true;
+  bigint_len=(!len);
+  bigint_chiffres=chiffres}
 
 let neg_bigint a =
-  {
-    bigint_sign=not a.bigint_sign;
-    bigint_len=a.bigint_len;
-    bigint_chiffres=a.bigint_chiffres;
-  }
+  {bigint_sign=not a.bigint_sign;
+  bigint_len=a.bigint_len;
+  bigint_chiffres=a.bigint_chiffres}
 
 let add_bigint a b =
   if a.bigint_sign = b.bigint_sign then
@@ -181,11 +173,9 @@ D'ou le nom de la fonction. *)
     if (!len) <> 0 && chiffres.((!len) - 1) = 0 then
       len := (!len) - 1
   done;
-  {
-    bigint_sign=a.bigint_sign = b.bigint_sign;
-    bigint_len=(!len);
-    bigint_chiffres=chiffres;
-  }
+  {bigint_sign=a.bigint_sign = b.bigint_sign;
+  bigint_len=(!len);
+  bigint_chiffres=chiffres}
 
 let bigint_premiers_chiffres a i =
   let len = ref( (min (i) (a.bigint_len)) ) in
@@ -193,11 +183,9 @@ let bigint_premiers_chiffres a i =
   do
       len := (!len) - 1
   done;
-  {
-    bigint_sign=a.bigint_sign;
-    bigint_len=(!len);
-    bigint_chiffres=a.bigint_chiffres;
-  }
+  {bigint_sign=a.bigint_sign;
+  bigint_len=(!len);
+  bigint_chiffres=a.bigint_chiffres}
 
 let bigint_shift a i =
   let chiffres = Array.init (a.bigint_len + i) (fun k ->
@@ -205,11 +193,9 @@ let bigint_shift a i =
       a.bigint_chiffres.(k - i)
     else
       0) in
-  {
-    bigint_sign=a.bigint_sign;
-    bigint_len=a.bigint_len + i;
-    bigint_chiffres=chiffres;
-  }
+  {bigint_sign=a.bigint_sign;
+  bigint_len=a.bigint_len + i;
+  bigint_chiffres=chiffres}
 
 let rec mul_bigint aa bb =
   if aa.bigint_len = 0 then
@@ -222,9 +208,9 @@ let rec mul_bigint aa bb =
     begin
       (* Algorithme de Karatsuba *)
       let split = (min (aa.bigint_len) (bb.bigint_len)) / 2 in
-      let a = bigint_shift aa (-split) in
+      let a = bigint_shift aa (- split) in
       let b = bigint_premiers_chiffres aa split in
-      let c = bigint_shift bb (-split) in
+      let c = bigint_shift bb (- split) in
       let d = bigint_premiers_chiffres bb split in
       let amoinsb = sub_bigint a b in
       let cmoinsd = sub_bigint c d in
@@ -260,11 +246,9 @@ let bigint_of_int i =
     t.(k) <- (!i) mod 10;
     i := (!i) / 10
   done;
-  {
-    bigint_sign=true;
-    bigint_len=(!size);
-    bigint_chiffres=t;
-  }
+  {bigint_sign=true;
+  bigint_len=(!size);
+  bigint_chiffres=t}
 
 let fact_bigint a =
   let a = ref a in
@@ -294,7 +278,7 @@ let euler20 () =
 let rec bigint_exp a b =
   if b = 1 then
     a
-  else if (b mod 2) = 0 then
+  else if b mod 2 = 0 then
     bigint_exp (mul_bigint a a) (b / 2)
   else
     mul_bigint a (bigint_exp a (b - 1))
@@ -303,7 +287,7 @@ let rec bigint_exp_10chiffres a b =
   let a = bigint_premiers_chiffres a 10 in
   if b = 1 then
     a
-  else if (b mod 2) = 0 then
+  else if b mod 2 = 0 then
     bigint_exp_10chiffres (mul_bigint a a) (b / 2)
   else
     mul_bigint a (bigint_exp_10chiffres a (b - 1))
@@ -386,7 +370,7 @@ let euler29 () =
 
 let () =
 begin
-  Printf.printf "%d\n" ((euler29 ()));
+  Printf.printf "%d\n" (euler29 ());
   let sum = ref( read_bigint 50 ) in
   for _i = 2 to 100 do
     Scanf.scanf " " (fun () -> ());
@@ -395,14 +379,14 @@ begin
   done;
   Printf.printf "euler13 = ";
   print_bigint (!sum);
-  Printf.printf "\neuler25 = %d\neuler16 = %d\n" ((euler25 ())) ((euler16 ()));
+  Printf.printf "\neuler25 = %d\neuler16 = %d\n" (euler25 ()) (euler16 ());
   (euler48 ());
-  Printf.printf "euler20 = %d\n" ((euler20 ()));
+  Printf.printf "euler20 = %d\n" (euler20 ());
   let a = bigint_of_int 999999 in
   let b = bigint_of_int 9951263 in
   print_bigint a;
   Printf.printf ">>1=";
-  print_bigint (bigint_shift a (-1));
+  print_bigint (bigint_shift a (- 1));
   Printf.printf "\n";
   print_bigint a;
   Printf.printf "*";

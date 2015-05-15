@@ -23,7 +23,7 @@ Module aaa_missing
         Return i2
       End If
     Next
-    Return - 1
+    Return -1
     End Function
     
     

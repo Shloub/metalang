@@ -8,7 +8,7 @@ let h i =
   let j = ref( i - 2 ) in
   while (!j) <= i + 2
   do
-      if (i mod (!j)) = 5 then
+      if i mod (!j) = 5 then
         raise (Found_1(true));
       j := (!j) + 1
   done;

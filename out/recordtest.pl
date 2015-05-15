@@ -18,8 +18,7 @@ sub readspaces {
 }
 
 
-my $param = {"foo" => 0,
-             "bar" => 0};
+my $param = {"foo" => 0, "bar" => 0};
 $param->{"bar"} = readint();
 readspaces();
 $param->{"foo"} = readint();

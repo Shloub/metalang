@@ -27,7 +27,7 @@ int fillPrimesFactors(std::vector<int> * t, int n, std::vector<int> * primes, in
   for (int i = 0 ; i < nprimes; i++)
   {
     int d = primes->at(i);
-    while ((n % d) == 0)
+    while (n % d == 0)
     {
       t->at(d) = t->at(d) + 1;
       n /= d;
@@ -57,15 +57,14 @@ int find(int ndiv2){
   {
     std::vector<int > *primesFactors = new std::vector<int>( n + 2 );
     std::fill(primesFactors->begin(), primesFactors->end(), 0);
-    int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n +
-                                                                           1, primes, nprimes));
+    int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors->at(2) --;
     int ndivs = 1;
     for (int i = 0 ; i <= max0; i ++)
       if (primesFactors->at(i) != 0)
       ndivs *= 1 + primesFactors->at(i);
     if (ndivs > ndiv2)
-      return (n * (n + 1)) / 2;
+      return n * (n + 1) / 2;
     /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
   }
   return 0;

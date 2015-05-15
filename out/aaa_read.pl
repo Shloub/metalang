@@ -38,7 +38,7 @@ readspaces();
 print($len, "=len\n");
 $len = $len * 2;
 print("len*2=", $len, "\n");
-$len = int(($len) / (2));
+$len = int($len / 2);
 my $tab = [];
 foreach my $i (0 .. $len - 1) {
   my $tmpi1 = readint();
@@ -63,7 +63,7 @@ foreach my $toto (0 .. $strlen - 1) {
   my $c = ord($tmpc);
   print($tmpc, ":", $c, " ");
   if ($tmpc ne " ") {
-    $c = remainder(($c - ord("a")) + 13, 26) + ord("a");
+    $c = remainder($c - ord("a") + 13, 26) + ord("a");
   }
   $tab4->[$toto] = chr($c);
 }

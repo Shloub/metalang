@@ -2,7 +2,7 @@ import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
 def next0( n ):
-    if (mod(n, 2)) == 0:
+    if mod(n, 2) == 0:
       return math.trunc(n / 2)
     else:
       return 3 * n + 1

@@ -39,14 +39,17 @@ data Intlist = Intlist {
 cons list i =
   (Intlist <$> (newIORef i) <*> (newIORef list))
 
-rev2 empty acc torev =
-  if torev == empty
-  then return acc
-  else do acc2 <- (Intlist <$> ((readIORef (_head0 torev)) >>= newIORef) <*> (newIORef acc))
-          rev2 empty acc =<< (readIORef (_tail0 torev))
+is_empty foo =
+  return True
+
+rev2 acc torev =
+  ifM (is_empty torev)
+      (return acc)
+      (do acc2 <- (Intlist <$> ((readIORef (_head0 torev)) >>= newIORef) <*> (newIORef acc))
+          rev2 acc =<< (readIORef (_tail0 torev)))
 
 rev empty torev =
-  rev2 empty empty torev
+  rev2 empty torev
 
 test empty =
   do let i = - 1

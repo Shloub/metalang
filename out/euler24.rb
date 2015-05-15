@@ -22,7 +22,7 @@ def show( lim, nth )
       nchiffre = (nth.to_f / n).to_i
       nth = mod(nth, n)
       for l in (0 ..  lim - 1) do
-        if not(pris[l]) then
+        if !pris[l] then
           if nchiffre == 0 then
             printf "%d", l
             pris[l] = true
@@ -32,7 +32,7 @@ def show( lim, nth )
       end
     end
     for m in (0 ..  lim - 1) do
-      if not(pris[m]) then
+      if !pris[m] then
         printf "%d", m
       end
     end

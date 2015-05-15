@@ -52,12 +52,12 @@ Module euler43
                   If allowed(d9) Then
                     allowed(d9) = false
                     For  d10 As Integer  = 1 to  9
-                      If allowed(d10) AndAlso ((d6 * 100 + d7 * 10 + d8) Mod 11) = 0 AndAlso ((d7 * 100 + d8 * 10 + d9) Mod 13) = 0 AndAlso ((d8 * 100 + d9 * 10 + d10) Mod 17) = 0 Then
+                      If allowed(d10) AndAlso (d6 * 100 + d7 * 10 + d8) Mod 11 = 0 AndAlso (d7 * 100 + d8 * 10 + d9) Mod 13 = 0 AndAlso (d8 * 100 + d9 * 10 + d10) Mod 17 = 0 Then
                         allowed(d10) = false
                         For  d5 As Integer  = 0 to  9
                           If allowed(d5) Then
                             allowed(d5) = false
-                            If ((d5 * 100 + d6 * 10 + d7) Mod 7) = 0 Then
+                            If (d5 * 100 + d6 * 10 + d7) Mod 7 = 0 Then
                               For  i4 As Integer  = 0 to  4
                                 Dim d4 As Integer = i4 * 2
                                 If allowed(d4) Then
@@ -65,7 +65,7 @@ Module euler43
                                   For  d3 As Integer  = 0 to  9
                                     If allowed(d3) Then
                                       allowed(d3) = false
-                                      If ((d3 + d4 + d5) Mod 3) = 0 Then
+                                      If (d3 + d4 + d5) Mod 3 = 0 Then
                                         For  d2 As Integer  = 0 to  9
                                           If allowed(d2) Then
                                             allowed(d2) = false

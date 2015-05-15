@@ -8,7 +8,7 @@ sub remainder {
 sub g{
   my($i) = @_;
   my $j = $i * 4;
-  if ((remainder($j, 2)) eq 1) {
+  if (remainder($j, 2) eq 1) {
     return 0;
   }
   return $j;

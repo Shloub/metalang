@@ -12,7 +12,7 @@ a = [None] * 5
 for i in range(0, 5):
   print("%d" % i, end='')
   j += i
-  a[i] = (mod(i, 2)) == 0
+  a[i] = mod(i, 2) == 0
 print("%d " % ( j ), end='')
 c = a[0]
 if c:

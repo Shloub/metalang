@@ -8,7 +8,7 @@ def primesfactors( n )
       }
     d = 2
     while n != 1 && d * d <= n do
-      if (mod(n, d)) == 0 then
+      if mod(n, d) == 0 then
         tab[d] = tab[d] + 1
         n = (n.to_f / d).to_i
       else

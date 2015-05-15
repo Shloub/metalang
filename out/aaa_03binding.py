@@ -3,7 +3,7 @@ def mod(x, y):
   return x - y * math.trunc(x / y)
 def g( i ):
     j = i * 4
-    if (mod(j, 2)) == 1:
+    if mod(j, 2) == 1:
       return 0
     return j
 

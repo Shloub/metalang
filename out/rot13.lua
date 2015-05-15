@@ -28,10 +28,10 @@ for toto = 0,strlen - 1 do
   local c = tmpc
   if tmpc ~= 32
   then
-    c = math.mod((c - 97) + 13, 26) + 97;
+    c = math.mod(c - 97 + 13, 26) + 97;
   end
-  tab4[toto] = c;
+  tab4[toto + 1] = c;
 end
 for j = 0,strlen - 1 do
-  io.write(string.format("%c", tab4[j]))
+  io.write(string.format("%c", tab4[j + 1]))
 end

@@ -12,7 +12,7 @@ begin
   sum := 0;
   while a < 4000000 do
   begin
-    if (a Mod 2) = 0
+    if a Mod 2 = 0
     then
       begin
         sum := sum + a;

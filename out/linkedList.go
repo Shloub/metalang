@@ -16,19 +16,23 @@ func cons(list * intlist, i int) * intlist{
   return out0
 }
 
-func rev2(empty * intlist, acc * intlist, torev * intlist) * intlist{
-  if torev == empty {
+func is_empty(foo * intlist) bool{
+  return true
+}
+
+func rev2(acc * intlist, torev * intlist) * intlist{
+  if is_empty(torev) {
     return acc
   } else {
     var acc2 * intlist = new (intlist)
     (*acc2).head=(*torev).head
     (*acc2).tail=acc
-    return rev2(empty, acc, (*torev).tail)
+    return rev2(acc, (*torev).tail)
   }
 }
 
 func rev(empty * intlist, torev * intlist) * intlist{
-  return rev2(empty, empty, torev)
+  return rev2(empty, torev)
 }
 
 func test(empty * intlist) {

@@ -3,7 +3,7 @@
 bool palindrome2(std::vector<int> * pow2, int n){
   std::vector<bool > *t = new std::vector<bool>( 20 );
   for (int i = 0 ; i < 20; i++)
-    t->at(i) = ((n / pow2->at(i)) % 2) == 1;
+    t->at(i) = n / pow2->at(i) % 2 == 1;
   int nnum = 0;
   for (int j = 1 ; j <= 19; j ++)
     if (t->at(j))

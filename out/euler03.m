@@ -15,7 +15,7 @@ int main(void){
     int found = 0;
     while (b <= sqrtia)
     {
-      if ((a % b) == 0)
+      if (a % b == 0)
       {
         a /= b;
         b0 = b;

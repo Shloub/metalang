@@ -3,7 +3,7 @@ function &primesfactors($n){
   $tab = array_fill(0, $n + 1, 0);
   $d = 2;
   while ($n != 1 && $d * $d <= $n)
-    if (($n % $d) == 0)
+    if ($n % $d == 0)
   {
     $tab[$d] = $tab[$d] + 1;
     $n = intval($n / $d);

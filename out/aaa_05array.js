@@ -4,7 +4,7 @@ function id(b){
 }
 
 function g(t, index){
-  t[index] = 0;
+  t[index] = false;
 }
 
 var j = 0;
@@ -13,7 +13,7 @@ for (var i = 0 ; i <= 5 - 1; i++)
 {
   util.print(i);
   j += i;
-  a[i] = (~~(i % 2)) == 0;
+  a[i] = ~~(i % 2) == 0;
 }
 util.print(j, " ");
 var c = a[0];

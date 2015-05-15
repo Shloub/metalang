@@ -56,7 +56,7 @@ End Function
   Function pathfind_aux(ByRef cache as Integer(), ByRef tab as Integer(), ByVal len as Integer, ByVal pos as Integer) As Integer
     If pos >= len - 1 Then
       Return 0
-    ElseIf cache(pos) <> - 1 Then
+    ElseIf cache(pos) <> -1 Then
       Return cache(pos)
     Else
       cache(pos) = len * 2
@@ -76,7 +76,7 @@ End Function
   Function pathfind(ByRef tab as Integer(), ByVal len as Integer) As Integer
     Dim cache(len) As Integer
     For  i As Integer  = 0 to  len - 1
-      cache(i) = - 1
+      cache(i) = -1
     Next
     Return pathfind_aux(cache, tab, len, 0)
     End Function

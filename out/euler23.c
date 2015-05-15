@@ -23,7 +23,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes){
   for (i = 0 ; i < nprimes; i++)
   {
     int d = primes[i];
-    while ((n % d) == 0)
+    while (n % d == 0)
     {
       t[d] = t[d] + 1;
       n /= d;

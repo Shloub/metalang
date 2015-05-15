@@ -48,15 +48,11 @@ end-struct move%
   S\" \n|" TYPE
   2 0 BEGIN 2dup >= WHILE DUP { y }
     2 0 BEGIN 2dup >= WHILE DUP { x }
-      g ->cases @ x cells +
-       @ y cells +
-       @ 0 =
+      g ->cases @  x cells +  @  y cells +  @ 0 =
       IF
         S"  " TYPE
       ELSE
-        g ->cases @ x cells +
-         @ y cells +
-         @ 1 =
+        g ->cases @  x cells +  @  y cells +  @ 1 =
         IF
           S" O" TYPE
         ELSE
@@ -82,18 +78,12 @@ end-struct move%
     1 NEGATE { col }
     1 NEGATE { lin }
     2 0 BEGIN 2dup >= WHILE DUP { x }
-      g ->cases @ x cells +
-       @ y cells +
-       @ 0 =
+      g ->cases @  x cells +  @  y cells +  @ 0 =
       IF
         freecase 1 + TO freecase
       THEN
-      g ->cases @ x cells +
-       @ y cells +
-       @ { colv }
-      g ->cases @ y cells +
-       @ x cells +
-       @ { linv }
+      g ->cases @  x cells +  @  y cells +  @ { colv }
+      g ->cases @  y cells +  @  x cells +  @ { linv }
       col 1 NEGATE = colv 0 <> AND
       IF
         colv TO col
@@ -124,23 +114,11 @@ end-struct move%
     THEN
    1 + REPEAT 2DROP
   2 1 BEGIN 2dup >= WHILE DUP { x }
-    g ->cases @ 0 cells +
-     @ 0 cells +
-     @ x = g ->cases @ 1 cells +
-     @ 1 cells +
-     @ x = AND g ->cases @ 2 cells +
-     @ 2 cells +
-     @ x = AND
+    g ->cases @  0 cells +  @  0 cells +  @ x = g ->cases @  1 cells +  @  1 cells +  @ x = AND g ->cases @  2 cells +  @  2 cells +  @ x = AND
     IF
       x TO win
     THEN
-    g ->cases @ 0 cells +
-     @ 2 cells +
-     @ x = g ->cases @ 1 cells +
-     @ 1 cells +
-     @ x = AND g ->cases @ 2 cells +
-     @ 0 cells +
-     @ x = AND
+    g ->cases @  0 cells +  @  2 cells +  @ x = g ->cases @  1 cells +  @  1 cells +  @ x = AND g ->cases @  2 cells +  @  0 cells +  @ x = AND
     IF
       x TO win
     THEN
@@ -167,9 +145,7 @@ end-struct move%
   IF
     1 TO player
   THEN
-  player g ->cases @ x cells +
-   @ y cells +
-   !
+  player g ->cases @  x cells +  @  y cells +  !
   g ->firstToPlay @ INVERT g ->firstToPlay !
 ;
 
@@ -178,9 +154,7 @@ end-struct move%
 ;
 
 : cancel_move_xy { x y g }
-  0 g ->cases @ x cells +
-   @ y cells +
-   !
+  0 g ->cases @  x cells +  @  y cells +  !
   g ->firstToPlay @ INVERT g ->firstToPlay !
   false g ->ended !
 ;
@@ -190,9 +164,7 @@ end-struct move%
 ;
 
 : can_move_xy { x y g }
-  g ->cases @ x cells +
-   @ y cells +
-   @ 0 = exit
+  g ->cases @  x cells +  @  y cells +  @ 0 = exit
 ;
 
 : can_move { m g }
@@ -275,11 +247,9 @@ end-struct move%
   3 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     HERE 3 cells allot { tab }
     3 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-      0 tab j cells +
-       !
+      0 tab  j cells +  !
      1 + REPEAT 2DROP
-    tab cases i cells +
-     !
+    tab cases  i cells +  !
    1 + REPEAT 2DROP
   gamestate% %allot { a }
   cases a ->cases !

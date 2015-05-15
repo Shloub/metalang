@@ -19,7 +19,7 @@ end
 function nth( tab, tofind, len )
   local out0 = 0
   for i = 0,len - 1 do
-    if tab[i] == tofind
+    if tab[i + 1] == tofind
     then
       out0 = out0 + 1;
     end
@@ -38,7 +38,7 @@ local tab = {}
 for i = 0,len - 1 do
   local tmp = 0
   tmp = readchar()
-  tab[i] = tmp;
+  tab[i + 1] = tmp;
 end
 local result = nth(tab, tofind, len)
 io.write(result)

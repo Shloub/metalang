@@ -50,22 +50,27 @@ static int readInt(){
     return out0;
   }
   
-  static intlist rev2(intlist empty, intlist acc, intlist torev)
+  static bool is_empty(intlist foo)
   {
-    if (torev == empty)
+    return true;
+  }
+  
+  static intlist rev2(intlist acc, intlist torev)
+  {
+    if (is_empty(torev))
       return acc;
     else
     {
       intlist acc2 = new intlist();
       acc2.head = torev.head;
       acc2.tail = acc;
-      return rev2(empty, acc, torev.tail);
+      return rev2(acc, torev.tail);
     }
   }
   
   static intlist rev(intlist empty, intlist torev)
   {
-    return rev2(empty, empty, torev);
+    return rev2(empty, torev);
   }
   
   static void test(intlist empty)

@@ -10,7 +10,7 @@ public class euler02
     int sum = 0;
     while (a < 4000000)
     {
-      if ((a % 2) == 0)
+      if (a % 2 == 0)
         sum += a;
       int c = a;
       a = b;

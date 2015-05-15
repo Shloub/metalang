@@ -17,10 +17,10 @@ Module euler40
       Else
         Dim nombre As Integer = exp0(10, i - 1) + n \ i
         Dim chiffre As Integer = i - 1 - n Mod i
-        Return (nombre \ exp0(10, chiffre)) Mod 10
+        Return nombre \ exp0(10, chiffre) Mod 10
       End If
     Next
-    Return - 1
+    Return -1
   End Function
   
   

@@ -24,7 +24,7 @@ public class euler23
     for (int i = 0 ; i < nprimes; i++)
     {
       int d = primes[i];
-      while ((n % d) == 0)
+      while (n % d == 0)
       {
         t[d] = t[d] + 1;
         n /= d;

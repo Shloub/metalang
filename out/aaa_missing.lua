@@ -1,10 +1,8 @@
 
 function readintline()
   local tab = {}
-  local i = 0
   for a in string.gmatch(io.read("*l"), "-?%d+") do
-    tab[i] = tonumber(a)
-    i = i + 1
+    table.insert(tab, tonumber(a))
   end
   return tab
 end
@@ -14,15 +12,15 @@ end
 function result( len, tab )
   local tab2 = {}
   for i = 0,len - 1 do
-    tab2[i] = false;
+    tab2[i + 1] = false;
   end
   for i1 = 0,len - 1 do
-    io.write(string.format("%d ", tab[i1]))
-    tab2[tab[i1]] = true;
+    io.write(string.format("%d ", tab[i1 + 1]))
+    tab2[tab[i1 + 1] + 1] = true;
   end
   io.write("\n")
   for i2 = 0,len - 1 do
-    if not(tab2[i2])
+    if not(tab2[i2 + 1])
     then
       return i2
     end

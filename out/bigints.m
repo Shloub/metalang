@@ -210,17 +210,17 @@ D'ou le nom de la fonction. */
     int retenue = 0;
     for (j = 0 ; j < b->bigint_len; j++)
     {
-      chiffres[i + j] = chiffres[i + j] + retenue + b->bigint_chiffres[j] *
-      a->bigint_chiffres[i];
+      chiffres[i + j] =
+      chiffres[i + j] + retenue + b->bigint_chiffres[j] * a->bigint_chiffres[i];
       retenue = chiffres[i + j] / 10;
       chiffres[i + j] = chiffres[i + j] % 10;
     }
     chiffres[i + b->bigint_len] = chiffres[i + b->bigint_len] + retenue;
   }
-  chiffres[a->bigint_len + b->bigint_len] = chiffres[a->bigint_len +
-  b->bigint_len - 1] / 10;
-  chiffres[a->bigint_len + b->bigint_len - 1] = chiffres[a->bigint_len +
-  b->bigint_len - 1] % 10;
+  chiffres[a->bigint_len + b->bigint_len] =
+  chiffres[a->bigint_len + b->bigint_len - 1] / 10;
+  chiffres[a->bigint_len + b->bigint_len - 1] =
+  chiffres[a->bigint_len + b->bigint_len - 1] % 10;
   for (l = 0 ; l <= 2; l++)
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
@@ -344,7 +344,7 @@ int euler20(){
 bigint * bigint_exp(bigint * a, int b){
   if (b == 1)
     return a;
-  else if ((b % 2) == 0)
+  else if (b % 2 == 0)
     return bigint_exp(mul_bigint(a, a), b / 2);
   else
     return mul_bigint(a, bigint_exp(a, b - 1));
@@ -354,7 +354,7 @@ bigint * bigint_exp_10chiffres(bigint * a, int b){
   a = bigint_premiers_chiffres(a, 10);
   if (b == 1)
     return a;
-  else if ((b % 2) == 0)
+  else if (b % 2 == 0)
     return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
   else
     return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));

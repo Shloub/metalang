@@ -32,11 +32,7 @@ for (var a = 0 ; a <= 9; a++)
         for (var b = 0 ; b <= 9; b++)
           for (var e = 0 ; e <= 9; e++)
           {
-            var mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c *
-                                                             d) + 1000 * (c *
-                                                                           e +
-                                                                           b *
-                                                                           f) + 10000 * c * f;
+            var mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
             if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
               m = Math.max(mul, m);
 }

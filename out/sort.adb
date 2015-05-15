@@ -91,10 +91,8 @@ begin
         j := j - 1;
       end if;
     end loop;
-    qsort0(tab, len, i0, i -
-    1);
-    qsort0(tab, len, i +
-    1, j0);
+    qsort0(tab, len, i0, i - 1);
+    qsort0(tab, len, i + 1, j0);
   end if;
 end;
 
@@ -125,8 +123,7 @@ begin
   end loop;
   PString(new char_array'( To_C("" & Character'Val(10))));
   tab3 := copytab(tab, len);
-  qsort0(tab3, len, 0, len -
-  1);
+  qsort0(tab3, len, 0, len - 1);
   for i in integer range 0..len - 1 loop
     PInt(tab3(i));
     PString(new char_array'( To_C(" ")));

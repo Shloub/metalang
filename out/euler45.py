@@ -2,16 +2,16 @@ import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
 def triangle( n ):
-    if (mod(n, 2)) == 0:
-      return (math.trunc(n / 2)) * (n + 1)
+    if mod(n, 2) == 0:
+      return math.trunc(n / 2) * (n + 1)
     else:
-      return n * (math.trunc((n + 1) / 2))
+      return n * math.trunc((n + 1) / 2)
 
 def penta( n ):
-    if (mod(n, 2)) == 0:
-      return (math.trunc(n / 2)) * (3 * n - 1)
+    if mod(n, 2) == 0:
+      return math.trunc(n / 2) * (3 * n - 1)
     else:
-      return (math.trunc((3 * n - 1) / 2)) * n
+      return math.trunc((3 * n - 1) / 2) * n
 
 def hexa( n ):
     return n * (2 * n - 1)

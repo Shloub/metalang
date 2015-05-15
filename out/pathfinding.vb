@@ -65,7 +65,7 @@ End Function
       Return x * y * 10
     ElseIf tab(posY)(posX) = Chr(35) Then
       Return x * y * 10
-    ElseIf cache(posY)(posX) <> - 1 Then
+    ElseIf cache(posY)(posX) <> -1 Then
       Return cache(posY)(posX)
     Else
       cache(posY)(posX) = x * y * 10
@@ -84,7 +84,7 @@ End Function
     For  i As Integer  = 0 to  y - 1
       Dim tmp(x) As Integer
       For  j As Integer  = 0 to  x - 1
-        tmp(j) = - 1
+        tmp(j) = -1
       Next
       cache(i) = tmp
       Next

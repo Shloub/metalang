@@ -16,7 +16,7 @@ int main(){
   {
     std::cout << i;
     j += i;
-    a->at(i) = (i % 2) == 0;
+    a->at(i) = i % 2 == 0;
   }
   std::cout << j << " ";
   bool c = a->at(0);

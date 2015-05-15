@@ -29,21 +29,16 @@ create bufferc 128 allot
 : result { len tab }
   HERE len cells allot { tab2 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    false tab2 i cells +
-     !
+    false tab2  i cells +  !
    1 + REPEAT 2DROP
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i1 }
-    tab i1 cells +
-     @ s>d 0 d.r
+    tab  i1 cells +  @ s>d 0 d.r
     S"  " TYPE
-    true tab2 tab i1 cells +
-     @ cells +
-     !
+    true tab2  tab  i1 cells +  @ cells +  !
    1 + REPEAT 2DROP
   S\" \n" TYPE
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i2 }
-    tab2 i2 cells +
-     @ INVERT
+    tab2  i2 cells +  @ INVERT
     IF
       DROP DROP i2 exit
     THEN
@@ -58,8 +53,7 @@ create bufferc 128 allot
   S\" \n" TYPE
   HERE len cells allot { tab }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { a }
-    read-int tab a cells +
-     !
+    read-int tab  a cells +  !
     skipspaces
    1 + REPEAT 2DROP
   len tab result s>d 0 d.r

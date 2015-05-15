@@ -5,7 +5,7 @@ Module euler36
   Function palindrome2(ByRef pow2 as Integer(), ByVal n as Integer) As Boolean
     Dim t(20) As Boolean
     For  i As Integer  = 0 to  20 - 1
-      t(i) = ((n \ pow2(i)) Mod 2) = 1
+      t(i) = n \ pow2(i) Mod 2 = 1
     Next
     Dim nnum As Integer = 0
     For  j As Integer  = 1 to  19

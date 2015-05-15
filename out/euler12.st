@@ -4,9 +4,9 @@ Object subclass: euler12 [
     (2 to: (max0 - 1)) do: [:i|
       ((t at: (i + 1)) = i)
         ifTrue:[
-               j := (i * i).
+               j := i * i.
                n :=  (n + 1).
-               [((j < max0) & (j > 0))] whileTrue:
+               [(j < max0) and: [j > 0]] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -19,14 +19,14 @@ Object subclass: euler12 [
    fillPrimesFactors: t c: c primes: primes nprimes: nprimes [|n d|
     n := c.
     (0 to: (nprimes - 1)) do: [:i|
-      d := (primes at: (i + 1)).
-      [((n rem: d) = 0)] whileTrue:
+      d := primes at: (i + 1).
+      [(n rem: d) = 0] whileTrue:
       [
       t at: (d + 1) put:  ((t at: (d + 1)) + 1).
       n :=  (n quo: d).
       ].
       (n = 1)
-        ifTrue:[^ (primes at: (i + 1))].
+        ifTrue:[^ primes at: (i + 1)].
     ].
     ^ n
   ]
@@ -63,14 +63,14 @@ Object subclass: euler12 [
           ifTrue:[ndivs :=  (ndivs * (1 + (primesFactors at: (i + 1)))).].
       ].
       (ndivs > ndiv2)
-        ifTrue:[^ ((n * (n + 1)) quo: 2)].
+        ifTrue:[^ (n * (n + 1)) quo: 2].
       " print ""n="" print n print ""\t"" print (n * (n + 1) / 2 ) print "" "" print ndivs print ""\n"" "
     ].
     ^ 0
   ]
   
   main [
-    ((self find: 500)) display.
+    (self find: 500) display.
     '
 ' display.
     ]

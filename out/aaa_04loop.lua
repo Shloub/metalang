@@ -5,7 +5,7 @@ function h( i )
   local j = i - 2
   while j <= i + 2
   do
-  if (math.mod(i, j)) == 5
+  if math.mod(i, j) == 5
   then
     return true
   end

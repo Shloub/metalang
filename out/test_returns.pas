@@ -35,7 +35,7 @@ begin
         end;
       j := 8;
     end;
-  exit((i Mod 2) = 0);
+  exit(i Mod 2 = 0);
 end;
 
 

@@ -24,7 +24,7 @@ function palindrome2(pow2 : in f_PTR; n : in Integer) return Boolean is
 begin
   t := new e (0..20);
   for i in integer range 0..20 - 1 loop
-    t(i) := ((n / pow2(i)) rem 2) = 1;
+    t(i) := n / pow2(i) rem 2 = 1;
   end loop;
   nnum := 0;
   for j in integer range 1..19 loop

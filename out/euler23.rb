@@ -20,7 +20,7 @@ end
 def fillPrimesFactors( t, n, primes, nprimes )
     for i in (0 ..  nprimes - 1) do
       d = primes[i]
-      while (mod(n, d)) == 0 do
+      while mod(n, d) == 0 do
         t[d] = t[d] + 1
         n = (n.to_f / d).to_i
       end
@@ -105,7 +105,7 @@ for i in (1 ..  n) do
   end
 end
 for o in (1 ..  n) do
-  if not(summable[o]) then
+  if !summable[o] then
     sum += o
   end
 end

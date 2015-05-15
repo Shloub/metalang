@@ -25,15 +25,12 @@ create bufferc 128 allot
 : main
   HERE 2 cells allot { t }
   2 1 - 0 BEGIN 2dup >= WHILE DUP { d }
-    read-int t d cells +
-     !
+    read-int t  d cells +  !
     skipspaces
    1 + REPEAT 2DROP
-  t 0 cells +
-   @ s>d 0 d.r
+  t  0 cells +  @ s>d 0 d.r
   S"  - " TYPE
-  t 1 cells +
-   @ s>d 0 d.r
+  t  1 cells +  @ s>d 0 d.r
   S\" \n" TYPE
   ;
 main

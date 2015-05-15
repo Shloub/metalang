@@ -57,7 +57,7 @@ begin
                   end if;
                 end if;
               end if;
-              if sum = num and then sum /= 1 and then sum /= 2
+              if (sum = num and then sum /= 1) and then sum /= 2
               then
                 out0 := out0 + num;
                 PInt(num);

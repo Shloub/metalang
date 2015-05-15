@@ -42,7 +42,7 @@ begin
   n := b;
   for i in integer range 0..nprimes - 1 loop
     d := primes(i);
-    while (n rem d) = 0 loop
+    while n rem d = 0 loop
       t(d) := t(d) + 1;
       n := n / d;
     end loop;

@@ -87,7 +87,7 @@ begin
   end loop;
   for m in integer range 1..maximumprimes loop
     m2 := m * 2 + 1;
-    if m2 < maximumprimes and then (not canbe(m2))
+    if m2 < maximumprimes and then not canbe(m2)
     then
       PInt(m2);
       PString(new char_array'( To_C("" & Character'Val(10))));

@@ -27,7 +27,7 @@ public class euler27
       n = -n;
     while (primes[i] * primes[i] < n)
     {
-      if ((n % primes[i]) == 0)
+      if (n % primes[i] == 0)
         return false;
       i ++;
     }

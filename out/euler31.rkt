@@ -8,15 +8,14 @@
   1
   (let ([out0 0])
   (let ([div (quotient sum (vector-ref t0 maxIndex))])
-  (letrec ([a (lambda (i out0) 
-                (if (<= i div)
-                (let ([out0 (+ out0 (result (- sum (* i (vector-ref t0 maxIndex))) t0 (- maxIndex 1) cache))])
-                (a (+ i 1) out0))
-                (block
-                  (vector-set! (vector-ref cache sum) maxIndex out0)
-                  out0
-                  )))])
-  (a 0 out0))))))
+  (letrec ([a (lambda (i out0) (if (<= i div)
+                               (let ([out0 (+ out0 (result (- sum (* i (vector-ref t0 maxIndex))) t0 (- maxIndex 1) cache))])
+                               (a (+ i 1) out0))
+                               (block
+                                 (vector-set! (vector-ref cache sum) maxIndex out0)
+                                 out0
+                                 )))])
+    (a 0 out0))))))
 )
 (define main
   (let ([t0 (build-vector 8 (lambda (i) 

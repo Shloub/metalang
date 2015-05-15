@@ -17,7 +17,7 @@ end;
 
 function next0(n : in Integer) return Integer is
 begin
-  if (n rem 2) = 0
+  if n rem 2 = 0
   then
     return n / 2;
   else

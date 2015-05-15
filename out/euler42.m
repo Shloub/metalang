@@ -20,7 +20,7 @@ int score(){
   for (i = 1 ; i <= len; i++)
   {
     scanf("%c", &c);
-    sum += ((int)(c) - (int)('A')) + 1;
+    sum += (int)(c) - (int)('A') + 1;
     /*		print c print " " print sum print " " */
   }
   if (is_triangular(sum))

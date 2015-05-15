@@ -45,14 +45,14 @@ Object subclass: aaa_08tuple [
     t := toto new.
     t foo: e.
     t bar: bar_.
-    f := (t foo).
-    a := (f tuple_int_int_field_0).
-    b := (f tuple_int_int_field_1).
-    (a) display.
+    f := t foo.
+    a := f tuple_int_int_field_0.
+    b := f tuple_int_int_field_1.
+    a display.
     ' ' display.
-    (b) display.
+    b display.
     ' ' display.
-    ((t bar)) display.
+    t bar display.
     '
 ' display.
     ]

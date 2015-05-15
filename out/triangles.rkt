@@ -66,22 +66,20 @@
                                                                    ))) (mread-int)))))))])
      (block
        (printf "~a\n" (find01 len tab))
-       (letrec ([b (lambda (k) 
-                     (if (<= k (- len 1))
-                     (letrec ([c (lambda (l) 
-                                   (if (<= l k)
-                                   (block
-                                     (printf "~a " (vector-ref (vector-ref tab k) l))
-                                     (c (+ l 1))
-                                     )
-                                   (block
-                                     (display "\n")
-                                     (b (+ k 1))
-                                     )))])
-                     (c 0))
-                     '()))])
-     (b 0))
-  ))
-))) (mread-int)))
+       (letrec ([b (lambda (k) (if (<= k (- len 1))
+                               (letrec ([c (lambda (l) (if (<= l k)
+                                                       (block
+                                                         (printf "~a " (vector-ref (vector-ref tab k) l))
+                                                         (c (+ l 1))
+                                                         )
+                                                       (block
+                                                         (display "\n")
+                                                         (b (+ k 1))
+                                                         )))])
+                                 (c 0))
+                               '()))])
+         (b 0))
+       ))
+  ))) (mread-int)))
 )
 

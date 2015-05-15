@@ -67,7 +67,7 @@ End Function
     For  i As Integer  = 1 to  n
       ' La boucle : i est le diviseur potentiel
       
-      If (n Mod i) = 0 Then
+      If n Mod i = 0 Then
         ' Si i divise 
         
         out0 = out0 + i

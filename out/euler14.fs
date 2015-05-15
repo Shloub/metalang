@@ -18,16 +18,12 @@
     IF
       1 n next0 m find0 + exit
     ELSE
-      m n cells +
-       @ 0 <>
+      m  n cells +  @ 0 <>
       IF
-        m n cells +
-         @ exit
+        m  n cells +  @ exit
       ELSE
-        1 n next0 m find0 + m n cells +
-         !
-        m n cells +
-         @ exit
+        1 n next0 m find0 + m  n cells +  !
+        m  n cells +  @ exit
       THEN
     THEN
   THEN
@@ -36,8 +32,7 @@
 : main
   HERE 1000000 cells allot { m }
   1000000 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    0 m j cells +
-     !
+    0 m  j cells +  !
    1 + REPEAT 2DROP
   0 { max0 }
   0 { maxi }

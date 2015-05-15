@@ -7,8 +7,8 @@ Object subclass: euler10 [
                sum :=  (sum + i).
                ((max0 quo: i) > i)
                  ifTrue:[
-                        j := (i * i).
-                        [((j < max0) & (j > 0))] whileTrue:
+                        j := i * i.
+                        [(j < max0) and: [j > 0]] whileTrue:
                         [
                         t at: (j + 1) put:  0.
                         j :=  (j + i).
@@ -27,7 +27,7 @@ Object subclass: euler10 [
       t at: (i + 1) put:  i.
     ].
     t at: (1 + 1) put:  0.
-    ((self eratostene: t max0: n)) display.
+    (self eratostene: t max0: n) display.
     '
 ' display.
     ]

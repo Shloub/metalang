@@ -3,20 +3,20 @@ function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
 function triangle( n )
-  if (math.mod(n, 2)) == 0
+  if math.mod(n, 2) == 0
   then
-    return (trunc(n / 2)) * (n + 1)
+    return trunc(n / 2) * (n + 1)
   else
-    return n * (trunc((n + 1) / 2))
+    return n * trunc((n + 1) / 2)
   end
 end
 
 function penta( n )
-  if (math.mod(n, 2)) == 0
+  if math.mod(n, 2) == 0
   then
-    return (trunc(n / 2)) * (3 * n - 1)
+    return trunc(n / 2) * (3 * n - 1)
   else
-    return (trunc((3 * n - 1) / 2)) * n
+    return trunc((3 * n - 1) / 2) * n
   end
 end
 
@@ -61,8 +61,8 @@ end
 
 for n = 285,55385 do
   local t = triangle(n)
-  if findPenta2(t, trunc(n / 5), n) and
-  findHexa2(t, trunc(n / 5), trunc(n / 2) + 10)
+  if
+  findPenta2(t, trunc(n / 5), n) and findHexa2(t, trunc(n / 5), trunc(n / 2) + 10)
   then
     io.write(string.format("%d\n%d\n", n, t))
   end

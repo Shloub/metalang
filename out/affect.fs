@@ -62,13 +62,11 @@ end-struct toto%
   1 { len }
   HERE len cells allot { cache0 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    i NEGATE cache0 i cells +
-     !
+    i NEGATE cache0  i cells +  !
    1 + REPEAT 2DROP
   HERE len cells allot { cache1 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    j cache1 j cells +
-     !
+    j cache1  j cells +  !
    1 + REPEAT 2DROP
   cache0 { cache2 }
   cache1 TO cache0

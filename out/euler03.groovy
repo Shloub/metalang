@@ -12,7 +12,7 @@ while (a != 1)
   boolean found = false
   while (b <= sqrtia)
   {
-    if ((a % b) == 0)
+    if (a % b == 0)
     {
       a /= b;
       b0 = b

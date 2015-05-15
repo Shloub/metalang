@@ -19,7 +19,7 @@ function fillPrimesFactors(t, n, primes, nprimes){
   for (var i = 0 ; i <= nprimes - 1; i++)
   {
     var d = primes[i];
-    while ((~~(n % d)) == 0)
+    while (~~(n % d) == 0)
     {
       t[d] = t[d] + 1;
       n = ~~(n / d);
@@ -82,21 +82,21 @@ var n = 100;
 /* 28124 ça prend trop de temps mais on arrive a passer le test */
 var abondant = new Array(n + 1);
 for (var p = 0 ; p <= n + 1 - 1; p++)
-  abondant[p] = 0;
+  abondant[p] = false;
 var summable = new Array(n + 1);
 for (var q = 0 ; q <= n + 1 - 1; q++)
-  summable[q] = 0;
+  summable[q] = false;
 var sum = 0;
 for (var r = 2 ; r <= n; r++)
 {
   var other = sumdiv(nprimes, primes, r) - r;
   if (other > r)
-    abondant[r] = 1;
+    abondant[r] = true;
 }
 for (var i = 1 ; i <= n; i++)
   for (var j = 1 ; j <= n; j++)
     if (abondant[i] && abondant[j] && i + j <= n)
-  summable[i + j] = 1;
+  summable[i + j] = true;
 for (var o = 1 ; o <= n; o++)
   if (!summable[o])
   sum += o;

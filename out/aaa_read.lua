@@ -36,7 +36,7 @@ for i = 0,len - 1 do
   local tmpi1 = readint()
   stdinsep()
   io.write(string.format("%d=>%d ", i, tmpi1))
-  tab[i] = tmpi1;
+  tab[i + 1] = tmpi1;
 end
 io.write("\n")
 local tab2 = {}
@@ -44,7 +44,7 @@ for i_ = 0,len - 1 do
   local tmpi2 = readint()
   stdinsep()
   io.write(string.format("%d==>%d ", i_, tmpi2))
-  tab2[i_] = tmpi2;
+  tab2[i_ + 1] = tmpi2;
 end
 local strlen = readint()
 stdinsep()
@@ -56,10 +56,10 @@ for toto = 0,strlen - 1 do
   io.write(string.format("%c:%d ", tmpc, c))
   if tmpc ~= 32
   then
-    c = math.mod((c - 97) + 13, 26) + 97;
+    c = math.mod(c - 97 + 13, 26) + 97;
   end
-  tab4[toto] = c;
+  tab4[toto + 1] = c;
 end
 for j = 0,strlen - 1 do
-  io.write(string.format("%c", tab4[j]))
+  io.write(string.format("%c", tab4[j + 1]))
 end

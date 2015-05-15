@@ -6,7 +6,7 @@ def exp0( a, b )
     if b == 0 then
       return (1)
     end
-    if (mod(b, 2)) == 0 then
+    if mod(b, 2) == 0 then
       o = exp0(a, (b.to_f / 2).to_i)
       return (o * o)
     else

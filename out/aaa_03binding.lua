@@ -1,6 +1,6 @@
 function g( i )
   local j = i * 4
-  if (math.mod(j, 2)) == 1
+  if math.mod(j, 2) == 1
   then
     return 0
   end

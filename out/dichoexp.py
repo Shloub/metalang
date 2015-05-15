@@ -38,7 +38,7 @@ def mod(x, y):
 def exp0( a, b ):
     if b == 0:
       return 1
-    if (mod(b, 2)) == 0:
+    if mod(b, 2) == 0:
       o = exp0(a, math.trunc(b / 2))
       return o * o
     else:

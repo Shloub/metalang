@@ -79,7 +79,7 @@ begin
 	  n * 2 = k * (k + 1)
    }
   a := Floor(Sqrt(n * 2));
-  exit((a * (a + 1)) = (n * 2));
+  exit(a * (a + 1) = n * 2);
 end;
 
 function score() : Longint;
@@ -96,7 +96,7 @@ begin
   for i := 1 to  len do
   begin
     c := read_char_();
-    sum := sum + (ord(c) - ord(#65)) + 1;
+    sum := sum + ord(c) - ord(#65) + 1;
     {		print c print " " print sum print " " }
   end;
   if is_triangular(sum)

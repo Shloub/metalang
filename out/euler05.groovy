@@ -7,7 +7,7 @@ int[] primesfactors(int n)
     tab[i] = 0
   int d = 2
   while (n != 1 && d * d <= n)
-    if ((n % d) == 0)
+    if (n % d == 0)
   {
     tab[d] = tab[d] + 1
     n /= d;

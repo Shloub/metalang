@@ -4,7 +4,7 @@ def mod(x, y)
 end
 def g( i )
     j = i * 4
-    if (mod(j, 2)) == 1 then
+    if mod(j, 2) == 1 then
       return (0)
     end
     return (j)

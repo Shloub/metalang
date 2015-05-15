@@ -21,7 +21,7 @@ let fillPrimesFactors t n primes nprimes =
   try
   for i = 0 to nprimes - 1 do
     let d = primes.(i) in
-    while ((!n) mod d) = 0
+    while (!n) mod d = 0
     do
         t.(d) <- t.(d) + 1;
         n := (!n) / d
@@ -59,7 +59,7 @@ let find ndiv2 =
         ndivs := (!ndivs) * (1 + primesFactors.(i))
     done;
     if (!ndivs) > ndiv2 then
-      raise (Found_2((n * (n + 1)) / 2))
+      raise (Found_2(n * (n + 1) / 2))
     (* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" *)
   done;
   0

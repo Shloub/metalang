@@ -144,7 +144,7 @@ begin
     if tmpc <> #32
     then
       begin
-        c := ((c - ord(#97)) + 13) Mod 26 + ord(#97);
+        c := (c - ord(#97) + 13) Mod 26 + ord(#97);
       end;
     tab4[i3] := chr(c);
   end;

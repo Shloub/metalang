@@ -67,7 +67,7 @@ End Function
     If y = len - 1 Then
       Return tab(y)(x)
     ElseIf x > y Then
-      Return - 10000
+      Return -10000
     ElseIf cache(y)(x) <> 0 Then
       Return cache(y)(x)
     End If

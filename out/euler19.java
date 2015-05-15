@@ -5,7 +5,7 @@ public class euler19
   
   static boolean is_leap(int year)
   {
-    return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0);
+    return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
   }
   
   static int ndayinmonth(int month, int year)
@@ -60,7 +60,7 @@ public class euler19
         month = 0;
         year ++;
       }
-      if ((dayofweek % 7) == 6)
+      if (dayofweek % 7 == 6)
         count ++;
     }
     System.out.printf("%d\n", count);

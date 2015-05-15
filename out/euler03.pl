@@ -15,8 +15,8 @@ while ($a ne 1)
   my $found = ();
   while ($b <= $sqrtia)
   {
-    if ((remainder($a, $b)) eq 0) {
-      $a = int(($a) / ($b));
+    if (remainder($a, $b) eq 0) {
+      $a = int($a / $b);
       $b0 = $b;
       $b = $a;
       $sqrtia = int(sqrt($a));

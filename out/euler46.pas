@@ -14,7 +14,7 @@ begin
     then
       begin
         n := n + 1;
-        if (max0 Div i) > i
+        if max0 Div i > i
         then
           begin
             j := i * i;
@@ -94,7 +94,7 @@ begin
   for m := 1 to  maximumprimes do
   begin
     m2 := m * 2 + 1;
-    if (m2 < maximumprimes) and not canbe[m2]
+    if (m2 < maximumprimes) and not(canbe[m2])
     then
       begin
         Write(m2);
