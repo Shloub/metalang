@@ -37,19 +37,50 @@ open Ast
 open Printer
 open PyPrinter
 
+let print_lief prio f l =
+  let open Format in
+  let open Ast.Expr in match l with
+  | Char c ->
+      let cs = Printf.sprintf "%C" c in
+      if String.length cs == 6 then
+        fprintf f "\"\\u%04x\"" (int_of_char c)
+      else fprintf f "%S" (String.from_char c)
+  | String s -> fprintf f "%S" s
+  | Integer i ->
+      if i < 0 then parens prio (-1) f "%i" i
+      else Format.fprintf f "%i" i
+  | Bool true -> fprintf f "true"
+  | Bool false -> fprintf f "false"
+  | Enum s -> fprintf f "%S" s
+
+let print_expr0 config e f prio_parent =
+  let open Format in
+  let open Ast.Expr in match e with
+  | BinOp (a, (Div as op), b) ->
+      let _, priol, prior = prio_binop op in
+      fprintf f "(%a.to_f %a %a).to_i" a priol print_op op b prior
+  | BinOp (a, Mod, b) -> fprintf f "mod(%a, %a)" a nop b nop
+  | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
+  | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
+      fprintf f "%S => %a" name x nop) sep_c) li
+  | _ -> print_expr0 config e f prio_parent
+
+let print_expr macros e f p =
+  let config = {
+    prio_binop = prio_binop_equal;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
+
 class rbPrinter = object(self)
   inherit pyPrinter as super
 
   method lang () = "ruby"
-
-  method char f c =
-    let cs = Printf.sprintf "%C" c in
-    if String.length cs == 6 then
-      Format.fprintf f "\"\\u%04x\"" (int_of_char c)
-    else
-      Format.fprintf f "%S" (String.from_char c)
-
-  method tuple f li = Format.fprintf f "[%a]" (print_list self#expr sep_c) li
 
   method header f prog = Format.fprintf f "require \"scanf.rb\"
 %s"
@@ -60,13 +91,6 @@ end
 " else "")
 
   method comment f str = Format.fprintf f "\n=begin\n%s\n=end\n" str
-
-  method unop f op a =
-    let pop g f a = match op with
-      | Expr.Neg -> Format.fprintf f "-%a" g a
-      | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
-    in if self#nop (Expr.unfix a) then pop self#expr f a
-      else pop self#printp f a
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a )"
@@ -108,27 +132,6 @@ end
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ =@ %a@]" self#binding var self#expr e
 
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "/"
-      | Expr.Mod -> "%"
-      | Expr.Or -> "||"
-      | Expr.And -> "&&"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "=="
-      | Expr.Diff -> "!="
-      )
-
-  method bool f b = Format.fprintf f (if b then "true" else "false")
-
   method selfAssoc f m e2 = function
   | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_set m self#expr e2
   | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_set m self#expr e2
@@ -136,20 +139,6 @@ end
   | Expr.Div -> Format.fprintf f "@[<h>%a = (%a.to_f / %a).to_i@]" self#mutable_set m self#mutable_get m self#expr e2
   | Expr.Mod -> Format.fprintf f "@[<h>%a = mod(%a, %a)@]" self#mutable_set m self#mutable_get m self#expr e2
   | _ -> assert false
-
-  method binop f op a b =
-    match op with
-    | Expr.Div ->
-      if Typer.is_int (super#getTyperEnv ()) a
-      then Format.fprintf f "(%a.to_f / %a).to_i"
-        (self#chf op Left) a
-        (self#chf op Right) b
-      else super#sbinop f op a b
-    | Expr.Mod ->
-      Format.fprintf f "mod(%a, %a)"
-        self#expr a
-        self#expr b
-    | _ -> super#sbinop f op a b
 
 val mutable inlambda = false
 
@@ -224,4 +213,7 @@ val mutable inlambda = false
           self#expr expr
       )
       (sep "%a,@\n%a") f li
+
+  method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
+    ty, params, List.assoc (self#lang ()) li) macros) e f nop
 end

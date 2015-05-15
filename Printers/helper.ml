@@ -83,55 +83,205 @@ let contains_instr f prog =
     (List.exists (function Ast.Prog.DeclarFun (_, _, _, instrs, _) -> cli instrs | _ -> false)
     prog.Ast.Prog.funs)
 
-
-let print_varname f = function
-  | Ast.UserName v -> Format.fprintf f "$%s" v
-  | Ast.InternalName _ -> assert false
-
-let print_mut m f () = match m with
-| Ast.Mutable.Var v -> Format.fprintf f "$%a" print_varname v
-| Ast.Mutable.Array (m, fi) -> Format.fprintf f "%a%a" m ()
-      (print_list (fun f a -> Format.fprintf f "[%a]" a ()) nosep) fi
-| Ast.Mutable.Dot (m, field) -> Format.fprintf f "%a[%S]" m () field
- 
 let parens (pa:int) pb f format =
-  if pa < pb then Format.fprintf f "(%a)" (fun f -> Format.fprintf f format)
+  if pa < pb then Format.fprintf f ("(" ^^ format ^^ ")")
   else Format.fprintf f format
 
 let print_op f op =
+  let open Ast.Expr in
   Format.fprintf f (match op with
-  | Ast.Expr.Add -> "+"
-  | Ast.Expr.Sub -> "-"
-  | Ast.Expr.Mul -> "*"
-  | Ast.Expr.Div -> "/"
-  | Ast.Expr.Mod -> "%%"
-  | Ast.Expr.Or -> "||"
-  | Ast.Expr.And -> "&&"
-  | Ast.Expr.Lower -> "<"
-  | Ast.Expr.LowerEq -> "<="
-  | Ast.Expr.Higher -> ">"
-  | Ast.Expr.HigherEq -> ">="
-  | Ast.Expr.Eq -> "=="
-  | Ast.Expr.Diff -> "!=")
+  | Add -> "+"
+  | Sub -> "-"
+  | Mul -> "*"
+  | Div -> "/"
+  | Mod -> "%%"
+  | Or -> "||"
+  | And -> "&&"
+  | Lower -> "<"
+  | LowerEq -> "<="
+  | Higher -> ">"
+  | HigherEq -> ">="
+  | Eq -> "=="
+  | Diff -> "!=")
+
+let print_unop f op =
+  let open Ast.Expr in
+  Format.fprintf f (match op with
+  | Neg -> "-"
+  | Not -> "!")
+
+let assoc x = x, x, x
+let nonassocr x = x, x, x - 1
+let nonassocl x = x, x - 1, x
+let nonassoclr x = x, x - 1, x - 1
+
+type config = {
+    prio_binop : Ast.Expr.binop -> int * int * int ;
+    prio_unop : Ast.Expr.unop -> int;
+    print_varname : Format.formatter -> Ast.varname -> unit;
+    print_lief : int -> Format.formatter -> Ast.Expr.lief -> unit;
+    print_op : Format.formatter -> Ast.Expr.binop -> unit;
+    print_unop : Format.formatter -> Ast.Expr.unop -> unit;
+    macros : (Ast.Type.t * (string * Ast.Type.t) list * string) StringMap.t
+}
+
+let prio_binop op =
+  let open Ast.Expr in match op with
+  | Mul -> assoc 5
+  | Div
+  | Mod -> nonassocr 5
+  | Add -> assoc 7
+  | Sub -> nonassocr 7
+  | Lower
+  | LowerEq
+  | Higher
+  | HigherEq -> assoc 9
+  | Eq -> nonassocl 11
+  | Diff -> nonassocl 11
+  | And -> assoc 13
+  | Or -> assoc 13
+        
+let prio_binop_equal = function
+  | Ast.Expr.Eq -> nonassoclr 11
+  | op -> prio_binop op
+
+let prio_unop op =
+  let open Ast.Expr in match op with
+  | Neg -> 1
+  | Not -> 3
+
+let nop = 15
+
+let print_mut c m f () =
+  let open Ast.Mutable in match m with
+  | Var v -> c.print_varname f v
+  | Array (m, fi) -> Format.fprintf f "%a%a" m ()
+        (print_list (fun f a -> Format.fprintf f "[%a]" a nop) nosep) fi
+  | Dot (m, field) -> Format.fprintf f "%a[%S]" m () field
+ 
+let print_mut print_varname f m = Ast.Mutable.Fixed.Deep.fold (print_mut print_varname) m f ()
+
+let print_expr0 c e f prio_parent =
+  let open Format in
+  let open Ast.Expr in match e with
+  | BinOp (a, op, b) ->
+      let prio, priol, prior = prio_binop op in
+      parens prio_parent prio f "%a %a %a" a priol print_op op b prior
+  | UnOp (a, op) -> 
+      let prio = prio_unop op in
+      parens prio_parent prio f "%a%a" print_unop op a prio
+  | Lief l -> c.print_lief prio_parent f l
+  | Access m -> print_mut c f m
+  | Call (func, li) ->
+      begin match StringMap.find_opt func c.macros with
+      | Some ( (_, params, code) ) ->
+          let li = List.map
+              (fun e ->
+                let b = Buffer.create 1 in
+                let fb = Format.formatter_of_buffer b in
+                Format.fprintf fb "@[<hov>%a@]%!" e nop;
+                Buffer.contents b
+              ) li in
+          let expanded = List.fold_left
+              (fun s ((param, _type), string) ->
+                String.replace ("$__MACRO__PARAM__"^param) string s
+              )
+              (String.replace "$" "$__MACRO__PARAM__" code)
+              (List.combine params li)
+          in let expanded = String.replace "$__MACRO__PARAM__" "$" expanded
+          in Format.fprintf f "%s" expanded
+      | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
+      end
+  | Lexems li -> assert false
+  | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f nop) sep_c) li
+  | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
+      fprintf f "%S:%a" name x nop) sep_c) li
+
+let print_expr c e f p = Ast.Expr.Fixed.Deep.fold (print_expr0 c) e f p
+
+let format_type f t =
+  let open Ast.Type in Format.fprintf f (match unfix t with
+  | Integer -> "%%d"
+  | Char -> "%%c"
+  | String ->  "%%s"
+  | Bool -> "%%"
+  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (type_t_to_string t))))
+
+type iprinter = {
+    is_if : bool;
+    is_comment : bool;
+    p : Format.formatter -> unit -> unit
+}
+
+let print_ilist f li =
+  Format.fprintf f "{@\n%a@]@\n}" (print_list (fun f i -> i.p f ()) sep_nl) li
+
+let print_instr c i =
+  let print_mut = print_mut c in
+  let open Ast.Instr in
+  let p f () =
+    let open Format in match i with
+    | Declare (var, ty, e, _) -> fprintf f "%a = %a;" c.print_varname var e nop
+    | Affect (mut, e) -> fprintf f "%a = %a" print_mut mut e nop
+    | Loop (var, e1, e2, li) -> fprintf f "for (%a=%a; %a<=%a; %a++)%a"
+          c.print_varname var e1 nop
+          c.print_varname var e2 nop
+          c.print_varname var
+          print_ilist li
+    | While (e, li) -> fprintf f "@[<v 2>while(@[<h>%a@])%a" e nop print_ilist li
+    | Comment s -> fprintf f "/*%s*/" s
+    | Tag s -> fprintf f "/*%S*/" s
+    | Return e -> fprintf f "return %a;" e nop
+    | AllocArray (name, t, e, None, opt) -> fprintf f "var %a = array();" c.print_varname name
+    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+    | AllocArrayConst (name, ty, len, lief, opt) ->
+        fprintf f "@[<h>%a = array_fill(0, %a, %a);@]" c.print_varname name
+          len nop (c.print_lief nop) lief
+    | AllocRecord (name, ty, list, opt) ->
+        fprintf f "%a = array(%a);" c.print_varname name
+          (print_list (fun f (field, x) -> printf "%S => %a" field x nop) sep_c) list
+    | If (e, listif, []) ->
+        fprintf f "@[<v 2>if (%a)%a" e nop print_ilist listif
+    | If (e, listif, listelse) ->
+        fprintf f "@[<v 2>if (%a)%a@\n@[<v 2>else %a" e nop print_ilist listif print_ilist listelse
+    | Call (func, li) -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
+    | Print (ty, e) -> fprintf f "echo %a;" e nop
+    | Read (ty, mut) -> begin match Ast.Type.unfix ty with
+      | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" print_mut mut
+      | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" print_mut mut format_type ty
+    end
+    | DeclRead (ty, v, opt) ->
+        begin match Ast.Type.unfix ty with
+        | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" c.print_varname v
+        | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" c.print_varname v format_type ty
+        end
+    | Untuple (li, expr, opt) -> fprintf f "list(%a)=%a;" (print_list c.print_varname sep_c) (List.map snd li) expr nop
+    | StdinSep -> Format.fprintf f "@[scantrim();@]"
+    | Unquote e -> assert false in
+  let is_if = match i with If (_, _, _) -> true | _ -> false in
+  let is_comment = match i with Comment _ -> true | _ -> false in
+  {
+   is_if = is_if;
+   is_comment = is_comment;
+   p=p;
+ }
+
+let print_instr c i =
+  let open Ast.Instr.Fixed.Deep in
+  (fold (print_instr c) (mapg (print_expr c) i)).p
 
 
-let prio_binop = function
-    | Ast.Expr.Add -> -1, -2, -2
-    | Ast.Expr.Sub -> -1, -2, -1
-    | Ast.Expr.Mul -> 0, -1, -1
-    | Ast.Expr.Div -> -10, 15, 15
-    | Ast.Expr.Mod -> -10, 15, 15
-    | Ast.Expr.Or -> -8, -8, -8
-    | Ast.Expr.And -> -10, -10, -10
-    | Ast.Expr.Lower -> -5, -5, -5
-    | Ast.Expr.LowerEq -> -5, -5, -5
-    | Ast.Expr.Higher -> -5, -5, -5
-    | Ast.Expr.HigherEq -> -5, -5, -5
-    | Ast.Expr.Eq -> -6, -5, -5
-    | Ast.Expr.Diff -> -5, -5, -5
+let print_lief prio f l =
+  let open Ast.Expr in match l with
+  | Char c -> Format.fprintf f "%C" c
+  | String s -> Format.fprintf f "%S" s
+  | Integer i ->
+      if i < 0 then parens prio (-1) f "%i" i
+      else Format.fprintf f "%i" i
+  | Bool true -> Format.fprintf f "true"
+  | Bool false -> Format.fprintf f "false"
+  | Enum s -> Format.fprintf f "%s" s
 
-
-let print_expr e f prio_parent = match e with
-| Ast.Expr.BinOp (a, op, b) ->
-    let prio, prio_left, prio_right = prio_binop op in
-    parens prio prio_parent f "%a %a %a" a prio_left print_op op b prio_right
+let print_varname f = function
+  | Ast.UserName v -> Format.fprintf f "%s" v
+  | Ast.InternalName _ -> assert false

@@ -36,25 +36,55 @@ open Ast
 open Printer
 open CPrinter
 
+let print_varname f = function
+  | Ast.UserName v -> Format.fprintf f "$%s" v
+  | Ast.InternalName _ -> assert false
+
+let print_lief prio f l =
+  let open Format in
+  let open Ast.Expr in match l with
+  | Char c -> 
+    let cs = Printf.sprintf "%C" c in
+    if String.length cs == 6 || c == '\b' then
+      fprintf f "\"\\x%02x\"" (int_of_char c)
+    else
+      fprintf f "%S" (String.from_char c)
+  | String s -> 
+      let s = Printf.sprintf "%S" s in
+      fprintf f "%s" (String.replace "$" "\\$" s)
+  | Integer i ->
+      if i < 0 then parens prio (-1) f "%i" i
+      else Format.fprintf f "%i" i
+  | Bool true -> fprintf f "true"
+  | Bool false -> fprintf f "false"
+  | Enum s -> fprintf f "%S" s
+
+let print_expr0 config e f prio_parent =
+  let open Format in
+  let open Ast.Expr in match e with
+  | BinOp (a, (Div as op), b) ->
+      let prio, priol, prior = prio_binop op in
+      fprintf f "intval(%a %a %a)" a priol print_op op b prior
+  | Tuple li -> fprintf f "array(%a)" (print_list (fun f x -> x f nop) sep_c) li
+  | Record li -> fprintf f "array(%a)" (print_list (fun f (name, x) ->
+      fprintf f "%S => %a" name x nop) sep_c) li
+  | _ -> print_expr0 config e f prio_parent
+
+let print_expr macros e f p =
+  let config = {
+    prio_binop = prio_binop_equal;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 class phpPrinter = object(self)
   inherit cPrinter as super
 
-  method string f s = self#string_nodolar f s
-
-  method char f c =
-    let cs = Printf.sprintf "%C" c in
-    if String.length cs == 6 || c == '\b' then
-      Format.fprintf f "\"\\x%02x\"" (int_of_char c)
-    else
-      Format.fprintf f "%S" (String.from_char c)
-
   method declare_for s f li = ()
-
-  method tuple f li = Format.fprintf f "array(%a)" (print_list self#expr sep_c) li
-
-  method record f li = Format.fprintf f "array(@\n  @[<v>%a@])"
-      (self#def_fields (InternalName 0)) li
-
 
   method untuple f li e =
     Format.fprintf f "@[<h>list(%a) = %a;@]"
@@ -72,8 +102,6 @@ class phpPrinter = object(self)
     | _ -> ()
 
   method stdin_sep f = Format.fprintf f "@[scantrim();@]"
-
-  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method read f t m =
     match Type.unfix t with
@@ -94,7 +122,6 @@ class phpPrinter = object(self)
       Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
         self#binding v
         self#format_type t
-
 
   method m_field f m field = Format.fprintf f "%a[%S]" self#mutable_get m field
 
@@ -212,14 +239,9 @@ function nextChar(){
   | Expr.Div -> false
   | _ -> true
 
-  method binop f op a b =
-    match op with
-    | Expr.Div ->
-      if Typer.is_int (super#getTyperEnv ()) a
-      then Format.fprintf f "intval(%a)"
-        (fun f () -> super#binop f op a b) ()
-      else super#binop f op a b
-    | _ -> super#binop f op a b
-
   method multiread f instrs = self#basemultiread f instrs
+
+  method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
+    ty, params, List.assoc (self#lang ()) li) macros) e f nop
+
 end
