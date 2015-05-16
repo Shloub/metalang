@@ -123,7 +123,7 @@ type config = {
     print_op : Format.formatter -> Ast.Expr.binop -> unit;
     print_unop : Format.formatter -> Ast.Expr.unop -> unit;
     macros : (Ast.Type.t * (string * Ast.Type.t) list * string) StringMap.t;
-    print_mut : config -> Format.formatter -> (Format.formatter -> int -> unit) Ast.Mutable.Fixed.t -> unit
+    print_mut : config -> int -> Format.formatter -> (Format.formatter -> int -> unit) Ast.Mutable.Fixed.t -> unit
 }
 
 let prio_binop op =
@@ -163,7 +163,7 @@ let print_expr0 c e f prio_parent =
       let prio = c.prio_unop op in
       parens prio_parent prio f "%a%a" c.print_unop op a prio
   | Lief l -> c.print_lief prio_parent f l
-  | Access m -> c.print_mut c f m
+  | Access m -> c.print_mut c prio_parent f m
   | Call (func, li) ->
       begin match StringMap.find_opt func c.macros with
       | Some ( (_, params, code) ) ->
@@ -213,7 +213,7 @@ let print_instr c i =
   let p f () =
     let open Format in match i with
     | Declare (var, ty, e, _) -> fprintf f "%a = %a;" c.print_varname var e nop
-    | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c) mut e nop
+    | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
     | Loop (var, e1, e2, li) -> fprintf f "for (%a=%a; %a<=%a; %a++)%a"
           c.print_varname var e1 nop
           c.print_varname var e2 nop
@@ -238,8 +238,8 @@ let print_instr c i =
     | Call (func, li) -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
     | Print (ty, e) -> fprintf f "echo %a;" e nop
     | Read (ty, mut) -> begin match Ast.Type.unfix ty with
-      | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" (c.print_mut c) mut
-      | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" (c.print_mut c) mut format_type ty
+      | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" (c.print_mut c nop) mut
+      | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" (c.print_mut c nop) mut format_type ty
     end
     | DeclRead (ty, v, opt) ->
         begin match Ast.Type.unfix ty with
@@ -261,14 +261,15 @@ let print_instr c i =
   let open Ast.Instr.Fixed.Deep in
   (fold (print_instr c) (mapg (print_expr c) i)).p
 
-let print_mut c m f () =
+let print_mut c m f priority =
+  let open Format in
   let open Ast.Mutable in match m with
   | Var v -> c.print_varname f v
-  | Array (m, fi) -> Format.fprintf f "%a%a" m ()
-        (print_list (fun f a -> Format.fprintf f "[%a]" a nop) nosep) fi
-  | Dot (m, field) -> Format.fprintf f "%a[%S]" m () field
+  | Array (m, fi) -> fprintf f "%a%a" m priority
+        (print_list (fun f a -> fprintf f "[%a]" a nop) nosep) fi
+  | Dot (m, field) -> fprintf f "%a[%S]" m priority field
  
-let print_mut conf f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f ()
+let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f priority
 
 let print_lief prio f l =
   let open Ast.Expr in match l with

@@ -89,14 +89,15 @@ let print_expr0 config e f prio_parent =
       fprintf f "%S => %a" name x nop) sep_c) li
   | _ -> print_expr0 config e f prio_parent
 
-let print_mut c m f () =
+let print_mut c m f prio  =
+  let open Format in
   let open Ast.Mutable in match m with
   | Var v -> c.print_varname f v
-  | Array (m, fi) -> Format.fprintf f "%a->%a" m ()
-        (print_list (fun f a -> Format.fprintf f "[%a]" a nop) nosep) fi
-  | Dot (m, field) -> Format.fprintf f "%a->{%S}" m () field
+  | Array (m, fi) -> fprintf f "%a->%a" m prio
+        (print_list (fun f a -> fprintf f "[%a]" a nop) nosep) fi
+  | Dot (m, field) -> fprintf f "%a->{%S}" m prio field
  
-let print_mut conf f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f ()
+let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f prio
 
 let print_expr macros e f p =
   let config = {
