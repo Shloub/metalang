@@ -35,6 +35,48 @@ open Ast
 open Printer
 open JavaPrinter
 
+let prio_binop op =
+  let open Ast.Expr in match op with
+  | Mul -> assoc 5
+  | Div
+  | Mod -> nonassocr 7
+  | Add -> assoc 9
+  | Sub -> nonassocr 9
+  | Lower
+  | LowerEq
+  | Higher
+  | HigherEq -> assoc 11
+  | Eq -> nonassocl 13
+  | Diff -> nonassocl 13
+  | And -> assoc 15
+  | Or -> assoc 15
+
+let print_lief tyenv prio f = function
+  | Ast.Expr.Char c ->
+    if (c >= 'A' && c <= 'Z' ) ||
+      (c >= 'a' && c <= 'z' ) ||
+      (c >= '0' && c <= '9' ) ||
+      (c = '-' || c = '_' )
+    then Format.fprintf f "%C" c
+    else Format.fprintf f "(char)%d" (int_of_char c)
+  | Ast.Expr.Enum e ->
+      let t = Typer.typename_for_enum e tyenv in
+      Format.fprintf f "%s.%s" t e
+  | x -> print_lief prio f x
+
+let print_expr tyenv macros e f p =
+  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief = print_lief tyenv;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
 class csharpPrinter = object(self)
   inherit javaPrinter as super
@@ -43,14 +85,9 @@ class csharpPrinter = object(self)
 
   method lang () = "csharp"
 
-  method char f c =
-    if (c >= 'A' && c <= 'Z' ) ||
-      (c >= 'a' && c <= 'z' ) ||
-      (c >= '0' && c <= '9' ) ||
-      (c = '-' || c = '_' )
-    then Format.fprintf f "%C" c
-    else Format.fprintf f "(char)%d" (int_of_char c)
-
+  method expr f e = print_expr (self#getTyperEnv ()) 
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params, List.assoc (self#lang ()) li) macros) e f nop
 
   method ptype f t =
     match Type.unfix t with
@@ -198,7 +235,6 @@ static int readInt(){
       self#separator ()
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
-
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
@@ -217,6 +253,5 @@ static int readInt(){
         (print_list self#enumfield (sep "%a,@\n %a")
         ) li
     | _ -> super#decl_type f name t
-
 
 end

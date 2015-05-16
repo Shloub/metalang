@@ -33,24 +33,8 @@ open Stdlib
 open Helper
 open Ast
 open Printer
-open CsharpPrinter
 
-let prio_binop op =
-  let open Ast.Expr in match op with
-  | Mul -> assoc 5
-  | Div
-  | Mod -> nonassocr 7
-  | Add -> assoc 9
-  | Sub -> nonassocr 9
-  | Lower
-  | LowerEq
-  | Higher
-  | HigherEq -> assoc 11
-  | Eq -> nonassocl 13
-  | Diff -> nonassocl 13
-  | And -> assoc 15
-  | Or -> assoc 15
-
+let prio_binop op = CsharpPrinter.prio_binop op
 
 let print_op f op =
   Format.fprintf f
@@ -113,9 +97,8 @@ let print_expr tyenv macros e f p =
     macros
   } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
-
 class vbDotNetPrinter = object(self)
-  inherit csharpPrinter as super
+  inherit CsharpPrinter.csharpPrinter as super
 
   method expr f e = print_expr (self#getTyperEnv ()) 
       (StringMap.map (fun (ty, params, li) ->
