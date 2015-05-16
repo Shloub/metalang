@@ -261,15 +261,19 @@ let print_instr c i =
   let open Ast.Instr.Fixed.Deep in
   (fold (print_instr c) (mapg (print_expr c) i)).p
 
-let print_mut c m f priority =
+let print_mut0 fmt_array
+    fmt_arrayindex
+    fmt_dot
+    c m f priority =
   let open Format in
   let open Ast.Mutable in match m with
   | Var v -> c.print_varname f v
-  | Array (m, fi) -> fprintf f "%a%a" m priority
-        (print_list (fun f a -> fprintf f "[%a]" a nop) nosep) fi
-  | Dot (m, field) -> fprintf f "%a[%S]" m priority field
+  | Array (m, fi) -> fprintf f fmt_array m priority
+        (print_list (fun f a -> fprintf f fmt_arrayindex a nop) nosep) fi
+  | Dot (m, field) -> fprintf f fmt_dot m priority field
  
-let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f priority
+let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
+    (print_mut0 "%a%a" "[%a]" "%a[%S]" conf) m f priority
 
 let print_lief prio f l =
   let open Ast.Expr in match l with

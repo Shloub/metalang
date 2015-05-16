@@ -34,6 +34,42 @@ open Ast
 open Printer
 open CPrinter
 
+let print_lief prio f = function
+  | Ast.Expr.Char c ->
+      let cs = Printf.sprintf "%C" c in
+      if String.length cs == 6 then
+        Format.fprintf f "'\\x%02x'" (int_of_char c)
+      else
+        Format.fprintf f "%s" cs
+  | Ast.Expr.Enum e -> Format.fprintf f "%S" e
+  | x -> print_lief prio f x
+
+let print_expr0 config e f prio_parent =
+  let open Format in
+  let open Ast.Expr in match e with
+  | BinOp (a, ((Div | Mod) as op), b) ->
+      let prio, priol, prior = prio_binop op in
+      fprintf f "~~(%a %a %a)" a priol print_op op b prior
+
+  | _ -> print_expr0 config e f prio_parent
+
+
+let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
+    (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f priority
+
+let print_expr macros e f p =
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
+
 class jsPrinter = object(self)
   inherit cPrinter as super
 
@@ -46,20 +82,6 @@ class jsPrinter = object(self)
   method hasSelfAffect = function
   | Expr.Div -> false
   | _ -> true
-
-  method binop f op a b =
-    match op with
-    | Expr.Mod ->
-      if Typer.is_int (super#getTyperEnv ()) a
-      then Format.fprintf f "~~(%a)"
-        (fun f () -> super#binop f op a b) ()
-      else super#binop f op a b
-    | Expr.Div ->
-      if Typer.is_int (super#getTyperEnv ()) a
-      then Format.fprintf f "~~(%a)"
-        (fun f () -> super#binop f op a b) ()
-      else super#binop f op a b
-    | _ -> super#binop f op a b
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ (var %a@ =@ %a@ ;@ %a@ <=@ %a;@ %a++)@\n@]%a"
@@ -192,8 +214,9 @@ function read_int_(){
   method stdin_sep f =
     Format.fprintf f "@[stdinsep();@]"
 
-  method enum f e =
-    Format.fprintf f "%S" e
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params, List.assoc (self#lang ()) li) macros) e f nop
 
   method multiread f instrs = self#basemultiread f instrs
 end
