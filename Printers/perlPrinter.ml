@@ -98,7 +98,6 @@ let print_mut c m f () =
  
 let print_mut conf f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f ()
 
-
 let print_expr macros e f p =
   let config = {
     prio_binop = prio_binop_equal;
@@ -123,20 +122,6 @@ class perlPrinter = object(self)
   method combine_formats () = false
 
   method binding f i = Format.fprintf f "$%a" baseprinter#binding i
-
-  method string f s = self#string_nodolar f s
-
-  method char f c =
-    match c with
-    | '$' -> Format.fprintf f "\"\\$\""
-    | _->
-        let cs = Printf.sprintf "%C" c in
-        if String.length cs == 6 then
-          Format.fprintf f "\"\\x%02x\"" (int_of_char c)
-        else
-          Format.fprintf f "%S" (String.from_char c)
-
-  method bool f b = Format.fprintf f (if b then "1" else "()")
 
   method main f main = self#instructions f main
 
@@ -279,20 +264,7 @@ class perlPrinter = object(self)
 	      Format.fprintf f "%S=>@[<h>%a@]" fieldname self#expr expr)
 	        (sep "%a,@\n%a")) el
 
-  method record f li = Format.fprintf f "{%a}" (self#def_fields (InternalName 0)) li
   method field f field = Format.fprintf f "%S" field
-  method tuple f li = Format.fprintf f "[%a]" (print_list self#expr sep_c) li
-
-  method def_fields name f li =
-    Format.fprintf f "@[<h>%a@]"
-      (print_list
-         (fun f (fieldname, expr) ->
-           Format.fprintf f "%a => %a"
-             self#field fieldname
-             self#expr expr
-         )
-         (sep "%a,@\n%a"))
-      li
 
   method untuple f li e =
     Format.fprintf f "my (%a) = @@{ %a };"
@@ -303,7 +275,6 @@ class perlPrinter = object(self)
   method bloc f li =
     Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
-
   method m_field f m field = 
       Format.fprintf f "%a->{%S}" self#mutable_get m field
 
@@ -311,30 +282,6 @@ class perlPrinter = object(self)
       Format.fprintf f "%a->[%a]"
         self#mutable_get m
         (print_list self#expr (sep "%a][%a")) indexes
-
-  method binop f op a b = match op with
-  | Expr.Mod -> Format.fprintf f "remainder(%a, %a)" self#expr a self#expr b
-  | Expr.Div -> Format.fprintf f "int((%a) / (%a))" self#expr a self#expr b
-  | _ -> baseprinter#binop f op a b
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "/"
-      | Expr.Mod -> "%"
-      | Expr.Or -> "||"
-      | Expr.And -> "&&"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "eq"
-      | Expr.Diff -> "ne"
-      )
 
   method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
     ty, params, List.assoc (self#lang ()) li) macros) e f nop
