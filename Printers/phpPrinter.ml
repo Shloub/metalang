@@ -78,6 +78,7 @@ let print_expr macros e f p =
     print_lief;
     print_op;
     print_unop;
+    print_mut;
     macros
   } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
