@@ -151,7 +151,7 @@ let prio_unop op =
   | Neg -> 1
   | Not -> 3
 
-let nop = 15
+let nop = 100
 
 let print_expr0 c e f prio_parent =
   let open Format in
@@ -289,3 +289,59 @@ let print_lief prio f l =
 let print_varname f = function
   | Ast.UserName v -> Format.fprintf f "%s" v
   | Ast.InternalName _ -> assert false
+
+let is_printable_i i =
+  let lowerchar = i >= (int_of_char 'a') && i <= (int_of_char 'z') in
+  let upperchar = i >= (int_of_char 'A') && i <= (int_of_char 'Z') in
+  let digit = i >= (int_of_char '0') && i <= (int_of_char '9') in
+  let specials = List.map int_of_char [ ' '; '|';
+		            '#'; '&'; '(';
+		            ')'; '*'; '+'; ','; '-';
+		            '.'; '/'; ':'; ';'; '<';
+		            '='; '>'; '_'; '|'; '!';
+		            '%'; '?'; '@'; '[';
+		            ']'; '^'; '`'; '{';
+		            '}'; '~']
+  in let specials = List.mem i specials
+  in lowerchar || upperchar || digit || specials
+    
+let is_printable c = is_printable_i (int_of_char c)
+    
+let string_noprintable print_char print_first_char f s =
+  let li = Array.to_list @$ String.chararray s in
+  let fst, printable = List.fold_left
+      (fun (fst, printable) c ->
+        if fst then
+          if is_printable c then begin
+            Format.fprintf f "\"%c" c;
+            (false, true)
+          end
+          else if print_first_char then
+            begin Format.fprintf f "\"\" & %a" print_char c;
+	(false, false) end
+          else
+            begin Format.fprintf f "%a" print_char c;
+	(false, false) end
+        else if is_printable c then
+          if printable then begin
+            Format.fprintf f "%c" c;
+            (false, true)
+          end
+          else begin
+            Format.fprintf f " & \"%c" c;
+            (false, true)
+          end
+        else
+          if printable then begin
+            Format.fprintf f "\" & %a" print_char c;
+            (false, false)
+          end
+          else begin
+            Format.fprintf f " & %a" print_char c;
+            (false, false)
+          end
+      ) (true, false) li
+  in if printable then
+    Format.fprintf f "\""
+  else if fst then
+    Format.fprintf f "\"\""

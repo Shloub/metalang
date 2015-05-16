@@ -107,62 +107,8 @@ class printer = object(self)
     let s = Printf.sprintf "%S" s in
     Format.fprintf f "%s" (String.replace "$" "\\$" s)
 
-  method is_printable_i i =
-    let lowerchar = i >= (int_of_char 'a') && i <= (int_of_char 'z') in
-    let upperchar = i >= (int_of_char 'A') && i <= (int_of_char 'Z') in
-    let digit = i >= (int_of_char '0') && i <= (int_of_char '9') in
-    let specials = List.map int_of_char [ ' '; '|';
-					  '#'; '&'; '(';
-					  ')'; '*'; '+'; ','; '-';
-					  '.'; '/'; ':'; ';'; '<';
-					  '='; '>'; '_'; '|'; '!';
-					  '%'; '?'; '@'; '[';
-					  ']'; '^'; '`'; '{';
-					  '}'; '~']
-	in let specials = List.mem i specials
-	   in lowerchar || upperchar || digit || specials
-
-  method is_printable c = self#is_printable_i (int_of_char c)
-
   method string_noprintable print_first_char f s =
-    let li = Array.to_list @$ String.chararray s in
-    let fst, printable = List.fold_left
-      (fun (fst, printable) c ->
-	if fst then
-	  if self#is_printable c then begin
-	    Format.fprintf f "\"%c" c;
-	    (false, true)
-	  end
-	  else if print_first_char then
-	    begin Format.fprintf f "\"\" & %a" self#char c;
-	      (false, false) end
-	  else
-	    begin Format.fprintf f "%a" self#char c;
-	      (false, false) end
-	else if self#is_printable c then
-	  if printable then begin
-	    Format.fprintf f "%c" c;
-	    (false, true)
-	  end
-	  else begin
-	    Format.fprintf f " & \"%c" c;
-	    (false, true)
-	  end
-	else
-	  if printable then begin
-	    Format.fprintf f "\" & %a" self#char c;
-	    (false, false)
-	  end
-	  else begin
-	    Format.fprintf f " & %a" self#char c;
-	    (false, false)
-	  end
-      ) (true, false) li
-    in if printable then
-	Format.fprintf f "\""
-      else if fst then
-	Format.fprintf f "\"\""
-
+    string_noprintable self#char print_first_char f s 
 
   method declaration f var t e =
     Format.fprintf f "@[<hov>def %a@ %a@ =@ %a@]"

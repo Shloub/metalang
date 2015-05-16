@@ -163,7 +163,7 @@ out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
 out/%.exeVB : out/%.vb
-	@vbnc2 $< -out:$@ || exit 1
+	@vbnc2 -removeintchecks $< -out:$@ || exit 1
 
 out/%.fun.ml.native : out/%.fun.ml
 	@ocamlopt -w +A -g out/$(basename $*).fun.ml -o out/$(basename $*).fun.ml.native || exit 1

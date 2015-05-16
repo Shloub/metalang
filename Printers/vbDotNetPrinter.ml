@@ -35,9 +35,91 @@ open Ast
 open Printer
 open CsharpPrinter
 
+let prio_binop op =
+  let open Ast.Expr in match op with
+  | Mul -> assoc 5
+  | Div
+  | Mod -> nonassocr 7
+  | Add -> assoc 9
+  | Sub -> nonassocr 9
+  | Lower
+  | LowerEq
+  | Higher
+  | HigherEq -> assoc 11
+  | Eq -> nonassocl 13
+  | Diff -> nonassocl 13
+  | And -> assoc 15
+  | Or -> assoc 15
+
+
+let print_op f op =
+  Format.fprintf f
+    "%s"
+    (match op with
+    | Expr.Add -> "+"
+    | Expr.Sub -> "-"
+    | Expr.Mul -> "*"
+    | Expr.Div -> "\\"
+    | Expr.Mod -> "Mod"
+    | Expr.Or -> "OrElse"
+    | Expr.And -> "AndAlso"
+    | Expr.Lower -> "<"
+    | Expr.LowerEq -> "<="
+    | Expr.Higher -> ">"
+    | Expr.HigherEq -> ">="
+    | Expr.Eq -> "="
+    | Expr.Diff -> "<>"
+    )
+
+let print_unop f op =
+  let open Ast.Expr in
+  Format.fprintf f (match op with
+  | Neg -> "-"
+  | Not -> "Not ")
+
+let prio_unop op =
+  let open Ast.Expr in match op with
+  | Neg -> 1
+  | Not -> 0
+
+let pchar f c =
+  if (c >= 'A' && c <= 'Z' ) ||
+  (c >= 'a' && c <= 'z' ) ||
+  (c >= '0' && c <= '9' ) ||
+  (c = '-' || c = '_' )
+  then Format.fprintf f "\"%c\"C" c
+  else Format.fprintf f "Chr(%d)" (int_of_char c)
+
+let print_lief tyenv prio f = function
+  | Ast.Expr.Char c -> pchar f c
+  | Ast.Expr.String s -> string_noprintable pchar false f s
+  | Ast.Expr.Enum e ->
+      let t = Typer.typename_for_enum e tyenv in
+      Format.fprintf f "%s.%s" t e
+  | x -> print_lief prio f x
+
+let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
+    (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f priority
+
+let print_expr tyenv macros e f p =
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief = print_lief tyenv;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 
 class vbDotNetPrinter = object(self)
   inherit csharpPrinter as super
+
+  method expr f e = print_expr (self#getTyperEnv ()) 
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params, List.assoc (self#lang ()) li) macros) e f nop
 
   method combine_formats () = false
 
@@ -56,22 +138,11 @@ class vbDotNetPrinter = object(self)
       self#separator ()
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
-  method char f c =
-    if (c >= 'A' && c <= 'Z' ) ||
-      (c >= 'a' && c <= 'z' ) ||
-      (c >= '0' && c <= '9' ) ||
-      (c = '-' || c = '_' )
-    then Format.fprintf f "\"%c\"C" c
-    else Format.fprintf f "Chr(%d)" (int_of_char c)
-
   method declaration f var t e =
     Format.fprintf f "@[<hov>Dim %a@ As %a@ =@ %a@]"
       self#binding var
       self#ptype t
       self#expr e
-
-
-  method string f s = self#string_noprintable false f s
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -203,37 +274,7 @@ End Function" else "")
     | Type.Lexems -> assert false
     | Type.Tuple _ -> assert false
 
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "\\"
-      | Expr.Mod -> "Mod"
-      | Expr.Or -> "OrElse"
-      | Expr.And -> "AndAlso"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "="
-      | Expr.Diff -> "<>"
-      )
-
-  method unop f op a =
-    let pop f () = match op with
-      | Expr.Neg -> Format.fprintf f "-"
-      | Expr.Not -> Format.fprintf f "Not"
-    in if self#nop (Expr.unfix a) then
-        Format.fprintf f "%a %a" pop () self#expr a
-      else
-        Format.fprintf f "%a(%a)" pop () self#expr a
-
   method return f e = Format.fprintf f "@[<h>Return@ %a@]" self#expr e
-
 
   method print_fun f funname t li instrs =
     match Type.unfix t with
@@ -245,26 +286,6 @@ End Function" else "")
       Format.fprintf f "Function @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Function@\n"
 	self#print_proto (funname, t, li)
 	self#instructions instrs
-
-  method binop f op a b =
-    match op with
-    | Expr.Eq ->
-      begin match Type.unfix @$ Typer.get_type (super#getTyperEnv ()) a with
-      | Type.Struct _ ->
-	Format.fprintf f "Object.ReferenceEquals(%a, %a)"
-        (self#chf op Left) a
-        (self#chf op Right) b
-      | _ -> super#binop f op a b
-      end
-    | Expr.Diff ->
-      begin match Type.unfix @$ Typer.get_type (super#getTyperEnv ()) a with
-      | Type.Struct _ ->
-	Format.fprintf f "Not(Object.ReferenceEquals(%a, %a))"
-        (self#chf op Left) a
-        (self#chf op Right) b
-      | _ -> super#binop f op a b
-      end
-    | _ -> super#binop f op a b
 
 
   method if_ f e ifcase elsecase =

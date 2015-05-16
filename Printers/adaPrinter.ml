@@ -73,7 +73,7 @@ class adaPrinter = object(self)
 
   method char (f:Format.formatter) (c:char) =
     let i = int_of_char c in
-    if self#is_printable_i i then Format.fprintf f "%C" c
+    if is_printable_i i then Format.fprintf f "%C" c
     else Format.fprintf f "Character'Val(%d)" i
 
   method string f s =
