@@ -34,21 +34,21 @@ open Ast
 open Fresh
 open PassesUtils
 
-module WalkCountNoPosition = WalkTop(CountNoPosition);;
-module WalkRemoveTags = WalkTop(RemoveTags);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
-module WalkCollectTypes = WalkTop(CollectTypes);;
-module WalkNopend = Walk(NoPend);;
-module WalkExpandPrint = Walk(ExpandPrint);;
-module WalkIfMerge = Walk(IfMerge);;
-module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
-module WalkRecordExprToInstr = Walk(RecordExprToInstr);;
-module WalkCheckNaming = WalkTop(CheckNaming);;
-module WalkRename = WalkTop(Rename);;
-module WalkInternalTags = WalkTop(InternalTags);;
-module WalkExpandUnTuple = WalkTop(ExpandUnTuple);;
-module WalkInlineFuncs0 = WalkTop(InlineFuncs);;
-module WalkRemoveInternal = WalkTop(RemoveInternal);;
+module WalkCountNoPosition = WalkTop(CountNoPosition)
+module WalkRemoveTags = WalkTop(RemoveTags)
+module WalkCollectCalls = WalkTop(CollectCalls)
+module WalkCollectTypes = WalkTop(CollectTypes)
+module WalkNopend = Walk(NoPend)
+module WalkExpandPrint = Walk(ExpandPrint)
+module WalkIfMerge = Walk(IfMerge)
+module WalkAllocArrayExpend = Walk(AllocArrayExpend)
+module WalkRecordExprToInstr = Walk(RecordExprToInstr)
+module WalkCheckNaming = WalkTop(CheckNaming)
+module WalkRename = WalkTop(Rename)
+module WalkInternalTags = WalkTop(InternalTags)
+module WalkExpandUnTuple = WalkTop(ExpandUnTuple)
+module WalkInlineFuncs0 = WalkTop(InlineFuncs)
+module WalkRemoveInternal = WalkTop(RemoveInternal)
 module WalkInlineFuncs = struct
   let apply () p =
     let p = WalkInlineFuncs0.apply () p in
@@ -56,9 +56,11 @@ module WalkInlineFuncs = struct
     | Prog.DeclarFun (name, t, params, instrs, {Prog.useless=true}) -> false
     | _ -> true) p.Prog.funs}
 end
-module WalkInlineVars = WalkTop(InlineVars);;
+module WalkInlineVars = WalkTop(InlineVars)
 
-module WalkDetectRecursion = WalkTop(DetectRecursion);;
+module WalkDetectRecursion = WalkTop(DetectRecursion)
+
+module WalkArrayReIndex = Walk(ArrayReIndex)
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function

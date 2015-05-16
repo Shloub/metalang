@@ -175,6 +175,7 @@ let clike_passes
     ~array
     ~mergeif
     ~arrayconst
+    ~arrayindex1
     prog =
   let rec_, ty, p = default_passes prog in
   let ty, p = if tuple then
@@ -190,6 +191,7 @@ let clike_passes
     if mergeif then Passes.WalkIfMerge.apply () p |> Typer.process
     else ty, p
   in let p = if array then Passes.WalkAllocArrayExpend.apply arrayconst p else p in
+  let p = if arrayindex1 then Passes.WalkArrayReIndex.apply () p else p in
   let p = Passes.WalkInlineVars.apply () p in
   let ty, p = Typer.process p in
   let p = ReadAnalysis.apply p in
@@ -243,27 +245,27 @@ let languages, printers =
       
   in
   let ls = [
-    "c",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new CPrinter.cPrinter ;
-    "fs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new ForthPrinter.forthPrinter ;
-    "m",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new ObjCPrinter.objCPrinter ;
-    "pas",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new PasPrinter.pasPrinter ;
-    "adb",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new AdaPrinter.adaPrinter ;
-    "cc",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:true ) => new CppPrinter.cppPrinter ;
-    "cs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new CsharpPrinter.csharpPrinter ;
-    "vb",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new VbDotNetPrinter.vbDotNetPrinter ;
-    "java",    (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new JavaPrinter.javaPrinter ;
-    "groovy",  (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new GroovyPrinter.groovyPrinter ;
-    "js",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new JsPrinter.jsPrinter ;
-    "st",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new SmalltalkPrinter.smalltalkPrinter ;
-    "go",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false) => new GoPrinter.goPrinter ;
-    "cl",      (true , clike_passes ~tuple:true  ~record:true  ~array:false ~mergeif:true  ~arrayconst:false) => new CommonLispPrinter.commonLispPrinter ;
-    "php",     (true , clike_passes ~tuple:false ~record:true  ~array:true  ~mergeif:false ~arrayconst:true) => new PhpPrinter.phpPrinter ;
-    "scala",   (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false) => new ScalaPrinter.scalaPrinter ;
-    "lua",     (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false) => new LuaPrinter.luaPrinter ;
-    "py",      (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:true ) => new PyPrinter.pyPrinter ;
-    "pl",      (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false) => new PerlPrinter.perlPrinter ;
-    "ml",      (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true  ~arrayconst:false) => new OcamlPrinter.camlPrinter ;
-    "rb",      (false, clike_passes ~tuple:false ~record:false ~array:false ~mergeif:false ~arrayconst:false) => new RbPrinter.rbPrinter ;
+    "c",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new CPrinter.cPrinter ;
+    "fs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new ForthPrinter.forthPrinter ;
+    "m",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new ObjCPrinter.objCPrinter ;
+    "pas",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new PasPrinter.pasPrinter ;
+    "adb",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new AdaPrinter.adaPrinter ;
+    "cc",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false) => new CppPrinter.cppPrinter ;
+    "cs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new CsharpPrinter.csharpPrinter ;
+    "vb",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new VbDotNetPrinter.vbDotNetPrinter ;
+    "java",    (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new JavaPrinter.javaPrinter ;
+    "groovy",  (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new GroovyPrinter.groovyPrinter ;
+    "js",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new JsPrinter.jsPrinter ;
+    "st",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:true ) => new SmalltalkPrinter.smalltalkPrinter ;
+    "go",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new GoPrinter.goPrinter ;
+    "cl",      (true , clike_passes ~tuple:true  ~record:true  ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false) => new CommonLispPrinter.commonLispPrinter ;
+    "php",     (true , clike_passes ~tuple:false ~record:true  ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false) => new PhpPrinter.phpPrinter ;
+    "scala",   (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new ScalaPrinter.scalaPrinter ;
+    "lua",     (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new LuaPrinter.luaPrinter ;
+    "py",      (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false) => new PyPrinter.pyPrinter ;
+    "pl",      (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new PerlPrinter.perlPrinter ;
+    "ml",      (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false) => new OcamlPrinter.camlPrinter ;
+    "rb",      (false, clike_passes ~tuple:false ~record:false ~array:false ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new RbPrinter.rbPrinter ;
     "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:true ) => new OcamlFunPrinter.camlFunPrinter ;
     "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:false) => new RacketPrinter.racketPrinter ;
     "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  ~curry:true ) => new HaskellPrinter.haskellPrinter ;
