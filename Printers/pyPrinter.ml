@@ -35,8 +35,80 @@ open Ast
 open Printer
 open CPrinter
 
+let print_expr macros e f p =
+  let prio_binop op =
+    let open Ast.Expr in match op with
+    | Mul -> assoc 5
+    | Div
+    | Mod -> nonassocr 7
+    | Add -> assoc 9
+    | Sub -> nonassocr 9
+    | Lower
+    | LowerEq
+    | Higher
+    | HigherEq
+    | Eq
+    | Diff -> nonassocl 13
+    | And -> assoc 15
+    | Or -> assoc 15 in
+  let print_expr0 config e f prio_parent =
+    let open Format in
+    let open Ast.Expr in match e with
+    | BinOp (a, (Div as op), b) ->
+        let _, priol, prior = prio_binop op in
+        fprintf f "math.trunc(%a %a %a)" a priol print_op op b prior
+    | BinOp (a, Mod, b) -> fprintf f "mod(%a, %a)" a nop b nop
+    | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
+    | _ -> print_expr0 config e f prio_parent
+  in
+  let print_op f op =
+    let open Ast.Expr in
+    Format.fprintf f (match op with
+    | Add -> "+"
+    | Sub -> "-"
+    | Mul -> "*"
+    | Div -> "/"
+    | Mod -> "%%"
+    | Or -> "or"
+    | And -> "and"
+    | Lower -> "<"
+    | LowerEq -> "<="
+    | Higher -> ">"
+    | HigherEq -> ">="
+    | Eq -> "=="
+    | Diff -> "!=") in
+  let print_unop f op =
+    let open Ast.Expr in
+    Format.fprintf f (match op with
+    | Neg -> "-"
+    | Not -> "not ") in
+  let print_lief prio f = function
+    | Ast.Expr.Char c -> unicode f c
+    | Ast.Expr.Enum e -> Format.fprintf f "%S" e
+    | Ast.Expr.Bool true -> Format.fprintf f "True"
+    | Ast.Expr.Bool false -> Format.fprintf f "False"
+    | x -> print_lief prio f x
+  in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 class pyPrinter = object(self)
   inherit cPrinter as super
+
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
+
 
   method declare_for s f li = ()
   method separator f () = ()

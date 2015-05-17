@@ -66,16 +66,60 @@ let skip = "def skip() {
 }
 "
 
+let print_expr tyenv macros e f p =
+  let print_expr0 config e f prio_parent =
+    let open Format in
+    let open Ast.Expr in match e with
+    | Record li -> begin match li with
+      | (field, _)::_ ->
+          let t = Typer.typename_for_field field tyenv in
+          Format.fprintf f "new %s(%a)"
+            (String.capitalize t)
+            (print_list
+               (fun f (_fieldname, expr) -> expr f nop) sep_c
+            )
+            li
+      | _ -> assert false
+    end
+    | _ -> print_expr0 config e f prio_parent in
+  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f prio in
+  let print_lief prio f l =
+    let open Format in
+    let open Ast.Expr in match l with
+    | Char c -> unicode f c
+    | String s -> fprintf f "%S" s
+    | Integer i ->
+        if i < 0 then parens prio (-1) f "%i" i
+        else Format.fprintf f "%i" i
+    | Bool true -> fprintf f "true"
+    | Bool false -> fprintf f "false"
+    | Enum s -> fprintf f "%s" s
+  in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
+
 class scalaPrinter = object(self)
   inherit CPrinter.cPrinter as printer
+
+  method expr f e = print_expr (self#getTyperEnv ()) 
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method lang () = "scala"
 
   method hasSelfAffect op = false
-
-  method bool f b = Format.fprintf f (if b then "true" else "false")
-
-  method char f c = unicode f c
 
   method header f prog =
     let need_stdinsep = prog.Prog.hasSkip in

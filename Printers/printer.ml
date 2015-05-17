@@ -516,12 +516,7 @@ class printer = object(self)
     Format.fprintf f "record %a end"
       (self#def_fields (InternalName 0)) li
 
-  method char f c =
-    let cs = Printf.sprintf "%C" c in
-    if String.length cs == 6 then
-      Format.fprintf f "'\\x%02x'" (int_of_char c)
-    else
-      Format.fprintf f "%s" cs
+  method char f c = clike_char f c
 
   method access f m =
     self#mutable_get f m

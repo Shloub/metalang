@@ -42,7 +42,7 @@ let print_lief tyenv prio f l =
     else
       Format.fprintf f "(char)%s" cs
   | String s -> string_nodolar f s
-  | Ast.Expr.Enum e ->
+  | Enum e ->
       let t = Typer.typename_for_enum e tyenv in
       Format.fprintf f "%s.%s" (String.capitalize t) e
   | x -> print_lief tyenv prio f x

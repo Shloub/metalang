@@ -356,3 +356,10 @@ let unicode f c =
 let string_nodolar f s =
   let s = Printf.sprintf "%S" s in
   Format.fprintf f "%s" (String.replace "$" "\\$" s)
+
+let clike_char f c =
+  let cs = Printf.sprintf "%C" c in
+  if String.length cs == 6 then
+    Format.fprintf f "'\\x%02x'" (int_of_char c)
+  else
+    Format.fprintf f "%s" cs

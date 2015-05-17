@@ -36,8 +36,40 @@ open Stdlib
 open Printer
 open CPrinter
 
+let print_expr macros e f p =
+  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "(*%a).%s" conf) m f prio in
+  let print_lief prio f l =
+    let open Format in
+    let open Ast.Expr in match l with
+    | Char c -> clike_char f c
+    | String s -> fprintf f "%S" s
+    | Integer i ->
+        if i < 0 then parens prio (-1) f "%i" i
+        else Format.fprintf f "%i" i
+    | Bool true -> fprintf f "true"
+    | Bool false -> fprintf f "false"
+    | Enum s -> fprintf f "%s" s
+  in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 class goPrinter = object(self)
   inherit cPrinter as super
+
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method lang () = "go"
 
@@ -164,8 +196,6 @@ func skip() {
   method ptypename f t = match Type.unfix t with
   | Type.Named n -> Format.fprintf f "%s" n
   | _ -> assert false
-
-  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"
