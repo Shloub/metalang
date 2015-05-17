@@ -33,11 +33,80 @@ open Ast
 open Printer
 open Helper
 
+let print_expr macros e f p =
+  let open Format in
+  let open Ast.Expr in
+  let prio_binop op = match op with
+  | Mul -> assoc 5
+  | Div
+  | Mod -> nonassocr 7
+  | And -> assoc 9
+
+  | Add -> assoc 11
+  | Sub -> nonassocr 11
+  | Or -> assoc 13
+
+
+  | Eq -> nonassocl 15
+  | Diff -> nonassocl 15
+
+  | Lower
+  | LowerEq
+  | Higher
+  | HigherEq -> assoc 17
+  in
+  let print_lief prio f = function
+    | Char c -> fprintf f "#%d" (int_of_char c)
+    | String i ->
+        fprintf f "'";
+        String.fold_left (fun () c ->
+          let ns = 
+            if is_printable c then String.of_char c
+            else "'#"^(string_of_int (int_of_char c))^"'"
+          in fprintf f "%s" ns ) () i;
+        fprintf f "'"
+    | x -> print_lief prio f x in
+  let print_expr0 config e f prio_parent = match e with
+  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
+  | _ -> print_expr0 config e f prio_parent
+  in
+  let print_op f op = fprintf f (match op with
+  | Add -> "+"
+  | Sub -> "-"
+  | Mul -> "*"
+  | Div -> "Div"
+  | Mod -> "Mod"
+  | Or -> "or"
+  | And -> "and"
+  | Lower -> "<"
+  | LowerEq -> "<="
+  | Higher -> ">"
+  | HigherEq -> ">="
+  | Eq -> "="
+  | Diff -> "<>") in
+  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "%a^.%s" conf) m f prio in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 class pasPrinter = object(self)
   inherit printer as super
 
-  method lang () = "pas"
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
+  method lang () = "pas"
 
   method hasSelfAffect op = false
 

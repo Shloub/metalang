@@ -36,18 +36,18 @@ open Helper
 open Printer
 open CPrinter
 
-let print_lief tyenv prio f = function
-  | Ast.Expr.Char c -> unicode f c
-  | x -> print_lief prio f x
-
-let print_expr tyenv macros e f p =
+let print_expr macros e f p =
+  let print_lief prio f = function
+    | Ast.Expr.Char c -> unicode f c
+    | x -> print_lief prio f x
+  in
   let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "->at(%a)" "%a->%s" conf) m f prio in
   let config = {
     prio_binop;
     prio_unop;
     print_varname;
-    print_lief = print_lief tyenv;
+    print_lief;
     print_op;
     print_unop;
     print_mut;
@@ -57,9 +57,11 @@ let print_expr tyenv macros e f p =
 class cppPrinter = object(self)
   inherit cPrinter as cprinter
 
-  method expr f e = print_expr (self#getTyperEnv ()) 
+  method expr f e = print_expr
       (StringMap.map (fun (ty, params, li) ->
-        ty, params, List.assoc (self#lang ()) li) macros) e f nop
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method lang () = "cpp"
 

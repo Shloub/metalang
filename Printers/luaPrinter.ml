@@ -34,11 +34,61 @@ open Helper
 open Ast
 open Printer
 
+let print_expr macros e f p =
+  let open Format in
+  let open Ast.Expr in
+  let print_lief prio f = function
+    | Char c -> fprintf f "%d" (int_of_char c)
+    | x -> print_lief prio f x in
+  let print_expr0 config e f prio_parent = match e with
+  | BinOp (a, (Div as op), b) ->
+      let _, priol, prior = prio_binop op in
+      fprintf f "trunc(%a %a %a)" a priol print_op op b prior
+  | BinOp (a, Mod, b) -> fprintf f "math.mod(%a, %a)" a nop b nop
+  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
+  | Tuple li -> fprintf f "{%a}" (print_list (fun f x -> x f nop) sep_c) li
+  | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
+      fprintf f "%s=%a" name x nop) sep_c) li
+  | _ -> print_expr0 config e f prio_parent
+  in
+  let print_op f op = fprintf f (match op with
+  | Add -> "+"
+  | Sub -> "-"
+  | Mul -> "*"
+  | Div -> "/"
+  | Mod -> "%%"
+  | Or -> "or"
+  | And -> "and"
+  | Lower -> "<"
+  | LowerEq -> "<="
+  | Higher -> ">"
+  | HigherEq -> ">="
+  | Eq -> "=="
+  | Diff -> "~=") in
+  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 class luaPrinter = object(self)
   inherit printer as super
 
   method combine_formats () = true
   method limit_nprint () = 255
+
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method lang () = "lua"
   method prog f prog =
@@ -48,7 +98,6 @@ class luaPrinter = object(self)
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "%a%a%a%a%a%a%a%a@\n%a"
   (fun f () -> if Tags.is_taged "use_readintline" then
-if Tags.is_taged "use_readtuple" then
 Format.fprintf f "
 function readintline()
   local tab = {}
@@ -56,21 +105,8 @@ function readintline()
     table.insert(tab, tonumber(a))
   end
   return tab
-end@\n"
-else
-Format.fprintf f "
-function readintline()
-  local tab = {}
-  local i = 0
-  for a in string.gmatch(io.read(\"*l\"), \"-?%%d+\") do
-    tab[i] = tonumber(a)
-    i = i + 1
-  end
-  return tab
-end@\n"
-) ()
+end@\n") ()
   (fun f () -> if Tags.is_taged "use_readcharline" then
-if Tags.is_taged "use_readtuple" then
 Format.fprintf f "
 function readcharline()
   local tab = {}
@@ -79,18 +115,7 @@ function readcharline()
     table.insert(tab, string.byte(a))
   end
   return tab
-end@\n"
-else
-Format.fprintf f "function readcharline()
-   local tab = {}
-   local i = 0
-   for a in string.gmatch(io.read(\"*l\"), \".\") do
-    tab[i] = string.byte(a)
-    i = i + 1
-   end
-   return tab
-end@\n"
-) ()
+end@\n") ()
   (fun f () -> if Tags.is_taged "__internal__div" then Format.fprintf f "
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
@@ -167,16 +192,6 @@ end@\n") ()
         self#instructions ifcase
         self#instructions elsecase
 
-  method m_array f m indexes =
-        if Tags.is_taged "use_readtuple" then
-          Format.fprintf f "%a[%a]"
-            self#mutable_get m
-            (print_list
-               (fun f e -> Format.fprintf f "%a" self#expr (Expr.saddi e 1))
-               (sep "%a][%a"))
-            indexes
-        else super#m_array f m indexes
-
   method multi_print f format exprs =
     match exprs with
     | [] -> Format.fprintf f "@[<h>io.write(\"%s\")@]" format
@@ -222,52 +237,12 @@ end@\n") ()
       self#expr expr2
       self#instructions li
 
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "/"
-      | Expr.Mod -> "%"
-      | Expr.Or -> "or"
-      | Expr.And -> "and"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "=="
-      | Expr.Diff -> "~="
-      )
-
-  method unop f op a = match op with
-  | Expr.Neg -> Format.fprintf f "-%a" (fun f a ->
-      if self#nop (Expr.unfix a) then self#expr f a
-      else Format.fprintf f "(%a)" self#expr a) a
-  | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
-
   method main f main = self#instructions f main
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "function %a( %a )"
       self#funname funname
       (print_list (fun t (a, type_) -> self#binding t a) sep_c) li
-
-
-  method binop f op a b =
-    match op with
-    | Expr.Div ->
-      if Typer.is_int (super#getTyperEnv ()) a
-      then Format.fprintf f "trunc(%a / %a)"
-        (self#chf op Left) a
-        (self#chf op Right) b
-      else super#binop f op a b
-    | Expr.Mod ->
-      Format.fprintf f "math.mod(%a, %a)"
-        self#expr a
-        self#expr b
-    | _ -> super#binop f op a b
 
 end
 

@@ -34,51 +34,89 @@ open Ast
 open Printer
 open PasPrinter
 
+let print_expr macros e f p =
+  let open Format in
+  let open Ast.Expr in
+  let prio_binop op =
+    let open Ast.Expr in match op with
+    | Mul -> assoc 5
+    | Div
+    | Mod -> nonassocr 7
+    | Add -> assoc 9
+    | Sub -> nonassocr 9
+    | Lower
+    | LowerEq
+    | Higher
+    | HigherEq
+    | Eq
+    | Diff -> nonassoclr 11 (* pour éviter l'erreur : unexpected relational operator *)
+    | And
+    | Or -> nonassoclr 15
+  in
+  let pchar f c = 
+    let i = int_of_char c in
+    if is_printable_i i then fprintf f "%C" c
+    else fprintf f "Character'Val(%d)" i in
+  let print_lief prio f = function
+    | Char c -> pchar f c
+    | Integer i ->
+        if i < 0 then parens prio (1000) f "%i" i
+        else Format.fprintf f "%i" i
+    | String s -> fprintf f "new char_array'( To_C(%a))"
+          (string_noprintable pchar true) s
+    | Bool true -> fprintf f "TRUE"
+    | Bool false -> fprintf f "FALSE"
+    | x -> print_lief prio f x in
+  let print_unop f op =
+    let open Ast.Expr in
+    Format.fprintf f (match op with
+    | Neg -> "-"
+    | Not -> "not ")
+  in
+  let print_expr0 config e f prio_parent = match e with
+  | UnOp (a, Neg) -> fprintf f "(-%a)" a 1
+  | Call(funname, []) when not (StringMap.mem funname macros) -> fprintf f "%s" funname
+  | _ -> print_expr0 config e f prio_parent
+  in
+  let print_op f op = fprintf f (match op with
+  | Add -> "+"
+  | Sub -> "-"
+  | Mul -> "*"
+  | Div -> "/"
+  | Mod -> "rem"
+  | Or -> "or else"
+  | And -> "and then"
+  | Lower -> "<"
+  | LowerEq -> "<="
+  | Higher -> ">"
+  | HigherEq -> ">="
+  | Eq -> "="
+  | Diff -> "/=") in
+  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f prio in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 class adaPrinter = object(self)
   inherit pasPrinter as super
 
-  method binop f op a b = super#baseBinop f op a b
-
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   val mutable progname = ""
 
   method lang () = "ada"
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "/"
-      | Expr.Mod -> "rem"
-      | Expr.Or -> "or else" (* short circuit = long operateur...*)
-      | Expr.And -> "and then"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "="
-      | Expr.Diff -> "/="
-      )
-
-  method bool f b = Format.fprintf f (if b then "TRUE" else "FALSE")
-
-  method integer f i =
-    Format.fprintf f "%d" i
-
-  method unop f op a =
-    Format.fprintf f "(%a)" (fun f () -> super#unop f op a) ()
-
-  method char (f:Format.formatter) (c:char) =
-    let i = int_of_char c in
-    if is_printable_i i then Format.fprintf f "%C" c
-    else Format.fprintf f "Character'Val(%d)" i
-
-  method string f s =
-    Format.fprintf f "new char_array'( To_C(%a))"
-      (self#string_noprintable true) s
 
   method print f t expr =
     match Type.unfix t with
