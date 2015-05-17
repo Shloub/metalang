@@ -34,23 +34,6 @@ open Stdlib
 open Ast
 open Helper
 open Printer
-open CppPrinter
-
-let prio_binop op =
-  let open Ast.Expr in match op with
-  | Mul -> assoc 5
-  | Div
-  | Mod -> nonassocr 7
-  | Add -> assoc 9
-  | Sub -> nonassocr 9
-  | Lower
-  | LowerEq
-  | Higher
-  | HigherEq -> assoc 11
-  | Eq -> nonassocl 13
-  | Diff -> nonassocl 13
-  | And -> assoc 15
-  | Or -> assoc 15
 
 let print_lief tyenv prio f = function
   | Ast.Expr.Char c -> unicode f c
@@ -74,7 +57,7 @@ let print_expr tyenv macros e f p =
   } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
 class javaPrinter = object(self)
-  inherit cppPrinter as cppprinter
+  inherit CppPrinter.cppPrinter as cppprinter
 
   method expr f e = print_expr (self#getTyperEnv ()) 
       (StringMap.map (fun (ty, params, li) ->
@@ -243,7 +226,6 @@ class javaPrinter = object(self)
       ) sep_nl
       f
       li
-
 
   method allocrecord f name t el =
     Format.fprintf f "%a %a = new %a()%a@\n%a"

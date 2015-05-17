@@ -33,13 +33,50 @@ open Helper
 open Ast
 open JavaPrinter
 
+let print_lief tyenv prio f l =
+  let open Format in
+  let open Ast.Expr in match l with
+  | Char c -> let cs = Printf.sprintf "%C" c in
+    if String.length cs == 6 then
+      Format.fprintf f "(char)%d" (int_of_char c)
+    else
+      Format.fprintf f "(char)%s" cs
+  | String s -> string_nodolar f s
+  | Ast.Expr.Enum e ->
+      let t = Typer.typename_for_enum e tyenv in
+      Format.fprintf f "%s.%s" (String.capitalize t) e
+  | x -> print_lief tyenv prio f x
+
+let print_expr0 config e f prio_parent =
+  let open Format in
+  let open Ast.Expr in match e with
+  | BinOp (a, (Div as op), b) -> fprintf f "%a.intdiv(%a)" a 0 b nop
+  | _ -> print_expr0 config e f prio_parent
+
+let print_expr tyenv macros e f p =
+  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief = print_lief tyenv;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
+
 (** the main class : the ocaml printer *)
 class groovyPrinter = object(self)
   inherit javaPrinter as super
 
-  method limit_nprint () = 254
+  method expr f e = print_expr (self#getTyperEnv ()) 
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params, List.assoc (self#lang ()) li) macros) e f nop
 
-  method string f s = self#string_nodolar f s
+  method limit_nprint () = 254
 
   method lang () = "groovy"
 
@@ -49,27 +86,12 @@ class groovyPrinter = object(self)
 
   method separator f () = ()
   method static f () = ()
-  method char f c =
-    let cs = Printf.sprintf "%C" c in
-    if String.length cs == 6 then
-      Format.fprintf f "(char)%d" (int_of_char c)
-    else
-      Format.fprintf f "(char)%s" cs
-
+  
   method decl_field f (name, type_) = Format.fprintf f "%a %a" self#ptype type_ self#field name
 
   method typename f n = Format.fprintf f "%s" (String.capitalize n)
 
   method print f t expr = Format.fprintf f "@[<h>print(%a)@]" self#expr expr
-
-  method binop f op a b =
-    match op with
-    | Expr.Div ->
-        Format.fprintf f "(int)(%a %a@;%a)"
-          (self#chf op Printer.Left) a
-          self#print_op op
-          (self#chf op Printer.Right) b
-    | _ -> super#binop f op a b
 
   method multi_print f format exprs =
     match exprs with
@@ -77,7 +99,6 @@ class groovyPrinter = object(self)
     | _ ->
       Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
         (print_list self#expr sep_c ) (List.map snd exprs)
-
 
   method print_scanner f () =
     Format.fprintf f "@[<h>@@Field %aScanner scanner = new Scanner(System.in)%a@]"
@@ -94,6 +115,5 @@ class groovyPrinter = object(self)
       self#proglist prog.Prog.funs
       (if reader || datareader then self#print_scanner else fun f () -> ()) ()
       (print_option self#main) prog.Prog.main
-
 
 end

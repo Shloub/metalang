@@ -130,20 +130,20 @@ let prio_binop op =
   let open Ast.Expr in match op with
   | Mul -> assoc 5
   | Div
-  | Mod -> nonassocr 5
-  | Add -> assoc 7
-  | Sub -> nonassocr 7
+  | Mod -> nonassocr 7
+  | Add -> assoc 9
+  | Sub -> nonassocr 9
   | Lower
   | LowerEq
   | Higher
-  | HigherEq -> assoc 9
-  | Eq -> nonassocl 11
-  | Diff -> nonassocl 11
-  | And -> assoc 13
-  | Or -> assoc 13
+  | HigherEq -> assoc 11
+  | Eq -> nonassocl 13
+  | Diff -> nonassocl 13
+  | And -> assoc 15
+  | Or -> assoc 15
         
 let prio_binop_equal = function
-  | Ast.Expr.Eq -> nonassoclr 11
+  | Ast.Expr.Eq -> nonassoclr 13
   | op -> prio_binop op
 
 let prio_unop op =
@@ -352,3 +352,7 @@ let unicode f c =
     Format.fprintf f "'\\u00%02x'" (int_of_char c)
   else
     Format.fprintf f "%s" cs
+
+let string_nodolar f s =
+  let s = Printf.sprintf "%S" s in
+  Format.fprintf f "%s" (String.replace "$" "\\$" s)

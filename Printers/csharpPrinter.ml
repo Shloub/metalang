@@ -51,7 +51,7 @@ let print_expr tyenv macros e f p =
   let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
   let config = {
-    prio_binop = JavaPrinter.prio_binop;
+    prio_binop;
     prio_unop;
     print_varname;
     print_lief = print_lief tyenv;

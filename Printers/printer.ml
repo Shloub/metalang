@@ -103,9 +103,7 @@ class printer = object(self)
   method typename f i = Format.fprintf f "%s" i
   method string f i = Format.fprintf f "%S" i
 
-  method string_nodolar f s =
-    let s = Printf.sprintf "%S" s in
-    Format.fprintf f "%s" (String.replace "$" "\\$" s)
+  method string_nodolar f s = string_nodolar f s
 
   method string_noprintable print_first_char f s =
     string_noprintable self#char print_first_char f s 
