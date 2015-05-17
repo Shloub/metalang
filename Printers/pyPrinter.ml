@@ -32,38 +32,46 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
-open CPrinter
+
+let prio_percent_percent = 0
+
+let print_lief prio f l =
+  let open Format in
+  let open Expr in
+  match l with
+    | Char c -> unicode f c
+    | Enum e -> fprintf f "%S" e
+    | Bool true -> fprintf f "True"
+    | Bool false -> fprintf f "False"
+    | x -> print_lief prio f x
 
 let print_expr macros e f p =
-  let prio_binop op =
-    let open Ast.Expr in match op with
-    | Mul -> assoc 5
-    | Div
-    | Mod -> nonassocr 7
-    | Add -> assoc 9
-    | Sub -> nonassocr 9
-    | Lower
-    | LowerEq
-    | Higher
-    | HigherEq
-    | Eq
-    | Diff -> nonassocl 13
-    | And -> assoc 15
-    | Or -> assoc 15 in
-  let print_expr0 config e f prio_parent =
-    let open Format in
-    let open Ast.Expr in match e with
-    | BinOp (a, (Div as op), b) ->
-        let _, priol, prior = prio_binop op in
-        fprintf f "math.trunc(%a %a %a)" a priol print_op op b prior
-    | BinOp (a, Mod, b) -> fprintf f "mod(%a, %a)" a nop b nop
-    | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
-    | _ -> print_expr0 config e f prio_parent
+  let open Format in
+  let open Expr in
+  let prio_binop op = match op with
+  | Mul -> assoc 5
+  | Div
+  | Mod -> nonassocr 7
+  | Add -> assoc 9
+  | Sub -> nonassocr 9
+  | Lower
+  | LowerEq
+  | Higher
+  | HigherEq
+  | Eq
+  | Diff -> nonassocl 13
+  | And -> assoc 15
+  | Or -> assoc 15 in
+  let print_expr0 config e f prio_parent = match e with
+  | BinOp (a, (Div as op), b) ->
+      let _, priol, prior = prio_binop op in
+      fprintf f "math.trunc(%a %a %a)" a priol print_op op b prior
+  | BinOp (a, Mod, b) -> fprintf f "mod(%a, %a)" a nop b nop
+  | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
+  | _ -> print_expr0 config e f prio_parent
   in
   let print_op f op =
-    let open Ast.Expr in
-    Format.fprintf f (match op with
+    fprintf f (match op with
     | Add -> "+"
     | Sub -> "-"
     | Mul -> "*"
@@ -82,13 +90,6 @@ let print_expr macros e f p =
     Format.fprintf f (match op with
     | Neg -> "-"
     | Not -> "not ") in
-  let print_lief prio f = function
-    | Ast.Expr.Char c -> unicode f c
-    | Ast.Expr.Enum e -> Format.fprintf f "%S" e
-    | Ast.Expr.Bool true -> Format.fprintf f "True"
-    | Ast.Expr.Bool false -> Format.fprintf f "False"
-    | x -> print_lief prio f x
-  in
   let config = {
     prio_binop;
     prio_unop;
@@ -98,16 +99,18 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 class pyPrinter = object(self)
-  inherit cPrinter as super
+  inherit CPrinter.cPrinter as super
 
-  method expr f e = print_expr
+  method exprp p f e = print_expr
       (StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
+        with Not_found -> List.assoc "" li) macros) e f p
+
+  method expr f e = self#exprp nop f e
 
 
   method declare_for s f li = ()
@@ -133,49 +136,11 @@ class pyPrinter = object(self)
 
   method enum f e = Format.fprintf f "\"%s\"" e
 
-  method unop f op a = match op with
-  | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
-  | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
-
-  method binop f op a b =
-    match op with
-    | Expr.Div ->
-      if Typer.is_int (super#getTyperEnv ()) a
-      then Format.fprintf f "math.trunc(%a / %a)"
-        (self#chf op Left) a
-        (self#chf op Right) b
-      else super#binop f op a b
-    | Expr.Mod ->
-      Format.fprintf f "mod(%a, %a)"
-        self#expr a
-        self#expr b
-    | _ -> super#binop f op a b
-
-  method sbinop f op a b = super#binop f op a b
-
-  method print_op f op = Format.fprintf f "%s"
-    (match op with
-    | Expr.Add -> "+"
-    | Expr.Sub -> "-"
-    | Expr.Mul -> "*"
-    | Expr.Div -> "/"
-    | Expr.Mod -> "%"
-    | Expr.Or -> "or"
-    | Expr.And -> "and"
-    | Expr.Lower -> "<"
-    | Expr.LowerEq -> "<="
-    | Expr.Higher -> ">"
-    | Expr.HigherEq -> ">="
-    | Expr.Eq -> "=="
-    | Expr.Diff -> "!="
-    )
-
   method allocarrayconst f binding t len e opt =
     Format.fprintf f "@[<h>%a@ = [%a] * %a@]"
       self#binding binding
-      self#lief e
-      (fun f e -> if self#nop (Expr.unfix e) then self#expr f e
-      else Format.fprintf f "(%a)" self#expr e)
+      (print_lief nop) e
+      (fun f e -> self#exprp (prio_right (prio_binop Ast.Expr.Mul)) f e)
       len
 
 
@@ -312,11 +277,7 @@ def skipchar():
   method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>%a@ =@ [None] * %a@]"
       self#binding binding
-      (fun f a ->
-        if self#nop (Expr.unfix a) then
-          self#expr f a
-        else self#printp f a
-      ) len
+      (fun f a -> self#exprp (prio_right (prio_binop Ast.Expr.Mul)) f a) len
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\n"
@@ -351,9 +312,7 @@ def skipchar():
   method print_args =
     print_list
       (fun f (t, expr) ->
-        (if self#nop (Expr.unfix expr) then
-            self#expr
-         else self#printp) f expr)
+        (self#expr) f expr)
       sep_c
 
   method multi_print f format exprs =
@@ -379,10 +338,7 @@ def skipchar():
       else Format.fprintf f "@[print( %S, end='')@]" s
     | _ ->
       Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t
-        (fun f expr ->
-          if self#nop (Expr.unfix expr) then
-              self#expr f expr
-           else self#printp f expr) expr
+        (fun f expr -> self#exprp prio_percent_percent f expr) expr
 
   method field f field = Format.fprintf f "%S" field
 

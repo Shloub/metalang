@@ -267,7 +267,7 @@ let languages, printers =
     "pl",      (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new PerlPrinter.perlPrinter ;
     "ml",      (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false) => new OcamlPrinter.camlPrinter ;
     "rb",      (false, clike_passes ~tuple:false ~record:false ~array:false ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new RbPrinter.rbPrinter ;
-    "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:true  ~macrotize:false) => new OcamlFunPrinter.camlFunPrinter ;
+    "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:true  ~macrotize:true) => new OcamlFunPrinter.camlFunPrinter ;
     "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:false ~macrotize:true ) => new RacketPrinter.racketPrinter ;
     "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  ~curry:true  ~macrotize:false) => new HaskellPrinter.haskellPrinter ;
   ] in

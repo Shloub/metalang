@@ -34,12 +34,11 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
-open PyPrinter
 
-let print_lief prio f l =
+let print_expr macros e f p =
   let open Format in
-  let open Ast.Expr in match l with
+  let open Ast.Expr in
+  let print_lief prio f l = match l with
   | Char c ->
       let cs = Printf.sprintf "%C" c in
       if String.length cs == 6 then
@@ -48,14 +47,11 @@ let print_lief prio f l =
   | String s -> fprintf f "%S" s
   | Integer i ->
       if i < 0 then parens prio (-1) f "%i" i
-      else Format.fprintf f "%i" i
+      else fprintf f "%i" i
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
-  | Enum s -> fprintf f "%S" s
-
-let print_expr0 config e f prio_parent =
-  let open Format in
-  let open Ast.Expr in match e with
+  | Enum s -> fprintf f "%S" s in
+  let print_expr0 config e f prio_parent = match e with
   | BinOp (a, (Div as op), b) ->
       let _, priol, prior = prio_binop op in
       fprintf f "(%a.to_f %a %a).to_i" a priol print_op op b prior
@@ -63,9 +59,7 @@ let print_expr0 config e f prio_parent =
   | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
   | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
       fprintf f "%S => %a" name x nop) sep_c) li
-  | _ -> print_expr0 config e f prio_parent
-
-let print_expr macros e f p =
+  | _ -> print_expr0 config e f prio_parent in
   let config = {
     prio_binop = prio_binop_equal;
     prio_unop;
@@ -75,11 +69,11 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 
 class rbPrinter = object(self)
-  inherit pyPrinter as super
+  inherit PyPrinter.pyPrinter as super
 
   method lang () = "ruby"
 
@@ -216,5 +210,8 @@ val mutable inlambda = false
       (sep "%a,@\n%a") f li
 
   method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
-    ty, params, List.assoc (self#lang ()) li) macros) e f nop
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
+
 end

@@ -36,18 +36,144 @@ open Helper
 module E = AstFun.Expr
 module Type = Ast.Type
 
-let format_to_string li =
-  let li = List.map (function
-		      | E.IntFormat -> "%d"
-		      | E.StringFormat -> "%s"
-		      | E.CharFormat -> "%c"
-		      | E.StringConstant s -> String.replace "%" "%%" s
-		    ) li
-  in String.concat "" li
+let lang = "ml"
+
+let prio_if = -107
+let prio_arg = -105
+let prio_tuple = -103
+let prio_apply = -101
+let prio_array = -100
+let prio_record = -100
+let prio_if = 100
+
+let binopstr op =
+  let open Ast.Expr in match op with
+  | Add -> "+"
+  | Sub -> "-"
+  | Mul -> "*"
+  | Div -> "/"
+  | Mod -> "mod"
+  | Or -> "||"
+  | And -> "&&"
+  | Lower -> "<"
+  | LowerEq -> "<="
+  | Higher -> ">"
+  | HigherEq -> ">="
+  | Eq -> "="
+  | Diff -> "<>"
+
+let unopstr = let open Ast.Expr in function
+  | Neg -> "-"
+  | Not -> "not"
+
+let print_expr macros e f prio_parent =
+  let open Ast.Expr in
+  let open Format in
+  let open AstFun.Expr in
+  let print_lief f = function
+  | Error -> fprintf f "(assert false)"
+  | Unit -> fprintf f "()"
+  | Char c -> fprintf f "%C" c
+  | String s -> fprintf f "%S" s
+  | Integer i -> fprintf f "%i" i
+  | Bool true -> fprintf f "true"
+  | Bool false -> fprintf f "false"
+  | Enum s -> fprintf f "%s" s
+  | Binding s -> print_varname f s in
+  match e with
+  | Skip -> parens prio_parent prio_apply f "Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ())"
+  | UnOp (a, op) -> parens prio_parent prio_apply f "%s %a" (unopstr op) a prio_arg
+  | BinOp (a, op, b) ->
+      let prio, prio_left, prio_right = prio_binop op in
+      parens prio_parent prio f "%a %s %a" a prio_left (binopstr op) b prio_right
+  | Fun ([], e) -> fprintf f "(fun () -> @[<v>%a@])" e nop
+  | Fun (params, e) ->
+      fprintf f "(fun %a -> %a)" (print_list print_varname sep_space) params e nop
+  | LetRecIn (name, [], e1, e2) ->
+      fprintf f "@[<v 2>let rec %a () =@\n%a in@\n%a@]"
+        print_varname name e1 nop e2 nop
+  | LetRecIn (name, params, e1, e2) ->
+      fprintf f "@[<v 2>let rec %a %a =@\n%a in@\n%a@]"
+        print_varname name
+        (print_list print_varname sep_space) params e1 nop e2 nop
+  | Print (e, ty) ->
+      parens prio_parent prio_apply f "Printf.printf %S %a"
+        (Printer.format_type ty) e prio_arg
+  | FunTuple (params, e) ->
+      fprintf f "(fun (%a) ->@[<v>%a@])" (print_list print_varname sep_c) params e nop
+  | Lief l -> print_lief f l
+  | MultiPrint (fmt, li) ->
+      parens prio_parent prio_apply f "Printf.printf %S %a"
+		   (format_to_string fmt)
+		   (print_list (fun f (a, ty) -> a f prio_arg) sep_space) li
+
+  | Apply (a, []) -> parens prio_parent prio_apply f "%a ()" a nop
+  | Apply (a, params) -> parens prio_parent prio_apply f "%a %a" a nop (print_list (fun f a -> a f prio_arg) sep_space) params
+  | Tuple li -> parens prio_parent prio_tuple f "%a" (print_list (fun f a -> a f nop) sep_c) li
+  | If (e1, e2, e3) -> parens prio_parent prio_if f "@[if %a@\nthen %a@\nelse %a@]" e1 prio_if e2 prio_if e3 prio_if
+  | Block li ->
+      fprintf f "( @[<v>%a@])"
+        (print_list
+           (fun f a -> a f nop)
+           (sep "%a;@\n%a")) li
+  | RecordAffect (a, field, v) -> fprintf f "%a.%s <- %a" a prio_record field v nop
+  | RecordAccess (a, field) -> fprintf f "%a.%s" a prio_record field
+  | Record li ->
+      fprintf f "{@[<v>%a}@]"
+        (print_list
+           (fun f (expr, field) -> fprintf f "%s=%a" field expr nop)
+           (sep "%a;@\n%a")) li
+  | ArrayInit (len, lambda) -> parens prio_parent prio_apply f "Array.init %a %a"
+        len prio_arg lambda prio_arg
+  | ArrayMake (len, lambda, env) -> parens prio_parent prio_apply f "Array.init_withenv %a %a %a"
+        len prio_arg lambda prio_arg env prio_arg
+  | ArrayAccess (tab, indexes) ->
+      fprintf f "%a%a" tab prio_array (print_list (fun f a -> fprintf f ".(%a)" a nop) nosep) indexes
+  | ArrayAffect (tab, indexes, v) ->
+      fprintf f "%a%a <- %a" tab prio_array (print_list (fun f a -> fprintf f ".(%a)" a nop) nosep) indexes v nop
+  | LetIn (var, e, i) -> fprintf f "let %a = %a in@\n%a" print_varname var e nop i nop
+  | Comment (s, i) -> fprintf f "(* %s *)@\n%a" s i prio_parent
+  | ReadIn (ty, next) -> parens prio_parent prio_apply f "Scanf.scanf %S@\n%a" (Printer.format_type ty) next prio_arg
+  | ApplyMacro(m, li) ->
+      let t, params, code = Ast.BindingMap.find m macros in
+      pmacros f "(%s)" t params code li nop
+
+let print_expr macros f e =
+  AstFun.Expr.Fixed.Deep.fold (print_expr macros) e f nop
+
+let ptype ty f () =
+  let open Ast.Type in
+  let open Format in
+  match ty with
+  | Integer -> fprintf f "int"
+  | String -> fprintf f "string"
+  | Array a -> fprintf f "%a array" a ()
+  | Void ->  fprintf f "void"
+  | Bool -> fprintf f "bool"
+  | Char -> fprintf f "char"
+  | Named n -> fprintf f "%s" n
+  | Struct li -> fprintf f "{%a}"
+        (print_list
+           (fun t (name, type_) ->
+             fprintf t "mutable %s : %a;" name type_ ()
+           )
+           sep_space
+        ) li
+  | Enum li ->
+      fprintf f "%a"
+        (print_list
+           (fun t name ->
+             fprintf t "%s" name
+           )
+           (sep "%a@\n| %a")
+        ) li
+  | Lexems -> assert false
+  | Auto -> assert false
+  | Tuple li -> fprintf f "(%a)" (print_list (fun f p -> p f ()) (sep "%a * %a")) li
+
+let ptype f t = Ast.Type.Fixed.Deep.fold ptype t f ()
 
 class camlFunPrinter = object(self)
-
-  method lang () = "ml"
 
   val mutable macros = Ast.BindingMap.empty
 
@@ -55,256 +181,24 @@ class camlFunPrinter = object(self)
   method setRecursive b = recursives_definitions <- b
 
   val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
   method setTyperEnv t = typerEnv <- t
-  method typename_of_field field = Typer.typename_for_field field typerEnv
-
-  method binopstr = function
-  | Ast.Expr.Add -> "+"
-  | Ast.Expr.Sub -> "-"
-  | Ast.Expr.Mul -> "*"
-  | Ast.Expr.Div -> "/"
-  | Ast.Expr.Mod -> "mod"
-  | Ast.Expr.Or -> "||"
-  | Ast.Expr.And -> "&&"
-  | Ast.Expr.Lower -> "<"
-  | Ast.Expr.LowerEq -> "<="
-  | Ast.Expr.Higher -> ">"
-  | Ast.Expr.HigherEq -> ">="
-  | Ast.Expr.Eq -> "="
-  | Ast.Expr.Diff -> "<>"
-
-  method unopstr = function
-  | Ast.Expr.Neg -> "-"
-  | Ast.Expr.Not -> "not"
-
-  method pbinop f op = Format.fprintf f "%s" (self#binopstr op)
-  method punop f op = Format.fprintf f "%s" (self#unopstr op)
-
-  method comment f s c = Format.fprintf f "(* %s *)@\n%a" s self#expr c
-  method binop f a op b = Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
-  method unop f a op = Format.fprintf f "(%a %a)"self#punop op self#expr a
-
-
-  method fun_ f params e =
-    let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
-    Format.fprintf f "(fun %a -> %a)" pparams () self#expr e
-
-  method letrecin f name params e1 e2 = match params with
-  | [] -> Format.fprintf f "@[<v 2>let rec %a () =@\n%a in@\n%a@]"
-    self#binding name
-    self#expr e1
-    self#expr e2
-  | _ ->
-    Format.fprintf f "@[<v 2>let rec %a %a =@\n%a in@\n%a@]"
-      self#binding name
-      (print_list self#binding sep_space) params
-      self#expr e1
-      self#expr e2
-
-  method funtuple f params e =
-    let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
-    Format.fprintf f "(fun %a -> %a)" pparams () self#expr e
 
   method typename f s = Format.fprintf f "%s" s
 
-  method binding f s = match s with
-  | Ast.UserName s -> Format.fprintf f "%s" s
-  | Ast.InternalName i -> Format.fprintf f "internal_%d" i
+  method binding f s = print_varname f s
 
-  method print f e ty = match E.unfix e with
-  | E.Lief (E.String s) -> Format.fprintf f "(Printf.printf %S)" s
-  | _ -> Format.fprintf f "(Printf.printf %S %a)"
-    (Printer.format_type ty)
-    self#expr e
-
-  method print_format f formats =
-    Format.fprintf f "%S" (format_to_string formats)
-
-  method multiprint f formats exprs =
-    Format.fprintf f "(Printf.printf %a %a)"
-		   self#print_format formats
-		   (print_list
-		      (fun f (a, ty) -> self#expr f a)
-		      sep_space) exprs
-
-  method read f ty next =
-    Format.fprintf f "Scanf.scanf %S@\n%a"
-      (Printer.format_type ty)
-      self#expr next
-
-  method lief f = function
-  | E.Error -> Format.fprintf f "(assert false)"
-  | E.Unit -> Format.fprintf f "()"
-  | E.Char c -> Format.fprintf f "%C" c
-  | E.String s -> Format.fprintf f "%S" s
-  | E.Integer i -> Format.fprintf f "%i" i
-  | E.Bool true -> Format.fprintf f "true"
-  | E.Bool false -> Format.fprintf f "false"
-  | E.Enum s -> Format.fprintf f "%s" s
-  | E.Binding s -> self#binding f s
-
-  method expand_macro_call f name t params code li =
-    let lang = self#lang () in
-    let code_to_expand = List.fold_left
-      (fun acc (clang, expantion) ->
-        match acc with
-        | Some _ -> acc
-        | None ->
-          if clang = "" || clang = lang then
-            Some expantion
-          else None
-      ) None
-      code
-    in match code_to_expand with
-    | None -> assert false (* TODO *)
-    | Some s ->
-      let listr = List.map
-        (fun e ->
-          let b = Buffer.create 1 in
-          let fb = Format.formatter_of_buffer b in
-          Format.fprintf fb "@[<h>%a@]%!" self#expr e;
-          Buffer.contents b
-        ) li in
-      let expanded = List.fold_left
-        (fun s ((param, _type), string) ->
-          String.replace ("$"^param) string s
-        )
-        s
-        (List.combine params listr)
-      in Format.fprintf f "(%s)" expanded
-
-  method apply_nomacros f e li =
-    match li with
-    | [] -> Format.fprintf f "(%a ())" self#expr e
-    | _ -> Format.fprintf f "(%a %a)"
-      self#expr e (print_list self#expr sep_space) li
-
-  method apply f e li =
-    let default () = self#apply_nomacros f e li in
-    match E.unfix e with
-    | E.Lief ( E.Binding binding ) ->
-      begin match Ast.BindingMap.find_opt binding macros with
-      | None -> default ()
-      | Some ((t, params, code)) -> self#expand_macro_call f binding t params code li
-      end
-    | _ -> default ()
-
-  method tuple f li = Format.fprintf f "(%a)"
-    (print_list self#expr sep_c) li
-
-  method if_ f e1 e2 e3 = Format.fprintf f "(@[if %a@\nthen %a@\nelse %a)@]" self#expr e1 self#expr e2 self#expr e3
-
-  method block f li = Format.fprintf f "@[<v 2>(@\n%a@\n)@]@\n"
-    (print_list
-       self#expr
-       (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
-
-  method expr f e = match E.unfix e with
-  | E.LetRecIn (name, params, e1, e2) -> self#letrecin f name params e1 e2
-  | E.BinOp (a, op, b) -> self#binop f a op b
-  | E.UnOp (a, op) -> self#unop f a op
-  | E.Fun (params, e) -> self#fun_ f params e
-  | E.FunTuple (params, e) -> self#funtuple f params e
-  | E.Apply (e, li) -> self#apply f e li
-  | E.Tuple li -> self#tuple f li
-  | E.Lief l -> self#lief f l
-  | E.Comment (s, c) -> self#comment f s c
-  | E.If (e1, e2, e3) -> self#if_ f e1 e2 e3
-  | E.Print (e, ty) -> self#print f e ty
-  | E.MultiPrint (formats, exprs) -> self#multiprint f formats exprs
-  | E.ReadIn (ty, next) -> self#read f ty next
-  | E.Skip -> self#skip f
-  | E.Block li -> self#block f li
-  | E.Record li -> self#record f li
-  | E.RecordAccess (record, field) -> self#recordaccess f record field
-  | E.RecordAffect (record, field, value) -> self#recordaffect f record field value
-  | E.ArrayMake (len, lambda, env) -> self#arraymake f len lambda env
-  | E.ArrayInit (len, lambda) -> self#arrayinit f len lambda
-  | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
-  | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect f tab indexes v
-  | E.LetIn (binding, e, b) -> self#letin f [binding, e] b
-
-  method recordaccess f record field  =
-    Format.fprintf f "%a.%s" self#expr record field
-
-  method recordaffect f record field value =
-    Format.fprintf f "%a.%s <- %a"
-      self#expr record field
-      self#expr value
-
-  method record f li =
-    Format.fprintf f "{%a}"
-      (print_list
-	 (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
-	 (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
-
-  method skip f = Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ()))"
-
-  method arrayinit f len lambda = Format.fprintf f "(Array.init %a %a)" self#expr len self#expr lambda
-
-  method arraymake f len lambda env = Format.fprintf f "(Array.init_withenv %a %a %a)" self#expr len self#expr lambda self#expr env
-
-  method arrayindex f tab indexes =
-    Format.fprintf f "%a.(%a)"
-      self#expr tab
-      (print_list self#expr
-	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
-
-  method arrayaffect f tab indexes v =
-    Format.fprintf f "%a.(%a) <- %a"
-      self#expr tab
-      (print_list self#expr
-	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
-      self#expr v
-
-  method letin f params b  = Format.fprintf f "let %a in@\n%a"
-    (print_list
-       (fun f (s, a) ->
-	 let pparams, a = self#extract_fun_params a (fun f () -> ()) in
-	 Format.fprintf f "%a%a = %a"
-	   self#binding s pparams () self#expr a
-       )
-       (fun f pa a pb b -> Format.fprintf f "%a@\nand %a" pa a pb b))
-    params
-    self#expr b
+  method expr f e = print_expr (Ast.BindingMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc lang li
+        with Not_found -> List.assoc "" li) macros) f e
 
   (** show a type *)
-  method ptype f (t : Type.t ) =
-    match Type.Fixed.unfix t with
-    | Type.Integer -> Format.fprintf f "int"
-    | Type.String -> Format.fprintf f "string"
-    | Type.Array a -> Format.fprintf f "%a array" self#ptype a
-    | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "bool"
-    | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> Format.fprintf f "%s" n
-    | Type.Struct li ->
-      Format.fprintf f "{%a}"
-        (print_list
-           (fun t (name, type_) ->
-             Format.fprintf t "mutable %s : %a;" name self#ptype type_
-           )
-           sep_space
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "%a"
-        (print_list
-           (fun t name ->
-             Format.fprintf t "%s" name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
-        ) li
-    | Type.Lexems -> assert false
-    | Type.Auto -> assert false
-    | Type.Tuple li ->
-      Format.fprintf f "(%a)"
-        (print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a * %a" fa a fb b)) li
+  method ptype f t = ptype f t
 
   method is_rec name e =
     E.Fixed.Deep.exists (fun e -> match E.unfix e with
-				  | E.Lief (E.Binding n) -> n = name
-				  | _ -> false) e
+    | E.Lief (E.Binding n) -> n = name
+    | _ -> false) e
 
   method extract_fun_params e acc = match E.unfix e with
   | E.Fun ([], e) ->

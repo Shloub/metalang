@@ -32,16 +32,43 @@
 open Ast
 open Stdlib
 open Helper
-open Printer
+let lang = "c"
+
+let print_expr macros e f p =
+  let open Format in
+  let open Expr in
+  let print_lief prio f l = match l with
+  | Bool true -> fprintf f "1"
+  | Bool false -> fprintf f "0"
+  | Char c -> clike_char f c
+  | x -> print_lief prio f x in
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "%a->%s" conf) m f prio in
+  let print_expr0 config e f prio_parent = match e with
+  | _ -> print_expr0 config e f prio_parent in
+  let config = {
+    prio_binop = prio_binop_equal;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Fixed.Deep.fold (print_expr0 config) e f p
+
 
 class cPrinter = object(self)
-  inherit printer as baseprinter
+  inherit Printer.printer as baseprinter
 
   method base_multi_print = baseprinter#multi_print
 
-  method lang () = "c"
+  method lang () = lang
 
-  method bool f b = Format.fprintf f (if b then "1" else "0")
+  method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method ptype f t =
     match Type.unfix t with
@@ -77,7 +104,6 @@ class cPrinter = object(self)
       self#binding name
       self#separator ()
       (self#def_fields name) el
-
 
   method def_fields name f li =
     Format.fprintf f "@[<h>%a@]"
@@ -229,11 +255,7 @@ class cPrinter = object(self)
     | Type.Enum li ->
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a%a"
         self#typename name
-        (print_list
-           (fun t name ->
-             self#enum t name
-           ) sep_c
-        ) li
+        (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li
         self#typename name
         self#separator ()
     | _ ->
@@ -295,7 +317,6 @@ class cPrinter = object(self)
       self#blocinif ifcase
       self#bloc elsecase
 
-
   method basemultiread f instrs = baseprinter#multiread f instrs
 
   method multiread f instrs =
@@ -304,10 +325,10 @@ class cPrinter = object(self)
       | Instr.StdinSep -> (format ^ " ", variables)
       | Instr.DeclRead (t, var, _) ->
         let mutable_ = Mutable.var var in
-        let addons = format_type t in
+        let addons = Printer.format_type t in
         (format ^ addons, mutable_::variables)
       | Instr.Read (t, mutable_) ->
-        let addons = format_type t in
+        let addons = Printer.format_type t in
         (format ^ addons, mutable_::variables)
       | _ -> assert false
       ) ("", []) instrs

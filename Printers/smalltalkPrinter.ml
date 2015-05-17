@@ -32,81 +32,67 @@
 open Ast
 open Helper
 open Stdlib
-open Printer
 
-let print_lief prio f l =
+let prio_object = 1
+let prio_message = 3
+let prio_result = 9
+let print_expr prototypes macros e f p =
   let open Format in
-  let open Ast.Expr in match l with
+  let open Expr in 
+  let print_lief prio f l = match l with
   | Char c -> fprintf f "$%c" c
   | String s -> fprintf f "'%s'" (String.replace "'" "''" s)
   | Integer i -> fprintf f "%i" i
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
-  | Enum s -> fprintf f "#%s" s
-
-let print_op f op =
-  Format.fprintf f
-    "%s"
-    (match op with
-    | Expr.Add -> "+"
-    | Expr.Sub -> "-"
-    | Expr.Mul -> "*"
-    | Expr.Div -> "quo:"
-    | Expr.Mod -> "rem:"
-    | Expr.Or -> "|"
-    | Expr.And -> "&"
-    | Expr.Lower -> "<"
-    | Expr.LowerEq -> "<="
-    | Expr.Higher -> ">"
-    | Expr.HigherEq -> ">="
-    | Expr.Eq -> "="
-    | Expr.Diff -> "~="
-    )
-
-let prio_object = 1
-let prio_message = 3
-let prio_result = 9
-let prio_binop = function
-  | Expr.Div | Expr.Mod -> prio_result, prio_object, prio_message
-  | _ -> 7, 7, 6
-
-
-let print_expr0 prototypes config e f prio_parent =
-  let open Format in
-  let open Ast.Expr in match e with
-  | BinOp(a, Or, b)  -> parens prio_parent prio_result f "%a or: [%a]" a prio_object b nop
-  | UnOp (a, Not)    -> parens prio_parent prio_result f "%a not" a prio_object
-  | UnOp (a, Neg)    -> parens prio_parent prio_result f "0 - %a" a 6
-  | BinOp(a, And, b) -> parens prio_parent prio_result f "%a and: [%a]" a prio_object b nop
-  | Call(funname, li) ->
-      begin match StringMap.find_opt funname prototypes with
-      | None -> print_expr0 config e f prio_parent (* une macro ? *)
-      | Some proto -> begin match li with
-        | [] -> fprintf f "(self %s)" funname
-        | _ -> fprintf f "(self %a)"
-              (print_list
-                 (fun f (a,b) ->
-                   fprintf f "%a: %a"
-                     a ()
-                     b prio_message)
-                 sep_space
-              ) (List.zip proto li)
-      end
-      end
-  | _ -> print_expr0 config e f prio_parent
-
-let print_mut c m f prio_parent =
-  let open Ast.Mutable in match m with
-  | Var v -> c.print_varname f v
-  | Array (m, fi) -> parens prio_parent prio_result f "%a at: %a" m prio_object
-        (print_list (fun f a -> a f prio_message) (sep "%a at: %a")) fi
-  | Dot (m, field) -> Format.fprintf f "%a %s" m prio_object field
- 
-let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f prio
- 
-let print_expr prototypes macros e f p =
+  | Enum s -> fprintf f "#%s" s in
+  let print_op f op = fprintf f "%s" (match op with
+  | Add -> "+"
+  | Sub -> "-"
+  | Mul -> "*"
+  | Div -> "quo:"
+  | Mod -> "rem:"
+  | Or -> "|"
+  | And -> "&"
+  | Lower -> "<"
+  | LowerEq -> "<="
+  | Higher -> ">"
+  | HigherEq -> ">="
+  | Eq -> "="
+  | Diff -> "~=" ) in
+  let prio_binop = function
+    | Div | Mod -> prio_result, prio_object, prio_message
+    | _ -> 7, 7, 6 in
+  let print_expr0 config e f prio_parent = match e with
+    | BinOp(a, Or, b)  -> parens prio_parent prio_result f "%a or: [%a]" a prio_object b nop
+    | UnOp (a, Not)    -> parens prio_parent prio_result f "%a not" a prio_object
+    | UnOp (a, Neg)    -> parens prio_parent prio_result f "0 - %a" a 6
+    | BinOp(a, And, b) -> parens prio_parent prio_result f "%a and: [%a]" a prio_object b nop
+    | Call(funname, li) ->
+        begin match StringMap.find_opt funname prototypes with
+        | None -> print_expr0 config e f prio_parent (* une macro ? *)
+        | Some proto -> begin match li with
+          | [] -> fprintf f "(self %s)" funname
+          | _ -> fprintf f "(self %a)"
+                (print_list
+                   (fun f (a,b) ->
+                     fprintf f "%a: %a"
+                       a ()
+                       b prio_message)
+                   sep_space
+                ) (List.zip proto li)
+        end
+        end
+    | _ -> print_expr0 config e f prio_parent in
+  let print_mut c m f prio_parent =
+    let open Mutable in match m with
+    | Var v -> c.print_varname f v
+    | Array (m, fi) -> parens prio_parent prio_result f "%a at: %a" m prio_object
+          (print_list (fun f a -> a f prio_message) (sep "%a at: %a")) fi
+    | Dot (m, field) -> fprintf f "%a %s" m prio_object field in
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold (print_mut conf) m f prio in
   let config = {
-    prio_binop = prio_binop;
+    prio_binop;
     prio_unop;
     print_varname;
     print_lief;
@@ -114,12 +100,12 @@ let print_expr prototypes macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 prototypes config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 
 
 class smalltalkPrinter = object(self)
-  inherit printer as baseprinter
+  inherit Printer.printer as baseprinter
 
   val mutable prototypes = StringMap.empty
 
@@ -191,7 +177,9 @@ class smalltalkPrinter = object(self)
 
   method expr_prio p f e = print_expr prototypes
       (StringMap.map (fun (ty, params, li) ->
-        ty, params, List.assoc (self#lang ()) li) macros) e f p
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f p
 
   method expr f e = self#expr_prio nop f e
 

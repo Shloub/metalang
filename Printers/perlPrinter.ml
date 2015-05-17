@@ -32,54 +32,46 @@
 open Ast
 open Helper
 open Stdlib
-open CPrinter
-open Printer
 
-let print_lief prio f l =
+let print_expr macros e f p =
   let open Format in
-  let open Ast.Expr in match l with
-  | Char c ->
-      begin match c with
-      | '$' -> fprintf f "\"\\$\""
-      | _->
-          let cs = Printf.sprintf "%C" c in
-          if String.length cs == 6 then
-            fprintf f "\"\\x%02x\"" (int_of_char c)
-          else
-            fprintf f "%S" (String.from_char c)
-      end
+  let open Expr in
+  let print_lief prio f l = match l with
+  | Char c -> begin match c with
+    | '$' -> fprintf f "\"\\$\""
+    | _->
+        let cs = Printf.sprintf "%C" c in
+        if String.length cs == 6 then
+          fprintf f "\"\\x%02x\"" (int_of_char c)
+        else
+          fprintf f "%S" (String.from_char c)
+  end
   | String s ->
       let s = Printf.sprintf "%S" s in
       fprintf f "%s" (String.replace "$" "\\$" s)
   | Integer i ->
       if i < 0 then parens prio (-1) f "%i" i
-      else Format.fprintf f "%i" i
+      else fprintf f "%i" i
   | Bool true -> fprintf f "1"
   | Bool false -> fprintf f "()"
-  | Enum s -> fprintf f "%S" s
-
-let print_op f op =
-  Format.fprintf f
-    "%s"
-    (match op with
-    | Expr.Add -> "+"
-    | Expr.Sub -> "-"
-    | Expr.Mul -> "*"
-    | Expr.Div -> "/"
-    | Expr.Mod -> "%"
-    | Expr.Or -> "||"
-    | Expr.And -> "&&"
-    | Expr.Lower -> "<"
-    | Expr.LowerEq -> "<="
-    | Expr.Higher -> ">"
-    | Expr.HigherEq -> ">="
-    | Expr.Eq -> "eq"
-    | Expr.Diff -> "ne"
-    )
-
-let print_expr0 config e f prio_parent =
-  let open Format in
-  let open Ast.Expr in match e with
+  | Enum s -> fprintf f "%S" s in
+  let print_op f op = fprintf f "%s"
+      (match op with
+      | Add -> "+"
+      | Sub -> "-"
+      | Mul -> "*"
+      | Div -> "/"
+      | Mod -> "%"
+      | Or -> "||"
+      | And -> "&&"
+      | Lower -> "<"
+      | LowerEq -> "<="
+      | Higher -> ">"
+      | HigherEq -> ">="
+      | Eq -> "eq"
+      | Diff -> "ne"
+      ) in
+  let print_expr0 config e f prio_parent = match e with
   | BinOp (a, (Div as op), b) ->
       let prio, priol, prior = prio_binop op in
       fprintf f "int(%a %a %a)" a priol print_op op b prior
@@ -87,34 +79,29 @@ let print_expr0 config e f prio_parent =
   | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
   | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
       fprintf f "%S => %a" name x nop) sep_c) li
-  | _ -> print_expr0 config e f prio_parent
-
-let print_mut c m f prio  =
-  let open Format in
-  let open Ast.Mutable in match m with
+  | _ -> print_expr0 config e f prio_parent in
+  let print_mut c m f prio  =
+    let open Mutable in match m with
   | Var v -> c.print_varname f v
   | Array (m, fi) -> fprintf f "%a->%a" m prio
         (print_list (fun f a -> fprintf f "[%a]" a nop) nosep) fi
-  | Dot (m, field) -> fprintf f "%a->{%S}" m prio field
- 
-let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold (print_mut conf) m f prio
-
-let print_expr macros e f p =
+  | Dot (m, field) -> fprintf f "%a->{%S}" m prio field in
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold (print_mut conf) m f prio in
   let config = {
     prio_binop = prio_binop_equal;
     prio_unop;
-    print_varname=PhpPrinter.print_varname;
+    print_varname=Helper.dolar_varname;
     print_lief;
     print_op;
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 
 
 class perlPrinter = object(self)
-  inherit cPrinter as baseprinter
+  inherit CPrinter.cPrinter as baseprinter
 
   method lang () = "pl"
 
@@ -285,6 +272,10 @@ class perlPrinter = object(self)
         (print_list self#expr (sep "%a][%a")) indexes
 
   method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
-    ty, params, List.assoc (self#lang ()) li) macros) e f nop
+    ty, params,
+    try List.assoc (self#lang ()) li
+    with Not_found -> List.assoc "" li) macros) e f nop
+
+
 
 end

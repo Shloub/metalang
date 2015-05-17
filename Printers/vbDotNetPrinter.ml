@@ -32,7 +32,6 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
 
 let print_op f op =
   Format.fprintf f
@@ -78,7 +77,7 @@ let print_lief tyenv prio f = function
   | Ast.Expr.Enum e ->
       let t = Typer.typename_for_enum e tyenv in
       Format.fprintf f "%s.%s" t e
-  | x -> print_lief prio f x
+  | x -> Helper.print_lief prio f x
 
 let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f priority
@@ -98,9 +97,11 @@ let print_expr tyenv macros e f p =
 class vbDotNetPrinter = object(self)
   inherit CsharpPrinter.csharpPrinter as super
 
-  method expr f e = print_expr (self#getTyperEnv ()) 
+  method exprp p f e = print_expr (self#getTyperEnv ())
       (StringMap.map (fun (ty, params, li) ->
-        ty, params, List.assoc (self#lang ()) li) macros) e f nop
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f p
 
   method combine_formats () = false
 

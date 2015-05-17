@@ -31,7 +31,56 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
+
+let print_lief f l =
+  let open Ast.Expr in let open Format in match l with
+  | Char c -> fprintf f "%C" c
+  | String s -> fprintf f "%S" s
+  | Integer i -> fprintf f "%i" i
+  | Bool true -> fprintf f "true"
+  | Bool false -> fprintf f "false"
+  | Enum s -> fprintf f "%s" s
+
+let prio_arg = -105
+let prio_tuple = -103
+let prio_apply = -101
+
+let print_expr refbindings macros e f p =
+  let open Format in
+  let open Ast.Expr in
+  let print_op f op = fprintf f "%s" (OcamlFunPrinter.binopstr op) in
+  let print_mut0 m f () =
+    let open Mutable in match m with
+    | Var v ->
+        if BindingSet.mem v refbindings
+        then fprintf f "(!%a)" print_varname v
+        else print_varname f v
+    | Array (m, fi) -> fprintf f "%a%a" m ()
+          (print_list (fun f a -> fprintf f ".(%a)" a nop) (sep "%a%a")) fi
+    | Dot (m, field) -> fprintf f "%a.%s" m () field in
+  let print_mut f m = Mutable.Fixed.Deep.fold print_mut0 m f in
+  let print_expr0 e f prio_parent = match e with
+  | BinOp (a, op, b) ->
+      let prio, priol, prior = prio_binop op in
+      parens prio_parent prio f "%a %a %a" a priol print_op op b prior
+  | UnOp (a, op) -> parens prio_parent prio_apply f "%s %a" (OcamlFunPrinter.unopstr op) a prio_arg
+  | Lief l -> print_lief f l
+  | Access m -> print_mut f m ()
+  | Call (func, li) ->
+      begin match StringMap.find_opt func macros with
+      | Some ( (t, params, code) ) ->
+          pmacros f "%s" t params code li nop
+      | None ->
+          if li = [] then parens prio_parent prio_apply f "%s ()" func
+          else parens prio_parent prio_apply f "%s %a" func (print_list (fun f x -> x f prio_arg) sep_space) li
+      end
+  | Lexems li -> assert false
+  | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f nop) sep_c) li
+  | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
+      fprintf f "%s=%a" name x nop) (sep "%a;@\n%a")) li
+
+  in Fixed.Deep.fold print_expr0 e f p
+
 
 let collect_return acc li =
   let f f acc i = match Instr.unfix i with
@@ -96,7 +145,7 @@ let collect_sad_returns ty instrs =
 
 (** the main class : the ocaml printer *)
 class camlPrinter = object(self)
-  inherit printer as super
+  inherit Printer.printer as super
 
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
@@ -106,6 +155,11 @@ class camlPrinter = object(self)
   (** true if we are processing an expression *)
   val mutable in_expr = false
   val mutable exn_count = 0
+
+  method expr f e = print_expr refbindings (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method lang () = "ml"
 
@@ -119,35 +173,7 @@ class camlPrinter = object(self)
       (self#def_fields (InternalName 0)) li
 
   (** show a type *)
-  method ptype f (t : Ast.Type.t ) =
-    match Type.Fixed.unfix t with
-    | Type.Tuple li ->
-      Format.fprintf f "(%a)"
-        (print_list self#ptype (sep "%a * %a")) li
-    | Type.Integer -> Format.fprintf f "int"
-    | Type.String -> Format.fprintf f "string"
-    | Type.Array a -> Format.fprintf f "%a array" self#ptype a
-    | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "bool"
-    | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> Format.fprintf f "%s" n
-    | Type.Struct li ->
-      Format.fprintf f "record{%a}"
-        (print_list
-           (fun t (name, type_) ->
-             Format.fprintf t "%s : %a;" name self#ptype type_
-           ) nosep
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "%a"
-        (print_list
-           (fun t name ->
-             Format.fprintf t "%s" name
-           )
-           (sep "%a@\n| %a")
-        ) li
-    | Type.Lexems -> assert false
-    | Type.Auto -> assert false
+  method ptype f (t : Ast.Type.t ) = OcamlFunPrinter.ptype f t
 
   (** read spaces from stdin *)
   method stdin_sep f =
@@ -174,15 +200,6 @@ class camlPrinter = object(self)
       | Expr.Diff -> "<>"
       )
 
-  (** show unary operators *)
-  method unop f op a =
-    let pop f () = match op with
-      | Expr.Neg -> Format.fprintf f "-"
-      | Expr.Not -> Format.fprintf f "not "
-    in if self#nop (Expr.unfix a) then
-        Format.fprintf f "%a%a" pop () self#expr a
-      else
-        Format.fprintf f "%a(%a)" pop () self#expr a
 
   (** show the main *)
   method main f main =
@@ -262,7 +279,7 @@ class camlPrinter = object(self)
     else if (match instrs with [_] -> false | _ -> true) (* TODO factoriser ça *)
       && List.for_all self#is_print instrs then
       let li = List.map (fun i -> match Instr.unfix i with
-        | Instr.Print (t, i) -> format_type t, (t, i)
+        | Instr.Print (t, i) -> Printer.format_type t, (t, i)
         | _ -> assert false
       ) instrs in
       let li =
@@ -433,14 +450,6 @@ class camlPrinter = object(self)
     | _ -> tra acc i
     in refbindings <- List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs
 
-  (** print an expression *)
-  method expr f e =
-    begin
-      in_expr <- true;
-      super#expr f e;
-      in_expr <- false;
-    end
-
   method m_variable f binding = if in_expr && BindingSet.mem binding refbindings
   then Format.fprintf f "(!%a)" self#binding binding
   else self#binding f binding
@@ -552,7 +561,7 @@ class camlPrinter = object(self)
             if self#nop (Expr.unfix e) then self#expr f e
             else Format.fprintf f "(%a)" self#expr e
           ) len
-          self#lief lief
+          print_lief lief
     | _ ->
     let next_sad_return =sad_returns in
     sad_returns <- collect_sad_return lambda;
@@ -685,7 +694,7 @@ class camlPrinter = object(self)
           ) li
     | Type.Enum li ->
       Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
-        name (print_list self#enum (sep "%a@\n| %a")) li
+        name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
     | _ ->
       Format.fprintf f "type %a = %a;;"
         super#typename name
@@ -696,10 +705,10 @@ class camlPrinter = object(self)
       List.fold_left (fun (format, variables) i -> match Instr.unfix i with
       | Instr.StdinSep -> (format ^ " ", variables)
       | Instr.DeclRead (t, v, _opt) ->
-        let addons = format_type t in
+        let addons = Printer.format_type t in
         (format ^ addons, (true, Mutable.var v)::variables)
       | Instr.Read (t, mutable_) ->
-        let addons = format_type t in
+        let addons = Printer.format_type t in
         (format ^ addons, (false, mutable_)::variables)
       | _ -> assert false
       ) ("", []) instrs

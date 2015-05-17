@@ -31,33 +31,25 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
-open CPrinter
 
-let print_lief prio f = function
-  | Ast.Expr.Char c ->
-      let cs = Printf.sprintf "%C" c in
-      if String.length cs == 6 then
-        Format.fprintf f "'\\x%02x'" (int_of_char c)
-      else
-        Format.fprintf f "%s" cs
-  | Ast.Expr.Enum e -> Format.fprintf f "%S" e
-  | x -> print_lief prio f x
-
-let print_expr0 config e f prio_parent =
+let print_expr macros e f p =
   let open Format in
-  let open Ast.Expr in match e with
+  let open Ast.Expr in 
+  let print_mut conf priority f m = Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f priority in
+  let print_lief prio f = function
+    | Char c ->
+        let cs = sprintf "%C" c in
+        if String.length cs == 6 then fprintf f "'\\x%02x'" (int_of_char c)
+        else fprintf f "%s" cs
+    | Enum e -> fprintf f "%S" e
+    | x -> print_lief prio f x in
+  let print_expr0 config e f prio_parent = match e with
   | BinOp (a, ((Div | Mod) as op), b) ->
       let prio, priol, prior = prio_binop op in
       fprintf f "~~(%a %a %a)" a priol print_op op b prior
-
   | _ -> print_expr0 config e f prio_parent
-
-
-let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
-    (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f priority
-
-let print_expr macros e f p =
+  in
   let config = {
     prio_binop;
     prio_unop;
@@ -67,11 +59,11 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 
 class jsPrinter = object(self)
-  inherit cPrinter as super
+  inherit CPrinter.cPrinter as super
 
   method lang () = "js"
 
@@ -147,10 +139,8 @@ function read_int_(){
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-
   method main f main =
     self#instructions f main
-
 
   method combine_formats () = false
 
@@ -186,7 +176,6 @@ function read_int_(){
       )
       li
 
-
   method read f t mutable_ =
     match Type.unfix t with
     | Type.Integer ->
@@ -216,7 +205,9 @@ function read_int_(){
 
   method expr f e = print_expr
       (StringMap.map (fun (ty, params, li) ->
-        ty, params, List.assoc (self#lang ()) li) macros) e f nop
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method multiread f instrs = self#basemultiread f instrs
 end

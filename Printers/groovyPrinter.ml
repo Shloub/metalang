@@ -31,50 +31,45 @@
 open Stdlib
 open Helper
 open Ast
-open JavaPrinter
 
-let print_lief tyenv prio f l =
+let print_expr tyenv macros e f p =
   let open Format in
-  let open Ast.Expr in match l with
+  let open Expr in
+  let print_lief prio f l = match l with
   | Char c -> let cs = Printf.sprintf "%C" c in
-    if String.length cs == 6 then
-      Format.fprintf f "(char)%d" (int_of_char c)
-    else
-      Format.fprintf f "(char)%s" cs
+    if String.length cs == 6 then fprintf f "(char)%d" (int_of_char c)
+    else fprintf f "(char)%s" cs
   | String s -> string_nodolar f s
   | Enum e ->
       let t = Typer.typename_for_enum e tyenv in
-      Format.fprintf f "%s.%s" (String.capitalize t) e
-  | x -> print_lief tyenv prio f x
-
-let print_expr0 config e f prio_parent =
-  let open Format in
-  let open Ast.Expr in match e with
+      fprintf f "%s.%s" (String.capitalize t) e
+  | x -> JavaPrinter.print_lief tyenv prio f x in
+  let print_expr0 config e f prio_parent = match e with
   | BinOp (a, (Div as op), b) -> fprintf f "%a.intdiv(%a)" a 0 b nop
-  | _ -> print_expr0 config e f prio_parent
-
-let print_expr tyenv macros e f p =
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+  | _ -> print_expr0 config e f prio_parent in
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
   let config = {
     prio_binop;
     prio_unop;
     print_varname;
-    print_lief = print_lief tyenv;
+    print_lief;
     print_op;
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 
 (** the main class : the ocaml printer *)
 class groovyPrinter = object(self)
-  inherit javaPrinter as super
+  inherit JavaPrinter.javaPrinter as super
 
-  method expr f e = print_expr (self#getTyperEnv ()) 
+  method expr f e = print_expr (self#getTyperEnv ())
       (StringMap.map (fun (ty, params, li) ->
-        ty, params, List.assoc (self#lang ()) li) macros) e f nop
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method limit_nprint () = 254
 

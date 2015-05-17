@@ -146,12 +146,31 @@ let prio_binop_equal = function
   | Ast.Expr.Eq -> nonassoclr 13
   | op -> prio_binop op
 
+let prio_right (_, _, p) = p
+
 let prio_unop op =
   let open Ast.Expr in match op with
   | Neg -> 1
   | Not -> 3
 
 let nop = 100
+let priority_recordacess = -10
+
+let pmacros f fmt t params code li param =
+  let listr = List.map
+      (fun e ->
+        let b = Buffer.create 1 in
+        let fb = Format.formatter_of_buffer b in
+        Format.fprintf fb "@[<h>%a@]%!" e param;
+        Buffer.contents b
+      ) li in
+  let expanded = List.fold_left
+      (fun s ((param, _type), string) ->
+        String.replace ("$"^param) string s
+      )
+      code
+      (List.combine params listr)
+  in Format.fprintf f fmt expanded
 
 let print_expr0 c e f prio_parent =
   let open Format in
@@ -166,22 +185,8 @@ let print_expr0 c e f prio_parent =
   | Access m -> c.print_mut c prio_parent f m
   | Call (func, li) ->
       begin match StringMap.find_opt func c.macros with
-      | Some ( (_, params, code) ) ->
-          let li = List.map
-              (fun e ->
-                let b = Buffer.create 1 in
-                let fb = Format.formatter_of_buffer b in
-                Format.fprintf fb "@[<hov>%a@]%!" e nop;
-                Buffer.contents b
-              ) li in
-          let expanded = List.fold_left
-              (fun s ((param, _type), string) ->
-                String.replace ("$__MACRO__PARAM__"^param) string s
-              )
-              (String.replace "$" "$__MACRO__PARAM__" code)
-              (List.combine params li)
-          in let expanded = String.replace "$__MACRO__PARAM__" "$" expanded
-          in Format.fprintf f "%s" expanded
+      | Some ( (t, params, code) ) ->
+          pmacros f "%s" t params code li nop
       | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
       end
   | Lexems li -> assert false
@@ -270,7 +275,7 @@ let print_mut0 fmt_array
   | Var v -> c.print_varname f v
   | Array (m, fi) -> fprintf f fmt_array m priority
         (print_list (fun f a -> fprintf f fmt_arrayindex a nop) nosep) fi
-  | Dot (m, field) -> fprintf f fmt_dot m priority field
+  | Dot (m, field) -> fprintf f fmt_dot m priority_recordacess field
  
 let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "[%a]" "%a[%S]" conf) m f priority
@@ -363,3 +368,16 @@ let clike_char f c =
     Format.fprintf f "'\\x%02x'" (int_of_char c)
   else
     Format.fprintf f "%s" cs
+
+let dolar_varname f = function
+  | Ast.UserName v -> Format.fprintf f "$%s" v
+  | Ast.InternalName _ -> assert false
+
+let format_to_string li =
+  let open AstFun.Expr in
+  let li = List.map (function
+    | IntFormat -> "%d"
+    | StringFormat -> "%s"
+    | CharFormat -> "%c"
+    | StringConstant s -> String.replace "%" "%%" s ) li
+  in String.concat "" li

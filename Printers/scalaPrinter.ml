@@ -32,7 +32,6 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
 
 let buffer = "
 var buffer = \"\";
@@ -67,34 +66,32 @@ let skip = "def skip() {
 "
 
 let print_expr tyenv macros e f p =
-  let print_expr0 config e f prio_parent =
-    let open Format in
-    let open Ast.Expr in match e with
-    | Record li -> begin match li with
-      | (field, _)::_ ->
-          let t = Typer.typename_for_field field tyenv in
-          Format.fprintf f "new %s(%a)"
-            (String.capitalize t)
-            (print_list
-               (fun f (_fieldname, expr) -> expr f nop) sep_c
-            )
-            li
-      | _ -> assert false
-    end
-    | _ -> print_expr0 config e f prio_parent in
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+  let open Format in
+  let open Expr in
+  let print_expr0 config e f prio_parent = match e with
+  | Record li -> begin match li with
+    | (field, _)::_ ->
+        let t = Typer.typename_for_field field tyenv in
+        fprintf f "new %s(%a)"
+          (String.capitalize t)
+          (print_list
+             (fun f (_fieldname, expr) -> expr f nop) sep_c
+          )
+          li
+    | _ -> assert false
+  end
+  | _ -> print_expr0 config e f prio_parent in
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f prio in
-  let print_lief prio f l =
-    let open Format in
-    let open Ast.Expr in match l with
-    | Char c -> unicode f c
-    | String s -> fprintf f "%S" s
-    | Integer i ->
-        if i < 0 then parens prio (-1) f "%i" i
-        else Format.fprintf f "%i" i
-    | Bool true -> fprintf f "true"
-    | Bool false -> fprintf f "false"
-    | Enum s -> fprintf f "%s" s
+  let print_lief prio f l = match l with
+  | Char c -> unicode f c
+  | String s -> fprintf f "%S" s
+  | Integer i ->
+      if i < 0 then parens prio (-1) f "%i" i
+      else Format.fprintf f "%i" i
+  | Bool true -> fprintf f "true"
+  | Bool false -> fprintf f "false"
+  | Enum s -> fprintf f "%s" s
   in
   let config = {
     prio_binop;
@@ -105,8 +102,7 @@ let print_expr tyenv macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
-
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 class scalaPrinter = object(self)
   inherit CPrinter.cPrinter as printer
@@ -262,7 +258,7 @@ class scalaPrinter = object(self)
       Format.fprintf f "object %a extends Enumeration {@\n  type %a = Value;@\n  val %a = Value@\n}@\nimport %a._"
         self#typename name
         self#typename name
-        (print_list self#enum sep_c) li
+        (print_list (fun f s -> Format.fprintf f "%s" s) sep_c) li
           self#typename name
     | _ -> assert false
 

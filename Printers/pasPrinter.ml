@@ -30,26 +30,21 @@
 
 open Stdlib
 open Ast
-open Printer
 open Helper
 
 let print_expr macros e f p =
   let open Format in
-  let open Ast.Expr in
+  let open Expr in
   let prio_binop op = match op with
   | Mul -> assoc 5
   | Div
   | Mod -> nonassocr 7
   | And -> assoc 9
-
   | Add -> assoc 11
   | Sub -> nonassocr 11
   | Or -> assoc 13
-
-
   | Eq -> nonassocl 15
   | Diff -> nonassocl 15
-
   | Lower
   | LowerEq
   | Higher
@@ -84,7 +79,7 @@ let print_expr macros e f p =
   | HigherEq -> ">="
   | Eq -> "="
   | Diff -> "<>") in
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a^.%s" conf) m f prio in
   let config = {
     prio_binop;
@@ -95,10 +90,10 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 class pasPrinter = object(self)
-  inherit printer as super
+  inherit Printer.printer as super
 
   method expr f e = print_expr
       (StringMap.map (fun (ty, params, li) ->
@@ -115,92 +110,6 @@ class pasPrinter = object(self)
 
   method comment f str =
     Format.fprintf f "{%s}" str
-
-  method baseBinop f op a b = super#binop f op a b
-
-  method binop f op a b =
-    let print_op op f a =
-      match op with
-      | Expr.Div ->
-        if Typer.is_int (super#getTyperEnv ()) a
-        then Format.fprintf f "Div"
-        else self#print_op f op
-      | _ -> self#print_op f op
-    in
-    let chf op side f x = match (Expr.unfix x) with
-      | Expr.BinOp (_, op2, _) ->
-        begin match (op, side, op2) with
-        | ((Expr.Eq | Expr.Diff | Expr.Lower |
-            Expr.LowerEq | Expr.Higher | Expr.HigherEq
-        ), _, (Expr.And | Expr.Or)) ->
-          self#expr f x
-        | ((Expr.Add | Expr.Sub), _, (Expr.Mul | Expr.Div | Expr.Mod))
-          ->
-          self#expr f x
-        | (Expr.Sub, Left, (Expr.Sub | Expr.Add))
-          ->
-          self#expr f x
-        | (Expr.Add, _, Expr.Add)
-          ->
-          self#expr f x
-        | (Expr.Mul, _, Expr.Mul)
-          ->
-          self#expr f x
-        | (Expr.And, _, Expr.And)
-          ->
-          self#expr f x
-        | (Expr.Or, _, Expr.Or)
-          ->
-          self#expr f x
-        | _ ->
-          self#printp f x
-        end
-      | _ -> self#expr f x
-    in Format.fprintf f "%a@ %a@ %a"
-    (chf op Left) a
-    (print_op op) a
-    (chf op Right) b
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "/"
-      | Expr.Mod -> "Mod"
-      | Expr.Or -> "or"
-      | Expr.And -> "and"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "="
-      | Expr.Diff -> "<>"
-      )
-
-  method unop f op a =
-    let pop f () = match op with
-      | Expr.Neg -> Format.fprintf f "-"
-      | Expr.Not -> Format.fprintf f "not "
-    in if self#nop (Expr.unfix a) then
-        Format.fprintf f "%a%a" pop () self#expr a
-      else
-        Format.fprintf f "%a(%a)" pop () self#expr a
-
-
-  method char f c = Format.fprintf f "#%d" (int_of_char c)
-
-  method string f i =
-    Format.fprintf f "'";
-    String.fold_left (fun () c ->
-      let ns = 
-        if is_printable c then String.of_char c
-        else "'#"^(string_of_int (int_of_char c))^"'"
-      in Format.fprintf f "%s" ns
-    ) () i;
-    Format.fprintf f "'"
 
   method whileloop f expr li =
     Format.fprintf f "@[<h>while %a@] do@\n%a;"
@@ -337,7 +246,6 @@ class pasPrinter = object(self)
       declared_types
       instrs
 
-
   method declarevars f instrs =
     let bindings = self#declaredvars BindingMap.empty instrs
     in
@@ -401,7 +309,6 @@ class pasPrinter = object(self)
 
   method stdin_sep f =
     Format.fprintf f "@[<h>skip();@]"
-
 
   method read f t m = match Type.unfix t with
   | Type.Integer ->
@@ -549,16 +456,10 @@ end;
                Format.fprintf t "%a : %a;" self#field name self#ptype type_
              ) sep_nl
           ) li
-
-
     | Type.Enum li ->
       Format.fprintf f "Type %a = (@\n@[<v2>  %a@]);@\n"
         self#typename name
-        (print_list
-           (fun t name ->
-             self#enum t name
-           ) sep_c
-        ) li
+        (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li
 
     | _ ->
       Format.fprintf f "type %a = %a;"

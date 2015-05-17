@@ -33,11 +33,10 @@
 open Stdlib
 open Ast
 open Helper
-open Printer
 
 let print_lief tyenv prio f = function
-  | Ast.Expr.Char c -> unicode f c
-  | Ast.Expr.Enum e ->
+  | Expr.Char c -> unicode f c
+  | Expr.Enum e ->
       let t = Typer.typename_for_enum e tyenv in
       Format.fprintf f "%s.%s" t e
   | x -> print_lief prio f x
@@ -54,14 +53,16 @@ let print_expr tyenv macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
 class javaPrinter = object(self)
   inherit CppPrinter.cppPrinter as cppprinter
 
-  method expr f e = print_expr (self#getTyperEnv ()) 
+  method expr f e = print_expr (self#getTyperEnv ())
       (StringMap.map (fun (ty, params, li) ->
-        ty, params, List.assoc (self#lang ()) li) macros) e f nop
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
   method declare_for s f li = ()
 

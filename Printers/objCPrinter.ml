@@ -32,11 +32,9 @@
 open Ast
 open Helper
 open Stdlib
-open Printer
-open CPrinter
 
 class objCPrinter = object(self)
-  inherit cPrinter as baseprinter
+  inherit CPrinter.cPrinter as baseprinter
 
   method lang () = "objc"
 
@@ -96,10 +94,8 @@ class objCPrinter = object(self)
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
         self#typename name
         (print_list
-           (fun t name ->
-             self#enum t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+           (fun t name -> Format.fprintf t "%s" name)
+           (sep "%a,@\n%a")
         ) li
         self#typename name
     | _ ->

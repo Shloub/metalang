@@ -42,6 +42,8 @@ let format_type t = match Type.unfix t with
   | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t))
 )
 
+let lang = "abstract"
+
 type oppart =
 | Left | Right
 
@@ -92,21 +94,24 @@ class printer = object(self)
 
   val mutable macros = StringMap.empty
 
-  method binding f = function
-  | UserName i -> Format.fprintf f "%s"i 
-  | InternalName i -> Format.fprintf f "internal__%d" i
+  method expr f e = 
+    let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
+        (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f priority in
+    print_expr
+      { prio_binop; prio_unop; print_varname; print_lief; print_op;
+        print_unop;
+        macros=(StringMap.map (fun (ty, params, li) ->
+          ty, params,
+          try List.assoc (self#lang ()) li
+          with Not_found -> List.assoc "" li) macros);
+        print_mut} e f nop
+
+  method binding f b = print_varname f b
 
   method field f i = Format.fprintf f "%s" i
-  method enum f i = Format.fprintf f "%s" i
   method enumfield f i = Format.fprintf f "%s" i
   method funname f i = Format.fprintf f "%s" i
   method typename f i = Format.fprintf f "%s" i
-  method string f i = Format.fprintf f "%S" i
-
-  method string_nodolar f s = string_nodolar f s
-
-  method string_noprintable print_first_char f s =
-    string_noprintable self#char print_first_char f s 
 
   method declaration f var t e =
     Format.fprintf f "@[<hov>def %a@ %a@ =@ %a@]"
@@ -131,7 +136,6 @@ class printer = object(self)
     Format.fprintf f "@[<hov>while %a@]@\n%a"
       self#expr expr
       self#bloc li
-
 
   method comment f str =
     Format.fprintf f "/*%s*/" str
@@ -175,7 +179,6 @@ class printer = object(self)
       self#binding binding
       self#expr len
 
-
   method allocarray_lambda f binding type_ len binding2 lambda useless =
     Format.fprintf f "@[<hov>def %a array<%a>%a[%a] with %a do@\n@[<v 2>  %a@]@\nend@]"
       self#p_option useless
@@ -212,7 +215,7 @@ class printer = object(self)
   method expand_macro_apply f name t params code li =
     self#expand_macro_call f name t params code li
 
-  method lang () = "abstract"
+  method lang () = lang
 
   method expand_macro_call f name t params code li =
     let lang = self#lang () in
@@ -250,7 +253,6 @@ class printer = object(self)
       self#separator ()
 
   method separator f () = Format.fprintf f ";"
-
 
   method apply f var li = 
     match StringMap.find_opt var macros with
@@ -402,124 +404,8 @@ class printer = object(self)
         self#instructions ifcase
         self#instructions elsecase
 
-  method bool f b = Format.fprintf f (if b then "true" else "false")
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "/"
-      | Expr.Mod -> "%"
-      | Expr.Or -> "||"
-      | Expr.And -> "&&"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "=="
-      | Expr.Diff -> "!="
-      )
-
-  method unop f op a =
-    let pop f () = match op with
-      | Expr.Neg -> Format.fprintf f "-"
-      | Expr.Not -> Format.fprintf f "!"
-    in if self#nop (Expr.unfix a) then
-        Format.fprintf f "%a%a" pop () self#expr a
-      else
-        Format.fprintf f "%a(%a)" pop () self#expr a
-
-  method nop = function
-  | Expr.Lief _ -> true
-  | Expr.Access _ -> true
-  | Expr.Call (_, _) -> true
-  | _ -> false
-
   method printp f e =
     Format.fprintf f "@[<hov 2>(%a)@]" self#expr e
-
-  method chf op side f x = match (Expr.unfix x) with
-  | Expr.BinOp (_, op2, _) ->
-    begin match (op, side, op2) with
-    | ((Expr.Eq | Expr.Diff | Expr.Lower |
-        Expr.LowerEq | Expr.Higher | Expr.HigherEq
-    ), _, (Expr.Add | Expr.Mul | Expr.Sub | Expr.Div)) ->
-      self#expr f x
-
-    | ((Expr.And | Expr.Or), _, (Expr.Eq | Expr.Diff | Expr.Lower |
-        Expr.LowerEq | Expr.Higher | Expr.HigherEq
-    )) ->
-      self#expr f x
-    | ((Expr.Add | Expr.Sub), _, (Expr.Mul | Expr.Div | Expr.Mod))
-      ->
-      self#expr f x
-    | (Expr.Sub, Left, (Expr.Sub | Expr.Add))
-      ->
-      self#expr f x
-    | (Expr.Add, _, Expr.Add)
-      ->
-      self#expr f x
-    | (Expr.Mul, _, Expr.Mul)
-      ->
-      self#expr f x
-    | (Expr.And, _, Expr.And)
-      ->
-      self#expr f x
-    | (Expr.Or, _, Expr.Or)
-      ->
-      self#expr f x
-    | _ ->
-      self#printp f x
-    end
-  | _ -> self#expr f x
-
-  method binop f op a b =
-    Format.fprintf f "%a %a@;%a"
-      (self#chf op Left) a
-      self#print_op op
-      (self#chf op Right) b
-
-  method integer f i =
-    Format.fprintf f "%i" i
-
-  method lexems f (li : (Parser.token, Utils.expr) Lexems.t list )  =
-    Utils.lexems f li
-
-  method lief f = function
-    | Expr.Enum e -> self#enum f e
-    | Expr.Bool b -> self#bool f b
-    | Expr.Integer i -> self#integer f i
-    | Expr.String i -> self#string f i
-    | Expr.Char (c) -> self#char f c
-
-  method expr f t =
-    let t = Expr.unfix t in
-    match t with
-    | Expr.Lief l -> self#lief f l
-    | Expr.Lexems li -> self#lexems f li
-    | Expr.UnOp (a, op) -> self#unop f op a
-    | Expr.BinOp (a, op, b) -> self#binop f op a b
-    | Expr.Access m ->
-      self#access f m
-    | Expr.Call (funname, li) -> self#apply f funname li
-    | Expr.Tuple li -> self#tuple f li
-    | Expr.Record li -> self#record f li
-
-  method tuple f li =
-    Format.fprintf f "(%a)"
-      (print_list self#expr sep_c) li
-
-  method record f li =
-    Format.fprintf f "record %a end"
-      (self#def_fields (InternalName 0)) li
-
-  method char f c = clike_char f c
-
-  method access f m =
-    self#mutable_get f m
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "def@ %a %a(%a)"
@@ -530,7 +416,6 @@ class printer = object(self)
            Format.fprintf f "%a@ %a"
              self#ptype t
              self#binding n) sep_c) li
-
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<hov>%a@]@\n@[<v 2>  %a@]@\nend@\n"
@@ -654,7 +539,6 @@ class printer = object(self)
 
   method proglist f funs =
     Format.fprintf f "%a" (print_list self#prog_item nosep) funs
-
 
   val mutable recursives_definitions = StringSet.empty
   method setRecursive b = recursives_definitions <- b

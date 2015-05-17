@@ -33,57 +33,50 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
-open CPrinter
 
-let print_varname f = function
-  | Ast.UserName v -> Format.fprintf f "$%s" v
-  | Ast.InternalName _ -> assert false
-
-let print_lief prio f l =
+let print_lief prio f l = 
   let open Format in
-  let open Ast.Expr in match l with
+  let open Expr in
+  match l with
   | Char c -> 
-    let cs = Printf.sprintf "%C" c in
-    if String.length cs == 6 || c == '\b' then
-      fprintf f "\"\\x%02x\"" (int_of_char c)
-    else
-      fprintf f "%S" (String.from_char c)
+      let cs = Printf.sprintf "%C" c in
+      if String.length cs == 6 || c == '\b' then
+        fprintf f "\"\\x%02x\"" (int_of_char c)
+      else fprintf f "%S" (String.from_char c)
   | String s -> 
       let s = Printf.sprintf "%S" s in
       fprintf f "%s" (String.replace "$" "\\$" s)
   | Integer i ->
       if i < 0 then parens prio (-1) f "%i" i
-      else Format.fprintf f "%i" i
+      else fprintf f "%i" i
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
   | Enum s -> fprintf f "%S" s
 
-let print_expr0 config e f prio_parent =
+let print_expr macros e f p =
   let open Format in
-  let open Ast.Expr in match e with
+  let open Expr in
+  let print_expr0 config e f prio_parent = match e with
   | BinOp (a, (Div as op), b) ->
       let prio, priol, prior = prio_binop op in
       fprintf f "intval(%a %a %a)" a priol print_op op b prior
   | Tuple li -> fprintf f "array(%a)" (print_list (fun f x -> x f nop) sep_c) li
   | Record li -> fprintf f "array(%a)" (print_list (fun f (name, x) ->
       fprintf f "%S => %a" name x nop) sep_c) li
-  | _ -> print_expr0 config e f prio_parent
-
-let print_expr macros e f p =
+  | _ -> print_expr0 config e f prio_parent in
   let config = {
     prio_binop = prio_binop_equal;
     prio_unop;
-    print_varname;
+    print_varname = dolar_varname;
     print_lief;
     print_op;
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 class phpPrinter = object(self)
-  inherit cPrinter as super
+  inherit CPrinter.cPrinter as super
 
   method declare_for s f li = ()
 
@@ -213,7 +206,7 @@ function nextChar(){
     Format.fprintf f "@[<h>%a = array_fill(0, %a, %a);@]"
       self#binding binding
       self#expr len
-      self#lief e
+      (print_lief nop) e
 
   method forloop f varname expr1 expr2 li =
     self#forloop_content f (varname, expr1, expr2, li)
@@ -242,7 +235,10 @@ function nextChar(){
 
   method multiread f instrs = self#basemultiread f instrs
 
-  method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
-    ty, params, List.assoc (self#lang ()) li) macros) e f nop
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
 
 end

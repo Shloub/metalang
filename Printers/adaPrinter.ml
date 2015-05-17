@@ -32,13 +32,11 @@ open Stdlib
 open Helper
 open Ast
 open Printer
-open PasPrinter
 
 let print_expr macros e f p =
   let open Format in
-  let open Ast.Expr in
-  let prio_binop op =
-    let open Ast.Expr in match op with
+  let open Expr in
+  let prio_binop op = match op with
     | Mul -> assoc 5
     | Div
     | Mod -> nonassocr 7
@@ -61,15 +59,14 @@ let print_expr macros e f p =
     | Char c -> pchar f c
     | Integer i ->
         if i < 0 then parens prio (1000) f "%i" i
-        else Format.fprintf f "%i" i
+        else fprintf f "%i" i
     | String s -> fprintf f "new char_array'( To_C(%a))"
           (string_noprintable pchar true) s
     | Bool true -> fprintf f "TRUE"
     | Bool false -> fprintf f "FALSE"
     | x -> print_lief prio f x in
   let print_unop f op =
-    let open Ast.Expr in
-    Format.fprintf f (match op with
+    fprintf f (match op with
     | Neg -> "-"
     | Not -> "not ")
   in
@@ -92,7 +89,7 @@ let print_expr macros e f p =
   | HigherEq -> ">="
   | Eq -> "="
   | Diff -> "/=") in
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f prio in
   let config = {
     prio_binop;
@@ -103,10 +100,10 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
 class adaPrinter = object(self)
-  inherit pasPrinter as super
+  inherit PasPrinter.pasPrinter as super
 
   method expr f e = print_expr
       (StringMap.map (fun (ty, params, li) ->
@@ -342,7 +339,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
     | Type.Enum li ->
       Format.fprintf f "Type %a is (@\n@[<v2>  %a@]);@\n"
         self#typename name
-        (print_list self#enum (sep "%a,@\n %a")) li
+        (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a,@\n %a")) li
     | _ ->
       Format.fprintf f "type %a = %a;"
         super#ptype t

@@ -33,15 +33,13 @@
 open Ast
 open Helper
 open Stdlib
-open Printer
-open CPrinter
 
 let print_expr macros e f p =
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "(*%a).%s" conf) m f prio in
   let print_lief prio f l =
     let open Format in
-    let open Ast.Expr in match l with
+    let open Expr in match l with
     | Char c -> clike_char f c
     | String s -> fprintf f "%S" s
     | Integer i ->
@@ -60,10 +58,10 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
 class goPrinter = object(self)
-  inherit cPrinter as super
+  inherit CPrinter.cPrinter as super
 
   method expr f e = print_expr
       (StringMap.map (fun (ty, params, li) ->
@@ -213,9 +211,7 @@ func skip() {
       self#binding binding
       self#ptype type_
       self#ptype type_
-      (fun f a ->
-        if self#nop (Expr.unfix a) then self#expr f a
-        else self#printp f a) len
+      self#expr len
 
   method stdin_sep f = Format.fprintf f "@[skip()@]"
 
@@ -264,9 +260,7 @@ func skip() {
         self#typename name
         (print_list
            (fun t fname ->
-             Format.fprintf t "%a %a = iota"
-               self#enum fname
-               self#enum name
+             Format.fprintf t "%s %s = iota" fname name
            ) sep_nl
         ) li
     | _ -> Format.fprintf f "type %a %a;" self#typename name self#ptype t

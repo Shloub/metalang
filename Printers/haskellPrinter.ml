@@ -393,7 +393,7 @@ class haskellPrinter = object(self)
     parens ~p (fun_priority -1) f "do @[<v>%a@]" self#blockContent li
 	
   method print_format f formats =
-    Format.fprintf f "%S" (OcamlFunPrinter.format_to_string formats)
+    Format.fprintf f "%S" (format_to_string formats)
 
   method printf f () = Format.fprintf f "printf"
   method multiprint ~p f formats exprs =

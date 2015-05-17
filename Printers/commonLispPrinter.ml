@@ -32,40 +32,113 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
 
-class commonLispPrinter = object(self)
-  inherit printer as super
+let print_mut0 tyenv m f () =
+  let open Format in
+  let open Ast.Mutable in match m with
+  | Var v -> print_varname f v
+  | Array (m, fi) ->
+      List.fold_left (fun t (_, param) f () -> fprintf f "(aref %a %a)" t () param None) m fi f ()
+  | Dot (m, field) -> fprintf f "(%s-%s %a)" (Typer.typename_for_field field tyenv) field m ()
 
-  method lang () = "clisp"
-
-  method char f c = match c with
-  | ' ' -> Format.fprintf f "#\\Space"
-  | '\n' -> Format.fprintf f "#\\NewLine"
+let p_char f c = let open Format in match c with
+  | ' ' -> fprintf f "#\\Space"
+  | '\n' -> fprintf f "#\\NewLine"
   | x -> if (x >= 'a' && x <= 'z') ||
-      (x >= '0' && x <= '9') ||
-      (x >= 'A' && x <= 'Z')
-    then Format.fprintf f "#\\%c" x
-    else Format.fprintf f "(code-char %d)" (int_of_char c)
+    (x >= '0' && x <= '9') ||
+    (x >= 'A' && x <= 'Z')
+  then fprintf f "#\\%c" x
+  else fprintf f "(code-char %d)" (int_of_char c)
 
-  method is_char_printable_instring c =
+  let  is_char_printable_instring c =
     let i = int_of_char c in
     c == '\n' || (i > 30 && i < 127 && c != '"' && c != '\\')
 
-  method string f s =
-    if String.for_all self#is_char_printable_instring s then
-      Format.fprintf f "\"%s\"" (String.replace "\"" "\\\"" s)
-    else
-      Format.fprintf f "(format nil \"%a\"%a)"
-        (fun f s ->
-          String.iter (fun c -> if self#is_char_printable_instring c
-          then Format.fprintf f "%c" c
-          else Format.fprintf f "~C") s
-        ) s
-        (fun f s ->
-          String.iter (fun c -> if not(self#is_char_printable_instring c)
-          then Format.fprintf f " %a" self#char c) s
-        ) s
+let p_string f s = let open Format in
+  if String.for_all is_char_printable_instring s then
+    fprintf f "\"%s\"" (String.replace "\"" "\\\"" s)
+  else
+    fprintf f "(format nil \"%a\"%a)"
+      (fun f s ->
+        String.iter (fun c -> if is_char_printable_instring c
+        then fprintf f "%c" c
+        else fprintf f "~C") s
+      ) s
+      (fun f s ->
+        String.iter (fun c -> if not(is_char_printable_instring c)
+        then fprintf f " %a" p_char c) s
+      ) s
+
+let print_expr0 macros tyenv (annot:int) e =
+  let print_mut tyenv f m = Mutable.Fixed.Deep.fold (print_mut0 tyenv) m f () in
+  let open Expr in   
+  let open Format in
+  let binopstr = function
+    | Add -> "+"
+    | Sub -> "-"
+    | Mul -> "*"
+    | Div -> "quotient"
+    | Mod -> "remainder"
+    | Or -> "or"
+    | And -> "and"
+    | Lower -> "<"
+    | LowerEq -> "<="
+    | Higher -> ">"
+    | HigherEq -> ">="
+    | _ -> assert false in
+  let lambda = (fun f parent_operator ->
+    match e with
+    | BinOp ((annota, a), Eq, (_, b)) ->
+        if Typer.is_int_a tyenv annota then fprintf f "@[<h>(= %a@ %a)@]" a None b None
+        else fprintf f "@[<h>(eq %a@ %a)@]" a None b None
+    | BinOp ((annota, a), Diff, (_, b)) ->
+        if Typer.is_int_a tyenv annota then fprintf f "@[<h>(not (= %a@ %a))@]" a None b None
+        else fprintf f "@[<h>(not (eq %a@ %a))@]" a None b None
+    | BinOp ((_, a), ((Add | Mul | Or | And) as op), (_, b)) when Some op = parent_operator ->
+        fprintf f "%a %a" a parent_operator b parent_operator
+    | BinOp ((_, a), op, (_, b)) ->
+        let sop = Some op in
+        fprintf f "(%s %a %a)" (binopstr op) a sop b sop
+    | UnOp ((_, a), Not) -> fprintf f "(not %a)" a None
+    | UnOp ((_, a), Neg) -> fprintf f "(- 0 %a)" a None
+    | Lief l -> begin match l with
+      | Char c -> p_char f c
+      | String s -> p_string f s
+      | Bool true -> fprintf f "t"
+      | Bool false -> fprintf f "nil"
+      | Integer i -> fprintf f "%i" i
+      | Enum e -> fprintf f "'%s" e
+    end
+    | Access m -> print_mut tyenv f m
+    | Call (func, li) ->
+        let li = List.map snd li in
+        begin match StringMap.find_opt func macros with
+        | Some ( (t, params, code) ) ->
+            pmacros f "%s" t params code li None
+        | None -> fprintf f "(%s %a)" func (print_list (fun f x -> x f None) sep_space) li
+        end
+    | Tuple _
+    | Lexems _ -> assert false
+    | Record li ->
+        let t = Typer.typename_for_field (fst (List.hd li) ) tyenv in
+        fprintf f "(make-%s @[<v>%a@])" t
+          (print_list (fun f (name, (_, x)) ->
+            fprintf f ":%s %a" name x None) sep_c) li
+               ) in annot, lambda
+
+
+let print_expr tyenv macros e f () = ( snd (Expr.Fixed.Deep.folda (print_expr0 tyenv macros) e) ) f None
+
+class commonLispPrinter = object(self)
+  inherit Printer.printer as super
+
+  method lang () = "clisp"
+
+  method expr f e = print_expr
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) (self#getTyperEnv ()) e f ()
         
   method affectop f m = match Mutable.unfix m with
   | Mutable.Array _ | Mutable.Dot _ -> Format.fprintf f "setf"
@@ -100,7 +173,6 @@ class commonLispPrinter = object(self)
     | Type.Integer -> self#affect f mutable_ (Expr.call "mread-int" [])
     | Type.Char -> self#affect f mutable_ (Expr.call "mread-char" [])
     | _ -> assert false
-
 
   method m_field f m field =
       Format.fprintf f "@[<h>(%s-%a %a)@]"
@@ -153,52 +225,6 @@ class commonLispPrinter = object(self)
       self#expr expr2
       self#blocnonnull li
 
-  method unop f op a = match op with
-  | Expr.Neg -> Format.fprintf f "(- 0 %a)" self#expr a
-  | Expr.Not -> Format.fprintf f "(not %a)" self#expr a
-
-  method expr f t =
-    let binop op a b =
-      let rec collect e li = match Expr.unfix e with
-      | Expr.BinOp (a, op2, b) when op2 = op ->
-          let li = collect b li in
-          let li = collect a li in
-          li
-      | _ -> e::li
-      in match op with
-      | Expr.Eq ->
-        if Typer.is_int (super#getTyperEnv ()) a then
-          Format.fprintf f "@[<h>(= %a@ %a)@]" self#expr a self#expr b
-        else
-          Format.fprintf f "@[<h>(eq %a@ %a)@]"self#expr a self#expr b
-      | Expr.Diff ->
-        if Typer.is_int (super#getTyperEnv ()) a then
-          Format.fprintf f "@[<h>(not (= %a@ %a))@]" self#expr a self#expr b
-        else
-          Format.fprintf f "@[<h>(not (eq %a@ %a))@]" self#expr a self#expr b
-      | Ast.Expr.Add
-      | Ast.Expr.Mul
-      | Ast.Expr.Or
-      | Ast.Expr.And ->
-          let li = collect b [] in
-          let li = collect a li in
-          Format.fprintf f "(%a %a)" self#print_op op (print_list self#expr sep_space) li
-      | _ ->
-        Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#print_op op self#expr a self#expr b
-    in
-    let t = Expr.unfix t in
-    match t with
-    | Expr.UnOp (a, op) -> self#unop f op a
-    | Expr.BinOp (a, op, b) -> binop op a b
-    | Expr.Access a -> self#access f a
-    | Expr.Call (funname, li) -> self#apply f funname li
-    | Expr.Lexems e -> assert false
-    | Expr.Record e -> self#record f e
-    | Expr.Lief l -> self#lief f l
-    | Expr.Tuple _ -> assert false
-
-  method enum f e = Format.fprintf f "'%s" e
-
   method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
@@ -248,8 +274,6 @@ class commonLispPrinter = object(self)
   method return f e =
     Format.fprintf f "@[<h>(return-from %s %a)@]" funname_ self#expr e
 
-  method bool f b =  Format.fprintf f (if b then "t" else "nil")
-
   method formater_type t = match Type.unfix t with
   | Type.Integer -> "~D"
   | Type.Char -> "~C"
@@ -264,7 +288,7 @@ class commonLispPrinter = object(self)
 
 	method multi_print f format exprs =
 		Format.fprintf f "@[<v>(format t %a %a)@]"
-			self#string format
+			p_string format
       (print_list (fun f (t, e) -> self#expr f e) sep_space) exprs
 
   method bloc f li =

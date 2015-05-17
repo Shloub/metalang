@@ -32,7 +32,6 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
 
 let print_expr macros e f p =
   let open Format in
@@ -65,7 +64,7 @@ let print_expr macros e f p =
   | HigherEq -> ">="
   | Eq -> "=="
   | Diff -> "~=") in
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
   let config = {
     prio_binop;
@@ -76,10 +75,10 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Fixed.Deep.fold (print_expr0 config) e f p
 
 class luaPrinter = object(self)
-  inherit printer as super
+  inherit Printer.printer as super
 
   method combine_formats () = true
   method limit_nprint () = 255

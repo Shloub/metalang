@@ -32,52 +32,102 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
+
+let is_string tyenv a =
+  match Typer.get_type_a tyenv a |> Type.unfix with
+  | Type.String -> true
+  | _ -> false
+let print_access f access = Format.fprintf f (if access then " @@" else "")
+let print_access_double f access = Format.fprintf f (if access then " 2@@" else "")
+let print_mut0 tyenv annot m f access =
+  let open Format in
+  let open Mutable in match m with
+  | Var v -> print_varname f v
+  | Array (m, li) ->
+      if is_string tyenv annot then
+        match List.rev li with
+        | hd::tl ->
+            fprintf f "%a %a %a cells 2 * + %a" m true
+              (print_list (fun f a -> fprintf f "%a cells + @@" a ()) (sep "%a %a")) (List.rev tl)
+              hd ()
+              print_access_double access
+        | [] -> assert false
+      else
+        begin match List.rev li with
+        | hd::tl ->
+            fprintf f "%a %a %a cells + %a" m true
+              (print_list (fun f a -> fprintf f "%a cells + @@" a ()) (sep "%a %a")) (List.rev tl)
+              hd ()
+              print_access access
+        | [] -> assert false
+        end
+  | Dot (m, field) ->
+      if is_string tyenv annot then
+        fprintf f "%a ->%s%a" m true field print_access_double access
+      else fprintf f "%a ->%s%a" m true field print_access access
+
+let print_expr0 tyenv macros e f prio_parent =
+  let open Expr in
+  let open Format in
+  let print_op f op = fprintf f
+      "%s"
+      (match op with
+      | Add -> "+"
+      | Sub -> "-"
+      | Mul -> "*"
+      | Div -> "//"
+      | Mod -> "%"
+      | Or -> "OR"
+      | And -> "AND"
+      | Lower -> "<"
+      | LowerEq -> "<="
+      | Higher -> ">"
+      | HigherEq -> ">="
+      | Eq -> "="
+      | Diff -> "<>"
+      ) in
+  let print_lief f = function
+    | String s ->
+        let s = " " ^ s in
+        let s = Printf.sprintf "%S" s in
+        fprintf f (if String.exists ((=) '\\') s then "S\\%s" else "S%s") s
+    | Char c -> let ci = int_of_char c in
+      if ci >= 48 && ci <= 127 then fprintf f "[char] %c" c
+      else fprintf f "%d" ci
+    | Bool true -> fprintf f "true"
+    | Bool false -> fprintf f "false"
+    | Enum e -> fprintf f "%s" e
+    | Integer i -> fprintf f "%i" i
+  in
+  let print_mut m f b = Mutable.Fixed.Deep.folda (print_mut0 tyenv) m f b in
+  match e with
+  | BinOp (a, op, b) -> fprintf f "%a %a %a" a () b () print_op op
+  | UnOp (a, Not) -> fprintf f "%a INVERT" a ()
+  | UnOp (a, Neg) -> fprintf f "%a NEGATE" a ()
+  | Lief l -> print_lief f l
+  | Access m -> print_mut m f true
+  | Call (func, li) ->
+      begin match StringMap.find_opt func macros with
+      | Some ( (t, params, code) ) ->
+          pmacros f "%s" t params code li ()
+      | None -> fprintf f "%a %s" (print_list (fun f x -> x f ()) sep_space) li func
+      end
+  | Lexems li -> assert false
+  | Tuple li -> assert false
+  | Record li -> assert false
+
+let print_expr tyenv macros e f () = Expr.Fixed.Deep.fold (print_expr0 tyenv macros) e f ()
 
 class forthPrinter = object(self)
-  inherit printer as super
+  inherit Printer.printer as super
 
   method lang () = "fs"
-
-  method string f s =
-    let s = " " ^ s in
-    let s = Printf.sprintf "%S" s in
-     Format.fprintf f (if String.exists ((=) '\\') s then "S\\%s" else "S%s") s
 
   method field f i = Format.fprintf f "->%s" i
 
   method comment f s =
     let lic = String.split s '\n' in
     print_list (fun f s -> Format.fprintf f "\\ %s@\n" s) nosep f lic
-
-  method binop f op a b =
-    Format.fprintf f "%a %a %a"
-      self#expr a
-      self#expr b
-      self#print_op op
-
-  method unop f op a = match op with
-  | Expr.Neg -> Format.fprintf f "%a NEGATE" self#expr a
-  | Expr.Not -> Format.fprintf f "%a INVERT" self#expr a
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "//"
-      | Expr.Mod -> "%"
-      | Expr.Or -> "OR"
-      | Expr.And -> "AND"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "="
-      | Expr.Diff -> "<>"
-      )
 
   method if_ f e ifcase elsecase =
     match elsecase with
@@ -180,12 +230,6 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
           self#expr len
           self#binding binding
 
-  method char f c =
-    let ci = int_of_char c in
-    if ci >= 48 && ci <= 127 then
-      Format.fprintf f "[char] %c" c
-    else Format.fprintf f "%d" ci (* TODO gérer la taille *)
-
   method separator f () = Format.fprintf f ""
   method return f e = Format.fprintf f "@[<hov>%a%a exit@]"
       (print_ntimes ndrop) "DROP "
@@ -218,26 +262,10 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
       self#instructions instrs
 
   method mutable0 f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a %a"
-        self#mutable_get m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m2, indexes) ->
-        match Typer.get_type_a (self#getTyperEnv ()) (Mutable.Fixed.annot m) |> Type.unfix with
-        | Type.String -> Format.fprintf f "%a %a"
-            self#mutable_get m2
-            (print_list
-               (fun f e -> Format.fprintf f "%a cells 2 * +" self#expr e)
-               sep_space)
-            indexes
-        | _ -> Format.fprintf f "%a %a"
-            self#mutable_get m2
-            (print_list
-               (fun f e -> Format.fprintf f "%a cells +@\n" self#expr e)
-               sep_space)
-            indexes
+    let macros = self#gmacros () in
+    let tyenv = self#getTyperEnv () in
+    let mut = Ast.Mutable.Fixed.Deep.mapg (print_expr tyenv macros) m in
+    Ast.Mutable.Fixed.Deep.folda (print_mut0 tyenv) mut f false
 
   method mutable_get f m =
     match Mutable.unfix m with
@@ -321,6 +349,12 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
     | Type.Named n -> self#typename f n
     | _ ->  super#ptype f t
 
+  method gmacros () = StringMap.map (fun (ty, params, li) ->
+    ty, params,
+    try List.assoc (self#lang ()) li
+    with Not_found -> List.assoc "" li) macros
+
+  method expr f e = print_expr (self#getTyperEnv ()) (self#gmacros ()) e f ()
 
 end
 

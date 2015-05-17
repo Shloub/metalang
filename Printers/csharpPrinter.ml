@@ -32,23 +32,23 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
 
-let print_lief tyenv prio f = function
-  | Ast.Expr.Char c ->
-    if (c >= 'A' && c <= 'Z' ) ||
-      (c >= 'a' && c <= 'z' ) ||
-      (c >= '0' && c <= '9' ) ||
-      (c = '-' || c = '_' )
-    then Format.fprintf f "%C" c
-    else Format.fprintf f "(char)%d" (int_of_char c)
-  | Ast.Expr.Enum e ->
-      let t = Typer.typename_for_enum e tyenv in
-      Format.fprintf f "%s.%s" t e
-  | x -> print_lief prio f x
+let prio_operator = -100
 
 let print_expr tyenv macros e f p =
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
+  let print_lief tyenv prio f = function
+    | Expr.Char c ->
+        if (c >= 'A' && c <= 'Z' ) ||
+        (c >= 'a' && c <= 'z' ) ||
+        (c >= '0' && c <= '9' ) ||
+        (c = '-' || c = '_' )
+        then Format.fprintf f "%C" c
+        else Format.fprintf f "(char)%d" (int_of_char c)
+    | Ast.Expr.Enum e ->
+        let t = Typer.typename_for_enum e tyenv in
+        Format.fprintf f "%s.%s" t e
+    | x -> print_lief prio f x in
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
   let config = {
     prio_binop;
@@ -59,7 +59,7 @@ let print_expr tyenv macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
 class csharpPrinter = object(self)
   inherit JavaPrinter.javaPrinter as super
@@ -68,9 +68,13 @@ class csharpPrinter = object(self)
 
   method lang () = "csharp"
 
-  method expr f e = print_expr (self#getTyperEnv ()) 
+  method exprp p f e = print_expr (self#getTyperEnv ())
       (StringMap.map (fun (ty, params, li) ->
-        ty, params, List.assoc (self#lang ()) li) macros) e f nop
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f p
+
+  method expr f e = self#exprp nop f e
 
   method ptype f t =
     match Type.unfix t with
@@ -187,9 +191,7 @@ static int readInt(){
     let exprs = List.rev exprs in
       Format.fprintf f "@[<h>Console.Write(%a)%a@]"
         (print_list
-           (fun f (t, e) ->
-             if self#nop (Expr.unfix e) then self#expr f e
-             else self#printp f e)
+           (fun f (t, e) ->self#exprp prio_operator f e)
            (fun t f1 e1 f2 e2 -> Format.fprintf t "%a %a %a"
 	     f1 e1
 	     self#concat_operator ()

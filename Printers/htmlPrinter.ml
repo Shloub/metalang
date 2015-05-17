@@ -143,10 +143,6 @@ class htmlPrinter = object(self)
 
   method instr f t = Format.fprintf f "<div class=\"instruction\">%a</div>@\n" super#instr t
 
-  method bool f b = Format.fprintf f "<span class=\"constant\">%a</span>@\n" super#bool b
-  method enum f e = Format.fprintf f "<span class=\"constant\">%a</span>@\n" super#enum e
-  method char f e = Format.fprintf f "<span class=\"constant\">%a</span>@\n" super#char e
-
   method print_proto f (funname, t, li) =
     Format.fprintf f "<span class=\"keyword\">def</span>@ %a %a(%a)"
       self#ptype t
@@ -176,8 +172,7 @@ class htmlPrinter = object(self)
       Format.fprintf f "<span class=\"keyword\">enum</span> <span class=\"type\">@@%s</span> @\n<div class=\"metalang_bloc_content\">@[<v2>  %a@]</div>@\n<span class=\"keyword\">end</span>@\n"
         name
         (print_list
-           (fun t name ->
-             self#enum t name
+           (fun t name -> Format.fprintf t "%s" name
            ) sep_nl
         ) li
     | _ ->
