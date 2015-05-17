@@ -518,13 +518,6 @@ class printer = object(self)
     Format.fprintf f "record %a end"
       (self#def_fields (InternalName 0)) li
 
-  method unicode f c =
-    let cs = Printf.sprintf "%C" c in
-    if String.length cs == 6 then
-      Format.fprintf f "'\\u00%02x'" (int_of_char c)
-    else
-      Format.fprintf f "%s" cs
-
   method char f c =
     let cs = Printf.sprintf "%C" c in
     if String.length cs == 6 then

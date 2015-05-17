@@ -75,7 +75,7 @@ class scalaPrinter = object(self)
 
   method bool f b = Format.fprintf f (if b then "true" else "false")
 
-  method char f c = self#unicode f c
+  method char f c = unicode f c
 
   method header f prog =
     let need_stdinsep = prog.Prog.hasSkip in

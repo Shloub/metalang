@@ -34,7 +34,7 @@ open Helper
 open Ast
 open Printer
 
-let prio_binop op = CsharpPrinter.prio_binop op
+let prio_binop op = JavaPrinter.prio_binop op
 
 let print_op f op =
   Format.fprintf f

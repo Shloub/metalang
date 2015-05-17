@@ -33,23 +33,6 @@ open Stdlib
 open Helper
 open Ast
 open Printer
-open JavaPrinter
-
-let prio_binop op =
-  let open Ast.Expr in match op with
-  | Mul -> assoc 5
-  | Div
-  | Mod -> nonassocr 7
-  | Add -> assoc 9
-  | Sub -> nonassocr 9
-  | Lower
-  | LowerEq
-  | Higher
-  | HigherEq -> assoc 11
-  | Eq -> nonassocl 13
-  | Diff -> nonassocl 13
-  | And -> assoc 15
-  | Or -> assoc 15
 
 let print_lief tyenv prio f = function
   | Ast.Expr.Char c ->
@@ -68,7 +51,7 @@ let print_expr tyenv macros e f p =
   let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
   let config = {
-    prio_binop;
+    prio_binop = JavaPrinter.prio_binop;
     prio_unop;
     print_varname;
     print_lief = print_lief tyenv;
@@ -79,7 +62,7 @@ let print_expr tyenv macros e f p =
   } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
 class csharpPrinter = object(self)
-  inherit javaPrinter as super
+  inherit JavaPrinter.javaPrinter as super
 
   method combine_formats () = false
 
