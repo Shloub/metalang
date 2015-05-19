@@ -62,6 +62,7 @@ module Expr = struct
   | Fun of Ast.varname list * 'a
   | FunTuple of Ast.varname list * 'a
   | Apply of 'a * 'a list
+  | ApplyMacro of Ast.varname * 'a list
   | Tuple of 'a list
   | Lief of lief
   | Comment of string * 'a
@@ -99,6 +100,7 @@ module Expr = struct
       | Fun (params, e) -> ret (fun e -> Fun (params, e)) <*> f e
       | FunTuple (params, e) -> ret (fun e -> FunTuple (params, e)) <*> f e
       | Apply (e, li) -> ret (fun e li -> Apply (e, li)) <*> f e <*> fold_left_map f li
+      | ApplyMacro(m, li) -> ret (fun li -> ApplyMacro (m, li)) <*> fold_left_map f li
       | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f li
       | Lief l -> ret (Lief l)
       | Comment (s, c) -> ret (fun c -> Comment (s, c)) <*> f c

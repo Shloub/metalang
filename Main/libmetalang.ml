@@ -204,7 +204,7 @@ let fun_passes
     ~rename
     ~fun_inline
     ~detect_effects
-    ~curry prog =
+    ~curry ~macrotize prog =
   let rec_, ty, p = default_passes prog in
   let p = Passes.WalkInlineVars.apply () p in
   let p = ReadAnalysis.apply p in
@@ -218,6 +218,7 @@ let fun_passes
   let p = if fun_inline then FunInline.apply p else p in
   let p = RemoveInternalFun.apply p in
   let p = if detect_effects then DetectSideEffect.apply p else p in
+  let p = if macrotize then MakeMacros.apply p else p in
   (rec_, ty, p)
 
 let no_passes prog = prog
@@ -266,9 +267,9 @@ let languages, printers =
     "pl",      (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new PerlPrinter.perlPrinter ;
     "ml",      (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false) => new OcamlPrinter.camlPrinter ;
     "rb",      (false, clike_passes ~tuple:false ~record:false ~array:false ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new RbPrinter.rbPrinter ;
-    "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:true ) => new OcamlFunPrinter.camlFunPrinter ;
-    "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:false) => new RacketPrinter.racketPrinter ;
-    "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  ~curry:true ) => new HaskellPrinter.haskellPrinter ;
+    "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:true  ~macrotize:false) => new OcamlFunPrinter.camlFunPrinter ;
+    "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:false ~macrotize:true ) => new RacketPrinter.racketPrinter ;
+    "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  ~curry:true  ~macrotize:false) => new HaskellPrinter.haskellPrinter ;
   ] in
   let langs : string list = List.map fst ls |> List.sort String.compare in
   let map = L.from_list ls
