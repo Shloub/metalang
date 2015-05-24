@@ -102,8 +102,6 @@ let print_expr prototypes macros e f p =
     macros
   } in Fixed.Deep.fold (print_expr0 config) e f p
 
-
-
 class smalltalkPrinter = object(self)
   inherit Printer.printer as base
 

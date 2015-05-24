@@ -77,17 +77,20 @@ class javaPrinter = object(self)
       self#separator ()
 
   method ptype f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "int"
-    | Type.String -> Format.fprintf f "String"
-    | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
-    | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "boolean"
-    | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> self#typename f n
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
+    let open Type in
+    let open Format in
+    let ptype ty f () = match ty with
+    | Integer -> fprintf f "int"
+    | String -> fprintf f "String"
+    | Array a -> fprintf f "%a[]" a ()
+    | Void ->  fprintf f "void"
+    | Bool -> fprintf f "boolean"
+    | Char -> fprintf f "char"
+    | Named n -> self#typename f n
+    | Enum _ -> fprintf f "an enum"
+    | Struct li -> fprintf f "a struct"
+    | Auto | Tuple _ | Lexems -> assert false
+    in Fixed.Deep.fold ptype t f ()
 
   method decl_field f (name, type_) = Format.fprintf f "public %a %a%a" self#ptype type_ self#field name self#separator ()
 
@@ -104,10 +107,6 @@ class javaPrinter = object(self)
         (print_list self#enumfield (sep "%a,@\n %a")) li
     | _ -> cppprinter#decl_type f name t
 
-  method enum f e =
-    let t = Typer.typename_for_enum e (cppprinter#getTyperEnv ()) in
-    Format.fprintf f "%a.%s" self#typename t e
-
   method prog f prog =
     let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
     let datareader = Tags.is_taged "use_java_readline" in
@@ -118,7 +117,6 @@ class javaPrinter = object(self)
       (if datareader then self#print_datareader else fun f () -> ()) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
-
 
   method prefix_type f t =
     match Type.unfix t with

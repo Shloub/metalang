@@ -155,8 +155,6 @@ class scalaPrinter = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-
-
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
 
@@ -193,7 +191,6 @@ class scalaPrinter = object(self)
     in let g acc i = Instr.Writer.Deep.fold g (g acc i) i
     in refbindings <- List.fold_left g BindingSet.empty instrs
 
-
   method print_proto f (funname, t, li) =
     Format.fprintf f "def %a(%a)%a"
       self#funname funname
@@ -223,18 +220,21 @@ class scalaPrinter = object(self)
       self#separator ()
 
   method ptype f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "Int"
-    | Type.String -> Format.fprintf f "String"
-    | Type.Array a -> Format.fprintf f "Array[%a]" self#ptype a
-    | Type.Void ->  Format.fprintf f "Unit"
-    | Type.Bool -> Format.fprintf f "Boolean"
-    | Type.Char -> Format.fprintf f "Char"
-    | Type.Named n -> self#typename f n
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Struct _ -> Format.fprintf f "a struct"
-    | Type.Tuple li -> Format.fprintf f "(%a)" (print_list self#ptype sep_c) li
-    | Type.Auto | Type.Lexems -> assert false
+    let open Type in
+    let open Format in
+    let ptype ty f () = match ty with
+    | Integer -> fprintf f "Int"
+    | String -> fprintf f "String"
+    | Array a -> fprintf f "Array[%a]" a ()
+    | Void ->  fprintf f "Unit"
+    | Bool -> fprintf f "Boolean"
+    | Char -> fprintf f "Char"
+    | Named n -> self#typename f n
+    | Enum _ -> fprintf f "an enum"
+    | Struct _ -> fprintf f "a struct"
+    | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f ()) sep_c) li
+    | Auto | Lexems -> assert false
+in Fixed.Deep.fold ptype t f ()
 
   method typename f n = Format.fprintf f "%s" (String.capitalize n)
 
@@ -313,7 +313,6 @@ class scalaPrinter = object(self)
       self#expr expr1
       self#expr expr2
       self#bloc li
-
 
   method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>var %a@ :Array[%a]@ =@ new Array[%a](%a)%a@]"
