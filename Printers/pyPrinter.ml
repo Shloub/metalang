@@ -112,17 +112,8 @@ class pyPrinter = object(self)
 
   method expr f e = self#exprp nop f e
 
-
   method declare_for s f li = ()
   method separator f () = ()
-
-  method tuple f li =
-    Format.fprintf f "@[<h>(%a)@]"
-      (print_list self#expr sep_c) li
-
-  method record f li =
-    Format.fprintf f "{@\n  @[<v>%a@]}"
-      (self#def_fields (InternalName 0) ) li
 
   method selfAssoc f m e2 = function
   | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_set m self#expr e2
@@ -134,17 +125,12 @@ class pyPrinter = object(self)
 
   method lang () = "py"
 
-  method enum f e = Format.fprintf f "\"%s\"" e
-
   method allocarrayconst f binding t len e opt =
     Format.fprintf f "@[<h>%a@ = [%a] * %a@]"
       self#binding binding
       (print_lief nop) e
       (fun f e -> self#exprp (prio_right (prio_binop Ast.Expr.Mul)) f e)
       len
-
-
-  method bool f b =Format.fprintf f (if b then "True" else "False")
 
   method read f t mutable_ =
     match Type.unfix t with

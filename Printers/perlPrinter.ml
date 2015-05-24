@@ -276,6 +276,4 @@ class perlPrinter = object(self)
     try List.assoc (self#lang ()) li
     with Not_found -> List.assoc "" li) macros) e f nop
 
-
-
 end

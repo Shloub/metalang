@@ -227,8 +227,7 @@ class commonLispPrinter = object(self)
 
   method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     match StringMap.find_opt var macros with
-    | Some ( (t, params, code) ) ->
-      self#expand_macro_apply f var t params code li
+    | Some _ -> super#apply f var li
     | None -> Format.fprintf f "@[<h>(%a %a)@]" self#funname var (print_list self#expr sep_space) li
 
   method call (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit = self#apply f var li

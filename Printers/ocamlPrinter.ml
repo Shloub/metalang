@@ -622,8 +622,7 @@ class camlPrinter = object(self)
   (* Todo virer les parentheses quand on peut*)
   method apply f var li =
     match StringMap.find_opt var macros with
-    | Some ( (t, params, code) ) ->
-      self#expand_macro_call f var t params code li
+    | Some _ -> super#apply f var li
     | None ->
       match li with
       | [] ->

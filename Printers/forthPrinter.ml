@@ -239,8 +239,7 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
 
   method apply f var li =
     match StringMap.find_opt var macros with
-    | Some ( (t, params, code) ) ->
-      self#expand_macro_call f var t params code li
+    | Some _ -> super#apply f var li
     | None ->
       Format.fprintf
         f

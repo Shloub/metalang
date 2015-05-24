@@ -105,7 +105,7 @@ let print_expr prototypes macros e f p =
 
 
 class smalltalkPrinter = object(self)
-  inherit Printer.printer as baseprinter
+  inherit Printer.printer as base
 
   val mutable prototypes = StringMap.empty
 
@@ -203,8 +203,7 @@ class smalltalkPrinter = object(self)
 
   method apply f var li =
     match StringMap.find_opt var macros with
-    | Some ( (t, params, code) ) ->
-      self#expand_macro_apply f var t params code li
+    | Some _ -> base#apply f var li
     | None ->
         match li with
         | [] -> Format.fprintf f "(self %a)" self#funname var

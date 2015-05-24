@@ -144,29 +144,26 @@ class printer = object(self)
     Format.fprintf f "@[<hov>return@ %a@]" self#expr e
 
   method ptype f (t:Type.t) =
-    match Type.unfix t with
-    | Type.Tuple li ->
-      Format.fprintf f "@[<hov>(%a)@]"
-        (print_list self#ptype sep_c) li
-    | Type.Auto -> ()
-    | Type.Integer -> Format.fprintf f "int"
-    | Type.String -> Format.fprintf f "string"
-    | Type.Array a -> Format.fprintf f "array<%a>" self#ptype a
-    | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "bool"
-    | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> Format.fprintf f "@@%s" n
-    | Type.Lexems -> Format.fprintf f "lexems"
-    | Type.Struct li ->
-      Format.fprintf f "record@\n @[<hov>%a@]@\nend"
+    let open Type in
+    let open Format in
+    let ptype ty f () = match ty with
+    | Tuple li -> fprintf f "@[<hov>(%a)@]" (print_list (fun f p -> p f ()) sep_c) li
+    | Auto -> ()
+    | Integer -> fprintf f "int"
+    | String -> fprintf f "string"
+    | Array a -> fprintf f "array<%a>" a ()
+    | Void ->  fprintf f "void"
+    | Bool -> fprintf f "bool"
+    | Char -> fprintf f "char"
+    | Named n -> fprintf f "@@%s" n
+    | Lexems -> fprintf f "lexems"
+    | Struct li ->
+      fprintf f "record@\n @[<hov>%a@]@\nend"
         (print_list
-           (fun t (name, type_) ->
-             Format.fprintf t "%a : %a;" self#field name self#ptype type_
-           ) nosep
+           (fun t (name, type_) -> fprintf t "%a : %a;" self#field name type_ ()) nosep
         ) li
-    | Type.Enum li ->
-      Format.fprintf f "enum{%a}"
-        (print_list self#enumfield sep_space) li
+    | Enum li -> fprintf f "enum{%a}" (print_list self#enumfield sep_space) li
+    in Fixed.Deep.fold ptype t f ()
 
   method p_option f = function
   | { Ast.Instr.useless = true } -> Format.fprintf f "useless "
@@ -212,41 +209,7 @@ class printer = object(self)
     | Mutable.Var binding -> self#m_variable_get f binding
     | Mutable.Array (m, indexes) -> self#m_array_get f m indexes
 
-  method expand_macro_apply f name t params code li =
-    self#expand_macro_call f name t params code li
-
   method lang () = lang
-
-  method expand_macro_call f name t params code li =
-    let lang = self#lang () in
-    let code_to_expand = List.fold_left
-      (fun acc (clang, expantion) ->
-        match acc with
-        | Some _ -> acc
-        | None ->
-          if clang = "" || clang = lang then
-            Some expantion
-          else None
-      ) None
-      code
-    in match code_to_expand with
-    | None -> failwith ("no definition for macro "^name^" in language "^lang)
-    | Some s ->
-      let listr = List.map
-        (fun e ->
-          let b = Buffer.create 1 in
-          let fb = Format.formatter_of_buffer b in
-          Format.fprintf fb "@[<hov>%a@]%!" self#expr e;
-          Buffer.contents b
-        ) li in
-      let expanded = List.fold_left
-        (fun s ((param, _type), string) ->
-          String.replace ("$__MACRO__PARAM__"^param) string s
-        )
-        (String.replace "$" "$__MACRO__PARAM__" s)
-        (List.combine params listr)
-      in let expanded = String.replace "$__MACRO__PARAM__" "$" expanded
-      in Format.fprintf f "%s" expanded
 
   method call f var li =
     Format.fprintf f "%a%a" (fun f () -> self#apply f var li) ()
@@ -257,7 +220,10 @@ class printer = object(self)
   method apply f var li = 
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
-      self#expand_macro_call f var t params code li
+        let li = List.map (fun e f () -> self#expr f e) li in
+        let code = try List.assoc (self#lang ()) code
+        with Not_found -> List.assoc "" code in
+        pmacros f "%s" t params code li ()
     | None ->
       Format.fprintf
         f
