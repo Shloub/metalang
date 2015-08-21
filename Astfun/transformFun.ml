@@ -102,7 +102,13 @@ let rec affect_mutable (cont:F.Expr.t) (m:F.Expr.t A.Mutable.t) (e:F.Expr.t) = m
 let affected li =
   List.fold_left (fun acc i ->
     A.Instr.Writer.Deep.fold (fun acc i -> match A.Instr.unfix i with
-    | A.Instr.Read (_, m)
+    | A.Instr.Read li ->
+        List.fold_left (fun acc -> function
+          | A.Instr.ReadExpr (_, m) -> begin match name_of_mutable m with
+            | None -> acc
+            | Some s -> BindingSet.add s acc
+          end
+          | A.Instr.Separation -> acc ) acc li
     | A.Instr.Affect (m, _) -> begin match name_of_mutable m with
       | None -> acc
       | Some s -> BindingSet.add s acc
@@ -136,15 +142,22 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       | Some v -> affect_mutable (F.Expr.fun_ [v] tl) m e
       | None -> affect_mutable tl m e
       end
-    | A.Instr.Read (ty, m) ->
-      let v = name_of_mutable m in
-      let nenv = Option.map_default env (fun v -> if List.mem v env then env else v::env) v in
-      let tl = instrs suite contsuite contreturn nenv tl in
-      let f = Fresh.fresh_internal () in
-      let cont = match v with
+    | A.Instr.Read li ->
+        let rec continue env = function
+          | [] -> instrs suite contsuite contreturn env tl
+          | A.Instr.Separation :: tl ->
+              let next = continue env tl in
+              F.Expr.skipin next
+          | A.Instr.ReadExpr (ty, m) :: tl ->
+              let v = name_of_mutable m in
+              let nenv = Option.map_default env (fun v -> if List.mem v env then env else v::env) v in
+              let tl = continue nenv tl in
+              let f = Fresh.fresh_internal () in
+              let cont = match v with
 	| Some v -> affect_mutable (F.Expr.fun_ [v] tl) m (F.Expr.binding f)
 	| None -> affect_mutable tl m (F.Expr.binding f)
-      in F.Expr.readin (F.Expr.fun_ [f] cont) ty
+              in F.Expr.readin (F.Expr.fun_ [f] cont) ty
+        in continue env li
     | A.Instr.Return ( e) ->
       begin match contreturn with
       | Some contreturn -> F.Expr.apply contreturn [e]
@@ -187,12 +200,14 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
         let body1 = instrs true ncont contreturn env l1 in
         let body2 = instrs true ncont contreturn env l2 in
         F.Expr.apply next [F.Expr.if_ e body1 body2]
-    | A.Instr.Print (ty, e) ->
+    | A.Instr.Print li ->
       let next = instrs suite contsuite contreturn env tl in
-      F.Expr.print e ty next
-    | A.Instr.StdinSep ->
-      let next = instrs suite contsuite contreturn env tl in
-      F.Expr.skipin next
+      List.fold_right (fun item next -> match item with
+      | A.Instr.PrintExpr (ty, e) ->
+          F.Expr.print e ty next
+      | A.Instr.StringConst str ->
+          F.Expr.print (F.Expr.lief (F.Expr.String str)) A.Type.string next
+                      ) li next
     | A.Instr.While (e, li) ->
       let affected = List.filter (fun x -> List.mem x env) @$ BindingSet.elements @$ affected li in
       let next = instrs suite contsuite contreturn env tl in

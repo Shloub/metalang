@@ -184,7 +184,10 @@ class adaPrinter = object(self)
   method prog f prog =
     let contains t0 =
       contains_instr (fun i -> match Instr.unfix i with
-      | Instr.Print (t, _) -> Type.unfix t = t0
+      | Instr.Print li ->
+          List.exists (function
+            | Instr.StringConst _ -> t0 = Type.String
+            | Instr.PrintExpr(t, _) -> Type.unfix t = t0) li
       | _ -> false) prog
     in
     Format.fprintf f "
@@ -271,7 +274,10 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
       (Instr.Writer.Deep.fold
          (fun acc i ->
            match Instr.unfix i with
-           | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+           | Instr.Read li ->
+               List.fold_left (fun acc -> function
+                 | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+                 | _ -> acc ) acc li
            | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
            | _ -> acc
          ))

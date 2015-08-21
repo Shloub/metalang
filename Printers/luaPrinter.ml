@@ -191,7 +191,8 @@ end@\n") ()
         self#instructions ifcase
         self#instructions elsecase
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     match exprs with
     | [] -> Format.fprintf f "@[<h>io.write(\"%s\")@]" format
     | _ ->

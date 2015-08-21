@@ -60,7 +60,9 @@ let process () i =
 		    (
 		      Expr.Lief _ | Expr.Access (
 			Mutable.Fixed.F
-			  (_, Mutable.Var _)))), _, _)
+			  (_, Mutable.Var _)))), _, _) ->
+      [t0]
+(*
     | Instr.Print(_, Expr.Fixed.F
       (_,
        (Expr.Access ( Mutable.Fixed.F
@@ -81,7 +83,7 @@ let process () i =
         |> Instr.fixa annot |> locate loc;
         ]
       | _ -> [t0]
-      end
+      end *)
     | Instr.AllocArray(b0, t, e, lambdaopt, opt) ->
       let annot = Instr.Fixed.annot t0 in
       let loc = PosMap.get (Instr.Fixed.annot t0) in

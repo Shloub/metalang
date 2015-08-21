@@ -67,12 +67,19 @@ let finstr i =
       else 1
       in match instr with
       | Instr.Affect (m, e) -> acc + e + fmut m
-      | Instr.Read (t, e) -> acc + count_type t + fmut e
+      | Instr.Read li ->
+          List.fold_left (fun acc -> function
+            | Instr.Separation -> acc
+            | Instr.ReadExpr (t, e) ->
+                acc + count_type t + fmut e ) acc li
       | Instr.Declare (_, t, e, _) -> acc + count_type t + e
       | Instr.AllocArray (_, t, e, _, _) -> acc + count_type t + e
       | Instr.AllocArrayConst (_, t, e, _, _) -> acc + count_type t + e
       | Instr.AllocRecord (_, t, li, _) -> count_type t + List.fold_left (fun acc (_, e) -> acc + e) acc li
-      | Instr.Print (t, e) -> acc + count_type t + e
+      | Instr.Print li ->
+          List.fold_left (fun acc -> function
+            | Instr.StringConst _str -> acc
+            | Instr.PrintExpr (t, e) -> acc + count_type t + e) acc li
       | Instr.DeclRead (t, _, _) -> acc + count_type t
       | _ -> Instr.Fixed.Surface.fold (+) acc instr
     )

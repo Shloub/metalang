@@ -279,7 +279,10 @@ class smalltalkPrinter = object(self)
   method calc_refs instrs =
     let g acc i =
       match Instr.unfix i with
-      | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+      | Instr.Read li ->
+          List.fold_left (fun acc -> function
+            | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+            | _ -> acc ) acc li
       | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) ->
           BindingSet.add varname acc
       | _ -> acc

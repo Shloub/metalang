@@ -133,15 +133,20 @@ let rec process_instr map i =
       )
     | Instr.Call (name, li) ->
       Instr.Call (mapname_fun map name, List.map (process_expr map) li)
-    | Instr.Print (t, e) ->
-      Instr.Print (mapty map t, process_expr map e)
-    | Instr.Read (t, m) ->
-      Instr.Read (mapty map t, mapmutable map m)
+    | Instr.Print li ->
+        let li = List.map (function
+          | Instr.StringConst str -> Instr.StringConst str
+          | Instr.PrintExpr (t, e) -> Instr.PrintExpr (mapty map t, process_expr map e)) li
+        in Instr.Print li
+    | Instr.Read li ->
+        let li = List.map (function
+          | Instr.Separation -> Instr.Separation
+          | Instr.ReadExpr (t, m) -> Instr.ReadExpr (mapty map t, mapmutable map m)) li
+        in Instr.Read li
     | Instr.DeclRead (t, v, opt) ->
       Instr.DeclRead (mapty map t, mapname map v, opt)
     | Instr.Untuple (li, e, opt)->
       Instr.Untuple (List.map (fun (t, n) -> mapty map t, mapname map n) li, process_expr map e, opt)
-    | Instr.StdinSep -> Instr.StdinSep
   in Instr.Fixed.fixa (Instr.Fixed.annot i) i2
 
 let process_main acc m = acc, List.map (process_instr acc) m

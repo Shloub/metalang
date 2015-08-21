@@ -160,22 +160,16 @@ function nextChar(){
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method eprint t f e =
-    match Type.unfix t with
-    | Type.Integer
-    | Type.String
-    | Type.Bool -> Format.fprintf f "%a" self#expr e
-    | Type.Char -> Format.fprintf f "%a" self#expr e
-    | _ -> assert false
-
   method combine_formats () = false
 
-  method multi_print f format exprs =
+  method multi_print f li =
     Format.fprintf f "@[<h>echo %a;@]"
       (print_list
-         (fun f (t, e) -> (self#eprint t) f e) sep_c) exprs
+         (fun f -> function
+           | Instr.StringConst str -> self#expr f (Expr.string str)
+           | Instr.PrintExpr (_t, e) -> self#expr f e) sep_c) li
 
-  method print f t expr = Format.fprintf f "@[echo@ %a;@]" (self#eprint t) expr
+  method print f _t expr = Format.fprintf f "@[echo@ %a;@]" self#expr expr
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "function %a%a(%a)"
@@ -232,8 +226,6 @@ function nextChar(){
   method hasSelfAffect = function
   | Expr.Div -> false
   | _ -> true
-
-  method multiread f instrs = self#basemultiread f instrs
 
   method expr f e = print_expr
       (StringMap.map (fun (ty, params, li) ->

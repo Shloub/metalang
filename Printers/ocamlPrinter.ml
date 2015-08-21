@@ -258,9 +258,7 @@ class camlPrinter = object(self)
   method ends_with_stop instr1 instrs2 =
     let instrs2 = nocomment instrs2 in
     if instrs2 = [] then false else
-    if self#is_stdin instr1
-    then false
-    else match Instr.unfix instr1 with
+    match Instr.unfix instr1 with
     | Instr.Affect ( Mutable.Fixed.F (_, Mutable.Var v), _) when not (BindingSet.mem v refbindings) -> false
     | Instr.AllocRecord _  (* letin -> pas de ; *)
     | Instr.AllocArray _
@@ -269,88 +267,31 @@ class camlPrinter = object(self)
     | Instr.DeclRead _
     | Instr.Comment _  (* le ; a déjà été mis *)
     | Instr.Return _ (* return -> pas de ; *)
-      -> false
+      -> false (*
+    | Instr.Read li ->
+        begin match List.rev li with
+        | Instr.Separation :: _ -> true
+        | _ -> false
+        end *)
     | _ -> true
 
   (** show an instruction *)
-  method instructions0 f instrs =
-    if List.for_all self#is_stdin instrs then
-      self#multiread f instrs
-    else if (match instrs with [_] -> false | _ -> true) (* TODO factoriser ça *)
-      && List.for_all self#is_print instrs then
-      let li = List.map (fun i -> match Instr.unfix i with
-        | Instr.Print (t, i) -> Printer.format_type t, (t, i)
-        | _ -> assert false
-      ) instrs in
-      let li =
-        if self#combine_formats () then
-          List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
-          | Expr.Lief (Expr.String s) ->
-            let s = self#noformat s in
-            (String.sub s 1 ((String.length s) - 2)  , (ty, e))
-          | _ -> (format, (ty, e))
-          ) li else li in
-      let formats, exprs = List.unzip li in
-      let rec g acc = function
-        | [] -> acc
-        | hd::tl -> g (acc ^ hd) tl
-      in
-      let format = g "" formats in
-      let exprs =
-        if self#combine_formats () then
-          List.filter (fun (ty, e) -> match Expr.unfix e with
-          | Expr.Lief (Expr.String _) -> false
-          | _ -> true
-          ) exprs
-        else exprs
-      in
-      self#multi_print f format exprs
-    else
-      let rec g f = function
-        | [] -> ()
-        | [hd] -> self#instr f hd
-        | hd::tl ->
+  method instructions f instrs =
+    let rec g f = function
+      | [] -> ()
+      | [hd] -> self#instr f hd
+      | hd::tl ->
           if self#ends_with_stop hd tl then
             Format.fprintf f "%a;@\n%a" self#instr hd g tl
           else
             Format.fprintf f "%a@\n%a" self#instr hd g tl
-      in Format.fprintf f "%a" g instrs
-
-  (** show an instruction *)
-  method instructions f instrs =
-    let rec g kind acc1 acc2 = function
-      | hd::tl ->
-        let kind2 = (self#is_print hd, self#is_stdin hd) in
-        if kind2 = kind
-        then g kind acc1 (hd::acc2) tl
-        else g kind2 ((List.rev acc2)::acc1) [hd] tl
-      | [] -> List.rev ( (List.rev acc2) :: acc1 )
-    in
-    let lili = g (false, false) [] [] instrs in
-    let lili = List.filter ( (<>) [] ) lili in
-    Format.fprintf f "%a%s"
-      (print_list
-         self#instructions0
-         (fun t print1 item1 print2 item2 ->
-           if not (self#need_unit item1) then (* oui je sais c'est sale *)
-             Format.fprintf t "%a;@\n%a" print1 item1 print2 item2
-           else
-             Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-         )
-      ) lili
+    in Format.fprintf f "%a%s" g instrs
       (if self#need_unit instrs then " ()" else "")
-
-
 
   (** returns true if the function need to returns unit *)
   method need_unit instrs =
     let instrs = nocomment instrs in
     if instrs = [] then true
-    else if (List.for_all self#is_stdin instrs) && List.exists (fun i -> match Instr.unfix i with
-    | Instr.DeclRead _ -> true
-    | _ -> false
-    ) instrs
-    then true
     else match List.map Instr.unfix instrs |> List.rev with
     | (Instr.AllocArray _ | Instr.Declare _ | Instr.DeclRead _ | Instr.Untuple _) :: _ -> true
     | (Instr.Affect ( Mutable.Fixed.F (_, Mutable.Var v), _)) :: _
@@ -435,12 +376,19 @@ class camlPrinter = object(self)
     let g acc i = Instr.Writer.Deep.fold
         (fun acc i ->
           match Instr.unfix i with
-          | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+          | Instr.Read li ->
+              List.fold_left (fun acc -> function
+                | Instr.Separation -> acc
+                | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+                | Instr.ReadExpr _ -> acc) acc li
           | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
           | _ -> acc
         ) acc i
     in let f tra acc i = match Instr.unfix i with
-    | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+    | Instr.Read li ->
+        List.fold_left (fun acc -> function
+          | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+          | _ -> acc) acc li
     | Instr.Loop (_, _, _, li)
     | Instr.While (_, li) -> List.fold_left g acc li
     | Instr.AllocArray (_, _, _, Some (_, li), _) -> List.fold_left g acc li
@@ -699,10 +647,10 @@ class camlPrinter = object(self)
         super#typename name
         super#ptype t
 
+(*
   method multiread f instrs =
     let format, variables =
       List.fold_left (fun (format, variables) i -> match Instr.unfix i with
-      | Instr.StdinSep -> (format ^ " ", variables)
       | Instr.DeclRead (t, v, _opt) ->
         let addons = Printer.format_type t in
         (format ^ addons, (true, Mutable.var v)::variables)
@@ -769,9 +717,12 @@ class camlPrinter = object(self)
       affect
       print_return ()
       print_in ()
+*)
+
 
   method printf f () = Format.fprintf f "Printf.printf"
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     if exprs = [] then
       Format.fprintf f "@[<h>%a \"%s\"@]" self#printf () format
     else

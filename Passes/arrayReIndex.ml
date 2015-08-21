@@ -54,7 +54,10 @@ let process () is =
     Instr.Fixed.Deep.map2
       (function
         | Instr.Affect (m, e) -> Instr.Affect (map_mut m, e)
-        | Instr.Read (ty, m) -> Instr.Read (ty, map_mut m)
+        | Instr.Read li -> Instr.Read (List.map (function
+            | Instr.Separation -> Instr.Separation
+            | Instr.ReadExpr (t, mut) -> Instr.ReadExpr (t, map_mut mut)
+                                                ) li)
         | i -> i)
       (Expr.Fixed.Deep.map (fun e -> match Expr.unfix e with
         | Expr.Access m -> Expr.Fixed.fixa (Expr.Fixed.annot e) $ Expr.Access (map_mut m)

@@ -717,23 +717,35 @@ module EvalF (IO : EvalIO) = struct
       let f execenv =
         let _ = call execenv in ()
       in env, f
-    | Instr.Print (t, e) ->
-      let e = e env in
-      let f execenv =
-        let e = eval_expr execenv e in
-        print t e
+    | Instr.Print li ->
+        let env, f = List.fold_left (fun (env, f) -> function
+          | Instr.StringConst str ->
+              env, (fun execenv ->
+                let () = f execenv in
+                print Type.string (String str))
+          | Instr.PrintExpr (t, e) ->
+            let e = e env in
+            let f execenv =
+              let () = f execenv in
+              let e = eval_expr execenv e in
+              print t e
+            in env, f) (env, (fun _ -> ())) li
       in env, f
-    | Instr.Read (t, mut) ->
-      let mut = Mutable.Fixed.Deep.mapg (fun f -> f env) mut in
-      let mut = mut_setval env mut
-      in env, (fun execenv ->
-        read t (fun value -> mut execenv value))
+    | Instr.Read li ->
+        let env, f = List.fold_left (fun (env, f) -> function
+          | Instr.Separation ->
+              let f execenv = f execenv; IO.skip () in
+              env, f
+          | Instr.ReadExpr (t, mut) ->
+              let mut = Mutable.Fixed.Deep.mapg (fun f -> f env) mut in
+              let mut = mut_setval env mut
+              in env, (fun execenv ->
+                f execenv;
+                read t (fun value -> mut execenv value))) (env, (fun _ -> ())) li
+        in env, f
     | Instr.DeclRead (t, var, _) ->
       let env, r = add_in_env env var in
       env, (fun execenv -> read t (fun v -> execenv.(r) <- v))
-    | Instr.StdinSep ->
-      let f execenv = IO.skip () in
-      env, f
     | Instr.Tag _ -> env, (fun _ -> ())
     | Instr.Unquote li -> assert false
   and print ty e =

@@ -44,13 +44,35 @@ let write_bool e =
     [ Instr.print Type.string (Expr.string "True") ]
     [ Instr.print Type.string (Expr.string "False") ]
 
-let rewrite i = match Instr.unfix i with
-    | Instr.Print(Type.Fixed.F (_, Type.Bool), b) -> write_bool b
-    | j -> j
-    |> Instr.fixa (Instr.Fixed.annot i)
+let rewrite (i: Utils.instr) = match Instr.unfix i with
+    | Instr.Print li ->
+        let li, last_print = List.fold_left
+            (fun (liacc, lip) -> function
+              | Instr.StringConst s -> liacc, (Instr.StringConst s) :: lip
+              | Instr.PrintExpr (Type.Fixed.F (_, Type.Bool), b) ->
+                  let ni = write_bool b
+                  in begin match lip with
+                  | [] ->ni :: liacc, []
+                  | _ -> ni :: (Instr.Print (List.rev lip) |> Instr.fix)::liacc, []
+                  end
+              | Instr.PrintExpr (t, e) ->
+                  liacc, (Instr.PrintExpr (t, e)) :: lip
+            ) ([], []) li in
+        let li = match last_print with
+        | [] -> li
+        | _ -> (Instr.Print (List.rev last_print) |> Instr.fix) :: li
+        in List.rev li
+    | _ -> [i]
+
+let rewrite_li l = List.map rewrite l |> List.flatten
 
 type 'lex acc = unit
 let init_acc _ = ()
-let process acc i =
-  acc, List.map (Instr.Writer.Deep.map rewrite) i
+let process () (li:Utils.instr list) =
+  (),
+  let li = rewrite_li li in
+  List.map (fun i ->
+    let i0 = Instr.deep_map_bloc rewrite_li (Instr.unfix i)
+           in Instr.fixa (Instr.Fixed.annot i) i0 ) li
+              
 

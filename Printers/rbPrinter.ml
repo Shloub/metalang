@@ -154,7 +154,8 @@ val mutable inlambda = false
       self#expr expr2
       self#bloc li
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     if exprs = [] then
       Format.fprintf f "@[<h>printf \"%s\"@]" format
     else

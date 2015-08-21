@@ -174,7 +174,8 @@ static int readInt(){
 
   method concat_operator f () = Format.fprintf f "+"
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     let exprs = (Type.string, Expr.string "") :: exprs in
     let rec compress = function
       | ((ty1, e1)::(ty2, e2)::tl ) as li ->

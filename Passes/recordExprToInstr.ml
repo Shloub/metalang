@@ -97,16 +97,26 @@ let expand tyenv i = match Instr.unfix i with
   | Instr.Call (funname, lie) ->
     let instrs, lie = List.fold_left_map (process tyenv) [] lie in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Call (funname, lie))  ) :: instrs)
-  | Instr.Print (t, e) ->
-    let instrs, e = process tyenv [] e in
-    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Print (t, e))  ) :: instrs)
-  | Instr.Read (t, mut) ->
-    let instrs, mut = process_mut tyenv [] mut in
-    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Read (t, mut))  ) :: instrs)
+  | Instr.Print li ->
+      let instrs, li = List.fold_left_map (fun instrs -> function
+        | (Instr.StringConst _ ) as e-> instrs, e
+        | Instr.PrintExpr (ty, e) ->
+            let instrs, e = process tyenv [] e in
+            instrs, Instr.PrintExpr (ty, e)) [] li
+      in
+      List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Print li)  ) :: instrs)
+  | Instr.Read li ->
+      let instrs, li = List.fold_left_map (fun instrs -> function
+        | Instr.Separation -> instrs, Instr.Separation
+        | Instr.ReadExpr (t, mut) ->
+            let instrs, mut = process_mut tyenv [] mut in
+            instrs, Instr.ReadExpr (t, mut) ) [] li
+      in
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Read li)  ) :: instrs)
   | Instr.Untuple(li, e, opt) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Untuple (li, e, opt))  ) :: instrs)
-  | Instr.Tag _ | Instr.Comment _ | Instr.StdinSep | Instr.Unquote _ | Instr.DeclRead _ -> [i]
+  | Instr.Tag _ | Instr.Comment _ | Instr.Unquote _ | Instr.DeclRead _ -> [i]
 
 let mapi tyenv i =
   Instr.deep_map_bloc

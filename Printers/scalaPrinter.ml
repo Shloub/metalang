@@ -145,8 +145,6 @@ class scalaPrinter = object(self)
     | Type.Integer -> Format.fprintf f "%a = read_int()" self#mutable_set m
     | _ -> assert false
 
-  method multiread f instrs = self#basemultiread f instrs
-
   method prog f prog =
     Format.fprintf f
       "object %s@\n@[<v 2>{@\n%a%a@\n%a@]@\n}@\n"
@@ -184,7 +182,10 @@ class scalaPrinter = object(self)
   method calc_refs instrs =
     let g acc i =
       match Instr.unfix i with
-      | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+      | Instr.Read li ->
+          List.fold_left (fun acc -> function
+            | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+            | _ -> acc) acc li
       | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) ->
           BindingSet.add varname acc
       | _ -> acc

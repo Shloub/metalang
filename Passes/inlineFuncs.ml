@@ -143,12 +143,17 @@ let rec rename_instr acc (instr:Utils.instr) =
     let l1 = rename_instrs acc l1 in
     let l2 = rename_instrs acc l2 in
     acc, Instr.If (e, l1, l2) |> Instr.fixa annot
-  | Instr.Print (t, e) ->
-    let e = rename_e acc e in
-    acc, Instr.Print (t, e) |> Instr.fixa annot
-  | Instr.Read (t, mut) ->
-    let mut = rename_mut acc mut in
-    acc, Instr.Read (t, mut) |> Instr.fixa annot
+  | Instr.Print li ->
+      let li = List.map (function
+        | Instr.StringConst str -> Instr.StringConst str
+        | Instr.PrintExpr (t, e) -> Instr.PrintExpr (t, rename_e acc e)) li
+      in
+      acc, Instr.Print li |> Instr.fixa annot
+  | Instr.Read li ->
+      let li = List.map (function
+        | Instr.Separation -> Instr.Separation
+        | Instr.ReadExpr (t, mut) -> Instr.ReadExpr (t, rename_mut acc mut)) li in
+      acc, Instr.Read li |> Instr.fixa annot
   | Instr.DeclRead (t, name, opt) ->
     let newname = Fresh.fresh_internal () in
     let acc = BindingMap.add name newname acc in
@@ -161,7 +166,6 @@ let rec rename_instr acc (instr:Utils.instr) =
       acc, (ty, newname) ) acc li
     in
     acc, Instr.Untuple (li, e, opt) |> Instr.fixa annot
-  | Instr.StdinSep -> acc, instr
   | Instr.Unquote e -> acc, instr (* normalement, ça n'arrive pas... l'evaluation des macros devrait déjà avoir eu lieu. *)
 and rename_instrs acc instrs =
   let _, instrs = List.fold_left_map rename_instr acc instrs in
@@ -297,17 +301,23 @@ and map_instr acc instr =
     let l1 = map_instrs acc l1 in
     let l2 = map_instrs acc l2 in
     List.append addon [Instr.If (e, l1, l2) |> Instr.fixa annot]
-  | Instr.Print (t, e) ->
-    let addon, e = map_e acc e in
-    List.append addon [Instr.Print (t, e) |> Instr.fixa annot]
-  | Instr.Read (t, mut) ->
-    let addon, mut = map_mut acc mut in
-    List.append addon [Instr.Read(t, mut) |> Instr.fixa annot]
+  | Instr.Print li ->
+      let addon, li = List.fold_left_map (fun addon -> function
+        | Instr.StringConst str -> addon, Instr.StringConst str
+        | Instr.PrintExpr (t, e) -> let addon, e = map_e acc e in
+          addon, Instr.PrintExpr (t, e)) [] li
+      in
+      List.append addon [Instr.Print li |> Instr.fixa annot]
+  | Instr.Read li ->
+let addon, li = List.fold_left_map (fun addon -> function
+  | Instr.Separation -> addon, Instr.Separation
+  | Instr.ReadExpr (t, mut) -> let addon, mut = map_mut acc mut in
+    addon, Instr.ReadExpr(t, mut)) [] li in
+    List.append addon [Instr.Read li |> Instr.fixa annot]
   | Instr.DeclRead (_t, _name, _opt) -> [instr]
   | Instr.Untuple (li, e, opt) ->
     let addon, e = map_e acc e in
     List.append addon [Instr.Untuple(li, e, opt) |> Instr.fixa annot]
-  | Instr.StdinSep -> [instr]
   | Instr.Unquote e -> [instr] (* normalement, ça n'arrive pas... l'evaluation des macros devrait déjà avoir eu lieu. *)
 
 let process (acc: 'a acc) (i:Utils.t_fun) = match i with

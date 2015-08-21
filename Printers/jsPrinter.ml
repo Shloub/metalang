@@ -144,7 +144,8 @@ function read_int_(){
 
   method combine_formats () = false
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     Format.fprintf f "@[<h>util.print(%a);@]"
       (print_list self#expr sep_c) (List.map snd exprs)
 
@@ -209,5 +210,4 @@ function read_int_(){
         try List.assoc (self#lang ()) li
         with Not_found -> List.assoc "" li) macros) e f nop
 
-  method multiread f instrs = self#basemultiread f instrs
 end

@@ -113,10 +113,12 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
     let infos = getinfos infos (Some hd) li in
     infos
   | Instr.Comment _
-  | Instr.StdinSep
   | Instr.Tag _ -> infos
   | Instr.Call (_, lie) -> List.fold_left (getinfos_expr hd dad) infos lie
-  | Instr.Print (_, e)
+  | Instr.Print li ->
+      List.fold_left (fun infos -> function
+        | Instr.StringConst _ -> infos
+        | Instr.PrintExpr (_t, e) -> getinfos_expr hd dad infos e) infos li
   | Instr.Return e -> getinfos_expr hd dad infos e
   | Instr.Untuple (li, e, opt) ->
     let infos = getinfos_expr hd dad infos e in
@@ -143,11 +145,14 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
     let infos = getinfos infos (Some hd) li1 in
     let infos = getinfos infos (Some hd) li2 in
     infos
-  | Instr.Read (_, mut) ->
-    let infos = getinfos_mut hd dad infos mut in
-    let name = name_of_mut mut in
-    let infos = addinfos infos name {instruction=hd; expression=None; affected=true; declaration=false; dad=dad} in
-    infos
+  | Instr.Read li ->
+      List.fold_left (fun infos -> function
+        | Instr.Separation -> infos
+        | Instr.ReadExpr (_, mut) ->
+            let infos = getinfos_mut hd dad infos mut in
+            let name = name_of_mut mut in
+            let infos = addinfos infos name {instruction=hd; expression=None; affected=true; declaration=false; dad=dad} in
+            infos) infos li
   | Instr.DeclRead (_, name, _) ->
     addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
   | Instr.Unquote e -> assert false
@@ -210,20 +215,25 @@ let rec no_affectation li ilimit name =
   | hd::tl -> if hd = ilimit then true else
       (no_affectation tl ilimit name) &&
         (match Instr.unfix hd with
-        | Instr.Affect (m, _)
-        | Instr.Read (_, m) ->
-          let m = name_of_mut m in
-          m <> name
+        | Instr.Affect (m, _) ->
+                  let m = name_of_mut m in
+                  m <> name
+        | Instr.Read li ->
+            List.exists (function
+              | Instr.Separation -> false
+              | Instr.ReadExpr(_, m) ->
+                  let m = name_of_mut m in
+                  m <> name) li
         | _ -> true
         )
-
+(*
 let is_readvar i = match Instr.unfix i with
-  | Instr.Read (_, m) -> begin match Mutable.unfix m with
+  | Instr.Read li -> begin match Mutable.unfix m with
     | Mutable.Var _ -> true
     | _ -> false
   end
   | _ -> false
-
+*)
 let is_decl_copyvar i name = match Instr.unfix i with
   | Instr.Declare (_, _, e, _) -> begin match Expr.unfix e with
     | Expr.Access m -> begin match Mutable.unfix m with

@@ -301,7 +301,8 @@ def skipchar():
         (self#expr) f expr)
       sep_c
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     if exprs = [] then
       if String.ends_with format "\n" then
         let l = String.length format in
@@ -340,6 +341,4 @@ def skipchar():
     Format.fprintf f "%a = {%a}" self#binding name (self#def_fields name) el
 
   method m_field f m field = Format.fprintf f "%a[%a]" self#mutable_get m self#field field
-
-  method multiread f instrs = self#basemultiread f instrs
 end

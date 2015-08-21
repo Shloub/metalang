@@ -105,8 +105,6 @@ class perlPrinter = object(self)
 
   method lang () = "pl"
 
-  method is_stdin i =false
-
   method combine_formats () = false
 
   method binding f i = Format.fprintf f "$%a" baseprinter#binding i
@@ -144,7 +142,8 @@ class perlPrinter = object(self)
   method print f t expr =
     Format.fprintf f "print %a;" self#expr_inprint expr
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     Format.fprintf f "@[<h>print(%a);@]"
       (print_list self#expr sep_c ) (List.map snd exprs)
 

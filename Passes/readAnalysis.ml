@@ -36,7 +36,10 @@ open PassesUtils
 
 let hasSkip li =
   List.exists (Instr.Fixed.Deep.exists
-                 (fun i -> match Instr.unfix i with Instr.StdinSep -> true | _ -> false)) li
+                 (fun i -> match Instr.unfix i with Instr.Read li ->
+                   List.exists (function
+                     | Instr.Separation -> true
+                     | _ -> false) li | _ -> false)) li
 
 let hasSkip_progitem li =
   List.fold_right
@@ -49,11 +52,17 @@ let hasSkip_progitem li =
 let collectReads acc li =
   let f acc i =
     match Instr.unfix i with
-    | Instr.DeclRead (ty, _, _)
-    | Instr.Read(ty, _) ->
+    | Instr.DeclRead (ty, _, _) ->
       TypeMap.add ty
         (Ast.PosMap.get (Instr.Fixed.annot i))
         acc
+    | Instr.Read li ->
+        List.fold_left (fun acc -> function
+          | Instr.Separation -> acc
+          | Instr.ReadExpr (ty, _) ->
+              TypeMap.add ty
+                (Ast.PosMap.get (Instr.Fixed.annot i))
+                acc ) acc li
     | _ -> acc in
   List.fold_left
     (fun acc i ->

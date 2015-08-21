@@ -212,7 +212,8 @@ class cPrinter = object(self)
 
   method printf f () = Format.fprintf f "printf"
   method combine_formats () = true
-  method multi_print f format exprs =
+  method multi_print f li=
+    let format, exprs = self#extract_multi_print li in
     if exprs = [] then
       Format.fprintf f "@[<h>%a(\"%s\")%a@]" self#printf () format self#separator ()
     else
@@ -316,9 +317,7 @@ class cPrinter = object(self)
       self#expr e
       self#blocinif ifcase
       self#bloc elsecase
-
-  method basemultiread f instrs = baseprinter#multiread f instrs
-
+(*
   method multiread f instrs =
     let format, variables =
       List.fold_left (fun (format, variables) i -> match Instr.unfix i with
@@ -337,4 +336,5 @@ class cPrinter = object(self)
       format
       (print_list (fun f x -> Format.fprintf f ", &%a" self#mutable_get x) nosep)
       (List.rev variables)
+*)
 end

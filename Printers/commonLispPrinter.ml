@@ -283,11 +283,10 @@ class commonLispPrinter = object(self)
                       in List.fold_left (fun s (from, to_) -> String.replace from to_ s) s
 											["~", "~~"; "\n", "~%"]
 
-	method combine_formats () = true
-
-	method multi_print f format exprs =
-		Format.fprintf f "@[<v>(format t %a %a)@]"
-			p_string format
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
+    Format.fprintf f "@[<v>(format t %a %a)@]"
+      p_string format
       (print_list (fun f (t, e) -> self#expr f e) sep_space) exprs
 
   method bloc f li =
@@ -302,8 +301,6 @@ class commonLispPrinter = object(self)
         done;
         nlet <- exnlet;
       end
-		| li when (match li with [_] -> false | _ -> true)
-				&& List.for_all self#is_print li -> self#instructions f li;
     | _ ->
       let exnlet = nlet in
       begin

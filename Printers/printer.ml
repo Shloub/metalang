@@ -119,7 +119,7 @@ class printer = object(self)
       self#binding var
       self#expr e
 
-  method affect f mutable_ (expr : 'lex Expr.t) =
+  method affect f mutable_ (expr : Utils.expr) =
     Format.fprintf f "@[<hov>%a@ =@ %a%a@]" self#mutable_set mutable_ self#expr expr self#separator ()
 
   method bloc f li = Format.fprintf f "@[<v>do@\n%a@]@\nend"
@@ -280,7 +280,6 @@ class printer = object(self)
     match Instr.unfix t with
     | Instr.Tag s ->  Format.fprintf f "tag %s@\n" s
     | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
-    | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr, _option) -> self#declaration f varname type_ expr
     | Instr.Affect (mutable_, expr) ->
       begin match Expr.unfix expr with
@@ -324,9 +323,13 @@ class printer = object(self)
     | Instr.If (e, ifcase, elsecase) ->
       self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li
-    | Instr.Read (t, mutable_) -> self#read f t mutable_
+    | Instr.Read li ->
+        List.iter (function
+          | Instr.Separation -> self#stdin_sep f
+          | Instr.ReadExpr (t, mutable_) -> self#read f t mutable_ ) li
     | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
-    | Instr.Print (t, expr) -> self#print f t expr
+    | Instr.Print li ->
+        self#multi_print f li
     | Instr.Untuple (li, e, _) -> self#untuple f li e
 
   method allocarrayconst f b t len e opt = assert false
@@ -352,6 +355,9 @@ class printer = object(self)
 
   method print f t expr =
     Format.fprintf f "@[print %a %a@]" self#ptype t self#expr expr
+
+  method print_const f str =
+    Format.fprintf f "@[print %a@]" self#expr (Expr.string str)
 
   method if_ f e ifcase elsecase =
     match elsecase with
@@ -431,77 +437,16 @@ class printer = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method multi_print f format exprs =
-    Format.fprintf f "@[<v>%a@]"
-      (print_list (fun f (t, e) -> self#print f t e) sep_nl ) exprs
-
-  method combine_formats () = false
-
-  method multiread f instrs = (print_list self#instr sep_nl) f instrs
-
-  method is_print i = match Instr.unfix i with
-  | Instr.Print _ -> true
-  | _ -> false
-
-  method is_stdin i = match Instr.unfix i with
-  | Instr.Read _ -> true
-  | Instr.DeclRead _ -> true
-  | Instr.StdinSep -> true
-  | _ -> false
+  method multi_print f li =
+    List.iter (function
+      | Instr.StringConst str -> self#print_const f str
+      | Instr.PrintExpr (t, expr) -> self#print f t expr ) li
 
   method formater_type t = format_type t
   method limit_nprint () = 100000
 
-  method instructions0 f instrs =
-    if List.for_all self#is_stdin instrs then
-      self#multiread f instrs
-    else if (match instrs with [_] -> false | _ -> true)
-      && List.for_all self#is_print instrs then
-      if List.length instrs > self#limit_nprint () then
-        print_list self#instructions0 sep_nl f
-          (List.pack (self#limit_nprint ()) instrs)
-      else
-      let li = List.map (fun i -> match Instr.unfix i with
-        | Instr.Print (t, i) -> self#formater_type t, (t, i)
-        | _ -> assert false
-      ) instrs in
-      let li =
-        if self#combine_formats () then
-          List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
-          | Expr.Lief (Expr.String s) ->
-            let s = self#noformat s in
-            (String.sub s 1 ((String.length s) - 2)  , (ty, e))
-          | _ -> (format, (ty, e))
-          ) li else li in
-      let formats, exprs = List.unzip li in
-      let rec g acc = function
-        | [] -> acc
-        | hd::tl -> g (acc ^ hd) tl
-      in
-      let format = g "" formats in
-      let exprs =
-        if self#combine_formats () then
-          List.filter (fun (ty, e) -> match Expr.unfix e with
-          | Expr.Lief (Expr.String _) -> false
-          | _ -> true
-          ) exprs
-        else exprs
-      in
-      self#multi_print f format exprs
-    else (print_list self#instr sep_nl) f instrs
-
   method instructions f instrs =
-    let rec g kind acc1 acc2 = function
-      | hd::tl ->
-        let kind2 = (self#is_print hd, self#is_stdin hd) in
-        if kind2 = kind
-        then g kind acc1 (hd::acc2) tl
-        else g kind2 ((List.rev acc2)::acc1) [hd] tl
-      | [] -> List.rev ( (List.rev acc2) :: acc1 )
-    in
-    let lili = g (false, false) [] [] instrs in
-    let lili = List.filter ( (<>) [] ) lili in
-    (print_list self#instructions0 sep_nl) f lili
+    print_list self#instr sep_nl f instrs
 
   method proglist f funs =
     Format.fprintf f "%a" (print_list self#prog_item nosep) funs
@@ -510,6 +455,16 @@ class printer = object(self)
   method setRecursive b = recursives_definitions <- b
   method is_rec funname = StringSet.mem funname recursives_definitions
 
+  method extract_multi_print (li:Utils.expr Instr.printable list) =
+    let s, e = List.fold_left (fun (format, exprs) -> function
+      | Instr.StringConst str -> format ^ str, exprs
+      | Instr.PrintExpr (t, expr) -> format ^ (self#formater_type t), (t, expr)::exprs) ("",  []) li
+    in s, List.rev e
+  method extract_multi_printers (li:Utils.expr Instr.printable list) =
+    List.fold_left (fun acc -> function
+      | Instr.StringConst str -> (fun f () -> self#expr f (Expr.string str)) :: acc
+      | Instr.PrintExpr (t, expr) -> (fun f () -> self#expr f expr) :: acc) [] li |> List.rev
+                   
   method main f (main : Utils.instr list) =
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
       self#instructions main

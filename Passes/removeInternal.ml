@@ -64,9 +64,13 @@ let fold_map_instr acc instr =
   | Instr.Affect (mut, e) ->
     let mut = map_mut acc mut in
     acc, Instr.Affect(mut, e) |> Instr.fixa annot
-  | Instr.Read (ty, mut) ->
-    let mut = map_mut acc mut in
-    acc, Instr.Read(ty, mut) |> Instr.fixa annot
+  | Instr.Read li ->
+      let li = List.map (function
+        | Instr.Separation -> Instr.Separation
+        | Instr.ReadExpr (ty, mut) ->
+            let mut = map_mut acc mut in
+            Instr.ReadExpr (ty, mut) ) li
+      in acc, Instr.Read li |> Instr.fixa annot
   | _ -> acc, instr
 
 let fold_map_instr acc instr =

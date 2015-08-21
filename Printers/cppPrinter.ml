@@ -189,9 +189,10 @@ class cppPrinter = object(self)
 
 
   method combine_formats () = false
-  method multi_print f format exprs =
+  method multi_print f li =
+    let p = self#extract_multi_printers li in
     Format.fprintf f "@[<h>std::cout << %a;@]"
-      (print_list self#expr (sep "%a@ <<@ %a")) (List.map snd exprs)
+      (print_list (fun f g -> g f ()) (sep "%a@ <<@ %a")) p
 
   method print f t expr =
     Format.fprintf f "@[std::cout << %a;@]"
@@ -223,9 +224,18 @@ class cppPrinter = object(self)
 
   method stdin_sep f = Format.fprintf f "@[std::cin >> std::skipws;@]"
 
-  method read f t m = Format.fprintf f "@[std::cin >> %a;@]" self#mutable_get m
-  method read_decl f t v = Format.fprintf f "@[std::cin >> %a;@]" self#binding v
+  method read f t m =
+    match Type.unfix t with
+    | Type.Char -> Format.fprintf f "@[std::cin >> %a >> std::noskipws;@]" self#mutable_get m
+    | Type.Integer -> Format.fprintf f "@[std::cin >> %a;@]" self#mutable_get m
+    | _ -> assert false
 
+  method read_decl f t v = match Type.unfix t with
+  | Type.Char -> Format.fprintf f "@[std::cin >> %a >> std::noskipws;@]" self#binding v
+  | Type.Integer -> Format.fprintf f "@[std::cin >> %a;@]" self#binding v
+  | _ -> assert false
+
+(*
   method multiread f instrs = (* TODO, quand on a plusieurs noskip ou skip à la suite, il faut les virer*)
     let skipfirst, variables =
       List.fold_left (fun (skipfirst, variables) i -> match Instr.unfix i with
@@ -259,5 +269,5 @@ class cppPrinter = object(self)
         skipSet := true;
        ) nosep )
       (List.rev variables)
-
+*)
 end

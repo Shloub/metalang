@@ -88,7 +88,8 @@ class groovyPrinter = object(self)
 
   method print f t expr = Format.fprintf f "@[<h>print(%a)@]" self#expr expr
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     match exprs with
     | [] -> Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format
     | _ ->

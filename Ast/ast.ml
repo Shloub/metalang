@@ -578,6 +578,14 @@ module Instr = struct
   let popt f opt =
     Format.fprintf f "{useless=%b}" opt.useless
 
+  type 'expr printable =
+    | StringConst of string
+    | PrintExpr of Type.t * 'expr
+
+  type 'expr readable =
+    | Separation
+    | ReadExpr of Type.t * 'expr Mutable.t
+
   type ('a, 'expr) tofix =
     Declare of varname * Type.t * 'expr * declaration_option
   | Affect of 'expr Mutable.t * 'expr
@@ -591,11 +599,11 @@ module Instr = struct
   | AllocRecord of varname * Type.t * (fieldname * 'expr) list * declaration_option
   | If of 'expr * 'a list * 'a list
   | Call of funname * 'expr list
-  | Print of Type.t * 'expr
-  | Read of Type.t * 'expr Mutable.t
+  | Print of 'expr printable list
+  | Read of 'expr readable list
+
   | DeclRead of Type.t * varname * declaration_option
   | Untuple of (Type.t * varname) list * 'expr * declaration_option
-  | StdinSep
   | Unquote of 'expr
 
   let pdebug f = function
@@ -642,10 +650,21 @@ module Instr = struct
         popt opt
   | If(e, a, b) -> Format.fprintf f "I.If(@[%a,@\n%a,@\n%a@])" e () punitlist a punitlist b
   | Call(name, li) -> Format.fprintf f "I.Call(%S, %a)" name punitlist li
-  | Print(ty, e) -> Format.fprintf f "I.Print(%s, %a)" (Type.type_t_to_string ty) e ()
-  | Read(ty, mut) ->
-      let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
-      Format.fprintf f "I.Mut(%s, %a)" (Type.type_t_to_string ty) mut ()
+  | Print li -> Format.fprintf f "I.Print(%a)"
+        punitlist
+        (List.map (fun e f () -> match e with
+          | StringConst s -> Format.fprintf f "%S" s
+          | PrintExpr (ty, e) -> Format.fprintf f "Expr(%s, %a)" (Type.type_t_to_string ty) e ()
+                  ) li)
+  | Read li ->
+      Format.fprintf f "I.Read(%a)"
+        punitlist
+        (List.map (fun e f () -> match e with
+        | Separation -> Format.fprintf f "Sep"
+        | ReadExpr (ty, mut) ->
+            let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
+            Format.fprintf f "I.Mut(%s, %a)" (Type.type_t_to_string ty) mut ()
+                  ) li)
   | DeclRead(ty, name, opt) ->
       Format.fprintf f "I.DeclRead(%s, %a, %a)" (Type.type_t_to_string ty)
         debug_varname name
@@ -655,7 +674,6 @@ module Instr = struct
             (Type.type_t_to_string ty)
             debug_varname name) li)
         e () popt opt
-  | StdinSep -> Format.fprintf f "StdinSep"
   | Unquote(e) -> Format.fprintf f "I.Unquote(%a)" e ()
 
   module Make(F:Applicative) = struct
@@ -676,11 +694,16 @@ module Instr = struct
       | AllocArray (b, t, l, Some ((b2, li)), opt) -> ret (fun l li -> AllocArray (b, t, l, Some((b2, li)), opt)) <*> g l <*> f li
       | AllocArray (a, b, c, None, opt) -> ret (fun c -> AllocArray (a, b, c, None, opt)) <*> g c
       | AllocRecord (a, b, c, opt) -> ret (fun c -> AllocRecord (a, b, c, opt)) <*> fold_left_map g' c
-      | Print (a, b) -> ret (fun b -> Print (a, b)) <*> g b
-      | Read (a, b) -> ret ( fun b -> Read (a, b) ) <*> Mut.map g b
+      | Print li -> ret (fun l -> Print l) <*>
+          fold_left_map (function
+            | StringConst s -> ret (StringConst s)
+            | PrintExpr (ty, e) -> ret (fun e -> PrintExpr (ty, e)) <*> g e) li
+      | Read li -> ret (fun l -> Read l) <*>
+          fold_left_map (function
+            | Separation -> ret Separation
+            | ReadExpr (ty, mut) -> ret (fun m -> ReadExpr (ty, m)) <*> Mut.map g mut) li
       | DeclRead (a, b, opt) -> ret (DeclRead (a, b, opt))
       | Call (a, b) -> ret (fun b -> Call (a, b)) <*> fold_left_map g b
-      | StdinSep -> ret StdinSep
       | Unquote e -> ret (fun e -> Unquote e) <*> g e
       | Untuple (lis, e, opt) -> ret (fun e -> Untuple (lis, e, opt)) <*> g e
       | Tag e -> ret (Tag e)
@@ -721,9 +744,17 @@ module Instr = struct
         | AllocRecord (n, _, li, _) ->BindingSet.add n @* (fun acc -> List.fold_left (fun acc (_, f) -> f acc) acc li)
         | If (e, l1, l2) -> e @* fli l1 @* fli l2
         | Call (_, eli) -> (fun acc -> List.fold_left (fun acc f -> f acc) acc eli)
-        | Return e
-        | Print (_, e) -> e
-        | Read (_, m) -> mut m
+        | Return e -> e
+        | Print li ->
+            fun acc0 -> List.fold_left
+              (fun acc -> function
+                | StringConst _ -> acc
+                | PrintExpr (_, e) -> e acc) acc0 li
+        | Read li ->
+            fun acc0 -> List.fold_left
+                (fun acc -> function
+                  | Separation -> acc
+                  | ReadExpr (ty, m) -> mut m acc) acc0 li
         | DeclRead (_, v, _) -> BindingSet.add v
         | Untuple (li, e, _) -> e @* (fun acc -> List.fold_left (fun acc (_, v) -> BindingSet.add v acc) acc li)
         | Unquote e -> e
@@ -751,9 +782,9 @@ module Instr = struct
         (Fixed.fixa annot i)
       )) t
 
-  let stdin_sep () = StdinSep |> fix
-  let print t v = Print (t, v) |> fix
-  let read t v = Read (t, v) |> fix
+  let stdin_sep () = Read [Separation] |> fix
+  let print t v = Print [PrintExpr (t, v)] |> fix
+  let read t v = Read [ReadExpr (t, v)] |> fix
   let readdecl t v opt = DeclRead (t, v, opt) |> fix
   let call v p = Call (v, p) |> fix
   let declare v t e opt =  Declare (v, t, e, opt) |> fix

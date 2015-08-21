@@ -674,13 +674,16 @@ let collect_contraintes_instruction env instruction =
         {env with
           contraintes = (void_contraint, out_contraint) ::
             env.contraintes}
-      | Instr.Print (ty, contrainte_expr) ->
-        let ty = expand env ty loc in
-        let env, contrainte_expr = contrainte_expr env in
-        let env, contrainte_ty = ty2typeContrainte env ty loc in
-        {env with
-          contraintes = (contrainte_ty, contrainte_expr) ::
-            env.contraintes}
+      | Instr.Print li ->
+          List.fold_left (fun env -> function
+            | Instr.PrintExpr (ty, contrainte_expr) ->
+                let ty = expand env ty loc in
+                let env, contrainte_expr = contrainte_expr env in
+                let env, contrainte_ty = ty2typeContrainte env ty loc in
+                {env with
+                 contraintes = (contrainte_ty, contrainte_expr) ::
+                 env.contraintes}
+            | Instr.StringConst _ -> env) env li
       | Instr.Untuple (li, contrainte_expr, _) ->
           let env, contrainte_expr = contrainte_expr env in
         let env, li_contraintes =
@@ -693,13 +696,16 @@ let collect_contraintes_instruction env instruction =
           env li_contraintes in
         let tuple_contrainte = ref (PreTyped (Type.Tuple (List.map fst li_contraintes), loc)) in
         {env with contraintes = (tuple_contrainte, contrainte_expr) :: env.contraintes}
-      | Instr.Read (ty, mut) ->
-        let ty = expand env ty loc in
-        let env, contrainte_mut = collect_contraintes_mutable (fun e env -> e env) mut env in
-        let env, contrainte_expr = ty2typeContrainte env ty loc in
-        {env with
-          contraintes = (contrainte_mut, contrainte_expr) ::
-            env.contraintes}
+      | Instr.Read li ->
+          List.fold_left (fun env -> function
+            | Instr.Separation -> env
+            | Instr.ReadExpr (ty, mut) ->
+                let ty = expand env ty loc in
+                let env, contrainte_mut = collect_contraintes_mutable (fun e env -> e env) mut env in
+                let env, contrainte_expr = ty2typeContrainte env ty loc in
+                {env with
+                 contraintes = (contrainte_mut, contrainte_expr) ::
+                 env.contraintes}) env li
       | Instr.DeclRead (ty, var, _) ->
         let ty = expand env ty loc in
         let env, ty = ty2typeContrainte env ty loc in
@@ -707,7 +713,6 @@ let collect_contraintes_instruction env instruction =
           { env with locales =
               BindingMap.add var ty env.locales }
         in env
-      | Instr.StdinSep -> env
       | Instr.Unquote li ->
         raise (Error (fun f -> Format.fprintf f "There is still unquote near %a" ploc loc ))
     )
@@ -774,10 +779,18 @@ let map_ty env prog =
       let ty = map_ty ty in Instr.fixa a (Instr.AllocArray (p1, ty, p2, p3, opt) )
     | Instr.AllocRecord (p1, ty, p2, opt) ->
       let ty = map_ty ty in Instr.fixa a (Instr.AllocRecord (p1, ty, p2, opt) )
-    | Instr.Print (ty, p1) ->
-      let ty = map_ty ty in Instr.fixa a (Instr.Print (ty, p1) )
-    | Instr.Read (ty, p1) ->
-      let ty = map_ty ty in Instr.fixa a (Instr.Read (ty, p1) )
+    | Instr.Print li ->
+        let li = List.map (function
+          | Instr.PrintExpr (ty, p1) ->
+              let ty = map_ty ty in Instr.PrintExpr (ty, p1)
+          | Instr.StringConst str -> Instr.StringConst str) li
+        in Instr.fixa a (Instr.Print li)
+    | Instr.Read li ->
+        let li = List.map (function
+          | Instr.ReadExpr (ty, p1) ->
+              let ty = map_ty ty in Instr.ReadExpr (ty, p1)
+          | Instr.Separation -> Instr.Separation) li
+        in Instr.fixa a (Instr.Read li )
     | Instr.DeclRead (ty, p1, opt) ->
       let ty = map_ty ty in Instr.fixa a (Instr.DeclRead (ty, p1, opt) )
     | Instr.Untuple (li, e, opt) ->

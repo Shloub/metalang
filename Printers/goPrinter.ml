@@ -265,7 +265,5 @@ func skip() {
         ) li
     | _ -> Format.fprintf f "type %a %a;" self#typename name self#ptype t
 
-  method multiread f instrs = self#basemultiread f instrs
-
 end
 

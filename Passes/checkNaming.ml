@@ -212,14 +212,19 @@ let rec check_instr funname acc instr =
     let () = is_fun funname acc name loc in
     let () = List.iter (check_expr funname acc) li
     in acc
-  | Instr.Print (t, e) ->
-    let () = check_expr funname acc e in acc
+  | Instr.Print li ->
+      List.iter (function
+        | Instr.PrintExpr (_, e) -> check_expr funname acc e
+        | Instr.StringConst s -> ()
+                ) li;
+      acc
   | Instr.DeclRead (t, v, _) ->
     add_local_in_acc funname v acc loc
-  | Instr.Read (t, mut) ->
-    let () = check_mutable funname acc mut in
-    acc
-  | Instr.StdinSep -> acc
+  | Instr.Read li ->
+      List.iter (function
+        | Instr.Separation -> ()
+        | Instr.ReadExpr (ty, mut) -> check_mutable funname acc mut) li;
+      acc
   | Instr.Unquote e ->
     let () = check_expr funname acc e in acc
   | Instr.Untuple (li, e, _) ->

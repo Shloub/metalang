@@ -202,7 +202,8 @@ class javaPrinter = object(self)
       self#binding v
     | _ -> failwith("unsuported read")
 
-  method multi_print f format exprs =
+  method multi_print f li =
+    let format, exprs = self#extract_multi_print li in
     match exprs with
     | [] -> Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format
     | _ ->
@@ -244,5 +245,4 @@ class javaPrinter = object(self)
         self#mutable_get m
         (print_list self#expr (sep "%a][%a")) indexes
 
-  method multiread f instrs = self#basemultiread f instrs
 end

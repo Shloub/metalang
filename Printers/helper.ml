@@ -207,7 +207,8 @@ let format_type f t =
 type iprinter = {
     is_if : bool;
     is_comment : bool;
-    p : Format.formatter -> unit -> unit
+    p : Format.formatter -> unit -> unit;
+    print_lief : int -> Format.formatter -> Ast.Expr.lief -> unit;
 }
 
 let print_ilist f li =
@@ -235,24 +236,34 @@ let print_instr c i =
           len nop (c.print_lief nop) lief
     | AllocRecord (name, ty, list, opt) ->
         fprintf f "%a = array(%a);" c.print_varname name
-          (print_list (fun f (field, x) -> printf "%S => %a" field x nop) sep_c) list
+          (print_list (fun f (field, x) -> fprintf f "%S => %a" field x nop) sep_c) list
     | If (e, listif, []) ->
         fprintf f "@[<v 2>if (%a)%a" e nop print_ilist listif
     | If (e, listif, listelse) ->
         fprintf f "@[<v 2>if (%a)%a@\n@[<v 2>else %a" e nop print_ilist listif print_ilist listelse
     | Call (func, li) -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
-    | Print (ty, e) -> fprintf f "echo %a;" e nop
-    | Read (ty, mut) -> begin match Ast.Type.unfix ty with
-      | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" (c.print_mut c nop) mut
-      | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" (c.print_mut c nop) mut format_type ty
-    end
+    | Print li->
+        fprintf f "echo %a;"
+          (print_list
+             (fun f -> function
+               | StringConst s -> c.print_lief nop f (Ast.Expr.String s)
+               | PrintExpr (_, e) -> e f nop) sep_c) li
+    | Read li ->
+        print_list
+          (fun f -> function
+            | Separation -> Format.fprintf f "@[scantrim();@]"
+            | ReadExpr (ty, mut) ->
+                begin match Ast.Type.unfix ty with
+                | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" (c.print_mut c nop) mut
+                | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" (c.print_mut c nop) mut format_type ty
+                end
+          ) sep_nl f li
     | DeclRead (ty, v, opt) ->
         begin match Ast.Type.unfix ty with
         | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" c.print_varname v
         | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" c.print_varname v format_type ty
         end
     | Untuple (li, expr, opt) -> fprintf f "list(%a)=%a;" (print_list c.print_varname sep_c) (List.map snd li) expr nop
-    | StdinSep -> Format.fprintf f "@[scantrim();@]"
     | Unquote e -> assert false in
   let is_if = match i with If (_, _, _) -> true | _ -> false in
   let is_comment = match i with Comment _ -> true | _ -> false in
@@ -260,6 +271,7 @@ let print_instr c i =
    is_if = is_if;
    is_comment = is_comment;
    p=p;
+   print_lief = c.print_lief;
  }
 
 let print_instr c i =
