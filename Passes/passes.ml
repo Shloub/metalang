@@ -61,6 +61,7 @@ module WalkInlineVars = WalkTop(InlineVars)
 module WalkDetectRecursion = WalkTop(DetectRecursion)
 
 module WalkArrayReIndex = Walk(ArrayReIndex)
+module WalkMergePrints = Walk(MergePrints)
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function

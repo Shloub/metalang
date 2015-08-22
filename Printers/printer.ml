@@ -438,9 +438,10 @@ class printer = object(self)
       (print_option self#main) prog.Prog.main
 
   method multi_print f li =
-    List.iter (function
-      | Instr.StringConst str -> self#print_const f str
-      | Instr.PrintExpr (t, expr) -> self#print f t expr ) li
+    let li = List.map (function
+      | Instr.StringConst str -> fun f () -> self#print_const f str
+      | Instr.PrintExpr (t, expr) -> fun f () ->self#print f t expr ) li
+    in print_list (fun f e -> e f ()) sep_nl f li
 
   method formater_type t = format_type t
   method limit_nprint () = 100000

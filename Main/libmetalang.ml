@@ -162,6 +162,7 @@ let default_passes (prog : Typer.env * Utils.prog) =
   |> typed "internal tags" Passes.WalkInternalTags.apply funit
   |> typed "inline functions" Passes.WalkInlineFuncs.apply funit
   |> typed "inline vars" Passes.WalkInlineVars.apply funit
+  |> typed "walk merge prints" Passes.WalkMergePrints.apply funit
   |> typer_process
   |> (fun (ty, p) ->
       let acc = Passes.WalkDetectRecursion.fold () p in
