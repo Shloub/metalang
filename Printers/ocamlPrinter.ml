@@ -256,6 +256,11 @@ class camlPrinter = object(self)
         self#bloc elsecase
 
   method ends_with_stop instr1 instrs2 =
+    let rec ends_declread = function
+      | Instr.DeclRead _ :: tl -> false
+      | Instr.Separation :: tl -> ends_declread tl
+      | _ -> true
+    in
     let instrs2 = nocomment instrs2 in
     if instrs2 = [] then false else
     match Instr.unfix instr1 with
@@ -267,11 +272,7 @@ class camlPrinter = object(self)
     | Instr.Comment _  (* le ; a déjà été mis *)
     | Instr.Return _ (* return -> pas de ; *)
       -> false
-    | Instr.Read li ->
-        begin match List.rev li with
-        | Instr.DeclRead _ :: _ -> false
-        | _ -> true
-        end
+    | Instr.Read li -> ends_declread (List.rev li)
     | _ -> true
 
   (** show an instruction *)
@@ -652,18 +653,17 @@ class camlPrinter = object(self)
         super#typename name
         super#ptype t
 
-(*
-  method multiread f instrs =
+  method multi_read f li =
     let format, variables =
-      List.fold_left (fun (format, variables) i -> match Instr.unfix i with
+      List.fold_left (fun (format, variables) i -> match i with
       | Instr.DeclRead (t, v, _opt) ->
         let addons = Printer.format_type t in
         (format ^ addons, (true, Mutable.var v)::variables)
-      | Instr.Read (t, mutable_) ->
+      | Instr.ReadExpr (t, mutable_) ->
         let addons = Printer.format_type t in
         (format ^ addons, (false, mutable_)::variables)
-      | _ -> assert false
-      ) ("", []) instrs
+      | Instr.Separation -> format ^ " ", variables
+      ) ("", []) li
     in
     let variables = List.mapi (fun i (b, m) -> (i, b, m) ) (List.rev variables) in
     let declares, affect = List.partition (fun (_, b, _) -> b) variables in
@@ -708,9 +708,7 @@ class camlPrinter = object(self)
     in Format.fprintf f "%aScanf.scanf \"%s\" (fun %a -> @[<v>%a%a@])%a"
       print_let ()
       format
-
       print_variables ()
-
       (print_list (fun f (i, b, m) -> Format.fprintf f "%a %s v_%d"
         self#mutable_get m
         (match Mutable.Fixed.unfix m with
@@ -722,8 +720,6 @@ class camlPrinter = object(self)
       affect
       print_return ()
       print_in ()
-*)
-
 
   method printf f () = Format.fprintf f "Printf.printf"
   method multi_print f li =

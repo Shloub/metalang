@@ -110,6 +110,8 @@ class pyPrinter = object(self)
         try List.assoc (self#lang ()) li
         with Not_found -> List.assoc "" li) macros) e f p
 
+  method multi_read f li = self#base_multi_read f li
+
   method expr f e = self#exprp nop f e
 
   method declare_for s f li = ()

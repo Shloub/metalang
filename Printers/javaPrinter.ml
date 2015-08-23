@@ -66,7 +66,7 @@ class javaPrinter = object(self)
 
   method declare_for s f li = ()
 
-  method combine_formats () = true
+  method multi_read f li = self#base_multi_read f li
 
   method lang () = "java"
 

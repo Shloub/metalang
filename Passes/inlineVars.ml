@@ -328,11 +328,7 @@ let rec map_instrs (infos:infos) = function
     | _ ->
       let b, tl = map_instrs infos tl in b, hd :: tl
 and map_reads infos li tl =
-  let insert reads li =
-    match reads with
-    | [] -> li
-    | _ -> (Instr.Read (List.rev reads) |> Instr.fix) :: li in
-  let b, tl, reads = List.fold_left (fun (b, tl, reads) -> function
+  let (b, tl), li = List.fold_left_map (fun (b, tl) -> function
     | Instr.DeclRead (ty, name, { Instr.useless = true } ) as orig ->
         begin match BindingMap.find_opt name infos.infos with
         | Some [
@@ -342,7 +338,7 @@ and map_reads infos li tl =
           ->
 (*        Format.printf "on inline un readDecl@\n"; *)
             let tl = remove_instruction tl i2 in
-            true, insert reads ((Instr.read ty @$ affected_mutable i2)::tl), []
+            (true, tl), Instr.ReadExpr (ty, affected_mutable i2)
         | Some [
           {instruction=(Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
                                       )) as i2; expression=_; affected=false; declaration=false; dad=dad2};
@@ -350,13 +346,15 @@ and map_reads infos li tl =
           when is_declare_copyvar i2 name
           ->
             let tl = remove_instruction tl i2 in
-            true, (Instr.readdecl ty name2 useless2)::tl, []
-        | Some _li -> b, tl, orig :: reads
-        | None -> b, tl, orig :: reads
+            (true, tl), Instr.DeclRead (ty, name2, useless2)
+        | Some _li -> (b, tl), orig
+        | None -> (b, tl), orig
 	      end
-    | orig -> b, tl, orig :: reads
-) (false, tl, []) li
-in b, insert reads tl
+    | orig -> (b, tl), orig) (false, tl) li
+  in let b, tl = if b then b, tl else map_instrs infos tl
+  in b, match li with
+  | [] -> tl
+  | _ -> (Instr.Read li |> Instr.fix) :: tl
 
 
 let getlines instrs =

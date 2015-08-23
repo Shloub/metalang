@@ -323,11 +323,7 @@ class printer = object(self)
     | Instr.If (e, ifcase, elsecase) ->
       self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li
-    | Instr.Read li ->
-        List.iter (function
-          | Instr.Separation -> self#stdin_sep f
-          | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
-          | Instr.ReadExpr (t, mutable_) -> self#read f t mutable_ ) li
+    | Instr.Read li -> self#multi_read f li
     | Instr.Print [Instr.StringConst str] -> self#print_const f str
     | Instr.Print [Instr.PrintExpr (t, e)] -> self#print f t e
     | Instr.Print li -> self#multi_print f li
@@ -436,6 +432,13 @@ class printer = object(self)
     Format.fprintf f "%a%a@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
+
+  method multi_read f li =
+    let li = List.map (function
+      | Instr.Separation -> fun f () -> self#stdin_sep f
+      | Instr.DeclRead (t, var, _option) -> fun f () -> self#read_decl f t var
+      | Instr.ReadExpr (t, mutable_) -> fun f () -> self#read f t mutable_ ) li
+    in print_list (fun f e -> e f ()) sep_nl f li
 
   method multi_print f li =
     let li = List.map (function

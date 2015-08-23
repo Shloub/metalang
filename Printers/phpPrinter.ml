@@ -78,6 +78,8 @@ let print_expr macros e f p =
 class phpPrinter = object(self)
   inherit CPrinter.cPrinter as super
 
+  method multi_read f li = self#base_multi_read f li
+
   method declare_for s f li = ()
 
   method untuple f li e =
@@ -160,8 +162,6 @@ function nextChar(){
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method combine_formats () = false
-
   method multi_print f li =
     Format.fprintf f "@[<h>echo %a;@]"
       (print_list
@@ -186,7 +186,6 @@ function nextChar(){
              "%a%a"
              self#prototype type_
              self#binding a) sep_c ) li
-
 
   method binding f i = Format.fprintf f "$%a" super#binding i
 

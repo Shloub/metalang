@@ -211,7 +211,7 @@ class cPrinter = object(self)
     Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#mutable_get m
 
   method printf f () = Format.fprintf f "printf"
-  method combine_formats () = true
+
   method multi_print f li = let format, exprs = self#extract_multi_print li in
       Format.fprintf f "@[<h>%a(\"%s\", %a)%a@]" self#printf () format
         (print_list
@@ -315,24 +315,26 @@ class cPrinter = object(self)
       self#expr e
       self#blocinif ifcase
       self#bloc elsecase
-(*
-  method multiread f instrs =
+
+  method base_multi_read f li = baseprinter#multi_read f li
+
+  method multi_read f li =
     let format, variables =
-      List.fold_left (fun (format, variables) i -> match Instr.unfix i with
-      | Instr.StdinSep -> (format ^ " ", variables)
+      List.fold_left (fun (format, variables) i -> match i with
+      | Instr.Separation -> (format ^ " ", variables)
       | Instr.DeclRead (t, var, _) ->
         let mutable_ = Mutable.var var in
         let addons = Printer.format_type t in
         (format ^ addons, mutable_::variables)
-      | Instr.Read (t, mutable_) ->
+      | Instr.ReadExpr (t, mutable_) ->
         let addons = Printer.format_type t in
         (format ^ addons, mutable_::variables)
       | _ -> assert false
-      ) ("", []) instrs
+      ) ("", []) li
     in
     Format.fprintf f "scanf(\"%s\"%a);"
       format
       (print_list (fun f x -> Format.fprintf f ", &%a" self#mutable_get x) nosep)
       (List.rev variables)
-*)
+
 end

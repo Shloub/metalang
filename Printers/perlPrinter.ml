@@ -103,9 +103,9 @@ let print_expr macros e f p =
 class perlPrinter = object(self)
   inherit CPrinter.cPrinter as baseprinter
 
-  method lang () = "pl"
+  method multi_read f li = self#base_multi_read f li
 
-  method combine_formats () = false
+  method lang () = "pl"
 
   method binding f i = Format.fprintf f "$%a" baseprinter#binding i
 

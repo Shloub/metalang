@@ -142,7 +142,7 @@ function read_int_(){
   method main f main =
     self#instructions f main
 
-  method combine_formats () = false
+  method multi_read f li = self#base_multi_read f li
 
   method multi_print f li =
     Format.fprintf f "@[<h>util.print(%a);@]"

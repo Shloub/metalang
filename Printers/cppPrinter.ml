@@ -238,20 +238,20 @@ class cppPrinter = object(self)
   | Type.Integer -> Format.fprintf f "@[std::cin >> %a;@]" self#binding v
   | _ -> assert false
 
-(*
-  method multiread f instrs = (* TODO, quand on a plusieurs noskip ou skip à la suite, il faut les virer*)
+
+  method multi_read f li =
     let skipfirst, variables =
-      List.fold_left (fun (skipfirst, variables) i -> match Instr.unfix i with
-      | Instr.Read (t, mutable_) -> skipfirst, (t, mutable_, false)::variables
+      List.fold_left (fun (skipfirst, variables) i -> match i with
+      | Instr.ReadExpr (t, mutable_) -> skipfirst, (t, mutable_, false)::variables
       | Instr.DeclRead (t, var, _) ->
         let mutable_ = Mutable.var var in
         skipfirst, (t, mutable_, false)::variables
-      | Instr.StdinSep -> begin match variables with
+      | Instr.Separation -> begin match variables with
         | (t, m, s)::tl -> skipfirst, (t, m, true)::tl
         | [] -> true, []
       end
       | _ -> assert false
-      ) (false, []) instrs
+      ) (false, []) li
     in
     let lastSkip = ref false in
     let skipSet = ref false in
@@ -272,5 +272,5 @@ class cppPrinter = object(self)
         skipSet := true;
        ) nosep )
       (List.rev variables)
-*)
+
 end

@@ -115,6 +115,8 @@ class scalaPrinter = object(self)
 
   method lang () = "scala"
 
+  method multi_read f li = self#base_multi_read f li
+
   method hasSelfAffect op = false
 
   method header f prog =

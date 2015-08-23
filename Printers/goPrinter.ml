@@ -215,6 +215,8 @@ func skip() {
 
   method stdin_sep f = Format.fprintf f "@[skip()@]"
 
+  method multi_read f li = self#base_multi_read f li
+
   method read_decl f t v =
     Format.fprintf f "@[var %a %a@\nfmt.Fscanf(reader, \"%a\", &%a)@]"
       self#binding v

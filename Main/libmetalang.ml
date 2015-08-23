@@ -60,7 +60,7 @@ let keywords lang=
     "value";"virtual";"void"; "volatile";"val";
     "where";"while";"when";"with";
     "yield";
-
+    "read_int"; "read_char"; "skip";
     "qsort"
   ]
   in match lang with
@@ -163,6 +163,7 @@ let default_passes (prog : Typer.env * Utils.prog) =
   |> typed "inline functions" Passes.WalkInlineFuncs.apply funit
   |> typed "inline vars" Passes.WalkInlineVars.apply funit
   |> typed "walk merge prints" Passes.WalkMergePrints.apply funit
+  |> typed "walk merge reads" Passes.WalkMergeReads.apply funit
   |> typer_process
   |> (fun (ty, p) ->
       let acc = Passes.WalkDetectRecursion.fold () p in
