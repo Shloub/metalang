@@ -27,15 +27,7 @@ Module euler30
                 Dim s As Integer = p(a) + p(b) + p(c) + p(d) + p(e) + p(f)
                 Dim r As Integer = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000
                 If s = r AndAlso r <> 1 Then
-                  Console.Write(f)
-                  Console.Write(e)
-                  Console.Write(d)
-                  Console.Write(c)
-                  Console.Write(b)
-                  Console.Write(a)
-                  Console.Write(" ")
-                  Console.Write(r)
-                  Console.Write(Chr(10))
+                  Console.Write("" & f & e & d & c & b & a & " " & r & Chr(10))
                   sum = sum + r
                 End If
               Next

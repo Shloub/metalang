@@ -5,9 +5,7 @@ public class aaa_11arrayconst
   static void test(int[] tab, int len)
   {
     for (int i = 0 ; i < len; i++)
-    {
       Console.Write("" + tab[i] + " ");
-    }
     Console.Write("\n");
   }
   

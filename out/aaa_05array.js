@@ -16,15 +16,13 @@ for (var i = 0 ; i <= 5 - 1; i++)
   a[i] = ~~(i % 2) == 0;
 }
 util.print(j, " ");
-var c = a[0];
-if (c)
+if (a[0])
   util.print("True");
 else
   util.print("False");
 util.print("\n");
 g(id(a), 0);
-var d = a[0];
-if (d)
+if (a[0])
   util.print("True");
 else
   util.print("False");

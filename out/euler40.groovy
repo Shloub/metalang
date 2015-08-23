@@ -28,9 +28,7 @@ int[] t = new int[9]
 for (int i = 0 ; i < 9; i++)
   t[i] = exp0(10, i) - exp0(10, i - 1)
 for (int i2 = 1 ; i2 <= 8; i2 ++)
-{
   System.out.printf("%s => %s\n", i2, t[i2]);
-}
 for (int j = 0 ; j <= 80; j ++)
   print(e(t, j))
 print("\n")

@@ -454,7 +454,7 @@ for ($i = 2 ; $i <= 100; $i++)
 }
 echo "euler13 = ";
 print_bigint($sum);
-echo "\n", "euler25 = ", euler25(), "\n", "euler16 = ", euler16(), "\n";
+echo "\neuler25 = ", euler25(), "\neuler16 = ", euler16(), "\n";
 euler48();
 echo "euler20 = ", euler20(), "\n";
 $a = bigint_of_int(999999);
@@ -497,8 +497,7 @@ print_bigint($a);
 echo ">";
 print_bigint($b);
 echo "=";
-$r = bigint_gt($a, $b);
-if ($r)
+if (bigint_gt($a, $b))
   echo "True";
 else
   echo "False";

@@ -48,8 +48,7 @@ foreach my $i (0 .. $len - 1) {
   readspaces();
   $tab->[$i] = $tmp;
 }
-my $a = devine0($nombre, $tab, $len);
-if ($a) {
+if (devine0($nombre, $tab, $len)) {
   print "True";
 }else{
   print "False";

@@ -85,8 +85,7 @@ End Function
       stdin_sep()
       tab(i) = tmp
     Next
-    Dim a As Boolean = devine0(nombre, tab, len)
-    If a Then
+    If devine0(nombre, tab, len) Then
       Console.Write("True")
     Else
       Console.Write("False")

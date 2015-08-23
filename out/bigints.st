@@ -3,9 +3,9 @@ Object subclass: bigint [
   bigint_sign [ ^bigint_sign ]
   bigint_len [ ^bigint_len ]
   bigint_chiffres [ ^bigint_chiffres ]
-  bigint_sign: s [ bigint_sign := s. ] 
-  bigint_len: s [ bigint_len := s. ] 
-  bigint_chiffres: s [ bigint_chiffres := s. ] 
+  bigint_sign: r [ bigint_sign := r. ] 
+  bigint_len: r [ bigint_len := r. ] 
+  bigint_chiffres: r [ bigint_chiffres := r. ] 
 ]
 Object subclass: bigints [
   |buffer|
@@ -257,8 +257,8 @@ D'ou le nom de la fonction. "
 Division,
 Modulo
 "
-   log10: u  [|out0 a|
-    a := u.
+   log10: s  [|out0 a|
+    a := s.
     out0 := 1.
     [a >= 10] whileTrue:
     [
@@ -268,8 +268,8 @@ Modulo
     ^ out0
   ]
   
-   bigint_of_int: v  [|t size q i|
-    i := v.
+   bigint_of_int: u  [|t size q i|
+    i := u.
     size := (self log10: i).
     (i = 0)
       ifTrue:[size :=  0.].
@@ -288,8 +288,8 @@ Modulo
     ^ q
   ]
   
-   fact_bigint: w  [|out0 one a|
-    a := w.
+   fact_bigint: v  [|out0 one a|
+    a := v.
     one := (self bigint_of_int: 1).
     out0 := one.
     [(self bigint_eq: a b: one) not] whileTrue:
@@ -324,8 +324,8 @@ Modulo
                 ifFalse:[^ (self mul_bigint: a bb: (self bigint_exp: a b: (b - 1)))].].
   ]
   
-   bigint_exp_10chiffres: x b: b [|a|
-    a := x.
+   bigint_exp_10chiffres: w b: b [|a|
+    a := w.
     a :=  (self bigint_premiers_chiffres: a i: 10).
     (b = 1)
       ifTrue:[^ a]
@@ -418,8 +418,8 @@ Modulo
   ]
   
   main [
-    |tmp sum r b a|(self euler29) display.
-                   '
+    |tmp sum b a|(self euler29) display.
+    '
 ' display.
     sum := (self read_bigint: 50).
     (2 to: 100) do: [:i|
@@ -430,12 +430,10 @@ Modulo
     'euler13 = ' display.
     (self print_bigint: sum).
     '
-' display.
-    'euler25 = ' display.
+euler25 = ' display.
     (self euler25) display.
     '
-' display.
-    'euler16 = ' display.
+euler16 = ' display.
     (self euler16) display.
     '
 ' display.
@@ -490,8 +488,7 @@ Modulo
     '>' display.
     (self print_bigint: b).
     '=' display.
-    r := (self bigint_gt: a b: b).
-    r
+    (self bigint_gt: a b: b)
       ifTrue:['True' display.]
       ifFalse:['False' display.].
     '

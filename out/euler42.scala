@@ -60,9 +60,7 @@ def skip() {
   {
     for (i <- 1 to 55)
       if (is_triangular(i))
-    {
       printf("%d ", i);
-    }
     printf("\n");
     var sum: Int = 0;
     var n = read_int()

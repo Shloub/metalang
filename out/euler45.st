@@ -43,14 +43,12 @@ Object subclass: euler45 [
     |t|(285 to: 55385) do: [:n|
          t := (self triangle: n).
          ((self findPenta2: t a: (n quo: 5) b: n) and: [(self findHexa2: t a: (n quo: 5) b: ((n quo: 2) + 10))])
-           ifTrue:[
-                  n display.
+           ifTrue:[n display.
                   '
 ' display.
                   t display.
                   '
-' display.
-           ].
+' display.].
     ].
     ]
 ]

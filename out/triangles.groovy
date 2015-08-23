@@ -73,9 +73,7 @@ System.out.printf("%s\n", find(len, tab));
 for (int k = 0 ; k < len; k++)
 {
   for (int l = 0 ; l <= k; l ++)
-  {
     System.out.printf("%s ", tab[k][l]);
-  }
   print("\n")
 }
 

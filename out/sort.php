@@ -86,15 +86,11 @@ for ($i_ = 0 ; $i_ < $len; $i_++)
 $tab2 = copytab($tab, $len);
 bubblesort($tab2, $len);
 for ($i = 0 ; $i < $len; $i++)
-{
   echo $tab2[$i], " ";
-}
 echo "\n";
 $tab3 = copytab($tab, $len);
 qsort0($tab3, $len, 0, $len - 1);
 for ($i = 0 ; $i < $len; $i++)
-{
   echo $tab3[$i], " ";
-}
 echo "\n";
 ?>

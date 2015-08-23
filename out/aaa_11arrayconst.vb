@@ -4,8 +4,7 @@ Module aaa_11arrayconst
 
   Sub test(ByRef tab as Integer(), ByVal len as Integer)
     For  i As Integer  = 0 to  len - 1
-      Console.Write(tab(i))
-      Console.Write(" ")
+      Console.Write("" & tab(i) & " ")
     Next
     Console.Write(Chr(10))
   End Sub

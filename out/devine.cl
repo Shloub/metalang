@@ -63,11 +63,10 @@
                     (return-from lambda_1 tmp)
                   )))
                 ))))
-      (let ((a (devine0 nombre tab len)))
-        (if
-          a
-          (princ "True")
-          (princ "False"))
-      )))))
+      (if
+        (devine0 nombre tab len)
+        (princ "True")
+        (princ "False"))
+      ))))
 
 

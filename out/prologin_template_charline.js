@@ -47,7 +47,9 @@ taille=read_int_();
 stdinsep();
 var tableau = new Array(taille);
 for (var a = 0 ; a <= taille - 1; a++)
+{
   tableau[a]=read_char_();
+}
 stdinsep();
 util.print(programme_candidat(tableau, taille), "\n");
 

@@ -85,9 +85,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     for (k <- 0 to len - 1)
     {
       for (l <- 0 to k)
-      {
         printf("%d ", tab(k)(l));
-      }
       printf("\n");
     }
   }

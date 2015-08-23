@@ -19,15 +19,13 @@ int main(){
     a->at(i) = i % 2 == 0;
   }
   std::cout << j << " ";
-  bool c = a->at(0);
-  if (c)
+  if (a->at(0))
     std::cout << "True";
   else
     std::cout << "False";
   std::cout << "\n";
   g(id(a), 0);
-  bool d = a->at(0);
-  if (d)
+  if (a->at(0))
     std::cout << "True";
   else
     std::cout << "False";

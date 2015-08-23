@@ -45,8 +45,7 @@ for i = 0,len - 1 do
   stdinsep()
   tab[i + 1] = tmp;
 end
-local a = devine0(nombre, tab, len)
-if a
+if devine0(nombre, tab, len)
 then
   io.write("True")
 else

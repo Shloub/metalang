@@ -48,9 +48,7 @@ begin
   for n = 285 to 55385 do
     let t = triangle n in
     if findPenta2 t (n / 5) n && findHexa2 t (n / 5) (n / 2 + 10) then
-      begin
-        Printf.printf "%d\n%d\n" n t
-      end
+      Printf.printf "%d\n%d\n" n t
   done
 end
  

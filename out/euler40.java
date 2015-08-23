@@ -32,9 +32,7 @@ public class euler40
     for (int i = 0 ; i < 9; i++)
       t[i] = exp0(10, i) - exp0(10, i - 1);
     for (int i2 = 1 ; i2 <= 8; i2 ++)
-    {
       System.out.printf("%d => %d\n", i2, t[i2]);
-    }
     for (int j = 0 ; j <= 80; j ++)
       System.out.printf("%d", e(t, j));
     System.out.print("\n");

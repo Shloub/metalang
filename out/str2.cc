@@ -2,7 +2,7 @@
 #include <vector>
 
 int main(){
-  std::cout << "ma petite chaine" << " en or";
+  std::cout << "ma petite chaine en or";
   return 0;
 }
 

@@ -15,9 +15,7 @@ public class euler09
         int a2b2 = a * a + b * b;
         int cc = c * c;
         if (cc == a2b2 && c > a)
-        {
           Console.Write("" + a + "\n" + b + "\n" + c + "\n" + (a * b * c) + "\n");
-        }
     }
   }
   

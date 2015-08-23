@@ -57,11 +57,9 @@ Object subclass: euler46 [
     (1 to: maximumprimes) do: [:m|
       m2 := m * 2 + 1.
       ((m2 < maximumprimes) and: [(canbe at: (m2 + 1)) not])
-        ifTrue:[
-               m2 display.
+        ifTrue:[m2 display.
                '
-' display.
-        ].
+' display.].
     ].
     ]
 ]

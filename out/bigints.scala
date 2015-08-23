@@ -486,8 +486,7 @@ Modulo
     printf(">");
     print_bigint(b);
     printf("=");
-    var e: Boolean = bigint_gt(a, b);
-    if (e)
+    if (bigint_gt(a, b))
       printf("True");
     else
       printf("False");

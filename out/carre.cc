@@ -29,9 +29,7 @@ int main(){
   for (int jy = 0 ; jy < y; jy++)
   {
     for (int jx = 0 ; jx < x; jx++)
-    {
       std::cout << tab->at(jy)->at(jx) << " ";
-    }
     std::cout << "\n";
   }
   return 0;

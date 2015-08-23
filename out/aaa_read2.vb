@@ -14,18 +14,12 @@ Module aaa_read2
     Console.Write("" & len & "=len" & Chr(10))
     Dim tab As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
     For  i As Integer  = 0 to  len - 1
-      Console.Write(i)
-      Console.Write("=>")
-      Console.Write(tab(i))
-      Console.Write(" ")
+      Console.Write("" & i & "=>" & tab(i) & " ")
     Next
     Console.Write(Chr(10))
     Dim tab2 As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
     For  i_ As Integer  = 0 to  len - 1
-      Console.Write(i_)
-      Console.Write("==>")
-      Console.Write(tab2(i_))
-      Console.Write(" ")
+      Console.Write("" & i_ & "==>" & tab2(i_) & " ")
     Next
     Dim strlen As Integer = Integer.Parse(Console.ReadLine())
     Console.Write("" & strlen & "=strlen" & Chr(10))
@@ -33,10 +27,7 @@ Module aaa_read2
     For  i3 As Integer  = 0 to  strlen - 1
       Dim tmpc As Char = tab4(i3)
       Dim c As Integer = Asc(tmpc)
-      Console.Write(tmpc)
-      Console.Write(":")
-      Console.Write(c)
-      Console.Write(" ")
+      Console.Write("" & tmpc & ":" & c & " ")
       If tmpc <> Chr(32) Then
         c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)
       End If

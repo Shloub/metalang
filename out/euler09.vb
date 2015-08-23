@@ -14,14 +14,7 @@ Module euler09
         Dim a2b2 As Integer = a * a + b * b
         Dim cc As Integer = c * c
         If cc = a2b2 AndAlso c > a Then
-          Console.Write(a)
-          Console.Write(Chr(10))
-          Console.Write(b)
-          Console.Write(Chr(10))
-          Console.Write(c)
-          Console.Write(Chr(10))
-          Console.Write(a * b * c)
-          Console.Write(Chr(10))
+          Console.Write("" & a & Chr(10) & b & Chr(10) & c & Chr(10) & (a * b * c) & Chr(10))
         End If
       Next
     Next

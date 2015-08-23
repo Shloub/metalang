@@ -219,12 +219,7 @@ End Function
         If can_move_xy(x, y, g) Then
           apply_move_xy(x, y, g)
           Dim currentNote As Integer = minmax(g)
-          Console.Write(x)
-          Console.Write(", ")
-          Console.Write(y)
-          Console.Write(", ")
-          Console.Write(currentNote)
-          Console.Write(Chr(10))
+          Console.Write("" & x & ", " & y & ", " & currentNote & Chr(10))
           cancel_move_xy(x, y, g)
           If currentNote < minNote Then
             minNote = currentNote
@@ -289,8 +284,7 @@ End Function
           End If
         Loop
         print_state(state)
-        Console.Write(state.note)
-        Console.Write(Chr(10))
+        Console.Write("" & state.note & Chr(10))
       Next
     End Sub
     

@@ -11,9 +11,7 @@ object aaa_07triplet
     }
     var l: Array[Int] = readLine().split(" ").map(_.toInt);
     for (j <- 0 to 9)
-    {
       printf("%d\n", l(j));
-    }
   }
   
 }

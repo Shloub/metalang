@@ -112,9 +112,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     for (int k = 0 ; k < len; k++)
     {
       for (int l = 0 ; l <= k; l ++)
-      {
         Console.Write("" + tab[k][l] + " ");
-      }
       Console.Write("\n");
     }
   }

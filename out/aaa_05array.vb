@@ -20,16 +20,14 @@ Module aaa_05array
       a(i) = i Mod 2 = 0
     Next
     Console.Write("" & j & " ")
-    Dim c As Boolean = a(0)
-    If c Then
+    If a(0) Then
       Console.Write("True")
     Else
       Console.Write("False")
     End If
     Console.Write(Chr(10))
     g(id(a), 0)
-    Dim d As Boolean = a(0)
-    If d Then
+    If a(0) Then
       Console.Write("True")
     Else
       Console.Write("False")

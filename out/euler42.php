@@ -55,9 +55,7 @@ function score(){
 
 for ($i = 1 ; $i <= 55; $i++)
   if (is_triangular($i))
-{
   echo $i, " ";
-}
 echo "\n";
 $sum = 0;
 list($n) = scan("%d");

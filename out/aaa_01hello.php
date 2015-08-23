@@ -1,32 +1,27 @@
 <?php
 echo "Hello World";
 $a = 5;
-echo (4 + 6) * 2, " ", "\n", $a, "foo", "";
-$b = 1 + intval((1 + 1) * 2 * (3 + 8) / 4) - (1 - 2) - 3 == 12 && true;
-if ($b)
+echo (4 + 6) * 2, " \n", $a, "foo";
+if (1 + intval((1 + 1) * 2 * (3 + 8) / 4) - (1 - 2) - 3 == 12 && true)
   echo "True";
 else
   echo "False";
 echo "\n";
-$c = (3 * (4 + 5 + 6) * 2 == 45) == false;
-if ($c)
+if ((3 * (4 + 5 + 6) * 2 == 45) == false)
   echo "True";
 else
   echo "False";
 echo " ";
-$d = (2 == 1) == false;
-if ($d)
+if ((2 == 1) == false)
   echo "True";
 else
   echo "False";
 echo " ", intval(intval((4 + 1) / 3) / (2 + 1)), intval(intval(4 * 1 / 3) / 2 * 1);
-$e = !(!($a == 0) && !($a == 4));
-if ($e)
+if (!(!($a == 0) && !($a == 4)))
   echo "True";
 else
   echo "False";
-$f = true && !false && !(true && false);
-if ($f)
+if (true && !false && !(true && false))
   echo "True";
 else
   echo "False";

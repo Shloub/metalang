@@ -20,8 +20,7 @@ Module carre
     Next
     For  jy As Integer  = 0 to  y - 1
       For  jx As Integer  = 0 to  x - 1
-        Console.Write(tab(jy)(jx))
-        Console.Write(" ")
+        Console.Write("" & tab(jy)(jx) & " ")
       Next
       Console.Write(Chr(10))
     Next

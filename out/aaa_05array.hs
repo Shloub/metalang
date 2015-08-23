@@ -33,22 +33,20 @@ g t index =
   writeIOA t index False
 
 main =
-  (array_init_withenv 5 (\ i e ->
+  (array_init_withenv 5 (\ i c ->
                            do printf "%d" (i :: Int) :: IO ()
-                              let f = e + i
-                              let h = (i `rem` 2) == 0
-                              return (f, h)) 0) >>= (\ (k, a) ->
-                                                      do printf "%d " (k::Int) :: IO()
-                                                         c <- readIOA a 0
-                                                         if c
-                                                         then printf "True" :: IO ()
-                                                         else printf "False" :: IO ()
+                              let d = c + i
+                              let e = (i `rem` 2) == 0
+                              return (d, e)) 0) >>= (\ (f, a) ->
+                                                      do printf "%d " (f::Int) :: IO()
+                                                         ifM (readIOA a 0)
+                                                             (printf "True" :: IO ())
+                                                             (printf "False" :: IO ())
                                                          printf "\n" :: IO ()
                                                          join $ g <$> (id0 a) <*> return 0
-                                                         d <- readIOA a 0
-                                                         if d
-                                                         then printf "True" :: IO ()
-                                                         else printf "False" :: IO ()
+                                                         ifM (readIOA a 0)
+                                                             (printf "True" :: IO ())
+                                                             (printf "False" :: IO ())
                                                          printf "\n" :: IO ())
 
 

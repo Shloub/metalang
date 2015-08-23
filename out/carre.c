@@ -29,9 +29,7 @@ int main(void){
   for (jy = 0 ; jy < y; jy++)
   {
     for (jx = 0 ; jx < x; jx++)
-    {
       printf("%d ", tab[jy][jx]);
-    }
     printf("\n");
   }
   return 0;

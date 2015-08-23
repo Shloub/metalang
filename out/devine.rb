@@ -28,8 +28,7 @@ tab = [*0..len - 1].map { |i|
   scanf("%*\n")
   next (tmp)
   }
-a = devine0(nombre, tab, len)
-if a then
+if devine0(nombre, tab, len) then
   print "True"
 else
   print "False"

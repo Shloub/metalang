@@ -4,9 +4,7 @@ object aaa_11arrayconst
   def test(tab : Array[Int], len : Int){
     var i: Int=0;
     for (i <- 0 to len - 1)
-    {
       printf("%d ", tab(i));
-    }
     printf("\n");
   }
   

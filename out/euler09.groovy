@@ -12,8 +12,6 @@ for (int a = 1 ; a <= 1000; a ++)
     int a2b2 = a * a + b * b
     int cc = c * c
     if (cc == a2b2 && c > a)
-    {
       System.out.printf("%s\n%s\n%s\n%s\n", a, b, c, a * b * c);
-    }
 }
 

@@ -368,8 +368,7 @@ print_bigint(a)
 print( ">", end='')
 print_bigint(b)
 print( "=", end='')
-e = bigint_gt(a, b)
-if e:
+if bigint_gt(a, b):
   print( "True", end='')
 else:
   print( "False", end='')

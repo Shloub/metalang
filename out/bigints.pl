@@ -448,7 +448,7 @@ foreach my $i (2 .. 100) {
 }
 print "euler13 = ";
 print_bigint($sum);
-print("\n", "euler25 = ", euler25(), "\n", "euler16 = ", euler16(), "\n");
+print("\neuler25 = ", euler25(), "\neuler16 = ", euler16(), "\n");
 euler48();
 print("euler20 = ", euler20(), "\n");
 my $a = bigint_of_int(999999);
@@ -491,8 +491,7 @@ print_bigint($a);
 print ">";
 print_bigint($b);
 print "=";
-my $e = bigint_gt($a, $b);
-if ($e) {
+if (bigint_gt($a, $b)) {
   print "True";
 }else{
   print "False";

@@ -9,6 +9,6 @@ import Data.IORef
 
 main :: IO ()
 main =
-  printf "ma petite chaine en or" :: IO()
+  printf "ma petite chaine en or" :: IO ()
 
 

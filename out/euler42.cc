@@ -32,9 +32,7 @@ int main(){
   int n;
   for (int i = 1 ; i <= 55; i ++)
     if (is_triangular(i))
-  {
     std::cout << i << " ";
-  }
   std::cout << "\n";
   int sum = 0;
   std::cin >> n >> std::noskipws;

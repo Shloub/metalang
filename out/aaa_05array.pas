@@ -1,21 +1,19 @@
 program aaa_05array;
 
-type e = array of boolean;
-function id(b : e) : e;
+type c = array of boolean;
+function id(b : c) : c;
 begin
   exit(b);
 end;
 
-procedure g(t : e; index : Longint);
+procedure g(t : c; index : Longint);
 begin
   t[index] := false;
 end;
 
 
 var
-  a : e;
-  c : boolean;
-  d : boolean;
+  a : c;
   i : Longint;
   j : Longint;
 begin
@@ -29,8 +27,7 @@ begin
   end;
   Write(j);
   Write(' ');
-  c := a[0];
-  if c
+  if a[0]
   then
     begin
       Write('True');
@@ -41,8 +38,7 @@ begin
     end;
   Write(''#10'');
   g(id(a), 0);
-  d := a[0];
-  if d
+  if a[0]
   then
     begin
       Write('True');

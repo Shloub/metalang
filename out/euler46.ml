@@ -44,9 +44,7 @@ begin
   for m = 1 to maximumprimes do
     let m2 = m * 2 + 1 in
     if m2 < maximumprimes && not canbe.(m2) then
-      begin
-        Printf.printf "%d\n" m2
-      end
+      Printf.printf "%d\n" m2
   done
 end
  

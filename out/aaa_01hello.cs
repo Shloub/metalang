@@ -8,31 +8,26 @@ public class aaa_01hello
     Console.Write("Hello World");
     int a = 5;
     Console.Write("" + ((4 + 6) * 2) + " \n" + a + "foo");
-    bool b = 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 == 12 && true;
-    if (b)
+    if (1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 == 12 && true)
       Console.Write("True");
     else
       Console.Write("False");
     Console.Write("\n");
-    bool c = (3 * (4 + 5 + 6) * 2 == 45) == false;
-    if (c)
+    if ((3 * (4 + 5 + 6) * 2 == 45) == false)
       Console.Write("True");
     else
       Console.Write("False");
     Console.Write(" ");
-    bool d = (2 == 1) == false;
-    if (d)
+    if ((2 == 1) == false)
       Console.Write("True");
     else
       Console.Write("False");
     Console.Write(" " + ((4 + 1) / 3 / (2 + 1)) + (4 * 1 / 3 / 2 * 1));
-    bool e = !(!(a == 0) && !(a == 4));
-    if (e)
+    if (!(!(a == 0) && !(a == 4)))
       Console.Write("True");
     else
       Console.Write("False");
-    bool f = true && !false && !(true && false);
-    if (f)
+    if (true && !false && !(true && false))
       Console.Write("True");
     else
       Console.Write("False");

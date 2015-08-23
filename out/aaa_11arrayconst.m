@@ -5,9 +5,7 @@
 void test(int* tab, int len){
   int i;
   for (i = 0 ; i < len; i++)
-  {
     printf("%d ", tab[i]);
-  }
   printf("\n");
 }
 

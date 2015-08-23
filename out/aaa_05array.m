@@ -22,15 +22,13 @@ int main(void){
     a[i] = i % 2 == 0;
   }
   printf("%d ", j);
-  int c = a[0];
-  if (c)
+  if (a[0])
     printf("True");
   else
     printf("False");
   printf("\n");
   g(id0(a), 0);
-  int d = a[0];
-  if (d)
+  if (a[0])
     printf("True");
   else
     printf("False");

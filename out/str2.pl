@@ -1,5 +1,5 @@
 #!/usr/bin/perl
 
-print("ma petite chaine", " en or");
+print "ma petite chaine en or";
 
 

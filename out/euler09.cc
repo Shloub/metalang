@@ -12,9 +12,7 @@ int main(){
       int a2b2 = a * a + b * b;
       int cc = c * c;
       if (cc == a2b2 && c > a)
-      {
         std::cout << a << "\n" << b << "\n" << c << "\n" << a * b * c << "\n";
-      }
   }
   return 0;
 }

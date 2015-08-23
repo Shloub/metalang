@@ -96,16 +96,12 @@ def skip() {
     var tab2: Array[Int] = copytab(tab, len);
     bubblesort(tab2, len);
     for (i <- 0 to len - 1)
-    {
       printf("%d ", tab2(i));
-    }
     printf("\n");
     var tab3: Array[Int] = copytab(tab, len);
     qsort0(tab3, len, 0, len - 1);
     for (i <- 0 to len - 1)
-    {
       printf("%d ", tab3(i));
-    }
     printf("\n");
   }
   

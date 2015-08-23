@@ -15,27 +15,22 @@ main :: IO ()
 main =
   do printf "Hello World" :: IO ()
      printf "%d \n%dfoo" (((4 + 6) * 2)::Int) (5::Int) :: IO()
-     let b = 1 + (((1 + 1) * 2 * (3 + 8)) `quot` 4) - (1 - 2) - 3 == 12 && True
-     if b
+     if 1 + (((1 + 1) * 2 * (3 + 8)) `quot` 4) - (1 - 2) - 3 == 12 && True
      then printf "True" :: IO ()
      else printf "False" :: IO ()
      printf "\n" :: IO ()
-     let c = (3 * (4 + 5 + 6) * 2 == 45) == False
-     if c
+     if (3 * (4 + 5 + 6) * 2 == 45) == False
      then printf "True" :: IO ()
      else printf "False" :: IO ()
      printf " " :: IO ()
-     let d = (2 == 1) == False
-     if d
+     if (2 == 1) == False
      then printf "True" :: IO ()
      else printf "False" :: IO ()
      printf " %d%d" ((((4 + 1) `quot` 3) `quot` (2 + 1))::Int) ((((4 * 1) `quot` 3) `quot` (2 * 1))::Int) :: IO()
-     let e = not (not (5 == 0) && not (5 == 4))
-     if e
+     if not (not (5 == 0) && not (5 == 4))
      then printf "True" :: IO ()
      else printf "False" :: IO ()
-     let f = (True && not False) && not (True && False)
-     if f
+     if (True && not False) && not (True && False)
      then printf "True" :: IO ()
      else printf "False" :: IO ()
      printf "\n" :: IO ()

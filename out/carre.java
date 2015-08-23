@@ -27,9 +27,7 @@ public class carre
     for (int jy = 0 ; jy < y; jy++)
     {
       for (int jx = 0 ; jx < x; jx++)
-      {
         System.out.printf("%d ", tab[jy][jx]);
-      }
       System.out.print("\n");
     }
   }

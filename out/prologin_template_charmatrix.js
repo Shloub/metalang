@@ -55,7 +55,9 @@ for (var b = 0 ; b <= taille_y - 1; b++)
 {
   var c = new Array(taille_x);
   for (var d = 0 ; d <= taille_x - 1; d++)
+  {
     c[d]=read_char_();
+  }
   stdinsep();
   a[b] = c;
 }

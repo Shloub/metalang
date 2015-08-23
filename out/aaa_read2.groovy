@@ -19,15 +19,11 @@ int len = Integer.parseInt(scanner.nextLine())
 System.out.printf("%s=len\n", len);
 int[] tab = read_int_line()
 for (int i = 0 ; i < len; i++)
-{
   System.out.printf("%s=>%s ", i, tab[i]);
-}
 print("\n")
 int[] tab2 = read_int_line()
 for (int i_ = 0 ; i_ < len; i_++)
-{
   System.out.printf("%s==>%s ", i_, tab2[i_]);
-}
 int strlen = Integer.parseInt(scanner.nextLine())
 System.out.printf("%s=strlen\n", strlen);
 char[] tab4 = scanner.nextLine().toCharArray()

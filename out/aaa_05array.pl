@@ -23,16 +23,14 @@ foreach my $i (0 .. 5 - 1) {
   $a->[$i] = remainder($i, 2) eq 0;
 }
 print($j, " ");
-my $c = $a->[0];
-if ($c) {
+if ($a->[0]) {
   print "True";
 }else{
   print "False";
 }
 print "\n";
 g(id($a), 0);
-my $d = $a->[0];
-if ($d) {
+if ($a->[0]) {
   print "True";
 }else{
   print "False";

@@ -57,10 +57,7 @@ Module euler45
     For  n As Integer  = 285 to  55385
       Dim t As Integer = triangle(n)
       If findPenta2(t, n \ 5, n) AndAlso findHexa2(t, n \ 5, n \ 2 + 10) Then
-        Console.Write(n)
-        Console.Write(Chr(10))
-        Console.Write(t)
-        Console.Write(Chr(10))
+        Console.Write("" & n & Chr(10) & t & Chr(10))
       End If
     Next
   End Sub

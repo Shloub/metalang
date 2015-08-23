@@ -70,8 +70,7 @@ End Function
     Sub print_sudoku(ByRef sudoku0 as Integer())
       For  y As Integer  = 0 to  8
         For  x As Integer  = 0 to  8
-          Console.Write(sudoku0(x + y * 9))
-          Console.Write(" ")
+          Console.Write("" & sudoku0(x + y * 9) & " ")
           If x Mod 3 = 2 Then
             Console.Write(" ")
           End If

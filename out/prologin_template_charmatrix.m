@@ -26,7 +26,9 @@ int main(void){
   {
     char *c = calloc( taille_x , sizeof(char));
     for (d = 0 ; d < taille_x; d++)
+    {
       scanf("%c", &c[d]);
+    }
     scanf(" ");
     a[b] = c;
   }

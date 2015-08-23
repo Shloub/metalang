@@ -34,9 +34,7 @@ public class euler15
     for (int m = 0 ; m < n; m++)
     {
       for (int k = 0 ; k < n; k++)
-      {
         System.out.printf("%d ", tab[m][k]);
-      }
       System.out.print("\n");
     }
     System.out.printf("%d\n", tab[0][0]);

@@ -90,10 +90,7 @@ Module euler21
         If other > n Then
           Dim othersum As Integer = sumdiv(nprimes, primes, other) - other
           If othersum = n Then
-            Console.Write(other)
-            Console.Write(" & ")
-            Console.Write(n)
-            Console.Write(Chr(10))
+            Console.Write("" & other & " & " & n & Chr(10))
             sum = sum + other + n
           End If
         End If

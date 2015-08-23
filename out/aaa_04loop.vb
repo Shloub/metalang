@@ -22,8 +22,7 @@ Module aaa_04loop
     Dim j As Integer = 0
     For  k As Integer  = 0 to  10
       j = j + k
-      Console.Write(j)
-      Console.Write(Chr(10))
+      Console.Write("" & j & Chr(10))
     Next
     Dim i As Integer = 4
     Do While i < 10

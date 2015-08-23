@@ -87,9 +87,7 @@ static int readInt(){
   {
     for (int i = 1 ; i <= 55; i ++)
       if (is_triangular(i))
-    {
       Console.Write("" + i + " ");
-    }
     Console.Write("\n");
     int sum = 0;
     int n = readInt();

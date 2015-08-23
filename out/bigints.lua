@@ -484,8 +484,7 @@ print_bigint(a);
 io.write(">")
 print_bigint(b);
 io.write("=")
-local e = bigint_gt(a, b)
-if e
+if bigint_gt(a, b)
 then
   io.write("True")
 else

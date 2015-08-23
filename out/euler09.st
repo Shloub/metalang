@@ -9,8 +9,7 @@ Object subclass: euler09 [
         a2b2 := a * a + (b * b).
         cc := c * c.
         ((cc = a2b2) and: [c > a])
-          ifTrue:[
-                 a display.
+          ifTrue:[a display.
                  '
 ' display.
                  b display.
@@ -21,8 +20,7 @@ Object subclass: euler09 [
 ' display.
                  (a * b * c) display.
                  '
-' display.
-          ].
+' display.].
       ].
     ].
     ]

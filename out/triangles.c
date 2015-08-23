@@ -60,9 +60,7 @@ int main(void){
   for (k = 0 ; k < len; k++)
   {
     for (l = 0 ; l <= k; l++)
-    {
       printf("%d ", tab[k][l]);
-    }
     printf("\n");
   }
   return 0;

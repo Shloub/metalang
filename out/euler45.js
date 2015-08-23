@@ -47,8 +47,6 @@ for (var n = 285 ; n <= 55385; n++)
 {
   var t = triangle(n);
   if (findPenta2(t, ~~(n / 5), n) && findHexa2(t, ~~(n / 5), ~~(n / 2) + 10))
-  {
     util.print(n, "\n", t, "\n");
-  }
 }
 

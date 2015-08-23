@@ -90,8 +90,7 @@ End Function
   Sub Main()
     For  i As Integer  = 1 to  55
       If is_triangular(i) Then
-        Console.Write(i)
-        Console.Write(" ")
+        Console.Write("" & i & " ")
       End If
     Next
     Console.Write(Chr(10))

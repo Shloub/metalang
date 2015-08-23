@@ -6,7 +6,5 @@ for ($i = 1 ; $i <= 3; $i++)
 }
 $l = array_map("intval", explode(" ", fgets(STDIN)));
 for ($j = 0 ; $j <= 9; $j++)
-{
   echo $l[$j], "\n";
-}
 ?>

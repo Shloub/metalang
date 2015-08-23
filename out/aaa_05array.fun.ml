@@ -16,19 +16,16 @@ let g t index =
 let main =
   let j = 0 in
   (fun (j, a) ->( Printf.printf "%d " j;
-                  let c = a.(0) in
-                  ( if c
-                    then Printf.printf "%s" "True"
-                    else Printf.printf "%s" "False";
-                    Printf.printf "%s" "\n";
-                    g (id a) 0;
-                    let d = a.(0) in
-                    ( if d
-                      then Printf.printf "%s" "True"
-                      else Printf.printf "%s" "False";
-                      Printf.printf "%s" "\n")))) (Array.init_withenv 5 (fun i j -> ( 
-  Printf.printf "%d" i;
-  let j = j + i in
-  let e = i mod 2 = 0 in
-  j, e)) j)
+                  if a.(0)
+                  then Printf.printf "%s" "True"
+                  else Printf.printf "%s" "False";
+                  Printf.printf "%s" "\n";
+                  g (id a) 0;
+                  if a.(0)
+                  then Printf.printf "%s" "True"
+                  else Printf.printf "%s" "False";
+                  Printf.printf "%s" "\n")) (Array.init_withenv 5 (fun i j -> ( Printf.printf "%d" i;
+                                                                                let j = j + i in
+                                                                                let c = i mod 2 = 0 in
+                                                                                j, c)) j)
 

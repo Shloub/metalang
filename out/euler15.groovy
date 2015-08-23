@@ -30,9 +30,7 @@ for (int o = 2 ; o <= n; o ++)
 for (int m = 0 ; m < n; m++)
 {
   for (int k = 0 ; k < n; k++)
-  {
     System.out.printf("%s ", tab[m][k]);
-  }
   print("\n")
 }
 System.out.printf("%s\n", tab[0][0]);

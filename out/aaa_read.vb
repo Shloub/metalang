@@ -75,10 +75,7 @@ End Function
     For  i As Integer  = 0 to  len - 1
       Dim tmpi1 As Integer = readInt()
       stdin_sep()
-      Console.Write(i)
-      Console.Write("=>")
-      Console.Write(tmpi1)
-      Console.Write(" ")
+      Console.Write("" & i & "=>" & tmpi1 & " ")
       tab(i) = tmpi1
     Next
     Console.Write(Chr(10))
@@ -86,10 +83,7 @@ End Function
     For  i_ As Integer  = 0 to  len - 1
       Dim tmpi2 As Integer = readInt()
       stdin_sep()
-      Console.Write(i_)
-      Console.Write("==>")
-      Console.Write(tmpi2)
-      Console.Write(" ")
+      Console.Write("" & i_ & "==>" & tmpi2 & " ")
       tab2(i_) = tmpi2
     Next
     Dim strlen As Integer = readInt()
@@ -99,10 +93,7 @@ End Function
     For  toto As Integer  = 0 to  strlen - 1
       Dim tmpc As Char = readChar()
       Dim c As Integer = Asc(tmpc)
-      Console.Write(tmpc)
-      Console.Write(":")
-      Console.Write(c)
-      Console.Write(" ")
+      Console.Write("" & tmpc & ":" & c & " ")
       If tmpc <> Chr(32) Then
         c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)
       End If

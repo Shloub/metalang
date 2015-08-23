@@ -25,7 +25,7 @@
 (define (devine0 nombre tab len)
   (let ([min0 (vector-ref tab 0)])
   (let ([max0 (vector-ref tab 1)])
-  (letrec ([b (lambda (i max0 min0) (if (<= i (- len 1))
+  (letrec ([a (lambda (i max0 min0) (if (<= i (- len 1))
                                     (if (or (> (vector-ref tab i) max0) (< (vector-ref tab i) min0))
                                     #f
                                     (let ([min0 (if (< (vector-ref tab i) nombre)
@@ -36,9 +36,9 @@
                                                 max0)])
                                     (if (and (eq? (vector-ref tab i) nombre) (not (eq? len (+ i 1))))
                                     #f
-                                    (b (+ i 1) max0 min0)))))
+                                    (a (+ i 1) max0 min0)))))
                                     #t))])
-    (b 2 max0 min0))))
+    (a 2 max0 min0))))
 )
 (define main
   ((lambda (nombre) 
@@ -53,10 +53,9 @@
                                                 (mread-blank)
                                                 tmp
                                                 )) (mread-int))))])
-          (let ([a (devine0 nombre tab len)])
-          (if a
+          (if (devine0 nombre tab len)
           (display "True")
-          (display "False"))))
+          (display "False")))
        )) (mread-int))
 )) (mread-int))
 )

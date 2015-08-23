@@ -1,3 +1,3 @@
 <?php
-echo "ma petite chaine", " en or";
+echo "ma petite chaine en or";
 ?>

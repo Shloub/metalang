@@ -1,9 +1,7 @@
 var util = require("util");
 function test(tab, len){
   for (var i = 0 ; i <= len - 1; i++)
-  {
     util.print(tab[i], " ");
-  }
   util.print("\n");
 }
 

@@ -31,9 +31,7 @@ public class euler40
     for (int i = 0 ; i < 9; i++)
       t[i] = exp0(10, i) - exp0(10, i - 1);
     for (int i2 = 1 ; i2 <= 8; i2 ++)
-    {
       Console.Write("" + i2 + " => " + t[i2] + "\n");
-    }
     for (int j = 0 ; j <= 80; j ++)
       Console.Write(e(t, j));
     Console.Write("\n");

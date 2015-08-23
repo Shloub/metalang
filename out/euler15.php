@@ -25,9 +25,7 @@ for ($o = 2 ; $o <= $n; $o++)
 for ($m = 0 ; $m < $n; $m++)
 {
   for ($k = 0 ; $k < $n; $k++)
-  {
     echo $tab[$m][$k], " ";
-  }
   echo "\n";
 }
 echo $tab[0][0], "\n";

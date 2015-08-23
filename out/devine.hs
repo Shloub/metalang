@@ -58,21 +58,21 @@ main :: IO ()
 devine0 nombre tab len =
   do min0 <- readIOA tab 0
      max0 <- readIOA tab 1
-     let b i c d =
+     let a i b c =
            if i <= len - 1
-           then ifM ((((<) c) <$> (readIOA tab i)) <||> (((>) d) <$> (readIOA tab i)))
+           then ifM ((((<) b) <$> (readIOA tab i)) <||> (((>) c) <$> (readIOA tab i)))
                     (return False)
-                    (do e <- ifM (((>) nombre) <$> (readIOA tab i))
-                                 (readIOA tab i)
-                                 (return d)
-                        f <- ifM (((<) nombre) <$> (readIOA tab i))
+                    (do d <- ifM (((>) nombre) <$> (readIOA tab i))
                                  (readIOA tab i)
                                  (return c)
+                        e <- ifM (((<) nombre) <$> (readIOA tab i))
+                                 (readIOA tab i)
+                                 (return b)
                         ifM (((&&) (len /= i + 1)) <$> (((==) nombre) <$> (readIOA tab i)))
                             (return False)
-                            (b (i + 1) f e))
+                            (a (i + 1) e d))
            else return True in
-           b 2 max0 min0
+           a 2 max0 min0
 
 main =
   do nombre <- read_int
@@ -83,9 +83,8 @@ main =
                               do tmp <- read_int
                                  skip_whitespaces
                                  return tmp)
-     a <- devine0 nombre tab len
-     if a
-     then printf "True" :: IO ()
-     else printf "False" :: IO ()
+     ifM (devine0 nombre tab len)
+         (printf "True" :: IO ())
+         (printf "False" :: IO ())
 
 

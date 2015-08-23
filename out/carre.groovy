@@ -24,9 +24,7 @@ for (int ix = 1 ; ix < x; ix++)
 for (int jy = 0 ; jy < y; jy++)
 {
   for (int jx = 0 ; jx < x; jx++)
-  {
     System.out.printf("%s ", tab[jy][jx]);
-  }
   print("\n")
 }
 

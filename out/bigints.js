@@ -439,7 +439,7 @@ for (var i = 2 ; i <= 100; i++)
 }
 util.print("euler13 = ");
 print_bigint(sum);
-util.print("\n", "euler25 = ", euler25(), "\n", "euler16 = ", euler16(), "\n");
+util.print("\neuler25 = ", euler25(), "\neuler16 = ", euler16(), "\n");
 euler48();
 util.print("euler20 = ", euler20(), "\n");
 var a = bigint_of_int(999999);
@@ -482,8 +482,7 @@ print_bigint(a);
 util.print(">");
 print_bigint(b);
 util.print("=");
-var r = bigint_gt(a, b);
-if (r)
+if (bigint_gt(a, b))
   util.print("True");
 else
   util.print("False");

@@ -69,16 +69,12 @@ int main(void){
   int* tab2 = copytab(tab, len);
   bubblesort(tab2, len);
   for (i = 0 ; i < len; i++)
-  {
     printf("%d ", tab2[i]);
-  }
   printf("\n");
   int* tab3 = copytab(tab, len);
   qsort0(tab3, len, 0, len - 1);
   for (i = 0 ; i < len; i++)
-  {
     printf("%d ", tab3[i]);
-  }
   printf("\n");
   return 0;
 }

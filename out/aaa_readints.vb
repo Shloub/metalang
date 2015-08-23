@@ -9,10 +9,7 @@ Module aaa_readints
     Console.Write("" & len & "=len" & Chr(10))
     Dim tab1 As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
     For  i As Integer  = 0 to  len - 1
-      Console.Write(i)
-      Console.Write("=>")
-      Console.Write(tab1(i))
-      Console.Write(Chr(10))
+      Console.Write("" & i & "=>" & tab1(i) & Chr(10))
     Next
     len = Integer.Parse(Console.ReadLine())
     Dim tab2(len - 1)() As Integer
@@ -21,8 +18,7 @@ Module aaa_readints
     Next
     For  i As Integer  = 0 to  len - 2
       For  j As Integer  = 0 to  len - 1
-        Console.Write(tab2(i)(j))
-        Console.Write(" ")
+        Console.Write("" & tab2(i)(j) & " ")
       Next
       Console.Write(Chr(10))
     Next

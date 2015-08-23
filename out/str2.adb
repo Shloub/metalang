@@ -12,6 +12,5 @@ begin
 end;
 
 begin
-  PString(new char_array'( To_C("ma petite chaine")));
-  PString(new char_array'( To_C(" en or")));
+  PString(new char_array'( To_C("ma petite chaine en or")));
 end;

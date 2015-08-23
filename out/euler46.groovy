@@ -52,8 +52,6 @@ for (int m = 1 ; m <= maximumprimes; m ++)
 {
   int m2 = m * 2 + 1
   if (m2 < maximumprimes && !canbe[m2])
-  {
     System.out.printf("%s\n", m2);
-  }
 }
 

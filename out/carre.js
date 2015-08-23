@@ -49,9 +49,7 @@ for (var ix = 1 ; ix <= x - 1; ix++)
 for (var jy = 0 ; jy <= y - 1; jy++)
 {
   for (var jx = 0 ; jx <= x - 1; jx++)
-  {
     util.print(tab[jy][jx], " ");
-  }
   util.print("\n");
 }
 

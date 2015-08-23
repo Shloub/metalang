@@ -47,8 +47,6 @@ for ($n = 285 ; $n <= 55385; $n++)
 {
   $t = triangle($n);
   if (findPenta2($t, intval($n / 5), $n) && findHexa2($t, intval($n / 5), intval($n / 2) + 10))
-  {
     echo $n, "\n", $t, "\n";
-  }
 }
 ?>

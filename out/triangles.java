@@ -76,9 +76,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     for (int k = 0 ; k < len; k++)
     {
       for (int l = 0 ; l <= k; l ++)
-      {
         System.out.printf("%d ", tab[k][l]);
-      }
       System.out.print("\n");
     }
   }

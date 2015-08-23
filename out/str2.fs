@@ -1,6 +1,5 @@
 : main
-  S" ma petite chaine" TYPE
-  S"  en or" TYPE
+  S" ma petite chaine en or" TYPE
   ;
 main
 BYE

@@ -14,26 +14,24 @@ procedure PInt(i : in Integer) is
 begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
-type e is Array (Integer range <>) of Boolean;
-type e_PTR is access e;
-function id(b : in e_PTR) return e_PTR is
+type c is Array (Integer range <>) of Boolean;
+type c_PTR is access c;
+function id(b : in c_PTR) return c_PTR is
 begin
   return b;
 end;
 
-procedure g(t : in e_PTR; index : in Integer) is
+procedure g(t : in c_PTR; index : in Integer) is
 begin
   t(index) := FALSE;
 end;
 
 
   j : Integer;
-  d : Boolean;
-  c : Boolean;
-  a : e_PTR;
+  a : c_PTR;
 begin
   j := 0;
-  a := new e (0..5);
+  a := new c (0..5);
   for i in integer range 0..5 - 1 loop
     PInt(i);
     j := j + i;
@@ -41,8 +39,7 @@ begin
   end loop;
   PInt(j);
   PString(new char_array'( To_C(" ")));
-  c := a(0);
-  if c
+  if a(0)
   then
     PString(new char_array'( To_C("True")));
   else
@@ -50,8 +47,7 @@ begin
   end if;
   PString(new char_array'( To_C("" & Character'Val(10))));
   g(id(a), 0);
-  d := a(0);
-  if d
+  if a(0)
   then
     PString(new char_array'( To_C("True")));
   else

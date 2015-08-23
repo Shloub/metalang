@@ -20,29 +20,23 @@
   ((lambda (internal_env) (apply (lambda (j a) 
                                         (block
                                           (printf "~a " j)
-                                          (let ([c (vector-ref a 0)])
-                                          (block
-                                            (if c
-                                            (display "True")
-                                            (display "False"))
-                                            (display "\n")
-                                            (g (id a) 0)
-                                            (let ([d (vector-ref a 0)])
-                                            (block
-                                              (if d
-                                              (display "True")
-                                              (display "False"))
-                                              (display "\n")
-                                              ))
-                                            ))
+                                          (if (vector-ref a 0)
+                                          (display "True")
+                                          (display "False"))
+                                          (display "\n")
+                                          (g (id a) 0)
+                                          (if (vector-ref a 0)
+                                          (display "True")
+                                          (display "False"))
+                                          (display "\n")
                                           )) internal_env)) (array_init_withenv 5 
   (lambda (i) 
     (lambda (j) 
       (block
         (display i)
         (let ([j (+ j i)])
-        (let ([e (eq? (remainder i 2) 0)])
-        (list j e)))
+        (let ([c (eq? (remainder i 2) 0)])
+        (list j c)))
         ))) j)))
 )
 

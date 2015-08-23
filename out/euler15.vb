@@ -29,8 +29,7 @@ Module euler15
       Next
       For  m As Integer  = 0 to  n - 1
         For  k As Integer  = 0 to  n - 1
-          Console.Write(tab(m)(k))
-          Console.Write(" ")
+          Console.Write("" & tab(m)(k) & " ")
         Next
         Console.Write(Chr(10))
       Next

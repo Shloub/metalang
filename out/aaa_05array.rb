@@ -17,16 +17,14 @@ a = [*0..5 - 1].map { |i|
   next (mod(i, 2) == 0)
   }
 printf "%d ", j
-c = a[0]
-if c then
+if a[0] then
   print "True"
 else
   print "False"
 end
 print "\n"
 g(id(a), 0)
-d = a[0]
-if d then
+if a[0] then
   print "True"
 else
   print "False"

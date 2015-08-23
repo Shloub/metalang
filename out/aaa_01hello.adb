@@ -15,39 +15,29 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
 
-  f : Boolean;
-  e : Boolean;
-  d : Boolean;
-  c : Boolean;
-  b : Boolean;
   a : Integer;
 begin
   PString(new char_array'( To_C("Hello World")));
   a := 5;
   PInt((4 + 6) * 2);
-  PString(new char_array'( To_C(" ")));
-  PString(new char_array'( To_C("" & Character'Val(10))));
+  PString(new char_array'( To_C(" " & Character'Val(10))));
   PInt(a);
   PString(new char_array'( To_C("foo")));
-  PString(new char_array'( To_C("")));
-  b := 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 = 12 and then TRUE;
-  if b
+  if 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 = 12 and then TRUE
   then
     PString(new char_array'( To_C("True")));
   else
     PString(new char_array'( To_C("False")));
   end if;
   PString(new char_array'( To_C("" & Character'Val(10))));
-  c := (3 * (4 + 5 + 6) * 2 = 45) = FALSE;
-  if c
+  if (3 * (4 + 5 + 6) * 2 = 45) = FALSE
   then
     PString(new char_array'( To_C("True")));
   else
     PString(new char_array'( To_C("False")));
   end if;
   PString(new char_array'( To_C(" ")));
-  d := (2 = 1) = FALSE;
-  if d
+  if (2 = 1) = FALSE
   then
     PString(new char_array'( To_C("True")));
   else
@@ -56,15 +46,13 @@ begin
   PString(new char_array'( To_C(" ")));
   PInt((4 + 1) / 3 / (2 + 1));
   PInt(4 * 1 / 3 / 2 * 1);
-  e := not (not (a = 0) and then not (a = 4));
-  if e
+  if not (not (a = 0) and then not (a = 4))
   then
     PString(new char_array'( To_C("True")));
   else
     PString(new char_array'( To_C("False")));
   end if;
-  f := (TRUE and then not FALSE) and then not (TRUE and then FALSE);
-  if f
+  if (TRUE and then not FALSE) and then not (TRUE and then FALSE)
   then
     PString(new char_array'( To_C("True")));
   else

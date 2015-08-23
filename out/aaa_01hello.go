@@ -4,35 +4,30 @@ func main() {
   fmt.Printf("Hello World");
   var a int = 5
   fmt.Printf("%d \n%dfoo", (4 + 6) * 2, a);
-  var b bool = 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 == 12 && true
-  if b {
+  if 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 == 12 && true {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");
   }
   fmt.Printf("\n");
-  var c bool = (3 * (4 + 5 + 6) * 2 == 45) == false
-  if c {
+  if (3 * (4 + 5 + 6) * 2 == 45) == false {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");
   }
   fmt.Printf(" ");
-  var d bool = (2 == 1) == false
-  if d {
+  if (2 == 1) == false {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");
   }
   fmt.Printf(" %d%d", (4 + 1) / 3 / (2 + 1), 4 * 1 / 3 / 2 * 1);
-  var e bool = !(!(a == 0) && !(a == 4))
-  if e {
+  if !(!(a == 0) && !(a == 4)) {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");
   }
-  var f bool = true && !false && !(true && false)
-  if f {
+  if true && !false && !(true && false) {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");

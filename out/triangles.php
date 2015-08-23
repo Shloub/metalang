@@ -75,9 +75,7 @@ echo find($len, $tab), "\n";
 for ($k = 0 ; $k < $len; $k++)
 {
   for ($l = 0 ; $l <= $k; $l++)
-  {
     echo $tab[$k][$l], " ";
-  }
   echo "\n";
 }
 ?>

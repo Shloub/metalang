@@ -61,8 +61,8 @@ begin
    until false;
 end;
 
-type b = array of Longint;
-function devine0(nombre : Longint; tab : b; len : Longint) : boolean;
+type a = array of Longint;
+function devine0(nombre : Longint; tab : a; len : Longint) : boolean;
 var
   i : Longint;
   max0 : Longint;
@@ -98,11 +98,10 @@ end;
 
 
 var
-  a : boolean;
   i : Longint;
   len : Longint;
   nombre : Longint;
-  tab : b;
+  tab : a;
   tmp : Longint;
 begin
   nombre := read_int_();
@@ -116,8 +115,7 @@ begin
     skip();
     tab[i] := tmp;
   end;
-  a := devine0(nombre, tab, len);
-  if a
+  if devine0(nombre, tab, len)
   then
     begin
       Write('True');

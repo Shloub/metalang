@@ -121,15 +121,13 @@ End Function
       Dim tab2 As Integer() = copytab(tab, len)
       bubblesort(tab2, len)
       For  i As Integer  = 0 to  len - 1
-        Console.Write(tab2(i))
-        Console.Write(" ")
+        Console.Write("" & tab2(i) & " ")
       Next
       Console.Write(Chr(10))
       Dim tab3 As Integer() = copytab(tab, len)
       qsort0(tab3, len, 0, len - 1)
       For  i As Integer  = 0 to  len - 1
-        Console.Write(tab3(i))
-        Console.Write(" ")
+        Console.Write("" & tab3(i) & " ")
       Next
       Console.Write(Chr(10))
       End Sub

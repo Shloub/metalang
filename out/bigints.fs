@@ -527,11 +527,9 @@ end-struct bigint%
    1 + REPEAT 2DROP
   S" euler13 = " TYPE
   sum print_bigint
-  S\" \n" TYPE
-  S" euler25 = " TYPE
+  S\" \neuler25 = " TYPE
    euler25 s>d 0 d.r
-  S\" \n" TYPE
-  S" euler16 = " TYPE
+  S\" \neuler16 = " TYPE
    euler16 s>d 0 d.r
   S\" \n" TYPE
    euler48
@@ -578,8 +576,7 @@ end-struct bigint%
   S" >" TYPE
   b print_bigint
   S" =" TYPE
-  a b bigint_gt { r }
-  r
+  a b bigint_gt
   IF
     S" True" TYPE
   ELSE

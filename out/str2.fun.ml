@@ -1,3 +1,3 @@
 let main =
-  Printf.printf "ma petite chaine en or" 
+  Printf.printf "%s" "ma petite chaine en or"
 

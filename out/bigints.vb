@@ -521,8 +521,7 @@ End Sub
                   Console.Write(">")
                   print_bigint(b)
                   Console.Write("=")
-                  Dim r As Boolean = bigint_gt(a, b)
-                  If r Then
+                  If bigint_gt(a, b) Then
                     Console.Write("True")
                   Else
                     Console.Write("False")

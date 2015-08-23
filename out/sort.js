@@ -92,15 +92,11 @@ for (var i_ = 0 ; i_ <= len - 1; i_++)
 var tab2 = copytab(tab, len);
 bubblesort(tab2, len);
 for (var i = 0 ; i <= len - 1; i++)
-{
   util.print(tab2[i], " ");
-}
 util.print("\n");
 var tab3 = copytab(tab, len);
 qsort0(tab3, len, 0, len - 1);
 for (var i = 0 ; i <= len - 1; i++)
-{
   util.print(tab3[i], " ");
-}
 util.print("\n");
 

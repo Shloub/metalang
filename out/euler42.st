@@ -51,10 +51,8 @@ Object subclass: euler42 [
   main [
     |sum n|(1 to: 55) do: [:i|
              (self is_triangular: i)
-               ifTrue:[
-                      i display.
-                      ' ' display.
-               ].
+               ifTrue:[i display.
+                      ' ' display.].
     ].
     '
 ' display.

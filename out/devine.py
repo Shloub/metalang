@@ -55,8 +55,7 @@ for i in range(0, len):
   tmp=readint()
   stdinsep()
   tab[i] = tmp
-a = devine0(nombre, tab, len)
-if a:
+if devine0(nombre, tab, len):
   print( "True", end='')
 else:
   print( "False", end='')

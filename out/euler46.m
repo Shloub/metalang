@@ -55,9 +55,7 @@ int main(void){
   {
     int m2 = m * 2 + 1;
     if (m2 < maximumprimes && !canbe[m2])
-    {
       printf("%d\n", m2);
-    }
   }
   [pool drain];
   return 0;

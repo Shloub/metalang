@@ -15,9 +15,7 @@ public class aaa_06readcouple
     }
     int[] l = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int j = 0 ; j <= 9; j ++)
-    {
       Console.Write("" + l[j] + "\n");
-    }
   }
   
 }

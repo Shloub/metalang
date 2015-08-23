@@ -57,9 +57,7 @@ int main(){
   for (int k = 0 ; k < len; k++)
   {
     for (int l = 0 ; l <= k; l ++)
-    {
       std::cout << tab->at(k)->at(l) << " ";
-    }
     std::cout << "\n";
   }
   return 0;

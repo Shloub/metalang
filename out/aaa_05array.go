@@ -17,16 +17,14 @@ func main() {
       a[i] = i % 2 == 0;
   }
   fmt.Printf("%d ", j);
-  var c bool = a[0]
-  if c {
+  if a[0] {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");
   }
   fmt.Printf("\n");
   g(id(a), 0);
-  var d bool = a[0]
-  if d {
+  if a[0] {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");

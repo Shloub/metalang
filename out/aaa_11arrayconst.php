@@ -1,9 +1,7 @@
 <?php
 function test(&$tab, $len){
   for ($i = 0 ; $i < $len; $i++)
-  {
     echo $tab[$i], " ";
-  }
   echo "\n";
 }
 

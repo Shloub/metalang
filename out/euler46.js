@@ -48,8 +48,6 @@ for (var m = 1 ; m <= maximumprimes; m++)
 {
   var m2 = m * 2 + 1;
   if (m2 < maximumprimes && !canbe[m2])
-  {
     util.print(m2, "\n");
-  }
 }
 

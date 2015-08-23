@@ -21,15 +21,13 @@ for (int i = 0 ; i < 5; i++)
   a[i] = i % 2 == 0
 }
 System.out.printf("%s ", j);
-boolean c = a[0]
-if (c)
+if (a[0])
   print("True")
 else
   print("False")
 print("\n")
 g(id(a), 0)
-boolean d = a[0]
-if (d)
+if (a[0])
   print("True")
 else
   print("False")

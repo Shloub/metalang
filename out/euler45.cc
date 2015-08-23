@@ -50,9 +50,7 @@ int main(){
   {
     int t = triangle(n);
     if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))
-    {
       std::cout << n << "\n" << t << "\n";
-    }
   }
   return 0;
 }

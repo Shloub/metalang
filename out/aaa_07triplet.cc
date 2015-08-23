@@ -14,9 +14,7 @@ int main(){
     std::cin >> l->at(d) >> std::skipws;
   }
   for (int j = 0 ; j <= 9; j ++)
-  {
     std::cout << l->at(j) << "\n";
-  }
   return 0;
 }
 

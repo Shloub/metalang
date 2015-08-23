@@ -72,17 +72,7 @@ Module euler43
                                             For  d1 As Integer  = 0 to  9
                                               If allowed(d1) Then
                                                 allowed(d1) = false
-                                                Console.Write(d1)
-                                                Console.Write(d2)
-                                                Console.Write(d3)
-                                                Console.Write(d4)
-                                                Console.Write(d5)
-                                                Console.Write(d6)
-                                                Console.Write(d7)
-                                                Console.Write(d8)
-                                                Console.Write(d9)
-                                                Console.Write(d10)
-                                                Console.Write(" + ")
+                                                Console.Write("" & d1 & d2 & d3 & d4 & d5 & d6 & d7 & d8 & d9 & d10 & " + ")
                                                 allowed(d1) = true
                                               End If
                                             Next

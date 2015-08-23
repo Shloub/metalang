@@ -114,8 +114,7 @@ End Function
         Console.Write("" & find(len, tab) & Chr(10))
         For  k As Integer  = 0 to  len - 1
           For  l As Integer  = 0 to  k
-            Console.Write(tab(k)(l))
-            Console.Write(" ")
+            Console.Write("" & tab(k)(l) & " ")
           Next
           Console.Write(Chr(10))
         Next

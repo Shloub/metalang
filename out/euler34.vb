@@ -10,8 +10,7 @@ Module euler34
     Next
     For  i As Integer  = 1 to  9
       f(i) = f(i) * i * f(i - 1)
-      Console.Write(f(i))
-      Console.Write(" ")
+      Console.Write("" & f(i) & " ")
     Next
     Dim out0 As Integer = 0
     Console.Write(Chr(10))
@@ -37,8 +36,7 @@ Module euler34
                 End If
                 If sum = num AndAlso sum <> 1 AndAlso sum <> 2 Then
                   out0 = out0 + num
-                  Console.Write(num)
-                  Console.Write(" ")
+                  Console.Write("" & num & " ")
                 End If
               Next
             Next

@@ -17,9 +17,7 @@ int main(void){
     scanf("%d ", &tab[a]);
   }
   for (i = 0 ; i < len; i++)
-  {
     printf("%d=>%d ", i, tab[i]);
-  }
   printf("\n");
   int *tab2 = calloc( len , sizeof(int));
   for (b = 0 ; b < len; b++)
@@ -27,14 +25,14 @@ int main(void){
     scanf("%d ", &tab2[b]);
   }
   for (i_ = 0 ; i_ < len; i_++)
-  {
     printf("%d==>%d ", i_, tab2[i_]);
-  }
   scanf("%d ", &strlen);
   printf("%d=strlen\n", strlen);
   char *tab4 = calloc( strlen , sizeof(char));
   for (d = 0 ; d < strlen; d++)
+  {
     scanf("%c", &tab4[d]);
+  }
   scanf(" ");
   for (i3 = 0 ; i3 < strlen; i3++)
   {

@@ -48,8 +48,7 @@ func main() {
       skip()
       tab[i] = tmp;
   }
-  var a bool = devine0(nombre, tab, len)
-  if a {
+  if devine0(nombre, tab, len) {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");

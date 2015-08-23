@@ -437,7 +437,7 @@ int main(){
   }
   std::cout << "euler13 = ";
   print_bigint(sum);
-  std::cout << "\n" << "euler25 = " << euler25() << "\n" << "euler16 = " << euler16() << "\n";
+  std::cout << "\neuler25 = " << euler25() << "\neuler16 = " << euler16() << "\n";
   euler48();
   std::cout << "euler20 = " << euler20() << "\n";
   bigint * a = bigint_of_int(999999);
@@ -480,8 +480,7 @@ int main(){
   std::cout << ">";
   print_bigint(b);
   std::cout << "=";
-  bool r = bigint_gt(a, b);
-  if (r)
+  if (bigint_gt(a, b))
     std::cout << "True";
   else
     std::cout << "False";

@@ -57,8 +57,7 @@ create bufferc 128 allot
     skipspaces
     tmp tab  i cells +  !
    1 + REPEAT 2DROP
-  nombre tab len devine0 { a }
-  a
+  nombre tab len devine0
   IF
     S" True" TYPE
   ELSE

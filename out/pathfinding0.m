@@ -58,7 +58,9 @@ int main(void){
   {
     char *g = calloc( x , sizeof(char));
     for (h = 0 ; h < x; h++)
+    {
       scanf("%c", &g[h]);
+    }
     scanf(" ");
     e[f] = g;
   }

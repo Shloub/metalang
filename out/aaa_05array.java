@@ -25,15 +25,13 @@ public class aaa_05array
       a[i] = i % 2 == 0;
     }
     System.out.printf("%d ", j);
-    boolean c = a[0];
-    if (c)
+    if (a[0])
       System.out.print("True");
     else
       System.out.print("False");
     System.out.print("\n");
     g(id(a), 0);
-    boolean d = a[0];
-    if (d)
+    if (a[0])
       System.out.print("True");
     else
       System.out.print("False");

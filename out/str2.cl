@@ -1,3 +1,3 @@
-(format t "ma petite chaine en or" )
+(princ "ma petite chaine en or")
 
 

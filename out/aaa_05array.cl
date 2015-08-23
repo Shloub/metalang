@@ -27,21 +27,19 @@
             ))
             ))))
     (format t "~D " j)
-    (let ((c (aref a 0)))
-      (if
-        c
-        (princ "True")
-        (princ "False"))
-      (princ "
+    (if
+      (aref a 0)
+      (princ "True")
+      (princ "False"))
+    (princ "
 ")
-      (g (id a) 0)
-      (let ((d (aref a 0)))
-        (if
-          d
-          (princ "True")
-          (princ "False"))
-        (princ "
+    (g (id a) 0)
+    (if
+      (aref a 0)
+      (princ "True")
+      (princ "False"))
+    (princ "
 ")
-      )))))
+    )))
 
 

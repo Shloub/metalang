@@ -2,8 +2,7 @@ program str2;
 
 
 begin
-  Write('ma petite chaine');
-  Write(' en or');
+  Write('ma petite chaine en or');
 end.
 
 

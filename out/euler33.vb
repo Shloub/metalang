@@ -24,10 +24,7 @@ Module euler33
             Dim a As Integer = i * 10 + j
             Dim b As Integer = j * 10 + k
             If a * k = i * b Then
-              Console.Write(a)
-              Console.Write("/")
-              Console.Write(b)
-              Console.Write(Chr(10))
+              Console.Write("" & a & "/" & b & Chr(10))
               top = top * a
               bottom = bottom * b
             End If

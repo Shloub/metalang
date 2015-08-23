@@ -17,7 +17,9 @@ function stdinsep(){
 }
 var str = new Array(12);
 for (var a = 0 ; a <= 12 - 1; a++)
+{
   str[a]=read_char_();
+}
 stdinsep();
 for (var i = 0 ; i <= 11; i++)
   util.print(str[i]);

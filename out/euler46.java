@@ -56,9 +56,7 @@ public class euler46
     {
       int m2 = m * 2 + 1;
       if (m2 < maximumprimes && !canbe[m2])
-      {
         System.out.printf("%d\n", m2);
-      }
     }
   }
   

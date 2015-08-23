@@ -31,9 +31,7 @@ int main(void){
   for (i = 0 ; i < 9; i++)
     t[i] = exp0(10, i) - exp0(10, i - 1);
   for (i2 = 1 ; i2 <= 8; i2++)
-  {
     printf("%d => %d\n", i2, t[i2]);
-  }
   for (j = 0 ; j <= 80; j++)
     printf("%d", e(t, j));
   printf("\n");

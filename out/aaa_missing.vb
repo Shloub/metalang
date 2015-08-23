@@ -13,8 +13,7 @@ Module aaa_missing
       tab2(i) = false
     Next
     For  i1 As Integer  = 0 to  len - 1
-      Console.Write(tab(i1))
-      Console.Write(" ")
+      Console.Write("" & tab(i1) & " ")
       tab2(tab(i1)) = true
     Next
     Console.Write(Chr(10))

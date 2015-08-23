@@ -51,11 +51,11 @@ type
       bigint_chiffres : array of Longint;
     end;
 
-type s = array of Longint;
+type r = array of Longint;
 function read_bigint(len : Longint) : bigint;
 var
   c : char;
-  chiffres : s;
+  chiffres : r;
   e : bigint;
   i : Longint;
   j : Longint;
@@ -176,7 +176,7 @@ end;
 
 function add_bigint_positif(a : bigint; b : bigint) : bigint;
 var
-  chiffres : s;
+  chiffres : r;
   f : bigint;
   i : Longint;
   len : Longint;
@@ -216,7 +216,7 @@ end;
 
 function sub_bigint_positif(a : bigint; b : bigint) : bigint;
 var
-  chiffres : s;
+  chiffres : r;
   g : bigint;
   i : Longint;
   len : Longint;
@@ -321,7 +321,7 @@ end;
 
 function mul_bigint_cp(a : bigint; b : bigint) : bigint;
 var
-  chiffres : s;
+  chiffres : r;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -386,7 +386,7 @@ end;
 
 function bigint_shift(a : bigint; i : Longint) : bigint;
 var
-  chiffres : s;
+  chiffres : r;
   k : Longint;
   p : bigint;
 begin
@@ -476,7 +476,7 @@ var
   k : Longint;
   q : bigint;
   size : Longint;
-  t : s;
+  t : r;
 begin
   size := log10(i);
   if i = 0
@@ -627,12 +627,12 @@ begin
   exit(i);
 end;
 
-type u = array of bigint;
+type s = array of bigint;
 function euler29() : Longint;
 var
-  a0_bigint : u;
-  a_bigint : u;
-  b : s;
+  a0_bigint : s;
+  a_bigint : s;
+  b : r;
   found : boolean;
   i : Longint;
   j : Longint;
@@ -711,7 +711,6 @@ var
   a : bigint;
   b : bigint;
   i : Longint;
-  r : boolean;
   sum : bigint;
   tmp : bigint;
 begin
@@ -726,11 +725,9 @@ begin
   end;
   Write('euler13 = ');
   print_bigint(sum);
-  Write(''#10'');
-  Write('euler25 = ');
+  Write(''#10'euler25 = ');
   Write(euler25());
-  Write(''#10'');
-  Write('euler16 = ');
+  Write(''#10'euler16 = ');
   Write(euler16());
   Write(''#10'');
   euler48();
@@ -777,8 +774,7 @@ begin
   Write('>');
   print_bigint(b);
   Write('=');
-  r := bigint_gt(a, b);
-  if r
+  if bigint_gt(a, b)
   then
     begin
       Write('True');

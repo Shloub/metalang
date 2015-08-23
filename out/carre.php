@@ -12,9 +12,7 @@ for ($ix = 1 ; $ix < $x; $ix++)
 for ($jy = 0 ; $jy < $y; $jy++)
 {
   for ($jx = 0 ; $jx < $x; $jx++)
-  {
     echo $tab[$jy][$jx], " ";
-  }
   echo "\n";
 }
 ?>

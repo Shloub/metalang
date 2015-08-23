@@ -15,8 +15,7 @@ for i = 0,5 - 1 do
   a[i + 1] = math.mod(i, 2) == 0;
 end
 io.write(string.format("%d ", j))
-local c = a[0 + 1]
-if c
+if a[0 + 1]
 then
   io.write("True")
 else
@@ -24,8 +23,7 @@ else
 end
 io.write("\n")
 g(id(a), 0);
-local d = a[0 + 1]
-if d
+if a[0 + 1]
 then
   io.write("True")
 else

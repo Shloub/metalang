@@ -32,9 +32,7 @@ object euler15
     for (m <- 0 to n - 1)
     {
       for (k <- 0 to n - 1)
-      {
         printf("%d ", tab(m)(k));
-      }
       printf("\n");
     }
     printf("%d\n", tab(0)(0));

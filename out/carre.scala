@@ -23,9 +23,7 @@ object carre
     for (jy <- 0 to y - 1)
     {
       for (jx <- 0 to x - 1)
-      {
         printf("%d ", tab(jy)(jx));
-      }
       printf("\n");
     }
   }

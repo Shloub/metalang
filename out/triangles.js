@@ -83,9 +83,7 @@ util.print(find(len, tab), "\n");
 for (var k = 0 ; k <= len - 1; k++)
 {
   for (var l = 0 ; l <= k; l++)
-  {
     util.print(tab[k][l], " ");
-  }
   util.print("\n");
 }
 

@@ -27,8 +27,7 @@ int main(){
     std::cin >> tmp >> std::skipws;
     tab->at(i) = tmp;
   }
-  bool a = devine0(nombre, tab, len);
-  if (a)
+  if (devine0(nombre, tab, len))
     std::cout << "True";
   else
     std::cout << "False";

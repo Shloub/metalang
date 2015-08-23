@@ -60,9 +60,7 @@ function score(){
 
 for (var i = 1 ; i <= 55; i++)
   if (is_triangular(i))
-{
   util.print(i, " ");
-}
 util.print("\n");
 var sum = 0;
 n=read_int_();

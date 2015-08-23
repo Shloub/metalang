@@ -13,9 +13,7 @@ int main(void){
     scanf("%d ", &tab1[a]);
   }
   for (i = 0 ; i < len; i++)
-  {
     printf("%d=>%d\n", i, tab1[i]);
-  }
   scanf("%d ", &len);
   int* *tab2 = calloc( len - 1 , sizeof(int*));
   for (b = 0 ; b < len - 1; b++)
@@ -30,9 +28,7 @@ int main(void){
   for (i = 0 ; i <= len - 2; i++)
   {
     for (j = 0 ; j < len; j++)
-    {
       printf("%d ", tab2[i][j]);
-    }
     printf("\n");
   }
   [pool drain];

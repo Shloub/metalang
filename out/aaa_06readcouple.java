@@ -23,9 +23,7 @@ public class aaa_06readcouple
     }
     int[] l = read_int_line();
     for (int j = 0 ; j <= 9; j ++)
-    {
       System.out.printf("%d\n", l[j]);
-    }
   }
   
 }

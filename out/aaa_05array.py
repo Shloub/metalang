@@ -14,15 +14,13 @@ for i in range(0, 5):
   j += i
   a[i] = mod(i, 2) == 0
 print("%d " % ( j ), end='')
-c = a[0]
-if c:
+if a[0]:
   print( "True", end='')
 else:
   print( "False", end='')
 print("")
 g(id(a), 0)
-d = a[0]
-if d:
+if a[0]:
   print( "True", end='')
 else:
   print( "False", end='')

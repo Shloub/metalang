@@ -17,8 +17,7 @@
    1 + REPEAT 2DROP
   j s>d 0 d.r
   S"  " TYPE
-  a  0 cells +  @ { c }
-  c
+  a  0 cells +  @
   IF
     S" True" TYPE
   ELSE
@@ -26,8 +25,7 @@
   THEN
   S\" \n" TYPE
   a id 0 g
-  a  0 cells +  @ { d }
-  d
+  a  0 cells +  @
   IF
     S" True" TYPE
   ELSE

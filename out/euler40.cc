@@ -26,9 +26,7 @@ int main(){
   for (int i = 0 ; i < 9; i++)
     t->at(i) = exp0(10, i) - exp0(10, i - 1);
   for (int i2 = 1 ; i2 <= 8; i2 ++)
-  {
     std::cout << i2 << " => " << t->at(i2) << "\n";
-  }
   for (int j = 0 ; j <= 80; j ++)
     std::cout << e(t, j);
   std::cout << "\n";

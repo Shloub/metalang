@@ -30,10 +30,7 @@ Module euler40
       t(i) = exp0(10, i) - exp0(10, i - 1)
     Next
     For  i2 As Integer  = 1 to  8
-      Console.Write(i2)
-      Console.Write(" => ")
-      Console.Write(t(i2))
-      Console.Write(Chr(10))
+      Console.Write("" & i2 & " => " & t(i2) & Chr(10))
     Next
     For  j As Integer  = 0 to  80
       Console.Write(e(t, j))
@@ -56,13 +53,7 @@ Module euler40
       Dim puiss As Integer = exp0(10, l)
       Dim v As Integer = e(t, puiss - 1)
       out0 = out0 * v
-      Console.Write("10^")
-      Console.Write(l)
-      Console.Write("=")
-      Console.Write(puiss)
-      Console.Write(" v=")
-      Console.Write(v)
-      Console.Write(Chr(10))
+      Console.Write("10^" & l & "=" & puiss & " v=" & v & Chr(10))
     Next
     Console.Write("" & out0 & Chr(10))
     End Sub

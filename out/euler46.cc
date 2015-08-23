@@ -49,9 +49,7 @@ int main(){
   {
     int m2 = m * 2 + 1;
     if (m2 < maximumprimes && !canbe->at(m2))
-    {
       std::cout << m2 << "\n";
-    }
   }
   return 0;
 }

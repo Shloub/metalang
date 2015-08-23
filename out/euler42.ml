@@ -23,9 +23,7 @@ let () =
 begin
   for i = 1 to 55 do
     if is_triangular i then
-      begin
-        Printf.printf "%d " i
-      end
+      Printf.printf "%d " i
   done;
   Printf.printf "\n";
   let sum = ref( 0 ) in

@@ -23,8 +23,7 @@ begin
   let tab = Array.init len (fun _i ->
     let tmp = Scanf.scanf "%d " (fun v_0 -> v_0) in
     tmp) in
-  let a = devine0 nombre tab len in
-  if a then
+  if devine0 nombre tab len then
     Printf.printf "True"
   else
     Printf.printf "False"

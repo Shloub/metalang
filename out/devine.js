@@ -54,8 +54,7 @@ for (var i = 0 ; i <= len - 1; i++)
   stdinsep();
   tab[i] = tmp;
 }
-var a = devine0(nombre, tab, len);
-if (a)
+if (devine0(nombre, tab, len))
   util.print("True");
 else
   util.print("False");

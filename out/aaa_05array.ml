@@ -12,15 +12,13 @@ begin
     j := (!j) + i;
     i mod 2 = 0) in
   Printf.printf "%d " (!j);
-  let c = a.(0) in
-  if c then
+  if a.(0) then
     Printf.printf "True"
   else
     Printf.printf "False";
   Printf.printf "\n";
   g (id a) 0;
-  let d = a.(0) in
-  if d then
+  if a.(0) then
     Printf.printf "True"
   else
     Printf.printf "False";

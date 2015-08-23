@@ -44,8 +44,6 @@ for ($m = 1 ; $m <= $maximumprimes; $m++)
 {
   $m2 = $m * 2 + 1;
   if ($m2 < $maximumprimes && !$canbe[$m2])
-  {
     echo $m2, "\n";
-  }
 }
 ?>

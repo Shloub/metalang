@@ -10,18 +10,11 @@ Module aaa_07triplet
       Dim a As Integer = d(0)
       Dim b As Integer = d(1)
       Dim c As Integer = d(2)
-      Console.Write("a = ")
-      Console.Write(a)
-      Console.Write(" b = ")
-      Console.Write(b)
-      Console.Write("c =")
-      Console.Write(c)
-      Console.Write(Chr(10))
+      Console.Write("a = " & a & " b = " & b & "c =" & c & Chr(10))
     Next
     Dim l As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
     For  j As Integer  = 0 to  9
-      Console.Write(l(j))
-      Console.Write(Chr(10))
+      Console.Write("" & l(j) & Chr(10))
     Next
   End Sub
   

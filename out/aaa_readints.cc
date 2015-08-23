@@ -11,9 +11,7 @@ int main(){
     std::cin >> tab1->at(a) >> std::skipws;
   }
   for (int i = 0 ; i < len; i++)
-  {
     std::cout << i << "=>" << tab1->at(i) << "\n";
-  }
   std::cin >> len >> std::skipws;
   std::vector<std::vector<int> * > *tab2 = new std::vector<std::vector<int> *>( len - 1 );
   for (int b = 0 ; b < len - 1; b++)
@@ -28,9 +26,7 @@ int main(){
   for (int i = 0 ; i <= len - 2; i ++)
   {
     for (int j = 0 ; j < len; j++)
-    {
       std::cout << tab2->at(i)->at(j) << " ";
-    }
     std::cout << "\n";
   }
   return 0;

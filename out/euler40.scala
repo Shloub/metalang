@@ -31,9 +31,7 @@ object euler40
     for (i <- 0 to 9 - 1)
       t(i) = exp0(10, i) - exp0(10, i - 1);
     for (i2 <- 1 to 8)
-    {
       printf("%d => %d\n", i2, t(i2));
-    }
     for (j <- 0 to 80)
       printf("%d", e(t, j));
     printf("\n");

@@ -54,8 +54,7 @@ def skip() {
       skip();
       tab(i) = tmp;
     }
-    var a: Boolean = devine0(nombre, tab, len);
-    if (a)
+    if (devine0(nombre, tab, len))
       printf("True");
     else
       printf("False");

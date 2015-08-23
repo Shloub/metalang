@@ -482,8 +482,7 @@ print_bigint(a)
 print ">"
 print_bigint(b)
 print "="
-e = bigint_gt(a, b)
-if e then
+if bigint_gt(a, b) then
   print "True"
 else
   print "False"

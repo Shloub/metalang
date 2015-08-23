@@ -422,8 +422,7 @@ begin
   Printf.printf ">";
   print_bigint b;
   Printf.printf "=";
-  let e = bigint_gt a b in
-  if e then
+  if bigint_gt a b then
     Printf.printf "True"
   else
     Printf.printf "False";

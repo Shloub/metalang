@@ -21,8 +21,7 @@ Object subclass: euler52 [
   main [
     |num|num := 142857.
     (self same_numbers: num b: (num * 2) c: (num * 3) d: (num * 4) e: (num * 6) f: (num * 5))
-      ifTrue:[
-             num display.
+      ifTrue:[num display.
              ' ' display.
              (num * 2) display.
              ' ' display.
@@ -34,8 +33,7 @@ Object subclass: euler52 [
              ' ' display.
              (num * 6) display.
              '
-' display.
-      ].
+' display.].
     ]
 ]
 Eval [ (euler52 new) main. ]

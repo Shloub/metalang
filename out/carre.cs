@@ -20,9 +20,7 @@ public class carre
     for (int jy = 0 ; jy < y; jy++)
     {
       for (int jx = 0 ; jx < x; jx++)
-      {
         Console.Write("" + tab[jy][jx] + " ");
-      }
       Console.Write("\n");
     }
   }

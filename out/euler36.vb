@@ -32,13 +32,11 @@ Module euler36
       Dim sum As Integer = 0
       For  d As Integer  = 1 to  9
         If palindrome2(pow2, d) Then
-          Console.Write(d)
-          Console.Write(Chr(10))
+          Console.Write("" & d & Chr(10))
           sum = sum + d
         End If
         If palindrome2(pow2, d * 10 + d) Then
-          Console.Write(d * 10 + d)
-          Console.Write(Chr(10))
+          Console.Write("" & (d * 10 + d) & Chr(10))
           sum = sum + d * 10 + d
         End If
       Next
@@ -48,27 +46,23 @@ Module euler36
           For  c As Integer  = 0 to  9
             Dim num0 As Integer = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a
             If palindrome2(pow2, num0) Then
-              Console.Write(num0)
-              Console.Write(Chr(10))
+              Console.Write("" & num0 & Chr(10))
               sum = sum + num0
             End If
             Dim num1 As Integer = a * 10000 + b * 1000 + c * 100 + b * 10 + a
             If palindrome2(pow2, num1) Then
-              Console.Write(num1)
-              Console.Write(Chr(10))
+              Console.Write("" & num1 & Chr(10))
               sum = sum + num1
             End If
           Next
           Dim num2 As Integer = a * 100 + b * 10 + a
           If palindrome2(pow2, num2) Then
-            Console.Write(num2)
-            Console.Write(Chr(10))
+            Console.Write("" & num2 & Chr(10))
             sum = sum + num2
           End If
           Dim num3 As Integer = a * 1000 + b * 100 + b * 10 + a
           If palindrome2(pow2, num3) Then
-            Console.Write(num3)
-            Console.Write(Chr(10))
+            Console.Write("" & num3 & Chr(10))
             sum = sum + num3
           End If
         Next

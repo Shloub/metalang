@@ -49,24 +49,24 @@ begin
   end if;
 end;
 
-type s is Array (Integer range <>) of Integer;
-type s_PTR is access s;
+type r is Array (Integer range <>) of Integer;
+type r_PTR is access r;
 
 type bigint;
 type bigint_PTR is access bigint;
 type bigint is record
   bigint_sign : Boolean;
   bigint_len : Integer;
-  bigint_chiffres : s_PTR;
+  bigint_chiffres : r_PTR;
 end record;
 
 function read_bigint(len : in Integer) return bigint_PTR is
   tmp : Integer;
   e : bigint_PTR;
-  chiffres : s_PTR;
+  chiffres : r_PTR;
   c : Character;
 begin
-  chiffres := new s (0..len);
+  chiffres := new r (0..len);
   for j in integer range 0..len - 1 loop
     Get(c);
     chiffres(j) := Character'Pos(c);
@@ -167,13 +167,13 @@ function add_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_
   retenue : Integer;
   len : Integer;
   f : bigint_PTR;
-  chiffres : s_PTR;
+  chiffres : r_PTR;
 begin
   -- Une addition ou on en a rien a faire des signes 
   
   len := max2_0(a.bigint_len, b.bigint_len) + 1;
   retenue := 0;
-  chiffres := new s (0..len);
+  chiffres := new r (0..len);
   for i in integer range 0..len - 1 loop
     tmp := retenue;
     if i < a.bigint_len
@@ -202,7 +202,7 @@ function sub_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_
   retenue : Integer;
   len : Integer;
   g : bigint_PTR;
-  chiffres : s_PTR;
+  chiffres : r_PTR;
 begin
   -- Une soustraction ou on en a rien a faire des signes
   --Pré-requis : a > b
@@ -210,7 +210,7 @@ begin
   
   len := a.bigint_len;
   retenue := 0;
-  chiffres := new s (0..len);
+  chiffres := new r (0..len);
   for i in integer range 0..len - 1 loop
     tmp := retenue + a.bigint_chiffres(i);
     if i < b.bigint_len
@@ -289,14 +289,14 @@ function mul_bigint_cp(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR i
   retenue : Integer;
   m : bigint_PTR;
   len : Integer;
-  chiffres : s_PTR;
+  chiffres : r_PTR;
 begin
   -- Cet algorithm est quadratique.
   --C'est le même que celui qu'on enseigne aux enfants en CP.
   --D'ou le nom de la fonction. 
   
   len := a.bigint_len + b.bigint_len + 1;
-  chiffres := new s (0..len);
+  chiffres := new r (0..len);
   for k in integer range 0..len - 1 loop
     chiffres(k) := 0;
   end loop;
@@ -341,9 +341,9 @@ end;
 
 function bigint_shift(a : in bigint_PTR; i : in Integer) return bigint_PTR is
   p : bigint_PTR;
-  chiffres : s_PTR;
+  chiffres : r_PTR;
 begin
-  chiffres := new s (0..a.bigint_len + i);
+  chiffres := new r (0..a.bigint_len + i);
   for k in integer range 0..a.bigint_len + i - 1 loop
     if k >= i
     then
@@ -409,11 +409,11 @@ end;
 --Modulo
 --
 
-function log10(u : in Integer) return Integer is
+function log10(s : in Integer) return Integer is
   out0 : Integer;
   a : Integer;
 begin
-  a := u;
+  a := s;
   out0 := 1;
   while a >= 10 loop
     a := a / 10;
@@ -422,19 +422,19 @@ begin
   return out0;
 end;
 
-function bigint_of_int(v : in Integer) return bigint_PTR is
-  t : s_PTR;
+function bigint_of_int(u : in Integer) return bigint_PTR is
+  t : r_PTR;
   size : Integer;
   q : bigint_PTR;
   i : Integer;
 begin
-  i := v;
+  i := u;
   size := log10(i);
   if i = 0
   then
     size := 0;
   end if;
-  t := new s (0..size);
+  t := new r (0..size);
   for j in integer range 0..size - 1 loop
     t(j) := 0;
   end loop;
@@ -449,12 +449,12 @@ begin
   return q;
 end;
 
-function fact_bigint(w : in bigint_PTR) return bigint_PTR is
+function fact_bigint(v : in bigint_PTR) return bigint_PTR is
   out0 : bigint_PTR;
   one : bigint_PTR;
   a : bigint_PTR;
 begin
-  a := w;
+  a := v;
   one := bigint_of_int(1);
   out0 := one;
   while not bigint_eq(a, one) loop
@@ -501,10 +501,10 @@ begin
   end if;
 end;
 
-function bigint_exp_10chiffres(x : in bigint_PTR; b : in Integer) return bigint_PTR is
+function bigint_exp_10chiffres(w : in bigint_PTR; b : in Integer) return bigint_PTR is
   a : bigint_PTR;
 begin
-  a := x;
+  a := w;
   a := bigint_premiers_chiffres(a, 10);
   if b = 1
   then
@@ -568,29 +568,29 @@ begin
   return i;
 end;
 
-type y is Array (Integer range <>) of bigint_PTR;
-type y_PTR is access y;
+type x is Array (Integer range <>) of bigint_PTR;
+type x_PTR is access x;
 function euler29 return Integer is
   n : Integer;
   min0 : bigint_PTR;
   maxB : Integer;
   maxA : Integer;
   found : Boolean;
-  b : s_PTR;
-  a_bigint : y_PTR;
-  a0_bigint : y_PTR;
+  b : r_PTR;
+  a_bigint : x_PTR;
+  a0_bigint : x_PTR;
 begin
   maxA := 5;
   maxB := 5;
-  a_bigint := new y (0..maxA + 1);
+  a_bigint := new x (0..maxA + 1);
   for j in integer range 0..maxA + 1 - 1 loop
     a_bigint(j) := bigint_of_int(j * j);
   end loop;
-  a0_bigint := new y (0..maxA + 1);
+  a0_bigint := new x (0..maxA + 1);
   for j2 in integer range 0..maxA + 1 - 1 loop
     a0_bigint(j2) := bigint_of_int(j2);
   end loop;
-  b := new s (0..maxA + 1);
+  b := new r (0..maxA + 1);
   for k in integer range 0..maxA + 1 - 1 loop
     b(k) := 2;
   end loop;
@@ -632,7 +632,6 @@ end;
 
   tmp : bigint_PTR;
   sum : bigint_PTR;
-  r : Boolean;
   b : bigint_PTR;
   a : bigint_PTR;
 begin
@@ -646,11 +645,9 @@ begin
   end loop;
   PString(new char_array'( To_C("euler13 = ")));
   print_bigint(sum);
-  PString(new char_array'( To_C("" & Character'Val(10))));
-  PString(new char_array'( To_C("euler25 = ")));
+  PString(new char_array'( To_C("" & Character'Val(10) & "euler25 = ")));
   PInt(euler25);
-  PString(new char_array'( To_C("" & Character'Val(10))));
-  PString(new char_array'( To_C("euler16 = ")));
+  PString(new char_array'( To_C("" & Character'Val(10) & "euler16 = ")));
   PInt(euler16);
   PString(new char_array'( To_C("" & Character'Val(10))));
   euler48;
@@ -697,8 +694,7 @@ begin
   PString(new char_array'( To_C(">")));
   print_bigint(b);
   PString(new char_array'( To_C("=")));
-  r := bigint_gt(a, b);
-  if r
+  if bigint_gt(a, b)
   then
     PString(new char_array'( To_C("True")));
   else

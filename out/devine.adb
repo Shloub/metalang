@@ -21,9 +21,9 @@ begin
     Get(C);
   end loop;
 end;
-type b is Array (Integer range <>) of Integer;
-type b_PTR is access b;
-function devine0(nombre : in Integer; tab : in b_PTR; len : in Integer) return Boolean is
+type a is Array (Integer range <>) of Integer;
+type a_PTR is access a;
+function devine0(nombre : in Integer; tab : in a_PTR; len : in Integer) return Boolean is
   min0 : Integer;
   max0 : Integer;
 begin
@@ -52,23 +52,21 @@ end;
 
 
   tmp : Integer;
-  tab : b_PTR;
+  tab : a_PTR;
   nombre : Integer;
   len : Integer;
-  a : Boolean;
 begin
   Get(nombre);
   SkipSpaces;
   Get(len);
   SkipSpaces;
-  tab := new b (0..len);
+  tab := new a (0..len);
   for i in integer range 0..len - 1 loop
     Get(tmp);
     SkipSpaces;
     tab(i) := tmp;
   end loop;
-  a := devine0(nombre, tab, len);
-  if a
+  if devine0(nombre, tab, len)
   then
     PString(new char_array'( To_C("True")));
   else

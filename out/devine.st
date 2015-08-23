@@ -33,7 +33,7 @@ Object subclass: devine [
   ]
   
   main [
-    |tmp tab nombre len a|nombre := self read_int.
+    |tmp tab nombre len|nombre := self read_int.
     self skip.
     len := self read_int.
     self skip.
@@ -43,8 +43,7 @@ Object subclass: devine [
       self skip.
       tab at: (i + 1) put:  tmp.
     ].
-    a := (self devine0: nombre tab: tab len: len).
-    a
+    (self devine0: nombre tab: tab len: len)
       ifTrue:['True' display.]
       ifFalse:['False' display.].
     ]

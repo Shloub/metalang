@@ -43,7 +43,5 @@ for (var d = 0 ; d <= 10 - 1; d++)
   stdinsep();
 }
 for (var j = 0 ; j <= 9; j++)
-{
   util.print(l[j], "\n");
-}
 

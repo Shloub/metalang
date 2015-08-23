@@ -16,15 +16,13 @@ for ($i = 0 ; $i < 5; $i++)
   $a[$i] = $i % 2 == 0;
 }
 echo $j, " ";
-$c = $a[0];
-if ($c)
+if ($a[0])
   echo "True";
 else
   echo "False";
 echo "\n";
 g(id($a), 0);
-$d = $a[0];
-if ($d)
+if ($a[0])
   echo "True";
 else
   echo "False";

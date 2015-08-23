@@ -1,7 +1,7 @@
 Object subclass: euler17 [
   main [
     |one_to_twenty one_to_thirty one_to_ten one_to_sixty one_to_seventy one_to_ninety_nine one_to_ninety one_to_nine one_to_forty one_to_fifty one_to_eighty|(3 + 3 + 5 + 4 + 4) display.
-                                                                                                                                                             '
+    '
 ' display.
     one_to_nine := 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4.
     one_to_nine display.

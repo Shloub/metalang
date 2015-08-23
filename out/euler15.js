@@ -27,9 +27,7 @@ for (var o = 2 ; o <= n; o++)
 for (var m = 0 ; m <= n - 1; m++)
 {
   for (var k = 0 ; k <= n - 1; k++)
-  {
     util.print(tab[m][k], " ");
-  }
   util.print("\n");
 }
 util.print(tab[0][0], "\n");

@@ -13,9 +13,7 @@ int main(void){
       int a2b2 = a * a + b * b;
       int cc = c * c;
       if (cc == a2b2 && c > a)
-      {
         printf("%d\n%d\n%d\n%d\n", a, b, c, a * b * c);
-      }
   }
   return 0;
 }

@@ -82,15 +82,11 @@ for (int i_ = 0 ; i_ < len; i_++)
 int[] tab2 = copytab(tab, len)
 bubblesort(tab2, len)
 for (int i = 0 ; i < len; i++)
-{
   System.out.printf("%s ", tab2[i]);
-}
 print("\n")
 int[] tab3 = copytab(tab, len)
 qsort0(tab3, len, 0, len - 1)
 for (int i = 0 ; i < len; i++)
-{
   System.out.printf("%s ", tab3[i]);
-}
 print("\n")
 

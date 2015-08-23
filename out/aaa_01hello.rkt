@@ -7,40 +7,25 @@
     (let ([a 5])
     (block
       (printf "~a \n~afoo" (* (+ 4 6) 2) a)
-      (let ([b (and (eq? (- (- (+ 1 (quotient (* (+ 1 1) 2 (+ 3 8)) 4)) (- 1 2)) 3) 12) #t)])
-      (block
-        (if b
-        (display "True")
-        (display "False"))
-        (display "\n")
-        (let ([c (eq? (eq? (* 3 (+ 4 5 6) 2) 45) #f)])
-        (block
-          (if c
-          (display "True")
-          (display "False"))
-          (display " ")
-          (let ([d (eq? (eq? 2 1) #f)])
-          (block
-            (if d
-            (display "True")
-            (display "False"))
-            (printf " ~a~a" (quotient (quotient (+ 4 1) 3) (+ 2 1)) (quotient (quotient (* 4 1) 3) (* 2 1)))
-            (let ([e (not (and (not (eq? a 0)) (not (eq? a 4))))])
-            (block
-              (if e
-              (display "True")
-              (display "False"))
-              (let ([f (and #t (not #f) (not (and #t #f)))])
-              (block
-                (if f
-                (display "True")
-                (display "False"))
-                (display "\n")
-                ))
-              ))
-            ))
-          ))
-        ))
+      (if (and (eq? (- (- (+ 1 (quotient (* (+ 1 1) 2 (+ 3 8)) 4)) (- 1 2)) 3) 12) #t)
+      (display "True")
+      (display "False"))
+      (display "\n")
+      (if (eq? (eq? (* 3 (+ 4 5 6) 2) 45) #f)
+      (display "True")
+      (display "False"))
+      (display " ")
+      (if (eq? (eq? 2 1) #f)
+      (display "True")
+      (display "False"))
+      (printf " ~a~a" (quotient (quotient (+ 4 1) 3) (+ 2 1)) (quotient (quotient (* 4 1) 3) (* 2 1)))
+      (if (not (and (not (eq? a 0)) (not (eq? a 4))))
+      (display "True")
+      (display "False"))
+      (if (and #t (not #f) (not (and #t #f)))
+      (display "True")
+      (display "False"))
+      (display "\n")
       ))
     )
 )

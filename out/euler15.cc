@@ -29,9 +29,7 @@ int main(){
   for (int m = 0 ; m < n; m++)
   {
     for (int k = 0 ; k < n; k++)
-    {
       std::cout << tab->at(m)->at(k) << " ";
-    }
     std::cout << "\n";
   }
   std::cout << tab->at(0)->at(0) << "\n";

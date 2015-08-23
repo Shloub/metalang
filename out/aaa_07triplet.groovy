@@ -21,7 +21,5 @@ for (int i = 1 ; i <= 3; i ++)
 }
 int[] l = read_int_line()
 for (int j = 0 ; j <= 9; j ++)
-{
   System.out.printf("%s\n", l[j]);
-}
 

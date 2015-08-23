@@ -569,13 +569,12 @@ Modulo
         (princ ">")
         (print_bigint b)
         (princ "=")
-        (let ((r (bigint_gt a b)))
-          (if
-            r
-            (princ "True")
-            (princ "False"))
-          (princ "
+        (if
+          (bigint_gt a b)
+          (princ "True")
+          (princ "False"))
+        (princ "
 ")
-        )))))
+      ))))
 
 

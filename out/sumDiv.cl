@@ -25,7 +25,9 @@
   )))
 
 (defun foo2 ()
-)
+(progn
+  
+))
 
 (defun foo3 ()
 (if

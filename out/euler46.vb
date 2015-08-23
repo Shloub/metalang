@@ -54,8 +54,7 @@ Module euler46
     For  m As Integer  = 1 to  maximumprimes
       Dim m2 As Integer = m * 2 + 1
       If m2 < maximumprimes AndAlso Not canbe(m2) Then
-        Console.Write(m2)
-        Console.Write(Chr(10))
+        Console.Write("" & m2 & Chr(10))
       End If
     Next
     End Sub

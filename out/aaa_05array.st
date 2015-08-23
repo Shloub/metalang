@@ -8,7 +8,7 @@ Object subclass: aaa_05array [
   ]
   
   main [
-    |j d c a|j := 0.
+    |j a|j := 0.
     a := Array new: 5.
     (0 to: (5 - 1)) do: [:i|
       i display.
@@ -17,15 +17,13 @@ Object subclass: aaa_05array [
     ].
     j display.
     ' ' display.
-    c := a at: (0 + 1).
-    c
+    (a at: (0 + 1))
       ifTrue:['True' display.]
       ifFalse:['False' display.].
     '
 ' display.
     (self g: (self id: a) index: 0).
-    d := a at: (0 + 1).
-    d
+    (a at: (0 + 1))
       ifTrue:['True' display.]
       ifFalse:['False' display.].
     '

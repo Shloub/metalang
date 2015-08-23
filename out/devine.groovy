@@ -50,8 +50,7 @@ for (int i = 0 ; i < len; i++)
   scanner.findWithinHorizon("[\n\r ]*", 1)
   tab[i] = tmp
 }
-boolean a = devine0(nombre, tab, len)
-if (a)
+if (devine0(nombre, tab, len))
   print("True")
 else
   print("False")

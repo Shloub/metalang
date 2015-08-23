@@ -76,8 +76,7 @@ Module euler32
                         If Not counted(product) AndAlso okdigits(allowed, product \ 10) Then
                           counted(product) = true
                           count = count + product
-                          Console.Write(product)
-                          Console.Write(" ")
+                          Console.Write("" & product & " ")
                         End If
                         ' 1  * 4 digits 
                         
@@ -85,8 +84,7 @@ Module euler32
                         If Not counted(product2) AndAlso okdigits(allowed, product2 \ 10) Then
                           counted(product2) = true
                           count = count + product2
-                          Console.Write(product2)
-                          Console.Write(" ")
+                          Console.Write("" & product2 & " ")
                         End If
                         allowed(d) = true
                       End If

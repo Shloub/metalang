@@ -528,8 +528,7 @@ Modulo
     Console.Write(">");
     print_bigint(b);
     Console.Write("=");
-    bool r = bigint_gt(a, b);
-    if (r)
+    if (bigint_gt(a, b))
       Console.Write("True");
     else
       Console.Write("False");

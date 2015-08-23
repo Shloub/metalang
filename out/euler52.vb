@@ -27,18 +27,7 @@ Module euler52
   Sub Main()
     Dim num As Integer = 142857
     If same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5) Then
-      Console.Write(num)
-      Console.Write(" ")
-      Console.Write(num * 2)
-      Console.Write(" ")
-      Console.Write(num * 3)
-      Console.Write(" ")
-      Console.Write(num * 4)
-      Console.Write(" ")
-      Console.Write(num * 5)
-      Console.Write(" ")
-      Console.Write(num * 6)
-      Console.Write(Chr(10))
+      Console.Write("" & num & " " & (num * 2) & " " & (num * 3) & " " & (num * 4) & " " & (num * 5) & " " & (num * 6) & Chr(10))
     End If
   End Sub
   

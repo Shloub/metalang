@@ -499,8 +499,7 @@ func main() {
   fmt.Printf(">");
   print_bigint(b);
   fmt.Printf("=");
-  var r bool = bigint_gt(a, b)
-  if r {
+  if bigint_gt(a, b) {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");

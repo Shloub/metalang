@@ -495,8 +495,7 @@ int main(void){
   printf(">");
   print_bigint(b);
   printf("=");
-  int r = bigint_gt(a, b);
-  if (r)
+  if (bigint_gt(a, b))
     printf("True");
   else
     printf("False");

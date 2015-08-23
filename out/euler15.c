@@ -31,9 +31,7 @@ int main(void){
   for (m = 0 ; m < n; m++)
   {
     for (k = 0 ; k < n; k++)
-    {
       printf("%d ", tab[m][k]);
-    }
     printf("\n");
   }
   printf("%d\n", tab[0][0]);

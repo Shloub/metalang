@@ -26,9 +26,7 @@ int main(){
     std::cin >> tab->at(a) >> std::skipws;
   }
   for (int i = 0 ; i < len; i++)
-  {
     std::cout << i << "=>" << tab->at(i) << " ";
-  }
   std::cout << "\n";
   std::vector<int > *tab2 = new std::vector<int>( len );
   for (int b = 0 ; b < len; b++)
@@ -36,9 +34,7 @@ int main(){
     std::cin >> tab2->at(b) >> std::skipws;
   }
   for (int i_ = 0 ; i_ < len; i_++)
-  {
     std::cout << i_ << "==>" << tab2->at(i_) << " ";
-  }
   std::cin >> strlen >> std::skipws;
   std::cout << strlen << "=strlen\n";
   std::vector<char> * tab4 = getline();

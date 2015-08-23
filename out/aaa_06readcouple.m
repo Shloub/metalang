@@ -16,9 +16,7 @@ int main(void){
     scanf("%d ", &l[c]);
   }
   for (j = 0 ; j <= 9; j++)
-  {
     printf("%d\n", l[j]);
-  }
   [pool drain];
   return 0;
 }

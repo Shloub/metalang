@@ -7,31 +7,26 @@ object aaa_01hello
     printf("Hello World");
     var a: Int = 5;
     printf("%d \n%dfoo", (4 + 6) * 2, a);
-    var b: Boolean = 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 == 12 && true;
-    if (b)
+    if (1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 == 12 && true)
       printf("True");
     else
       printf("False");
     printf("\n");
-    var c: Boolean = (3 * (4 + 5 + 6) * 2 == 45) == false;
-    if (c)
+    if ((3 * (4 + 5 + 6) * 2 == 45) == false)
       printf("True");
     else
       printf("False");
     printf(" ");
-    var d: Boolean = (2 == 1) == false;
-    if (d)
+    if ((2 == 1) == false)
       printf("True");
     else
       printf("False");
     printf(" %d%d", (4 + 1) / 3 / (2 + 1), 4 * 1 / 3 / 2 * 1);
-    var e: Boolean = !(!(a == 0) && !(a == 4));
-    if (e)
+    if (!(!(a == 0) && !(a == 4)))
       printf("True");
     else
       printf("False");
-    var f: Boolean = true && !false && !(true && false);
-    if (f)
+    if (true && !false && !(true && false))
       printf("True");
     else
       printf("False");

@@ -54,9 +54,7 @@ object euler46
     {
       var m2: Int = m * 2 + 1;
       if (m2 < maximumprimes && !canbe(m2))
-      {
         printf("%d\n", m2);
-      }
     }
   }
   

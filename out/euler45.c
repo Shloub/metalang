@@ -51,9 +51,7 @@ int main(void){
   {
     int t = triangle(n);
     if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))
-    {
       printf("%d\n%d\n", n, t);
-    }
   }
   return 0;
 }

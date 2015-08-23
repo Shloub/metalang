@@ -7,15 +7,11 @@ $len = intval(trim(fgets(STDIN)));
 echo $len, "=len\n";
 $tab = array_map("intval", explode(" ", fgets(STDIN)));
 for ($i = 0 ; $i < $len; $i++)
-{
   echo $i, "=>", $tab[$i], " ";
-}
 echo "\n";
 $tab2 = array_map("intval", explode(" ", fgets(STDIN)));
 for ($i_ = 0 ; $i_ < $len; $i_++)
-{
   echo $i_, "==>", $tab2[$i_], " ";
-}
 $strlen = intval(trim(fgets(STDIN)));
 echo $strlen, "=strlen\n";
 $tab4 = fgets(STDIN);

@@ -495,8 +495,7 @@ Modulo
     System.out.print(">");
     print_bigint(b);
     System.out.print("=");
-    boolean r = bigint_gt(a, b);
-    if (r)
+    if (bigint_gt(a, b))
       System.out.print("True");
     else
       System.out.print("False");

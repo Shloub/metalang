@@ -80,7 +80,9 @@ for (var f = 0 ; f <= y - 1; f++)
 {
   var g = new Array(x);
   for (var h = 0 ; h <= x - 1; h++)
+  {
     g[h]=read_char_();
+  }
   stdinsep();
   e[f] = g;
 }
