@@ -303,12 +303,6 @@ def skipchar():
 
   method multi_print f li =
     let format, exprs = self#extract_multi_print li in
-    if exprs = [] then
-      if String.ends_with format "\n" then
-        let l = String.length format in
-        Format.fprintf f "@[<h>print(\"%s\")@]"  (String.sub format 0 (l - 1) )
-      else Format.fprintf f "@[<h>print(\"%s\", end='')@]" format
-    else
       if String.ends_with format "\n" then
         let l = String.length format in
         Format.fprintf f "@[<h>print(\"%s\" %% ( %a ))@]" (String.sub format 0 (l - 1) )

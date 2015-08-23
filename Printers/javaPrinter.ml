@@ -202,13 +202,8 @@ class javaPrinter = object(self)
       self#binding v
     | _ -> failwith("unsuported read")
 
-  method multi_print f li =
-    let format, exprs = self#extract_multi_print li in
-    match exprs with
-    | [] -> Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format
-    | _ ->
-      Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
-        (print_list self#expr sep_c ) (List.map snd exprs)
+  method printf f () = Format.fprintf f "System.out.printf"
+  method multi_print f li = self#c_multi_print f li
 
   method print f t expr = match Expr.unfix expr with
   | Expr.Lief (Expr.String s) -> Format.fprintf f "@[System.out.print(%S);@]" s

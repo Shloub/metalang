@@ -187,6 +187,7 @@ class cppPrinter = object(self)
         self#bloc li
     | _ -> default ()
 
+  method c_multi_print = cprinter#multi_print
 
   method combine_formats () = false
   method multi_print f li =

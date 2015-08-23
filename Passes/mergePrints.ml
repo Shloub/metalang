@@ -39,10 +39,19 @@ type acc0 = unit
 type 'lex acc = unit
 let init_acc () = ()
 
+let rec merge_prints = function
+  | [] -> []
+  | Instr.StringConst s1 :: Instr.StringConst s2 :: tl ->
+      merge_prints (Instr.StringConst (s1 ^ s2) :: tl)
+  | hd:: tl -> hd :: merge_prints tl
+
 let insert_prints instructions prints =
   match prints with
   | [] -> instructions
-  | prints -> (Instr.Print (List.rev prints) |> Instr.fix)::instructions
+  | prints ->
+      let prints = List.rev prints in
+      let prints = merge_prints prints in
+      (Instr.Print prints |> Instr.fix)::instructions
         
 let processli is =
   let li, prints =

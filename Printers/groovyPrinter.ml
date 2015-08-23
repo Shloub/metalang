@@ -89,6 +89,11 @@ class groovyPrinter = object(self)
   method print f t expr = Format.fprintf f "@[<h>print(%a)@]" self#expr expr
 
   method multi_print f li =
+    let limit = 100 in
+    if List.length li > limit then
+      let lili = List.pack limit li in
+      print_list self#multi_print sep_nl f lili
+    else
     let format, exprs = self#extract_multi_print li in
     match exprs with
     | [] -> Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format

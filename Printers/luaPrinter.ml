@@ -192,6 +192,11 @@ end@\n") ()
         self#instructions elsecase
 
   method multi_print f li =
+    let limit = 50 in
+    if List.length li > limit then
+      let lili = List.pack limit li in
+      print_list self#multi_print sep_nl f lili
+    else
     let format, exprs = self#extract_multi_print li in
     match exprs with
     | [] -> Format.fprintf f "@[<h>io.write(\"%s\")@]" format

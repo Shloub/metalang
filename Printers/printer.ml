@@ -328,8 +328,9 @@ class printer = object(self)
           | Instr.Separation -> self#stdin_sep f
           | Instr.ReadExpr (t, mutable_) -> self#read f t mutable_ ) li
     | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
-    | Instr.Print li ->
-        self#multi_print f li
+    | Instr.Print [Instr.StringConst str] -> self#print_const f str
+    | Instr.Print [Instr.PrintExpr (t, e)] -> self#print f t e
+    | Instr.Print li -> self#multi_print f li
     | Instr.Untuple (li, e, _) -> self#untuple f li e
 
   method allocarrayconst f b t len e opt = assert false
@@ -356,8 +357,7 @@ class printer = object(self)
   method print f t expr =
     Format.fprintf f "@[print %a %a@]" self#ptype t self#expr expr
 
-  method print_const f str =
-    Format.fprintf f "@[print %a@]" self#expr (Expr.string str)
+  method print_const f str = self#print f Type.string (Expr.string str)
 
   method if_ f e ifcase elsecase =
     match elsecase with
@@ -458,9 +458,12 @@ class printer = object(self)
 
   method extract_multi_print (li:Utils.expr Instr.printable list) =
     let s, e = List.fold_left (fun (format, exprs) -> function
-      | Instr.StringConst str -> format ^ str, exprs
+      | Instr.StringConst str ->
+          let s = self#noformat str in
+          format ^ (String.sub s 1 (String.length s - 2)), exprs
       | Instr.PrintExpr (t, expr) -> format ^ (self#formater_type t), (t, expr)::exprs) ("",  []) li
     in s, List.rev e
+
   method extract_multi_printers (li:Utils.expr Instr.printable list) =
     List.fold_left (fun acc -> function
       | Instr.StringConst str -> (fun f () -> self#expr f (Expr.string str)) :: acc

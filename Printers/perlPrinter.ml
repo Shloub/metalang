@@ -143,9 +143,11 @@ class perlPrinter = object(self)
     Format.fprintf f "print %a;" self#expr_inprint expr
 
   method multi_print f li =
-    let format, exprs = self#extract_multi_print li in
     Format.fprintf f "@[<h>print(%a);@]"
-      (print_list self#expr sep_c ) (List.map snd exprs)
+      (print_list
+         (fun f -> function
+           | Instr.StringConst str -> self#expr f (Expr.string str)
+           | Instr.PrintExpr (_t, e) -> self#expr f e) sep_c) li
 
   method print_proto f (funname, t, li) =
     if li = [] then Format.fprintf f "sub %a{" self#funname funname

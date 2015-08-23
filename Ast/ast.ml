@@ -783,7 +783,10 @@ module Instr = struct
       )) t
 
   let stdin_sep () = Read [Separation] |> fix
-  let print t v = Print [PrintExpr (t, v)] |> fix
+  let print t v =
+    match Type.unfix t, Expr.unfix v with
+    | (Type.String | Type.Auto), Expr.Lief (Expr.String str) -> Print  [ StringConst str] |> fix
+    | _ -> Print [PrintExpr (t, v)] |> fix
   let read t v = Read [ReadExpr (t, v)] |> fix
   let readdecl t v opt = DeclRead (t, v, opt) |> fix
   let call v p = Call (v, p) |> fix

@@ -212,11 +212,7 @@ class cPrinter = object(self)
 
   method printf f () = Format.fprintf f "printf"
   method combine_formats () = true
-  method multi_print f li=
-    let format, exprs = self#extract_multi_print li in
-    if exprs = [] then
-      Format.fprintf f "@[<h>%a(\"%s\")%a@]" self#printf () format self#separator ()
-    else
+  method multi_print f li = let format, exprs = self#extract_multi_print li in
       Format.fprintf f "@[<h>%a(\"%s\", %a)%a@]" self#printf () format
         (print_list
            (fun f (t, e) -> self#expr f e) sep_c ) exprs

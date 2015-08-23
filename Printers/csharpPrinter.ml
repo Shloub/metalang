@@ -174,14 +174,13 @@ static int readInt(){
 
   method concat_operator f () = Format.fprintf f "+"
 
-  method multi_print f li =
-    let format, exprs = self#extract_multi_print li in
-    let exprs = (Type.string, Expr.string "") :: exprs in
+  method multi_print f exprs =
+    let exprs = (Instr.StringConst "") :: exprs in
     let rec compress = function
-      | ((ty1, e1)::(ty2, e2)::tl ) as li ->
-	begin match Expr.unfix e1, Expr.unfix e2 with
-	| Expr.Lief (Expr.String s1), Expr.Lief (Expr.String s2) ->
-	  (ty1, Expr.string (s2^s1))::tl
+      | (e1::e2::tl ) as li ->
+	begin match e1, e2 with
+	| Instr.StringConst s1, Instr.StringConst s2 ->
+	  Instr.StringConst (s2^s1)::tl
 	| _ -> li
 	end
       | x -> x
@@ -192,7 +191,10 @@ static int readInt(){
     let exprs = List.rev exprs in
       Format.fprintf f "@[<h>Console.Write(%a)%a@]"
         (print_list
-           (fun f (t, e) ->self#exprp prio_operator f e)
+           (fun f e ->
+             match e with
+             | Instr.StringConst s -> self#exprp prio_operator f (Expr.string s)
+             | Instr.PrintExpr (_, e) -> self#exprp prio_operator f e)
            (fun t f1 e1 f2 e2 -> Format.fprintf t "%a %a %a"
 	     f1 e1
 	     self#concat_operator ()
