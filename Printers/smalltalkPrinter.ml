@@ -186,7 +186,9 @@ class smalltalkPrinter = object(self)
       (Instr.Writer.Deep.fold
          (fun bindings i ->
            match Instr.Fixed.unfix i with
-           | Instr.DeclRead (t, b, _)
+           | Instr.Read li -> List.fold_left (fun bindings -> function
+               | Instr.DeclRead (t, b, _) -> BindingMap.add b t bindings
+               | _ -> bindings ) bindings li
            | Instr.Declare (b, t, _, _) ->
              BindingMap.add b t bindings
            | Instr.AllocArray (b, t, _, _, _) ->

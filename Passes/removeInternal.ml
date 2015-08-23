@@ -53,9 +53,6 @@ let fold_map_instr acc instr =
   | Instr.AllocRecord (name, ty, fields, opt) ->
     let acc, name = map_name acc name in
     acc, Instr.AllocRecord (name, ty, fields, opt) |> Instr.fixa annot
-  | Instr.DeclRead (ty, name, opt) ->
-    let acc, name = map_name acc name in
-    acc, Instr.DeclRead (ty, name, opt) |> Instr.fixa annot
   | Instr.Untuple (li, e, opt) ->
     let acc, li = List.fold_left_map (fun acc (ty, name) ->
       let acc, name = map_name acc name in
@@ -65,11 +62,14 @@ let fold_map_instr acc instr =
     let mut = map_mut acc mut in
     acc, Instr.Affect(mut, e) |> Instr.fixa annot
   | Instr.Read li ->
-      let li = List.map (function
-        | Instr.Separation -> Instr.Separation
+      let acc, li = List.fold_left_map (fun acc -> function
+        | Instr.DeclRead (ty, name, opt) ->
+            let acc, name = map_name acc name in
+            acc, Instr.DeclRead (ty, name, opt)
+        | Instr.Separation -> acc, Instr.Separation
         | Instr.ReadExpr (ty, mut) ->
             let mut = map_mut acc mut in
-            Instr.ReadExpr (ty, mut) ) li
+            acc, Instr.ReadExpr (ty, mut) ) acc li
       in acc, Instr.Read li |> Instr.fixa annot
   | _ -> acc, instr
 

@@ -66,12 +66,14 @@ class cppPrinter = object(self)
   method collect_for instrs =
     let collect acc i =
       Instr.Writer.Deep.fold (fun (acci, accc) i -> match Instr.unfix i with
-      | Instr.DeclRead (ty, i, _) ->
-        begin match Type.unfix ty with
-        | Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
-        | Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
-        | _ -> assert false
-        end
+      | Instr.Read li -> List.fold_left (fun (acci, accc) -> function
+          | Instr.DeclRead (ty, i, _) ->
+              begin match Type.unfix ty with
+              | Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
+              | Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
+              | _ -> assert false
+              end
+          | _ -> acci, accc) (acci, accc) li
       | _ -> (acci, accc)
       ) acc i
     in

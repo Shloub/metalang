@@ -736,6 +736,9 @@ module EvalF (IO : EvalIO) = struct
           | Instr.Separation ->
               let f execenv = f execenv; IO.skip () in
               env, f
+          | Instr.DeclRead (t, var, _) ->
+              let env, r = add_in_env env var in
+              env, (fun execenv -> read t (fun v -> execenv.(r) <- v))
           | Instr.ReadExpr (t, mut) ->
               let mut = Mutable.Fixed.Deep.mapg (fun f -> f env) mut in
               let mut = mut_setval env mut
@@ -743,9 +746,6 @@ module EvalF (IO : EvalIO) = struct
                 f execenv;
                 read t (fun value -> mut execenv value))) (env, (fun _ -> ())) li
         in env, f
-    | Instr.DeclRead (t, var, _) ->
-      let env, r = add_in_env env var in
-      env, (fun execenv -> read t (fun v -> execenv.(r) <- v))
     | Instr.Tag _ -> env, (fun _ -> ())
     | Instr.Unquote li -> assert false
   and print ty e =

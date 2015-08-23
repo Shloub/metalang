@@ -218,13 +218,12 @@ let rec check_instr funname acc instr =
         | Instr.StringConst s -> ()
                 ) li;
       acc
-  | Instr.DeclRead (t, v, _) ->
-    add_local_in_acc funname v acc loc
   | Instr.Read li ->
-      List.iter (function
-        | Instr.Separation -> ()
-        | Instr.ReadExpr (ty, mut) -> check_mutable funname acc mut) li;
-      acc
+      List.fold_left (fun acc -> function
+        | Instr.Separation -> acc
+        | Instr.DeclRead (t, v, _) -> add_local_in_acc funname v acc loc
+        | Instr.ReadExpr (ty, mut) -> check_mutable funname acc mut; acc)
+        acc li
   | Instr.Unquote e ->
     let () = check_expr funname acc e in acc
   | Instr.Untuple (li, e, _) ->

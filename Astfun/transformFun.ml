@@ -108,7 +108,8 @@ let affected li =
             | None -> acc
             | Some s -> BindingSet.add s acc
           end
-          | A.Instr.Separation -> acc ) acc li
+          | A.Instr.Separation -> acc
+          | A.Instr.DeclRead _ -> acc ) acc li
     | A.Instr.Affect (m, _) -> begin match name_of_mutable m with
       | None -> acc
       | Some s -> BindingSet.add s acc
@@ -128,9 +129,6 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.Declare (v, ty, e, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [e]
-    | A.Instr.DeclRead (t, v, _) ->
-      let tl = instrs suite contsuite contreturn (v::env) tl in
-      F.Expr.readin (F.Expr.fun_ [v] tl) t
     | A.Instr.AllocRecord (v, ty, li, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [F.Expr.record (List.map (fun (a, b) -> b, a) li)]
@@ -145,6 +143,9 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.Read li ->
         let rec continue env = function
           | [] -> instrs suite contsuite contreturn env tl
+          | A.Instr.DeclRead (t, v, _) :: tl ->
+              let tl = continue (v::env) tl in
+              F.Expr.readin (F.Expr.fun_ [v] tl) t
           | A.Instr.Separation :: tl ->
               let next = continue env tl in
               F.Expr.skipin next

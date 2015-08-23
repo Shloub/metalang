@@ -237,10 +237,13 @@ class pasPrinter = object(self)
       (Instr.Writer.Deep.fold
          (fun declared_types i ->
            match Instr.Fixed.unfix i with
-           | Instr.Declare (_, t, _, _)    -> self#declare_type declared_types f t
-	   | Instr.DeclRead (t, _, _)      -> self#declare_type declared_types f t
+           | Instr.Declare (_, t, _, _) -> self#declare_type declared_types f t
+           | Instr.Read li ->
+               List.fold_left (fun declared_types -> function
+	               | Instr.DeclRead (t, _, _) -> self#declare_type declared_types f t
+                 | _ -> declared_types ) declared_types li
            | Instr.AllocArray (_, t, _, _, _) -> self#declare_type declared_types f (Type.array t)
-           | Instr.AllocRecord (_, t, _, _)   -> self#declare_type declared_types f t
+           | Instr.AllocRecord (_, t, _, _) -> self#declare_type declared_types f t
            | _ -> declared_types
 	 ))
       declared_types
@@ -271,7 +274,11 @@ class pasPrinter = object(self)
            match Instr.Fixed.unfix i with
            | Instr.Loop (b, _, _, _) ->
              BindingMap.add b Type.integer bindings
-           | Instr.DeclRead (t, b, _)
+
+           | Instr.Read li ->
+               List.fold_left (fun bindings -> function
+                 | Instr.DeclRead (t, b, _) -> BindingMap.add b t bindings
+                 | _ -> bindings) bindings li
            | Instr.Declare (b, t, _, _) ->
              BindingMap.add b t bindings
            | Instr.AllocArray (b, t, _, _, _) ->

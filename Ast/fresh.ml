@@ -54,11 +54,14 @@ let fresh_init prog =
     (fun acc i ->
       match Instr.unfix i with
       | Instr.Declare (UserName b, _, _, _)
-      | Instr.DeclRead (_, UserName b, _)
       | Instr.AllocRecord(UserName b, _, _, _)
       | Instr.AllocArray (UserName b, _, _, None, _)
       | Instr.Loop (UserName b, _, _, _)
         -> StringSet.add b acc
+      | Instr.Read li ->
+          List.fold_left (fun acc -> function
+            | Instr.DeclRead (_, UserName b, _) -> StringSet.add b acc
+            | _ -> acc) acc li
       | Instr.AllocArray (b1, _, _, Some (b2, _), _)
         ->
         let acc = match b1 with

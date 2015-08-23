@@ -57,6 +57,7 @@ let process () is =
         | Instr.Read li -> Instr.Read (List.map (function
             | Instr.Separation -> Instr.Separation
             | Instr.ReadExpr (t, mut) -> Instr.ReadExpr (t, map_mut mut)
+            | (Instr.DeclRead _) as o -> o
                                                 ) li)
         | i -> i)
       (Expr.Fixed.Deep.map (fun e -> match Expr.unfix e with

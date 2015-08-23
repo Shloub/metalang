@@ -160,7 +160,7 @@ class cPrinter = object(self)
   method bloc f li = match li with
   | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
                              | (Instr.AllocArray _)
-                             | (Instr.DeclRead _)
+                             | (Instr.Read _)
                              | (Instr.Declare _)
                              | (Instr.Comment _)))
     ] ->
@@ -171,7 +171,7 @@ class cPrinter = object(self)
   method blocinif f li = match li with
   | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
                              | (Instr.AllocArray _)
-                             | (Instr.DeclRead _)
+                             | (Instr.Read _)
                              | (Instr.Declare _)
                              | (Instr.Comment _)
                              | (Instr.If (_, _, _) ) (* sans accolades, on a un conflit sur le else *)
@@ -264,12 +264,14 @@ class cPrinter = object(self)
   method collect_for instrs =
     let collect acc i =
       Instr.Writer.Deep.fold (fun (acci, accc) i -> match Instr.unfix i with
-      | Instr.DeclRead (ty, i, _) ->
-        begin match Type.unfix ty with
-        | Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
-        | Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
-        | _ -> assert false
-        end
+      | Instr.Read li -> List.fold_left (fun (acci, accc) -> function
+          | Instr.DeclRead (ty, i, _) ->
+              begin match Type.unfix ty with
+              | Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
+              | Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
+              | _ -> assert false
+              end
+          | _ -> acci, accc ) (acci, accc) li
       | Instr.Loop (i, _, _, _) -> let acci = if List.mem i acci then acci else i::acci in acci, accc
       | _ -> (acci, accc)
       ) acc i

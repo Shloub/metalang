@@ -70,6 +70,7 @@ let finstr i =
       | Instr.Read li ->
           List.fold_left (fun acc -> function
             | Instr.Separation -> acc
+            | Instr.DeclRead (t, _, _) -> acc + count_type t
             | Instr.ReadExpr (t, e) ->
                 acc + count_type t + fmut e ) acc li
       | Instr.Declare (_, t, e, _) -> acc + count_type t + e
@@ -80,7 +81,6 @@ let finstr i =
           List.fold_left (fun acc -> function
             | Instr.StringConst _str -> acc
             | Instr.PrintExpr (t, e) -> acc + count_type t + e) acc li
-      | Instr.DeclRead (t, _, _) -> acc + count_type t
       | _ -> Instr.Fixed.Surface.fold (+) acc instr
     )
     fexpr i

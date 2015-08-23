@@ -59,7 +59,11 @@ let collect_instr acc i =
     | Instr.AllocRecord (_, ty, _, _)
     | Instr.AllocArray (_, ty, _, _, _)
     | Instr.AllocArrayConst (_, ty, _, _, _)
-    | Instr.DeclRead (ty, _, _) -> collect_type acc ty
+      -> collect_type acc ty
+    | Instr.Read li ->
+        List.fold_left (fun acc -> function
+          | Instr.DeclRead (ty, _, _) -> collect_type acc ty
+          | _ -> acc ) acc li
     | _ -> acc
   in Instr.Writer.Deep.fold f acc i
 

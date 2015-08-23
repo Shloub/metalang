@@ -252,17 +252,17 @@ let print_instr c i =
         print_list
           (fun f -> function
             | Separation -> Format.fprintf f "@[scantrim();@]"
+            | DeclRead (ty, v, opt) ->
+                begin match Ast.Type.unfix ty with
+                | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" c.print_varname v
+                | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" c.print_varname v format_type ty
+                end
             | ReadExpr (ty, mut) ->
                 begin match Ast.Type.unfix ty with
                 | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" (c.print_mut c nop) mut
                 | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" (c.print_mut c nop) mut format_type ty
                 end
           ) sep_nl f li
-    | DeclRead (ty, v, opt) ->
-        begin match Ast.Type.unfix ty with
-        | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" c.print_varname v
-        | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" c.print_varname v format_type ty
-        end
     | Untuple (li, expr, opt) -> fprintf f "list(%a)=%a;" (print_list c.print_varname sep_c) (List.map snd li) expr nop
     | Unquote e -> assert false in
   let is_if = match i with If (_, _, _) -> true | _ -> false in

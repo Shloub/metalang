@@ -326,8 +326,8 @@ class printer = object(self)
     | Instr.Read li ->
         List.iter (function
           | Instr.Separation -> self#stdin_sep f
+          | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
           | Instr.ReadExpr (t, mutable_) -> self#read f t mutable_ ) li
-    | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
     | Instr.Print [Instr.StringConst str] -> self#print_const f str
     | Instr.Print [Instr.PrintExpr (t, e)] -> self#print f t e
     | Instr.Print li -> self#multi_print f li

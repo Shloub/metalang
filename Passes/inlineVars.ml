@@ -147,14 +147,14 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
     infos
   | Instr.Read li ->
       List.fold_left (fun infos -> function
+        | Instr.DeclRead (_, name, _) ->
+            addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
         | Instr.Separation -> infos
         | Instr.ReadExpr (_, mut) ->
             let infos = getinfos_mut hd dad infos mut in
             let name = name_of_mut mut in
             let infos = addinfos infos name {instruction=hd; expression=None; affected=true; declaration=false; dad=dad} in
             infos) infos li
-  | Instr.DeclRead (_, name, _) ->
-    addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
   | Instr.Unquote e -> assert false
 and getinfos infos dad li = List.fold_left (getinfo_i dad ) infos li
 
@@ -221,6 +221,7 @@ let rec no_affectation li ilimit name =
         | Instr.Read li ->
             List.exists (function
               | Instr.Separation -> false
+              | Instr.DeclRead _ -> false
               | Instr.ReadExpr(_, m) ->
                   let m = name_of_mut m in
                   m <> name) li
@@ -302,30 +303,7 @@ let rec map_instrs (infos:infos) = function
         (* Format.printf "Aucune info pour l'inline de la déclaration@\n%a@\n" printer#instr hd; *)
         let b, tl = map_instrs infos tl in b, hd :: tl
       end
-    | Instr.DeclRead (ty, name, { Instr.useless = true } ) ->
-      begin match BindingMap.find_opt name infos.infos with
-      | Some [
-        {instruction=i2; expression=_; affected=false; declaration=false; dad=dad2};
-        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
-          when is_affect_copyvar i2 name
-            ->
-(*        Format.printf "on inline un readDecl@\n"; *)
-              let tl = remove_instruction tl i2 in
-              true, (Instr.read ty @$ affected_mutable i2)::tl
-      | Some [
-        {instruction=(Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
-        )) as i2; expression=_; affected=false; declaration=false; dad=dad2};
-        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
-          when is_declare_copyvar i2 name
-            ->
-        let tl = remove_instruction tl i2 in
-        true, (Instr.readdecl ty name2 useless2 )::tl
-      | Some li ->
-        (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos) TOTO@\n" printer#instr hd (List.length li) ; *)
-        let b, tl = map_instrs infos tl in b, hd :: tl
-      | None ->
-        let b, tl = map_instrs infos tl in b, hd :: tl
-	    end
+    | Instr.Read li -> map_reads infos li tl
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
       begin match BindingMap.find_opt name infos.infos with
       | Some li ->
@@ -349,6 +327,37 @@ let rec map_instrs (infos:infos) = function
       end
     | _ ->
       let b, tl = map_instrs infos tl in b, hd :: tl
+and map_reads infos li tl =
+  let insert reads li =
+    match reads with
+    | [] -> li
+    | _ -> (Instr.Read (List.rev reads) |> Instr.fix) :: li in
+  let b, tl, reads = List.fold_left (fun (b, tl, reads) -> function
+    | Instr.DeclRead (ty, name, { Instr.useless = true } ) as orig ->
+        begin match BindingMap.find_opt name infos.infos with
+        | Some [
+          {instruction=i2; expression=_; affected=false; declaration=false; dad=dad2};
+          {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
+          when is_affect_copyvar i2 name
+          ->
+(*        Format.printf "on inline un readDecl@\n"; *)
+            let tl = remove_instruction tl i2 in
+            true, insert reads ((Instr.read ty @$ affected_mutable i2)::tl), []
+        | Some [
+          {instruction=(Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
+                                      )) as i2; expression=_; affected=false; declaration=false; dad=dad2};
+                                                          {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
+          when is_declare_copyvar i2 name
+          ->
+            let tl = remove_instruction tl i2 in
+            true, (Instr.readdecl ty name2 useless2)::tl, []
+        | Some _li -> b, tl, orig :: reads
+        | None -> b, tl, orig :: reads
+	      end
+    | orig -> b, tl, orig :: reads
+) (false, tl, []) li
+in b, insert reads tl
+
 
 let getlines instrs =
   fst @$ List.fold_left (fun acc i ->

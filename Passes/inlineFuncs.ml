@@ -150,14 +150,14 @@ let rec rename_instr acc (instr:Utils.instr) =
       in
       acc, Instr.Print li |> Instr.fixa annot
   | Instr.Read li ->
-      let li = List.map (function
-        | Instr.Separation -> Instr.Separation
-        | Instr.ReadExpr (t, mut) -> Instr.ReadExpr (t, rename_mut acc mut)) li in
+      let acc, li = List.fold_left_map (fun acc -> function
+        | Instr.DeclRead (t, name, opt) ->
+            let newname = Fresh.fresh_internal () in
+            let acc = BindingMap.add name newname acc in
+            acc, (Instr.DeclRead (t, newname, opt))
+        | Instr.Separation -> acc, Instr.Separation
+        | Instr.ReadExpr (t, mut) -> acc, Instr.ReadExpr (t, rename_mut acc mut)) acc li in
       acc, Instr.Read li |> Instr.fixa annot
-  | Instr.DeclRead (t, name, opt) ->
-    let newname = Fresh.fresh_internal () in
-    let acc = BindingMap.add name newname acc in
-    acc, Instr.DeclRead (t, newname, opt) |> Instr.fixa annot
   | Instr.Untuple (li, e, opt) ->
     let e = rename_e acc e in
     let acc, li = List.fold_left_map (fun acc (ty, name) ->
@@ -309,12 +309,12 @@ and map_instr acc instr =
       in
       List.append addon [Instr.Print li |> Instr.fixa annot]
   | Instr.Read li ->
-let addon, li = List.fold_left_map (fun addon -> function
-  | Instr.Separation -> addon, Instr.Separation
-  | Instr.ReadExpr (t, mut) -> let addon, mut = map_mut acc mut in
-    addon, Instr.ReadExpr(t, mut)) [] li in
-    List.append addon [Instr.Read li |> Instr.fixa annot]
-  | Instr.DeclRead (_t, _name, _opt) -> [instr]
+      let addon, li = List.fold_left_map (fun addon -> function
+        | Instr.Separation -> addon, Instr.Separation
+        | Instr.DeclRead (t, name, opt) -> addon, Instr.DeclRead (t, name, opt) 
+        | Instr.ReadExpr (t, mut) -> let addon, mut = map_mut acc mut in
+          addon, Instr.ReadExpr(t, mut)) [] li in
+      List.append addon [Instr.Read li |> Instr.fixa annot]
   | Instr.Untuple (li, e, opt) ->
     let addon, e = map_e acc e in
     List.append addon [Instr.Untuple(li, e, opt) |> Instr.fixa annot]

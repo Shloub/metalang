@@ -141,10 +141,9 @@ let rec process_instr map i =
     | Instr.Read li ->
         let li = List.map (function
           | Instr.Separation -> Instr.Separation
+          | Instr.DeclRead (t, v, opt) -> Instr.DeclRead (mapty map t, mapname map v, opt)
           | Instr.ReadExpr (t, m) -> Instr.ReadExpr (mapty map t, mapmutable map m)) li
         in Instr.Read li
-    | Instr.DeclRead (t, v, opt) ->
-      Instr.DeclRead (mapty map t, mapname map v, opt)
     | Instr.Untuple (li, e, opt)->
       Instr.Untuple (List.map (fun (t, n) -> mapty map t, mapname map n) li, process_expr map e, opt)
   in Instr.Fixed.fixa (Instr.Fixed.annot i) i2

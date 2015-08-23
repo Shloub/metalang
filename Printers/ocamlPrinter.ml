@@ -264,15 +264,14 @@ class camlPrinter = object(self)
     | Instr.AllocArray _
     | Instr.Declare _ 
     | Instr.Untuple _
-    | Instr.DeclRead _
     | Instr.Comment _  (* le ; a déjà été mis *)
     | Instr.Return _ (* return -> pas de ; *)
-      -> false (*
+      -> false
     | Instr.Read li ->
         begin match List.rev li with
-        | Instr.Separation :: _ -> true
-        | _ -> false
-        end *)
+        | Instr.DeclRead _ :: _ -> false
+        | _ -> true
+        end
     | _ -> true
 
   (** show an instruction *)
@@ -293,7 +292,12 @@ class camlPrinter = object(self)
     let instrs = nocomment instrs in
     if instrs = [] then true
     else match List.map Instr.unfix instrs |> List.rev with
-    | (Instr.AllocArray _ | Instr.Declare _ | Instr.DeclRead _ | Instr.Untuple _) :: _ -> true
+    | (Instr.AllocArray _ | Instr.Declare _ | Instr.Untuple _) :: _ -> true
+    | Instr.Read li :: _ ->
+        begin match List.rev li with
+        | Instr.DeclRead _ :: _ -> true
+        | _ -> false
+        end
     | (Instr.Affect ( Mutable.Fixed.F (_, Mutable.Var v), _)) :: _
       when not( BindingSet.mem v refbindings) -> true
     | _ -> false
@@ -379,6 +383,7 @@ class camlPrinter = object(self)
           | Instr.Read li ->
               List.fold_left (fun acc -> function
                 | Instr.Separation -> acc
+                | Instr.DeclRead _ -> acc
                 | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
                 | Instr.ReadExpr _ -> acc) acc li
           | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
