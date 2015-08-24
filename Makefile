@@ -141,7 +141,7 @@ out/%.m.bin : out/%.m
 	@rm out/$(basename $*).m.d || exit 0
 
 out/%.c.bin : out/%.c
-	@gcc -Wall $< -o $@ -lm || exit 1
+	@gcc -std=c89 -Wall $< -o $@ -lm || exit 1
 
 out/%.cc.bin : out/%.cc
 	@g++ -Wall $< -o $@ -lm || exit 1
