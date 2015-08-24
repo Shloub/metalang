@@ -40,7 +40,7 @@ type tuple_int_int struct {
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var directions []* tuple_int_int = make([]* tuple_int_int, 8)
-  for i := 0 ; i <= 8 - 1; i++ {
+  for i := 0 ; i < 8; i++ {
     if i == 0 {
         var c * tuple_int_int = new (tuple_int_int)
           (*c).tuple_int_int_field_0=0
@@ -85,9 +85,9 @@ func main() {
   }
   var max0 int = 0
   var m [][]int = make([][]int, 20)
-  for o := 0 ; o <= 20 - 1; o++ {
+  for o := 0 ; o < 20; o++ {
     var p []int = make([]int, 20)
-      for q := 0 ; q <= 20 - 1; q++ {
+      for q := 0 ; q < 20; q++ {
         fmt.Fscanf(reader, "%d", &p[q])
           skip()
       }

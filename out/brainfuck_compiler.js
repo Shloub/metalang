@@ -7,7 +7,7 @@ et qui produit les macros metalang correspondante
 var input = ' ';
 var current_pos = 500;
 var mem = new Array(1000);
-for (var i = 0 ; i <= 1000 - 1; i++)
+for (var i = 0 ; i < 1000; i++)
   mem[i] = 0;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;

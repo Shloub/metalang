@@ -190,9 +190,9 @@ func play(g * gamestate) * move{
 
 func init0() * gamestate{
   var cases [][]int = make([][]int, 3)
-  for i := 0 ; i <= 3 - 1; i++ {
+  for i := 0 ; i < 3; i++ {
     var tab []int = make([]int, 3)
-      for j := 0 ; j <= 3 - 1; j++ {
+      for j := 0 ; j < 3; j++ {
         tab[j] = 0;
       }
       cases[i] = tab;

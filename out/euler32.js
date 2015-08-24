@@ -42,10 +42,10 @@ function okdigits(ok, n){
 
 var count = 0;
 var allowed = new Array(10);
-for (var i = 0 ; i <= 10 - 1; i++)
+for (var i = 0 ; i < 10; i++)
   allowed[i] = i != 0;
 var counted = new Array(100000);
-for (var j = 0 ; j <= 100000 - 1; j++)
+for (var j = 0 ; j < 100000; j++)
   counted[j] = false;
 for (var e = 1 ; e <= 9; e++)
 {

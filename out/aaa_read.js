@@ -42,7 +42,7 @@ len *= 2;
 util.print("len*2=", len, "\n");
 len = ~~(len / 2);
 var tab = new Array(len);
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
 {
   tmpi1=read_int_();
   stdinsep();
@@ -51,7 +51,7 @@ for (var i = 0 ; i <= len - 1; i++)
 }
 util.print("\n");
 var tab2 = new Array(len);
-for (var i_ = 0 ; i_ <= len - 1; i_++)
+for (var i_ = 0 ; i_ < len; i_++)
 {
   tmpi2=read_int_();
   stdinsep();
@@ -62,7 +62,7 @@ strlen=read_int_();
 stdinsep();
 util.print(strlen, "=strlen\n");
 var tab4 = new Array(strlen);
-for (var toto = 0 ; toto <= strlen - 1; toto++)
+for (var toto = 0 ; toto < strlen; toto++)
 {
   tmpc=read_char_();
   var c = tmpc.charCodeAt(0);
@@ -71,6 +71,6 @@ for (var toto = 0 ; toto <= strlen - 1; toto++)
     c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
   tab4[toto] = String.fromCharCode(c);
 }
-for (var j = 0 ; j <= strlen - 1; j++)
+for (var j = 0 ; j < strlen; j++)
   util.print(tab4[j]);
 

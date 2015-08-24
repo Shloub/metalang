@@ -10,18 +10,18 @@ func fact(n int) int{
 
 func show(lim int, nth int) {
   var t []int = make([]int, lim)
-  for i := 0 ; i <= lim - 1; i++ {
+  for i := 0 ; i < lim; i++ {
     t[i] = i;
   }
   var pris []bool = make([]bool, lim)
-  for j := 0 ; j <= lim - 1; j++ {
+  for j := 0 ; j < lim; j++ {
     pris[j] = false;
   }
-  for k := 1 ; k <= lim - 1; k++ {
+  for k := 1 ; k < lim; k++ {
     var n int = fact(lim - k)
       var nchiffre int = nth / n
       nth %= n;
-      for l := 0 ; l <= lim - 1; l++ {
+      for l := 0 ; l < lim; l++ {
         if !pris[l] {
             if nchiffre == 0 {
                 fmt.Printf("%d", l);
@@ -31,7 +31,7 @@ func show(lim int, nth int) {
           }
       }
   }
-  for m := 0 ; m <= lim - 1; m++ {
+  for m := 0 ; m < lim; m++ {
     if !pris[m] {
         fmt.Printf("%d", m);
       }

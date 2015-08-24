@@ -39,32 +39,32 @@ len=read_int_();
 stdinsep();
 util.print(len, "=len\n");
 var tab = new Array(len);
-for (var a = 0 ; a <= len - 1; a++)
+for (var a = 0 ; a < len; a++)
 {
   tab[a]=read_int_();
   stdinsep();
 }
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
   util.print(i, "=>", tab[i], " ");
 util.print("\n");
 var tab2 = new Array(len);
-for (var b = 0 ; b <= len - 1; b++)
+for (var b = 0 ; b < len; b++)
 {
   tab2[b]=read_int_();
   stdinsep();
 }
-for (var i_ = 0 ; i_ <= len - 1; i_++)
+for (var i_ = 0 ; i_ < len; i_++)
   util.print(i_, "==>", tab2[i_], " ");
 strlen=read_int_();
 stdinsep();
 util.print(strlen, "=strlen\n");
 var tab4 = new Array(strlen);
-for (var d = 0 ; d <= strlen - 1; d++)
+for (var d = 0 ; d < strlen; d++)
 {
   tab4[d]=read_char_();
 }
 stdinsep();
-for (var i3 = 0 ; i3 <= strlen - 1; i3++)
+for (var i3 = 0 ; i3 < strlen; i3++)
 {
   var tmpc = tab4[i3];
   var c = tmpc.charCodeAt(0);
@@ -73,6 +73,6 @@ for (var i3 = 0 ; i3 <= strlen - 1; i3++)
     c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
   tab4[i3] = String.fromCharCode(c);
 }
-for (var j = 0 ; j <= strlen - 1; j++)
+for (var j = 0 ; j < strlen; j++)
   util.print(tab4[j]);
 

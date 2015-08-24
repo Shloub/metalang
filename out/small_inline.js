@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 var t = new Array(2);
-for (var d = 0 ; d <= 2 - 1; d++)
+for (var d = 0 ; d < 2; d++)
 {
   t[d]=read_int_();
   stdinsep();

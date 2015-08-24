@@ -29,7 +29,7 @@ function read_int_(){
 function nbPassePartout(n, passepartout, m, serrures){
   var max_ancient = 0;
   var max_recent = 0;
-  for (var i = 0 ; i <= m - 1; i++)
+  for (var i = 0 ; i < m; i++)
   {
     if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
       max_ancient = serrures[i][1];
@@ -38,7 +38,7 @@ function nbPassePartout(n, passepartout, m, serrures){
   }
   var max_ancient_pp = 0;
   var max_recent_pp = 0;
-  for (var i = 0 ; i <= n - 1; i++)
+  for (var i = 0 ; i < n; i++)
   {
     var pp = passepartout[i];
     if (pp[0] >= max_ancient && pp[1] >= max_recent)
@@ -55,10 +55,10 @@ function nbPassePartout(n, passepartout, m, serrures){
 n=read_int_();
 stdinsep();
 var passepartout = new Array(n);
-for (var i = 0 ; i <= n - 1; i++)
+for (var i = 0 ; i < n; i++)
 {
   var out0 = new Array(2);
-  for (var j = 0 ; j <= 2 - 1; j++)
+  for (var j = 0 ; j < 2; j++)
   {
     out01=read_int_();
     stdinsep();
@@ -69,10 +69,10 @@ for (var i = 0 ; i <= n - 1; i++)
 m=read_int_();
 stdinsep();
 var serrures = new Array(m);
-for (var k = 0 ; k <= m - 1; k++)
+for (var k = 0 ; k < m; k++)
 {
   var out1 = new Array(2);
-  for (var l = 0 ; l <= 2 - 1; l++)
+  for (var l = 0 ; l < 2; l++)
   {
     out_=read_int_();
     stdinsep();

@@ -23,7 +23,7 @@ func find(n int, m []int) int{
 
 func main() {
   var m []int = make([]int, 1000000)
-  for j := 0 ; j <= 1000000 - 1; j++ {
+  for j := 0 ; j < 1000000; j++ {
     m[j] = 0;
   }
   var max0 int = 0

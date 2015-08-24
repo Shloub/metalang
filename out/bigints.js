@@ -17,7 +17,7 @@ function stdinsep(){
 }
 function read_bigint(len){
   var chiffres = new Array(len);
-  for (var j = 0 ; j <= len - 1; j++)
+  for (var j = 0 ; j < len; j++)
   {
     c=read_char_();
     chiffres[j] = c.charCodeAt(0);
@@ -39,7 +39,7 @@ function read_bigint(len){
 function print_bigint(a){
   if (!a.bigint_sign)
     util.print('-');
-  for (var i = 0 ; i <= a.bigint_len - 1; i++)
+  for (var i = 0 ; i < a.bigint_len; i++)
     util.print(a.bigint_chiffres[a.bigint_len - 1 - i]);
 }
 
@@ -51,7 +51,7 @@ function bigint_eq(a, b){
     return false;
   else
   {
-    for (var i = 0 ; i <= a.bigint_len - 1; i++)
+    for (var i = 0 ; i < a.bigint_len; i++)
       if (a.bigint_chiffres[i] != b.bigint_chiffres[i])
       return false;
     return true;
@@ -71,7 +71,7 @@ function bigint_gt(a, b){
     else if (a.bigint_len < b.bigint_len)
       return !a.bigint_sign;
     else
-      for (var i = 0 ; i <= a.bigint_len - 1; i++)
+      for (var i = 0 ; i < a.bigint_len; i++)
       {
         var j = a.bigint_len - 1 - i;
         if (a.bigint_chiffres[j] > b.bigint_chiffres[j])
@@ -92,7 +92,7 @@ function add_bigint_positif(a, b){
   var len = Math.max(a.bigint_len, b.bigint_len) + 1;
   var retenue = 0;
   var chiffres = new Array(len);
-  for (var i = 0 ; i <= len - 1; i++)
+  for (var i = 0 ; i < len; i++)
   {
     var tmp = retenue;
     if (i < a.bigint_len)
@@ -119,7 +119,7 @@ Pré-requis : a > b
   var len = a.bigint_len;
   var retenue = 0;
   var chiffres = new Array(len);
-  for (var i = 0 ; i <= len - 1; i++)
+  for (var i = 0 ; i < len; i++)
   {
     var tmp = retenue + a.bigint_chiffres[i];
     if (i < b.bigint_len)
@@ -188,12 +188,12 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   var len = a.bigint_len + b.bigint_len + 1;
   var chiffres = new Array(len);
-  for (var k = 0 ; k <= len - 1; k++)
+  for (var k = 0 ; k < len; k++)
     chiffres[k] = 0;
-  for (var i = 0 ; i <= a.bigint_len - 1; i++)
+  for (var i = 0 ; i < a.bigint_len; i++)
   {
     var retenue = 0;
-    for (var j = 0 ; j <= b.bigint_len - 1; j++)
+    for (var j = 0 ; j < b.bigint_len; j++)
     {
       chiffres[i + j] =
       chiffres[i + j] + retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i];
@@ -231,7 +231,7 @@ function bigint_premiers_chiffres(a, i){
 
 function bigint_shift(a, i){
   var chiffres = new Array(a.bigint_len + i);
-  for (var k = 0 ; k <= a.bigint_len + i - 1; k++)
+  for (var k = 0 ; k < a.bigint_len + i; k++)
     if (k >= i)
     chiffres[k] = a.bigint_chiffres[k - i];
   else
@@ -286,9 +286,9 @@ function bigint_of_int(i){
   if (i == 0)
     size = 0;
   var t = new Array(size);
-  for (var j = 0 ; j <= size - 1; j++)
+  for (var j = 0 ; j < size; j++)
     t[j] = 0;
-  for (var k = 0 ; k <= size - 1; k++)
+  for (var k = 0 ; k < size; k++)
   {
     t[k] = ~~(i % 10);
     i = ~~(i / 10);
@@ -314,7 +314,7 @@ function fact_bigint(a){
 
 function sum_chiffres_bigint(a){
   var out0 = 0;
-  for (var i = 0 ; i <= a.bigint_len - 1; i++)
+  for (var i = 0 ; i < a.bigint_len; i++)
     out0 += a.bigint_chiffres[i];
   return out0;
 }
@@ -387,13 +387,13 @@ function euler29(){
   var maxA = 5;
   var maxB = 5;
   var a_bigint = new Array(maxA + 1);
-  for (var j = 0 ; j <= maxA + 1 - 1; j++)
+  for (var j = 0 ; j < maxA + 1; j++)
     a_bigint[j] = bigint_of_int(j * j);
   var a0_bigint = new Array(maxA + 1);
-  for (var j2 = 0 ; j2 <= maxA + 1 - 1; j2++)
+  for (var j2 = 0 ; j2 < maxA + 1; j2++)
     a0_bigint[j2] = bigint_of_int(j2);
   var b = new Array(maxA + 1);
-  for (var k = 0 ; k <= maxA + 1 - 1; k++)
+  for (var k = 0 ; k < maxA + 1; k++)
     b[k] = 2;
   var n = 0;
   var found = true;

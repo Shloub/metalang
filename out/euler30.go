@@ -10,7 +10,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 */
   var p []int = make([]int, 10)
-  for i := 0 ; i <= 10 - 1; i++ {
+  for i := 0 ; i < 10; i++ {
     p[i] = i * i * i * i * i;
   }
   var sum int = 0

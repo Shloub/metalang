@@ -182,10 +182,10 @@ function play(g){
 
 function init0(){
   var cases = new Array(3);
-  for (var i = 0 ; i <= 3 - 1; i++)
+  for (var i = 0 ; i < 3; i++)
   {
     var tab = new Array(3);
-    for (var j = 0 ; j <= 3 - 1; j++)
+    for (var j = 0 ; j < 3; j++)
       tab[j] = 0;
     cases[i] = tab;
   }

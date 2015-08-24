@@ -37,7 +37,7 @@ function find(n, m, x, y, dx, dy){
 
 
 var directions = new Array(8);
-for (var i = 0 ; i <= 8 - 1; i++)
+for (var i = 0 ; i < 8; i++)
   if (i == 0)
 {
   var c = {
@@ -104,10 +104,10 @@ else
 }
 var max0 = 0;
 var m = new Array(20);
-for (var o = 0 ; o <= 20 - 1; o++)
+for (var o = 0 ; o < 20; o++)
 {
   var p = new Array(20);
-  for (var q = 0 ; q <= 20 - 1; q++)
+  for (var q = 0 ; q < 20; q++)
   {
     p[q]=read_int_();
     stdinsep();

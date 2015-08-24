@@ -35,7 +35,7 @@ for (var i = 1 ; i <= 3; i++)
   util.print("a = ", a, " b = ", b, "\n");
 }
 var l = new Array(10);
-for (var c = 0 ; c <= 10 - 1; c++)
+for (var c = 0 ; c < 10; c++)
 {
   l[c]=read_int_();
   stdinsep();

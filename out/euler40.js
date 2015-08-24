@@ -20,7 +20,7 @@ function e(t, n){
 }
 
 var t = new Array(9);
-for (var i = 0 ; i <= 9 - 1; i++)
+for (var i = 0 ; i < 9; i++)
   t[i] = exp0(10, i) - exp0(10, i - 1);
 for (var i2 = 1 ; i2 <= 8; i2++)
   util.print(i2, " => ", t[i2], "\n");

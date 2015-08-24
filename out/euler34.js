@@ -1,6 +1,6 @@
 var util = require("util");
 var f = new Array(10);
-for (var j = 0 ; j <= 10 - 1; j++)
+for (var j = 0 ; j < 10; j++)
   f[j] = 1;
 for (var i = 1 ; i <= 9; i++)
 {

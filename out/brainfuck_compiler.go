@@ -10,7 +10,7 @@ func main() {
   _ = input
   var current_pos int = 500
   var mem []int = make([]int, 1000)
-  for i := 0 ; i <= 1000 - 1; i++ {
+  for i := 0 ; i < 1000; i++ {
     mem[i] = 0;
   }
   mem[current_pos] = mem[current_pos] + 1;

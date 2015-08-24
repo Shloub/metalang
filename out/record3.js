@@ -37,7 +37,7 @@ function mktoto(v1){
 
 function result(t, len){
   var out0 = 0;
-  for (var j = 0 ; j <= len - 1; j++)
+  for (var j = 0 ; j < len; j++)
   {
     t[j].blah = t[j].blah + 1;
     out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
@@ -46,7 +46,7 @@ function result(t, len){
 }
 
 var t = new Array(4);
-for (var i = 0 ; i <= 4 - 1; i++)
+for (var i = 0 ; i < 4; i++)
   t[i] = mktoto(i);
 t[0].bar=read_int_();
 stdinsep();

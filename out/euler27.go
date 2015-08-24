@@ -2,7 +2,7 @@ package main
 import "fmt"
 func eratostene(t []int, max0 int) int{
   var n int = 0
-  for i := 2 ; i <= max0 - 1; i++ {
+  for i := 2 ; i < max0; i++ {
     if t[i] == i {
         n ++;
           var j int = i * i
@@ -42,18 +42,18 @@ func test(a int, b int, primes []int, len int) int{
 func main() {
   var maximumprimes int = 1000
   var era []int = make([]int, maximumprimes)
-  for j := 0 ; j <= maximumprimes - 1; j++ {
+  for j := 0 ; j < maximumprimes; j++ {
     era[j] = j;
   }
   var result int = 0
   var max0 int = 0
   var nprimes int = eratostene(era, maximumprimes)
   var primes []int = make([]int, nprimes)
-  for o := 0 ; o <= nprimes - 1; o++ {
+  for o := 0 ; o < nprimes; o++ {
     primes[o] = 0;
   }
   var l int = 0
-  for k := 2 ; k <= maximumprimes - 1; k++ {
+  for k := 2 ; k < maximumprimes; k++ {
     if era[k] == k {
         primes[l] = k;
           l ++;

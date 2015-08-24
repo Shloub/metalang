@@ -15,7 +15,7 @@ func skip() {
 }
 func nth(tab []byte, tofind byte, len int) int{
   var out0 int = 0
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     if tab[i] == tofind {
         out0 ++;
       }
@@ -32,7 +32,7 @@ func main() {
   fmt.Fscanf(reader, "%c", &tofind)
   skip()
   var tab []byte = make([]byte, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tmp byte = '\x00'
       fmt.Fscanf(reader, "%c", &tmp)
       tab[i] = tmp;

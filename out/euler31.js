@@ -16,7 +16,7 @@ function result(sum, t, maxIndex, cache){
 }
 
 var t = new Array(8);
-for (var i = 0 ; i <= 8 - 1; i++)
+for (var i = 0 ; i < 8; i++)
   t[i] = 0;
 t[0] = 1;
 t[1] = 2;
@@ -27,10 +27,10 @@ t[5] = 50;
 t[6] = 100;
 t[7] = 200;
 var cache = new Array(201);
-for (var j = 0 ; j <= 201 - 1; j++)
+for (var j = 0 ; j < 201; j++)
 {
   var o = new Array(8);
-  for (var k = 0 ; k <= 8 - 1; k++)
+  for (var k = 0 ; k < 8; k++)
     o[k] = 0;
   cache[j] = o;
 }

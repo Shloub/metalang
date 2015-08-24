@@ -51,7 +51,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tmp int = 0
       fmt.Fscanf(reader, "%d", &tmp)
       skip()

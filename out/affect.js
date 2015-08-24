@@ -61,10 +61,10 @@ function result(t_, t2_){
   t.blah ++;
   var len = 1;
   var cache0 = new Array(len);
-  for (var i = 0 ; i <= len - 1; i++)
+  for (var i = 0 ; i < len; i++)
     cache0[i] = -i;
   var cache1 = new Array(len);
-  for (var j = 0 ; j <= len - 1; j++)
+  for (var j = 0 ; j < len; j++)
     cache1[j] = j;
   var cache2 = cache0;
   cache0 = cache1;

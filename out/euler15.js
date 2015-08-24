@@ -3,14 +3,14 @@ var n = 10;
 /* normalement on doit mettre 20 mais là on se tape un overflow */
 n ++;
 var tab = new Array(n);
-for (var i = 0 ; i <= n - 1; i++)
+for (var i = 0 ; i < n; i++)
 {
   var tab2 = new Array(n);
-  for (var j = 0 ; j <= n - 1; j++)
+  for (var j = 0 ; j < n; j++)
     tab2[j] = 0;
   tab[i] = tab2;
 }
-for (var l = 0 ; l <= n - 1; l++)
+for (var l = 0 ; l < n; l++)
 {
   tab[n - 1][l] = 1;
   tab[l][n - 1] = 1;
@@ -24,9 +24,9 @@ for (var o = 2 ; o <= n; o++)
     tab[r][q] = tab[r + 1][q] + tab[r][q + 1];
   }
 }
-for (var m = 0 ; m <= n - 1; m++)
+for (var m = 0 ; m < n; m++)
 {
-  for (var k = 0 ; k <= n - 1; k++)
+  for (var k = 0 ; k < n; k++)
     util.print(tab[m][k], " ");
   util.print("\n");
 }

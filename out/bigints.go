@@ -38,7 +38,7 @@ type bigint struct {
 
 func read_bigint(len int) * bigint{
   var chiffres []int = make([]int, len)
-  for j := 0 ; j <= len - 1; j++ {
+  for j := 0 ; j < len; j++ {
     var c byte
     fmt.Fscanf(reader, "%c", &c)
       chiffres[j] = (int)(c);
@@ -59,7 +59,7 @@ func print_bigint(a * bigint) {
   if !(*a).bigint_sign {
     fmt.Printf("%c", '-');
   }
-  for i := 0 ; i <= (*a).bigint_len - 1; i++ {
+  for i := 0 ; i < (*a).bigint_len; i++ {
     fmt.Printf("%d", (*a).bigint_chiffres[(*a).bigint_len - 1 - i]);
   }
 }
@@ -71,7 +71,7 @@ func bigint_eq(a * bigint, b * bigint) bool{
   } else if (*a).bigint_len != (*b).bigint_len {
     return false
   } else {
-    for i := 0 ; i <= (*a).bigint_len - 1; i++ {
+    for i := 0 ; i < (*a).bigint_len; i++ {
       if (*a).bigint_chiffres[i] != (*b).bigint_chiffres[i] {
           return false
         }
@@ -92,7 +92,7 @@ func bigint_gt(a * bigint, b * bigint) bool{
     } else if (*a).bigint_len < (*b).bigint_len {
       return !(*a).bigint_sign
     } else {
-      for i := 0 ; i <= (*a).bigint_len - 1; i++ {
+      for i := 0 ; i < (*a).bigint_len; i++ {
         var j int = (*a).bigint_len - 1 - i
           if (*a).bigint_chiffres[j] > (*b).bigint_chiffres[j] {
             return (*a).bigint_sign
@@ -114,7 +114,7 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
   var len int = max2_((*a).bigint_len, (*b).bigint_len) + 1
   var retenue int = 0
   var chiffres []int = make([]int, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tmp int = retenue
       if i < (*a).bigint_len {
         tmp += (*a).bigint_chiffres[i];
@@ -142,7 +142,7 @@ Pré-requis : a > b
   var len int = (*a).bigint_len
   var retenue int = 0
   var chiffres []int = make([]int, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tmp int = retenue + (*a).bigint_chiffres[i]
       if i < (*b).bigint_len {
         tmp -= (*b).bigint_chiffres[i];
@@ -207,12 +207,12 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   var len int = (*a).bigint_len + (*b).bigint_len + 1
   var chiffres []int = make([]int, len)
-  for k := 0 ; k <= len - 1; k++ {
+  for k := 0 ; k < len; k++ {
     chiffres[k] = 0;
   }
-  for i := 0 ; i <= (*a).bigint_len - 1; i++ {
+  for i := 0 ; i < (*a).bigint_len; i++ {
     var retenue int = 0
-      for j := 0 ; j <= (*b).bigint_len - 1; j++ {
+      for j := 0 ; j < (*b).bigint_len; j++ {
         chiffres[i + j] = chiffres[i + j] + retenue + (*b).bigint_chiffres[j] * (*a).bigint_chiffres[i];
           retenue = chiffres[i + j] / 10;
           chiffres[i + j] = chiffres[i + j] % 10;
@@ -247,7 +247,7 @@ func bigint_premiers_chiffres(a * bigint, i int) * bigint{
 
 func bigint_shift(a * bigint, i int) * bigint{
   var chiffres []int = make([]int, (*a).bigint_len + i)
-  for k := 0 ; k <= (*a).bigint_len + i - 1; k++ {
+  for k := 0 ; k < (*a).bigint_len + i; k++ {
     if k >= i {
         chiffres[k] = (*a).bigint_chiffres[k - i];
       } else {
@@ -304,10 +304,10 @@ func bigint_of_int(i int) * bigint{
     size = 0;
   }
   var t []int = make([]int, size)
-  for j := 0 ; j <= size - 1; j++ {
+  for j := 0 ; j < size; j++ {
     t[j] = 0;
   }
-  for k := 0 ; k <= size - 1; k++ {
+  for k := 0 ; k < size; k++ {
     t[k] = i % 10;
       i /= 10;
   }
@@ -330,7 +330,7 @@ func fact_bigint(a * bigint) * bigint{
 
 func sum_chiffres_bigint(a * bigint) int{
   var out0 int = 0
-  for i := 0 ; i <= (*a).bigint_len - 1; i++ {
+  for i := 0 ; i < (*a).bigint_len; i++ {
     out0 += (*a).bigint_chiffres[i];
   }
   return out0
@@ -404,15 +404,15 @@ func euler29() int{
   var maxA int = 5
   var maxB int = 5
   var a_bigint []* bigint = make([]* bigint, maxA + 1)
-  for j := 0 ; j <= maxA + 1 - 1; j++ {
+  for j := 0 ; j < maxA + 1; j++ {
     a_bigint[j] = bigint_of_int(j * j);
   }
   var a0_bigint []* bigint = make([]* bigint, maxA + 1)
-  for j2 := 0 ; j2 <= maxA + 1 - 1; j2++ {
+  for j2 := 0 ; j2 < maxA + 1; j2++ {
     a0_bigint[j2] = bigint_of_int(j2);
   }
   var b []int = make([]int, maxA + 1)
-  for k := 0 ; k <= maxA + 1 - 1; k++ {
+  for k := 0 ; k < maxA + 1; k++ {
     b[k] = 2;
   }
   var n int = 0

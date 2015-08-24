@@ -1,7 +1,7 @@
 var util = require("util");
 function eratostene(t, max0){
   var n = 0;
-  for (var i = 2 ; i <= max0 - 1; i++)
+  for (var i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
     n ++;
@@ -20,14 +20,14 @@ function eratostene(t, max0){
 
 var maximumprimes = 6000;
 var era = new Array(maximumprimes);
-for (var j_ = 0 ; j_ <= maximumprimes - 1; j_++)
+for (var j_ = 0 ; j_ < maximumprimes; j_++)
   era[j_] = j_;
 var nprimes = eratostene(era, maximumprimes);
 var primes = new Array(nprimes);
-for (var o = 0 ; o <= nprimes - 1; o++)
+for (var o = 0 ; o < nprimes; o++)
   primes[o] = 0;
 var l = 0;
-for (var k = 2 ; k <= maximumprimes - 1; k++)
+for (var k = 2 ; k < maximumprimes; k++)
   if (era[k] == k)
 {
   primes[l] = k;
@@ -35,10 +35,10 @@ for (var k = 2 ; k <= maximumprimes - 1; k++)
 }
 util.print(l, " == ", nprimes, "\n");
 var canbe = new Array(maximumprimes);
-for (var i_ = 0 ; i_ <= maximumprimes - 1; i_++)
+for (var i_ = 0 ; i_ < maximumprimes; i_++)
   canbe[i_] = false;
-for (var i = 0 ; i <= nprimes - 1; i++)
-  for (var j = 0 ; j <= maximumprimes - 1; j++)
+for (var i = 0 ; i < nprimes; i++)
+  for (var j = 0 ; j < maximumprimes; j++)
   {
     var n = primes[i] + 2 * j * j;
     if (n < maximumprimes)

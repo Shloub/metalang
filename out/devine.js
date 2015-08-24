@@ -29,7 +29,7 @@ function read_int_(){
 function devine0(nombre, tab, len){
   var min0 = tab[0];
   var max0 = tab[1];
-  for (var i = 2 ; i <= len - 1; i++)
+  for (var i = 2 ; i < len; i++)
   {
     if (tab[i] > max0 || tab[i] < min0)
       return false;
@@ -48,7 +48,7 @@ stdinsep();
 len=read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
 {
   tmp=read_int_();
   stdinsep();

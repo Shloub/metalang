@@ -5,14 +5,14 @@ func main() {
   /* normalement on doit mettre 20 mais là on se tape un overflow */
   n ++;
   var tab [][]int = make([][]int, n)
-  for i := 0 ; i <= n - 1; i++ {
+  for i := 0 ; i < n; i++ {
     var tab2 []int = make([]int, n)
-      for j := 0 ; j <= n - 1; j++ {
+      for j := 0 ; j < n; j++ {
         tab2[j] = 0;
       }
       tab[i] = tab2;
   }
-  for l := 0 ; l <= n - 1; l++ {
+  for l := 0 ; l < n; l++ {
     tab[n - 1][l] = 1;
       tab[l][n - 1] = 1;
   }
@@ -23,8 +23,8 @@ func main() {
           tab[r][q] = tab[r + 1][q] + tab[r][q + 1];
       }
   }
-  for m := 0 ; m <= n - 1; m++ {
-    for k := 0 ; k <= n - 1; k++ {
+  for m := 0 ; m < n; m++ {
+    for k := 0 ; k < n; k++ {
         fmt.Printf("%d ", tab[m][k]);
       }
       fmt.Printf("\n");

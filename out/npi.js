@@ -41,7 +41,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 */
 function npi0(str, len){
   var stack = new Array(len);
-  for (var i = 0 ; i <= len - 1; i++)
+  for (var i = 0 ; i < len; i++)
     stack[i] = 0;
   var ptrStack = 0;
   var ptrStr = 0;
@@ -72,7 +72,7 @@ var len = 0;
 len=read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
 {
   var tmp = '\x00';
   tmp=read_char_();

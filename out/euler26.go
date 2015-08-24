@@ -5,7 +5,7 @@ func periode(restes []int, len int, a int, b int) int{
     var chiffre int = a / b
     _ = chiffre
     var reste int = a % b
-    for i := 0 ; i <= len - 1; i++ {
+    for i := 0 ; i < len; i++ {
       if restes[i] == reste {
           return len - i
         }
@@ -19,7 +19,7 @@ func periode(restes []int, len int, a int, b int) int{
 
 func main() {
   var t []int = make([]int, 1000)
-  for j := 0 ; j <= 1000 - 1; j++ {
+  for j := 0 ; j < 1000; j++ {
     t[j] = 0;
   }
   var m int = 0

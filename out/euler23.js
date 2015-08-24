@@ -1,7 +1,7 @@
 var util = require("util");
 function eratostene(t, max0){
   var n = 0;
-  for (var i = 2 ; i <= max0 - 1; i++)
+  for (var i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
     n ++;
@@ -16,7 +16,7 @@ function eratostene(t, max0){
 }
 
 function fillPrimesFactors(t, n, primes, nprimes){
-  for (var i = 0 ; i <= nprimes - 1; i++)
+  for (var i = 0 ; i < nprimes; i++)
   {
     var d = primes[i];
     while (~~(n % d) == 0)
@@ -57,7 +57,7 @@ function sumdivaux(t, n, i){
 
 function sumdiv(nprimes, primes, n){
   var t = new Array(n + 1);
-  for (var i = 0 ; i <= n + 1 - 1; i++)
+  for (var i = 0 ; i < n + 1; i++)
     t[i] = 0;
   var max0 = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max0, 0);
@@ -65,14 +65,14 @@ function sumdiv(nprimes, primes, n){
 
 var maximumprimes = 30001;
 var era = new Array(maximumprimes);
-for (var s = 0 ; s <= maximumprimes - 1; s++)
+for (var s = 0 ; s < maximumprimes; s++)
   era[s] = s;
 var nprimes = eratostene(era, maximumprimes);
 var primes = new Array(nprimes);
-for (var t = 0 ; t <= nprimes - 1; t++)
+for (var t = 0 ; t < nprimes; t++)
   primes[t] = 0;
 var l = 0;
-for (var k = 2 ; k <= maximumprimes - 1; k++)
+for (var k = 2 ; k < maximumprimes; k++)
   if (era[k] == k)
 {
   primes[l] = k;
@@ -81,10 +81,10 @@ for (var k = 2 ; k <= maximumprimes - 1; k++)
 var n = 100;
 /* 28124 ça prend trop de temps mais on arrive a passer le test */
 var abondant = new Array(n + 1);
-for (var p = 0 ; p <= n + 1 - 1; p++)
+for (var p = 0 ; p < n + 1; p++)
   abondant[p] = false;
 var summable = new Array(n + 1);
-for (var q = 0 ; q <= n + 1 - 1; q++)
+for (var q = 0 ; q < n + 1; q++)
   summable[q] = false;
 var sum = 0;
 for (var r = 2 ; r <= n; r++)

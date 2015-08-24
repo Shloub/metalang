@@ -2,7 +2,7 @@ package main
 import "fmt"
 func main() {
   var f []int = make([]int, 10)
-  for j := 0 ; j <= 10 - 1; j++ {
+  for j := 0 ; j < 10; j++ {
     f[j] = 1;
   }
   for i := 1 ; i <= 9; i++ {

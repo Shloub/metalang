@@ -8,7 +8,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 */
 var p = new Array(10);
-for (var i = 0 ; i <= 10 - 1; i++)
+for (var i = 0 ; i < 10; i++)
   p[i] = i * i * i * i * i;
 var sum = 0;
 for (var a = 0 ; a <= 9; a++)

@@ -30,7 +30,7 @@ func mktoto(v1 int) * toto{
 
 func result(t []* toto, len int) int{
   var out0 int = 0
-  for j := 0 ; j <= len - 1; j++ {
+  for j := 0 ; j < len; j++ {
     (*t[j]).blah = (*t[j]).blah + 1;
       out0 = out0 + (*t[j]).foo + (*t[j]).blah * (*t[j]).bar + (*t[j]).bar * (*t[j]).foo;
   }
@@ -40,7 +40,7 @@ func result(t []* toto, len int) int{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var t []* toto = make([]* toto, 4)
-  for i := 0 ; i <= 4 - 1; i++ {
+  for i := 0 ; i < 4; i++ {
     t[i] = mktoto(i);
   }
   fmt.Fscanf(reader, "%d", &(*t[0]).bar)

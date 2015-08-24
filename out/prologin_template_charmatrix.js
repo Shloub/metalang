@@ -34,9 +34,9 @@ function read_int_(){
 }
 function programme_candidat(tableau, taille_x, taille_y){
   var out0 = 0;
-  for (var i = 0 ; i <= taille_y - 1; i++)
+  for (var i = 0 ; i < taille_y; i++)
   {
-    for (var j = 0 ; j <= taille_x - 1; j++)
+    for (var j = 0 ; j < taille_x; j++)
     {
       out0 += tableau[i][j].charCodeAt(0) * (i + j * 2);
       util.print(tableau[i][j]);
@@ -51,10 +51,10 @@ stdinsep();
 taille_y=read_int_();
 stdinsep();
 var a = new Array(taille_y);
-for (var b = 0 ; b <= taille_y - 1; b++)
+for (var b = 0 ; b < taille_y; b++)
 {
   var c = new Array(taille_x);
-  for (var d = 0 ; d <= taille_x - 1; d++)
+  for (var d = 0 ; d < taille_x; d++)
   {
     c[d]=read_char_();
   }

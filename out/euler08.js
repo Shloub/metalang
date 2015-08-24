@@ -12,7 +12,7 @@ function read_char_(){
 }
 var i = 1;
 var last = new Array(5);
-for (var j = 0 ; j <= 5 - 1; j++)
+for (var j = 0 ; j < 5; j++)
 {
   c=read_char_();
   var d = c.charCodeAt(0) - '0'.charCodeAt(0);

@@ -2,7 +2,7 @@ package main
 import "fmt"
 func eratostene(t []int, max0 int) int{
   var n int = 0
-  for i := 2 ; i <= max0 - 1; i++ {
+  for i := 2 ; i < max0; i++ {
     if t[i] == i {
         n ++;
           var j int = i * i
@@ -16,7 +16,7 @@ func eratostene(t []int, max0 int) int{
 }
 
 func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
-  for i := 0 ; i <= nprimes - 1; i++ {
+  for i := 0 ; i < nprimes; i++ {
     var d int = primes[i]
       for n % d == 0{
         t[d] = t[d] + 1;
@@ -55,7 +55,7 @@ func sumdivaux(t []int, n int, i int) int{
 
 func sumdiv(nprimes int, primes []int, n int) int{
   var t []int = make([]int, n + 1)
-  for i := 0 ; i <= n + 1 - 1; i++ {
+  for i := 0 ; i < n + 1; i++ {
     t[i] = 0;
   }
   var max0 int = fillPrimesFactors(t, n, primes, nprimes)
@@ -65,16 +65,16 @@ func sumdiv(nprimes int, primes []int, n int) int{
 func main() {
   var maximumprimes int = 1001
   var era []int = make([]int, maximumprimes)
-  for j := 0 ; j <= maximumprimes - 1; j++ {
+  for j := 0 ; j < maximumprimes; j++ {
     era[j] = j;
   }
   var nprimes int = eratostene(era, maximumprimes)
   var primes []int = make([]int, nprimes)
-  for o := 0 ; o <= nprimes - 1; o++ {
+  for o := 0 ; o < nprimes; o++ {
     primes[o] = 0;
   }
   var l int = 0
-  for k := 2 ; k <= maximumprimes - 1; k++ {
+  for k := 2 ; k < maximumprimes; k++ {
     if era[k] == k {
         primes[l] = k;
           l ++;

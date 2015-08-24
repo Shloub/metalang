@@ -28,7 +28,7 @@ function read_int_(){
 }/* lit un sudoku sur l'entrée standard */
 function read_sudoku(){
   var out0 = new Array(9 * 9);
-  for (var i = 0 ; i <= 9 * 9 - 1; i++)
+  for (var i = 0 ; i < 9 * 9; i++)
   {
     k=read_int_();
     stdinsep();

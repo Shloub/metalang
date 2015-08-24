@@ -29,7 +29,7 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 */
 var allowed = new Array(10);
-for (var i = 0 ; i <= 10 - 1; i++)
+for (var i = 0 ; i < 10; i++)
   allowed[i] = true;
 for (var i6 = 0 ; i6 <= 1; i6++)
 {

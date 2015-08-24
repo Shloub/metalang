@@ -1,7 +1,7 @@
 var util = require("util");
 function primesfactors(n){
   var tab = new Array(n + 1);
-  for (var i = 0 ; i <= n + 1 - 1; i++)
+  for (var i = 0 ; i < n + 1; i++)
     tab[i] = 0;
   var d = 2;
   while (n != 1 && d * d <= n)
@@ -18,7 +18,7 @@ function primesfactors(n){
 
 var lim = 20;
 var o = new Array(lim + 1);
-for (var m = 0 ; m <= lim + 1 - 1; m++)
+for (var m = 0 ; m < lim + 1; m++)
   o[m] = 0;
 for (var i = 1 ; i <= lim; i++)
 {

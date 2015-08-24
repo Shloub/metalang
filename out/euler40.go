@@ -23,7 +23,7 @@ func e(t []int, n int) int{
 
 func main() {
   var t []int = make([]int, 9)
-  for i := 0 ; i <= 9 - 1; i++ {
+  for i := 0 ; i < 9; i++ {
     t[i] = exp0(10, i) - exp0(10, i - 1);
   }
   for i2 := 1 ; i2 <= 8; i2++ {

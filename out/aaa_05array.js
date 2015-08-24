@@ -9,7 +9,7 @@ function g(t, index){
 
 var j = 0;
 var a = new Array(5);
-for (var i = 0 ; i <= 5 - 1; i++)
+for (var i = 0 ; i < 5; i++)
 {
   util.print(i);
   j += i;

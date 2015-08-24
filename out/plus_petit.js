@@ -63,7 +63,7 @@ var len = 0;
 len=read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
 {
   var tmp = 0;
   tmp=read_int_();

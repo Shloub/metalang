@@ -30,20 +30,20 @@ len=read_int_();
 stdinsep();
 util.print(len, "=len\n");
 var tab1 = new Array(len);
-for (var a = 0 ; a <= len - 1; a++)
+for (var a = 0 ; a < len; a++)
 {
   tab1[a]=read_int_();
   stdinsep();
 }
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
   util.print(i, "=>", tab1[i], "\n");
 len=read_int_();
 stdinsep();
 var tab2 = new Array(len - 1);
-for (var b = 0 ; b <= len - 1 - 1; b++)
+for (var b = 0 ; b < len - 1; b++)
 {
   var c = new Array(len);
-  for (var d = 0 ; d <= len - 1; d++)
+  for (var d = 0 ; d < len; d++)
   {
     c[d]=read_int_();
     stdinsep();
@@ -52,7 +52,7 @@ for (var b = 0 ; b <= len - 1 - 1; b++)
 }
 for (var i = 0 ; i <= len - 2; i++)
 {
-  for (var j = 0 ; j <= len - 1; j++)
+  for (var j = 0 ; j < len; j++)
     util.print(tab2[i][j], " ");
   util.print("\n");
 }

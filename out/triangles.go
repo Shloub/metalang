@@ -43,9 +43,9 @@ func find0(len int, tab [][]int, cache [][]int, x int, y int) int{
 
 func find(len int, tab [][]int) int{
   var tab2 [][]int = make([][]int, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tab3 []int = make([]int, i + 1)
-      for j := 0 ; j <= i + 1 - 1; j++ {
+      for j := 0 ; j < i + 1; j++ {
         tab3[j] = 0;
       }
       tab2[i] = tab3;
@@ -59,9 +59,9 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab [][]int = make([][]int, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tab2 []int = make([]int, i + 1)
-      for j := 0 ; j <= i + 1 - 1; j++ {
+      for j := 0 ; j < i + 1; j++ {
         var tmp int = 0
           fmt.Fscanf(reader, "%d", &tmp)
           skip()
@@ -70,7 +70,7 @@ func main() {
       tab[i] = tab2;
   }
   fmt.Printf("%d\n", find(len, tab));
-  for k := 0 ; k <= len - 1; k++ {
+  for k := 0 ; k < len; k++ {
     for l := 0 ; l <= k; l++ {
         fmt.Printf("%d ", tab[k][l]);
       }

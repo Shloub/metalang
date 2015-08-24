@@ -1,7 +1,7 @@
 var util = require("util");
 function eratostene(t, max0){
   var n = 0;
-  for (var i = 2 ; i <= max0 - 1; i++)
+  for (var i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
     var j = i * i;
@@ -16,7 +16,7 @@ function eratostene(t, max0){
 }
 
 function fillPrimesFactors(t, n, primes, nprimes){
-  for (var i = 0 ; i <= nprimes - 1; i++)
+  for (var i = 0 ; i < nprimes; i++)
   {
     var d = primes[i];
     while (~~(n % d) == 0)
@@ -33,14 +33,14 @@ function fillPrimesFactors(t, n, primes, nprimes){
 function find(ndiv2){
   var maximumprimes = 110;
   var era = new Array(maximumprimes);
-  for (var j = 0 ; j <= maximumprimes - 1; j++)
+  for (var j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   var nprimes = eratostene(era, maximumprimes);
   var primes = new Array(nprimes);
-  for (var o = 0 ; o <= nprimes - 1; o++)
+  for (var o = 0 ; o < nprimes; o++)
     primes[o] = 0;
   var l = 0;
-  for (var k = 2 ; k <= maximumprimes - 1; k++)
+  for (var k = 2 ; k < maximumprimes; k++)
     if (era[k] == k)
   {
     primes[l] = k;
@@ -49,7 +49,7 @@ function find(ndiv2){
   for (var n = 1 ; n <= 10000; n++)
   {
     var primesFactors = new Array(n + 2);
-    for (var m = 0 ; m <= n + 2 - 1; m++)
+    for (var m = 0 ; m < n + 2; m++)
       primesFactors[m] = 0;
     var max0 = Math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] --;

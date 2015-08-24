@@ -3,7 +3,7 @@ import "fmt"
 import "math"
 func main() {
   var t []int = make([]int, 1001)
-  for i := 0 ; i <= 1001 - 1; i++ {
+  for i := 0 ; i < 1001; i++ {
     t[i] = 0;
   }
   for a := 1 ; a <= 1000; a++ {

@@ -13,7 +13,7 @@ function print_toto(t){
 }
 
 var tab = new Array(2);
-for (var i = 0 ; i <= 2 - 1; i++)
+for (var i = 0 ; i < 2; i++)
   tab[i] = idstring("chaine de test");
 for (var j = 0 ; j <= 1; j++)
   printstring(idstring(tab[j]));

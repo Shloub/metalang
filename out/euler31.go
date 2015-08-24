@@ -18,7 +18,7 @@ func result(sum int, t []int, maxIndex int, cache [][]int) int{
 
 func main() {
   var t []int = make([]int, 8)
-  for i := 0 ; i <= 8 - 1; i++ {
+  for i := 0 ; i < 8; i++ {
     t[i] = 0;
   }
   t[0] = 1;
@@ -30,9 +30,9 @@ func main() {
   t[6] = 100;
   t[7] = 200;
   var cache [][]int = make([][]int, 201)
-  for j := 0 ; j <= 201 - 1; j++ {
+  for j := 0 ; j < 201; j++ {
     var o []int = make([]int, 8)
-      for k := 0 ; k <= 8 - 1; k++ {
+      for k := 0 ; k < 8; k++ {
         o[k] = 0;
       }
       cache[j] = o;

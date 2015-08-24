@@ -2,7 +2,7 @@ package main
 import "fmt"
 func palindrome2(pow2 []int, n int) bool{
   var t []bool = make([]bool, 20)
-  for i := 0 ; i <= 20 - 1; i++ {
+  for i := 0 ; i < 20; i++ {
     t[i] = n / pow2[i] % 2 == 1;
   }
   var nnum int = 0
@@ -22,7 +22,7 @@ func palindrome2(pow2 []int, n int) bool{
 func main() {
   var p int = 1
   var pow2 []int = make([]int, 20)
-  for i := 0 ; i <= 20 - 1; i++ {
+  for i := 0 ; i < 20; i++ {
     p *= 2;
       pow2[i] = p / 2;
   }

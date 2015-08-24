@@ -16,7 +16,7 @@ func skip() {
 func devine0(nombre int, tab []int, len int) bool{
   var min0 int = tab[0]
   var max0 int = tab[1]
-  for i := 2 ; i <= len - 1; i++ {
+  for i := 2 ; i < len; i++ {
     if tab[i] > max0 || tab[i] < min0 {
         return false
       }
@@ -42,7 +42,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tmp int
     fmt.Fscanf(reader, "%d", &tmp)
       skip()

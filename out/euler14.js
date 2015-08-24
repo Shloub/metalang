@@ -21,7 +21,7 @@ function find(n, m){
 }
 
 var m = new Array(1000000);
-for (var j = 0 ; j <= 1000000 - 1; j++)
+for (var j = 0 ; j < 1000000; j++)
   m[j] = 0;
 var max0 = 0;
 var maxi = 0;

@@ -22,7 +22,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &strlen)
   skip()
   var tab4 []byte = make([]byte, strlen)
-  for toto := 0 ; toto <= strlen - 1; toto++ {
+  for toto := 0 ; toto < strlen; toto++ {
     var tmpc byte
     fmt.Fscanf(reader, "%c", &tmpc)
       var c int = (int)(tmpc)
@@ -31,7 +31,7 @@ func main() {
       }
       tab4[toto] = (byte)(c);
   }
-  for j := 0 ; j <= strlen - 1; j++ {
+  for j := 0 ; j < strlen; j++ {
     fmt.Printf("%c", tab4[j]);
   }
 }

@@ -28,14 +28,14 @@ function read_int_(){
 }
 function copytab(tab, len){
   var o = new Array(len);
-  for (var i = 0 ; i <= len - 1; i++)
+  for (var i = 0 ; i < len; i++)
     o[i] = tab[i];
   return o;
 }
 
 function bubblesort(tab, len){
-  for (var i = 0 ; i <= len - 1; i++)
-    for (var j = i + 1 ; j <= len - 1; j++)
+  for (var i = 0 ; i < len; i++)
+    for (var j = i + 1 ; j < len; j++)
       if (tab[i] > tab[j])
   {
     var tmp = tab[i];
@@ -82,7 +82,7 @@ var len = 2;
 len=read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i_ = 0 ; i_ <= len - 1; i_++)
+for (var i_ = 0 ; i_ < len; i_++)
 {
   var tmp = 0;
   tmp=read_int_();
@@ -91,12 +91,12 @@ for (var i_ = 0 ; i_ <= len - 1; i_++)
 }
 var tab2 = copytab(tab, len);
 bubblesort(tab2, len);
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
   util.print(tab2[i], " ");
 util.print("\n");
 var tab3 = copytab(tab, len);
 qsort0(tab3, len, 0, len - 1);
-for (var i = 0 ; i <= len - 1; i++)
+for (var i = 0 ; i < len; i++)
   util.print(tab3[i], " ");
 util.print("\n");
 

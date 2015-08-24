@@ -24,7 +24,7 @@ func max2_(a int, b int) int{
 func nbPassePartout(n int, passepartout [][]int, m int, serrures [][]int) int{
   var max_ancient int = 0
   var max_recent int = 0
-  for i := 0 ; i <= m - 1; i++ {
+  for i := 0 ; i < m; i++ {
     if serrures[i][0] == -1 && serrures[i][1] > max_ancient {
         max_ancient = serrures[i][1];
       }
@@ -34,7 +34,7 @@ func nbPassePartout(n int, passepartout [][]int, m int, serrures [][]int) int{
   }
   var max_ancient_pp int = 0
   var max_recent_pp int = 0
-  for i := 0 ; i <= n - 1; i++ {
+  for i := 0 ; i < n; i++ {
     var pp []int = passepartout[i]
       if pp[0] >= max_ancient && pp[1] >= max_recent {
         return 1
@@ -55,9 +55,9 @@ func main() {
   fmt.Fscanf(reader, "%d", &n)
   skip()
   var passepartout [][]int = make([][]int, n)
-  for i := 0 ; i <= n - 1; i++ {
+  for i := 0 ; i < n; i++ {
     var out0 []int = make([]int, 2)
-      for j := 0 ; j <= 2 - 1; j++ {
+      for j := 0 ; j < 2; j++ {
         var out01 int
         fmt.Fscanf(reader, "%d", &out01)
           skip()
@@ -69,9 +69,9 @@ func main() {
   fmt.Fscanf(reader, "%d", &m)
   skip()
   var serrures [][]int = make([][]int, m)
-  for k := 0 ; k <= m - 1; k++ {
+  for k := 0 ; k < m; k++ {
     var out1 []int = make([]int, 2)
-      for l := 0 ; l <= 2 - 1; l++ {
+      for l := 0 ; l < 2; l++ {
         var out_ int
         fmt.Fscanf(reader, "%d", &out_)
           skip()

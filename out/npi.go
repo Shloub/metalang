@@ -22,7 +22,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 */
 func npi0(str []byte, len int) int{
   var stack []int = make([]int, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     stack[i] = 0;
   }
   var ptrStack int = 0
@@ -53,7 +53,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []byte = make([]byte, len)
-  for i := 0 ; i <= len - 1; i++ {
+  for i := 0 ; i < len; i++ {
     var tmp byte = '\x00'
       fmt.Fscanf(reader, "%c", &tmp)
       tab[i] = tmp;

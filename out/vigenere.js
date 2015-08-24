@@ -47,7 +47,7 @@ function of_position_alphabet(c){
 }
 
 function crypte(taille_cle, cle, taille, message){
-  for (var i = 0 ; i <= taille - 1; i++)
+  for (var i = 0 ; i < taille; i++)
   {
     var lettre = position_alphabet(message[i]);
     if (lettre != -1)
@@ -62,7 +62,7 @@ function crypte(taille_cle, cle, taille, message){
 taille_cle=read_int_();
 stdinsep();
 var cle = new Array(taille_cle);
-for (var index = 0 ; index <= taille_cle - 1; index++)
+for (var index = 0 ; index < taille_cle; index++)
 {
   out0=read_char_();
   cle[index] = out0;
@@ -71,13 +71,13 @@ stdinsep();
 taille=read_int_();
 stdinsep();
 var message = new Array(taille);
-for (var index2 = 0 ; index2 <= taille - 1; index2++)
+for (var index2 = 0 ; index2 < taille; index2++)
 {
   out2=read_char_();
   message[index2] = out2;
 }
 crypte(taille_cle, cle, taille, message);
-for (var i = 0 ; i <= taille - 1; i++)
+for (var i = 0 ; i < taille; i++)
   util.print(message[i]);
 util.print("\n");
 

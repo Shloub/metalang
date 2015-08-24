@@ -30,23 +30,23 @@ func main() {
   fmt.Fscanf(reader, "%d", &y)
   skip()
   var tab [][]int = make([][]int, y)
-  for d := 0 ; d <= y - 1; d++ {
+  for d := 0 ; d < y; d++ {
     var e []int = make([]int, x)
-      for f := 0 ; f <= x - 1; f++ {
+      for f := 0 ; f < x; f++ {
         fmt.Fscanf(reader, "%d", &e[f])
           skip()
       }
       tab[d] = e;
   }
-  for ix := 1 ; ix <= x - 1; ix++ {
-    for iy := 1 ; iy <= y - 1; iy++ {
+  for ix := 1 ; ix < x; ix++ {
+    for iy := 1 ; iy < y; iy++ {
         if tab[iy][ix] == 1 {
             tab[iy][ix] = min2_(min2_(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1;
           }
       }
   }
-  for jy := 0 ; jy <= y - 1; jy++ {
-    for jx := 0 ; jx <= x - 1; jx++ {
+  for jy := 0 ; jy < y; jy++ {
+    for jx := 0 ; jx < x; jx++ {
         fmt.Printf("%d ", tab[jy][jx]);
       }
       fmt.Printf("\n");

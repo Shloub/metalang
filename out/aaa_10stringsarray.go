@@ -20,7 +20,7 @@ func print_toto(t * toto) {
 
 func main() {
   var tab []string = make([]string, 2)
-  for i := 0 ; i <= 2 - 1; i++ {
+  for i := 0 ; i < 2; i++ {
     tab[i] = idstring("chaine de test");
   }
   for j := 0 ; j <= 1; j++ {

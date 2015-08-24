@@ -15,7 +15,7 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   var i int = 1
   var last []int = make([]int, 5)
-  for j := 0 ; j <= 5 - 1; j++ {
+  for j := 0 ; j < 5; j++ {
     var c byte
     fmt.Fscanf(reader, "%c", &c)
       var d int = (int)(c) - (int)('0')
