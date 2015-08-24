@@ -196,13 +196,23 @@ func skip() {
   | _ -> assert false
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"
+    let default () = Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"
       self#binding varname
       self#expr expr1
       self#binding varname
       self#expr expr2
       self#binding varname
       self#instructions li
+    in match Expr.unfix expr2 with
+    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1))) ->
+        Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <@ %a;@ %a++ {@]@\n  @[<v 2>%a@]@\n}"
+          self#binding varname
+          self#expr expr1
+          self#binding varname
+          self#expr expr3
+          self#binding varname
+          self#instructions li
+    | _ -> default ()
 
   method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
