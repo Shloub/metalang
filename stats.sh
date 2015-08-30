@@ -30,6 +30,7 @@ scala=$(st  "scala" "out")
 smalltalk=$(st  "st" "out")
 forth=$(st  "fs" "out")
 groovy=$(st  "groovy" "out")
+fsharp=$(st  "fsscript" "out")
 
 c=$(( $c * 1000 / $metalang))
 cc=$(( $cc * 1000 / $metalang))
@@ -55,6 +56,7 @@ scala=$(( $scala * 1000 / $metalang))
 smalltalk=$(( $smalltalk * 1000 / $metalang))
 forth=$(( $forth * 1000 / $metalang))
 groovy=$(( $groovy * 1000 / $metalang))
+fsharp=$(( $fsharp * 1000 / $metalang))
 
 file="stats_repartition.dat"
 
@@ -106,6 +108,7 @@ scala $scala
 forth $forth
 java $java
 groovy $groovy
+fsharp $fsharp
 " | swap | sort -n | swap ) > "$file"
 
 filestatsplot(){

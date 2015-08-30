@@ -3,6 +3,7 @@ accélérer les tests :
 
 Langage & Compilateur :
   C if indentation
+  F# macros
   smalltalk macros
   forth macros & return intelligent
   structures as couples pour les langages qui le supportent
@@ -19,7 +20,6 @@ outils :
   une man page
 
 autres printers :
-  f#
   erlang
   rhino
   clojure
