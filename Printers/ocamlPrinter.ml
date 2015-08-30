@@ -372,9 +372,14 @@ class camlPrinter = object(self)
 
   (** declare a variable and read his value from stdin *)
   method read_decl f t v =
-    Format.fprintf f "@[let %a = Scanf.scanf \"%a\" (fun x -> x) in@]"
-      self#binding v
-      self#format_type t
+    if BindingSet.mem v refbindings then
+      Format.fprintf f "@[let %a = Scanf.scanf \"%a\" (fun x -> ref x) in@]"
+        self#binding v
+        self#format_type t
+    else
+      Format.fprintf f "@[let %a = Scanf.scanf \"%a\" (fun x -> x) in@]"
+        self#binding v
+        self#format_type t
 
   (** find references variables from a list of instructions *)
   method calc_refs instrs =

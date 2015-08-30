@@ -106,7 +106,7 @@ def bool is_number(char c)
 end
 
 macro int native_macro_max2(int a, int b)
-  ml do "(max ($a) ($b))"
+  ml do "max ($a) ($b)"
   js do "Math.max($a, $b)"
   java do "Math.max($a, $b)"
   groovy do "Math.max($a, $b)"
@@ -165,7 +165,7 @@ def inline int max2(int a, int b)
 end
 
 macro int native_macro_min2(int a, int b)
-  ml do "(min ($a) ($b))"
+  ml do "min ($a) ($b)"
   js do "Math.min($a, $b)"
   java do "Math.min($a, $b)"
   groovy do "Math.min($a, $b)"

@@ -148,7 +148,7 @@ let ptype ty f () =
   | Integer -> fprintf f "int"
   | String -> fprintf f "string"
   | Array a -> fprintf f "%a array" a ()
-  | Void ->  fprintf f "void"
+  | Void ->  fprintf f "unit"
   | Bool -> fprintf f "bool"
   | Char -> fprintf f "char"
   | Named n -> fprintf f "%s" n
