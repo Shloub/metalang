@@ -75,7 +75,7 @@ let bigint_lt a b =
 
 let add_bigint_positif a b =
   (* Une addition ou on en a rien a faire des signes *)
-  let len = ref( (max (a.bigint_len) (b.bigint_len)) + 1 ) in
+  let len = ref( max (a.bigint_len) (b.bigint_len) + 1 ) in
   let retenue = ref( 0 ) in
   let chiffres = Array.init (!len) (fun i ->
     let tmp = ref( (!retenue) ) in
@@ -178,7 +178,7 @@ D'ou le nom de la fonction. *)
   bigint_chiffres=chiffres}
 
 let bigint_premiers_chiffres a i =
-  let len = ref( (min (i) (a.bigint_len)) ) in
+  let len = ref( min (i) (a.bigint_len) ) in
   while (!len) <> 0 && a.bigint_chiffres.((!len) - 1) = 0
   do
       len := (!len) - 1
@@ -207,7 +207,7 @@ let rec mul_bigint aa bb =
   else
     begin
       (* Algorithme de Karatsuba *)
-      let split = (min (aa.bigint_len) (bb.bigint_len)) / 2 in
+      let split = min (aa.bigint_len) (bb.bigint_len) / 2 in
       let a = bigint_shift aa (- split) in
       let b = bigint_premiers_chiffres aa split in
       let c = bigint_shift bb (- split) in

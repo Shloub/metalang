@@ -22,7 +22,7 @@ begin
   for i = 1 to lim do
     let t = primesfactors i in
     for j = 1 to i do
-      o.(j) <- (max (o.(j)) (t.(j)))
+      o.(j) <- max (o.(j)) (t.(j))
     done
   done;
   let product = ref( 1 ) in

@@ -57,7 +57,7 @@ begin
                   end
               end
             else
-              stop := (min ((!stop)) (i))
+              stop := min ((!stop)) (i)
           end
       done;
       len := (!len) + 1

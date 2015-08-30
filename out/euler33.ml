@@ -1,6 +1,6 @@
 let rec pgcd a b =
-  let c = (min (a) (b)) in
-  let d = (max (a) (b)) in
+  let c = min (a) (b) in
+  let d = max (a) (b) in
   let reste = d mod c in
   if reste = 0 then
     c

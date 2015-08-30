@@ -51,7 +51,7 @@ let find ndiv2 =
   done;
   for n = 1 to 10000 do
     let primesFactors = Array.make (n + 2) 0 in
-    let max0 = (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)) in
+    let max0 = max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes) in
     primesFactors.(2) <- primesFactors.(2) - 1;
     let ndivs = ref( 1 ) in
     for i = 0 to max0 do

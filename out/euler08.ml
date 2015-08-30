@@ -26,7 +26,7 @@ begin
       end;
     last.((!index)) <- f;
     index := ((!index) + 1) mod 5;
-    max0 := (max ((!max0)) ((!i)))
+    max0 := max ((!max0)) ((!i))
   done;
   Printf.printf "%d\n" (!max0)
 end
