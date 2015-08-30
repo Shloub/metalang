@@ -10,6 +10,7 @@ macro int sqrt_(int c)
   ml do "(int_of_float (sqrt (float_of_int ( $c))))"
   js do "Math.floor(Math.sqrt($c))"
   csharp do "(int)Math.Sqrt($c)"
+  fsharp do "(int (sqrt (float ($c))))"
   py do "math.floor(math.sqrt($c))"
   ruby do "Math.sqrt($c).to_i"
   pas do "Floor(Sqrt($c))"
@@ -65,6 +66,7 @@ macro char char_of_int(int c)
   lua  do "$c"
   ruby do "($c).chr"
   st do "(($c) asCharacter)"
+  fsharp do "char ($c)"
   *  do "$c"
 end
 tag macro_char_of_int_pure
@@ -93,6 +95,7 @@ macro int int_of_char(char c)
   java do "(int)($c)"
   csharp do "(int)($c)"
   groovy do "(0+$c)"
+  fsharp do "int ($c)"
   *  do "$c"
 end
 tag macro_int_of_char_pure

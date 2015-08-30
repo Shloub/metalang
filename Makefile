@@ -94,6 +94,9 @@ TMPFILES	:=\
 	$(addsuffix .cc.bin.out, $(TESTS)) \
 	$(addsuffix .go, $(TESTS)) \
 	$(addsuffix .go.out, $(TESTS)) \
+	$(addsuffix .fsscript, $(TESTS)) \
+	$(addsuffix .fsscript.exe, $(TESTS)) \
+	$(addsuffix .fsscript.exe.out, $(TESTS)) \
 	$(addsuffix .pas, $(TESTS)) \
 	$(addsuffix .pas.bin, $(TESTS)) \
 	$(addsuffix .pas.bin.out, $(TESTS)) \
@@ -132,7 +135,7 @@ out/%.$1 : tests/prog/%.metalang tests/prog/%.in metalang Stdlib/stdlib.metalang
 	 ./metalang -quiet -o out -lang $1 $$< || exit 1; \
 	fi
 endef
-$(foreach i, groovy fs scala metalang st lua rkt php cc c py rb hs ml pl fun.ml adb pas vb cs js java m cl go, $(eval $(call GENERATION,$(i))))
+$(foreach i, fsscript groovy fs scala metalang st lua rkt php cc c py rb hs ml pl fun.ml adb pas vb cs js java m cl go, $(eval $(call GENERATION,$(i))))
 
 # compilation dans les différents langages
 
@@ -164,6 +167,9 @@ out/%.exe : out/%.cs
 
 out/%.exeVB : out/%.vb
 	@vbnc2 -removeintchecks $< -out:$@ || exit 1
+
+out/%.fsscript.exe  : out/%.fsscript
+	fsharpc $< -o $@ || exit 1
 
 out/%.fun.ml.native : out/%.fun.ml
 	@ocamlopt -w +A -g out/$(basename $*).fun.ml -o out/$(basename $*).fun.ml.native || exit 1
@@ -202,6 +208,9 @@ out/%.ml.native.out : out/%.ml.native
 
 out/%.hs.exe.out : out/%.hs.exe
 	./$< +RTS -K1G -RTS < tests/prog/$(basename $*).in > $@ || exit 1;
+
+out/%.fsscript.exe.out : out/%.fsscript.exe
+	./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.go.out : out/%.go
 	go run $< < tests/prog/$(basename $*).in > $@ || exit 1;
@@ -259,7 +268,7 @@ out/%.groovy.out : out/%.groovy
 
 # test global
 
-out/%.test : out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out out/%.lua.out out/%.scala.out out/%.st.out out/%.fs.out out/%.groovy.out
+out/%.test : out/%.fsscript.exe.out out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out out/%.lua.out out/%.scala.out out/%.st.out out/%.fs.out out/%.groovy.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -298,7 +307,7 @@ test_$1 : $(addsuffix .test_$1, $(TESTS))
 
 endef
 
-$(foreach i, groovy fs exeVB st adb.bin rkt fun.ml pl rkt m.bin ml py php rb eval js cc.bin c.bin ml.native pas.bin class exe go cl fun.ml.native hs.exe lua scala, $(eval $(call TEST2,$(i))))
+$(foreach i, fsscript.exe groovy fs exeVB st adb.bin rkt fun.ml pl rkt m.bin ml py php rb eval js cc.bin c.bin ml.native pas.bin class exe go cl fun.ml.native hs.exe lua scala, $(eval $(call TEST2,$(i))))
 
 # tests qui ne doivent pas compiler
 

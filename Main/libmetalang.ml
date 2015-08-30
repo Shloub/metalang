@@ -268,6 +268,7 @@ let languages, printers =
     "py",      (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false) => new PyPrinter.pyPrinter ;
     "pl",      (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new PerlPrinter.perlPrinter ;
     "ml",      (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false) => new OcamlPrinter.camlPrinter ;
+    "fsscript",  (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false) => new FSharpPrinter.fsharpPrinter ;
     "rb",      (false, clike_passes ~tuple:false ~record:false ~array:false ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new RbPrinter.rbPrinter ;
     "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:true  ~macrotize:true) => new OcamlFunPrinter.camlFunPrinter ;
     "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:false ~macrotize:true ) => new RacketPrinter.racketPrinter ;
@@ -427,6 +428,7 @@ enum @target_language
   LANG_Cc
   LANG_Cl
   LANG_Cs
+  LANG_Fsscript
   LANG_Fun_ml
   LANG_Fs
   LANG_Go
