@@ -64,8 +64,6 @@ let print_expr tyenv macros e f p =
 class csharpPrinter = object(self)
   inherit JavaPrinter.javaPrinter as super
 
-  method combine_formats () = false
-
   method lang () = "csharp"
 
   method exprp p f e = print_expr (self#getTyperEnv ())
@@ -111,7 +109,7 @@ static char readChar_(){
   if (buffer.Length == 0){
     String tmp = Console.ReadLine();
     eof = tmp == null;
-    buffer = \"\\n\"+tmp;
+    buffer = tmp + \"\\n\";
   }
   char c = buffer[0];
   return c;
