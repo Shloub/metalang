@@ -5,13 +5,10 @@ Module aaa_read
 Dim eof As Boolean
 Dim buffer As String
 Function readChar_() As Char
-  If buffer Is Nothing Then
-    buffer = Console.ReadLine()
-  End If
-  If buffer.Length = 0 Then
+  If buffer Is Nothing OrElse buffer.Length = 0 Then
     Dim tmp As String = Console.ReadLine()
     eof = (tmp Is Nothing)
-    buffer = Chr(10)+tmp
+    buffer = tmp + Chr(10)
   End If
   Return buffer(0)
 End Function
