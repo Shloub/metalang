@@ -1,0 +1,26 @@
+let rec chiffre_sort a =
+  if a < 10 then
+    a
+    
+  else
+      let b = chiffre_sort (a / 10)
+      let c = a % 10
+      let d = b % 10
+      let e = b / 10
+      if c < d then
+        c + b * 10
+        
+      else
+        d + chiffre_sort (c + e * 10) * 10
+        
+
+let same_numbers a b c d e f : bool =
+  let ca = chiffre_sort a
+  ca = chiffre_sort b && ca = chiffre_sort c && ca = chiffre_sort d && ca = chiffre_sort e && ca = chiffre_sort f
+
+let () =
+  let num = 142857
+  if same_numbers num (num * 2) (num * 3) (num * 4) (num * 6) (num * 5) then
+    Printf.printf "%d %d %d %d %d %d\n" num (num * 2) (num * 3) (num * 4) (num * 5) (num * 6)
+    
+ 

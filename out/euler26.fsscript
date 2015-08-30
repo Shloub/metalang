@@ -1,0 +1,31 @@
+exception Found_1 of int
+
+let periode (restes:int array) len a b =
+  let len = ref len
+  let a = ref a
+  try
+  while (!a) <> 0 do
+    let _chiffre = (!a) / b
+    let reste = (!a) % b
+    for i = 0 to (!len) - 1 do
+      if restes.[i] = reste then
+        raise (Found_1((!len) - i))
+        
+    restes.[(!len)] <- reste
+    len := (!len) + 1
+    a := reste * 10
+  
+  0
+  with Found_1 (out) -> out
+
+let () =
+  let t = Array.create 1000 0
+  let m = ref( 0 )
+  let mi = ref( 0 )
+  for i = 1 to 1000 do
+    let p = periode t 0 1 i
+    if p > (!m) then
+        mi := i
+        m := p
+  Printf.printf "%d\n%d\n" (!mi) (!m)
+ 

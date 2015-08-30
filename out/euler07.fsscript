@@ -1,0 +1,30 @@
+exception Found_1 of bool
+
+let divisible n (t:int array) size : bool =
+  try
+  for i = 0 to size - 1 do
+    if n % t.[i] = 0 then
+      raise (Found_1(true))
+      
+  false
+  with Found_1 (out) -> out
+
+let find n (t:int array) used nth =
+  let n = ref n
+  let used = ref used
+  while (!used) <> nth do
+    if divisible (!n) t (!used) then
+      n := (!n) + 1
+      
+    else
+        t.[(!used)] <- (!n)
+        n := (!n) + 1
+        used := (!used) + 1
+  
+  t.[(!used) - 1]
+
+let () =
+  let n = 10001
+  let t = Array.create n 2
+  Printf.printf "%d\n" (find 3 t 1 n)
+ 

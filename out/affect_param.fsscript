@@ -1,0 +1,9 @@
+let foo a =
+  let a = 4
+  ()
+
+let () =
+  let a = 0
+  foo a
+  Printf.printf "%d\n" a
+ 

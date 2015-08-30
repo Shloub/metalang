@@ -1,0 +1,22 @@
+let () =
+  let _maximum = 1
+  let b0 = ref( 2 )
+  let a = ref( 408464633 )
+  let sqrtia = ref( (int (sqrt (float ((!a))))) )
+  while (!a) <> 1 do
+    let b = ref( (!b0) )
+    let found = ref( false )
+    while (!b) <= (!sqrtia) do
+      if (!a) % (!b) = 0 then
+          a := (!a) / (!b)
+          b0 := (!b)
+          b := (!a)
+          sqrtia := (int (sqrt (float ((!a)))))
+          found := true
+      b := (!b) + 1
+    
+    if (not (!found)) then
+        Printf.printf "%d\n" (!a)
+        a := 1
+  
+ 

@@ -1,0 +1,102 @@
+
+open System
+let eof = ref false
+let buffer = ref ""
+let readChar_ () =
+  if (!buffer) = "" then
+    let tmp = Console.ReadLine()
+    eof := tmp = null
+    buffer := tmp + "\n"
+  (!buffer).[0]
+
+let consommeChar () =
+  ignore (readChar_ ())
+  buffer := (!buffer).[1..]
+
+let stdin_sep () =
+  let cond () =
+    if !eof then
+      false
+    else
+      let c = readChar_()
+      c = ' ' || c = '\n' || c = '\t' || c = '\r'
+  while cond () do
+    consommeChar ()
+
+let readInt () =
+  let sign =
+    if readChar_ () = '-' then
+      consommeChar ()
+      -1
+    else 1
+  let rec loop i =
+    let c = readChar_ ()
+    if c <= '9' && c >= '0' then
+      consommeChar ()
+      loop (i * 10 + (int c) - (int '0'))
+    else
+      i * sign
+  loop 0
+
+let copytab (tab:int array) len : int array =
+  let o = Array.init len (fun i ->
+    tab.[i])
+  o
+
+let bubblesort (tab:int array) len =
+  for i = 0 to len - 1 do
+    for j = i + 1 to len - 1 do
+      if tab.[i] > tab.[j] then
+          let tmp = tab.[i]
+          tab.[i] <- tab.[j]
+          tab.[j] <- tmp
+
+let rec qsort0 (tab:int array) len i j =
+  let i = ref i
+  let j = ref j
+  if (!i) < (!j) then
+      let i0 = (!i)
+      let j0 = (!j)
+      (* pivot : tab[0] *)
+      while (!i) <> (!j) do
+        if tab.[(!i)] > tab.[(!j)] then
+            if (!i) = (!j) - 1 then
+                (* on inverse simplement*)
+                let tmp = tab.[(!i)]
+                tab.[(!i)] <- tab.[(!j)]
+                tab.[(!j)] <- tmp
+                i := (!i) + 1
+            else
+                (* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] *)
+                let tmp = tab.[(!i)]
+                tab.[(!i)] <- tab.[(!j)]
+                tab.[(!j)] <- tab.[(!i) + 1]
+                tab.[(!i) + 1] <- tmp
+                i := (!i) + 1
+        else
+          j := (!j) - 1
+          
+      
+      qsort0 tab len i0 ((!i) - 1)
+      qsort0 tab len ((!i) + 1) j0
+
+let () =
+  let len = ref( 2 )
+  len := readInt()
+  stdin_sep();
+  let tab = Array.init (!len) (fun _i_ ->
+    let tmp = ref( 0 )
+    tmp := readInt()
+    stdin_sep();
+    (!tmp))
+  let tab2 = copytab tab (!len)
+  bubblesort tab2 (!len)
+  for i = 0 to (!len) - 1 do
+    Printf.printf "%d " tab2.[i]
+  Printf.printf "\n"
+  let tab3 = copytab tab (!len)
+  qsort0 tab3 (!len) 0 ((!len) - 1)
+  for i = 0 to (!len) - 1 do
+    Printf.printf "%d " tab3.[i]
+  Printf.printf "\n"
+ 

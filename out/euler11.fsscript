@@ -1,0 +1,99 @@
+
+open System
+let eof = ref false
+let buffer = ref ""
+let readChar_ () =
+  if (!buffer) = "" then
+    let tmp = Console.ReadLine()
+    eof := tmp = null
+    buffer := tmp + "\n"
+  (!buffer).[0]
+
+let consommeChar () =
+  ignore (readChar_ ())
+  buffer := (!buffer).[1..]
+
+let stdin_sep () =
+  let cond () =
+    if !eof then
+      false
+    else
+      let c = readChar_()
+      c = ' ' || c = '\n' || c = '\t' || c = '\r'
+  while cond () do
+    consommeChar ()
+
+let readInt () =
+  let sign =
+    if readChar_ () = '-' then
+      consommeChar ()
+      -1
+    else 1
+  let rec loop i =
+    let c = readChar_ ()
+    if c <= '9' && c >= '0' then
+      consommeChar ()
+      loop (i * 10 + (int c) - (int '0'))
+    else
+      i * sign
+  loop 0
+
+let max2_ a b =
+  if a > b then
+    a
+    
+  else
+    b
+    
+
+let rec find n (m:int array array) x y dx dy =
+  if x < 0 || x = 20 || y < 0 || y = 20 then
+    (- 1)
+    
+  else if n = 0 then
+    1
+    
+  else
+    m.[y].[x] * find (n - 1) m (x + dx) (y + dy) dx dy
+    
+
+let () =
+  let directions = Array.init 8 (fun i ->
+    if i = 0 then
+      (0, 1)
+      
+    else if i = 1 then
+      (1, 0)
+      
+    else if i = 2 then
+      (0, (- 1))
+      
+    else if i = 3 then
+      ((- 1), 0)
+      
+    else if i = 4 then
+      (1, 1)
+      
+    else if i = 5 then
+      (1, (- 1))
+      
+    else if i = 6 then
+      ((- 1), 1)
+      
+    else
+      ((- 1), (- 1))
+      )
+  let max0 = ref( 0 )
+  let m = Array.init 20 (fun _c ->
+    let e = Array.init 20 (fun _f ->
+      let d = readInt()
+      stdin_sep();
+      d)
+    e)
+  for j = 0 to 7 do
+    let (dx, dy) = directions.[j]
+    for x = 0 to 19 do
+      for y = 0 to 19 do
+        max0 := max2_ (!max0) (find 4 m x y dx dy)
+  Printf.printf "%d\n" (!max0)
+ 

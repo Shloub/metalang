@@ -1,0 +1,55 @@
+
+open System
+let eof = ref false
+let buffer = ref ""
+let readChar_ () =
+  if (!buffer) = "" then
+    let tmp = Console.ReadLine()
+    eof := tmp = null
+    buffer := tmp + "\n"
+  (!buffer).[0]
+
+let consommeChar () =
+  ignore (readChar_ ())
+  buffer := (!buffer).[1..]
+
+let readChar () =
+  let out_ = readChar_ ()
+  consommeChar ()
+  out_
+
+let max2_ a b =
+  if a > b then
+    a
+    
+  else
+    b
+    
+
+let () =
+  let i = ref( 1 )
+  let last = Array.init 5 (fun _j ->
+    let c = readChar()
+    let d = int (c) - int ('0')
+    i := (!i) * d
+    d)
+  let max0 = ref( (!i) )
+  let index = ref( 0 )
+  let nskipdiv = ref( 0 )
+  for _k = 1 to 995 do
+    let e = readChar()
+    let f = int (e) - int ('0')
+    if f = 0 then
+        i := 1
+        nskipdiv := 4
+    else
+        i := (!i) * f
+        if (!nskipdiv) < 0 then
+          i := (!i) / last.[(!index)]
+          
+        nskipdiv := (!nskipdiv) - 1
+    last.[(!index)] <- f
+    index := ((!index) + 1) % 5
+    max0 := max2_ (!max0) (!i)
+  Printf.printf "%d\n" (!max0)
+ 

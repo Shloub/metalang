@@ -1,0 +1,30 @@
+let fact n =
+  let prod = ref( 1 )
+  for i = 2 to n do
+    prod := (!prod) * i
+  (!prod)
+
+let show lim nth =
+  let nth = ref nth
+  let _t = Array.init lim (fun i ->
+    i)
+  let pris = Array.create lim false
+  for k = 1 to lim - 1 do
+    let n = fact (lim - k)
+    let nchiffre = ref( (!nth) / n )
+    nth := (!nth) % n
+    for l = 0 to lim - 1 do
+      if (not pris.[l]) then
+          if (!nchiffre) = 0 then
+              Printf.printf "%d" l
+              pris.[l] <- true
+          nchiffre := (!nchiffre) - 1
+  for m = 0 to lim - 1 do
+    if (not pris.[m]) then
+      Printf.printf "%d" m
+      
+  Printf.printf "\n"
+
+let () =
+  show 10 999999
+ 

@@ -1,0 +1,8 @@
+let () =
+  let i = 4
+  (*while i < 10 do *)
+  Printf.printf "%d" i
+  let i = i + 1
+  (*  end *)
+  Printf.printf "%d" i
+ 

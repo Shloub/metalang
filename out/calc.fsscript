@@ -1,0 +1,18 @@
+(*
+La suite de fibonaci
+*)
+let fibo a b i =
+  let out_ = ref( 0 )
+  let a2 = ref( a )
+  let b2 = ref( b )
+  for j = 0 to i + 1 do
+    Printf.printf "%d" j
+    out_ := (!out_) + (!a2)
+    let tmp = (!b2)
+    b2 := (!b2) + (!a2)
+    a2 := tmp
+  (!out_)
+
+let () =
+  Printf.printf "%d" (fibo 1 2 4)
+ 

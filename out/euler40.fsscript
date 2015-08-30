@@ -1,0 +1,47 @@
+let exp0 a e =
+  let o = ref( 1 )
+  for _i = 1 to e do
+    o := (!o) * a
+  (!o)
+
+exception Found_1 of int
+
+let e (t:int array) n =
+  let n = ref n
+  try
+  for i = 1 to 8 do
+    if (!n) >= t.[i] * i then
+      n := (!n) - t.[i] * i
+      
+    else
+        let nombre = exp0 10 (i - 1) + (!n) / i
+        let chiffre = i - 1 - (!n) % i
+        raise (Found_1(nombre / exp0 10 chiffre % 10))
+  (- 1)
+  with Found_1 (out) -> out
+
+let () =
+  let t = Array.init 9 (fun i ->
+    exp0 10 i - exp0 10 (i - 1))
+  for i2 = 1 to 8 do
+    Printf.printf "%d => %d\n" i2 t.[i2]
+  for j = 0 to 80 do
+    Printf.printf "%d" (e t j)
+  Printf.printf "\n"
+  for k = 1 to 50 do
+    Printf.printf "%d" k
+  Printf.printf "\n"
+  for j2 = 169 to 220 do
+    Printf.printf "%d" (e t j2)
+  Printf.printf "\n"
+  for k2 = 90 to 110 do
+    Printf.printf "%d" k2
+  Printf.printf "\n"
+  let out0 = ref( 1 )
+  for l = 0 to 6 do
+    let puiss = exp0 10 l
+    let v = e t (puiss - 1)
+    out0 := (!out0) * v
+    Printf.printf "10^%d=%d v=%d\n" l puiss v
+  Printf.printf "%d\n" (!out0)
+ 

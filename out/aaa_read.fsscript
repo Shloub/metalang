@@ -1,0 +1,80 @@
+
+open System
+let eof = ref false
+let buffer = ref ""
+let readChar_ () =
+  if (!buffer) = "" then
+    let tmp = Console.ReadLine()
+    eof := tmp = null
+    buffer := tmp + "\n"
+  (!buffer).[0]
+
+let consommeChar () =
+  ignore (readChar_ ())
+  buffer := (!buffer).[1..]
+
+let readChar () =
+  let out_ = readChar_ ()
+  consommeChar ()
+  out_
+
+let stdin_sep () =
+  let cond () =
+    if !eof then
+      false
+    else
+      let c = readChar_()
+      c = ' ' || c = '\n' || c = '\t' || c = '\r'
+  while cond () do
+    consommeChar ()
+
+let readInt () =
+  let sign =
+    if readChar_ () = '-' then
+      consommeChar ()
+      -1
+    else 1
+  let rec loop i =
+    let c = readChar_ ()
+    if c <= '9' && c >= '0' then
+      consommeChar ()
+      loop (i * 10 + (int c) - (int '0'))
+    else
+      i * sign
+  loop 0
+(*
+Ce test permet de vérifier si les différents backends pour les langages implémentent bien
+read int, read char et skip
+*)
+let () =
+  let len = readInt()
+  stdin_sep();
+  Printf.printf "%d=len\n" len
+  let len = len * 2
+  Printf.printf "len*2=%d\n" len
+  let len = len / 2
+  let _tab = Array.init len (fun i ->
+    let tmpi1 = readInt()
+    stdin_sep();
+    Printf.printf "%d=>%d " i tmpi1
+    tmpi1)
+  Printf.printf "\n"
+  let _tab2 = Array.init len (fun i_ ->
+    let tmpi2 = readInt()
+    stdin_sep();
+    Printf.printf "%d==>%d " i_ tmpi2
+    tmpi2)
+  let strlen = readInt()
+  stdin_sep();
+  Printf.printf "%d=strlen\n" strlen
+  let tab4 = Array.init strlen (fun _toto ->
+    let tmpc = readChar()
+    let c = ref( int (tmpc) )
+    Printf.printf "%c:%d " tmpc (!c)
+    if tmpc <> ' ' then
+      c := ((!c) - int ('a') + 13) % 26 + int ('a')
+      
+    char ((!c)))
+  for j = 0 to strlen - 1 do
+    Printf.printf "%c" tab4.[j]
+ 

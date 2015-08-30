@@ -1,0 +1,7 @@
+let () =
+  let lim = 100
+  let sum = lim * (lim + 1) / 2
+  let carressum = sum * sum
+  let sumcarres = lim * (lim + 1) * (2 * lim + 1) / 6
+  Printf.printf "%d" (carressum - sumcarres)
+ 

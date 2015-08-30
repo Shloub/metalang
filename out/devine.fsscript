@@ -1,0 +1,77 @@
+
+open System
+let eof = ref false
+let buffer = ref ""
+let readChar_ () =
+  if (!buffer) = "" then
+    let tmp = Console.ReadLine()
+    eof := tmp = null
+    buffer := tmp + "\n"
+  (!buffer).[0]
+
+let consommeChar () =
+  ignore (readChar_ ())
+  buffer := (!buffer).[1..]
+
+let stdin_sep () =
+  let cond () =
+    if !eof then
+      false
+    else
+      let c = readChar_()
+      c = ' ' || c = '\n' || c = '\t' || c = '\r'
+  while cond () do
+    consommeChar ()
+
+let readInt () =
+  let sign =
+    if readChar_ () = '-' then
+      consommeChar ()
+      -1
+    else 1
+  let rec loop i =
+    let c = readChar_ ()
+    if c <= '9' && c >= '0' then
+      consommeChar ()
+      loop (i * 10 + (int c) - (int '0'))
+    else
+      i * sign
+  loop 0
+exception Found_1 of bool
+
+let devine0 nombre (tab:int array) len : bool =
+  try
+  let min0 = ref( tab.[0] )
+  let max0 = ref( tab.[1] )
+  for i = 2 to len - 1 do
+    if tab.[i] > (!max0) || tab.[i] < (!min0) then
+      raise (Found_1(false))
+      
+    if tab.[i] < nombre then
+      min0 := tab.[i]
+      
+    if tab.[i] > nombre then
+      max0 := tab.[i]
+      
+    if tab.[i] = nombre && len <> i + 1 then
+      raise (Found_1(false))
+      
+  true
+  with Found_1 (out) -> out
+
+let () =
+  let nombre = readInt()
+  stdin_sep();
+  let len = readInt()
+  stdin_sep();
+  let tab = Array.init len (fun _i ->
+    let tmp = readInt()
+    stdin_sep();
+    tmp)
+  if devine0 nombre tab len then
+    Printf.printf "True"
+    
+  else
+    Printf.printf "False"
+    
+ 

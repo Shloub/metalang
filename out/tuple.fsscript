@@ -1,0 +1,9 @@
+let f (tuple0:(int * int)) : (int * int) =
+  let (a, b) = tuple0
+  (a + 1, b + 1)
+
+let () =
+  let t = f (0, 1)
+  let (a, b) = t
+  Printf.printf "%d -- %d--\n" a b
+ 

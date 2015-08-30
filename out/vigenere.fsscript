@@ -1,0 +1,85 @@
+
+open System
+let eof = ref false
+let buffer = ref ""
+let readChar_ () =
+  if (!buffer) = "" then
+    let tmp = Console.ReadLine()
+    eof := tmp = null
+    buffer := tmp + "\n"
+  (!buffer).[0]
+
+let consommeChar () =
+  ignore (readChar_ ())
+  buffer := (!buffer).[1..]
+
+let readChar () =
+  let out_ = readChar_ ()
+  consommeChar ()
+  out_
+
+let stdin_sep () =
+  let cond () =
+    if !eof then
+      false
+    else
+      let c = readChar_()
+      c = ' ' || c = '\n' || c = '\t' || c = '\r'
+  while cond () do
+    consommeChar ()
+
+let readInt () =
+  let sign =
+    if readChar_ () = '-' then
+      consommeChar ()
+      -1
+    else 1
+  let rec loop i =
+    let c = readChar_ ()
+    if c <= '9' && c >= '0' then
+      consommeChar ()
+      loop (i * 10 + (int c) - (int '0'))
+    else
+      i * sign
+  loop 0
+
+let position_alphabet (c:char) =
+  let i = int (c)
+  if i <= int ('Z') && i >= int ('A') then
+    i - int ('A')
+    
+  else if i <= int ('z') && i >= int ('a') then
+    i - int ('a')
+    
+  else
+    (- 1)
+    
+
+let of_position_alphabet c : char =
+  char (c + int ('a'))
+
+let crypte taille_cle (cle:char array) taille (message:char array) =
+  for i = 0 to taille - 1 do
+    let lettre = position_alphabet message.[i]
+    if lettre <> (- 1) then
+        let addon = position_alphabet cle.[i % taille_cle]
+        let new0 = (addon + lettre) % 26
+        message.[i] <- of_position_alphabet new0
+
+let () =
+  let taille_cle = readInt()
+  stdin_sep();
+  let cle = Array.init taille_cle (fun _index ->
+    let out0 = readChar()
+    out0)
+  stdin_sep();
+  let taille = readInt()
+  stdin_sep();
+  let message = Array.init taille (fun _index2 ->
+    let out2 = readChar()
+    out2)
+  crypte taille_cle cle taille message
+  for i = 0 to taille - 1 do
+    Printf.printf "%c" message.[i]
+  Printf.printf "\n"
+ 

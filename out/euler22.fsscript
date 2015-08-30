@@ -1,0 +1,63 @@
+
+open System
+let eof = ref false
+let buffer = ref ""
+let readChar_ () =
+  if (!buffer) = "" then
+    let tmp = Console.ReadLine()
+    eof := tmp = null
+    buffer := tmp + "\n"
+  (!buffer).[0]
+
+let consommeChar () =
+  ignore (readChar_ ())
+  buffer := (!buffer).[1..]
+
+let readChar () =
+  let out_ = readChar_ ()
+  consommeChar ()
+  out_
+
+let stdin_sep () =
+  let cond () =
+    if !eof then
+      false
+    else
+      let c = readChar_()
+      c = ' ' || c = '\n' || c = '\t' || c = '\r'
+  while cond () do
+    consommeChar ()
+
+let readInt () =
+  let sign =
+    if readChar_ () = '-' then
+      consommeChar ()
+      -1
+    else 1
+  let rec loop i =
+    let c = readChar_ ()
+    if c <= '9' && c >= '0' then
+      consommeChar ()
+      loop (i * 10 + (int c) - (int '0'))
+    else
+      i * sign
+  loop 0
+
+let score () =
+  stdin_sep();
+  let len = readInt()
+  stdin_sep();
+  let sum = ref( 0 )
+  for _i = 1 to len do
+    let c = readChar()
+    sum := (!sum) + int (c) - int ('A') + 1
+    (*		print c print " " print sum print " " *)
+  (!sum)
+
+let () =
+  let sum = ref( 0 )
+  let n = readInt()
+  for i = 1 to n do
+    sum := (!sum) + i * score ()
+  Printf.printf "%d\n" (!sum)
+ 

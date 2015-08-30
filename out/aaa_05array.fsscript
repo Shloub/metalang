@@ -1,0 +1,29 @@
+let id (b:bool array) : bool array =
+  b
+
+let g (t:bool array) index =
+  t.[index] <- false
+
+let () =
+  let j = ref( 0 )
+  let a = Array.init 5 (fun i ->
+    Printf.printf "%d" i
+    j := (!j) + i
+    i % 2 = 0)
+  Printf.printf "%d " (!j)
+  if a.[0] then
+    Printf.printf "True"
+    
+  else
+    Printf.printf "False"
+    
+  Printf.printf "\n"
+  g (id a) 0
+  if a.[0] then
+    Printf.printf "True"
+    
+  else
+    Printf.printf "False"
+    
+  Printf.printf "\n"
+ 
