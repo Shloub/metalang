@@ -51,7 +51,7 @@ let main =
                            let resp = sum.(i) in
                            g (i + 1) maxl process resp stop
                            else g (i + 1) maxl process resp stop
-                           else let stop = ((min (stop) (i))) in
+                           else let stop = (min (stop) (i)) in
                            g (i + 1) maxl process resp stop)
                     else g (i + 1) maxl process resp stop
                else let len = len + 1 in

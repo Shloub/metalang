@@ -20,7 +20,7 @@ let main =
                      (fun e -> let f = (int_of_char (e)) - (int_of_char ('0')) in
                      (fun (i, nskipdiv) ->( last.(index) <- f;
                                             let index = (index + 1) mod 5 in
-                                            let max0 = ((max (max0) (i))) in
+                                            let max0 = (max (max0) (i)) in
                                             h (k + 1) i index max0 nskipdiv)) (if f = 0
                                                                                then let i = 1 in
                                                                                let nskipdiv = 4 in

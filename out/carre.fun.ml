@@ -9,7 +9,7 @@ let main =
     then let rec l iy =
            if iy <= y - 1
            then if tab.(iy).(ix) = 1
-                then ( tab.(iy).(ix) <- ((min (((min (tab.(iy).(ix - 1)) (tab.(iy - 1).(ix))))) (tab.(iy - 1).(ix - 1)))) + 1;
+                then ( tab.(iy).(ix) <- (min ((min (tab.(iy).(ix - 1)) (tab.(iy - 1).(ix)))) (tab.(iy - 1).(ix - 1))) + 1;
                        l (iy + 1))
                 else l (iy + 1)
            else h (ix + 1) in

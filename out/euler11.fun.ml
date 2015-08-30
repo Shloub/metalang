@@ -30,7 +30,7 @@ let main =
                            if x <= 19
                            then let rec k y max0 =
                                   if y <= 19
-                                  then let max0 = ((max (max0) (find 4 m x y dx dy))) in
+                                  then let max0 = (max (max0) (find 4 m x y dx dy)) in
                                   k (y + 1) max0
                                   else h (x + 1) max0 in
                                   k 0 max0

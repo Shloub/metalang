@@ -5,13 +5,10 @@ public class montagnes
 static bool eof;
 static String buffer;
 static char readChar_(){
-  if (buffer == null){
-    buffer = Console.ReadLine();
-  }
-  if (buffer.Length == 0){
+  if (buffer == null || buffer.Length == 0){
     String tmp = Console.ReadLine();
     eof = tmp == null;
-    buffer = "\n"+tmp;
+    buffer = tmp + "\n";
   }
   char c = buffer[0];
   return c;

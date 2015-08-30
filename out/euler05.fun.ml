@@ -20,7 +20,7 @@ let main =
     then let t = primesfactors i in
     let rec p j =
       if j <= i
-      then ( o.(j) <- ((max (o.(j)) (t.(j))));
+      then ( o.(j) <- (max (o.(j)) (t.(j)));
              p (j + 1))
       else e (i + 1) in
       p 1

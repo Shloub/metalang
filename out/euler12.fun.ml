@@ -46,7 +46,7 @@ let find ndiv2 =
     else let rec p n =
            if n <= 10000
            then let primesFactors = Array.init (n + 2) (fun m -> 0) in
-           let max0 = ((max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes))) in
+           let max0 = (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)) in
            ( primesFactors.(2) <- primesFactors.(2) - 1;
              let ndivs = 1 in
              let rec q i ndivs =
