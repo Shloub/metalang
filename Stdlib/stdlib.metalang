@@ -305,6 +305,7 @@ end
 macro array<int> native_expand_read_int_line(int c)
   py do "list(map(int, input().split()))"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
+  fsharp do "(Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse"
   csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll(int.Parse).ToArray()"
   vb do "Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(\" \".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))"
   rkt do "list->vector (map string->number (regexp-split \" \" (read-line)))"
@@ -322,6 +323,7 @@ macro array<char> native_expand_read_char_line(int c)
   py do "list(input())"
   php do "fgets(STDIN)"
   csharp do "Console.ReadLine().ToCharArray()"
+  fsharp do "(Console.ReadLine ()).ToCharArray ()"
   vb do "Console.ReadLine().ToCharArray()"
   cpp do "getline()"
   rkt do "list->vector (string->list (read-line))"
@@ -345,6 +347,7 @@ macro int native_expand_read_int()
   py do "int(input())"
   php do "intval(trim(fgets(STDIN)))"
   csharp do "int.Parse(Console.ReadLine())"
+  fsharp do "Console.ReadLine () |> Int32.Parse"
   vb do "Integer.Parse(Console.ReadLine())"
   ml do "Scanf.scanf \"%d \" (fun x -> x)"
   rkt do "string->number (read-line)"
@@ -372,6 +375,7 @@ then
 	current_language() == LANG_Pl ||
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
+	current_language() == LANG_Fsscript ||
 	current_language() == LANG_Java ||
 	current_language() == LANG_Groovy ||
 	current_language() == LANG_Rb ||
@@ -398,6 +402,7 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Php ||
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
+	current_language() == LANG_Fsscript ||
 	current_language() == LANG_Pl ||
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Java ||
@@ -444,6 +449,7 @@ def lexems expand_read_char_line(lexems a)
 	current_language() == LANG_Pl ||
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
+	current_language() == LANG_Fsscript ||
 	current_language() == LANG_Java ||
 	current_language() == LANG_Groovy ||
 	current_language() == LANG_Rb ||
@@ -521,6 +527,7 @@ end
 def lexems expand_read_int_couple()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
+     current_language() == LANG_Fsscript ||
      current_language() == LANG_Java ||
      current_language() == LANG_Groovy
   then
@@ -569,6 +576,7 @@ end
 def lexems expand_read_3ints()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
+     current_language() == LANG_Fsscript ||
      current_language() == LANG_Hs ||
      current_language() == LANG_Groovy ||
      current_language() == LANG_Java then

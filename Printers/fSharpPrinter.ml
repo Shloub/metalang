@@ -228,9 +228,11 @@ class fsharpPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "%s%s%s%s%a%a"
+    let op = need || Tags.is_taged "use_readline" in
+    Format.fprintf f "%s%s%s%s%s%a%a"
+(if op then "open System
+" else "" )
 (if need then "
-open System
 let eof = ref false
 let buffer = ref \"\"
 let readChar_ () =
