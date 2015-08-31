@@ -1,38 +1,6 @@
-
 open System
-let eof = ref false
-let buffer = ref ""
-let readChar_ () =
-  if (!buffer) = "" then
-    let tmp = Console.ReadLine()
-    eof := tmp = null
-    buffer := tmp + "\n"
-  (!buffer).[0]
-
-let consommeChar () =
-  ignore (readChar_ ())
-  buffer := (!buffer).[1..]
-
-let readChar () =
-  let out_ = readChar_ ()
-  consommeChar ()
-  out_
-
-let stdin_sep () =
-  let cond () =
-    if !eof then
-      false
-    else
-      let c = readChar_()
-      c = ' ' || c = '\n' || c = '\t' || c = '\r'
-  while cond () do
-    consommeChar ()
-
 let () =
-  let str = Array.init 12 (fun _a ->
-    let b = readChar()
-    b)
-  stdin_sep();
-  for i = 0 to 11 do
-    Printf.printf "%c" str.[i]
- 
+              let str = (Console.ReadLine ()).ToCharArray ()
+              for i = 0 to 11 do
+                Printf.printf "%c" str.[i]
+             

@@ -1,63 +1,15 @@
-
 open System
-let eof = ref false
-let buffer = ref ""
-let readChar_ () =
-  if (!buffer) = "" then
-    let tmp = Console.ReadLine()
-    eof := tmp = null
-    buffer := tmp + "\n"
-  (!buffer).[0]
-
-let consommeChar () =
-  ignore (readChar_ ())
-  buffer := (!buffer).[1..]
-
-let stdin_sep () =
-  let cond () =
-    if !eof then
-      false
-    else
-      let c = readChar_()
-      c = ' ' || c = '\n' || c = '\t' || c = '\r'
-  while cond () do
-    consommeChar ()
-
-let readInt () =
-  let sign =
-    if readChar_ () = '-' then
-      consommeChar ()
-      -1
-    else 1
-  let rec loop i =
-    let c = readChar_ ()
-    if c <= '9' && c >= '0' then
-      consommeChar ()
-      loop (i * 10 + (int c) - (int '0'))
-    else
-      i * sign
-  loop 0
-
 let () =
-  let len = ref (readInt())
-  stdin_sep();
-  Printf.printf "%d=len\n" (!len)
-  let tab1 = Array.init (!len) (fun _a ->
-    let b = readInt()
-    stdin_sep();
-    b)
-  for i = 0 to (!len) - 1 do
-    Printf.printf "%d=>%d\n" i tab1.[i]
-  len := readInt()
-  stdin_sep();
-  let tab2 = Array.init ((!len) - 1) (fun _c ->
-    let e = Array.init (!len) (fun _f ->
-      let d = readInt()
-      stdin_sep();
-      d)
-    e)
-  for i = 0 to (!len) - 2 do
-    for j = 0 to (!len) - 1 do
-      Printf.printf "%d " tab2.[i].[j]
-    Printf.printf "\n"
- 
+              let len = Console.ReadLine () |> Int32.Parse
+              Printf.printf "%d=len\n" len
+              let tab1 = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+              for i = 0 to len - 1 do
+                Printf.printf "%d=>%d\n" i tab1.[i]
+              let len = Console.ReadLine () |> Int32.Parse
+              let tab2 = Array.init (len - 1) (fun _a ->
+                (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
+              for i = 0 to len - 2 do
+                for j = 0 to len - 1 do
+                  Printf.printf "%d " tab2.[i].[j]
+                Printf.printf "\n"
+             
