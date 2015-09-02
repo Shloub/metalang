@@ -1,5 +1,3 @@
-accélérer les tests :
-  euler07
 
 Langage & Compilateur :
   C if indentation
@@ -19,7 +17,6 @@ outils :
   une man page
 
 autres printers :
-  erlang
   rhino
   clojure
   rust
