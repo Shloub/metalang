@@ -263,7 +263,14 @@ def skipchar():
         self#bloc ifcase
         self#bloc elsecase
 
-  method comment f str = Format.fprintf f "\"\"\"%s\"\"\"" (String.trim str)
+  method comment f str =
+    let trimmed = String.trim str in
+      if not (String.starts_with trimmed "\"" || String.ends_with trimmed "\"") then
+        Format.fprintf f "\"\"\"%s\"\"\"" trimmed
+      else if not (String.starts_with trimmed "'" || String.ends_with trimmed "'") then
+        Format.fprintf f "'''%s'''" trimmed
+      else
+        Format.fprintf f "\"\"\"@\n%s@\n\"\"\"" trimmed
 
   method whileloop f expr li =
     Format.fprintf f "@[<h>while (%a):@]@\n%a" self#expr expr self#bloc li
