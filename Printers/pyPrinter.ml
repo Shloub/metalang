@@ -137,10 +137,10 @@ class pyPrinter = object(self)
   method read f t mutable_ =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[%a=readint()@]"
+      Format.fprintf f "@[%a = readint()@]"
         self#mutable_set mutable_
     | Type.Char ->
-      Format.fprintf f "@[%a=readchar()@]"
+      Format.fprintf f "@[%a = readchar()@]"
         self#mutable_set mutable_
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
       (Type.type_t_to_string t)
@@ -149,10 +149,10 @@ class pyPrinter = object(self)
   method read_decl f t v =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[%a=readint()@]"
+      Format.fprintf f "@[%a = readint()@]"
         self#binding v
     | Type.Char ->
-      Format.fprintf f "@[%a=readchar()@]"
+      Format.fprintf f "@[%a = readchar()@]"
         self#binding v
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
       (Type.type_t_to_string t)
@@ -175,53 +175,59 @@ class pyPrinter = object(self)
           "import math
 " else "")
       (if need then "import sys
-char=None
+char_ = None
+
 def readchar_():
-  global char
-  if char == None:
-    char = sys.stdin.read(1)
-  return char
+    global char_
+    if char_ == None:
+        char_ = sys.stdin.read(1)
+    return char_
 
 def skipchar():
-  global char
-  char = None
-  return
+    global char_
+    char_ = None
+    return
+
 " else "" )
       (if need_readchar then
           "def readchar():
-  out = readchar_()
-  skipchar()
-  return out
+    out = readchar_()
+    skipchar()
+    return out
+
 " else "")
       (if need_stdinsep then
           "def stdinsep():
-  while True:
-    c = readchar_()
-    if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
-      skipchar()
-    else:
-      return
+    while True:
+        c = readchar_()
+        if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
+            skipchar()
+        else:
+            return
+
 " else "")
       (if need_readint then
           "def readint():
-  c = readchar_()
-  if c == '-':
-    sign = -1
-    skipchar()
-  else:
-    sign = 1
-  out = 0
-  while True:
     c = readchar_()
-    if c <= '9' and c >= '0' :
-      out = out * 10 + int(c)
-      skipchar()
+    if c == '-':
+        sign = -1
+        skipchar()
     else:
-      return out * sign
+        sign = 1
+    out = 0
+    while True:
+        c = readchar_()
+        if c <= '9' and c >= '0' :
+            out = out * 10 + int(c)
+            skipchar()
+        else:
+            return out * sign
+
 " else "")
       (if Tags.is_taged "__internal__mod" then
           "def mod(x, y):
-  return x - y * math.trunc(x / y)
+    return x - y * math.trunc(x / y)
+
 "
        else "")
 
@@ -237,8 +243,8 @@ def skipchar():
 
   method bloc f li =
     match li with
-    | [] -> Format.fprintf f "@[<h>  pass@]"
-    | _ -> Format.fprintf f "@[<v 2>  %a@]" self#instructions li
+    | [] -> Format.fprintf f "@[<h>    pass@]"
+    | _ -> Format.fprintf f "@[<v 4>    %a@]" self#instructions li
 
   method if_ f e ifcase elsecase =
     match elsecase with
@@ -257,7 +263,7 @@ def skipchar():
         self#bloc ifcase
         self#bloc elsecase
 
-  method comment f str = Format.fprintf f "\"\"\"%s\"\"\"" str
+  method comment f str = Format.fprintf f "\"\"\"%s\"\"\"" (String.trim str)
 
   method whileloop f expr li =
     Format.fprintf f "@[<h>while (%a):@]@\n%a" self#expr expr self#bloc li
@@ -268,7 +274,7 @@ def skipchar():
       (fun f a -> self#exprp (prio_right (prio_binop Ast.Expr.Mul)) f a) len
 
   method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\n"
+    Format.fprintf f "@[<h>%a@]@\n@[<v 4>%a@]@\n"
       self#print_proto (funname, t, li)
       self#bloc instrs
 
@@ -293,7 +299,7 @@ def skipchar():
     | _ -> default ()
 
   method print_proto f (funname, t, li) =
-    Format.fprintf f "def %a( %a ):"
+    Format.fprintf f "def %a(%a):"
       self#funname funname
       (print_list self#binding sep_c) (List.map fst li)
 
@@ -307,10 +313,10 @@ def skipchar():
     let format, exprs = self#extract_multi_print li in
       if String.ends_with format "\n" then
         let l = String.length format in
-        Format.fprintf f "@[<h>print(\"%s\" %% ( %a ))@]" (String.sub format 0 (l - 1) )
+        Format.fprintf f "@[<h>print(\"%s\" %% (%a))@]" (String.sub format 0 (l - 1) )
           self#print_args exprs
       else
-        Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='')@]" format self#print_args exprs
+        Format.fprintf f "@[<h>print(\"%s\" %% (%a), end='')@]" format self#print_args exprs
 
   method print f t expr =
     match Expr.unfix expr with
@@ -318,7 +324,7 @@ def skipchar():
       if String.ends_with s "\n" then
         let l = String.length s in
         Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
-      else Format.fprintf f "@[print( %S, end='')@]" s
+      else Format.fprintf f "@[print(%S, end='')@]" s
     | _ ->
       Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t
         (fun f expr -> self#exprp prio_percent_percent f expr) expr

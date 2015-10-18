@@ -170,20 +170,21 @@ class javaPrinter = object(self)
 
   method print_datareader f () =
     Format.fprintf f "@[<h>
-    %aint[] read_int_line(){
-        String[] s = scanner.nextLine().split(\" \");
-        int[] out = new int[s.length];
-        for (int i = 0; i < s.length; i ++)
-          out[i] = Integer.parseInt(s[i]);
-        return out;
-    }
+  %aint[] read_int_line()
+  {
+    String[] s = scanner.nextLine().split(\" \");
+    int[] out = new int[s.length];
+    for (int i = 0; i < s.length; i++)
+      out[i] = Integer.parseInt(s[i]);
+    return out;
+  }
 @]"
   self#static ()
 
   method read f t m =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")){@\n  scanner.next(\"^-\");@\n  %a = -scanner.nextInt();@\n}else{@\n  %a = scanner.nextInt();@\n}@]"
+      Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")) {@\n  scanner.next(\"^-\");@\n  %a = -scanner.nextInt();@\n}else{@\n  %a = scanner.nextInt();@\n}@]"
         self#mutable_set m
         self#mutable_set m
     | Type.Char -> Format.fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
@@ -193,7 +194,7 @@ class javaPrinter = object(self)
   method read_decl f t v =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[<h>%a %a;@\nif (scanner.hasNext(\"^-\")){@\n  scanner.next(\"^-\");@\n  %a = scanner.nextInt();@\n} else {@\n  %a = scanner.nextInt();@\n}@]"
+      Format.fprintf f "@[<h>%a %a;@\nif (scanner.hasNext(\"^-\")) {@\n  scanner.next(\"^-\");@\n  %a = scanner.nextInt();@\n} else {@\n  %a = scanner.nextInt();@\n}@]"
         self#ptype t
         self#binding v
         self#binding v
@@ -229,8 +230,8 @@ class javaPrinter = object(self)
       self#ptype t
       self#separator ()
       (self#def_fields name) el
-      
-  method m_field f m field = 
+
+  method m_field f m field =
       Format.fprintf f "%a.%s"
         self#mutable_get m
         field

@@ -94,7 +94,7 @@ class printer = object(self)
 
   val mutable macros = StringMap.empty
 
-  method expr f e = 
+  method expr f e =
     let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
         (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f priority in
     print_expr
@@ -197,13 +197,13 @@ class printer = object(self)
   method m_array_get f m indexes = self#m_array f m indexes
   method m_array_set f m indexes = self#m_array f m indexes
 
-  method mutable_set f m = 
+  method mutable_set f m =
     match Mutable.unfix m with
     | Mutable.Dot (m, field) -> self#m_field_set f m field
     | Mutable.Var binding -> self#m_variable_set f binding
     | Mutable.Array (m, indexes) -> self#m_array_set f m indexes
 
-  method mutable_get f m = 
+  method mutable_get f m =
     match Mutable.unfix m with
     | Mutable.Dot (m, field) -> self#m_field_get f m field
     | Mutable.Var binding -> self#m_variable_get f binding
@@ -217,7 +217,7 @@ class printer = object(self)
 
   method separator f () = Format.fprintf f ";"
 
-  method apply f var li = 
+  method apply f var li =
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
         let li = List.map (fun e f () -> self#expr f e) li in
@@ -253,7 +253,7 @@ class printer = object(self)
   method selfAssoc f m e2 = function
   | Expr.Add -> begin match Expr.unfix e2 with
     | Expr.Lief (Expr.Integer 1) ->
-      Format.fprintf f "@[<hov>%a ++;@]" self#mutable_set m
+      Format.fprintf f "@[<hov>%a++;@]" self#mutable_set m
     | _ ->
       Format.fprintf f "@[<hov>%a += %a;@]" self#mutable_set m
         self#expr e2
@@ -471,7 +471,7 @@ class printer = object(self)
     List.fold_left (fun acc -> function
       | Instr.StringConst str -> (fun f () -> self#expr f (Expr.string str)) :: acc
       | Instr.PrintExpr (t, expr) -> (fun f () -> self#expr f expr) :: acc) [] li |> List.rev
-                   
+
   method main f (main : Utils.instr list) =
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
       self#instructions main

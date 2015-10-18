@@ -166,6 +166,7 @@ module String :
 sig
 
   type t = string
+  val trim : string -> string
   val join : string list -> string
   val split : string -> char -> string list
   val ends_with : string -> string -> bool
@@ -312,7 +313,7 @@ module Applicatives : sig
   module FoldMap : functor (Acc : sig type t end) -> Monade with type 'a t = Acc.t -> Acc.t * 'a
   module Fold : functor (Acc : sig type t end) -> Applicative with type 'a t = Acc.t -> Acc.t
   module Map: Monade with type 'a t = 'a
-  module Accumule : functor (Acc : sig type t 
+  module Accumule : functor (Acc : sig type t
     val merge : t -> t -> t
     val zero : t
   end) -> Applicative with type 'a t = Acc.t * 'a

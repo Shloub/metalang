@@ -141,7 +141,7 @@ let prio_binop op =
   | Diff -> nonassocl 13
   | And -> assoc 15
   | Or -> assoc 15
-        
+
 let prio_binop_equal = function
   | Ast.Expr.Eq -> nonassoclr 13
   | op -> prio_binop op
@@ -178,7 +178,7 @@ let print_expr0 c e f prio_parent =
   | BinOp (a, op, b) ->
       let prio, priol, prior = c.prio_binop op in
       parens prio_parent prio f "%a %a %a" a priol c.print_op op b prior
-  | UnOp (a, op) -> 
+  | UnOp (a, op) ->
       let prio = c.prio_unop op in
       parens prio_parent prio f "%a%a" c.print_unop op a prio
   | Lief l -> c.print_lief prio_parent f l
@@ -288,7 +288,7 @@ let print_mut0 fmt_array
   | Array (m, fi) -> fprintf f fmt_array m priority
         (print_list (fun f a -> fprintf f fmt_arrayindex a nop) nosep) fi
   | Dot (m, field) -> fprintf f fmt_dot m priority_recordacess field
- 
+
 let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "[%a]" "%a[%S]" conf) m f priority
 
@@ -321,9 +321,9 @@ let is_printable_i i =
 		            '}'; '~']
   in let specials = List.mem i specials
   in lowerchar || upperchar || digit || specials
-    
+
 let is_printable c = is_printable_i (int_of_char c)
-    
+
 let string_noprintable print_char print_first_char f s =
   let li = Array.to_list @$ String.chararray s in
   let fst, printable = List.fold_left

@@ -115,7 +115,7 @@ class perlPrinter = object(self)
     match elsecase with
     | [] -> (*begin match ifcase with
       | [item] ->
-        Format.fprintf f "%a if (%a);" 
+        Format.fprintf f "%a if (%a);"
           self#instr item
           self#expr e
       | _ ->*)
@@ -201,7 +201,7 @@ class perlPrinter = object(self)
       (fun f () ->
 	if need_stdinsep then Format.fprintf f
 	  "sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq \"\\r\" || $currentchar eq \"\\n\"){ nextchar() ; }
+  while ($currentchar eq ' ' || $currentchar eq \"\\r\" || $currentchar eq \"\\n\"){ nextchar(); }
 }@\n") ()
       (fun f () -> if Tags.is_taged "__internal__mod" then Format.fprintf f
 	  "sub remainder {
@@ -264,7 +264,7 @@ class perlPrinter = object(self)
   method bloc f li =
     Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
-  method m_field f m field = 
+  method m_field f m field =
       Format.fprintf f "%a->{%S}" self#mutable_get m field
 
   method m_array f m indexes =

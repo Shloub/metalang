@@ -243,6 +243,8 @@ end
 module String = struct
   include String
 
+  let trim = String.trim
+
   let join li = List.fold_left (^) "" li
 
   let rec split s c =
@@ -584,8 +586,8 @@ module Fix2 (F : Fixable2) = struct
     module M = F.Make(A)
     let rec fm2 f g (F(i, x)) = f (M.foldmap (fm2 f g) g x)
     let rec fm2i f g (F(i, x)) = f i (M.foldmap (fm2i f g) (g i) x)
-    let rec fm f x = fm2 f ret x 
-    let rec fmi f x = fm2i f (fun _ -> ret) x 
+    let rec fm f x = fm2 f ret x
+    let rec fmi f x = fm2i f (fun _ -> ret) x
     let map g t = fm2i (fun i x -> ret (fixa i) <*> x) (fun _ -> g) t
     let mapi g t = fm2i (fun i x -> ret (fixa i) <*> x) g t
   end
@@ -642,14 +644,14 @@ module MKArrow (App:Applicative) = struct
   type (_, _) arrow =
       Id : ('x, 'x) arrow
     | Arrow :
-        ('x -> 'y App.t) 
+        ('x -> 'y App.t)
         * ('p, 'q) arrow
       -> ('x * 'p, 'y * 'q) arrow
-          
+
   let arrow f = Arrow (f, Id)
-      
+
   let carrow f g = Arrow(f, g)
-      
+
   let extract : type a b x y . (a * x, b * y) arrow -> (a -> b App.t) * (x, y) arrow  = function
     | Id -> App.ret, Id
     | Arrow (f, x) -> f, x
@@ -665,7 +667,7 @@ end
 
 module FixN (F : FixableN) = struct
   type 'a t = Fix of int * ('a t * 'a) F.tofix
-  
+
   let annot = function Fix (i, _) -> i
   let unfix = function Fix (_, x) -> x
   let fix x = Fix (F.next (), x)
