@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
-class toto {
-public:
+struct toto {
   std::string s;
   int v;
 };

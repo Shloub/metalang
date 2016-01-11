@@ -14,8 +14,7 @@ int min2_(int a, int b){
     return b;
 }
 
-class bigint {
-public:
+struct bigint {
   bool bigint_sign;
   int bigint_len;
   std::vector<int> * bigint_chiffres;

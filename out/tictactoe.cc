@@ -4,8 +4,7 @@
 Tictactoe : un tictactoe avec une IA
 */
 /* La structure de donnée */
-class gamestate {
-public:
+struct gamestate {
   std::vector<std::vector<int> *> * cases;
   bool firstToPlay;
   int note;
@@ -13,8 +12,7 @@ public:
 };
 
 /* Un Mouvement */
-class move {
-public:
+struct move {
   int x;
   int y;
 };

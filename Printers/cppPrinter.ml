@@ -204,7 +204,7 @@ class cppPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        Format.fprintf f "class %a {@\npublic:@\n@[<v 2>  %a@]@\n};@\n"
+        Format.fprintf f "struct %a {@\n@[<v 2>  %a@]@\n};@\n"
           self#typename name
           (print_list
              (fun t (name, type_) ->

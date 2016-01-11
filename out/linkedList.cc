@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
-class intlist {
-public:
+struct intlist {
   int head;
   intlist * tail;
 };
