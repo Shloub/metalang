@@ -1,13 +1,11 @@
 #include <iostream>
 #include <vector>
-class tuple_int_int {
-public:
+struct tuple_int_int {
   int tuple_int_int_field_0;
   int tuple_int_int_field_1;
 };
 
-class toto {
-public:
+struct toto {
   tuple_int_int * foo;
   int bar;
 };

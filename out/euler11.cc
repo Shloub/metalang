@@ -16,8 +16,7 @@ int find(int n, std::vector<std::vector<int> *> * m, int x, int y, int dx, int d
     return m->at(y)->at(x) * find(n - 1, m, x + dx, y + dy, dx, dy);
 }
 
-class tuple_int_int {
-public:
+struct tuple_int_int {
   int tuple_int_int_field_0;
   int tuple_int_int_field_1;
 };
