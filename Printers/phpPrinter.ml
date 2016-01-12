@@ -34,16 +34,16 @@ open Stdlib
 open Helper
 open Ast
 
-let print_lief prio f l = 
+let print_lief prio f l =
   let open Format in
   let open Expr in
   match l with
-  | Char c -> 
+  | Char c ->
       let cs = Printf.sprintf "%C" c in
       if String.length cs == 6 || c == '\b' then
         fprintf f "\"\\x%02x\"" (int_of_char c)
       else fprintf f "%S" (String.from_char c)
-  | String s -> 
+  | String s ->
       let s = Printf.sprintf "%S" s in
       fprintf f "%s" (String.replace "$" "\\$" s)
   | Integer i ->
@@ -128,7 +128,7 @@ class phpPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "<?php@\n%s%s%s%a%a@\n?>"
+    Format.fprintf f "<?php@\n%s%s%s%a%a@\n"
       (if need then "
 $stdin='';
 function stdin_(){
