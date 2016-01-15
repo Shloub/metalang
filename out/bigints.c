@@ -284,7 +284,7 @@ int log10(int a){
   while (a >= 10)
   {
     a /= 10;
-    out0 ++;
+    out0++;
   }
   return out0;
 }
@@ -388,7 +388,7 @@ int euler25(){
     struct bigint * c = add_bigint(a, b);
     a = b;
     b = c;
-    i ++;
+    i++;
   }
   return i;
 }
@@ -428,7 +428,7 @@ int euler29(){
     }
     if (found)
     {
-      n ++;
+      n++;
       for (l = 2 ; l <= maxA; l++)
         if (bigint_eq(a_bigint[l], min0) && b[l] <= maxB)
       {

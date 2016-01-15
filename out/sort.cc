@@ -33,7 +33,7 @@ void qsort0(std::vector<int> * tab, int len, int i, int j){
         int tmp = tab->at(i);
         tab->at(i) = tab->at(j);
         tab->at(j) = tmp;
-        i ++;
+        i++;
       }
       else
       {
@@ -42,7 +42,7 @@ void qsort0(std::vector<int> * tab, int len, int i, int j){
         tab->at(i) = tab->at(j);
         tab->at(j) = tab->at(i + 1);
         tab->at(i + 1) = tmp;
-        i ++;
+        i++;
       }
     }
     else

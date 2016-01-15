@@ -15,7 +15,7 @@ int go0(std::vector<int> * tab, int a, int b){
   {
     int e = tab->at(i);
     if (e < m)
-      i ++;
+      i++;
     else
     {
       j --;

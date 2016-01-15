@@ -9,7 +9,7 @@ int periode(std::vector<int> * restes, int len, int a, int b){
       if (restes->at(i) == reste)
       return len - i;
     restes->at(len) = reste;
-    len ++;
+    len++;
     a = reste * 10;
   }
   return 0;

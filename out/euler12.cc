@@ -13,7 +13,7 @@ int eratostene(std::vector<int> * t, int max0){
     if (t->at(i) == i)
   {
     int j = i * i;
-    n ++;
+    n++;
     while (j < max0 && j > 0)
     {
       t->at(j) = 0;
@@ -51,7 +51,7 @@ int find(int ndiv2){
     if (era->at(k) == k)
   {
     primes->at(l) = k;
-    l ++;
+    l++;
   }
   for (int n = 1 ; n <= 10000; n ++)
   {

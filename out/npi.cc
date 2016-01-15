@@ -14,23 +14,23 @@ int npi0(std::vector<char> * str, int len){
   int ptrStr = 0;
   while (ptrStr < len)
     if (str->at(ptrStr) == ' ')
-    ptrStr ++;
+    ptrStr++;
   else if (is_number(str->at(ptrStr)))
   {
     int num = 0;
     while (str->at(ptrStr) != ' ')
     {
       num = num * 10 + (int)(str->at(ptrStr)) - (int)('0');
-      ptrStr ++;
+      ptrStr++;
     }
     stack->at(ptrStack) = num;
-    ptrStack ++;
+    ptrStack++;
   }
   else if (str->at(ptrStr) == '+')
   {
     stack->at(ptrStack - 2) = stack->at(ptrStack - 2) + stack->at(ptrStack - 1);
     ptrStack --;
-    ptrStr ++;
+    ptrStr++;
   }
   return stack->at(0);
 }

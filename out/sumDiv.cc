@@ -3,7 +3,7 @@
 void foo(){
   int a = 0;
   /* test */
-  a ++;
+  a++;
   /* test 2 */
 }
 

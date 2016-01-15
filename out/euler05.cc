@@ -18,7 +18,7 @@ std::vector<int> * primesfactors(int n){
     n /= d;
   }
   else
-    d ++;
+    d++;
   tab->at(n) = tab->at(n) + 1;
   return tab;
 }

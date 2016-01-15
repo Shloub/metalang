@@ -10,7 +10,7 @@ int montagnes0(int* tab, int len){
     int x = tab[i];
     while (j >= 0 && x > tab[len - j])
       j --;
-    j ++;
+    j++;
     tab[len - j] = x;
     if (j > max0)
       max0 = j;

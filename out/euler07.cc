@@ -10,12 +10,12 @@ bool divisible(int n, std::vector<int> * t, int size){
 int find(int n, std::vector<int> * t, int used, int nth){
   while (used != nth)
     if (divisible(n, t, used))
-    n ++;
+    n++;
   else
   {
     t->at(used) = n;
-    n ++;
-    used ++;
+    n++;
+    used++;
   }
   return t->at(used - 1);
 }

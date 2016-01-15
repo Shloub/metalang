@@ -9,7 +9,7 @@ int montagnes0(std::vector<int> * tab, int len){
     int x = tab->at(i);
     while (j >= 0 && x > tab->at(len - j))
       j --;
-    j ++;
+    j++;
     tab->at(len - j) = x;
     if (j > max0)
       max0 = j;

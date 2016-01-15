@@ -58,7 +58,7 @@ int main(){
   mem->at(current_pos) = mem->at(current_pos) + 1;
   mem->at(current_pos) = mem->at(current_pos) + 1;
   mem->at(current_pos) = mem->at(current_pos) + 1;
-  current_pos ++;
+  current_pos++;
   mem->at(current_pos) = mem->at(current_pos) + 1;
   mem->at(current_pos) = mem->at(current_pos) + 1;
   mem->at(current_pos) = mem->at(current_pos) + 1;
@@ -75,7 +75,7 @@ int main(){
     current_pos --;
     mem->at(current_pos) = mem->at(current_pos) + 1;
     std::cout << (char)(mem->at(current_pos));
-    current_pos ++;
+    current_pos++;
   }
   return 0;
 }
