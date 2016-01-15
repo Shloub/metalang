@@ -16,7 +16,7 @@ struct toto * mktoto(int v1){
 }
 
 int result(struct toto * t){
-  t->blah ++;
+  t->blah++;
   return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
 

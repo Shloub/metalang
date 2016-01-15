@@ -60,7 +60,7 @@ int main(void){
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
-  current_pos ++;
+  current_pos++;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
@@ -77,7 +77,7 @@ int main(void){
     current_pos --;
     mem[current_pos] = mem[current_pos] + 1;
     printf("%c", (char)(mem[current_pos]));
-    current_pos ++;
+    current_pos++;
   }
   return 0;
 }

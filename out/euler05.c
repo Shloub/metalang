@@ -21,7 +21,7 @@ int* primesfactors(int n){
     n /= d;
   }
   else
-    d ++;
+    d++;
   tab[n] = tab[n] + 1;
   return tab;
 }

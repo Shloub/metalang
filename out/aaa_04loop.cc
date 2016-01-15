@@ -9,7 +9,7 @@ bool h(int i){
   {
     if (i % j == 5)
       return true;
-    j ++;
+    j++;
   }
   return false;
 }
@@ -26,7 +26,7 @@ int main(){
   while (i < 10)
   {
     std::cout << i;
-    i ++;
+    i++;
     j += i;
   }
   std::cout << j << i << "FIN TEST\n";

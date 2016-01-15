@@ -16,7 +16,7 @@ int go0(int* tab, int a, int b){
   {
     int e = tab[i];
     if (e < m)
-      i ++;
+      i++;
     else
     {
       j --;

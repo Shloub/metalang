@@ -36,7 +36,7 @@ int result(toto * t_, toto * t2_){
   t3 = t2;
   t = t2;
   t2 = t3;
-  t->blah ++;
+  t->blah++;
   int len = 1;
   std::vector<int > *cache0 = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)

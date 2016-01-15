@@ -5,7 +5,7 @@ int eratostene(std::vector<int> * t, int max0){
   for (int i = 2 ; i < max0; i++)
     if (t->at(i) == i)
   {
-    n ++;
+    n++;
     int j = i * i;
     while (j < max0 && j > 0)
     {
@@ -24,7 +24,7 @@ bool isPrime(int n, std::vector<int> * primes, int len){
   {
     if (n % primes->at(i) == 0)
       return false;
-    i ++;
+    i++;
   }
   return true;
 }
@@ -55,7 +55,7 @@ int main(){
     if (era->at(k) == k)
   {
     primes->at(l) = k;
-    l ++;
+    l++;
   }
   std::cout << l << " == " << nprimes << "\n";
   int ma = 0;

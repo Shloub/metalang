@@ -11,7 +11,7 @@ int periode(int* restes, int len, int a, int b){
       if (restes[i] == reste)
       return len - i;
     restes[len] = reste;
-    len ++;
+    len++;
     a = reste * 10;
   }
   return 0;

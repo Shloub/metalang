@@ -48,14 +48,14 @@ int main(){
   {
     int ndays = ndayinmonth(month, year);
     dayofweek = (dayofweek + ndays) % 7;
-    month ++;
+    month++;
     if (month == 12)
     {
       month = 0;
-      year ++;
+      year++;
     }
     if (dayofweek % 7 == 6)
-      count ++;
+      count++;
   }
   std::cout << count << "\n";
   return 0;

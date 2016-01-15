@@ -7,7 +7,7 @@ int eratostene(int* t, int max0){
   for (i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
-    n ++;
+    n++;
     int j = i * i;
     while (j < max0 && j > 0)
     {
@@ -36,7 +36,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes){
 
 int sumdivaux2(int* t, int n, int i){
   while (i < n && t[i] == 0)
-    i ++;
+    i++;
   return i;
 }
 
@@ -84,7 +84,7 @@ int main(void){
     if (era[k] == k)
   {
     primes[l] = k;
-    l ++;
+    l++;
   }
   int n = 100;
   /* 28124 ça prend trop de temps mais on arrive a passer le test */

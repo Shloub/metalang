@@ -5,7 +5,7 @@ int main(void){
   int m, k, o, p, l, i, j;
   int n = 10;
   /* normalement on doit mettre 20 mais là on se tape un overflow */
-  n ++;
+  n++;
   int* *tab = calloc( n , sizeof(int*));
   for (i = 0 ; i < n; i++)
   {

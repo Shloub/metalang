@@ -7,7 +7,7 @@ int eratostene(int* t, int max0){
   for (i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
-    n ++;
+    n++;
     if (max0 / i > i)
     {
       int j = i * i;
@@ -36,7 +36,7 @@ int main(void){
     if (era[k] == k)
   {
     primes[l] = k;
-    l ++;
+    l++;
   }
   printf("%d == %d\n", l, nprimes);
   int *canbe = calloc( maximumprimes , sizeof(int));

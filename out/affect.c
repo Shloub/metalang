@@ -37,7 +37,7 @@ int result(struct toto * t_, struct toto * t2_){
   t3 = t2;
   t = t2;
   t2 = t3;
-  t->blah ++;
+  t->blah++;
   int len = 1;
   int *cache0 = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)

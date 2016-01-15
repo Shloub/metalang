@@ -5,7 +5,7 @@ int eratostene(std::vector<int> * t, int max0){
   for (int i = 2 ; i < max0; i++)
     if (t->at(i) == i)
   {
-    n ++;
+    n++;
     int j = i * i;
     while (j < max0 && j > 0)
     {
@@ -33,7 +33,7 @@ int fillPrimesFactors(std::vector<int> * t, int n, std::vector<int> * primes, in
 
 int sumdivaux2(std::vector<int> * t, int n, int i){
   while (i < n && t->at(i) == 0)
-    i ++;
+    i++;
   return i;
 }
 
@@ -77,7 +77,7 @@ int main(){
     if (era->at(k) == k)
   {
     primes->at(l) = k;
-    l ++;
+    l++;
   }
   std::cout << l << " == " << nprimes << "\n";
   int sum = 0;

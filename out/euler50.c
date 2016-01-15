@@ -14,7 +14,7 @@ int eratostene(int* t, int max0){
   for (i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
-    n ++;
+    n++;
     if (max0 / i > i)
     {
       int j = i * i;
@@ -43,7 +43,7 @@ int main(void){
     if (era[k] == k)
   {
     primes[l] = k;
-    l ++;
+    l++;
   }
   printf("%d == %d\n", l, nprimes);
   int *sum = calloc( nprimes , sizeof(int));
@@ -73,7 +73,7 @@ int main(void){
       else
         stop = min2_(stop, i);
     }
-    len ++;
+    len++;
   }
   printf("%d\n%d\n", resp, maxl);
   return 0;

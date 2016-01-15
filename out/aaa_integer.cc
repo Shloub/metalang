@@ -11,7 +11,7 @@ int main(){
   std::cout << i << "\n";
   i /= 2;
   std::cout << i << "\n";
-  i ++;
+  i++;
   std::cout << i << "\n";
   i /= 3;
   std::cout << i << "\n";

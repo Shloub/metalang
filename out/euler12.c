@@ -15,7 +15,7 @@ int eratostene(int* t, int max0){
     if (t[i] == i)
   {
     int j = i * i;
-    n ++;
+    n++;
     while (j < max0 && j > 0)
     {
       t[j] = 0;
@@ -56,7 +56,7 @@ int find(int ndiv2){
     if (era[k] == k)
   {
     primes[l] = k;
-    l ++;
+    l++;
   }
   for (n = 1 ; n <= 10000; n++)
   {

@@ -6,7 +6,7 @@ int nth(char* tab, char tofind, int len){
   int out0 = 0;
   for (i = 0 ; i < len; i++)
     if (tab[i] == tofind)
-    out0 ++;
+    out0++;
   return out0;
 }
 

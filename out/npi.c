@@ -17,23 +17,23 @@ int npi0(char* str, int len){
   int ptrStr = 0;
   while (ptrStr < len)
     if (str[ptrStr] == ' ')
-    ptrStr ++;
+    ptrStr++;
   else if (is_number(str[ptrStr]))
   {
     int num = 0;
     while (str[ptrStr] != ' ')
     {
       num = num * 10 + (int)(str[ptrStr]) - (int)('0');
-      ptrStr ++;
+      ptrStr++;
     }
     stack[ptrStack] = num;
-    ptrStack ++;
+    ptrStack++;
   }
   else if (str[ptrStr] == '+')
   {
     stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
     ptrStack --;
-    ptrStr ++;
+    ptrStr++;
   }
   return stack[0];
 }

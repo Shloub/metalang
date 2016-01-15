@@ -36,7 +36,7 @@ void qsort0(int* tab, int len, int i, int j){
         int tmp = tab[i];
         tab[i] = tab[j];
         tab[j] = tmp;
-        i ++;
+        i++;
       }
       else
       {
@@ -45,7 +45,7 @@ void qsort0(int* tab, int len, int i, int j){
         tab[i] = tab[j];
         tab[j] = tab[i + 1];
         tab[i + 1] = tmp;
-        i ++;
+        i++;
       }
     }
     else

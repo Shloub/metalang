@@ -10,7 +10,7 @@ int h(int i){
   {
     if (i % j == 5)
       return 1;
-    j ++;
+    j++;
   }
   return 0;
 }
@@ -27,7 +27,7 @@ int main(void){
   while (i < 10)
   {
     printf("%d", i);
-    i ++;
+    i++;
     j += i;
   }
   printf("%d%dFIN TEST\n", j, i);

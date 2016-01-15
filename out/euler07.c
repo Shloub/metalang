@@ -12,12 +12,12 @@ int divisible(int n, int* t, int size){
 int find(int n, int* t, int used, int nth){
   while (used != nth)
     if (divisible(n, t, used))
-    n ++;
+    n++;
   else
   {
     t[used] = n;
-    n ++;
-    used ++;
+    n++;
+    used++;
   }
   return t[used - 1];
 }

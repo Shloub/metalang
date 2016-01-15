@@ -5,7 +5,7 @@ int eratostene(std::vector<int> * t, int max0){
   for (int i = 2 ; i < max0; i++)
     if (t->at(i) == i)
   {
-    n ++;
+    n++;
     if (max0 / i > i)
     {
       int j = i * i;
@@ -33,7 +33,7 @@ int main(){
     if (era->at(k) == k)
   {
     primes->at(l) = k;
-    l ++;
+    l++;
   }
   std::cout << l << " == " << nprimes << "\n";
   std::vector<bool > *canbe = new std::vector<bool>( maximumprimes );
