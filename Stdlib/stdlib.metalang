@@ -344,6 +344,11 @@ macro array<array<int>> py_expand_read_int_matrix(int x, int y)
   *  do "E R R O R"
 end
 
+macro array<array<char>> py_expand_read_char_matrix(int x, int y)
+  cpp do "read_matrix<char>($x, $y)"
+  *  do "E R R O R"
+end
+
 macro int native_expand_read_int()
   py do "int(input())"
   php do "intval(trim(fgets(STDIN)))"
@@ -502,12 +507,19 @@ def inline array<array<int>> read_int_matrix(int x, int y)
 end
 
 def lexems expand_read_char_matrix(lexems x, lexems y)
-	return {
-  def array<array<char>> tab[${y}] with z do
-		return read_char_line(x)
+  if current_language() == LANG_Cpp then
+    return {
+      tag use_cpp_readmatrix
+      return py_expand_read_char_matrix( ${ x }, ${ y } )
+    }
+  else
+    return {
+      def array<array<char>> tab[${y}] with z do
+        return read_char_line(x)
+      end
+      return tab
+    }
   end
-  return tab
-  }
 end
 
 def inline array<array<char>> read_char_matrix(int x, int y)
