@@ -1,15 +1,17 @@
 #include <iostream>
 #include <vector>
-std::vector<char> getline(){
-  if (std::cin.flags() & std::ios_base::skipws){
-    char c = std::cin.peek();
-    if (c == '\n' || c == ' ') std::cin.ignore();
-    std::cin.unsetf(std::ios::skipws);
+template <typename T> std::vector<std::vector<T> > read_matrix(int x, int y){
+  std::vector<std::vector<T> > matrix(y);
+  for (int i = 0; i < y; i++)
+  {
+    std::vector<T>& line = matrix[i];
+    line.resize(x);
+    for (int j = 0; j < x; j++)
+    {
+        std::cin >> line[j] >> std::skipws;
+    }
   }
-  std::string line;
-  std::getline(std::cin, line);
-  std::vector<char> c(line.begin(), line.end());
-  return c;
+  return matrix;
 }
 int min2_(int a, int b){
   if (a < b)
@@ -61,10 +63,7 @@ int main(){
   int y, x;
   std::cin >> x >> std::skipws >> y;
   std::cout << x << " " << y << "\n";
-  std::vector<std::vector<char > > e(y);
-  for (int f = 0 ; f < y; f++)
-    e[f] = getline();
-  std::vector<std::vector<char > > tab = e;
+  std::vector<std::vector<char > > tab = read_matrix<char>(x, y);
   int result = pathfind(tab, x, y);
   std::cout << result;
   return 0;
