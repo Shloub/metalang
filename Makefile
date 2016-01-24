@@ -309,11 +309,16 @@ out/%.test_$1 : out/%.$1.out out/%.ml.out
 	cp $$< $$@ ; \
 	echo "$(green)OK $$(basename $$*)$(reset)";
 
+ifneq ($1, cpp.bin)
 test_$1 : $(addsuffix .test_$1, $(TESTS))
+endif
 
 endef
 
 $(foreach i, fsscript.exe groovy fs exeVB st adb.bin rkt fun.ml pl rkt m.bin ml py php rb eval js cc.bin cpp.bin c.bin ml.native pas.bin class exe go cl fun.ml.native hs.exe lua scala, $(eval $(call TEST2,$(i))))
+
+IGNORE=out/aaa_05array out/bigints out/linkedList out/tictactoe
+test_cpp.bin : $(addsuffix .test_cpp.bin, $(filter-out $(IGNORE),$(TESTS)))
 
 # tests qui ne doivent pas compiler
 
