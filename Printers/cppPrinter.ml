@@ -274,3 +274,7 @@ class cppPrinter = object(self)
       (List.rev variables)
 
 end
+
+class proloCppPrinter = object(self)
+  inherit cppPrinter
+end
