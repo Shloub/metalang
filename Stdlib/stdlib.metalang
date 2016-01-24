@@ -436,7 +436,8 @@ end
 
 def lexems expand_read_char_line(lexems a)
   if current_language() == LANG_Lua ||
-  current_language() == LANG_Cc
+  current_language() == LANG_Cc ||
+  current_language() == LANG_Cpp
   then
     return {
       tag use_cc_readline

@@ -1,5 +1,16 @@
 #include <iostream>
 #include <vector>
+std::vector<char> getline(){
+  if (std::cin.flags() & std::ios_base::skipws){
+    char c = std::cin.peek();
+    if (c == '\n' || c == ' ') std::cin.ignore();
+    std::cin.unsetf(std::ios::skipws);
+  }
+  std::string line;
+  std::getline(std::cin, line);
+  std::vector<char> c(line.begin(), line.end());
+  return c;
+}
 int min2_(int a, int b){
   if (a < b)
     return a;
@@ -52,15 +63,7 @@ int main(){
   std::cout << x << " " << y << "\n";
   std::vector<std::vector<char > > e(y);
   for (int f = 0 ; f < y; f++)
-  {
-    std::vector<char > g(x);
-    for (int h = 0 ; h < x; h++)
-    {
-      std::cin >> g[h] >> std::noskipws;
-    }
-    std::cin >> std::skipws;
-    e[f] = g;
-  }
+    e[f] = getline();
   std::vector<std::vector<char > > tab = e;
   int result = pathfind(tab, x, y);
   std::cout << result;

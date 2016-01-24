@@ -1,5 +1,16 @@
 #include <iostream>
 #include <vector>
+std::vector<char> getline(){
+  if (std::cin.flags() & std::ios_base::skipws){
+    char c = std::cin.peek();
+    if (c == '\n' || c == ' ') std::cin.ignore();
+    std::cin.unsetf(std::ios::skipws);
+  }
+  std::string line;
+  std::getline(std::cin, line);
+  std::vector<char> c(line.begin(), line.end());
+  return c;
+}
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
@@ -26,12 +37,7 @@ int main(){
     std::cout << i_ << "==>" << tab2[i_] << " ";
   std::cin >> strlen >> std::skipws;
   std::cout << strlen << "=strlen\n";
-  std::vector<char > tab4(strlen);
-  for (int d = 0 ; d < strlen; d++)
-  {
-    std::cin >> tab4[d] >> std::noskipws;
-  }
-  std::cin >> std::skipws;
+  std::vector<char > tab4 = getline();
   for (int i3 = 0 ; i3 < strlen; i3++)
   {
     char tmpc = tab4[i3];

@@ -1,5 +1,16 @@
 #include <iostream>
 #include <vector>
+std::vector<char> getline(){
+  if (std::cin.flags() & std::ios_base::skipws){
+    char c = std::cin.peek();
+    if (c == '\n' || c == ' ') std::cin.ignore();
+    std::cin.unsetf(std::ios::skipws);
+  }
+  std::string line;
+  std::getline(std::cin, line);
+  std::vector<char> c(line.begin(), line.end());
+  return c;
+}
 int programme_candidat(std::vector<char >& tableau, int taille){
   int out0 = 0;
   for (int i = 0 ; i < taille; i++)
@@ -15,12 +26,7 @@ int programme_candidat(std::vector<char >& tableau, int taille){
 int main(){
   int taille;
   std::cin >> taille >> std::skipws;
-  std::vector<char > tableau(taille);
-  for (int a = 0 ; a < taille; a++)
-  {
-    std::cin >> tableau[a] >> std::noskipws;
-  }
-  std::cin >> std::skipws;
+  std::vector<char > tableau = getline();
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }
