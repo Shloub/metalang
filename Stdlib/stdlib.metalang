@@ -337,9 +337,10 @@ macro array<char> native_expand_read_char_line(int c)
   *  do "E R R O R"
 end
 
-macro array<array<int>> py_expand_read_int_matrix(int y)
+macro array<array<int>> py_expand_read_int_matrix(int x, int y)
   py do "[list(map(int, input().split())) for i in range($y)]"
   ruby do "[*1..$y].map { |l| STDIN.readline.split(\" \").map{ |x| x.to_i(10) } }"
+  cpp do "read_int_matrix($x, $y)"
   *  do "E R R O R"
 end
 
@@ -480,9 +481,11 @@ end
 
 def lexems expand_read_int_matrix(lexems x, lexems y)
     if current_language() == LANG_Py ||
-       current_language() == LANG_Rb then
+       current_language() == LANG_Rb ||
+       current_language() == LANG_Cpp then
       return {
-        return py_expand_read_int_matrix( ${ y } )
+        tag use_cpp_readintmatrix
+        return py_expand_read_int_matrix( ${ x }, ${ y } )
       }
     else
     return {

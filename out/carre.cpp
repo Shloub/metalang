@@ -1,5 +1,18 @@
 #include <iostream>
 #include <vector>
+std::vector<std::vector<int> > read_int_matrix(int x, int y){
+  std::vector<std::vector<int> > matrix(y);
+  for (int i = 0; i < y; i++)
+  {
+    std::vector<int>& line = matrix[i];
+    line.resize(x);
+    for (int j = 0; j < x; j++)
+    {
+        std::cin >> line[j] >> std::skipws;
+    }
+  }
+  return matrix;
+}
 int min2_(int a, int b){
   if (a < b)
     return a;
@@ -11,16 +24,7 @@ int min2_(int a, int b){
 int main(){
   int y, x;
   std::cin >> x >> std::skipws >> y;
-  std::vector<std::vector<int > > tab(y);
-  for (int d = 0 ; d < y; d++)
-  {
-    std::vector<int > e(x);
-    for (int f = 0 ; f < x; f++)
-    {
-      std::cin >> e[f] >> std::skipws;
-    }
-    tab[d] = e;
-  }
+  std::vector<std::vector<int > > tab = read_int_matrix(x, y);
   for (int ix = 1 ; ix < x; ix++)
     for (int iy = 1 ; iy < y; iy++)
       if (tab[iy][ix] == 1)
