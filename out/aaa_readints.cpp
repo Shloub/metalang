@@ -1,5 +1,18 @@
 #include <iostream>
 #include <vector>
+std::vector<std::vector<int> > read_int_matrix(int x, int y){
+  std::vector<std::vector<int> > matrix(y);
+  for (int i = 0; i < y; i++)
+  {
+    std::vector<int>& line = matrix[i];
+    line.resize(x);
+    for (int j = 0; j < x; j++)
+    {
+        std::cin >> line[j] >> std::skipws;
+    }
+  }
+  return matrix;
+}
 
 int main(){
   int len;
@@ -13,16 +26,7 @@ int main(){
   for (int i = 0 ; i < len; i++)
     std::cout << i << "=>" << tab1[i] << "\n";
   std::cin >> len >> std::skipws;
-  std::vector<std::vector<int > > tab2(len - 1);
-  for (int b = 0 ; b < len - 1; b++)
-  {
-    std::vector<int > c(len);
-    for (int d = 0 ; d < len; d++)
-    {
-      std::cin >> c[d] >> std::skipws;
-    }
-    tab2[b] = c;
-  }
+  std::vector<std::vector<int > > tab2 = read_int_matrix(len, len - 1);
   for (int i = 0 ; i <= len - 2; i ++)
   {
     for (int j = 0 ; j < len; j++)

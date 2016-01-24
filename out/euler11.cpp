@@ -1,5 +1,18 @@
 #include <iostream>
 #include <vector>
+std::vector<std::vector<int> > read_int_matrix(int x, int y){
+  std::vector<std::vector<int> > matrix(y);
+  for (int i = 0; i < y; i++)
+  {
+    std::vector<int>& line = matrix[i];
+    line.resize(x);
+    for (int j = 0; j < x; j++)
+    {
+        std::cin >> line[j] >> std::skipws;
+    }
+  }
+  return matrix;
+}
 int max2_(int a, int b){
   if (a > b)
     return a;
@@ -82,21 +95,12 @@ int main(){
     directions[i] = l;
   }
   int max0 = 0;
-  std::vector<std::vector<int > > m(20);
-  for (int o = 0 ; o < 20; o++)
-  {
-    std::vector<int > p(20);
-    for (int q = 0 ; q < 20; q++)
-    {
-      std::cin >> p[q] >> std::skipws;
-    }
-    m[o] = p;
-  }
+  std::vector<std::vector<int > > m = read_int_matrix(20, 20);
   for (int j = 0 ; j <= 7; j ++)
   {
-    tuple_int_int r = directions[j];
-    int dx = r.tuple_int_int_field_0;
-    int dy = r.tuple_int_int_field_1;
+    tuple_int_int o = directions[j];
+    int dx = o.tuple_int_int_field_0;
+    int dy = o.tuple_int_int_field_1;
     for (int x = 0 ; x <= 19; x ++)
       for (int y = 0 ; y <= 19; y ++)
         max0 = max2_(max0, find(4, m, x, y, dx, dy));

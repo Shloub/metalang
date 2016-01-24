@@ -346,6 +346,20 @@ class proloCppPrinter = object(self)
   std::getline(std::cin, line);
   std::vector<char> c(line.begin(), line.end());
   return c;
+}@\n";
+        if Tags.is_taged "use_cpp_readintmatrix"
+        then Format.fprintf f "std::vector<std::vector<int> > read_int_matrix(int x, int y){
+  std::vector<std::vector<int> > matrix(y);
+  for (int i = 0; i < y; i++)
+  {
+    std::vector<int>& line = matrix[i];
+    line.resize(x);
+    for (int j = 0; j < x; j++)
+    {
+        std::cin >> line[j] >> std::skipws;
+    }
+  }
+  return matrix;
 }@\n"
       ) ()
 
