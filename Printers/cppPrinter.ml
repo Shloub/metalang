@@ -275,6 +275,127 @@ class cppPrinter = object(self)
 
 end
 
+let print_expr_stack macros e f p =
+  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
+  let config = {
+    prio_binop;
+    prio_unop;
+    print_varname;
+    print_lief;
+    print_op;
+    print_unop;
+    print_mut;
+    macros
+  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
 class proloCppPrinter = object(self)
-  inherit cppPrinter
+  inherit cppPrinter as cppprinter
+
+  method expr f e = print_expr_stack
+      (StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros) e f nop
+
+  method ptype f t =
+    match Type.unfix t with
+    | Type.Integer -> Format.fprintf f "int"
+    | Type.String -> Format.fprintf f "std::string"
+    | Type.Array a -> Format.fprintf f "std::vector<%a >" self#ptype a
+    | Type.Void ->  Format.fprintf f "void"
+    | Type.Bool -> Format.fprintf f "bool"
+    | Type.Char -> Format.fprintf f "char"
+    | Type.Named n -> begin match Typer.expand (cppprinter#getTyperEnv ()) t
+        default_location |> Type.unfix with
+        | Type.Struct _ ->
+          Format.fprintf f "%s" n
+        | Type.Enum _ ->
+          Format.fprintf f "%s" n
+        | _ -> assert false
+    end
+    | Type.Enum _ -> Format.fprintf f "an enum"
+    | Type.Struct li -> Format.fprintf f "a struct"
+    | Type.Auto | Type.Lexems | Type.Tuple _ -> assert false
+
+  method prototype f t =
+    match Type.unfix t with
+    | Type.Array a -> Format.fprintf f "%a&" self#ptype t
+    | Type.Named n -> begin match Typer.expand (cppprinter#getTyperEnv ()) t
+        default_location |> Type.unfix with
+        | Type.Struct _ ->
+          Format.fprintf f "%a&" self#ptype t
+        | _ -> self#ptype f t
+    end
+    | _ -> self#ptype f t
+
+  method prog f prog =
+    Format.fprintf f
+      "#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
+      (fun f () ->
+        if Tags.is_taged "use_math"
+        then Format.fprintf f "#include<cmath>@\n";
+        if Tags.is_taged "use_cc_readline"
+        then Format.fprintf f "std::vector<char> getline(){
+  if (std::cin.flags() & std::ios_base::skipws){
+    char c = std::cin.peek();
+    if (c == '\\n' || c == ' ') std::cin.ignore();
+    std::cin.unsetf(std::ios::skipws);
+  }
+  std::string line;
+  std::getline(std::cin, line);
+  std::vector<char> c(line.begin(), line.end());
+  return c;
+}@\n"
+      ) ()
+
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
+
+  method allocarray f binding type_ len _ =
+    Format.fprintf f "@[<h>std::vector<%a > %a(%a);@]"
+      self#ptype type_
+      self#binding binding
+      self#expr len
+
+  method allocarrayconst f binding type_ len e opt =
+    Format.fprintf f "@[<h>std::vector<%a > %a(%a, %a);@]"
+      self#ptype type_
+      self#binding binding
+      self#expr len
+      (print_lief nop) e
+
+  method allocrecord f name t el =
+    match Type.unfix t with
+    | Type.Named typename ->
+      Format.fprintf f "%s %a;@\n%a"
+        typename
+        self#binding name
+        (self#def_fields name) el
+    | _ -> assert false
+
+  method def_fields name f li =
+    Format.fprintf f "@[<h>%a@]"
+      (print_list
+         (fun f (fieldname, expr) ->
+           Format.fprintf f "%a.%a = %a%a"
+             self#binding name
+             self#field fieldname
+             self#expr expr
+             self#separator ()
+         ) sep_nl
+      )
+      li
+
+  method m_field f m field =
+      Format.fprintf f "%a.%s"
+        self#mutable_get m
+        field
+
+  method m_array f m indexes =
+      Format.fprintf f "@[<h>%a[%a]@]"
+        self#mutable_get m
+        (print_list
+           self#expr
+           (sep "%a[%a]")) indexes
 end
