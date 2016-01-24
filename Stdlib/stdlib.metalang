@@ -340,7 +340,7 @@ end
 macro array<array<int>> py_expand_read_int_matrix(int x, int y)
   py do "[list(map(int, input().split())) for i in range($y)]"
   ruby do "[*1..$y].map { |l| STDIN.readline.split(\" \").map{ |x| x.to_i(10) } }"
-  cpp do "read_int_matrix($x, $y)"
+  cpp do "read_matrix<int>($x, $y)"
   *  do "E R R O R"
 end
 
@@ -484,7 +484,7 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
        current_language() == LANG_Rb ||
        current_language() == LANG_Cpp then
       return {
-        tag use_cpp_readintmatrix
+        tag use_cpp_readmatrix
         return py_expand_read_int_matrix( ${ x }, ${ y } )
       }
     else

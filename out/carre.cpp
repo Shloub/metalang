@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
-std::vector<std::vector<int> > read_int_matrix(int x, int y){
-  std::vector<std::vector<int> > matrix(y);
+template <typename T> std::vector<std::vector<T> > read_matrix(int x, int y){
+  std::vector<std::vector<T> > matrix(y);
   for (int i = 0; i < y; i++)
   {
-    std::vector<int>& line = matrix[i];
+    std::vector<T>& line = matrix[i];
     line.resize(x);
     for (int j = 0; j < x; j++)
     {
@@ -24,7 +24,7 @@ int min2_(int a, int b){
 int main(){
   int y, x;
   std::cin >> x >> std::skipws >> y;
-  std::vector<std::vector<int > > tab = read_int_matrix(x, y);
+  std::vector<std::vector<int > > tab = read_matrix<int>(x, y);
   for (int ix = 1 ; ix < x; ix++)
     for (int iy = 1 ; iy < y; iy++)
       if (tab[iy][ix] == 1)
