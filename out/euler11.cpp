@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
-std::vector<std::vector<int> > read_int_matrix(int x, int y){
-  std::vector<std::vector<int> > matrix(y);
+template <typename T> std::vector<std::vector<T> > read_matrix(int x, int y){
+  std::vector<std::vector<T> > matrix(y);
   for (int i = 0; i < y; i++)
   {
-    std::vector<int>& line = matrix[i];
+    std::vector<T>& line = matrix[i];
     line.resize(x);
     for (int j = 0; j < x; j++)
     {
@@ -95,7 +95,7 @@ int main(){
     directions[i] = l;
   }
   int max0 = 0;
-  std::vector<std::vector<int > > m = read_int_matrix(20, 20);
+  std::vector<std::vector<int > > m = read_matrix<int>(20, 20);
   for (int j = 0 ; j <= 7; j ++)
   {
     tuple_int_int o = directions[j];
