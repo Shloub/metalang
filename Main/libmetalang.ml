@@ -254,6 +254,7 @@ let languages, printers =
     "pas",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new PasPrinter.pasPrinter ;
     "adb",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new AdaPrinter.adaPrinter ;
     "cc",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false) => new CppPrinter.cppPrinter ;
+    "cpp",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false) => new CppPrinter.proloCppPrinter ;
     "cs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new CsharpPrinter.csharpPrinter ;
     "vb",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new VbDotNetPrinter.vbDotNetPrinter ;
     "java",    (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false) => new JavaPrinter.javaPrinter ;
@@ -426,6 +427,7 @@ enum @target_language
   LANG_Adb
   LANG_C
   LANG_Cc
+  LANG_Cpp
   LANG_Cl
   LANG_Cs
   LANG_Fsscript
