@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int pathfind_aux(std::vector<int>& cache, std::vector<int>& tab, int len, int pos) {
   if (pos >= len - 1)
     return 0;
@@ -19,6 +20,7 @@ int pathfind_aux(std::vector<int>& cache, std::vector<int>& tab, int len, int po
     return out0;
   }
 }
+
 
 int pathfind(std::vector<int>& tab, int len) {
   std::vector<int> cache(len);

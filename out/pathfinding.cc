@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
+
 
 int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vector<char> *> * tab, int x, int y, int posX, int posY) {
   if (posX == x - 1 && posY == y - 1)
@@ -28,6 +30,7 @@ int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vecto
     return out0;
   }
 }
+
 
 int pathfind(std::vector<std::vector<char> *> * tab, int x, int y) {
   std::vector<std::vector<int> *> *cache = new std::vector<std::vector<int> *>( y );

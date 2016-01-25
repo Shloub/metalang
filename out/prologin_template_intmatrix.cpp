@@ -9,6 +9,7 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y) {
       std::cin >> elem;
   return matrix;
 }
+
 int programme_candidat(std::vector<std::vector<int>>& tableau, int x, int y) {
   int out0 = 0;
   for (int i = 0; i < y; i++)

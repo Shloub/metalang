@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
+
 std::vector<bool> * id(std::vector<bool> * b) {
   return b;
 }
+
 
 void g(std::vector<bool> * t, int index) {
   t->at(index) = false;

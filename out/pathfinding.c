@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
+
 
 int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY) {
   if (posX == x - 1 && posY == y - 1)
@@ -29,6 +31,7 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY) {
     return out0;
   }
 }
+
 
 int pathfind(char** tab, int x, int y) {
   int i, j;

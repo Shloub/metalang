@@ -16,6 +16,7 @@
 
 
 */
+
 int sumdiag(int n) {
   int i;
   int nterms = n * 2 - 1;

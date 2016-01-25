@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int exp0(int a, int e) {
   int i;
   int o = 1;
@@ -8,6 +9,7 @@ int exp0(int a, int e) {
     o *= a;
   return o;
 }
+
 
 int e(int* t, int n) {
   int i;

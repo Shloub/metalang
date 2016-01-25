@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int foo() {
   int i;
   for (i = 0; i <= 10; i++)
@@ -9,6 +10,7 @@ int foo() {
   }
   return 0;
 }
+
 
 int bar() {
   int i;

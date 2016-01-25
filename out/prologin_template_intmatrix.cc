@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y) {
   int out0 = 0;
   for (int i = 0; i < y; i++)

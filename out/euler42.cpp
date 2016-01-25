@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include<cmath>
+
 bool is_triangular(int n) {
   /*
    n = k * (k + 1) / 2
@@ -9,6 +10,7 @@ bool is_triangular(int n) {
   int a = (int)sqrt(n * 2);
   return a * (a + 1) == n * 2;
 }
+
 
 int score() {
   int len;

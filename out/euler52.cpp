@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int chiffre_sort(int a) {
   if (a < 10)
     return a;
@@ -15,6 +16,7 @@ int chiffre_sort(int a) {
       return d + chiffre_sort(c + e * 10) * 10;
   }
 }
+
 
 bool same_numbers(int a, int b, int c, int d, int e, int f) {
   int ca = chiffre_sort(a);

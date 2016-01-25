@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 int min2_(int a, int b) {
   if (a < b)
@@ -20,6 +22,7 @@ typedef struct bigint {
   int bigint_len;
   int* bigint_chiffres;
 } bigint;
+
 
 struct bigint * read_bigint(int len) {
   int i, j;
@@ -43,6 +46,7 @@ struct bigint * read_bigint(int len) {
   return e;
 }
 
+
 void print_bigint(struct bigint * a) {
   int i;
   if (!a->bigint_sign)
@@ -50,6 +54,7 @@ void print_bigint(struct bigint * a) {
   for (i = 0; i < a->bigint_len; i++)
     printf("%d", a->bigint_chiffres[a->bigint_len - 1 - i]);
 }
+
 
 int bigint_eq(struct bigint * a, struct bigint * b) {
   int i;
@@ -66,6 +71,7 @@ int bigint_eq(struct bigint * a, struct bigint * b) {
     return 1;
   }
 }
+
 
 int bigint_gt(struct bigint * a, struct bigint * b) {
   int i;
@@ -93,9 +99,11 @@ int bigint_gt(struct bigint * a, struct bigint * b) {
   }
 }
 
+
 int bigint_lt(struct bigint * a, struct bigint * b) {
   return !bigint_gt(a, b);
 }
+
 
 struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b) {
   int i;
@@ -121,6 +129,7 @@ struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b) {
   f->bigint_chiffres=chiffres;
   return f;
 }
+
 
 struct bigint * sub_bigint_positif(struct bigint * a, struct bigint * b) {
   int i;
@@ -153,6 +162,7 @@ Pré-requis : a > b
   return g;
 }
 
+
 struct bigint * neg_bigint(struct bigint * a) {
   struct bigint * h = malloc (sizeof(h) );
   h->bigint_sign=!a->bigint_sign;
@@ -160,6 +170,7 @@ struct bigint * neg_bigint(struct bigint * a) {
   h->bigint_chiffres=a->bigint_chiffres;
   return h;
 }
+
 
 struct bigint * add_bigint(struct bigint * a, struct bigint * b) {
   if (a->bigint_sign == b->bigint_sign)
@@ -187,9 +198,11 @@ struct bigint * add_bigint(struct bigint * a, struct bigint * b) {
   }
 }
 
+
 struct bigint * sub_bigint(struct bigint * a, struct bigint * b) {
   return add_bigint(a, neg_bigint(b));
 }
+
 
 struct bigint * mul_bigint_cp(struct bigint * a, struct bigint * b) {
   int l, i, j, k;
@@ -226,6 +239,7 @@ D'ou le nom de la fonction. */
   return m;
 }
 
+
 struct bigint * bigint_premiers_chiffres(struct bigint * a, int i) {
   int len = min2_(i, a->bigint_len);
   while (len != 0 && a->bigint_chiffres[len - 1] == 0)
@@ -236,6 +250,7 @@ struct bigint * bigint_premiers_chiffres(struct bigint * a, int i) {
   o->bigint_chiffres=a->bigint_chiffres;
   return o;
 }
+
 
 struct bigint * bigint_shift(struct bigint * a, int i) {
   int k;
@@ -251,6 +266,7 @@ struct bigint * bigint_shift(struct bigint * a, int i) {
   p->bigint_chiffres=chiffres;
   return p;
 }
+
 
 struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb) {
   if (aa->bigint_len == 0)
@@ -279,6 +295,7 @@ struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb) {
 Division,
 Modulo
 */
+
 int log10(int a) {
   int out0 = 1;
   while (a >= 10)
@@ -288,6 +305,7 @@ int log10(int a) {
   }
   return out0;
 }
+
 
 struct bigint * bigint_of_int(int i) {
   int k, j;
@@ -309,6 +327,7 @@ struct bigint * bigint_of_int(int i) {
   return q;
 }
 
+
 struct bigint * fact_bigint(struct bigint * a) {
   struct bigint * one = bigint_of_int(1);
   struct bigint * out0 = one;
@@ -320,6 +339,7 @@ struct bigint * fact_bigint(struct bigint * a) {
   return out0;
 }
 
+
 int sum_chiffres_bigint(struct bigint * a) {
   int i;
   int out0 = 0;
@@ -329,12 +349,14 @@ int sum_chiffres_bigint(struct bigint * a) {
 }
 
 /* http://projecteuler.net/problem=20 */
+
 int euler20() {
   struct bigint * a = bigint_of_int(15);
   /* normalement c'est 100 */
   a = fact_bigint(a);
   return sum_chiffres_bigint(a);
 }
+
 
 struct bigint * bigint_exp(struct bigint * a, int b) {
   if (b == 1)
@@ -345,6 +367,7 @@ struct bigint * bigint_exp(struct bigint * a, int b) {
     return mul_bigint(a, bigint_exp(a, b - 1));
 }
 
+
 struct bigint * bigint_exp_10chiffres(struct bigint * a, int b) {
   a = bigint_premiers_chiffres(a, 10);
   if (b == 1)
@@ -354,6 +377,7 @@ struct bigint * bigint_exp_10chiffres(struct bigint * a, int b) {
   else
     return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
 }
+
 
 void euler48() {
   int i;
@@ -371,12 +395,14 @@ void euler48() {
   printf("\n");
 }
 
+
 int euler16() {
   struct bigint * a = bigint_of_int(2);
   a = bigint_exp(a, 100);
   /* 1000 normalement */
   return sum_chiffres_bigint(a);
 }
+
 
 int euler25() {
   int i = 2;
@@ -392,6 +418,7 @@ int euler25() {
   }
   return i;
 }
+
 
 int euler29() {
   int l, i, k, j2, j;

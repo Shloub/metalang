@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int pathfind_aux(int* cache, int* tab, int len, int pos) {
   if (pos >= len - 1)
     return 0;
@@ -20,6 +21,7 @@ int pathfind_aux(int* cache, int* tab, int len, int pos) {
     return out0;
   }
 }
+
 
 int pathfind(int* tab, int len) {
   int i;

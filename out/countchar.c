@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int nth(char* tab, char tofind, int len) {
   int i;
   int out0 = 0;

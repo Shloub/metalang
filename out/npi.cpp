@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 bool is_number(char c) {
   return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
 }
@@ -7,6 +8,7 @@ bool is_number(char c) {
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
+
 int npi0(std::vector<char>& str, int len) {
   std::vector<int> stack(len, 0);
   int ptrStack = 0;

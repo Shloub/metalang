@@ -5,6 +5,7 @@ struct intlist {
   intlist * tail;
 };
 
+
 intlist * cons(intlist * list, int i) {
   intlist * out0 = new intlist();
   out0->head=i;
@@ -12,9 +13,11 @@ intlist * cons(intlist * list, int i) {
   return out0;
 }
 
+
 bool is_empty(intlist * foo) {
   return true;
 }
+
 
 intlist * rev2(intlist * acc, intlist * torev) {
   if (is_empty(torev))
@@ -28,9 +31,11 @@ intlist * rev2(intlist * acc, intlist * torev) {
   }
 }
 
+
 intlist * rev(intlist * empty, intlist * torev) {
   return rev2(empty, torev);
 }
+
 
 void test(intlist * empty) {
   intlist * list = empty;

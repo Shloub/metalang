@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
+
 
 int eratostene(int* t, int max0) {
   int i;

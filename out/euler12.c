@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 int eratostene(int* t, int max0) {
   int i;
@@ -25,6 +27,7 @@ int eratostene(int* t, int max0) {
   return n;
 }
 
+
 int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
   int i;
   for (i = 0; i < nprimes; i++)
@@ -40,6 +43,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
   }
   return n;
 }
+
 
 int find(int ndiv2) {
   int n, i, m, k, o, j;

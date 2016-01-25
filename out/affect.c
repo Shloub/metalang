@@ -10,6 +10,7 @@ typedef struct toto {
   int blah;
 } toto;
 
+
 struct toto * mktoto(int v1) {
   struct toto * t = malloc (sizeof(t) );
   t->foo=v1;
@@ -18,6 +19,7 @@ struct toto * mktoto(int v1) {
   return t;
 }
 
+
 struct toto * mktoto2(int v1) {
   struct toto * t = malloc (sizeof(t) );
   t->foo=v1 + 3;
@@ -25,6 +27,7 @@ struct toto * mktoto2(int v1) {
   t->blah=v1 + 1;
   return t;
 }
+
 
 int result(struct toto * t_, struct toto * t2_) {
   int j, i;

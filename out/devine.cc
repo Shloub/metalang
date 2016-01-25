@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 bool devine0(int nombre, std::vector<int> * tab, int len) {
   int min0 = tab->at(0);
   int max0 = tab->at(1);

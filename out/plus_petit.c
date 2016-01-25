@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int go0(int* tab, int a, int b) {
   int m = (a + b) / 2;
   if (a == m)
@@ -29,6 +30,7 @@ int go0(int* tab, int a, int b) {
   else
     return go0(tab, m, b);
 }
+
 
 int plus_petit0(int* tab, int len) {
   return go0(tab, 0, len);

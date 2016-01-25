@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int palindrome2(int* pow2, int n) {
   int k, j, i;
   int *t = calloc( 20 , sizeof(int));

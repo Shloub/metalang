@@ -287,7 +287,7 @@ class cPrinter = object(self)
 
   method print_fun f funname t li instrs =
     let li_fori, li_forc = self#collect_for instrs in
-    Format.fprintf f "@[<h>%a@] {@\n@[<v 2>  %a%a%a@]@\n}@\n"
+    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 2>  %a%a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc

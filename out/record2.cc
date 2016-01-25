@@ -6,6 +6,7 @@ struct toto {
   int blah;
 };
 
+
 toto * mktoto(int v1) {
   toto * t = new toto();
   t->foo=v1;
@@ -13,6 +14,7 @@ toto * mktoto(int v1) {
   t->blah=0;
   return t;
 }
+
 
 int result(toto * t) {
   t->blah++;

@@ -5,6 +5,7 @@ struct tuple_int_int {
   int tuple_int_int_field_1;
 };
 
+
 tuple_int_int f(tuple_int_int& tuple0) {
   tuple_int_int c = tuple0;
   int a = c.tuple_int_int_field_0;

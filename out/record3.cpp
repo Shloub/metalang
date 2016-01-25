@@ -6,6 +6,7 @@ struct toto {
   int blah;
 };
 
+
 toto mktoto(int v1) {
   toto t;
   t.foo = v1;
@@ -13,6 +14,7 @@ toto mktoto(int v1) {
   t.blah = 0;
   return t;
 }
+
 
 int result(std::vector<toto>& t, int len) {
   int out0 = 0;

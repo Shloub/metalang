@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int programme_candidat(int** tableau, int x, int y) {
   int i, j;
   int out0 = 0;

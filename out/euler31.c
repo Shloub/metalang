@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int result(int sum, int* t, int maxIndex, int** cache) {
   int i;
   if (cache[sum][maxIndex] != 0)

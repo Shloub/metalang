@@ -19,6 +19,7 @@ typedef struct move {
 } move;
 
 /* On affiche l'état */
+
 void print_state(struct gamestate * g) {
   int y, x;
   printf("\n|");
@@ -41,6 +42,7 @@ void print_state(struct gamestate * g) {
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
+
 void eval0(struct gamestate * g) {
   int y, x;
   int win = 0;
@@ -86,6 +88,7 @@ void eval0(struct gamestate * g) {
 }
 
 /* On applique un mouvement */
+
 void apply_move_xy(int x, int y, struct gamestate * g) {
   int player = 2;
   if (g->firstToPlay)
@@ -94,9 +97,11 @@ void apply_move_xy(int x, int y, struct gamestate * g) {
   g->firstToPlay = !g->firstToPlay;
 }
 
+
 void apply_move(struct move * m, struct gamestate * g) {
   apply_move_xy(m->x, m->y, g);
 }
+
 
 void cancel_move_xy(int x, int y, struct gamestate * g) {
   g->cases[x][y] = 0;
@@ -104,13 +109,16 @@ void cancel_move_xy(int x, int y, struct gamestate * g) {
   g->ended = 0;
 }
 
+
 void cancel_move(struct move * m, struct gamestate * g) {
   cancel_move_xy(m->x, m->y, g);
 }
 
+
 int can_move_xy(int x, int y, struct gamestate * g) {
   return g->cases[x][y] == 0;
 }
+
 
 int can_move(struct move * m, struct gamestate * g) {
   return can_move_xy(m->x, m->y, g);
@@ -119,6 +127,7 @@ int can_move(struct move * m, struct gamestate * g) {
 /*
 Un minimax classique, renvoie la note du plateau
 */
+
 int minmax(struct gamestate * g) {
   int x, y;
   eval0(g);
@@ -144,6 +153,7 @@ int minmax(struct gamestate * g) {
 /*
 Renvoie le coup de l'IA
 */
+
 struct move * play(struct gamestate * g) {
   int x, y;
   struct move * minMove = malloc (sizeof(minMove) );
@@ -169,6 +179,7 @@ struct move * play(struct gamestate * g) {
   return minMove;
 }
 
+
 struct gamestate * init0() {
   int i, j;
   int* *cases = calloc( 3 , sizeof(int*));
@@ -186,6 +197,7 @@ struct gamestate * init0() {
   a->ended=0;
   return a;
 }
+
 
 struct move * read_move() {
   int y, x;

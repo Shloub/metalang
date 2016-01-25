@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int exp0(int a, int b) {
   if (b == 0)
     return 1;

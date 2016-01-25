@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
@@ -8,12 +9,14 @@ int max2_(int a, int b) {
     return b;
 }
 
+
 int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
+
 
 int pgcd(int a, int b) {
   int c = min2_(a, b);

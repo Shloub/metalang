@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int eratostene(std::vector<int>& t, int max0) {
   int n = 0;
   for (int i = 2; i < max0; i++)
@@ -16,6 +17,7 @@ int eratostene(std::vector<int>& t, int max0) {
   return n;
 }
 
+
 bool isPrime(int n, std::vector<int>& primes, int len) {
   int i = 0;
   if (n < 0)
@@ -28,6 +30,7 @@ bool isPrime(int n, std::vector<int>& primes, int len) {
   }
   return true;
 }
+
 
 int test(int a, int b, std::vector<int>& primes, int len) {
   for (int n = 0; n <= 200; n ++)

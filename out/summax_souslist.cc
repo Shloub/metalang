@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int summax(std::vector<int> * lst, int len) {
   int current = 0;
   int max0 = 0;

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+
 int is_triangular(int n) {
   /*
    n = k * (k + 1) / 2
@@ -10,6 +11,7 @@ int is_triangular(int n) {
   int a = (int)sqrt(n * 2);
   return a * (a + 1) == n * 2;
 }
+
 
 int score() {
   int i, len;

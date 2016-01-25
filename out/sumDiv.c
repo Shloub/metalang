@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void foo() {
   int a = 0;
   /* test */
@@ -8,9 +9,11 @@ void foo() {
   /* test 2 */
 }
 
+
 void foo2() {
   
 }
+
 
 void foo3() {
   if (1 == 1)
@@ -18,6 +21,7 @@ void foo3() {
     
   }
 }
+
 
 int sumdiv(int n) {
   int i;

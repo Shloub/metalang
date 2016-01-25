@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int divisible(int n, int* t, int size) {
   int i;
   for (i = 0; i < size; i++)
@@ -8,6 +9,7 @@ int divisible(int n, int* t, int size) {
     return 1;
   return 0;
 }
+
 
 int find(int n, int* t, int used, int nth) {
   while (used != nth)
