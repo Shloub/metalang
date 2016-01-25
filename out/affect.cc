@@ -37,10 +37,10 @@ int result(toto * t_, toto * t2_){
   t2 = t3;
   t->blah++;
   int len = 1;
-  std::vector<int > *cache0 = new std::vector<int>( len );
+  std::vector<int> *cache0 = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
     cache0->at(i) = -i;
-  std::vector<int > *cache1 = new std::vector<int>( len );
+  std::vector<int> *cache1 = new std::vector<int>( len );
   for (int j = 0 ; j < len; j++)
     cache1->at(j) = j;
   std::vector<int> * cache2 = cache0;

@@ -19,7 +19,7 @@ void print_toto(toto * t){
 
 
 int main(){
-  std::vector<std::string > *tab = new std::vector<std::string>( 2 );
+  std::vector<std::string> *tab = new std::vector<std::string>( 2 );
   for (int i = 0 ; i < 2; i++)
     tab->at(i) = idstring("chaine de test");
   for (int j = 0 ; j <= 1; j ++)

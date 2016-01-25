@@ -14,7 +14,7 @@ int main(){
   std::cin >> len >> std::skipws;
   char tofind = '\u0000';
   std::cin >> tofind >> std::skipws;
-  std::vector<char > *tab = new std::vector<char>( len );
+  std::vector<char> *tab = new std::vector<char>( len );
   for (int i = 0 ; i < len; i++)
   {
     char tmp = '\u0000';

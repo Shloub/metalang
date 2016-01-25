@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 std::vector<int> * copytab(std::vector<int> * tab, int len){
-  std::vector<int > *o = new std::vector<int>( len );
+  std::vector<int> *o = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
     o->at(i) = tab->at(i);
   return o;
@@ -56,7 +56,7 @@ void qsort0(std::vector<int> * tab, int len, int i, int j){
 int main(){
   int len = 2;
   std::cin >> len >> std::skipws;
-  std::vector<int > *tab = new std::vector<int>( len );
+  std::vector<int> *tab = new std::vector<int>( len );
   for (int i_ = 0 ; i_ < len; i_++)
   {
     int tmp = 0;

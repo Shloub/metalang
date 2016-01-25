@@ -14,7 +14,7 @@ toto mktoto(int v1){
   return t;
 }
 
-int result(std::vector<toto >& t, int len){
+int result(std::vector<toto>& t, int len){
   int out0 = 0;
   for (int j = 0 ; j < len; j++)
   {
@@ -26,7 +26,7 @@ int result(std::vector<toto >& t, int len){
 
 
 int main(){
-  std::vector<toto > t(4);
+  std::vector<toto> t(4);
   for (int i = 0 ; i < 4; i++)
     t[i] = mktoto(i);
   std::cin >> t[0].bar >> std::skipws >> t[1].blah >> std::noskipws;

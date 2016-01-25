@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int eratostene(std::vector<int >& t, int max0){
+int eratostene(std::vector<int>& t, int max0){
   int n = 0;
   for (int i = 2 ; i < max0; i++)
     if (t[i] == i)
@@ -16,7 +16,7 @@ int eratostene(std::vector<int >& t, int max0){
   return n;
 }
 
-int fillPrimesFactors(std::vector<int >& t, int n, std::vector<int >& primes, int nprimes){
+int fillPrimesFactors(std::vector<int>& t, int n, std::vector<int>& primes, int nprimes){
   for (int i = 0 ; i < nprimes; i++)
   {
     int d = primes[i];
@@ -31,13 +31,13 @@ int fillPrimesFactors(std::vector<int >& t, int n, std::vector<int >& primes, in
   return n;
 }
 
-int sumdivaux2(std::vector<int >& t, int n, int i){
+int sumdivaux2(std::vector<int>& t, int n, int i){
   while (i < n && t[i] == 0)
     i++;
   return i;
 }
 
-int sumdivaux(std::vector<int >& t, int n, int i){
+int sumdivaux(std::vector<int>& t, int n, int i){
   if (i > n)
     return 1;
   else if (t[i] == 0)
@@ -56,8 +56,8 @@ int sumdivaux(std::vector<int >& t, int n, int i){
   }
 }
 
-int sumdiv(int nprimes, std::vector<int >& primes, int n){
-  std::vector<int > t(n + 1, 0);
+int sumdiv(int nprimes, std::vector<int>& primes, int n){
+  std::vector<int> t(n + 1, 0);
   int max0 = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max0, 0);
 }
@@ -65,11 +65,11 @@ int sumdiv(int nprimes, std::vector<int >& primes, int n){
 
 int main(){
   int maximumprimes = 1001;
-  std::vector<int > era(maximumprimes);
+  std::vector<int> era(maximumprimes);
   for (int j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   int nprimes = eratostene(era, maximumprimes);
-  std::vector<int > primes(nprimes, 0);
+  std::vector<int> primes(nprimes, 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era[k] == k)

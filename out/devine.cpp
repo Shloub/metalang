@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-bool devine0(int nombre, std::vector<int >& tab, int len){
+bool devine0(int nombre, std::vector<int>& tab, int len){
   int min0 = tab[0];
   int max0 = tab[1];
   for (int i = 2 ; i < len; i++)
@@ -21,7 +21,7 @@ bool devine0(int nombre, std::vector<int >& tab, int len){
 int main(){
   int tmp, len, nombre;
   std::cin >> nombre >> std::skipws >> len;
-  std::vector<int > tab(len);
+  std::vector<int> tab(len);
   for (int i = 0 ; i < len; i++)
   {
     std::cin >> tmp >> std::skipws;

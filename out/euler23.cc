@@ -57,7 +57,7 @@ int sumdivaux(std::vector<int> * t, int n, int i){
 }
 
 int sumdiv(int nprimes, std::vector<int> * primes, int n){
-  std::vector<int > *t = new std::vector<int>( n + 1 );
+  std::vector<int> *t = new std::vector<int>( n + 1 );
   std::fill(t->begin(), t->end(), 0);
   int max0 = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max0, 0);
@@ -66,11 +66,11 @@ int sumdiv(int nprimes, std::vector<int> * primes, int n){
 
 int main(){
   int maximumprimes = 30001;
-  std::vector<int > *era = new std::vector<int>( maximumprimes );
+  std::vector<int> *era = new std::vector<int>( maximumprimes );
   for (int s = 0 ; s < maximumprimes; s++)
     era->at(s) = s;
   int nprimes = eratostene(era, maximumprimes);
-  std::vector<int > *primes = new std::vector<int>( nprimes );
+  std::vector<int> *primes = new std::vector<int>( nprimes );
   std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
@@ -81,9 +81,9 @@ int main(){
   }
   int n = 100;
   /* 28124 ça prend trop de temps mais on arrive a passer le test */
-  std::vector<bool > *abondant = new std::vector<bool>( n + 1 );
+  std::vector<bool> *abondant = new std::vector<bool>( n + 1 );
   std::fill(abondant->begin(), abondant->end(), false);
-  std::vector<bool > *summable = new std::vector<bool>( n + 1 );
+  std::vector<bool> *summable = new std::vector<bool>( n + 1 );
   std::fill(summable->begin(), summable->end(), false);
   int sum = 0;
   for (int r = 2 ; r <= n; r ++)

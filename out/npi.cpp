@@ -7,8 +7,8 @@ bool is_number(char c){
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-int npi0(std::vector<char >& str, int len){
-  std::vector<int > stack(len, 0);
+int npi0(std::vector<char>& str, int len){
+  std::vector<int> stack(len, 0);
   int ptrStack = 0;
   int ptrStr = 0;
   while (ptrStr < len)
@@ -38,7 +38,7 @@ int npi0(std::vector<char >& str, int len){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  std::vector<char > tab(len);
+  std::vector<char> tab(len);
   for (int i = 0 ; i < len; i++)
   {
     char tmp = '\u0000';

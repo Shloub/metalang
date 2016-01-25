@@ -11,7 +11,7 @@ std::vector<char> getline(){
   std::vector<char> c(line.begin(), line.end());
   return c;
 }
-int programme_candidat(std::vector<char >& tableau, int taille){
+int programme_candidat(std::vector<char>& tableau, int taille){
   int out0 = 0;
   for (int i = 0 ; i < taille; i++)
   {
@@ -26,7 +26,7 @@ int programme_candidat(std::vector<char >& tableau, int taille){
 int main(){
   int taille;
   std::cin >> taille >> std::skipws;
-  std::vector<char > tableau = getline();
+  std::vector<char> tableau = getline();
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int eratostene(std::vector<int >& t, int max0){
+int eratostene(std::vector<int>& t, int max0){
   int n = 0;
   for (int i = 2 ; i < max0; i++)
     if (t[i] == i)
@@ -22,11 +22,11 @@ int eratostene(std::vector<int >& t, int max0){
 
 int main(){
   int maximumprimes = 6000;
-  std::vector<int > era(maximumprimes);
+  std::vector<int> era(maximumprimes);
   for (int j_ = 0 ; j_ < maximumprimes; j_++)
     era[j_] = j_;
   int nprimes = eratostene(era, maximumprimes);
-  std::vector<int > primes(nprimes, 0);
+  std::vector<int> primes(nprimes, 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era[k] == k)
@@ -35,7 +35,7 @@ int main(){
     l++;
   }
   std::cout << l << " == " << nprimes << "\n";
-  std::vector<bool > canbe(maximumprimes, false);
+  std::vector<bool> canbe(maximumprimes, false);
   for (int i = 0 ; i < nprimes; i++)
     for (int j = 0 ; j < maximumprimes; j++)
     {

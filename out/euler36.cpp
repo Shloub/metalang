@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-bool palindrome2(std::vector<int >& pow2, int n){
-  std::vector<bool > t(20);
+bool palindrome2(std::vector<int>& pow2, int n){
+  std::vector<bool> t(20);
   for (int i = 0 ; i < 20; i++)
     t[i] = n / pow2[i] % 2 == 1;
   int nnum = 0;
@@ -17,7 +17,7 @@ bool palindrome2(std::vector<int >& pow2, int n){
 
 int main(){
   int p = 1;
-  std::vector<int > pow2(20);
+  std::vector<int> pow2(20);
   for (int i = 0 ; i < 20; i++)
   {
     p *= 2;

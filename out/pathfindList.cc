@@ -21,7 +21,7 @@ int pathfind_aux(std::vector<int> * cache, std::vector<int> * tab, int len, int 
 }
 
 int pathfind(std::vector<int> * tab, int len){
-  std::vector<int > *cache = new std::vector<int>( len );
+  std::vector<int> *cache = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
     cache->at(i) = -1;
   return pathfind_aux(cache, tab, len, 0);
@@ -31,7 +31,7 @@ int pathfind(std::vector<int> * tab, int len){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  std::vector<int > *tab = new std::vector<int>( len );
+  std::vector<int> *tab = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;

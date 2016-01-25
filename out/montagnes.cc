@@ -22,7 +22,7 @@ int montagnes0(std::vector<int> * tab, int len){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  std::vector<int > *tab = new std::vector<int>( len );
+  std::vector<int> *tab = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
   {
     int x = 0;

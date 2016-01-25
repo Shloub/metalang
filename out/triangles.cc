@@ -27,10 +27,10 @@ int find0(int len, std::vector<std::vector<int> *> * tab, std::vector<std::vecto
 }
 
 int find(int len, std::vector<std::vector<int> *> * tab){
-  std::vector<std::vector<int> * > *tab2 = new std::vector<std::vector<int> *>( len );
+  std::vector<std::vector<int> *> *tab2 = new std::vector<std::vector<int> *>( len );
   for (int i = 0 ; i < len; i++)
   {
-    std::vector<int > *tab3 = new std::vector<int>( i + 1 );
+    std::vector<int> *tab3 = new std::vector<int>( i + 1 );
     std::fill(tab3->begin(), tab3->end(), 0);
     tab2->at(i) = tab3;
   }
@@ -41,10 +41,10 @@ int find(int len, std::vector<std::vector<int> *> * tab){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  std::vector<std::vector<int> * > *tab = new std::vector<std::vector<int> *>( len );
+  std::vector<std::vector<int> *> *tab = new std::vector<std::vector<int> *>( len );
   for (int i = 0 ; i < len; i++)
   {
-    std::vector<int > *tab2 = new std::vector<int>( i + 1 );
+    std::vector<int> *tab2 = new std::vector<int>( i + 1 );
     for (int j = 0 ; j < i + 1; j++)
     {
       int tmp = 0;

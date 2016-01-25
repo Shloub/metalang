@@ -8,10 +8,10 @@ int fact(int n){
 }
 
 void show(int lim, int nth){
-  std::vector<int > t(lim);
+  std::vector<int> t(lim);
   for (int i = 0 ; i < lim; i++)
     t[i] = i;
-  std::vector<bool > pris(lim, false);
+  std::vector<bool> pris(lim, false);
   for (int k = 1 ; k < lim; k++)
   {
     int n = fact(lim - k);

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
 /* lit un sudoku sur l'entrée standard */
-std::vector<int > read_sudoku(){
+std::vector<int> read_sudoku(){
   int k;
-  std::vector<int > out0(9 * 9);
+  std::vector<int> out0(9 * 9);
   for (int i = 0 ; i < 9 * 9; i++)
   {
     std::cin >> k >> std::skipws;
@@ -13,7 +13,7 @@ std::vector<int > read_sudoku(){
 }
 
 /* affiche un sudoku */
-void print_sudoku(std::vector<int >& sudoku0){
+void print_sudoku(std::vector<int>& sudoku0){
   for (int y = 0 ; y <= 8; y ++)
   {
     for (int x = 0 ; x <= 8; x ++)
@@ -32,7 +32,7 @@ void print_sudoku(std::vector<int >& sudoku0){
 /* dit si les variables sont toutes différentes */
 /* dit si les variables sont toutes différentes */
 /* dit si le sudoku est terminé de remplir */
-bool sudoku_done(std::vector<int >& s){
+bool sudoku_done(std::vector<int>& s){
   for (int i = 0 ; i <= 80; i ++)
     if (s[i] == 0)
     return false;
@@ -40,7 +40,7 @@ bool sudoku_done(std::vector<int >& s){
 }
 
 /* dit si il y a une erreur dans le sudoku */
-bool sudoku_error(std::vector<int >& s){
+bool sudoku_error(std::vector<int>& s){
   bool out1 = false;
   for (int x = 0 ; x <= 8; x ++)
     out1 =
@@ -57,7 +57,7 @@ bool sudoku_error(std::vector<int >& s){
 }
 
 /* résout le sudoku*/
-bool solve(std::vector<int >& sudoku0){
+bool solve(std::vector<int>& sudoku0){
   if (sudoku_error(sudoku0))
     return false;
   if (sudoku_done(sudoku0))
@@ -79,7 +79,7 @@ bool solve(std::vector<int >& sudoku0){
 
 
 int main(){
-  std::vector<int > sudoku0 = read_sudoku();
+  std::vector<int> sudoku0 = read_sudoku();
   print_sudoku(sudoku0);
   if (solve(sudoku0))
     print_sudoku(sudoku0);

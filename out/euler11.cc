@@ -23,7 +23,7 @@ struct tuple_int_int {
 
 
 int main(){
-  std::vector<tuple_int_int * > *directions = new std::vector<tuple_int_int *>( 8 );
+  std::vector<tuple_int_int *> *directions = new std::vector<tuple_int_int *>( 8 );
   for (int i = 0 ; i < 8; i++)
     if (i == 0)
   {
@@ -82,10 +82,10 @@ int main(){
     directions->at(i) = l;
   }
   int max0 = 0;
-  std::vector<std::vector<int> * > *m = new std::vector<std::vector<int> *>( 20 );
+  std::vector<std::vector<int> *> *m = new std::vector<std::vector<int> *>( 20 );
   for (int o = 0 ; o < 20; o++)
   {
-    std::vector<int > *p = new std::vector<int>( 20 );
+    std::vector<int> *p = new std::vector<int>( 20 );
     for (int q = 0 ; q < 20; q++)
     {
       std::cin >> p->at(q) >> std::skipws;

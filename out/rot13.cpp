@@ -8,7 +8,7 @@ int main(){
   int strlen;
   char tmpc;
   std::cin >> strlen >> std::skipws;
-  std::vector<char > tab4(strlen);
+  std::vector<char> tab4(strlen);
   for (int toto = 0 ; toto < strlen; toto++)
   {
     std::cin >> tmpc >> std::noskipws;

@@ -9,7 +9,7 @@ et qui produit les macros metalang correspondante
 int main(){
   char input = ' ';
   int current_pos = 500;
-  std::vector<int > mem(1000, 0);
+  std::vector<int> mem(1000, 0);
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;

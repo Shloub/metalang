@@ -3,7 +3,7 @@
 /* lit un sudoku sur l'entrée standard */
 std::vector<int> * read_sudoku(){
   int k;
-  std::vector<int > *out0 = new std::vector<int>( 9 * 9 );
+  std::vector<int> *out0 = new std::vector<int>( 9 * 9 );
   for (int i = 0 ; i < 9 * 9; i++)
   {
     std::cin >> k >> std::skipws;

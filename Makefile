@@ -150,10 +150,10 @@ out/%.c.bin : out/%.c
 	@gcc -std=c89 -Wall $< -o $@ -lm || exit 1
 
 out/%.cc.bin : out/%.cc
-	@g++ -Wall $< -o $@ -lm || exit 1
+	@g++ -Wall -std=c++11 $< -o $@ -lm || exit 1
 
 out/%.cpp.bin : out/%.cpp
-	@g++ -Wall $< -o $@ -lm || exit 1
+	@g++ -Wall -std=c++11 $< -o $@ -lm || exit 1
 
 out/%.pas.bin : out/%.pas
 	@fpc $< || exit 1

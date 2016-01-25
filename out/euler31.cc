@@ -18,7 +18,7 @@ int result(int sum, std::vector<int> * t, int maxIndex, std::vector<std::vector<
 
 
 int main(){
-  std::vector<int > *t = new std::vector<int>( 8 );
+  std::vector<int> *t = new std::vector<int>( 8 );
   std::fill(t->begin(), t->end(), 0);
   t->at(0) = 1;
   t->at(1) = 2;
@@ -28,10 +28,10 @@ int main(){
   t->at(5) = 50;
   t->at(6) = 100;
   t->at(7) = 200;
-  std::vector<std::vector<int> * > *cache = new std::vector<std::vector<int> *>( 201 );
+  std::vector<std::vector<int> *> *cache = new std::vector<std::vector<int> *>( 201 );
   for (int j = 0 ; j < 201; j++)
   {
-    std::vector<int > *o = new std::vector<int>( 8 );
+    std::vector<int> *o = new std::vector<int>( 8 );
     std::fill(o->begin(), o->end(), 0);
     cache->at(j) = o;
   }

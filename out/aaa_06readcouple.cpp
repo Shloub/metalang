@@ -8,7 +8,7 @@ int main(){
     std::cin >> a >> std::skipws >> b;
     std::cout << "a = " << a << " b = " << b << "\n";
   }
-  std::vector<int > l(10);
+  std::vector<int> l(10);
   for (int c = 0 ; c < 10; c++)
   {
     std::cin >> l[c] >> std::skipws;

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int periode(std::vector<int >& restes, int len, int a, int b){
+int periode(std::vector<int>& restes, int len, int a, int b){
   while (a != 0)
   {
     int chiffre = a / b;
@@ -17,7 +17,7 @@ int periode(std::vector<int >& restes, int len, int a, int b){
 
 
 int main(){
-  std::vector<int > t(1000, 0);
+  std::vector<int> t(1000, 0);
   int m = 0;
   int mi = 0;
   for (int i = 1 ; i <= 1000; i ++)

@@ -44,10 +44,10 @@ bool okdigits(std::vector<bool> * ok, int n){
 
 int main(){
   int count = 0;
-  std::vector<bool > *allowed = new std::vector<bool>( 10 );
+  std::vector<bool> *allowed = new std::vector<bool>( 10 );
   for (int i = 0 ; i < 10; i++)
     allowed->at(i) = i != 0;
-  std::vector<bool > *counted = new std::vector<bool>( 100000 );
+  std::vector<bool> *counted = new std::vector<bool>( 100000 );
   std::fill(counted->begin(), counted->end(), false);
   for (int e = 1 ; e <= 9; e ++)
   {
