@@ -3,11 +3,11 @@
 /*
 La suite de fibonaci
 */
-int fibo(int a, int b, int i){
+int fibo(int a, int b, int i) {
   int out_ = 0;
   int a2 = a;
   int b2 = b;
-  for (int j = 0 ; j <= i + 1; j ++)
+  for (int j = 0; j <= i + 1; j ++)
   {
     std::cout << j;
     out_ += a2;
@@ -19,7 +19,7 @@ int fibo(int a, int b, int i){
 }
 
 
-int main(){
+int main() {
   std::cout << fibo(1, 2, 4);
 }
 

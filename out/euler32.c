@@ -24,7 +24,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
-int okdigits(int* ok, int n){
+int okdigits(int* ok, int n) {
   if (n == 0)
     return 1;
   else
@@ -42,19 +42,19 @@ int okdigits(int* ok, int n){
   }
 }
 
-int main(void){
+int main(void) {
   int e, b, a, c, d, j, i;
   int count = 0;
   int *allowed = calloc( 10 , sizeof(int));
-  for (i = 0 ; i < 10; i++)
+  for (i = 0; i < 10; i++)
     allowed[i] = i != 0;
   int *counted = calloc( 100000 , sizeof(int));
-  for (j = 0 ; j < 100000; j++)
+  for (j = 0; j < 100000; j++)
     counted[j] = 0;
-  for (e = 1 ; e <= 9; e++)
+  for (e = 1; e <= 9; e++)
   {
     allowed[e] = 0;
-    for (b = 1 ; b <= 9; b++)
+    for (b = 1; b <= 9; b++)
       if (allowed[b])
     {
       allowed[b] = 0;
@@ -62,15 +62,15 @@ int main(void){
       if (allowed[be])
       {
         allowed[be] = 0;
-        for (a = 1 ; a <= 9; a++)
+        for (a = 1; a <= 9; a++)
           if (allowed[a])
         {
           allowed[a] = 0;
-          for (c = 1 ; c <= 9; c++)
+          for (c = 1; c <= 9; c++)
             if (allowed[c])
           {
             allowed[c] = 0;
-            for (d = 1 ; d <= 9; d++)
+            for (d = 1; d <= 9; d++)
               if (allowed[d])
             {
               allowed[d] = 0;

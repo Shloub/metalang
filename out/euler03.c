@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-int main(void){
+int main(void) {
   int maximum = 1;
   int b0 = 2;
   int a = 408464633;

@@ -6,7 +6,7 @@ struct toto {
 };
 
 
-int main(){
+int main() {
   toto param;
   param.foo = 0;
   param.bar = 0;

@@ -1,18 +1,18 @@
 #include <iostream>
 #include <vector>
-int g(int i){
+int g(int i) {
   int j = i * 4;
   if (j % 2 == 1)
     return 0;
   return j;
 }
 
-void h(int i){
+void h(int i) {
   std::cout << i << "\n";
 }
 
 
-int main(){
+int main() {
   h(14);
   int a = 4;
   int b = 5;

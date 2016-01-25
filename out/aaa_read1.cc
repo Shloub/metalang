@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-std::vector<char> *getline(){
-  if (std::cin.flags() & std::ios_base::skipws){
+std::vector<char> *getline() {
+  if (std::cin.flags() & std::ios_base::skipws) {
     char c = std::cin.peek();
     if (c == '\n' || c == ' ') std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
@@ -12,9 +12,9 @@ std::vector<char> *getline(){
   return c;
 }
 
-int main(){
+int main() {
   std::vector<char> * str = getline();
-  for (int i = 0 ; i <= 11; i ++)
+  for (int i = 0; i <= 11; i ++)
     std::cout << str->at(i);
 }
 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-std::vector<char> *getline(){
-  if (std::cin.flags() & std::ios_base::skipws){
+std::vector<char> *getline() {
+  if (std::cin.flags() & std::ios_base::skipws) {
     char c = std::cin.peek();
     if (c == '\n' || c == ' ') std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
@@ -11,15 +11,15 @@ std::vector<char> *getline(){
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
-int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<char> * tableau2, int taille2){
+int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<char> * tableau2, int taille2) {
   int out0 = 0;
-  for (int i = 0 ; i < taille1; i++)
+  for (int i = 0; i < taille1; i++)
   {
     out0 += (int)(tableau1->at(i)) * i;
     std::cout << tableau1->at(i);
   }
   std::cout << "--\n";
-  for (int j = 0 ; j < taille2; j++)
+  for (int j = 0; j < taille2; j++)
   {
     out0 += (int)(tableau2->at(j)) * j * 100;
     std::cout << tableau2->at(j);
@@ -29,7 +29,7 @@ int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<ch
 }
 
 
-int main(){
+int main() {
   int taille2, taille1;
   std::cin >> taille1 >> std::skipws >> taille2;
   std::vector<char> * tableau1 = getline();

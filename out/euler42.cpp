@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include<cmath>
-bool is_triangular(int n){
+bool is_triangular(int n) {
   /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
@@ -10,12 +10,12 @@ bool is_triangular(int n){
   return a * (a + 1) == n * 2;
 }
 
-int score(){
+int score() {
   int len;
   char c;
   std::cin >> std::skipws >> len;
   int sum = 0;
-  for (int i = 1 ; i <= len; i ++)
+  for (int i = 1; i <= len; i ++)
   {
     std::cin >> c >> std::noskipws;
     sum += (int)(c) - (int)('A') + 1;
@@ -28,15 +28,15 @@ int score(){
 }
 
 
-int main(){
+int main() {
   int n;
-  for (int i = 1 ; i <= 55; i ++)
+  for (int i = 1; i <= 55; i ++)
     if (is_triangular(i))
     std::cout << i << " ";
   std::cout << "\n";
   int sum = 0;
   std::cin >> n >> std::noskipws;
-  for (int i = 1 ; i <= n; i ++)
+  for (int i = 1; i <= n; i ++)
     sum += score();
   std::cout << sum << "\n";
 }

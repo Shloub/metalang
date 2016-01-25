@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int* copytab(int* tab, int len){
+int* copytab(int* tab, int len) {
   int i;
   int *o = calloc( len , sizeof(int));
-  for (i = 0 ; i < len; i++)
+  for (i = 0; i < len; i++)
     o[i] = tab[i];
   return o;
 }
 
-void bubblesort(int* tab, int len){
+void bubblesort(int* tab, int len) {
   int i, j;
-  for (i = 0 ; i < len; i++)
-    for (j = i + 1 ; j < len; j++)
+  for (i = 0; i < len; i++)
+    for (j = i + 1; j < len; j++)
       if (tab[i] > tab[j])
   {
     int tmp = tab[i];
@@ -21,7 +21,7 @@ void bubblesort(int* tab, int len){
   }
 }
 
-void qsort0(int* tab, int len, int i, int j){
+void qsort0(int* tab, int len, int i, int j) {
   if (i < j)
   {
     int i0 = i;
@@ -55,12 +55,12 @@ void qsort0(int* tab, int len, int i, int j){
   }
 }
 
-int main(void){
+int main(void) {
   int i, i_;
   int len = 2;
   scanf("%d ", &len);
   int *tab = calloc( len , sizeof(int));
-  for (i_ = 0 ; i_ < len; i_++)
+  for (i_ = 0; i_ < len; i_++)
   {
     int tmp = 0;
     scanf("%d ", &tmp);
@@ -68,12 +68,12 @@ int main(void){
   }
   int* tab2 = copytab(tab, len);
   bubblesort(tab2, len);
-  for (i = 0 ; i < len; i++)
+  for (i = 0; i < len; i++)
     printf("%d ", tab2[i]);
   printf("\n");
   int* tab3 = copytab(tab, len);
   qsort0(tab3, len, 0, len - 1);
-  for (i = 0 ; i < len; i++)
+  for (i = 0; i < len; i++)
     printf("%d ", tab3[i]);
   printf("\n");
   return 0;

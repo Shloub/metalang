@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int max2_(int a, int b){
+int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
 
-int nbPassePartout(int n, int** passepartout, int m, int** serrures){
+int nbPassePartout(int n, int** passepartout, int m, int** serrures) {
   int i;
   int max_ancient = 0;
   int max_recent = 0;
-  for (i = 0 ; i < m; i++)
+  for (i = 0; i < m; i++)
   {
     if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
       max_ancient = serrures[i][1];
@@ -21,7 +21,7 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
   }
   int max_ancient_pp = 0;
   int max_recent_pp = 0;
-  for (i = 0 ; i < n; i++)
+  for (i = 0; i < n; i++)
   {
     int* pp = passepartout[i];
     if (pp[0] >= max_ancient && pp[1] >= max_recent)
@@ -35,14 +35,14 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
     return 0;
 }
 
-int main(void){
+int main(void) {
   int k, l, out_, m, i, j, out01, n;
   scanf("%d ", &n);
   int* *passepartout = calloc( n , sizeof(int*));
-  for (i = 0 ; i < n; i++)
+  for (i = 0; i < n; i++)
   {
     int *out0 = calloc( 2 , sizeof(int));
-    for (j = 0 ; j < 2; j++)
+    for (j = 0; j < 2; j++)
     {
       scanf("%d ", &out01);
       out0[j] = out01;
@@ -51,10 +51,10 @@ int main(void){
   }
   scanf("%d ", &m);
   int* *serrures = calloc( m , sizeof(int*));
-  for (k = 0 ; k < m; k++)
+  for (k = 0; k < m; k++)
   {
     int *out1 = calloc( 2 , sizeof(int));
-    for (l = 0 ; l < 2; l++)
+    for (l = 0; l < 2; l++)
     {
       scanf("%d ", &out_);
       out1[l] = out_;

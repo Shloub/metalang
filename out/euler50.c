@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int min2_(int a, int b){
+int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
 
-int eratostene(int* t, int max0){
+int eratostene(int* t, int max0) {
   int i;
   int n = 0;
-  for (i = 2 ; i < max0; i++)
+  for (i = 2; i < max0; i++)
     if (t[i] == i)
   {
     n++;
@@ -28,18 +28,18 @@ int eratostene(int* t, int max0){
   return n;
 }
 
-int main(void){
+int main(void) {
   int i, i_, k, o, j;
   int maximumprimes = 1000001;
   int *era = calloc( maximumprimes , sizeof(int));
-  for (j = 0 ; j < maximumprimes; j++)
+  for (j = 0; j < maximumprimes; j++)
     era[j] = j;
   int nprimes = eratostene(era, maximumprimes);
   int *primes = calloc( nprimes , sizeof(int));
-  for (o = 0 ; o < nprimes; o++)
+  for (o = 0; o < nprimes; o++)
     primes[o] = 0;
   int l = 0;
-  for (k = 2 ; k < maximumprimes; k++)
+  for (k = 2; k < maximumprimes; k++)
     if (era[k] == k)
   {
     primes[l] = k;
@@ -47,7 +47,7 @@ int main(void){
   }
   printf("%d == %d\n", l, nprimes);
   int *sum = calloc( nprimes , sizeof(int));
-  for (i_ = 0 ; i_ < nprimes; i_++)
+  for (i_ = 0; i_ < nprimes; i_++)
     sum[i_] = primes[i_];
   int maxl = 0;
   int process = 1;
@@ -57,7 +57,7 @@ int main(void){
   while (process)
   {
     process = 0;
-    for (i = 0 ; i <= stop; i++)
+    for (i = 0; i <= stop; i++)
       if (i + len < nprimes)
     {
       sum[i] = sum[i] + primes[i + len];

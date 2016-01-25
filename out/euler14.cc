@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-int next0(int n){
+int next0(int n) {
   if (n % 2 == 0)
     return n / 2;
   else
     return 3 * n + 1;
 }
 
-int find(int n, std::vector<int> * m){
+int find(int n, std::vector<int> * m) {
   if (n == 1)
     return 1;
   else if (n >= 1000000)
@@ -22,12 +22,12 @@ int find(int n, std::vector<int> * m){
 }
 
 
-int main(){
+int main() {
   std::vector<int> *m = new std::vector<int>( 1000000 );
   std::fill(m->begin(), m->end(), 0);
   int max0 = 0;
   int maxi = 0;
-  for (int i = 1 ; i <= 999; i ++)
+  for (int i = 1; i <= 999; i ++)
   {
     /* normalement on met 999999 mais ça dépasse les int32... */
     int n2 = find(i, m);

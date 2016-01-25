@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-bool f(int i){
+bool f(int i) {
   if (i == 0)
     return true;
   return false;
 }
 
 
-int main(){
+int main() {
   if (f(4))
     std::cout << "true <-\n ->\n";
   else

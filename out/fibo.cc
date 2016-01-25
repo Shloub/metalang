@@ -3,11 +3,11 @@
 /*
 La suite de fibonaci
 */
-int fibo0(int a, int b, int i){
+int fibo0(int a, int b, int i) {
   int out0 = 0;
   int a2 = a;
   int b2 = b;
-  for (int j = 0 ; j <= i + 1; j ++)
+  for (int j = 0; j <= i + 1; j ++)
   {
     out0 += a2;
     int tmp = b2;
@@ -18,7 +18,7 @@ int fibo0(int a, int b, int i){
 }
 
 
-int main(){
+int main() {
   int a = 0;
   int b = 0;
   int i = 0;

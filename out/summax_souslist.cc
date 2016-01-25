@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-int summax(std::vector<int> * lst, int len){
+int summax(std::vector<int> * lst, int len) {
   int current = 0;
   int max0 = 0;
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     current += lst->at(i);
     if (current < 0)
@@ -15,11 +15,11 @@ int summax(std::vector<int> * lst, int len){
 }
 
 
-int main(){
+int main() {
   int len = 0;
   std::cin >> len >> std::skipws;
   std::vector<int> *tab = new std::vector<int>( len );
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     int tmp = 0;
     std::cin >> tmp >> std::skipws;

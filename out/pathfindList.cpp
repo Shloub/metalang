@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int pathfind_aux(std::vector<int>& cache, std::vector<int>& tab, int len, int pos){
+int pathfind_aux(std::vector<int>& cache, std::vector<int>& tab, int len, int pos) {
   if (pos >= len - 1)
     return 0;
   else if (cache[pos] != -1)
@@ -20,19 +20,19 @@ int pathfind_aux(std::vector<int>& cache, std::vector<int>& tab, int len, int po
   }
 }
 
-int pathfind(std::vector<int>& tab, int len){
+int pathfind(std::vector<int>& tab, int len) {
   std::vector<int> cache(len);
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
     cache[i] = -1;
   return pathfind_aux(cache, tab, len, 0);
 }
 
 
-int main(){
+int main() {
   int len = 0;
   std::cin >> len >> std::skipws;
   std::vector<int> tab(len);
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     int tmp = 0;
     std::cin >> tmp >> std::skipws;

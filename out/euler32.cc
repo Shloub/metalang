@@ -23,7 +23,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
-bool okdigits(std::vector<bool> * ok, int n){
+bool okdigits(std::vector<bool> * ok, int n) {
   if (n == 0)
     return true;
   else
@@ -42,17 +42,17 @@ bool okdigits(std::vector<bool> * ok, int n){
 }
 
 
-int main(){
+int main() {
   int count = 0;
   std::vector<bool> *allowed = new std::vector<bool>( 10 );
-  for (int i = 0 ; i < 10; i++)
+  for (int i = 0; i < 10; i++)
     allowed->at(i) = i != 0;
   std::vector<bool> *counted = new std::vector<bool>( 100000 );
   std::fill(counted->begin(), counted->end(), false);
-  for (int e = 1 ; e <= 9; e ++)
+  for (int e = 1; e <= 9; e ++)
   {
     allowed->at(e) = false;
-    for (int b = 1 ; b <= 9; b ++)
+    for (int b = 1; b <= 9; b ++)
       if (allowed->at(b))
     {
       allowed->at(b) = false;
@@ -60,15 +60,15 @@ int main(){
       if (allowed->at(be))
       {
         allowed->at(be) = false;
-        for (int a = 1 ; a <= 9; a ++)
+        for (int a = 1; a <= 9; a ++)
           if (allowed->at(a))
         {
           allowed->at(a) = false;
-          for (int c = 1 ; c <= 9; c ++)
+          for (int c = 1; c <= 9; c ++)
             if (allowed->at(c))
           {
             allowed->at(c) = false;
-            for (int d = 1 ; d <= 9; d ++)
+            for (int d = 1; d <= 9; d ++)
               if (allowed->at(d))
             {
               allowed->at(d) = false;

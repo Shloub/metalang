@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int max2_(int a, int b){
+int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
 
-int main(void){
+int main(void) {
   int k, j;
   char e, c;
   int i = 1;
   int *last = calloc( 5 , sizeof(int));
-  for (j = 0 ; j < 5; j++)
+  for (j = 0; j < 5; j++)
   {
     scanf("%c", &c);
     int d = (int)(c) - (int)('0');
@@ -23,7 +23,7 @@ int main(void){
   int max0 = i;
   int index = 0;
   int nskipdiv = 0;
-  for (k = 1 ; k <= 995; k++)
+  for (k = 1; k <= 995; k++)
   {
     scanf("%c", &e);
     int f = (int)(e) - (int)('0');

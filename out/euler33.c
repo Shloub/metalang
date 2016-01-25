@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int max2_(int a, int b){
+int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
 
-int min2_(int a, int b){
+int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
 
-int pgcd(int a, int b){
+int pgcd(int a, int b) {
   int c = min2_(a, b);
   int d = max2_(a, b);
   int reste = d % c;
@@ -25,13 +25,13 @@ int pgcd(int a, int b){
     return pgcd(c, reste);
 }
 
-int main(void){
+int main(void) {
   int i, j, k;
   int top = 1;
   int bottom = 1;
-  for (i = 1 ; i <= 9; i++)
-    for (j = 1 ; j <= 9; j++)
-      for (k = 1 ; k <= 9; k++)
+  for (i = 1; i <= 9; i++)
+    for (j = 1; j <= 9; j++)
+      for (k = 1; k <= 9; k++)
         if (i != j && j != k)
   {
     int a = i * 10 + j;

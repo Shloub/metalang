@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int g(int i){
+int g(int i) {
   int j = i * 4;
   if (j % 2 == 1)
     return 0;
   return j;
 }
 
-void h(int i){
+void h(int i) {
   printf("%d\n", i);
 }
 
-int main(void){
+int main(void) {
   h(14);
   int a = 4;
   int b = 5;

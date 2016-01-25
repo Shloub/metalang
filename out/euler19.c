@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int is_leap(int year){
+int is_leap(int year) {
   return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
 }
 
-int ndayinmonth(int month, int year){
+int ndayinmonth(int month, int year) {
   if (month == 0)
     return 31;
   else if (month == 1)
@@ -38,7 +38,7 @@ int ndayinmonth(int month, int year){
   return 0;
 }
 
-int main(void){
+int main(void) {
   int month = 0;
   int year = 1901;
   int dayofweek = 1;

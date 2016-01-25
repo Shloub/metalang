@@ -16,12 +16,12 @@
 
 
 */
-int sumdiag(int n){
+int sumdiag(int n) {
   int i;
   int nterms = n * 2 - 1;
   int un = 1;
   int sum = 1;
-  for (i = 0 ; i <= nterms - 2; i++)
+  for (i = 0; i <= nterms - 2; i++)
   {
     int d = 2 * (1 + i / 4);
     un += d;
@@ -31,7 +31,7 @@ int sumdiag(int n){
   return sum;
 }
 
-int main(void){
+int main(void) {
   printf("%d", sumdiag(1001));
   return 0;
 }

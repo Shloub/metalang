@@ -2,11 +2,11 @@
 #include <vector>
 #include<cmath>
 
-int main(){
+int main() {
   std::vector<int> *t = new std::vector<int>( 1001 );
   std::fill(t->begin(), t->end(), 0);
-  for (int a = 1 ; a <= 1000; a ++)
-    for (int b = 1 ; b <= 1000; b ++)
+  for (int a = 1; a <= 1000; a ++)
+    for (int b = 1; b <= 1000; b ++)
     {
       int c2 = a * a + b * b;
       int c = (int)sqrt(c2);
@@ -18,7 +18,7 @@ int main(){
       }
   }
   int j = 0;
-  for (int k = 1 ; k <= 1000; k ++)
+  for (int k = 1; k <= 1000; k ++)
     if (t->at(k) > t->at(j))
     j = k;
   std::cout << j;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-std::vector<char> *getline(){
-  if (std::cin.flags() & std::ios_base::skipws){
+std::vector<char> *getline() {
+  if (std::cin.flags() & std::ios_base::skipws) {
     char c = std::cin.peek();
     if (c == '\n' || c == ' ') std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
@@ -11,14 +11,14 @@ std::vector<char> *getline(){
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
-int min2_(int a, int b){
+int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
 
-int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vector<char> *> * tab, int x, int y, int posX, int posY){
+int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vector<char> *> * tab, int x, int y, int posX, int posY) {
   if (posX == x - 1 && posY == y - 1)
     return 0;
   else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
@@ -40,12 +40,12 @@ int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vecto
   }
 }
 
-int pathfind(std::vector<std::vector<char> *> * tab, int x, int y){
+int pathfind(std::vector<std::vector<char> *> * tab, int x, int y) {
   std::vector<std::vector<int> *> *cache = new std::vector<std::vector<int> *>( y );
-  for (int i = 0 ; i < y; i++)
+  for (int i = 0; i < y; i++)
   {
     std::vector<int> *tmp = new std::vector<int>( x );
-    for (int j = 0 ; j < x; j++)
+    for (int j = 0; j < x; j++)
     {
       std::cout << tab->at(i)->at(j);
       tmp->at(j) = -1;
@@ -57,12 +57,12 @@ int pathfind(std::vector<std::vector<char> *> * tab, int x, int y){
 }
 
 
-int main(){
+int main() {
   int y, x;
   std::cin >> x >> std::skipws >> y;
   std::cout << x << " " << y << "\n";
   std::vector<std::vector<char> *> *e = new std::vector<std::vector<char> *>( y );
-  for (int f = 0 ; f < y; f++)
+  for (int f = 0; f < y; f++)
     e->at(f) = getline();
   std::vector<std::vector<char> *> * tab = e;
   int result = pathfind(tab, x, y);

@@ -18,11 +18,11 @@ struct move {
 };
 
 /* On affiche l'état */
-void print_state(gamestate * g){
+void print_state(gamestate * g) {
   std::cout << "\n|";
-  for (int y = 0 ; y <= 2; y ++)
+  for (int y = 0; y <= 2; y ++)
   {
-    for (int x = 0 ; x <= 2; x ++)
+    for (int x = 0; x <= 2; x ++)
     {
       if (g->cases->at(x)->at(y) == 0)
         std::cout << " ";
@@ -39,14 +39,14 @@ void print_state(gamestate * g){
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-void eval0(gamestate * g){
+void eval0(gamestate * g) {
   int win = 0;
   int freecase = 0;
-  for (int y = 0 ; y <= 2; y ++)
+  for (int y = 0; y <= 2; y ++)
   {
     int col = -1;
     int lin = -1;
-    for (int x = 0 ; x <= 2; x ++)
+    for (int x = 0; x <= 2; x ++)
     {
       if (g->cases->at(x)->at(y) == 0)
         freecase++;
@@ -66,7 +66,7 @@ void eval0(gamestate * g){
     else if (lin >= 0)
       win = lin;
   }
-  for (int x = 1 ; x <= 2; x ++)
+  for (int x = 1; x <= 2; x ++)
   {
     if (g->cases->at(0)->at(0) == x && g->cases->at(1)->at(1) == x && g->cases->at(2)->at(2) == x)
       win = x;
@@ -83,7 +83,7 @@ void eval0(gamestate * g){
 }
 
 /* On applique un mouvement */
-void apply_move_xy(int x, int y, gamestate * g){
+void apply_move_xy(int x, int y, gamestate * g) {
   int player = 2;
   if (g->firstToPlay)
     player = 1;
@@ -91,40 +91,40 @@ void apply_move_xy(int x, int y, gamestate * g){
   g->firstToPlay = !g->firstToPlay;
 }
 
-void apply_move(move * m, gamestate * g){
+void apply_move(move * m, gamestate * g) {
   apply_move_xy(m->x, m->y, g);
 }
 
-void cancel_move_xy(int x, int y, gamestate * g){
+void cancel_move_xy(int x, int y, gamestate * g) {
   g->cases->at(x)->at(y) = 0;
   g->firstToPlay = !g->firstToPlay;
   g->ended = false;
 }
 
-void cancel_move(move * m, gamestate * g){
+void cancel_move(move * m, gamestate * g) {
   cancel_move_xy(m->x, m->y, g);
 }
 
-bool can_move_xy(int x, int y, gamestate * g){
+bool can_move_xy(int x, int y, gamestate * g) {
   return g->cases->at(x)->at(y) == 0;
 }
 
-bool can_move(move * m, gamestate * g){
+bool can_move(move * m, gamestate * g) {
   return can_move_xy(m->x, m->y, g);
 }
 
 /*
 Un minimax classique, renvoie la note du plateau
 */
-int minmax(gamestate * g){
+int minmax(gamestate * g) {
   eval0(g);
   if (g->ended)
     return g->note;
   int maxNote = -10000;
   if (!g->firstToPlay)
     maxNote = 10000;
-  for (int x = 0 ; x <= 2; x ++)
-    for (int y = 0 ; y <= 2; y ++)
+  for (int x = 0; x <= 2; x ++)
+    for (int y = 0; y <= 2; y ++)
       if (can_move_xy(x, y, g))
   {
     apply_move_xy(x, y, g);
@@ -140,13 +140,13 @@ int minmax(gamestate * g){
 /*
 Renvoie le coup de l'IA
 */
-move * play(gamestate * g){
+move * play(gamestate * g) {
   move * minMove = new move();
   minMove->x=0;
   minMove->y=0;
   int minNote = 10000;
-  for (int x = 0 ; x <= 2; x ++)
-    for (int y = 0 ; y <= 2; y ++)
+  for (int x = 0; x <= 2; x ++)
+    for (int y = 0; y <= 2; y ++)
       if (can_move_xy(x, y, g))
   {
     apply_move_xy(x, y, g);
@@ -164,9 +164,9 @@ move * play(gamestate * g){
   return minMove;
 }
 
-gamestate * init0(){
+gamestate * init0() {
   std::vector<std::vector<int> *> *cases = new std::vector<std::vector<int> *>( 3 );
-  for (int i = 0 ; i < 3; i++)
+  for (int i = 0; i < 3; i++)
   {
     std::vector<int> *tab = new std::vector<int>( 3 );
     std::fill(tab->begin(), tab->end(), 0);
@@ -180,7 +180,7 @@ gamestate * init0(){
   return a;
 }
 
-move * read_move(){
+move * read_move() {
   int y, x;
   std::cin >> x >> std::skipws >> y;
   move * b = new move();
@@ -190,8 +190,8 @@ move * read_move(){
 }
 
 
-int main(){
-  for (int i = 0 ; i <= 1; i ++)
+int main() {
+  for (int i = 0; i <= 1; i ++)
   {
     gamestate * state = init0();
     move * c = new move();

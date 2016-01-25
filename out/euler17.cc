@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main(){
+int main() {
   std::cout << 3 + 3 + 5 + 4 + 4 << "\n";
   int one_to_nine = 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4;
   std::cout << one_to_nine << "\n";

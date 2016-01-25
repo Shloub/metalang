@@ -11,7 +11,7 @@ struct toto {
 };
 
 
-int main(){
+int main() {
   int d, c, bar_;
   std::cin >> bar_ >> std::skipws >> c >> d;
   tuple_int_int * e = new tuple_int_int();

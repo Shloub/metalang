@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int max2_(int a, int b){
+int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
 
-int find(int n, int** m, int x, int y, int dx, int dy){
+int find(int n, int** m, int x, int y, int dx, int dy) {
   if (x < 0 || x == 20 || y < 0 || y == 20)
     return -1;
   else if (n == 0)
@@ -22,10 +22,10 @@ typedef struct tuple_int_int {
   int tuple_int_int_field_1;
 } tuple_int_int;
 
-int main(void){
+int main(void) {
   int j, x, y, o, q, i;
   struct tuple_int_int * *directions = calloc( 8 , sizeof(struct tuple_int_int *));
-  for (i = 0 ; i < 8; i++)
+  for (i = 0; i < 8; i++)
     if (i == 0)
   {
     struct tuple_int_int * c = malloc (sizeof(c) );
@@ -84,22 +84,22 @@ int main(void){
   }
   int max0 = 0;
   int* *m = calloc( 20 , sizeof(int*));
-  for (o = 0 ; o < 20; o++)
+  for (o = 0; o < 20; o++)
   {
     int *p = calloc( 20 , sizeof(int));
-    for (q = 0 ; q < 20; q++)
+    for (q = 0; q < 20; q++)
     {
       scanf("%d ", &p[q]);
     }
     m[o] = p;
   }
-  for (j = 0 ; j <= 7; j++)
+  for (j = 0; j <= 7; j++)
   {
     struct tuple_int_int * r = directions[j];
     int dx = r->tuple_int_int_field_0;
     int dy = r->tuple_int_int_field_1;
-    for (x = 0 ; x <= 19; x++)
-      for (y = 0 ; y <= 19; y++)
+    for (x = 0; x <= 19; x++)
+      for (y = 0; y <= 19; y++)
         max0 = max2_(max0, find(4, m, x, y, dx, dy));
   }
   printf("%d\n", max0);

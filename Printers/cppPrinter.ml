@@ -106,8 +106,8 @@ class cppPrinter = object(self)
         if Tags.is_taged "use_math"
         then Format.fprintf f "#include<cmath>@\n";
         if Tags.is_taged "use_cc_readline"
-        then Format.fprintf f "std::vector<char> *getline(){
-  if (std::cin.flags() & std::ios_base::skipws){
+        then Format.fprintf f "std::vector<char> *getline() {
+  if (std::cin.flags() & std::ios_base::skipws) {
     char c = std::cin.peek();
     if (c == '\\n' || c == ' ') std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
@@ -141,7 +141,7 @@ class cppPrinter = object(self)
 
   method main f main =
     let li_fori, li_forc = self#collect_for main in
-    Format.fprintf f "@[<v 2>int main(){@\n%a%a%a@]@\n}"
+    Format.fprintf f "@[<v 2>int main() {@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
@@ -170,7 +170,7 @@ class cppPrinter = object(self)
 
   method forloop f varname expr1 expr2 li =
     let default () =
-      Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <=@ %a;@ %a@ ++)@\n@]%a"
+      Format.fprintf f "@[<h>for@ (int %a@ =@ %a;@ %a@ <=@ %a;@ %a@ ++)@\n@]%a"
         self#binding varname
         self#expr expr1
         self#binding varname
@@ -180,7 +180,7 @@ class cppPrinter = object(self)
     in match Expr.unfix expr2 with
     | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1)))
       ->
-      Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <@ %a;@ %a++)@\n@]%a"
+      Format.fprintf f "@[<h>for@ (int %a@ =@ %a;@ %a@ <@ %a;@ %a++)@\n@]%a"
         self#binding varname
         self#expr expr1
         self#binding varname
@@ -336,8 +336,8 @@ class proloCppPrinter = object(self)
         if Tags.is_taged "use_math"
         then Format.fprintf f "#include<cmath>@\n";
         if Tags.is_taged "use_cc_readline"
-        then Format.fprintf f "std::vector<char> getline(){
-  if (std::cin.flags() & std::ios_base::skipws){
+        then Format.fprintf f "std::vector<char> getline() {
+  if (std::cin.flags() & std::ios_base::skipws) {
     char c = std::cin.peek();
     if (c == '\\n' || c == ' ') std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
@@ -348,7 +348,7 @@ class proloCppPrinter = object(self)
   return c;
 }@\n";
         if Tags.is_taged "use_cpp_readmatrix"
-        then Format.fprintf f "@\ntemplate <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
+        then Format.fprintf f "@\ntemplate <typename T> std::vector<std::vector<T>> read_matrix(int x, int y) {
   std::vector<std::vector<T>> matrix(y, std::vector<T>(x));
   std::cin >> std::skipws;
   for (std::vector<T>& line : matrix)

@@ -4,12 +4,12 @@
 /*
 La suite de fibonaci
 */
-int fibo0(int a, int b, int i){
+int fibo0(int a, int b, int i) {
   int j;
   int out0 = 0;
   int a2 = a;
   int b2 = b;
-  for (j = 0 ; j <= i + 1; j++)
+  for (j = 0; j <= i + 1; j++)
   {
     out0 += a2;
     int tmp = b2;
@@ -19,7 +19,7 @@ int fibo0(int a, int b, int i){
   return out0;
 }
 
-int main(void){
+int main(void) {
   int a = 0;
   int b = 0;
   int i = 0;

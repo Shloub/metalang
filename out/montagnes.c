@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int montagnes0(int* tab, int len){
+int montagnes0(int* tab, int len) {
   int max0 = 1;
   int j = 1;
   int i = len - 2;
@@ -19,12 +19,12 @@ int montagnes0(int* tab, int len){
   return max0;
 }
 
-int main(void){
+int main(void) {
   int i;
   int len = 0;
   scanf("%d ", &len);
   int *tab = calloc( len , sizeof(int));
-  for (i = 0 ; i < len; i++)
+  for (i = 0; i < len; i++)
   {
     int x = 0;
     scanf("%d ", &x);

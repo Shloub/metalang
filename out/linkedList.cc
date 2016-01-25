@@ -5,18 +5,18 @@ struct intlist {
   intlist * tail;
 };
 
-intlist * cons(intlist * list, int i){
+intlist * cons(intlist * list, int i) {
   intlist * out0 = new intlist();
   out0->head=i;
   out0->tail=list;
   return out0;
 }
 
-bool is_empty(intlist * foo){
+bool is_empty(intlist * foo) {
   return true;
 }
 
-intlist * rev2(intlist * acc, intlist * torev){
+intlist * rev2(intlist * acc, intlist * torev) {
   if (is_empty(torev))
     return acc;
   else
@@ -28,11 +28,11 @@ intlist * rev2(intlist * acc, intlist * torev){
   }
 }
 
-intlist * rev(intlist * empty, intlist * torev){
+intlist * rev(intlist * empty, intlist * torev) {
   return rev2(empty, torev);
 }
 
-void test(intlist * empty){
+void test(intlist * empty) {
   intlist * list = empty;
   int i = -1;
   while (i != 0)
@@ -44,7 +44,7 @@ void test(intlist * empty){
 }
 
 
-int main(){
+int main() {
   
 }
 

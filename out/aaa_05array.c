@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int* id(int* b){
+int* id(int* b) {
   return b;
 }
 
-void g(int* t, int index){
+void g(int* t, int index) {
   t[index] = 0;
 }
 
-int main(void){
+int main(void) {
   int i;
   int j = 0;
   int *a = calloc( 5 , sizeof(int));
-  for (i = 0 ; i < 5; i++)
+  for (i = 0; i < 5; i++)
   {
     printf("%d", i);
     j += i;
