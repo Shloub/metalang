@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int periode(std::vector<int> * restes, int len, int a, int b) {
   while (a != 0)
   {

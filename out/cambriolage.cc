@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 int nbPassePartout(int n, std::vector<std::vector<int> *> * passepartout, int m, std::vector<std::vector<int> *> * serrures) {
   int max_ancient = 0;

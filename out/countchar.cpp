@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int nth(std::vector<char>& tab, char tofind, int len) {
   int out0 = 0;
   for (int i = 0; i < len; i++)

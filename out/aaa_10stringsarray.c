@@ -6,13 +6,16 @@ typedef struct toto {
   int v;
 } toto;
 
+
 char* idstring(char* s) {
   return s;
 }
 
+
 void printstring(char* s) {
   printf("%s\n", idstring(s));
 }
+
 
 void print_toto(struct toto * t) {
   printf("%s = %d\n", t->s, t->v);

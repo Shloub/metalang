@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int montagnes0(std::vector<int> * tab, int len) {
   int max0 = 1;
   int j = 1;

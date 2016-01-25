@@ -6,6 +6,7 @@
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
+
 int find0(int len, int** tab, int** cache, int x, int y) {
   /*
 	Cette fonction est récursive
@@ -26,6 +27,7 @@ int find0(int len, int** tab, int** cache, int x, int y) {
   cache[y][x] = result;
   return result;
 }
+
 
 int find(int len, int** tab) {
   int i, j;

@@ -9,12 +9,14 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y) {
       std::cin >> elem;
   return matrix;
 }
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 int find(int n, std::vector<std::vector<int>>& m, int x, int y, int dx, int dy) {
   if (x < 0 || x == 20 || y < 0 || y == 20)

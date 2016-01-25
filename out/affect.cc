@@ -9,6 +9,7 @@ struct toto {
   int blah;
 };
 
+
 toto * mktoto(int v1) {
   toto * t = new toto();
   t->foo=v1;
@@ -17,6 +18,7 @@ toto * mktoto(int v1) {
   return t;
 }
 
+
 toto * mktoto2(int v1) {
   toto * t = new toto();
   t->foo=v1 + 3;
@@ -24,6 +26,7 @@ toto * mktoto2(int v1) {
   t->blah=v1 + 1;
   return t;
 }
+
 
 int result(toto * t_, toto * t2_) {
   toto * t = t_;

@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 bool divisible(int n, std::vector<int>& t, int size) {
   for (int i = 0; i < size; i++)
     if (n % t[i] == 0)
     return true;
   return false;
 }
+
 
 int find(int n, std::vector<int>& t, int used, int nth) {
   while (used != nth)

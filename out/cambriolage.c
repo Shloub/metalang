@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 int nbPassePartout(int n, int** passepartout, int m, int** serrures) {
   int i;

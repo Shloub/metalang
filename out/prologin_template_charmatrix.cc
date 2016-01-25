@@ -11,6 +11,7 @@ std::vector<char> *getline() {
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
+
 int programme_candidat(std::vector<std::vector<char> *> * tableau, int taille_x, int taille_y) {
   int out0 = 0;
   for (int i = 0; i < taille_y; i++)

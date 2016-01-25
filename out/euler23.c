@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int eratostene(int* t, int max0) {
   int i;
   int n = 0;
@@ -18,6 +19,7 @@ int eratostene(int* t, int max0) {
   return n;
 }
 
+
 int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
   int i;
   for (i = 0; i < nprimes; i++)
@@ -34,11 +36,13 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
   return n;
 }
 
+
 int sumdivaux2(int* t, int n, int i) {
   while (i < n && t[i] == 0)
     i++;
   return i;
 }
+
 
 int sumdivaux(int* t, int n, int i) {
   int j;
@@ -59,6 +63,7 @@ int sumdivaux(int* t, int n, int i) {
     return (out0 + 1) * o;
   }
 }
+
 
 int sumdiv(int nprimes, int* primes, int n) {
   int i;

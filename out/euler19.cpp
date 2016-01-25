@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
+
 bool is_leap(int year) {
   return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
 }
+
 
 int ndayinmonth(int month, int year) {
   if (month == 0)

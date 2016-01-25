@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 bool palindrome2(std::vector<int>& pow2, int n) {
   std::vector<bool> t(20);
   for (int i = 0; i < 20; i++)

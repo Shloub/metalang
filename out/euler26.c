@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int periode(int* restes, int len, int a, int b) {
   int i;
   while (a != 0)

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int is_pair(int i) {
   int j = 1;
   if (i < 10)

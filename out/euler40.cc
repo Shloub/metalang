@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int exp0(int a, int e) {
   int o = 1;
   for (int i = 1; i <= e; i ++)
     o *= a;
   return o;
 }
+
 
 int e(std::vector<int> * t, int n) {
   for (int i = 1; i <= 8; i ++)

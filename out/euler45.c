@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int triangle(int n) {
   if (n % 2 == 0)
     return (n / 2) * (n + 1);
   else
     return n * ((n + 1) / 2);
 }
+
 
 int penta(int n) {
   if (n % 2 == 0)
@@ -15,9 +17,11 @@ int penta(int n) {
     return ((3 * n - 1) / 2) * n;
 }
 
+
 int hexa(int n) {
   return n * (2 * n - 1);
 }
+
 
 int findPenta2(int n, int a, int b) {
   if (b == a + 1)
@@ -31,6 +35,7 @@ int findPenta2(int n, int a, int b) {
   else
     return findPenta2(n, a, c);
 }
+
 
 int findHexa2(int n, int a, int b) {
   if (b == a + 1)

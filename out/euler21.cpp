@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int eratostene(std::vector<int>& t, int max0) {
   int n = 0;
   for (int i = 2; i < max0; i++)
@@ -16,6 +17,7 @@ int eratostene(std::vector<int>& t, int max0) {
   return n;
 }
 
+
 int fillPrimesFactors(std::vector<int>& t, int n, std::vector<int>& primes, int nprimes) {
   for (int i = 0; i < nprimes; i++)
   {
@@ -31,11 +33,13 @@ int fillPrimesFactors(std::vector<int>& t, int n, std::vector<int>& primes, int 
   return n;
 }
 
+
 int sumdivaux2(std::vector<int>& t, int n, int i) {
   while (i < n && t[i] == 0)
     i++;
   return i;
 }
+
 
 int sumdivaux(std::vector<int>& t, int n, int i) {
   if (i > n)
@@ -55,6 +59,7 @@ int sumdivaux(std::vector<int>& t, int n, int i) {
     return (out0 + 1) * o;
   }
 }
+
 
 int sumdiv(int nprimes, std::vector<int>& primes, int n) {
   std::vector<int> t(n + 1, 0);

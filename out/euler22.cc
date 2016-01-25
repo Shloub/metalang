@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int score() {
   int len;
   char c;

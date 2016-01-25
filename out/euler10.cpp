@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int eratostene(std::vector<int>& t, int max0) {
   int sum = 0;
   for (int i = 2; i < max0; i++)

@@ -3,6 +3,7 @@
 /*
 La suite de fibonaci
 */
+
 int fibo(int a, int b, int i) {
   int out_ = 0;
   int a2 = a;

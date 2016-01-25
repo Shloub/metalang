@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int* id(int* b) {
   return b;
 }
+
 
 void g(int* t, int index) {
   t[index] = 0;

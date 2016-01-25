@@ -5,13 +5,16 @@ struct toto {
   int v;
 };
 
+
 std::string idstring(std::string s) {
   return s;
 }
 
+
 void printstring(std::string s) {
   std::cout << idstring(s) << "\n";
 }
+
 
 void print_toto(toto& t) {
   std::cout << t.s << " = " << t.v << "\n";

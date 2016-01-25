@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int g(int i) {
   int j = i * 4;
   if (j % 2 == 1)
     return 0;
   return j;
 }
+
 
 void h(int i) {
   std::cout << i << "\n";

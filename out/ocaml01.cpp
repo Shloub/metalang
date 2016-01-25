@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int foo() {
   for (int i = 0; i <= 10; i ++)
   {
@@ -7,6 +8,7 @@ int foo() {
   }
   return 0;
 }
+
 
 int bar() {
   for (int i = 0; i <= 10; i ++)

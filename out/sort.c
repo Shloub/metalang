@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int* copytab(int* tab, int len) {
   int i;
   int *o = calloc( len , sizeof(int));
@@ -8,6 +9,7 @@ int* copytab(int* tab, int len) {
     o[i] = tab[i];
   return o;
 }
+
 
 void bubblesort(int* tab, int len) {
   int i, j;
@@ -20,6 +22,7 @@ void bubblesort(int* tab, int len) {
     tab[j] = tmp;
   }
 }
+
 
 void qsort0(int* tab, int len, int i, int j) {
   if (i < j)

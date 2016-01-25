@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 std::vector<int> primesfactors(int n) {
   std::vector<int> tab(n + 1, 0);

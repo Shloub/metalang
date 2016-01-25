@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 std::vector<int> copytab(std::vector<int>& tab, int len) {
   std::vector<int> o(len);
   for (int i = 0; i < len; i++)
     o[i] = tab[i];
   return o;
 }
+
 
 void bubblesort(std::vector<int>& tab, int len) {
   for (int i = 0; i < len; i++)
@@ -17,6 +19,7 @@ void bubblesort(std::vector<int>& tab, int len) {
     tab[j] = tmp;
   }
 }
+
 
 void qsort0(std::vector<int>& tab, int len, int i, int j) {
   if (i < j)

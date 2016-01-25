@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int position_alphabet(char c) {
   int i = (int)(c);
   if (i <= (int)('Z') && i >= (int)('A'))
@@ -11,9 +12,11 @@ int position_alphabet(char c) {
     return -1;
 }
 
+
 char of_position_alphabet(int c) {
   return (char)(c + (int)('a'));
 }
+
 
 void crypte(int taille_cle, char* cle, int taille, char* message) {
   int i;

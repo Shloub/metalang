@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int devine0(int nombre, int* tab, int len) {
   int i;
   int min0 = tab[0];

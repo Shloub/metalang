@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 int result(int sum, std::vector<int>& t, int maxIndex, std::vector<std::vector<int>>& cache) {
   if (cache[sum][maxIndex] != 0)
     return cache[sum][maxIndex];

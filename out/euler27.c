@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int eratostene(int* t, int max0) {
   int i;
   int n = 0;
@@ -18,6 +19,7 @@ int eratostene(int* t, int max0) {
   return n;
 }
 
+
 int isPrime(int n, int* primes, int len) {
   int i = 0;
   if (n < 0)
@@ -30,6 +32,7 @@ int isPrime(int n, int* primes, int len) {
   }
   return 1;
 }
+
 
 int test(int a, int b, int* primes, int len) {
   int n;

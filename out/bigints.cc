@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 int min2_(int a, int b) {
   if (a < b)
@@ -19,6 +21,7 @@ struct bigint {
   int bigint_len;
   std::vector<int> * bigint_chiffres;
 };
+
 
 bigint * read_bigint(int len) {
   char c;
@@ -41,12 +44,14 @@ bigint * read_bigint(int len) {
   return e;
 }
 
+
 void print_bigint(bigint * a) {
   if (!a->bigint_sign)
     std::cout << '-';
   for (int i = 0; i < a->bigint_len; i++)
     std::cout << a->bigint_chiffres->at(a->bigint_len - 1 - i);
 }
+
 
 bool bigint_eq(bigint * a, bigint * b) {
   /* Renvoie vrai si a = b */
@@ -62,6 +67,7 @@ bool bigint_eq(bigint * a, bigint * b) {
     return true;
   }
 }
+
 
 bool bigint_gt(bigint * a, bigint * b) {
   /* Renvoie vrai si a > b */
@@ -88,9 +94,11 @@ bool bigint_gt(bigint * a, bigint * b) {
   }
 }
 
+
 bool bigint_lt(bigint * a, bigint * b) {
   return !bigint_gt(a, b);
 }
+
 
 bigint * add_bigint_positif(bigint * a, bigint * b) {
   /* Une addition ou on en a rien a faire des signes */
@@ -115,6 +123,7 @@ bigint * add_bigint_positif(bigint * a, bigint * b) {
   f->bigint_chiffres=chiffres;
   return f;
 }
+
 
 bigint * sub_bigint_positif(bigint * a, bigint * b) {
   /* Une soustraction ou on en a rien a faire des signes
@@ -146,6 +155,7 @@ Pré-requis : a > b
   return g;
 }
 
+
 bigint * neg_bigint(bigint * a) {
   bigint * h = new bigint();
   h->bigint_sign=!a->bigint_sign;
@@ -153,6 +163,7 @@ bigint * neg_bigint(bigint * a) {
   h->bigint_chiffres=a->bigint_chiffres;
   return h;
 }
+
 
 bigint * add_bigint(bigint * a, bigint * b) {
   if (a->bigint_sign == b->bigint_sign)
@@ -180,9 +191,11 @@ bigint * add_bigint(bigint * a, bigint * b) {
   }
 }
 
+
 bigint * sub_bigint(bigint * a, bigint * b) {
   return add_bigint(a, neg_bigint(b));
 }
+
 
 bigint * mul_bigint_cp(bigint * a, bigint * b) {
   /* Cet algorithm est quadratique.
@@ -217,6 +230,7 @@ D'ou le nom de la fonction. */
   return m;
 }
 
+
 bigint * bigint_premiers_chiffres(bigint * a, int i) {
   int len = min2_(i, a->bigint_len);
   while (len != 0 && a->bigint_chiffres->at(len - 1) == 0)
@@ -227,6 +241,7 @@ bigint * bigint_premiers_chiffres(bigint * a, int i) {
   o->bigint_chiffres=a->bigint_chiffres;
   return o;
 }
+
 
 bigint * bigint_shift(bigint * a, int i) {
   std::vector<int> *chiffres = new std::vector<int>( a->bigint_len + i );
@@ -241,6 +256,7 @@ bigint * bigint_shift(bigint * a, int i) {
   p->bigint_chiffres=chiffres;
   return p;
 }
+
 
 bigint * mul_bigint(bigint * aa, bigint * bb) {
   if (aa->bigint_len == 0)
@@ -269,6 +285,7 @@ bigint * mul_bigint(bigint * aa, bigint * bb) {
 Division,
 Modulo
 */
+
 int log10(int a) {
   int out0 = 1;
   while (a >= 10)
@@ -278,6 +295,7 @@ int log10(int a) {
   }
   return out0;
 }
+
 
 bigint * bigint_of_int(int i) {
   int size = log10(i);
@@ -297,6 +315,7 @@ bigint * bigint_of_int(int i) {
   return q;
 }
 
+
 bigint * fact_bigint(bigint * a) {
   bigint * one = bigint_of_int(1);
   bigint * out0 = one;
@@ -308,6 +327,7 @@ bigint * fact_bigint(bigint * a) {
   return out0;
 }
 
+
 int sum_chiffres_bigint(bigint * a) {
   int out0 = 0;
   for (int i = 0; i < a->bigint_len; i++)
@@ -316,12 +336,14 @@ int sum_chiffres_bigint(bigint * a) {
 }
 
 /* http://projecteuler.net/problem=20 */
+
 int euler20() {
   bigint * a = bigint_of_int(15);
   /* normalement c'est 100 */
   a = fact_bigint(a);
   return sum_chiffres_bigint(a);
 }
+
 
 bigint * bigint_exp(bigint * a, int b) {
   if (b == 1)
@@ -332,6 +354,7 @@ bigint * bigint_exp(bigint * a, int b) {
     return mul_bigint(a, bigint_exp(a, b - 1));
 }
 
+
 bigint * bigint_exp_10chiffres(bigint * a, int b) {
   a = bigint_premiers_chiffres(a, 10);
   if (b == 1)
@@ -341,6 +364,7 @@ bigint * bigint_exp_10chiffres(bigint * a, int b) {
   else
     return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
 }
+
 
 void euler48() {
   bigint * sum = bigint_of_int(0);
@@ -357,12 +381,14 @@ void euler48() {
   std::cout << "\n";
 }
 
+
 int euler16() {
   bigint * a = bigint_of_int(2);
   a = bigint_exp(a, 100);
   /* 1000 normalement */
   return sum_chiffres_bigint(a);
 }
+
 
 int euler25() {
   int i = 2;
@@ -378,6 +404,7 @@ int euler25() {
   }
   return i;
 }
+
 
 int euler29() {
   int maxA = 5;

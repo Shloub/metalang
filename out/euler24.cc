@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int fact(int n) {
   int prod = 1;
   for (int i = 2; i <= n; i ++)
     prod *= i;
   return prod;
 }
+
 
 void show(int lim, int nth) {
   std::vector<int> *t = new std::vector<int>( lim );

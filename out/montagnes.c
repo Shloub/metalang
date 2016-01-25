@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int montagnes0(int* tab, int len) {
   int max0 = 1;
   int j = 1;

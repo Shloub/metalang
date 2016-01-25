@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int fact(int n) {
   int i;
   int prod = 1;
@@ -8,6 +9,7 @@ int fact(int n) {
     prod *= i;
   return prod;
 }
+
 
 void show(int lim, int nth) {
   int m, k, l, j, i;

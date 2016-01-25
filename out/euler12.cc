@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
+
 int max2_(int a, int b) {
   if (a > b)
     return a;
   else
     return b;
 }
+
 
 int eratostene(std::vector<int> * t, int max0) {
   int n = 0;
@@ -23,6 +25,7 @@ int eratostene(std::vector<int> * t, int max0) {
   return n;
 }
 
+
 int fillPrimesFactors(std::vector<int> * t, int n, std::vector<int> * primes, int nprimes) {
   for (int i = 0; i < nprimes; i++)
   {
@@ -37,6 +40,7 @@ int fillPrimesFactors(std::vector<int> * t, int n, std::vector<int> * primes, in
   }
   return n;
 }
+
 
 int find(int ndiv2) {
   int maximumprimes = 110;

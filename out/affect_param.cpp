@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 void foo(int a) {
   a = 4;
 }
