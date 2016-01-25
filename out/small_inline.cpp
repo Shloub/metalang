@@ -2,7 +2,7 @@
 #include <vector>
 
 int main(){
-  std::vector<int > t(2);
+  std::vector<int> t(2);
   for (int d = 0 ; d < 2; d++)
   {
     std::cin >> t[d] >> std::skipws;

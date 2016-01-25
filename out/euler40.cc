@@ -22,7 +22,7 @@ int e(std::vector<int> * t, int n){
 
 
 int main(){
-  std::vector<int > *t = new std::vector<int>( 9 );
+  std::vector<int> *t = new std::vector<int>( 9 );
   for (int i = 0 ; i < 9; i++)
     t->at(i) = exp0(10, i) - exp0(10, i - 1);
   for (int i2 = 1 ; i2 <= 8; i2 ++)

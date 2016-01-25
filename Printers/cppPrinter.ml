@@ -123,14 +123,14 @@ class cppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>( %a );@]"
+    Format.fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a );@]"
       self#ptype type_
       self#binding binding
       self#ptype type_
       self#expr len
 
   method allocarrayconst f binding type_ len e opt =
-    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a);@]"
+    Format.fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a);@]"
       self#ptype type_
       self#binding binding
       self#ptype type_
@@ -302,7 +302,7 @@ class proloCppPrinter = object(self)
     match Type.unfix t with
     | Type.Integer -> Format.fprintf f "int"
     | Type.String -> Format.fprintf f "std::string"
-    | Type.Array a -> Format.fprintf f "std::vector<%a >" self#ptype a
+    | Type.Array a -> Format.fprintf f "std::vector<%a>" self#ptype a
     | Type.Void ->  Format.fprintf f "void"
     | Type.Bool -> Format.fprintf f "bool"
     | Type.Char -> Format.fprintf f "char"
@@ -348,8 +348,8 @@ class proloCppPrinter = object(self)
   return c;
 }@\n";
         if Tags.is_taged "use_cpp_readmatrix"
-        then Format.fprintf f "template <typename T> std::vector<std::vector<T> > read_matrix(int x, int y){
-  std::vector<std::vector<T> > matrix(y);
+        then Format.fprintf f "template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
+  std::vector<std::vector<T>> matrix(y);
   for (int i = 0; i < y; i++)
   {
     std::vector<T>& line = matrix[i];
@@ -367,13 +367,13 @@ class proloCppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>std::vector<%a > %a(%a);@]"
+    Format.fprintf f "@[<h>std::vector<%a> %a(%a);@]"
       self#ptype type_
       self#binding binding
       self#expr len
 
   method allocarrayconst f binding type_ len e opt =
-    Format.fprintf f "@[<h>std::vector<%a > %a(%a, %a);@]"
+    Format.fprintf f "@[<h>std::vector<%a> %a(%a, %a);@]"
       self#ptype type_
       self#binding binding
       self#expr len

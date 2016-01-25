@@ -10,7 +10,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   d ^ 5 +
   e ^ 5
 */
-  std::vector<int > *p = new std::vector<int>( 10 );
+  std::vector<int> *p = new std::vector<int>( 10 );
   for (int i = 0 ; i < 10; i++)
     p->at(i) = i * i * i * i * i;
   int sum = 0;

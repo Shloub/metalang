@@ -7,7 +7,7 @@ int min2_(int a, int b){
     return b;
 }
 
-int eratostene(std::vector<int >& t, int max0){
+int eratostene(std::vector<int>& t, int max0){
   int n = 0;
   for (int i = 2 ; i < max0; i++)
     if (t[i] == i)
@@ -29,11 +29,11 @@ int eratostene(std::vector<int >& t, int max0){
 
 int main(){
   int maximumprimes = 1000001;
-  std::vector<int > era(maximumprimes);
+  std::vector<int> era(maximumprimes);
   for (int j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   int nprimes = eratostene(era, maximumprimes);
-  std::vector<int > primes(nprimes, 0);
+  std::vector<int> primes(nprimes, 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era[k] == k)
@@ -42,7 +42,7 @@ int main(){
     l++;
   }
   std::cout << l << " == " << nprimes << "\n";
-  std::vector<int > sum(nprimes);
+  std::vector<int> sum(nprimes);
   for (int i_ = 0 ; i_ < nprimes; i_++)
     sum[i_] = primes[i_];
   int maxl = 0;

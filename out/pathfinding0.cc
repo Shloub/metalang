@@ -41,10 +41,10 @@ int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vecto
 }
 
 int pathfind(std::vector<std::vector<char> *> * tab, int x, int y){
-  std::vector<std::vector<int> * > *cache = new std::vector<std::vector<int> *>( y );
+  std::vector<std::vector<int> *> *cache = new std::vector<std::vector<int> *>( y );
   for (int i = 0 ; i < y; i++)
   {
-    std::vector<int > *tmp = new std::vector<int>( x );
+    std::vector<int> *tmp = new std::vector<int>( x );
     for (int j = 0 ; j < x; j++)
     {
       std::cout << tab->at(i)->at(j);
@@ -61,7 +61,7 @@ int main(){
   int y, x;
   std::cin >> x >> std::skipws >> y;
   std::cout << x << " " << y << "\n";
-  std::vector<std::vector<char> * > *e = new std::vector<std::vector<char> *>( y );
+  std::vector<std::vector<char> *> *e = new std::vector<std::vector<char> *>( y );
   for (int f = 0 ; f < y; f++)
     e->at(f) = getline();
   std::vector<std::vector<char> *> * tab = e;

@@ -42,13 +42,13 @@ int test(int a, int b, std::vector<int> * primes, int len){
 
 int main(){
   int maximumprimes = 1000;
-  std::vector<int > *era = new std::vector<int>( maximumprimes );
+  std::vector<int> *era = new std::vector<int>( maximumprimes );
   for (int j = 0 ; j < maximumprimes; j++)
     era->at(j) = j;
   int result = 0;
   int max0 = 0;
   int nprimes = eratostene(era, maximumprimes);
-  std::vector<int > *primes = new std::vector<int>( nprimes );
+  std::vector<int> *primes = new std::vector<int>( nprimes );
   std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)

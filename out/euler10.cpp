@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int eratostene(std::vector<int >& t, int max0){
+int eratostene(std::vector<int>& t, int max0){
   int sum = 0;
   for (int i = 2 ; i < max0; i++)
     if (t[i] == i)
@@ -23,7 +23,7 @@ int eratostene(std::vector<int >& t, int max0){
 int main(){
   int n = 100000;
   /* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages */
-  std::vector<int > t(n);
+  std::vector<int> t(n);
   for (int i = 0 ; i < n; i++)
     t[i] = i;
   t[1] = 0;

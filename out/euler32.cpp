@@ -23,7 +23,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
-bool okdigits(std::vector<bool >& ok, int n){
+bool okdigits(std::vector<bool>& ok, int n){
   if (n == 0)
     return true;
   else
@@ -44,10 +44,10 @@ bool okdigits(std::vector<bool >& ok, int n){
 
 int main(){
   int count = 0;
-  std::vector<bool > allowed(10);
+  std::vector<bool> allowed(10);
   for (int i = 0 ; i < 10; i++)
     allowed[i] = i != 0;
-  std::vector<bool > counted(100000, false);
+  std::vector<bool> counted(100000, false);
   for (int e = 1 ; e <= 9; e ++)
   {
     allowed[e] = false;

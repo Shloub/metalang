@@ -13,7 +13,7 @@ int main(){
   len *= 2;
   std::cout << "len*2=" << len << "\n";
   len /= 2;
-  std::vector<int > tab(len);
+  std::vector<int> tab(len);
   for (int i = 0 ; i < len; i++)
   {
     std::cin >> tmpi1 >> std::skipws;
@@ -21,7 +21,7 @@ int main(){
     tab[i] = tmpi1;
   }
   std::cout << "\n";
-  std::vector<int > tab2(len);
+  std::vector<int> tab2(len);
   for (int i_ = 0 ; i_ < len; i_++)
   {
     std::cin >> tmpi2 >> std::skipws;
@@ -30,7 +30,7 @@ int main(){
   }
   std::cin >> strlen >> std::skipws;
   std::cout << strlen << "=strlen\n";
-  std::vector<char > tab4(strlen);
+  std::vector<char> tab4(strlen);
   for (int toto = 0 ; toto < strlen; toto++)
   {
     std::cin >> tmpc >> std::noskipws;

@@ -5,7 +5,7 @@
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-int find0(int len, std::vector<std::vector<int > >& tab, std::vector<std::vector<int > >& cache, int x, int y){
+int find0(int len, std::vector<std::vector<int>>& tab, std::vector<std::vector<int>>& cache, int x, int y){
   /*
 	Cette fonction est récursive
 	*/
@@ -26,11 +26,11 @@ int find0(int len, std::vector<std::vector<int > >& tab, std::vector<std::vector
   return result;
 }
 
-int find(int len, std::vector<std::vector<int > >& tab){
-  std::vector<std::vector<int > > tab2(len);
+int find(int len, std::vector<std::vector<int>>& tab){
+  std::vector<std::vector<int>> tab2(len);
   for (int i = 0 ; i < len; i++)
   {
-    std::vector<int > tab3(i + 1, 0);
+    std::vector<int> tab3(i + 1, 0);
     tab2[i] = tab3;
   }
   return find0(len, tab, tab2, 0, 0);
@@ -40,10 +40,10 @@ int find(int len, std::vector<std::vector<int > >& tab){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  std::vector<std::vector<int > > tab(len);
+  std::vector<std::vector<int>> tab(len);
   for (int i = 0 ; i < len; i++)
   {
-    std::vector<int > tab2(i + 1);
+    std::vector<int> tab2(i + 1);
     for (int j = 0 ; j < i + 1; j++)
     {
       int tmp = 0;

@@ -7,7 +7,7 @@ int next0(int n){
     return 3 * n + 1;
 }
 
-int find(int n, std::vector<int >& m){
+int find(int n, std::vector<int>& m){
   if (n == 1)
     return 1;
   else if (n >= 1000000)
@@ -23,7 +23,7 @@ int find(int n, std::vector<int >& m){
 
 
 int main(){
-  std::vector<int > m(1000000, 0);
+  std::vector<int> m(1000000, 0);
   int max0 = 0;
   int maxi = 0;
   for (int i = 1 ; i <= 999; i ++)

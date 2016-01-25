@@ -32,14 +32,14 @@ int main(){
   int taille, taille_cle;
   char out2, out0;
   std::cin >> taille_cle >> std::skipws;
-  std::vector<char > *cle = new std::vector<char>( taille_cle );
+  std::vector<char> *cle = new std::vector<char>( taille_cle );
   for (int index = 0 ; index < taille_cle; index++)
   {
     std::cin >> out0 >> std::noskipws;
     cle->at(index) = out0;
   }
   std::cin >> std::skipws >> taille;
-  std::vector<char > *message = new std::vector<char>( taille );
+  std::vector<char> *message = new std::vector<char>( taille );
   for (int index2 = 0 ; index2 < taille; index2++)
   {
     std::cin >> out2 >> std::noskipws;

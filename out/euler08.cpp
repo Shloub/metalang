@@ -11,7 +11,7 @@ int max2_(int a, int b){
 int main(){
   char e, c;
   int i = 1;
-  std::vector<int > last(5);
+  std::vector<int> last(5);
   for (int j = 0 ; j < 5; j++)
   {
     std::cin >> c >> std::noskipws;

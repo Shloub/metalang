@@ -29,11 +29,11 @@ int eratostene(std::vector<int> * t, int max0){
 
 int main(){
   int maximumprimes = 1000001;
-  std::vector<int > *era = new std::vector<int>( maximumprimes );
+  std::vector<int> *era = new std::vector<int>( maximumprimes );
   for (int j = 0 ; j < maximumprimes; j++)
     era->at(j) = j;
   int nprimes = eratostene(era, maximumprimes);
-  std::vector<int > *primes = new std::vector<int>( nprimes );
+  std::vector<int> *primes = new std::vector<int>( nprimes );
   std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
@@ -43,7 +43,7 @@ int main(){
     l++;
   }
   std::cout << l << " == " << nprimes << "\n";
-  std::vector<int > *sum = new std::vector<int>( nprimes );
+  std::vector<int> *sum = new std::vector<int>( nprimes );
   for (int i_ = 0 ; i_ < nprimes; i_++)
     sum->at(i_) = primes->at(i_);
   int maxl = 0;

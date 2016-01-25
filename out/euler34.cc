@@ -2,7 +2,7 @@
 #include <vector>
 
 int main(){
-  std::vector<int > *f = new std::vector<int>( 10 );
+  std::vector<int> *f = new std::vector<int>( 10 );
   std::fill(f->begin(), f->end(), 1);
   for (int i = 1 ; i <= 9; i ++)
   {

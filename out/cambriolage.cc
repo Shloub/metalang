@@ -37,10 +37,10 @@ int nbPassePartout(int n, std::vector<std::vector<int> *> * passepartout, int m,
 int main(){
   int out_, m, out01, n;
   std::cin >> n >> std::skipws;
-  std::vector<std::vector<int> * > *passepartout = new std::vector<std::vector<int> *>( n );
+  std::vector<std::vector<int> *> *passepartout = new std::vector<std::vector<int> *>( n );
   for (int i = 0 ; i < n; i++)
   {
-    std::vector<int > *out0 = new std::vector<int>( 2 );
+    std::vector<int> *out0 = new std::vector<int>( 2 );
     for (int j = 0 ; j < 2; j++)
     {
       std::cin >> out01 >> std::skipws;
@@ -49,10 +49,10 @@ int main(){
     passepartout->at(i) = out0;
   }
   std::cin >> m >> std::skipws;
-  std::vector<std::vector<int> * > *serrures = new std::vector<std::vector<int> *>( m );
+  std::vector<std::vector<int> *> *serrures = new std::vector<std::vector<int> *>( m );
   for (int k = 0 ; k < m; k++)
   {
-    std::vector<int > *out1 = new std::vector<int>( 2 );
+    std::vector<int> *out1 = new std::vector<int>( 2 );
     for (int l = 0 ; l < 2; l++)
     {
       std::cin >> out_ >> std::skipws;

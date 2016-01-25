@@ -165,10 +165,10 @@ move * play(gamestate * g){
 }
 
 gamestate * init0(){
-  std::vector<std::vector<int> * > *cases = new std::vector<std::vector<int> *>( 3 );
+  std::vector<std::vector<int> *> *cases = new std::vector<std::vector<int> *>( 3 );
   for (int i = 0 ; i < 3; i++)
   {
-    std::vector<int > *tab = new std::vector<int>( 3 );
+    std::vector<int> *tab = new std::vector<int>( 3 );
     std::fill(tab->begin(), tab->end(), 0);
     cases->at(i) = tab;
   }

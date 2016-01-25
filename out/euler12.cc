@@ -40,11 +40,11 @@ int fillPrimesFactors(std::vector<int> * t, int n, std::vector<int> * primes, in
 
 int find(int ndiv2){
   int maximumprimes = 110;
-  std::vector<int > *era = new std::vector<int>( maximumprimes );
+  std::vector<int> *era = new std::vector<int>( maximumprimes );
   for (int j = 0 ; j < maximumprimes; j++)
     era->at(j) = j;
   int nprimes = eratostene(era, maximumprimes);
-  std::vector<int > *primes = new std::vector<int>( nprimes );
+  std::vector<int> *primes = new std::vector<int>( nprimes );
   std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
@@ -55,7 +55,7 @@ int find(int ndiv2){
   }
   for (int n = 1 ; n <= 10000; n ++)
   {
-    std::vector<int > *primesFactors = new std::vector<int>( n + 2 );
+    std::vector<int> *primesFactors = new std::vector<int>( n + 2 );
     std::fill(primesFactors->begin(), primesFactors->end(), 0);
     int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors->at(2) --;

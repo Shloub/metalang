@@ -20,7 +20,7 @@ int main(){
   int strlen, len;
   std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
-  std::vector<int > tab(len);
+  std::vector<int> tab(len);
   for (int a = 0 ; a < len; a++)
   {
     std::cin >> tab[a] >> std::skipws;
@@ -28,7 +28,7 @@ int main(){
   for (int i = 0 ; i < len; i++)
     std::cout << i << "=>" << tab[i] << " ";
   std::cout << "\n";
-  std::vector<int > tab2(len);
+  std::vector<int> tab2(len);
   for (int b = 0 ; b < len; b++)
   {
     std::cin >> tab2[b] >> std::skipws;
@@ -37,7 +37,7 @@ int main(){
     std::cout << i_ << "==>" << tab2[i_] << " ";
   std::cin >> strlen >> std::skipws;
   std::cout << strlen << "=strlen\n";
-  std::vector<char > tab4 = getline();
+  std::vector<char> tab4 = getline();
   for (int i3 = 0 ; i3 < strlen; i3++)
   {
     char tmpc = tab4[i3];

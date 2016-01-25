@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-template <typename T> std::vector<std::vector<T> > read_matrix(int x, int y){
-  std::vector<std::vector<T> > matrix(y);
+template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
+  std::vector<std::vector<T>> matrix(y);
   for (int i = 0; i < y; i++)
   {
     std::vector<T>& line = matrix[i];
@@ -20,7 +20,7 @@ int max2_(int a, int b){
     return b;
 }
 
-int find(int n, std::vector<std::vector<int > >& m, int x, int y, int dx, int dy){
+int find(int n, std::vector<std::vector<int>>& m, int x, int y, int dx, int dy){
   if (x < 0 || x == 20 || y < 0 || y == 20)
     return -1;
   else if (n == 0)
@@ -36,7 +36,7 @@ struct tuple_int_int {
 
 
 int main(){
-  std::vector<tuple_int_int > directions(8);
+  std::vector<tuple_int_int> directions(8);
   for (int i = 0 ; i < 8; i++)
     if (i == 0)
   {
@@ -95,7 +95,7 @@ int main(){
     directions[i] = l;
   }
   int max0 = 0;
-  std::vector<std::vector<int > > m = read_matrix<int>(20, 20);
+  std::vector<std::vector<int>> m = read_matrix<int>(20, 20);
   for (int j = 0 ; j <= 7; j ++)
   {
     tuple_int_int o = directions[j];

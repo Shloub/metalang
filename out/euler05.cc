@@ -8,7 +8,7 @@ int max2_(int a, int b){
 }
 
 std::vector<int> * primesfactors(int n){
-  std::vector<int > *tab = new std::vector<int>( n + 1 );
+  std::vector<int> *tab = new std::vector<int>( n + 1 );
   std::fill(tab->begin(), tab->end(), 0);
   int d = 2;
   while (n != 1 && d * d <= n)
@@ -26,7 +26,7 @@ std::vector<int> * primesfactors(int n){
 
 int main(){
   int lim = 20;
-  std::vector<int > *o = new std::vector<int>( lim + 1 );
+  std::vector<int> *o = new std::vector<int>( lim + 1 );
   std::fill(o->begin(), o->end(), 0);
   for (int i = 1 ; i <= lim; i ++)
   {

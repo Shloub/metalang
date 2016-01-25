@@ -11,10 +11,10 @@ int min2_(int a, int b){
 int main(){
   int y, x;
   std::cin >> x >> std::skipws >> y;
-  std::vector<std::vector<int> * > *tab = new std::vector<std::vector<int> *>( y );
+  std::vector<std::vector<int> *> *tab = new std::vector<std::vector<int> *>( y );
   for (int d = 0 ; d < y; d++)
   {
-    std::vector<int > *e = new std::vector<int>( x );
+    std::vector<int> *e = new std::vector<int>( x );
     for (int f = 0 ; f < x; f++)
     {
       std::cin >> e->at(f) >> std::skipws;

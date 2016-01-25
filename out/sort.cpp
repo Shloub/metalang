@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-std::vector<int > copytab(std::vector<int >& tab, int len){
-  std::vector<int > o(len);
+std::vector<int> copytab(std::vector<int>& tab, int len){
+  std::vector<int> o(len);
   for (int i = 0 ; i < len; i++)
     o[i] = tab[i];
   return o;
 }
 
-void bubblesort(std::vector<int >& tab, int len){
+void bubblesort(std::vector<int>& tab, int len){
   for (int i = 0 ; i < len; i++)
     for (int j = i + 1 ; j < len; j++)
       if (tab[i] > tab[j])
@@ -18,7 +18,7 @@ void bubblesort(std::vector<int >& tab, int len){
   }
 }
 
-void qsort0(std::vector<int >& tab, int len, int i, int j){
+void qsort0(std::vector<int>& tab, int len, int i, int j){
   if (i < j)
   {
     int i0 = i;
@@ -56,19 +56,19 @@ void qsort0(std::vector<int >& tab, int len, int i, int j){
 int main(){
   int len = 2;
   std::cin >> len >> std::skipws;
-  std::vector<int > tab(len);
+  std::vector<int> tab(len);
   for (int i_ = 0 ; i_ < len; i_++)
   {
     int tmp = 0;
     std::cin >> tmp >> std::skipws;
     tab[i_] = tmp;
   }
-  std::vector<int > tab2 = copytab(tab, len);
+  std::vector<int> tab2 = copytab(tab, len);
   bubblesort(tab2, len);
   for (int i = 0 ; i < len; i++)
     std::cout << tab2[i] << " ";
   std::cout << "\n";
-  std::vector<int > tab3 = copytab(tab, len);
+  std::vector<int> tab3 = copytab(tab, len);
   qsort0(tab3, len, 0, len - 1);
   for (int i = 0 ; i < len; i++)
     std::cout << tab3[i] << " ";

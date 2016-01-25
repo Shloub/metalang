@@ -7,7 +7,7 @@ int exp0(int a, int e){
   return o;
 }
 
-int e(std::vector<int >& t, int n){
+int e(std::vector<int>& t, int n){
   for (int i = 1 ; i <= 8; i ++)
     if (n >= t[i] * i)
     n -= t[i] * i;
@@ -22,7 +22,7 @@ int e(std::vector<int >& t, int n){
 
 
 int main(){
-  std::vector<int > t(9);
+  std::vector<int> t(9);
   for (int i = 0 ; i < 9; i++)
     t[i] = exp0(10, i) - exp0(10, i - 1);
   for (int i2 = 1 ; i2 <= 8; i2 ++)

@@ -20,7 +20,7 @@ int main(){
   int strlen, len;
   std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
-  std::vector<int > *tab = new std::vector<int>( len );
+  std::vector<int> *tab = new std::vector<int>( len );
   for (int a = 0 ; a < len; a++)
   {
     std::cin >> tab->at(a) >> std::skipws;
@@ -28,7 +28,7 @@ int main(){
   for (int i = 0 ; i < len; i++)
     std::cout << i << "=>" << tab->at(i) << " ";
   std::cout << "\n";
-  std::vector<int > *tab2 = new std::vector<int>( len );
+  std::vector<int> *tab2 = new std::vector<int>( len );
   for (int b = 0 ; b < len; b++)
   {
     std::cin >> tab2->at(b) >> std::skipws;

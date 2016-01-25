@@ -23,7 +23,7 @@ int find(int n, std::vector<int> * t, int used, int nth){
 
 int main(){
   int n = 10001;
-  std::vector<int > *t = new std::vector<int>( n );
+  std::vector<int> *t = new std::vector<int>( n );
   std::fill(t->begin(), t->end(), 2);
   std::cout << find(3, t, 1, n) << "\n";
   return 0;

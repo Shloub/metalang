@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int summax(std::vector<int >& lst, int len){
+int summax(std::vector<int>& lst, int len){
   int current = 0;
   int max0 = 0;
   for (int i = 0 ; i < len; i++)
@@ -18,7 +18,7 @@ int summax(std::vector<int >& lst, int len){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  std::vector<int > tab(len);
+  std::vector<int> tab(len);
   for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;

@@ -18,7 +18,7 @@ int summax(std::vector<int> * lst, int len){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  std::vector<int > *tab = new std::vector<int>( len );
+  std::vector<int> *tab = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;

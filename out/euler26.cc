@@ -17,7 +17,7 @@ int periode(std::vector<int> * restes, int len, int a, int b){
 
 
 int main(){
-  std::vector<int > *t = new std::vector<int>( 1000 );
+  std::vector<int> *t = new std::vector<int>( 1000 );
   std::fill(t->begin(), t->end(), 0);
   int m = 0;
   int mi = 0;

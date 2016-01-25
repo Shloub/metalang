@@ -5,10 +5,10 @@ int main(){
   int n = 10;
   /* normalement on doit mettre 20 mais là on se tape un overflow */
   n++;
-  std::vector<std::vector<int > > tab(n);
+  std::vector<std::vector<int>> tab(n);
   for (int i = 0 ; i < n; i++)
   {
-    std::vector<int > tab2(n, 0);
+    std::vector<int> tab2(n, 0);
     tab[i] = tab2;
   }
   for (int l = 0 ; l < n; l++)

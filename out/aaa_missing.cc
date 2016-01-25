@@ -4,7 +4,7 @@
   Ce test a été généré par Metalang.
 */
 int result(int len, std::vector<int> * tab){
-  std::vector<bool > *tab2 = new std::vector<bool>( len );
+  std::vector<bool> *tab2 = new std::vector<bool>( len );
   std::fill(tab2->begin(), tab2->end(), false);
   for (int i1 = 0 ; i1 < len; i1++)
   {
@@ -23,7 +23,7 @@ int main(){
   int len;
   std::cin >> len >> std::skipws;
   std::cout << len << "\n";
-  std::vector<int > *tab = new std::vector<int>( len );
+  std::vector<int> *tab = new std::vector<int>( len );
   for (int a = 0 ; a < len; a++)
   {
     std::cin >> tab->at(a) >> std::skipws;
