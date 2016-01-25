@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int h(int i){
+int h(int i) {
   /*  for j = i - 2 to i + 2 do
     if i % j == 5 then return true end
   end */
@@ -15,10 +15,10 @@ int h(int i){
   return 0;
 }
 
-int main(void){
+int main(void) {
   int k;
   int j = 0;
-  for (k = 0 ; k <= 10; k++)
+  for (k = 0; k <= 10; k++)
   {
     j += k;
     printf("%d\n", j);

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
+template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y) {
   std::vector<std::vector<T>> matrix(y, std::vector<T>(x));
   std::cin >> std::skipws;
   for (std::vector<T>& line : matrix)
@@ -9,14 +9,14 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
       std::cin >> elem;
   return matrix;
 }
-int min2_(int a, int b){
+int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
 
-int pathfind_aux(std::vector<std::vector<int>>& cache, std::vector<std::vector<char>>& tab, int x, int y, int posX, int posY){
+int pathfind_aux(std::vector<std::vector<int>>& cache, std::vector<std::vector<char>>& tab, int x, int y, int posX, int posY) {
   if (posX == x - 1 && posY == y - 1)
     return 0;
   else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
@@ -38,12 +38,12 @@ int pathfind_aux(std::vector<std::vector<int>>& cache, std::vector<std::vector<c
   }
 }
 
-int pathfind(std::vector<std::vector<char>>& tab, int x, int y){
+int pathfind(std::vector<std::vector<char>>& tab, int x, int y) {
   std::vector<std::vector<int>> cache(y);
-  for (int i = 0 ; i < y; i++)
+  for (int i = 0; i < y; i++)
   {
     std::vector<int> tmp(x);
-    for (int j = 0 ; j < x; j++)
+    for (int j = 0; j < x; j++)
     {
       std::cout << tab[i][j];
       tmp[j] = -1;
@@ -55,7 +55,7 @@ int pathfind(std::vector<std::vector<char>>& tab, int x, int y){
 }
 
 
-int main(){
+int main() {
   int y, x;
   std::cin >> x >> std::skipws >> y;
   std::cout << x << " " << y << "\n";

@@ -6,7 +6,7 @@ struct toto {
   int blah;
 };
 
-toto * mktoto(int v1){
+toto * mktoto(int v1) {
   toto * t = new toto();
   t->foo=v1;
   t->bar=0;
@@ -14,9 +14,9 @@ toto * mktoto(int v1){
   return t;
 }
 
-int result(std::vector<toto *> * t, int len){
+int result(std::vector<toto *> * t, int len) {
   int out0 = 0;
-  for (int j = 0 ; j < len; j++)
+  for (int j = 0; j < len; j++)
   {
     t->at(j)->blah = t->at(j)->blah + 1;
     out0 =
@@ -26,9 +26,9 @@ int result(std::vector<toto *> * t, int len){
 }
 
 
-int main(){
+int main() {
   std::vector<toto *> *t = new std::vector<toto *>( 4 );
-  for (int i = 0 ; i < 4; i++)
+  for (int i = 0; i < 4; i++)
     t->at(i) = mktoto(i);
   std::cin >> t->at(0)->bar >> std::skipws >> t->at(1)->blah >> std::noskipws;
   int titi = result(t, 4);

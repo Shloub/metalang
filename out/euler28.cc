@@ -15,11 +15,11 @@
 
 
 */
-int sumdiag(int n){
+int sumdiag(int n) {
   int nterms = n * 2 - 1;
   int un = 1;
   int sum = 1;
-  for (int i = 0 ; i <= nterms - 2; i ++)
+  for (int i = 0; i <= nterms - 2; i ++)
   {
     int d = 2 * (1 + i / 4);
     un += d;
@@ -30,7 +30,7 @@ int sumdiag(int n){
 }
 
 
-int main(){
+int main() {
   std::cout << sumdiag(1001);
 }
 

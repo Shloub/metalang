@@ -11,7 +11,7 @@ typedef struct toto {
   int bar;
 } toto;
 
-int main(void){
+int main(void) {
   int d, c, bar_;
   scanf("%d %d %d ", &bar_, &c, &d);
   struct tuple_int_int * e = malloc (sizeof(e) );

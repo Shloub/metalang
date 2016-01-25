@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int is_pair(int i){
+int is_pair(int i) {
   int j = 1;
   if (i < 10)
   {
@@ -29,7 +29,7 @@ int is_pair(int i){
   return i % 2 == 0;
 }
 
-int main(void){
+int main(void) {
   
   return 0;
 }

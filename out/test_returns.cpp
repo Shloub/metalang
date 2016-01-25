@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-bool is_pair(int i){
+bool is_pair(int i) {
   int j = 1;
   if (i < 10)
   {
@@ -29,7 +29,7 @@ bool is_pair(int i){
 }
 
 
-int main(){
+int main() {
   
 }
 

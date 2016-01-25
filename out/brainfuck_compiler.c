@@ -6,12 +6,12 @@ Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 et qui produit les macros metalang correspondante
 */
-int main(void){
+int main(void) {
   int i;
   char input = ' ';
   int current_pos = 500;
   int *mem = calloc( 1000 , sizeof(int));
-  for (i = 0 ; i < 1000; i++)
+  for (i = 0; i < 1000; i++)
     mem[i] = 0;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;

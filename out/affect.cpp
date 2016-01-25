@@ -9,7 +9,7 @@ struct toto {
   int blah;
 };
 
-toto mktoto(int v1){
+toto mktoto(int v1) {
   toto t;
   t.foo = v1;
   t.bar = v1;
@@ -17,7 +17,7 @@ toto mktoto(int v1){
   return t;
 }
 
-toto mktoto2(int v1){
+toto mktoto2(int v1) {
   toto t;
   t.foo = v1 + 3;
   t.bar = v1 + 2;
@@ -25,7 +25,7 @@ toto mktoto2(int v1){
   return t;
 }
 
-int result(toto& t_, toto& t2_){
+int result(toto& t_, toto& t2_) {
   toto t = t_;
   toto t2 = t2_;
   toto t3;
@@ -38,10 +38,10 @@ int result(toto& t_, toto& t2_){
   t.blah++;
   int len = 1;
   std::vector<int> cache0(len);
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
     cache0[i] = -i;
   std::vector<int> cache1(len);
-  for (int j = 0 ; j < len; j++)
+  for (int j = 0; j < len; j++)
     cache1[j] = j;
   std::vector<int> cache2 = cache0;
   cache0 = cache1;
@@ -50,7 +50,7 @@ int result(toto& t_, toto& t2_){
 }
 
 
-int main(){
+int main() {
   toto t = mktoto(4);
   toto t2 = mktoto(5);
   std::cin >> t.bar >> std::skipws >> t.blah >> t2.bar >> t2.blah >> std::noskipws;

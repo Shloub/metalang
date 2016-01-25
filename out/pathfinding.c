@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int min2_(int a, int b){
+int min2_(int a, int b) {
   if (a < b)
     return a;
   else
     return b;
 }
 
-int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
+int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY) {
   if (posX == x - 1 && posY == y - 1)
     return 0;
   else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
@@ -30,29 +30,29 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
   }
 }
 
-int pathfind(char** tab, int x, int y){
+int pathfind(char** tab, int x, int y) {
   int i, j;
   int* *cache = calloc( y , sizeof(int*));
-  for (i = 0 ; i < y; i++)
+  for (i = 0; i < y; i++)
   {
     int *tmp = calloc( x , sizeof(int));
-    for (j = 0 ; j < x; j++)
+    for (j = 0; j < x; j++)
       tmp[j] = -1;
     cache[i] = tmp;
   }
   return pathfind_aux(cache, tab, x, y, 0, 0);
 }
 
-int main(void){
+int main(void) {
   int i, j;
   int x = 0;
   int y = 0;
   scanf("%d %d ", &x, &y);
   char* *tab = calloc( y , sizeof(char*));
-  for (i = 0 ; i < y; i++)
+  for (i = 0; i < y; i++)
   {
     char *tab2 = calloc( x , sizeof(char));
-    for (j = 0 ; j < x; j++)
+    for (j = 0; j < x; j++)
     {
       char tmp = '\x00';
       scanf("%c", &tmp);

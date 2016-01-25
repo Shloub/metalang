@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main(){
+int main() {
   int i = 0;
   i --;
   std::cout << i << "\n";

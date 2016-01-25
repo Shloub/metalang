@@ -1,18 +1,18 @@
 #include <iostream>
 #include <vector>
-std::vector<bool> * id(std::vector<bool> * b){
+std::vector<bool> * id(std::vector<bool> * b) {
   return b;
 }
 
-void g(std::vector<bool> * t, int index){
+void g(std::vector<bool> * t, int index) {
   t->at(index) = false;
 }
 
 
-int main(){
+int main() {
   int j = 0;
   std::vector<bool> *a = new std::vector<bool>( 5 );
-  for (int i = 0 ; i < 5; i++)
+  for (int i = 0; i < 5; i++)
   {
     std::cout << i;
     j += i;

@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
-bool is_leap(int year){
+bool is_leap(int year) {
   return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
 }
 
-int ndayinmonth(int month, int year){
+int ndayinmonth(int month, int year) {
   if (month == 0)
     return 31;
   else if (month == 1)
@@ -38,7 +38,7 @@ int ndayinmonth(int month, int year){
 }
 
 
-int main(){
+int main() {
   int month = 0;
   int year = 1901;
   int dayofweek = 1;

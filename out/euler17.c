@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void){
+int main(void) {
   printf("%d\n", 3 + 3 + 5 + 4 + 4);
   int one_to_nine = 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4;
   printf("%d\n", one_to_nine);

@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void){
+int main(void) {
   int a, b;
   /*
 	a + b + c = 1000 && a * a + b * b = c * c
 	*/
-  for (a = 1 ; a <= 1000; a++)
-    for (b = a + 1 ; b <= 1000; b++)
+  for (a = 1; a <= 1000; a++)
+    for (b = a + 1; b <= 1000; b++)
     {
       int c = 1000 - a - b;
       int a2b2 = a * a + b * b;

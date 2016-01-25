@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int montagnes0(std::vector<int> * tab, int len){
+int montagnes0(std::vector<int> * tab, int len) {
   int max0 = 1;
   int j = 1;
   int i = len - 2;
@@ -19,11 +19,11 @@ int montagnes0(std::vector<int> * tab, int len){
 }
 
 
-int main(){
+int main() {
   int len = 0;
   std::cin >> len >> std::skipws;
   std::vector<int> *tab = new std::vector<int>( len );
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     int x = 0;
     std::cin >> x >> std::skipws;

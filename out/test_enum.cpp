@@ -6,7 +6,7 @@ typedef enum foo_t {
   Blah
 } foo_t;
 
-int main(){
+int main() {
   foo_t foo_val = Foo;
 }
 

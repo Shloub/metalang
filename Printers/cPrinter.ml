@@ -131,7 +131,7 @@ class cPrinter = object(self)
 
   method forloop_content f (varname, expr1, expr2, li) =
     let default () =
-      Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <=@ %a;@ %a++)@\n@]%a"
+      Format.fprintf f "@[<h>for@ (%a@ =@ %a;@ %a@ <=@ %a;@ %a++)@\n@]%a"
         self#binding varname
         self#expr expr1
         self#binding varname
@@ -140,7 +140,7 @@ class cPrinter = object(self)
         self#bloc li
     in match Expr.unfix expr2 with
     | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1))) ->
-      Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <@ %a;@ %a++)@\n@]%a"
+      Format.fprintf f "@[<h>for@ (%a@ =@ %a;@ %a@ <@ %a;@ %a++)@\n@]%a"
         self#binding varname
         self#expr expr1
         self#binding varname
@@ -151,7 +151,7 @@ class cPrinter = object(self)
 
   method main f main =
     let li_fori, li_forc = self#collect_for main in
-    Format.fprintf f "@[<v 2>int main(void){@\n%a%a%a@\nreturn 0%a@]@\n}"
+    Format.fprintf f "@[<v 2>int main(void) {@\n%a%a%a@\nreturn 0%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
@@ -287,7 +287,7 @@ class cPrinter = object(self)
 
   method print_fun f funname t li instrs =
     let li_fori, li_forc = self#collect_for instrs in
-    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a%a%a@]@\n}@\n"
+    Format.fprintf f "@[<h>%a@] {@\n@[<v 2>  %a%a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc

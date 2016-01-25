@@ -6,7 +6,7 @@
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-int find0(int len, int** tab, int** cache, int x, int y){
+int find0(int len, int** tab, int** cache, int x, int y) {
   /*
 	Cette fonction est récursive
 	*/
@@ -27,28 +27,28 @@ int find0(int len, int** tab, int** cache, int x, int y){
   return result;
 }
 
-int find(int len, int** tab){
+int find(int len, int** tab) {
   int i, j;
   int* *tab2 = calloc( len , sizeof(int*));
-  for (i = 0 ; i < len; i++)
+  for (i = 0; i < len; i++)
   {
     int *tab3 = calloc( i + 1 , sizeof(int));
-    for (j = 0 ; j < i + 1; j++)
+    for (j = 0; j < i + 1; j++)
       tab3[j] = 0;
     tab2[i] = tab3;
   }
   return find0(len, tab, tab2, 0, 0);
 }
 
-int main(void){
+int main(void) {
   int k, l, i, j;
   int len = 0;
   scanf("%d ", &len);
   int* *tab = calloc( len , sizeof(int*));
-  for (i = 0 ; i < len; i++)
+  for (i = 0; i < len; i++)
   {
     int *tab2 = calloc( i + 1 , sizeof(int));
-    for (j = 0 ; j < i + 1; j++)
+    for (j = 0; j < i + 1; j++)
     {
       int tmp = 0;
       scanf("%d ", &tmp);
@@ -57,9 +57,9 @@ int main(void){
     tab[i] = tab2;
   }
   printf("%d\n", find(len, tab));
-  for (k = 0 ; k < len; k++)
+  for (k = 0; k < len; k++)
   {
-    for (l = 0 ; l <= k; l++)
+    for (l = 0; l <= k; l++)
       printf("%d ", tab[k][l]);
     printf("\n");
   }

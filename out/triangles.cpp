@@ -5,7 +5,7 @@
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-int find0(int len, std::vector<std::vector<int>>& tab, std::vector<std::vector<int>>& cache, int x, int y){
+int find0(int len, std::vector<std::vector<int>>& tab, std::vector<std::vector<int>>& cache, int x, int y) {
   /*
 	Cette fonction est récursive
 	*/
@@ -26,9 +26,9 @@ int find0(int len, std::vector<std::vector<int>>& tab, std::vector<std::vector<i
   return result;
 }
 
-int find(int len, std::vector<std::vector<int>>& tab){
+int find(int len, std::vector<std::vector<int>>& tab) {
   std::vector<std::vector<int>> tab2(len);
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     std::vector<int> tab3(i + 1, 0);
     tab2[i] = tab3;
@@ -37,14 +37,14 @@ int find(int len, std::vector<std::vector<int>>& tab){
 }
 
 
-int main(){
+int main() {
   int len = 0;
   std::cin >> len >> std::skipws;
   std::vector<std::vector<int>> tab(len);
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     std::vector<int> tab2(i + 1);
-    for (int j = 0 ; j < i + 1; j++)
+    for (int j = 0; j < i + 1; j++)
     {
       int tmp = 0;
       std::cin >> tmp >> std::skipws;
@@ -53,9 +53,9 @@ int main(){
     tab[i] = tab2;
   }
   std::cout << find(len, tab) << "\n";
-  for (int k = 0 ; k < len; k++)
+  for (int k = 0; k < len; k++)
   {
-    for (int l = 0 ; l <= k; l ++)
+    for (int l = 0; l <= k; l ++)
       std::cout << tab[k][l] << " ";
     std::cout << "\n";
   }

@@ -19,12 +19,12 @@ typedef struct move {
 } move;
 
 /* On affiche l'état */
-void print_state(struct gamestate * g){
+void print_state(struct gamestate * g) {
   int y, x;
   printf("\n|");
-  for (y = 0 ; y <= 2; y++)
+  for (y = 0; y <= 2; y++)
   {
-    for (x = 0 ; x <= 2; x++)
+    for (x = 0; x <= 2; x++)
     {
       if (g->cases[x][y] == 0)
         printf(" ");
@@ -41,15 +41,15 @@ void print_state(struct gamestate * g){
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-void eval0(struct gamestate * g){
+void eval0(struct gamestate * g) {
   int y, x;
   int win = 0;
   int freecase = 0;
-  for (y = 0 ; y <= 2; y++)
+  for (y = 0; y <= 2; y++)
   {
     int col = -1;
     int lin = -1;
-    for (x = 0 ; x <= 2; x++)
+    for (x = 0; x <= 2; x++)
     {
       if (g->cases[x][y] == 0)
         freecase++;
@@ -69,7 +69,7 @@ void eval0(struct gamestate * g){
     else if (lin >= 0)
       win = lin;
   }
-  for (x = 1 ; x <= 2; x++)
+  for (x = 1; x <= 2; x++)
   {
     if (g->cases[0][0] == x && g->cases[1][1] == x && g->cases[2][2] == x)
       win = x;
@@ -86,7 +86,7 @@ void eval0(struct gamestate * g){
 }
 
 /* On applique un mouvement */
-void apply_move_xy(int x, int y, struct gamestate * g){
+void apply_move_xy(int x, int y, struct gamestate * g) {
   int player = 2;
   if (g->firstToPlay)
     player = 1;
@@ -94,32 +94,32 @@ void apply_move_xy(int x, int y, struct gamestate * g){
   g->firstToPlay = !g->firstToPlay;
 }
 
-void apply_move(struct move * m, struct gamestate * g){
+void apply_move(struct move * m, struct gamestate * g) {
   apply_move_xy(m->x, m->y, g);
 }
 
-void cancel_move_xy(int x, int y, struct gamestate * g){
+void cancel_move_xy(int x, int y, struct gamestate * g) {
   g->cases[x][y] = 0;
   g->firstToPlay = !g->firstToPlay;
   g->ended = 0;
 }
 
-void cancel_move(struct move * m, struct gamestate * g){
+void cancel_move(struct move * m, struct gamestate * g) {
   cancel_move_xy(m->x, m->y, g);
 }
 
-int can_move_xy(int x, int y, struct gamestate * g){
+int can_move_xy(int x, int y, struct gamestate * g) {
   return g->cases[x][y] == 0;
 }
 
-int can_move(struct move * m, struct gamestate * g){
+int can_move(struct move * m, struct gamestate * g) {
   return can_move_xy(m->x, m->y, g);
 }
 
 /*
 Un minimax classique, renvoie la note du plateau
 */
-int minmax(struct gamestate * g){
+int minmax(struct gamestate * g) {
   int x, y;
   eval0(g);
   if (g->ended)
@@ -127,8 +127,8 @@ int minmax(struct gamestate * g){
   int maxNote = -10000;
   if (!g->firstToPlay)
     maxNote = 10000;
-  for (x = 0 ; x <= 2; x++)
-    for (y = 0 ; y <= 2; y++)
+  for (x = 0; x <= 2; x++)
+    for (y = 0; y <= 2; y++)
       if (can_move_xy(x, y, g))
   {
     apply_move_xy(x, y, g);
@@ -144,14 +144,14 @@ int minmax(struct gamestate * g){
 /*
 Renvoie le coup de l'IA
 */
-struct move * play(struct gamestate * g){
+struct move * play(struct gamestate * g) {
   int x, y;
   struct move * minMove = malloc (sizeof(minMove) );
   minMove->x=0;
   minMove->y=0;
   int minNote = 10000;
-  for (x = 0 ; x <= 2; x++)
-    for (y = 0 ; y <= 2; y++)
+  for (x = 0; x <= 2; x++)
+    for (y = 0; y <= 2; y++)
       if (can_move_xy(x, y, g))
   {
     apply_move_xy(x, y, g);
@@ -169,13 +169,13 @@ struct move * play(struct gamestate * g){
   return minMove;
 }
 
-struct gamestate * init0(){
+struct gamestate * init0() {
   int i, j;
   int* *cases = calloc( 3 , sizeof(int*));
-  for (i = 0 ; i < 3; i++)
+  for (i = 0; i < 3; i++)
   {
     int *tab = calloc( 3 , sizeof(int));
-    for (j = 0 ; j < 3; j++)
+    for (j = 0; j < 3; j++)
       tab[j] = 0;
     cases[i] = tab;
   }
@@ -187,7 +187,7 @@ struct gamestate * init0(){
   return a;
 }
 
-struct move * read_move(){
+struct move * read_move() {
   int y, x;
   scanf("%d %d ", &x, &y);
   struct move * b = malloc (sizeof(b) );
@@ -196,9 +196,9 @@ struct move * read_move(){
   return b;
 }
 
-int main(void){
+int main(void) {
   int i;
-  for (i = 0 ; i <= 1; i++)
+  for (i = 0; i <= 1; i++)
   {
     struct gamestate * state = init0();
     struct move * c = malloc (sizeof(c) );

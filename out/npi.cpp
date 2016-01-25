@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-bool is_number(char c){
+bool is_number(char c) {
   return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
 }
 
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-int npi0(std::vector<char>& str, int len){
+int npi0(std::vector<char>& str, int len) {
   std::vector<int> stack(len, 0);
   int ptrStack = 0;
   int ptrStr = 0;
@@ -35,11 +35,11 @@ int npi0(std::vector<char>& str, int len){
 }
 
 
-int main(){
+int main() {
   int len = 0;
   std::cin >> len >> std::skipws;
   std::vector<char> tab(len);
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     char tmp = '\u0000';
     std::cin >> tmp >> std::noskipws;

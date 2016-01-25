@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int go0(std::vector<int>& tab, int a, int b){
+int go0(std::vector<int>& tab, int a, int b) {
   int m = (a + b) / 2;
   if (a == m)
   {
@@ -29,16 +29,16 @@ int go0(std::vector<int>& tab, int a, int b){
     return go0(tab, m, b);
 }
 
-int plus_petit0(std::vector<int>& tab, int len){
+int plus_petit0(std::vector<int>& tab, int len) {
   return go0(tab, 0, len);
 }
 
 
-int main(){
+int main() {
   int len = 0;
   std::cin >> len >> std::skipws;
   std::vector<int> tab(len);
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
     int tmp = 0;
     std::cin >> tmp >> std::skipws;

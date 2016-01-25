@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int go0(int* tab, int a, int b){
+int go0(int* tab, int a, int b) {
   int m = (a + b) / 2;
   if (a == m)
   {
@@ -30,16 +30,16 @@ int go0(int* tab, int a, int b){
     return go0(tab, m, b);
 }
 
-int plus_petit0(int* tab, int len){
+int plus_petit0(int* tab, int len) {
   return go0(tab, 0, len);
 }
 
-int main(void){
+int main(void) {
   int i;
   int len = 0;
   scanf("%d ", &len);
   int *tab = calloc( len , sizeof(int));
-  for (i = 0 ; i < len; i++)
+  for (i = 0; i < len; i++)
   {
     int tmp = 0;
     scanf("%d ", &tmp);

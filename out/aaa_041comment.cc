@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main(){
+int main() {
   int i = 4;
   /*while i < 10 do */
   std::cout << i;
