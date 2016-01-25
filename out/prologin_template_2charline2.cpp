@@ -35,6 +35,5 @@ int main(){
   std::vector<char> tableau1 = getline();
   std::vector<char> tableau2 = getline();
   std::cout << programme_candidat(tableau1, taille1, tableau2, taille2) << "\n";
-  return 0;
 }
 

@@ -29,6 +29,5 @@ int main(){
     std::cin >> tab->at(a) >> std::skipws;
   }
   std::cout << result(len, tab) << "\n";
-  return 0;
 }
 

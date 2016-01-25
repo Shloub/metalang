@@ -72,6 +72,5 @@ int main(){
     }
   }
   std::cout << "sum=" << sum << "\n";
-  return 0;
 }
 

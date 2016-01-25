@@ -34,6 +34,5 @@ int main(){
     a->at(b) = getline();
   std::vector<std::vector<char> *> * tableau = a;
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
-  return 0;
 }
 

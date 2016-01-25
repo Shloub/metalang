@@ -96,6 +96,5 @@ int main(){
     if (!summable[o])
     sum += o;
   std::cout << "\n" << sum << "\n";
-  return 0;
 }
 

@@ -22,6 +22,5 @@ int main(){
   for (int i = 1 ; i <= n; i ++)
     sum += i * score();
   std::cout << sum << "\n";
-  return 0;
 }
 

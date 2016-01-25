@@ -100,6 +100,5 @@ int main(){
     allowed[e] = true;
   }
   std::cout << count << "\n";
-  return 0;
 }
 

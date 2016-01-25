@@ -31,6 +31,5 @@ int main(){
     std::cout << "True";
   else
     std::cout << "False";
-  return 0;
 }
 

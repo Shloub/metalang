@@ -31,6 +31,5 @@ bool is_pair(int i){
 
 int main(){
   
-  return 0;
 }
 

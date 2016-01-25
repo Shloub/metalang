@@ -32,6 +32,5 @@ int main(){
     std::cout << "\n";
   }
   std::cout << tab[0][0] << "\n";
-  return 0;
 }
 

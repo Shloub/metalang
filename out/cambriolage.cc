@@ -61,6 +61,5 @@ int main(){
     serrures->at(k) = out1;
   }
   std::cout << nbPassePartout(n, passepartout, m, serrures);
-  return 0;
 }
 

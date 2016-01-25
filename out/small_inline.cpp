@@ -8,6 +8,5 @@ int main(){
     std::cin >> t[d] >> std::skipws;
   }
   std::cout << t[0] << " - " << t[1] << "\n";
-  return 0;
 }
 

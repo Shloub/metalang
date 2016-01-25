@@ -36,6 +36,5 @@ int main(){
     cache->at(j) = o;
   }
   std::cout << result(200, t, 7, cache);
-  return 0;
 }
 

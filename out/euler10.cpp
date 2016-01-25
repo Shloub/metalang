@@ -28,6 +28,5 @@ int main(){
     t[i] = i;
   t[1] = 0;
   std::cout << eratostene(t, n) << "\n";
-  return 0;
 }
 

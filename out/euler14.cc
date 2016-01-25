@@ -38,6 +38,5 @@ int main(){
     }
   }
   std::cout << max0 << "\n" << maxi << "\n";
-  return 0;
 }
 

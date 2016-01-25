@@ -60,6 +60,5 @@ int main(){
       std::cout << tab->at(k)->at(l) << " ";
     std::cout << "\n";
   }
-  return 0;
 }
 

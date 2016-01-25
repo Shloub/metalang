@@ -14,6 +14,5 @@ int main(){
     b += c;
   }
   std::cout << sum << "\n";
-  return 0;
 }
 

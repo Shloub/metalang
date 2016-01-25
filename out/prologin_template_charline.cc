@@ -28,6 +28,5 @@ int main(){
   std::cin >> taille >> std::skipws;
   std::vector<char> * tableau = getline();
   std::cout << programme_candidat(tableau, taille) << "\n";
-  return 0;
 }
 

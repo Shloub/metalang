@@ -61,6 +61,5 @@ int main(){
   }
   int result = pathfind(tab, x, y);
   std::cout << result;
-  return 0;
 }
 

@@ -23,6 +23,5 @@ int main(){
   }
   int result = nth(tab, tofind, len);
   std::cout << result;
-  return 0;
 }
 

@@ -8,6 +8,5 @@ int main(){
   i++;
   /*  end */
   std::cout << i;
-  return 0;
 }
 

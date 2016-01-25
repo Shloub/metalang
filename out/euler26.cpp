@@ -30,6 +30,5 @@ int main(){
     }
   }
   std::cout << mi << "\n" << m << "\n";
-  return 0;
 }
 

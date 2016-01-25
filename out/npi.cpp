@@ -47,6 +47,5 @@ int main(){
   }
   int result = npi0(tab, len);
   std::cout << result;
-  return 0;
 }
 

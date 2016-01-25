@@ -49,6 +49,5 @@ int main(){
   for (int i = 0 ; i < taille; i++)
     std::cout << message->at(i);
   std::cout << "\n";
-  return 0;
 }
 

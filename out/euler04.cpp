@@ -47,6 +47,5 @@ int main(){
                 m = max2_(mul, m);
   }
   std::cout << m << "\n";
-  return 0;
 }
 

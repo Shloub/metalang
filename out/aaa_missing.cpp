@@ -28,6 +28,5 @@ int main(){
     std::cin >> tab[a] >> std::skipws;
   }
   std::cout << result(len, tab) << "\n";
-  return 0;
 }
 

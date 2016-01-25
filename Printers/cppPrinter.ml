@@ -141,7 +141,7 @@ class cppPrinter = object(self)
 
   method main f main =
     let li_fori, li_forc = self#collect_for main in
-    Format.fprintf f "@[<v 2>int main(){@\n%a%a%a@\nreturn 0;@]@\n}"
+    Format.fprintf f "@[<v 2>int main(){@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main

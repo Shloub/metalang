@@ -29,6 +29,5 @@ int main(){
   else
     std::cout << "False";
   std::cout << "\n";
-  return 0;
 }
 

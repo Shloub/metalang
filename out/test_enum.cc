@@ -8,6 +8,5 @@ typedef enum foo_t {
 
 int main(){
   foo_t foo_val = Foo;
-  return 0;
 }
 

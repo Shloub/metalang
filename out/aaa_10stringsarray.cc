@@ -28,6 +28,5 @@ int main(){
   a->s="one";
   a->v=1;
   print_toto(a);
-  return 0;
 }
 

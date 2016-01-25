@@ -217,6 +217,5 @@ int main(){
     print_state(state);
     std::cout << state->note << "\n";
   }
-  return 0;
 }
 

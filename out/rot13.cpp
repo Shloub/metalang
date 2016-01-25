@@ -19,6 +19,5 @@ int main(){
   }
   for (int j = 0 ; j < strlen; j++)
     std::cout << tab4[j];
-  return 0;
 }
 

@@ -51,6 +51,5 @@ int main(){
     if (m2 < maximumprimes && !canbe->at(m2))
       std::cout << m2 << "\n";
   }
-  return 0;
 }
 

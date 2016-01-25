@@ -77,6 +77,5 @@ int main(){
     std::cout << (char)(mem->at(current_pos));
     current_pos++;
   }
-  return 0;
 }
 
