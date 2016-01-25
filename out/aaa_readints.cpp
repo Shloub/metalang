@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y) {
-  std::vector<std::vector<T>> matrix(y, std::vector<T>(x));
+template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
+  std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
   std::cin >> std::skipws;
   for (std::vector<T>& line : matrix)
     for (T& elem : line)
@@ -22,7 +22,7 @@ int main() {
   for (int i = 0; i < len; i++)
     std::cout << i << "=>" << tab1[i] << "\n";
   std::cin >> len >> std::skipws;
-  std::vector<std::vector<int>> tab2 = read_matrix<int>(len, len - 1);
+  std::vector<std::vector<int>> tab2 = read_matrix<int>(len - 1, len);
   for (int i = 0; i <= len - 2; i ++)
   {
     for (int j = 0; j < len; j++)
