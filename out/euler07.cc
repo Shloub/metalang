@@ -26,6 +26,5 @@ int main(){
   std::vector<int> *t = new std::vector<int>( n );
   std::fill(t->begin(), t->end(), 2);
   std::cout << find(3, t, 1, n) << "\n";
-  return 0;
 }
 

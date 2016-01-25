@@ -45,6 +45,5 @@ int main(){
   std::cout << top << "/" << bottom << "\n";
   int p = pgcd(top, bottom);
   std::cout << "pgcd=" << p << "\n" << bottom / p << "\n";
-  return 0;
 }
 

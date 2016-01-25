@@ -10,6 +10,5 @@ void test(std::vector<int>& tab, int len){
 int main(){
   std::vector<int> t(5, 1);
   test(t, 5);
-  return 0;
 }
 

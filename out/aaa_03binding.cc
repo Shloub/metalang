@@ -22,6 +22,5 @@ int main(){
   a = 2;
   b = 1;
   std::cout << a + b;
-  return 0;
 }
 

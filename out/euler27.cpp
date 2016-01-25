@@ -81,6 +81,5 @@ int main(){
       }
   }
   std::cout << ma << " " << mb << "\n" << max0 << "\n" << result << "\n";
-  return 0;
 }
 

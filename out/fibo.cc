@@ -24,6 +24,5 @@ int main(){
   int i = 0;
   std::cin >> a >> std::skipws >> b >> i >> std::noskipws;
   std::cout << fibo0(a, b, i);
-  return 0;
 }
 

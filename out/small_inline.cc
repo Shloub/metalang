@@ -8,6 +8,5 @@ int main(){
     std::cin >> t->at(d) >> std::skipws;
   }
   std::cout << t->at(0) << " - " << t->at(1) << "\n";
-  return 0;
 }
 

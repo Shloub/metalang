@@ -32,6 +32,5 @@ int main(){
       std::cout << tab->at(jy)->at(jx) << " ";
     std::cout << "\n";
   }
-  return 0;
 }
 

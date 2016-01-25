@@ -73,6 +73,5 @@ int main(){
   for (int i = 0 ; i < len; i++)
     std::cout << tab3->at(i) << " ";
   std::cout << "\n";
-  return 0;
 }
 

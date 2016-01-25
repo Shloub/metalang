@@ -23,6 +23,5 @@ int main(){
     tableau->at(a) = b;
   }
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
-  return 0;
 }
 

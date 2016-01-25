@@ -15,6 +15,5 @@ int main(){
   }
   for (int j = 0 ; j <= 9; j ++)
     std::cout << l[j] << "\n";
-  return 0;
 }
 

@@ -101,6 +101,5 @@ int main(){
     allowed->at(e) = true;
   }
   std::cout << count << "\n";
-  return 0;
 }
 

@@ -11,6 +11,5 @@ int main(){
   std::vector<int> *t = new std::vector<int>( 5 );
   std::fill(t->begin(), t->end(), 1);
   test(t, 5);
-  return 0;
 }
 

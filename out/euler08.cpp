@@ -43,6 +43,5 @@ int main(){
     max0 = max2_(max0, i);
   }
   std::cout << max0 << "\n";
-  return 0;
 }
 

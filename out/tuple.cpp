@@ -25,6 +25,5 @@ int main(){
   int a = g.tuple_int_int_field_0;
   int b = g.tuple_int_int_field_1;
   std::cout << a << " -- " << b << "--\n";
-  return 0;
 }
 

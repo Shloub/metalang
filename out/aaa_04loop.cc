@@ -30,6 +30,5 @@ int main(){
     j += i;
   }
   std::cout << j << i << "FIN TEST\n";
-  return 0;
 }
 

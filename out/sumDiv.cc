@@ -47,6 +47,5 @@ int main(){
   std::cin >> n >> std::noskipws;
   /* Lecture de l'entier */
   std::cout << sumdiv(n);
-  return 0;
 }
 

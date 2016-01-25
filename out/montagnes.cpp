@@ -30,6 +30,5 @@ int main(){
     tab[i] = x;
   }
   std::cout << montagnes0(tab, len);
-  return 0;
 }
 

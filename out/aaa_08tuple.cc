@@ -24,6 +24,5 @@ int main(){
   int a = f->tuple_int_int_field_0;
   int b = f->tuple_int_int_field_1;
   std::cout << a << " " << b << " " << t->bar << "\n";
-  return 0;
 }
 

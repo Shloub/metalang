@@ -100,6 +100,5 @@ int main(){
     if (!summable->at(o))
     sum += o;
   std::cout << "\n" << sum << "\n";
-  return 0;
 }
 

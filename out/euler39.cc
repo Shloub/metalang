@@ -22,6 +22,5 @@ int main(){
     if (t->at(k) > t->at(j))
     j = k;
   std::cout << j;
-  return 0;
 }
 

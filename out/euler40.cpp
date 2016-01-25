@@ -48,6 +48,5 @@ int main(){
     std::cout << "10^" << l << "=" << puiss << " v=" << v << "\n";
   }
   std::cout << out0 << "\n";
-  return 0;
 }
 

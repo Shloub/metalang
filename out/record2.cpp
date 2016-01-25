@@ -24,6 +24,5 @@ int main(){
   toto t = mktoto(4);
   std::cin >> t.bar >> std::skipws >> t.blah >> std::noskipws;
   std::cout << result(t);
-  return 0;
 }
 

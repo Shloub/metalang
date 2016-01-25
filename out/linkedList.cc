@@ -46,6 +46,5 @@ void test(intlist * empty){
 
 int main(){
   
-  return 0;
 }
 

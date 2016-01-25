@@ -45,6 +45,5 @@ int main(){
     tab->at(i) = tmp;
   }
   std::cout << plus_petit0(tab, len);
-  return 0;
 }
 

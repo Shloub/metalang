@@ -59,6 +59,5 @@ int main(){
       std::cout << tab[k][l] << " ";
     std::cout << "\n";
   }
-  return 0;
 }
 

@@ -49,6 +49,5 @@ int main(){
   }
   for (int j = 0 ; j < strlen; j++)
     std::cout << tab4->at(j);
-  return 0;
 }
 

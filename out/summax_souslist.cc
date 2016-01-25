@@ -27,6 +27,5 @@ int main(){
   }
   int result = summax(tab, len);
   std::cout << result;
-  return 0;
 }
 

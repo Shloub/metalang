@@ -37,6 +37,5 @@ int main(){
     for (int l = 1 ; l <= o[k]; l ++)
       product *= k;
   std::cout << product << "\n";
-  return 0;
 }
 

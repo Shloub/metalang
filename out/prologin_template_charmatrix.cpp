@@ -33,6 +33,5 @@ int main(){
   std::cin >> taille_x >> std::skipws >> taille_y;
   std::vector<std::vector<char>> tableau = read_matrix<char>(taille_x, taille_y);
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
-  return 0;
 }
 

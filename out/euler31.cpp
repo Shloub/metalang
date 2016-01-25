@@ -34,6 +34,5 @@ int main(){
     cache[j] = o;
   }
   std::cout << result(200, t, 7, cache);
-  return 0;
 }
 

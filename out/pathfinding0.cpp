@@ -66,6 +66,5 @@ int main(){
   std::vector<std::vector<char>> tab = read_matrix<char>(x, y);
   int result = pathfind(tab, x, y);
   std::cout << result;
-  return 0;
 }
 

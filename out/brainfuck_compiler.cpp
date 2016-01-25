@@ -76,6 +76,5 @@ int main(){
     std::cout << (char)(mem[current_pos]);
     current_pos++;
   }
-  return 0;
 }
 

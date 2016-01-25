@@ -85,6 +85,5 @@ int main(){
     print_sudoku(sudoku0);
   else
     std::cout << "no solution\n";
-  return 0;
 }
 

@@ -95,6 +95,5 @@ int main(){
     }
   }
   std::cout << "\n" << sum << "\n";
-  return 0;
 }
 

@@ -16,6 +16,5 @@ int main(){
   std::vector<char> str = getline();
   for (int i = 0 ; i <= 11; i ++)
     std::cout << str[i];
-  return 0;
 }
 

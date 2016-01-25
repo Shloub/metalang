@@ -17,6 +17,5 @@ int main(){
   std::cout << j << "\n";
   j = 4;
   std::cout << j << "\n";
-  return 0;
 }
 

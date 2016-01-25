@@ -39,6 +39,5 @@ int main(){
     for (int l = 1 ; l <= o->at(k); l ++)
       product *= k;
   std::cout << product << "\n";
-  return 0;
 }
 

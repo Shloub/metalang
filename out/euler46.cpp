@@ -49,6 +49,5 @@ int main(){
     if (m2 < maximumprimes && !canbe[m2])
       std::cout << m2 << "\n";
   }
-  return 0;
 }
 

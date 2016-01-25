@@ -72,6 +72,5 @@ int main(){
     len++;
   }
   std::cout << resp << "\n" << maxl << "\n";
-  return 0;
 }
 

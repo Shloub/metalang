@@ -21,6 +21,5 @@ int main(){
     if (t[k] > t[j])
     j = k;
   std::cout << j;
-  return 0;
 }
 

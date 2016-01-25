@@ -29,6 +29,5 @@ int main(){
       std::cout << tab2->at(i)->at(j) << " ";
     std::cout << "\n";
   }
-  return 0;
 }
 

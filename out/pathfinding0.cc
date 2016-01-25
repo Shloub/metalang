@@ -67,6 +67,5 @@ int main(){
   std::vector<std::vector<char> *> * tab = e;
   int result = pathfind(tab, x, y);
   std::cout << result;
-  return 0;
 }
 

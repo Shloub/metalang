@@ -13,6 +13,5 @@ int main(){
   else
     std::cout << "false <-\n ->\n";
   std::cout << "small test end\n";
-  return 0;
 }
 

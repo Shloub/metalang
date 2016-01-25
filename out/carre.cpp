@@ -36,6 +36,5 @@ int main(){
       std::cout << tab[jy][jx] << " ";
     std::cout << "\n";
   }
-  return 0;
 }
 

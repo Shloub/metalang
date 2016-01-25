@@ -17,6 +17,5 @@ int main(){
     std::cin >> tableau->at(a) >> std::skipws;
   }
   std::cout << programme_candidat(tableau, taille) << "\n";
-  return 0;
 }
 

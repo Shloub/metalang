@@ -33,6 +33,5 @@ int main(){
     std::cout << "\n";
   }
   std::cout << tab->at(0)->at(0) << "\n";
-  return 0;
 }
 

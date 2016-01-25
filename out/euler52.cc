@@ -26,6 +26,5 @@ int main(){
   int num = 142857;
   if (same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5))
     std::cout << num << " " << num * 2 << " " << num * 3 << " " << num * 4 << " " << num * 5 << " " << num * 6 << "\n";
-  return 0;
 }
 

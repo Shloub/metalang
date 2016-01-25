@@ -106,6 +106,5 @@ int main(){
         max0 = max2_(max0, find(4, m, x, y, dx, dy));
   }
   std::cout << max0 << "\n";
-  return 0;
 }
 

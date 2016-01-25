@@ -18,6 +18,5 @@ int main(){
   int b = 0;
   std::cin >> a >> std::skipws >> b >> std::noskipws;
   std::cout << exp0(a, b);
-  return 0;
 }
 

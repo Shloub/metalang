@@ -32,6 +32,5 @@ int main(){
   std::cin >> t[0].bar >> std::skipws >> t[1].blah >> std::noskipws;
   int titi = result(t, 4);
   std::cout << titi << t[2].blah;
-  return 0;
 }
 

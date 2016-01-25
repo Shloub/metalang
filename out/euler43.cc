@@ -103,6 +103,5 @@ d6 = 5 ou d6 = 0
     }
   }
   std::cout << 0 << "\n";
-  return 0;
 }
 
