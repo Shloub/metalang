@@ -348,17 +348,12 @@ class proloCppPrinter = object(self)
   return c;
 }@\n";
         if Tags.is_taged "use_cpp_readmatrix"
-        then Format.fprintf f "template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
-  std::vector<std::vector<T>> matrix(y);
-  for (int i = 0; i < y; i++)
-  {
-    std::vector<T>& line = matrix[i];
-    line.resize(x);
-    for (int j = 0; j < x; j++)
-    {
-        std::cin >> line[j] >> std::skipws;
-    }
-  }
+        then Format.fprintf f "@\ntemplate <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
+  std::vector<std::vector<T>> matrix(y, std::vector<T>(x));
+  std::cin >> std::skipws;
+  for (std::vector<T>& line : matrix)
+    for (T& elem : line)
+      std::cin >> elem;
   return matrix;
 }@\n"
       ) ()

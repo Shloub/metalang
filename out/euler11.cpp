@@ -1,16 +1,12 @@
 #include <iostream>
 #include <vector>
+
 template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y){
-  std::vector<std::vector<T>> matrix(y);
-  for (int i = 0; i < y; i++)
-  {
-    std::vector<T>& line = matrix[i];
-    line.resize(x);
-    for (int j = 0; j < x; j++)
-    {
-        std::cin >> line[j] >> std::skipws;
-    }
-  }
+  std::vector<std::vector<T>> matrix(y, std::vector<T>(x));
+  std::cin >> std::skipws;
+  for (std::vector<T>& line : matrix)
+    for (T& elem : line)
+      std::cin >> elem;
   return matrix;
 }
 int max2_(int a, int b){
