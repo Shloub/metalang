@@ -340,12 +340,12 @@ end
 macro array<array<int>> py_expand_read_int_matrix(int x, int y)
   py do "[list(map(int, input().split())) for i in range($y)]"
   ruby do "[*1..$y].map { |l| STDIN.readline.split(\" \").map{ |x| x.to_i(10) } }"
-  cpp do "read_matrix<int>($x, $y)"
+  cpp do "read_matrix<int>($y, $x)"
   *  do "E R R O R"
 end
 
 macro array<array<char>> py_expand_read_char_matrix(int x, int y)
-  cpp do "read_matrix<char>($x, $y)"
+  cpp do "read_matrix<char>($y, $x)"
   *  do "E R R O R"
 end
 

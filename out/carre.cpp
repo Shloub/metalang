@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y) {
-  std::vector<std::vector<T>> matrix(y, std::vector<T>(x));
+template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
+  std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
   std::cin >> std::skipws;
   for (std::vector<T>& line : matrix)
     for (T& elem : line)
@@ -21,7 +21,7 @@ int min2_(int a, int b) {
 int main() {
   int y, x;
   std::cin >> x >> std::skipws >> y;
-  std::vector<std::vector<int>> tab = read_matrix<int>(x, y);
+  std::vector<std::vector<int>> tab = read_matrix<int>(y, x);
   for (int ix = 1; ix < x; ix++)
     for (int iy = 1; iy < y; iy++)
       if (tab[iy][ix] == 1)

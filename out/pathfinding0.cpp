@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-template <typename T> std::vector<std::vector<T>> read_matrix(int x, int y) {
-  std::vector<std::vector<T>> matrix(y, std::vector<T>(x));
+template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
+  std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
   std::cin >> std::skipws;
   for (std::vector<T>& line : matrix)
     for (T& elem : line)
@@ -62,7 +62,7 @@ int main() {
   int y, x;
   std::cin >> x >> std::skipws >> y;
   std::cout << x << " " << y << "\n";
-  std::vector<std::vector<char>> tab = read_matrix<char>(x, y);
+  std::vector<std::vector<char>> tab = read_matrix<char>(y, x);
   int result = pathfind(tab, x, y);
   std::cout << result;
 }
