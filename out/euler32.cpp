@@ -25,81 +25,81 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 */
 
 bool okdigits(std::vector<bool>& ok, int n) {
-  if (n == 0)
-    return true;
-  else
-  {
-    int digit = n % 10;
-    if (ok[digit])
-    {
-      ok[digit] = false;
-      bool o = okdigits(ok, n / 10);
-      ok[digit] = true;
-      return o;
-    }
+    if (n == 0)
+      return true;
     else
-      return false;
-  }
+    {
+        int digit = n % 10;
+        if (ok[digit])
+        {
+            ok[digit] = false;
+            bool o = okdigits(ok, n / 10);
+            ok[digit] = true;
+            return o;
+        }
+        else
+          return false;
+    }
 }
 
 
 int main() {
-  int count = 0;
-  std::vector<bool> allowed(10);
-  for (int i = 0; i < 10; i++)
-    allowed[i] = i != 0;
-  std::vector<bool> counted(100000, false);
-  for (int e = 1; e <= 9; e ++)
-  {
-    allowed[e] = false;
-    for (int b = 1; b <= 9; b ++)
-      if (allowed[b])
+    int count = 0;
+    std::vector<bool> allowed(10);
+    for (int i = 0; i < 10; i++)
+      allowed[i] = i != 0;
+    std::vector<bool> counted(100000, false);
+    for (int e = 1; e <= 9; e ++)
     {
-      allowed[b] = false;
-      int be = b * e % 10;
-      if (allowed[be])
-      {
-        allowed[be] = false;
-        for (int a = 1; a <= 9; a ++)
-          if (allowed[a])
+        allowed[e] = false;
+        for (int b = 1; b <= 9; b ++)
+          if (allowed[b])
         {
-          allowed[a] = false;
-          for (int c = 1; c <= 9; c ++)
-            if (allowed[c])
-          {
-            allowed[c] = false;
-            for (int d = 1; d <= 9; d ++)
-              if (allowed[d])
+            allowed[b] = false;
+            int be = b * e % 10;
+            if (allowed[be])
             {
-              allowed[d] = false;
-              /* 2 * 3 digits */
-              int product = (a * 10 + b) * (c * 100 + d * 10 + e);
-              if (!counted[product] && okdigits(allowed, product / 10))
-              {
-                counted[product] = true;
-                count += product;
-                std::cout << product << " ";
-              }
-              /* 1  * 4 digits */
-              int product2 = b * (a * 1000 + c * 100 + d * 10 + e);
-              if (!counted[product2] && okdigits(allowed, product2 / 10))
-              {
-                counted[product2] = true;
-                count += product2;
-                std::cout << product2 << " ";
-              }
-              allowed[d] = true;
+                allowed[be] = false;
+                for (int a = 1; a <= 9; a ++)
+                  if (allowed[a])
+                {
+                    allowed[a] = false;
+                    for (int c = 1; c <= 9; c ++)
+                      if (allowed[c])
+                    {
+                        allowed[c] = false;
+                        for (int d = 1; d <= 9; d ++)
+                          if (allowed[d])
+                        {
+                            allowed[d] = false;
+                            /* 2 * 3 digits */
+                            int product = (a * 10 + b) * (c * 100 + d * 10 + e);
+                            if (!counted[product] && okdigits(allowed, product / 10))
+                            {
+                                counted[product] = true;
+                                count += product;
+                                std::cout << product << " ";
+                            }
+                            /* 1  * 4 digits */
+                            int product2 = b * (a * 1000 + c * 100 + d * 10 + e);
+                            if (!counted[product2] && okdigits(allowed, product2 / 10))
+                            {
+                                counted[product2] = true;
+                                count += product2;
+                                std::cout << product2 << " ";
+                            }
+                            allowed[d] = true;
+                        }
+                        allowed[c] = true;
+                    }
+                    allowed[a] = true;
+                }
+                allowed[be] = true;
             }
-            allowed[c] = true;
-          }
-          allowed[a] = true;
+            allowed[b] = true;
         }
-        allowed[be] = true;
-      }
-      allowed[b] = true;
+        allowed[e] = true;
     }
-    allowed[e] = true;
-  }
-  std::cout << count << "\n";
+    std::cout << count << "\n";
 }
 
