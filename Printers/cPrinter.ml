@@ -151,7 +151,7 @@ class cPrinter = object(self)
 
   method main f main =
     let li_fori, li_forc = self#collect_for main in
-    Format.fprintf f "@[<v 2>int main(void) {@\n%a%a%a@\nreturn 0%a@]@\n}"
+    Format.fprintf f "@[<v 4>int main(void) {@\n%a%a%a@\nreturn 0%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
@@ -164,9 +164,9 @@ class cPrinter = object(self)
                              | (Instr.Declare _)
                              | (Instr.Comment _)))
     ] ->
-    Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
+    Format.fprintf f "@[<v 4>{@\n%a@]@\n}" self#instructions li
   | [i] -> Format.fprintf f "  %a" self#instr i
-  | _ ->  Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
+  | _ ->  Format.fprintf f "@[<v 4>{@\n%a@]@\n}" self#instructions li
 
   method blocinif f li = match li with
   | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
@@ -177,9 +177,9 @@ class cPrinter = object(self)
                              | (Instr.If (_, _, _) ) (* sans accolades, on a un conflit sur le else *)
   ))
     ] ->
-    Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
+    Format.fprintf f "@[<v 4>{@\n%a@]@\n}" self#instructions li
   | [i] -> Format.fprintf f "  %a" self#instr i
-  | _ ->  Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
+  | _ ->  Format.fprintf f "@[<v 4>{@\n%a@]@\n}" self#instructions li
 
 
   method prototype f t = self#ptype f t
@@ -237,7 +237,7 @@ class cPrinter = object(self)
         let b = List.exists (fun (n, t) -> match Type.unfix t with
           | Type.Named n -> n = name
           | _ -> false) li in
-        Format.fprintf f "%atypedef struct %a {@\n@[<v 2>  %a@]@\n} %a%a@\n"
+        Format.fprintf f "%atypedef struct %a {@\n@[<v 4>  %a@]@\n} %a%a@\n"
           (fun f b ->
             if b then Format.fprintf f "struct %a%a@\n" self#typename name self#separator ()
           ) b
@@ -287,7 +287,7 @@ class cPrinter = object(self)
 
   method print_fun f funname t li instrs =
     let li_fori, li_forc = self#collect_for instrs in
-    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 2>  %a%a%a@]@\n}@\n"
+    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc

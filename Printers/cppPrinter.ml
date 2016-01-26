@@ -107,16 +107,16 @@ class cppPrinter = object(self)
         then Format.fprintf f "#include<cmath>@\n";
         if Tags.is_taged "use_cc_readline"
         then Format.fprintf f "std::vector<char> *getline() {
-  if (std::cin.flags() & std::ios_base::skipws) {
-    char c = std::cin.peek();
-    if (c == '\\n' || c == ' ') std::cin.ignore();
-    std::cin.unsetf(std::ios::skipws);
-  }
-  std::string line;
-  std::getline(std::cin, line);
-  std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
-  std::cin >> std::skipws;
-  return c;
+    if (std::cin.flags() & std::ios_base::skipws) {
+        char c = std::cin.peek();
+        if (c == '\\n' || c == ' ') std::cin.ignore();
+        std::cin.unsetf(std::ios::skipws);
+    }
+    std::string line;
+    std::getline(std::cin, line);
+    std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
+    std::cin >> std::skipws;
+    return c;
 }@\n"
       ) ()
 
@@ -142,7 +142,7 @@ class cppPrinter = object(self)
 
   method main f main =
     let li_fori, li_forc = self#collect_for main in
-    Format.fprintf f "@[<v 2>int main() {@\n%a%a%a@]@\n}"
+    Format.fprintf f "@[<v 4>int main() {@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
@@ -205,7 +205,7 @@ class cppPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        Format.fprintf f "struct %a {@\n@[<v 2>  %a@]@\n};@\n"
+        Format.fprintf f "struct %a {@\n@[<v 4>    %a@]@\n};@\n"
           self#typename name
           (print_list
              (fun t (name, type_) ->
@@ -214,7 +214,7 @@ class cppPrinter = object(self)
              sep_nl
           ) li
     | Type.Enum li ->
-      Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
+      Format.fprintf f "typedef enum %a {@\n@[<v 4>    %a@]@\n} %a;"
         self#typename name
         (print_list
            (fun t name -> self#enumfield t name)
@@ -334,24 +334,24 @@ class proloCppPrinter = object(self)
         then Format.fprintf f "#include<cmath>@\n";
         if Tags.is_taged "use_cc_readline"
         then Format.fprintf f "std::vector<char> getline() {
-  if (std::cin.flags() & std::ios_base::skipws) {
-    char c = std::cin.peek();
-    if (c == '\\n' || c == ' ') std::cin.ignore();
-    std::cin.unsetf(std::ios::skipws);
-  }
-  std::string line;
-  std::getline(std::cin, line);
-  std::vector<char> c(line.begin(), line.end());
-  std::cin >> std::skipws;
-  return c;
+    if (std::cin.flags() & std::ios_base::skipws) {
+        char c = std::cin.peek();
+        if (c == '\\n' || c == ' ') std::cin.ignore();
+        std::cin.unsetf(std::ios::skipws);
+    }
+    std::string line;
+    std::getline(std::cin, line);
+    std::vector<char> c(line.begin(), line.end());
+    std::cin >> std::skipws;
+    return c;
 }@\n";
         if Tags.is_taged "use_cpp_readmatrix"
         then Format.fprintf f "@\ntemplate <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
-  std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
-  for (std::vector<T>& line : matrix)
-    for (T& elem : line)
-      std::cin >> elem;
-  return matrix;
+    std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
+    for (std::vector<T>& line : matrix)
+        for (T& elem : line)
+            std::cin >> elem;
+    return matrix;
 }@\n"
       ) ()
 
