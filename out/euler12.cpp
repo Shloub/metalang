@@ -1,13 +1,6 @@
 #include <iostream>
 #include <vector>
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 
 int eratostene(std::vector<int>& t, int max0) {
     int n = 0;
@@ -59,7 +52,7 @@ int find(int ndiv2) {
     for (int n = 1; n <= 10000; n ++)
     {
         std::vector<int> primesFactors(n + 2, 0);
-        int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+        int max0 = std::max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
         primesFactors[2] --;
         int ndivs = 1;
         for (int i = 0; i <= max0; i ++)

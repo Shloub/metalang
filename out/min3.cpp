@@ -1,15 +1,8 @@
 #include <iostream>
 #include <vector>
-
-int min2_(int a, int b) {
-    if (a < b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 
 int main() {
-    std::cout << min2_(min2_(2, 3), 4) << " " << min2_(min2_(2, 4), 3) << " " << min2_(min2_(3, 2), 4) << " " << min2_(min2_(3, 4), 2) << " " << min2_(min2_(4, 2), 3) << " " << min2_(min2_(4, 3), 2) << "\n";
+    std::cout << std::min({2, 3, 4}) << " " << std::min({2, 4, 3}) << " " << std::min({3, 2, 4}) << " " << std::min({3, 4, 2}) << " " << std::min({4, 2, 3}) << " " << std::min({4, 3, 2}) << "\n";
 }
 

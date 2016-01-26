@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
@@ -8,14 +9,6 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
             std::cin >> elem;
     return matrix;
 }
-
-int min2_(int a, int b) {
-    if (a < b)
-      return a;
-    else
-      return b;
-}
-
 
 int pathfind_aux(std::vector<std::vector<int>>& cache, std::vector<std::vector<char>>& tab, int x, int y, int posX, int posY) {
     if (posX == x - 1 && posY == y - 1)
@@ -33,7 +26,7 @@ int pathfind_aux(std::vector<std::vector<int>>& cache, std::vector<std::vector<c
         int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
         int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
         int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-        int out0 = 1 + min2_(min2_(min2_(val1, val2), val3), val4);
+        int out0 = 1 + std::min({val1, val2, val3, val4});
         cache[posY][posX] = out0;
         return out0;
     }

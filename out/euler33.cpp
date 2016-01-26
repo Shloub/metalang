@@ -1,25 +1,10 @@
 #include <iostream>
 #include <vector>
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
-
-int min2_(int a, int b) {
-    if (a < b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 
 int pgcd(int a, int b) {
-    int c = min2_(a, b);
-    int d = max2_(a, b);
+    int c = std::min(a, b);
+    int d = std::max(a, b);
     int reste = d % c;
     if (reste == 0)
       return c;

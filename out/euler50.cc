@@ -1,13 +1,6 @@
 #include <iostream>
 #include <vector>
-
-int min2_(int a, int b) {
-    if (a < b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 
 int eratostene(std::vector<int> * t, int max0) {
     int n = 0;
@@ -70,7 +63,7 @@ int main() {
                 }
             }
             else
-              stop = min2_(stop, i);
+              stop = std::min(stop, i);
         }
         len++;
     }

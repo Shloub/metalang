@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
@@ -8,14 +9,6 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
             std::cin >> elem;
     return matrix;
 }
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
 
 int find(int n, std::vector<std::vector<int>>& m, int x, int y, int dx, int dy) {
     if (x < 0 || x == 20 || y < 0 || y == 20)
@@ -100,7 +93,7 @@ int main() {
         int dy = o.tuple_int_int_field_1;
         for (int x = 0; x <= 19; x ++)
           for (int y = 0; y <= 19; y ++)
-            max0 = max2_(max0, find(4, m, x, y, dx, dy));
+            max0 = std::max(max0, find(4, m, x, y, dx, dy));
     }
     std::cout << max0 << "\n";
 }

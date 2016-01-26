@@ -105,6 +105,8 @@ class cppPrinter = object(self)
       (fun f () ->
         if Tags.is_taged "use_math"
         then Format.fprintf f "#include<cmath>@\n";
+        if Tags.is_taged "use_cpp_algorithm"
+        then Format.fprintf f "#include <algorithm>@\n";
         if Tags.is_taged "use_cc_readline"
         then Format.fprintf f "std::vector<char> *getline() {
     if (std::cin.flags() & std::ios_base::skipws) {
@@ -332,6 +334,8 @@ class proloCppPrinter = object(self)
       (fun f () ->
         if Tags.is_taged "use_math"
         then Format.fprintf f "#include<cmath>@\n";
+        if Tags.is_taged "use_cpp_algorithm"
+        then Format.fprintf f "#include <algorithm>@\n";
         if Tags.is_taged "use_cc_readline"
         then Format.fprintf f "std::vector<char> getline() {
     if (std::cin.flags() & std::ios_base::skipws) {

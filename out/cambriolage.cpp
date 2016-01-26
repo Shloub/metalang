@@ -1,13 +1,6 @@
 #include <iostream>
 #include <vector>
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 
 int nbPassePartout(int n, std::vector<std::vector<int>>& passepartout, int m, std::vector<std::vector<int>>& serrures) {
     int max_ancient = 0;
@@ -26,8 +19,8 @@ int nbPassePartout(int n, std::vector<std::vector<int>>& passepartout, int m, st
         std::vector<int> pp = passepartout[i];
         if (pp[0] >= max_ancient && pp[1] >= max_recent)
           return 1;
-        max_ancient_pp = max2_(max_ancient_pp, pp[0]);
-        max_recent_pp = max2_(max_recent_pp, pp[1]);
+        max_ancient_pp = std::max(max_ancient_pp, pp[0]);
+        max_recent_pp = std::max(max_recent_pp, pp[1]);
     }
     if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
       return 2;

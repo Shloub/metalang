@@ -1,13 +1,6 @@
 #include <iostream>
 #include <vector>
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -46,7 +39,7 @@ int main() {
               {
                   int mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
                   if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
-                    m = max2_(mul, m);
+                    m = std::max(mul, m);
     }
     std::cout << m << "\n";
 }
