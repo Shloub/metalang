@@ -1,13 +1,6 @@
 #include <iostream>
 #include <vector>
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 
 std::vector<int> primesfactors(int n) {
     std::vector<int> tab(n + 1, 0);
@@ -32,7 +25,7 @@ int main() {
     {
         std::vector<int> t = primesfactors(i);
         for (int j = 1; j <= i; j ++)
-          o[j] = max2_(o[j], t[j]);
+          o[j] = std::max(o[j], t[j]);
     }
     int product = 1;
     for (int k = 1; k <= lim; k ++)

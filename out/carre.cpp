@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     std::vector<std::vector<T>> matrix(l, std::vector<T>(c));
@@ -9,14 +10,6 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     return matrix;
 }
 
-int min2_(int a, int b) {
-    if (a < b)
-      return a;
-    else
-      return b;
-}
-
-
 int main() {
     int y, x;
     std::cin >> x >> y;
@@ -25,7 +18,7 @@ int main() {
       for (int iy = 1; iy < y; iy++)
         if (tab[iy][ix] == 1)
       tab[iy][ix] =
-      min2_(min2_(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1;
+      std::min({tab[iy][ix - 1], tab[iy - 1][ix], tab[iy - 1][ix - 1]}) + 1;
     for (int jy = 0; jy < y; jy++)
     {
         for (int jx = 0; jx < x; jx++)

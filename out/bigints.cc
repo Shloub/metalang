@@ -1,21 +1,6 @@
 #include <iostream>
 #include <vector>
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
-
-int min2_(int a, int b) {
-    if (a < b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 struct bigint {
     bool bigint_sign;
     int bigint_len;
@@ -102,7 +87,7 @@ bool bigint_lt(bigint * a, bigint * b) {
 
 bigint * add_bigint_positif(bigint * a, bigint * b) {
     /* Une addition ou on en a rien a faire des signes */
-    int len = max2_(a->bigint_len, b->bigint_len) + 1;
+    int len = std::max(a->bigint_len, b->bigint_len) + 1;
     int retenue = 0;
     std::vector<int> *chiffres = new std::vector<int>( len );
     for (int i = 0; i < len; i++)
@@ -233,7 +218,7 @@ D'ou le nom de la fonction. */
 
 
 bigint * bigint_premiers_chiffres(bigint * a, int i) {
-    int len = min2_(i, a->bigint_len);
+    int len = std::min(i, a->bigint_len);
     while (len != 0 && a->bigint_chiffres->at(len - 1) == 0)
       len --;
     bigint * o = new bigint();
@@ -267,7 +252,7 @@ bigint * mul_bigint(bigint * aa, bigint * bb) {
     else if (aa->bigint_len < 3 || bb->bigint_len < 3)
       return mul_bigint_cp(aa, bb);
     /* Algorithme de Karatsuba */
-    int split = min2_(aa->bigint_len, bb->bigint_len) / 2;
+    int split = std::min(aa->bigint_len, bb->bigint_len) / 2;
     bigint * a = bigint_shift(aa, -split);
     bigint * b = bigint_premiers_chiffres(aa, split);
     bigint * c = bigint_shift(bb, -split);

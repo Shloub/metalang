@@ -1,13 +1,6 @@
 #include <iostream>
 #include <vector>
-
-int max2_(int a, int b) {
-    if (a > b)
-      return a;
-    else
-      return b;
-}
-
+#include <algorithm>
 
 int main() {
     char e, c;
@@ -41,7 +34,7 @@ int main() {
         }
         last->at(index) = f;
         index = (index + 1) % 5;
-        max0 = max2_(max0, i);
+        max0 = std::max(max0, i);
     }
     std::cout << max0 << "\n";
 }
