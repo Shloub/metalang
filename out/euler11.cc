@@ -90,7 +90,7 @@ int main() {
     std::vector<int> *p = new std::vector<int>( 20 );
     for (int q = 0; q < 20; q++)
     {
-      std::cin >> p->at(q) >> std::skipws;
+      std::cin >> p->at(q);
     }
     m->at(o) = p;
   }

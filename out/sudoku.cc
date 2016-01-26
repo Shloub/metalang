@@ -7,7 +7,7 @@ std::vector<int> * read_sudoku() {
   std::vector<int> *out0 = new std::vector<int>( 9 * 9 );
   for (int i = 0; i < 9 * 9; i++)
   {
-    std::cin >> k >> std::skipws;
+    std::cin >> k;
     out0->at(i) = k;
   }
   return out0;

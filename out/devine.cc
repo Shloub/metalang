@@ -21,11 +21,11 @@ bool devine0(int nombre, std::vector<int> * tab, int len) {
 
 int main() {
   int tmp, len, nombre;
-  std::cin >> nombre >> std::skipws >> len;
+  std::cin >> nombre >> len;
   std::vector<int> *tab = new std::vector<int>( len );
   for (int i = 0; i < len; i++)
   {
-    std::cin >> tmp >> std::skipws;
+    std::cin >> tmp;
     tab->at(i) = tmp;
   }
   if (devine0(nombre, tab, len))

@@ -13,7 +13,7 @@ struct toto {
 
 int main() {
   int d, c, bar_;
-  std::cin >> bar_ >> std::skipws >> c >> d;
+  std::cin >> bar_ >> c >> d;
   tuple_int_int * e = new tuple_int_int();
   e->tuple_int_int_field_0=c;
   e->tuple_int_int_field_1=d;

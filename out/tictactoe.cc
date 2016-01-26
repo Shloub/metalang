@@ -194,7 +194,7 @@ gamestate * init0() {
 
 move * read_move() {
   int y, x;
-  std::cin >> x >> std::skipws >> y;
+  std::cin >> x >> y;
   move * b = new move();
   b->x=x;
   b->y=y;

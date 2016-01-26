@@ -11,11 +11,11 @@ int programme_candidat(std::vector<int>& tableau, int taille) {
 
 int main() {
   int taille;
-  std::cin >> taille >> std::skipws;
+  std::cin >> taille;
   std::vector<int> tableau(taille);
   for (int a = 0; a < taille; a++)
   {
-    std::cin >> tableau[a] >> std::skipws;
+    std::cin >> tableau[a];
   }
   std::cout << programme_candidat(tableau, taille) << "\n";
 }

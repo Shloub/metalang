@@ -38,26 +38,26 @@ int nbPassePartout(int n, std::vector<std::vector<int>>& passepartout, int m, st
 
 int main() {
   int out_, m, out01, n;
-  std::cin >> n >> std::skipws;
+  std::cin >> n;
   std::vector<std::vector<int>> passepartout(n);
   for (int i = 0; i < n; i++)
   {
     std::vector<int> out0(2);
     for (int j = 0; j < 2; j++)
     {
-      std::cin >> out01 >> std::skipws;
+      std::cin >> out01;
       out0[j] = out01;
     }
     passepartout[i] = out0;
   }
-  std::cin >> m >> std::skipws;
+  std::cin >> m;
   std::vector<std::vector<int>> serrures(m);
   for (int k = 0; k < m; k++)
   {
     std::vector<int> out1(2);
     for (int l = 0; l < 2; l++)
     {
-      std::cin >> out_ >> std::skipws;
+      std::cin >> out_;
       out1[l] = out_;
     }
     serrures[k] = out1;

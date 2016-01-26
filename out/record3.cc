@@ -32,7 +32,7 @@ int main() {
   std::vector<toto *> *t = new std::vector<toto *>( 4 );
   for (int i = 0; i < 4; i++)
     t->at(i) = mktoto(i);
-  std::cin >> t->at(0)->bar >> std::skipws >> t->at(1)->blah >> std::noskipws;
+  std::cin >> t->at(0)->bar >> t->at(1)->blah >> std::noskipws;
   int titi = result(t, 4);
   std::cout << titi << t->at(2)->blah;
 }

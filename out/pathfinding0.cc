@@ -9,6 +9,7 @@ std::vector<char> *getline() {
   std::string line;
   std::getline(std::cin, line);
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
+  std::cin >> std::skipws;
   return c;
 }
 
@@ -62,7 +63,7 @@ int pathfind(std::vector<std::vector<char> *> * tab, int x, int y) {
 
 int main() {
   int y, x;
-  std::cin >> x >> std::skipws >> y;
+  std::cin >> x >> y;
   std::cout << x << " " << y << "\n";
   std::vector<std::vector<char> *> *e = new std::vector<std::vector<char> *>( y );
   for (int f = 0; f < y; f++)

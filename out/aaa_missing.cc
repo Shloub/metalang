@@ -22,12 +22,12 @@ int result(int len, std::vector<int> * tab) {
 
 int main() {
   int len;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::cout << len << "\n";
   std::vector<int> *tab = new std::vector<int>( len );
   for (int a = 0; a < len; a++)
   {
-    std::cin >> tab->at(a) >> std::skipws;
+    std::cin >> tab->at(a);
   }
   std::cout << result(len, tab) << "\n";
 }

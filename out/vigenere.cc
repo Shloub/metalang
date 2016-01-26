@@ -34,7 +34,7 @@ void crypte(int taille_cle, std::vector<char> * cle, int taille, std::vector<cha
 int main() {
   int taille, taille_cle;
   char out2, out0;
-  std::cin >> taille_cle >> std::skipws;
+  std::cin >> taille_cle;
   std::vector<char> *cle = new std::vector<char>( taille_cle );
   for (int index = 0; index < taille_cle; index++)
   {

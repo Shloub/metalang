@@ -11,11 +11,11 @@ int programme_candidat(std::vector<int> * tableau, int taille) {
 
 int main() {
   int taille;
-  std::cin >> taille >> std::skipws;
+  std::cin >> taille;
   std::vector<int> *tableau = new std::vector<int>( taille );
   for (int a = 0; a < taille; a++)
   {
-    std::cin >> tableau->at(a) >> std::skipws;
+    std::cin >> tableau->at(a);
   }
   std::cout << programme_candidat(tableau, taille) << "\n";
 }

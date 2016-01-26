@@ -9,6 +9,7 @@ std::vector<char> getline() {
   std::string line;
   std::getline(std::cin, line);
   std::vector<char> c(line.begin(), line.end());
+  std::cin >> std::skipws;
   return c;
 }
 

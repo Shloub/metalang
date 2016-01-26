@@ -20,7 +20,7 @@ int min2_(int a, int b) {
 
 int main() {
   int y, x;
-  std::cin >> x >> std::skipws >> y;
+  std::cin >> x >> y;
   std::vector<std::vector<int>> tab = read_matrix<int>(y, x);
   for (int ix = 1; ix < x; ix++)
     for (int iy = 1; iy < y; iy++)

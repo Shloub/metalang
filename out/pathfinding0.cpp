@@ -60,7 +60,7 @@ int pathfind(std::vector<std::vector<char>>& tab, int x, int y) {
 
 int main() {
   int y, x;
-  std::cin >> x >> std::skipws >> y;
+  std::cin >> x >> y;
   std::cout << x << " " << y << "\n";
   std::vector<std::vector<char>> tab = read_matrix<char>(y, x);
   int result = pathfind(tab, x, y);

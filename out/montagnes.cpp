@@ -22,12 +22,12 @@ int montagnes0(std::vector<int>& tab, int len) {
 
 int main() {
   int len = 0;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::vector<int> tab(len);
   for (int i = 0; i < len; i++)
   {
     int x = 0;
-    std::cin >> x >> std::skipws;
+    std::cin >> x;
     tab[i] = x;
   }
   std::cout << montagnes0(tab, len);

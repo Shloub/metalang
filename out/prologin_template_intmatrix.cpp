@@ -21,7 +21,7 @@ int programme_candidat(std::vector<std::vector<int>>& tableau, int x, int y) {
 
 int main() {
   int taille_y, taille_x;
-  std::cin >> taille_x >> std::skipws >> taille_y;
+  std::cin >> taille_x >> taille_y;
   std::vector<std::vector<int>> tableau = read_matrix<int>(taille_y, taille_x);
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
 }

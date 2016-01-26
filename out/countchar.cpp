@@ -12,9 +12,9 @@ int nth(std::vector<char>& tab, char tofind, int len) {
 
 int main() {
   int len = 0;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   char tofind = '\u0000';
-  std::cin >> tofind >> std::skipws;
+  std::cin >> tofind;
   std::vector<char> tab(len);
   for (int i = 0; i < len; i++)
   {
