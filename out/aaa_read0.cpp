@@ -3,7 +3,7 @@
 
 int main() {
   int len;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::cout << len << "\n";
 }
 

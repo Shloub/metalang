@@ -9,6 +9,7 @@ std::vector<char> *getline() {
   std::string line;
   std::getline(std::cin, line);
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
+  std::cin >> std::skipws;
   return c;
 }
 
@@ -32,9 +33,9 @@ int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<ch
 
 int main() {
   int taille2, taille1;
-  std::cin >> taille1 >> std::skipws;
+  std::cin >> taille1;
   std::vector<char> * tableau1 = getline();
-  std::cin >> taille2 >> std::skipws;
+  std::cin >> taille2;
   std::vector<char> * tableau2 = getline();
   std::cout << programme_candidat(tableau1, taille1, tableau2, taille2) << "\n";
 }

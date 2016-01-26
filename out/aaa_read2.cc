@@ -9,6 +9,7 @@ std::vector<char> *getline() {
   std::string line;
   std::getline(std::cin, line);
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
+  std::cin >> std::skipws;
   return c;
 }
 /*
@@ -18,12 +19,12 @@ read int, read char et skip
 
 int main() {
   int strlen, len;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::cout << len << "=len\n";
   std::vector<int> *tab = new std::vector<int>( len );
   for (int a = 0; a < len; a++)
   {
-    std::cin >> tab->at(a) >> std::skipws;
+    std::cin >> tab->at(a);
   }
   for (int i = 0; i < len; i++)
     std::cout << i << "=>" << tab->at(i) << " ";
@@ -31,11 +32,11 @@ int main() {
   std::vector<int> *tab2 = new std::vector<int>( len );
   for (int b = 0; b < len; b++)
   {
-    std::cin >> tab2->at(b) >> std::skipws;
+    std::cin >> tab2->at(b);
   }
   for (int i_ = 0; i_ < len; i_++)
     std::cout << i_ << "==>" << tab2->at(i_) << " ";
-  std::cin >> strlen >> std::skipws;
+  std::cin >> strlen;
   std::cout << strlen << "=strlen\n";
   std::vector<char> * tab4 = getline();
   for (int i3 = 0; i3 < strlen; i3++)

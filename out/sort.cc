@@ -58,12 +58,12 @@ void qsort0(std::vector<int> * tab, int len, int i, int j) {
 
 int main() {
   int len = 2;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::vector<int> *tab = new std::vector<int>( len );
   for (int i_ = 0; i_ < len; i_++)
   {
     int tmp = 0;
-    std::cin >> tmp >> std::skipws;
+    std::cin >> tmp;
     tab->at(i_) = tmp;
   }
   std::vector<int> * tab2 = copytab(tab, len);

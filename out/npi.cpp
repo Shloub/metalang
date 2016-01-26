@@ -39,7 +39,7 @@ int npi0(std::vector<char>& str, int len) {
 
 int main() {
   int len = 0;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::vector<char> tab(len);
   for (int i = 0; i < len; i++)
   {

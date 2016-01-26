@@ -18,12 +18,12 @@ int summax(std::vector<int> * lst, int len) {
 
 int main() {
   int len = 0;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::vector<int> *tab = new std::vector<int>( len );
   for (int i = 0; i < len; i++)
   {
     int tmp = 0;
-    std::cin >> tmp >> std::skipws;
+    std::cin >> tmp;
     tab->at(i) = tmp;
   }
   int result = summax(tab, len);

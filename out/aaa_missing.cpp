@@ -21,12 +21,12 @@ int result(int len, std::vector<int>& tab) {
 
 int main() {
   int len;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::cout << len << "\n";
   std::vector<int> tab(len);
   for (int a = 0; a < len; a++)
   {
-    std::cin >> tab[a] >> std::skipws;
+    std::cin >> tab[a];
   }
   std::cout << result(len, tab) << "\n";
 }

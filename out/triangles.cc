@@ -42,7 +42,7 @@ int find(int len, std::vector<std::vector<int> *> * tab) {
 
 int main() {
   int len = 0;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::vector<std::vector<int> *> *tab = new std::vector<std::vector<int> *>( len );
   for (int i = 0; i < len; i++)
   {
@@ -50,7 +50,7 @@ int main() {
     for (int j = 0; j < i + 1; j++)
     {
       int tmp = 0;
-      std::cin >> tmp >> std::skipws;
+      std::cin >> tmp;
       tab2->at(j) = tmp;
     }
     tab->at(i) = tab2;

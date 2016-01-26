@@ -115,6 +115,7 @@ class cppPrinter = object(self)
   std::string line;
   std::getline(std::cin, line);
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
+  std::cin >> std::skipws;
   return c;
 }@\n"
       ) ()
@@ -229,12 +230,12 @@ class cppPrinter = object(self)
 
   method read f t m =
     match Type.unfix t with
-    | Type.Char -> Format.fprintf f "@[std::cin >> %a >> std::noskipws;@]" self#mutable_get m
+    | Type.Char -> Format.fprintf f "@[std::cin.get(%a);@]" self#mutable_get m
     | Type.Integer -> Format.fprintf f "@[std::cin >> %a;@]" self#mutable_get m
     | _ -> assert false
 
   method read_decl f t v = match Type.unfix t with
-  | Type.Char -> Format.fprintf f "@[std::cin >> %a >> std::noskipws;@]" self#binding v
+  | Type.Char -> Format.fprintf f "@[std::cin.get(%a);@]" self#binding v
   | Type.Integer -> Format.fprintf f "@[std::cin >> %a;@]" self#binding v
   | _ -> assert false
 
@@ -253,23 +254,19 @@ class cppPrinter = object(self)
       | _ -> assert false
       ) (false, []) li
     in
-    let lastSkip = ref false in
-    let skipSet = ref false in
+    let lastSkip = ref true in
+    let skipSet = ref true in
     Format.fprintf f "std::cin%a%a;"
-      (fun f b -> if b then begin
-        Format.fprintf f " >> std::skipws";
-        lastSkip := true;
-        skipSet := true;
-      end
+      (fun f b -> if b then
+        Format.fprintf f " >> std::skipws"
       ) skipfirst
       (print_list (fun f (t, x, b) ->
-        if !lastSkip = b && !skipSet then
+        if !lastSkip = b then
           Format.fprintf f " >> %a" self#mutable_get x
         else
           Format.fprintf f " >> %a >> std::%sskipws" self#mutable_get x
             (if b then "" else "no");
         lastSkip := b;
-        skipSet := true;
        ) nosep )
       (List.rev variables)
 
@@ -345,6 +342,7 @@ class proloCppPrinter = object(self)
   std::string line;
   std::getline(std::cin, line);
   std::vector<char> c(line.begin(), line.end());
+  std::cin >> std::skipws;
   return c;
 }@\n";
         if Tags.is_taged "use_cpp_readmatrix"

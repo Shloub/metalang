@@ -8,7 +8,7 @@ read int, read char et skip
 int main() {
   int strlen, tmpi2, tmpi1, len;
   char tmpc;
-  std::cin >> len >> std::skipws;
+  std::cin >> len;
   std::cout << len << "=len\n";
   len *= 2;
   std::cout << "len*2=" << len << "\n";
@@ -16,7 +16,7 @@ int main() {
   std::vector<int> tab(len);
   for (int i = 0; i < len; i++)
   {
-    std::cin >> tmpi1 >> std::skipws;
+    std::cin >> tmpi1;
     std::cout << i << "=>" << tmpi1 << " ";
     tab[i] = tmpi1;
   }
@@ -24,11 +24,11 @@ int main() {
   std::vector<int> tab2(len);
   for (int i_ = 0; i_ < len; i_++)
   {
-    std::cin >> tmpi2 >> std::skipws;
+    std::cin >> tmpi2;
     std::cout << i_ << "==>" << tmpi2 << " ";
     tab2[i_] = tmpi2;
   }
-  std::cin >> strlen >> std::skipws;
+  std::cin >> strlen;
   std::cout << strlen << "=strlen\n";
   std::vector<char> tab4(strlen);
   for (int toto = 0; toto < strlen; toto++)

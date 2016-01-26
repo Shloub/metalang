@@ -9,6 +9,7 @@ std::vector<char> *getline() {
   std::string line;
   std::getline(std::cin, line);
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
+  std::cin >> std::skipws;
   return c;
 }
 
@@ -26,7 +27,7 @@ int programme_candidat(std::vector<char> * tableau, int taille) {
 
 int main() {
   int taille;
-  std::cin >> taille >> std::skipws;
+  std::cin >> taille;
   std::vector<char> * tableau = getline();
   std::cout << programme_candidat(tableau, taille) << "\n";
 }
