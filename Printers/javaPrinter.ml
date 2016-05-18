@@ -112,7 +112,7 @@ class javaPrinter = object(self)
     let datareader = Tags.is_taged "use_java_readline" in
     Format.fprintf f
       "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a%a@\n%a@\n%a@]@\n}@\n"
-      "Main" (* using the program name fails at compile time *)
+      prog.Prog.progname
       (if reader || datareader then self#print_scanner else fun f () -> ()) ()
       (if datareader then self#print_datareader else fun f () -> ()) ()
       self#proglist prog.Prog.funs
