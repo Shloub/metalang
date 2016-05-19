@@ -7,7 +7,7 @@ int main(void){
   int i = 4;
   /*while i < 10 do */
   printf("%d", i);
-  i ++;
+  i++;
   /*  end */
   printf("%d", i);
   [pool drain];

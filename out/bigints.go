@@ -293,7 +293,7 @@ func log10(a int) int{
   var out0 int = 1
   for a >= 10{
     a /= 10;
-    out0 ++;
+    out0++;
   }
   return out0
 }
@@ -395,7 +395,7 @@ func euler25() int{
     var c * bigint = add_bigint(a, b)
     a = b;
     b = c;
-    i ++;
+    i++;
   }
   return i
 }
@@ -433,7 +433,7 @@ func euler29() int{
         }
     }
     if found {
-      n ++;
+      n++;
         for l := 2 ; l <= maxA; l++ {
           if bigint_eq(a_bigint[l], min0) && b[l] <= maxB {
               b[l] = b[l] + 1;

@@ -23,13 +23,13 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
             for (e <- 0 to 9)
               for (f <- 0 to 9)
               {
-                var s: Int = p(a) + p(b) + p(c) + p(d) + p(e) + p(f);
-                var r: Int = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000;
-                if (s == r && r != 1)
-                {
-                  printf("%d%d%d%d%d%d %d\n", f, e, d, c, b, a, r);
-                  sum = sum + r;
-                }
+                  var s: Int = p(a) + p(b) + p(c) + p(d) + p(e) + p(f);
+                  var r: Int = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000;
+                  if (s == r && r != 1)
+                  {
+                      printf("%d%d%d%d%d%d %d\n", f, e, d, c, b, a, r);
+                      sum = sum + r;
+                  }
               }
     printf("%d", sum);
   }

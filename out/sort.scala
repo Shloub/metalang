@@ -37,9 +37,9 @@ def skip() {
       for (j <- i + 1 to len - 1)
         if (tab(i) > tab(j))
       {
-        var tmp: Int = tab(i);
-        tab(i) = tab(j);
-        tab(j) = tmp;
+          var tmp: Int = tab(i);
+          tab(i) = tab(j);
+          tab(j) = tmp;
       }
   }
   
@@ -48,34 +48,34 @@ def skip() {
     var j = _j;
     if (i < j)
     {
-      var i0: Int = i;
-      var j0: Int = j;
-      /* pivot : tab[0] */
-      while (i != j)
-        if (tab(i) > tab(j))
-      {
-        if (i == j - 1)
+        var i0: Int = i;
+        var j0: Int = j;
+        /* pivot : tab[0] */
+        while (i != j)
+          if (tab(i) > tab(j))
         {
-          /* on inverse simplement*/
-          var tmp: Int = tab(i);
-          tab(i) = tab(j);
-          tab(j) = tmp;
-          i = i + 1;
+            if (i == j - 1)
+            {
+                /* on inverse simplement*/
+                var tmp: Int = tab(i);
+                tab(i) = tab(j);
+                tab(j) = tmp;
+                i = i + 1;
+            }
+            else
+            {
+                /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
+                var tmp: Int = tab(i);
+                tab(i) = tab(j);
+                tab(j) = tab(i + 1);
+                tab(i + 1) = tmp;
+                i = i + 1;
+            }
         }
         else
-        {
-          /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
-          var tmp: Int = tab(i);
-          tab(i) = tab(j);
-          tab(j) = tab(i + 1);
-          tab(i + 1) = tmp;
-          i = i + 1;
-        }
-      }
-      else
-        j = j - 1;
-      qsort0(tab, len, i0, i - 1);
-      qsort0(tab, len, i + 1, j0);
+          j = j - 1;
+        qsort0(tab, len, i0, i - 1);
+        qsort0(tab, len, i + 1, j0);
     }
   }
   
@@ -88,10 +88,10 @@ def skip() {
     var tab :Array[Int] = new Array[Int](len);
     for (i_0 <- 0 to len - 1)
     {
-      var tmp: Int = 0;
-      tmp = read_int()
-      skip();
-      tab(i_0) = tmp;
+        var tmp: Int = 0;
+        tmp = read_int()
+        skip();
+        tab(i_0) = tmp;
     }
     var tab2: Array[Int] = copytab(tab, len);
     bubblesort(tab2, len);

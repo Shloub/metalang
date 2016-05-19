@@ -22,22 +22,23 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
-function okdigits(ok, n){
-  if (n == 0)
-    return true;
-  else
-  {
-    var digit = ~~(n % 10);
-    if (ok[digit])
-    {
-      ok[digit] = false;
-      var o = okdigits(ok, ~~(n / 10));
-      ok[digit] = true;
-      return o;
-    }
+
+function okdigits(ok, n) {
+    if (n == 0)
+      return true;
     else
-      return false;
-  }
+    {
+        var digit = ~~(n % 10);
+        if (ok[digit])
+        {
+            ok[digit] = false;
+            var o = okdigits(ok, ~~(n / 10));
+            ok[digit] = true;
+            return o;
+        }
+        else
+          return false;
+    }
 }
 
 var count = 0;
@@ -49,54 +50,54 @@ for (var j = 0 ; j < 100000; j++)
   counted[j] = false;
 for (var e = 1 ; e <= 9; e++)
 {
-  allowed[e] = false;
-  for (var b = 1 ; b <= 9; b++)
-    if (allowed[b])
-  {
-    allowed[b] = false;
-    var be = ~~(b * e % 10);
-    if (allowed[be])
+    allowed[e] = false;
+    for (var b = 1 ; b <= 9; b++)
+      if (allowed[b])
     {
-      allowed[be] = false;
-      for (var a = 1 ; a <= 9; a++)
-        if (allowed[a])
-      {
-        allowed[a] = false;
-        for (var c = 1 ; c <= 9; c++)
-          if (allowed[c])
+        allowed[b] = false;
+        var be = ~~(b * e % 10);
+        if (allowed[be])
         {
-          allowed[c] = false;
-          for (var d = 1 ; d <= 9; d++)
-            if (allowed[d])
-          {
-            allowed[d] = false;
-            /* 2 * 3 digits */
-            var product = (a * 10 + b) * (c * 100 + d * 10 + e);
-            if (!counted[product] && okdigits(allowed, ~~(product / 10)))
+            allowed[be] = false;
+            for (var a = 1 ; a <= 9; a++)
+              if (allowed[a])
             {
-              counted[product] = true;
-              count += product;
-              util.print(product, " ");
+                allowed[a] = false;
+                for (var c = 1 ; c <= 9; c++)
+                  if (allowed[c])
+                {
+                    allowed[c] = false;
+                    for (var d = 1 ; d <= 9; d++)
+                      if (allowed[d])
+                    {
+                        allowed[d] = false;
+                        /* 2 * 3 digits */
+                        var product = (a * 10 + b) * (c * 100 + d * 10 + e);
+                        if (!counted[product] && okdigits(allowed, ~~(product / 10)))
+                        {
+                            counted[product] = true;
+                            count += product;
+                            util.print(product, " ");
+                        }
+                        /* 1  * 4 digits */
+                        var product2 = b * (a * 1000 + c * 100 + d * 10 + e);
+                        if (!counted[product2] && okdigits(allowed, ~~(product2 / 10)))
+                        {
+                            counted[product2] = true;
+                            count += product2;
+                            util.print(product2, " ");
+                        }
+                        allowed[d] = true;
+                    }
+                    allowed[c] = true;
+                }
+                allowed[a] = true;
             }
-            /* 1  * 4 digits */
-            var product2 = b * (a * 1000 + c * 100 + d * 10 + e);
-            if (!counted[product2] && okdigits(allowed, ~~(product2 / 10)))
-            {
-              counted[product2] = true;
-              count += product2;
-              util.print(product2, " ");
-            }
-            allowed[d] = true;
-          }
-          allowed[c] = true;
+            allowed[be] = true;
         }
-        allowed[a] = true;
-      }
-      allowed[be] = true;
+        allowed[b] = true;
     }
-    allowed[b] = true;
-  }
-  allowed[e] = true;
+    allowed[e] = true;
 }
 util.print(count, "\n");
 

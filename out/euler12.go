@@ -13,7 +13,7 @@ func eratostene(t []int, max0 int) int{
   for i := 2 ; i < max0; i++ {
     if t[i] == i {
         var j int = i * i
-          n ++;
+          n++;
           for j < max0 && j > 0{
             t[j] = 0;
             j += i;
@@ -52,7 +52,7 @@ func find(ndiv2 int) int{
   for k := 2 ; k < maximumprimes; k++ {
     if era[k] == k {
         primes[l] = k;
-          l ++;
+          l++;
       }
   }
   for n := 1 ; n <= 10000; n++ {

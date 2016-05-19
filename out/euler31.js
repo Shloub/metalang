@@ -1,18 +1,19 @@
 var util = require("util");
-function result(sum, t, maxIndex, cache){
-  if (cache[sum][maxIndex] != 0)
-    return cache[sum][maxIndex];
-  else if (sum == 0 || maxIndex == 0)
-    return 1;
-  else
-  {
-    var out0 = 0;
-    var div = ~~(sum / t[maxIndex]);
-    for (var i = 0 ; i <= div; i++)
-      out0 += result(sum - i * t[maxIndex], t, maxIndex - 1, cache);
-    cache[sum][maxIndex] = out0;
-    return out0;
-  }
+
+function result(sum, t, maxIndex, cache) {
+    if (cache[sum][maxIndex] != 0)
+      return cache[sum][maxIndex];
+    else if (sum == 0 || maxIndex == 0)
+      return 1;
+    else
+    {
+        var out0 = 0;
+        var div = ~~(sum / t[maxIndex]);
+        for (var i = 0 ; i <= div; i++)
+          out0 += result(sum - i * t[maxIndex], t, maxIndex - 1, cache);
+        cache[sum][maxIndex] = out0;
+        return out0;
+    }
 }
 
 var t = new Array(8);
@@ -29,10 +30,10 @@ t[7] = 200;
 var cache = new Array(201);
 for (var j = 0 ; j < 201; j++)
 {
-  var o = new Array(8);
-  for (var k = 0 ; k < 8; k++)
-    o[k] = 0;
-  cache[j] = o;
+    var o = new Array(8);
+    for (var k = 0 ; k < 8; k++)
+      o[k] = 0;
+    cache[j] = o;
 }
 util.print(result(200, t, 7, cache));
 

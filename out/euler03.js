@@ -5,24 +5,24 @@ var a = 408464633;
 var sqrtia = Math.floor(Math.sqrt(a));
 while (a != 1)
 {
-  var b = b0;
-  var found = false;
-  while (b <= sqrtia)
-  {
-    if (~~(a % b) == 0)
+    var b = b0;
+    var found = false;
+    while (b <= sqrtia)
     {
-      a = ~~(a / b);
-      b0 = b;
-      b = a;
-      sqrtia = Math.floor(Math.sqrt(a));
-      found = true;
+        if (~~(a % b) == 0)
+        {
+            a = ~~(a / b);
+            b0 = b;
+            b = a;
+            sqrtia = Math.floor(Math.sqrt(a));
+            found = true;
+        }
+        b++;
     }
-    b ++;
-  }
-  if (!found)
-  {
-    util.print(a, "\n");
-    a = 1;
-  }
+    if (!found)
+    {
+        util.print(a, "\n");
+        a = 1;
+    }
 }
 

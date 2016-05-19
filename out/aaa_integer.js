@@ -8,7 +8,7 @@ i *= 13;
 util.print(i, "\n");
 i = ~~(i / 2);
 util.print(i, "\n");
-i ++;
+i++;
 util.print(i, "\n");
 i = ~~(i / 3);
 util.print(i, "\n");

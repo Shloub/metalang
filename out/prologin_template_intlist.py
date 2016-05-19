@@ -1,10 +1,10 @@
-def programme_candidat( tableau, taille ):
+def programme_candidat(tableau, taille):
     out0 = 0
     for i in range(0, taille):
-      out0 += tableau[i]
+        out0 += tableau[i]
     return out0
 
 taille = int(input())
 tableau = list(map(int, input().split()))
-print("%d\n" % ( programme_candidat(tableau, taille) ), end='')
+print("%d\n" % (programme_candidat(tableau, taille)), end='')
 

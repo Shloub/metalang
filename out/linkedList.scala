@@ -36,8 +36,8 @@ def read_int() : Int = {
       return acc;
     else
     {
-      var acc2: Intlist = new Intlist(torev.head, acc);
-      return rev2(acc, torev.tail);
+        var acc2: Intlist = new Intlist(torev.head, acc);
+        return rev2(acc, torev.tail);
     }
   }
   
@@ -50,9 +50,9 @@ def read_int() : Int = {
     var i: Int = -1;
     while (i != 0)
     {
-      i = read_int()
-      if (i != 0)
-        list = cons(list, i);
+        i = read_int()
+        if (i != 0)
+          list = cons(list, i);
     }
   }
   

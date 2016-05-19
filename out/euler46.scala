@@ -7,16 +7,16 @@ object euler46
     for (i <- 2 to max0 - 1)
       if (t(i) == i)
     {
-      n = n + 1;
-      if (max0 / i > i)
-      {
-        var j: Int = i * i;
-        while (j < max0 && j > 0)
+        n = n + 1;
+        if (max0 / i > i)
         {
-          t(j) = 0;
-          j = j + i;
+            var j: Int = i * i;
+            while (j < max0 && j > 0)
+            {
+                t(j) = 0;
+                j = j + i;
+            }
         }
-      }
     }
     return n;
   }
@@ -36,8 +36,8 @@ object euler46
     for (k <- 2 to maximumprimes - 1)
       if (era(k) == k)
     {
-      primes(l) = k;
-      l = l + 1;
+        primes(l) = k;
+        l = l + 1;
     }
     printf("%d == %d\n", l, nprimes);
     var canbe :Array[Boolean] = new Array[Boolean](maximumprimes);
@@ -46,15 +46,15 @@ object euler46
     for (i <- 0 to nprimes - 1)
       for (j <- 0 to maximumprimes - 1)
       {
-        var n: Int = primes(i) + 2 * j * j;
-        if (n < maximumprimes)
-          canbe(n) = true;
+          var n: Int = primes(i) + 2 * j * j;
+          if (n < maximumprimes)
+            canbe(n) = true;
       }
     for (m <- 1 to maximumprimes)
     {
-      var m2: Int = m * 2 + 1;
-      if (m2 < maximumprimes && !canbe(m2))
-        printf("%d\n", m2);
+        var m2: Int = m * 2 + 1;
+        if (m2 < maximumprimes && !canbe(m2))
+          printf("%d\n", m2);
     }
   }
   

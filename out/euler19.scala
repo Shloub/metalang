@@ -10,10 +10,10 @@ object euler19
       return 31;
     else if (month == 1)
     {
-      if (is_leap(year))
-        return 29;
-      else
-        return 28;
+        if (is_leap(year))
+          return 29;
+        else
+          return 28;
     }
     else if (month == 2)
       return 31;
@@ -48,16 +48,16 @@ object euler19
     var count: Int = 0;
     while (year != 2001)
     {
-      var ndays: Int = ndayinmonth(month, year);
-      dayofweek = (dayofweek + ndays) % 7;
-      month = month + 1;
-      if (month == 12)
-      {
-        month = 0;
-        year = year + 1;
-      }
-      if (dayofweek % 7 == 6)
-        count = count + 1;
+        var ndays: Int = ndayinmonth(month, year);
+        dayofweek = (dayofweek + ndays) % 7;
+        month = month + 1;
+        if (month == 12)
+        {
+            month = 0;
+            year = year + 1;
+        }
+        if (dayofweek % 7 == 6)
+          count = count + 1;
     }
     printf("%d\n", count);
   }

@@ -26,22 +26,22 @@ function read_int_(){
     }
   }
 }
-function montagnes0(tab, len){
-  var max0 = 1;
-  var j = 1;
-  var i = len - 2;
-  while (i >= 0)
-  {
-    var x = tab[i];
-    while (j >= 0 && x > tab[len - j])
-      j --;
-    j ++;
-    tab[len - j] = x;
-    if (j > max0)
-      max0 = j;
-    i --;
-  }
-  return max0;
+function montagnes0(tab, len) {
+    var max0 = 1;
+    var j = 1;
+    var i = len - 2;
+    while (i >= 0)
+    {
+        var x = tab[i];
+        while (j >= 0 && x > tab[len - j])
+          j --;
+        j++;
+        tab[len - j] = x;
+        if (j > max0)
+          max0 = j;
+        i --;
+    }
+    return max0;
 }
 
 var len = 0;
@@ -50,10 +50,10 @@ stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i < len; i++)
 {
-  var x = 0;
-  x=read_int_();
-  stdinsep();
-  tab[i] = x;
+    var x = 0;
+    x=read_int_();
+    stdinsep();
+    tab[i] = x;
 }
 util.print(montagnes0(tab, len));
 

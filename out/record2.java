@@ -19,7 +19,7 @@ public class record2
   
   static int result(toto t)
   {
-    t.blah ++;
+    t.blah++;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   
@@ -27,14 +27,14 @@ public class record2
   public static void main(String args[])
   {
     toto t = mktoto(4);
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       t.bar = -scanner.nextInt();
     }else{
       t.bar = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       t.blah = -scanner.nextInt();
     }else{

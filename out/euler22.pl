@@ -20,7 +20,7 @@ sub readint {
   return $o * $sign;
 }
 sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
+  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar(); }
 }
 
 sub score{

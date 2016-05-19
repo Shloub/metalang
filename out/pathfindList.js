@@ -26,31 +26,32 @@ function read_int_(){
     }
   }
 }
-function pathfind_aux(cache, tab, len, pos){
-  if (pos >= len - 1)
-    return 0;
-  else if (cache[pos] != -1)
-    return cache[pos];
-  else
-  {
-    cache[pos] = len * 2;
-    var posval = pathfind_aux(cache, tab, len, tab[pos]);
-    var oneval = pathfind_aux(cache, tab, len, pos + 1);
-    var out0 = 0;
-    if (posval < oneval)
-      out0 = 1 + posval;
+function pathfind_aux(cache, tab, len, pos) {
+    if (pos >= len - 1)
+      return 0;
+    else if (cache[pos] != -1)
+      return cache[pos];
     else
-      out0 = 1 + oneval;
-    cache[pos] = out0;
-    return out0;
-  }
+    {
+        cache[pos] = len * 2;
+        var posval = pathfind_aux(cache, tab, len, tab[pos]);
+        var oneval = pathfind_aux(cache, tab, len, pos + 1);
+        var out0 = 0;
+        if (posval < oneval)
+          out0 = 1 + posval;
+        else
+          out0 = 1 + oneval;
+        cache[pos] = out0;
+        return out0;
+    }
 }
 
-function pathfind(tab, len){
-  var cache = new Array(len);
-  for (var i = 0 ; i < len; i++)
-    cache[i] = -1;
-  return pathfind_aux(cache, tab, len, 0);
+
+function pathfind(tab, len) {
+    var cache = new Array(len);
+    for (var i = 0 ; i < len; i++)
+      cache[i] = -1;
+    return pathfind_aux(cache, tab, len, 0);
 }
 
 var len = 0;
@@ -59,10 +60,10 @@ stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i < len; i++)
 {
-  var tmp = 0;
-  tmp=read_int_();
-  stdinsep();
-  tab[i] = tmp;
+    var tmp = 0;
+    tmp=read_int_();
+    stdinsep();
+    tab[i] = tmp;
 }
 var result = pathfind(tab, len);
 util.print(result);

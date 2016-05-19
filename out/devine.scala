@@ -28,14 +28,14 @@ def skip() {
     var max0: Int = tab(1);
     for (i <- 2 to len - 1)
     {
-      if (tab(i) > max0 || tab(i) < min0)
-        return false;
-      if (tab(i) < nombre)
-        min0 = tab(i);
-      if (tab(i) > nombre)
-        max0 = tab(i);
-      if (tab(i) == nombre && len != i + 1)
-        return false;
+        if (tab(i) > max0 || tab(i) < min0)
+          return false;
+        if (tab(i) < nombre)
+          min0 = tab(i);
+        if (tab(i) > nombre)
+          max0 = tab(i);
+        if (tab(i) == nombre && len != i + 1)
+          return false;
     }
     return true;
   }
@@ -50,9 +50,9 @@ def skip() {
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
     {
-      var tmp = read_int()
-      skip();
-      tab(i) = tmp;
+        var tmp = read_int()
+        skip();
+        tab(i) = tmp;
     }
     if (devine0(nombre, tab, len))
       printf("True");

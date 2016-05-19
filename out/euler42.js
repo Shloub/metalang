@@ -32,30 +32,31 @@ function read_int_(){
     }
   }
 }
-function is_triangular(n){
-  /*
+function is_triangular(n) {
+    /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-  var a = Math.floor(Math.sqrt(n * 2));
-  return a * (a + 1) == n * 2;
+    var a = Math.floor(Math.sqrt(n * 2));
+    return a * (a + 1) == n * 2;
 }
 
-function score(){
-  stdinsep();
-  len=read_int_();
-  stdinsep();
-  var sum = 0;
-  for (var i = 1 ; i <= len; i++)
-  {
-    c=read_char_();
-    sum += c.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-    /*		print c print " " print sum print " " */
-  }
-  if (is_triangular(sum))
-    return 1;
-  else
-    return 0;
+
+function score() {
+    stdinsep();
+    len=read_int_();
+    stdinsep();
+    var sum = 0;
+    for (var i = 1 ; i <= len; i++)
+    {
+        c=read_char_();
+        sum += c.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
+        /*		print c print " " print sum print " " */
+    }
+    if (is_triangular(sum))
+      return 1;
+    else
+      return 0;
 }
 
 for (var i = 1 ; i <= 55; i++)

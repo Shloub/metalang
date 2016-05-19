@@ -37,35 +37,35 @@ $len *= 2;
 echo "len*2=", $len, "\n";
 $len = intval($len / 2);
 $tab = array();
-for ($i = 0 ; $i < $len; $i++)
+for ($i = 0; $i < $len; $i++)
 {
-  list($tmpi1) = scan("%d");
-  scantrim();
-  echo $i, "=>", $tmpi1, " ";
-  $tab[$i] = $tmpi1;
+    list($tmpi1) = scan("%d");
+    scantrim();
+    echo $i, "=>", $tmpi1, " ";
+    $tab[$i] = $tmpi1;
 }
 echo "\n";
 $tab2 = array();
-for ($i_ = 0 ; $i_ < $len; $i_++)
+for ($i_ = 0; $i_ < $len; $i_++)
 {
-  list($tmpi2) = scan("%d");
-  scantrim();
-  echo $i_, "==>", $tmpi2, " ";
-  $tab2[$i_] = $tmpi2;
+    list($tmpi2) = scan("%d");
+    scantrim();
+    echo $i_, "==>", $tmpi2, " ";
+    $tab2[$i_] = $tmpi2;
 }
 list($strlen) = scan("%d");
 scantrim();
 echo $strlen, "=strlen\n";
 $tab4 = array();
-for ($toto = 0 ; $toto < $strlen; $toto++)
+for ($toto = 0; $toto < $strlen; $toto++)
 {
-  $tmpc = nextChar();
-  $c = ord($tmpc);
-  echo $tmpc, ":", $c, " ";
-  if ($tmpc != " ")
-    $c = ($c - ord("a") + 13) % 26 + ord("a");
-  $tab4[$toto] = chr($c);
+    $tmpc = nextChar();
+    $c = ord($tmpc);
+    echo $tmpc, ":", $c, " ";
+    if ($tmpc != " ")
+      $c = ($c - ord("a") + 13) % 26 + ord("a");
+    $tab4[$toto] = chr($c);
 }
-for ($j = 0 ; $j < $strlen; $j++)
+for ($j = 0; $j < $strlen; $j++)
   echo $tab4[$j];
-?>
+

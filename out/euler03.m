@@ -11,25 +11,25 @@ int main(void){
   int sqrtia = (int)sqrt(a);
   while (a != 1)
   {
-    int b = b0;
-    int found = 0;
-    while (b <= sqrtia)
-    {
-      if (a % b == 0)
+      int b = b0;
+      int found = 0;
+      while (b <= sqrtia)
       {
-        a /= b;
-        b0 = b;
-        b = a;
-        sqrtia = (int)sqrt(a);
-        found = 1;
+          if (a % b == 0)
+          {
+              a /= b;
+              b0 = b;
+              b = a;
+              sqrtia = (int)sqrt(a);
+              found = 1;
+          }
+          b++;
       }
-      b ++;
-    }
-    if (!found)
-    {
-      printf("%d\n", a);
-      a = 1;
-    }
+      if (!found)
+      {
+          printf("%d\n", a);
+          a = 1;
+      }
   }
   [pool drain];
   return 0;

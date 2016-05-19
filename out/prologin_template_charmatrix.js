@@ -32,18 +32,18 @@ function read_int_(){
     }
   }
 }
-function programme_candidat(tableau, taille_x, taille_y){
-  var out0 = 0;
-  for (var i = 0 ; i < taille_y; i++)
-  {
-    for (var j = 0 ; j < taille_x; j++)
+function programme_candidat(tableau, taille_x, taille_y) {
+    var out0 = 0;
+    for (var i = 0 ; i < taille_y; i++)
     {
-      out0 += tableau[i][j].charCodeAt(0) * (i + j * 2);
-      util.print(tableau[i][j]);
+        for (var j = 0 ; j < taille_x; j++)
+        {
+            out0 += tableau[i][j].charCodeAt(0) * (i + j * 2);
+            util.print(tableau[i][j]);
+        }
+        util.print("--\n");
     }
-    util.print("--\n");
-  }
-  return out0;
+    return out0;
 }
 
 taille_x=read_int_();
@@ -53,13 +53,13 @@ stdinsep();
 var a = new Array(taille_y);
 for (var b = 0 ; b < taille_y; b++)
 {
-  var c = new Array(taille_x);
-  for (var d = 0 ; d < taille_x; d++)
-  {
-    c[d]=read_char_();
-  }
-  stdinsep();
-  a[b] = c;
+    var c = new Array(taille_x);
+    for (var d = 0 ; d < taille_x; d++)
+    {
+        c[d]=read_char_();
+    }
+    stdinsep();
+    a[b] = c;
 }
 var tableau = a;
 util.print(programme_candidat(tableau, taille_x, taille_y), "\n");

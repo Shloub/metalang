@@ -1,21 +1,22 @@
 var util = require("util");
-function eratostene(t, max0){
-  var n = 0;
-  for (var i = 2 ; i < max0; i++)
-    if (t[i] == i)
-  {
-    n ++;
-    if (~~(max0 / i) > i)
+
+function eratostene(t, max0) {
+    var n = 0;
+    for (var i = 2 ; i < max0; i++)
+      if (t[i] == i)
     {
-      var j = i * i;
-      while (j < max0 && j > 0)
-      {
-        t[j] = 0;
-        j += i;
-      }
+        n++;
+        if (~~(max0 / i) > i)
+        {
+            var j = i * i;
+            while (j < max0 && j > 0)
+            {
+                t[j] = 0;
+                j += i;
+            }
+        }
     }
-  }
-  return n;
+    return n;
 }
 
 var maximumprimes = 1000001;
@@ -30,8 +31,8 @@ var l = 0;
 for (var k = 2 ; k < maximumprimes; k++)
   if (era[k] == k)
 {
-  primes[l] = k;
-  l ++;
+    primes[l] = k;
+    l++;
 }
 util.print(l, " == ", nprimes, "\n");
 var sum = new Array(nprimes);
@@ -44,24 +45,24 @@ var len = 1;
 var resp = 1;
 while (process)
 {
-  process = false;
-  for (var i = 0 ; i <= stop; i++)
-    if (i + len < nprimes)
-  {
-    sum[i] = sum[i] + primes[i + len];
-    if (maximumprimes > sum[i])
+    process = false;
+    for (var i = 0 ; i <= stop; i++)
+      if (i + len < nprimes)
     {
-      process = true;
-      if (era[sum[i]] == sum[i])
-      {
-        maxl = len;
-        resp = sum[i];
-      }
+        sum[i] = sum[i] + primes[i + len];
+        if (maximumprimes > sum[i])
+        {
+            process = true;
+            if (era[sum[i]] == sum[i])
+            {
+                maxl = len;
+                resp = sum[i];
+            }
+        }
+        else
+          stop = Math.min(stop, i);
     }
-    else
-      stop = Math.min(stop, i);
-  }
-  len ++;
+    len++;
 }
 util.print(resp, "\n", maxl, "\n");
 

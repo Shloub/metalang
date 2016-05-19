@@ -18,13 +18,13 @@ for (var a = 0 ; a <= 9; a++)
         for (var e = 0 ; e <= 9; e++)
           for (var f = 0 ; f <= 9; f++)
           {
-            var s = p[a] + p[b] + p[c] + p[d] + p[e] + p[f];
-            var r = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000;
-            if (s == r && r != 1)
-            {
-              util.print(f, e, d, c, b, a, " ", r, "\n");
-              sum += r;
-            }
+              var s = p[a] + p[b] + p[c] + p[d] + p[e] + p[f];
+              var r = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000;
+              if (s == r && r != 1)
+              {
+                  util.print(f, e, d, c, b, a, " ", r, "\n");
+                  sum += r;
+              }
 }
 util.print(sum);
 

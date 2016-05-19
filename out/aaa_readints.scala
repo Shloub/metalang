@@ -15,9 +15,9 @@ object aaa_readints
       tab2(a) = readLine().split(" ").map(_.toInt);
     for (i <- 0 to len - 2)
     {
-      for (j <- 0 to len - 1)
-        printf("%d ", tab2(i)(j));
-      printf("\n");
+        for (j <- 0 to len - 1)
+          printf("%d ", tab2(i)(j));
+        printf("\n");
     }
   }
   

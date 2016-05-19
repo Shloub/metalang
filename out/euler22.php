@@ -27,23 +27,23 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-function score(){
-  scantrim();
-  list($len) = scan("%d");
-  scantrim();
-  $sum = 0;
-  for ($i = 1 ; $i <= $len; $i++)
-  {
-    $c = nextChar();
-    $sum += ord($c) - ord("A") + 1;
-    /*		print c print " " print sum print " " */
-  }
-  return $sum;
+function score() {
+    scantrim();
+    list($len) = scan("%d");
+    scantrim();
+    $sum = 0;
+    for ($i = 1; $i <= $len; $i++)
+    {
+        $c = nextChar();
+        $sum += ord($c) - ord("A") + 1;
+        /*		print c print " " print sum print " " */
+    }
+    return $sum;
 }
 
 $sum = 0;
 list($n) = scan("%d");
-for ($i = 1 ; $i <= $n; $i++)
+for ($i = 1; $i <= $n; $i++)
   $sum += $i * score();
 echo $sum, "\n";
-?>
+

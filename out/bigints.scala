@@ -40,14 +40,14 @@ def skip() {
     var chiffres :Array[Int] = new Array[Int](len);
     for (j <- 0 to len - 1)
     {
-      var c = read_char()
-      chiffres(j) = (c).toInt;
+        var c = read_char()
+        chiffres(j) = (c).toInt;
     }
     for (i <- 0 to (len - 1) / 2)
     {
-      var tmp: Int = chiffres(i);
-      chiffres(i) = chiffres(len - 1 - i);
-      chiffres(len - 1 - i) = tmp;
+        var tmp: Int = chiffres(i);
+        chiffres(i) = chiffres(len - 1 - i);
+        chiffres(len - 1 - i) = tmp;
     }
     return new Bigint(true, len, chiffres);
   }
@@ -69,10 +69,10 @@ def skip() {
       return false;
     else
     {
-      for (i <- 0 to a.bigint_len - 1)
-        if (a.bigint_chiffres(i) != b.bigint_chiffres(i))
-        return false;
-      return true;
+        for (i <- 0 to a.bigint_len - 1)
+          if (a.bigint_chiffres(i) != b.bigint_chiffres(i))
+          return false;
+        return true;
     }
   }
   
@@ -85,20 +85,20 @@ def skip() {
       return false;
     else
     {
-      if (a.bigint_len > b.bigint_len)
-        return a.bigint_sign;
-      else if (a.bigint_len < b.bigint_len)
-        return !a.bigint_sign;
-      else
-        for (i <- 0 to a.bigint_len - 1)
-        {
-          var j: Int = a.bigint_len - 1 - i;
-          if (a.bigint_chiffres(j) > b.bigint_chiffres(j))
-            return a.bigint_sign;
-          else if (a.bigint_chiffres(j) < b.bigint_chiffres(j))
-            return !a.bigint_sign;
-        }
-      return true;
+        if (a.bigint_len > b.bigint_len)
+          return a.bigint_sign;
+        else if (a.bigint_len < b.bigint_len)
+          return !a.bigint_sign;
+        else
+          for (i <- 0 to a.bigint_len - 1)
+          {
+              var j: Int = a.bigint_len - 1 - i;
+              if (a.bigint_chiffres(j) > b.bigint_chiffres(j))
+                return a.bigint_sign;
+              else if (a.bigint_chiffres(j) < b.bigint_chiffres(j))
+                return !a.bigint_sign;
+          }
+        return true;
     }
   }
   
@@ -114,13 +114,13 @@ def skip() {
     var chiffres :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
     {
-      var tmp: Int = retenue;
-      if (i < a.bigint_len)
-        tmp = tmp + a.bigint_chiffres(i);
-      if (i < b.bigint_len)
-        tmp = tmp + b.bigint_chiffres(i);
-      retenue = tmp / 10;
-      chiffres(i) = tmp % 10;
+        var tmp: Int = retenue;
+        if (i < a.bigint_len)
+          tmp = tmp + a.bigint_chiffres(i);
+        if (i < b.bigint_len)
+          tmp = tmp + b.bigint_chiffres(i);
+        retenue = tmp / 10;
+        chiffres(i) = tmp % 10;
     }
     while (len > 0 && chiffres(len - 1) == 0)
       len = len - 1;
@@ -137,17 +137,17 @@ Pré-requis : a > b
     var chiffres :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
     {
-      var tmp: Int = retenue + a.bigint_chiffres(i);
-      if (i < b.bigint_len)
-        tmp = tmp - b.bigint_chiffres(i);
-      if (tmp < 0)
-      {
-        tmp = tmp + 10;
-        retenue = -1;
-      }
-      else
-        retenue = 0;
-      chiffres(i) = tmp;
+        var tmp: Int = retenue + a.bigint_chiffres(i);
+        if (i < b.bigint_len)
+          tmp = tmp - b.bigint_chiffres(i);
+        if (tmp < 0)
+        {
+            tmp = tmp + 10;
+            retenue = -1;
+        }
+        else
+          retenue = 0;
+        chiffres(i) = tmp;
     }
     while (len > 0 && chiffres(len - 1) == 0)
       len = len - 1;
@@ -161,26 +161,26 @@ Pré-requis : a > b
   def add_bigint(a : Bigint, b : Bigint): Bigint = {
     if (a.bigint_sign == b.bigint_sign)
     {
-      if (a.bigint_sign)
-        return add_bigint_positif(a, b);
-      else
-        return neg_bigint(add_bigint_positif(a, b));
+        if (a.bigint_sign)
+          return add_bigint_positif(a, b);
+        else
+          return neg_bigint(add_bigint_positif(a, b));
     }
     else if (a.bigint_sign)
     {
-      /* a positif, b negatif */
-      if (bigint_gt(a, neg_bigint(b)))
-        return sub_bigint_positif(a, b);
-      else
-        return neg_bigint(sub_bigint_positif(b, a));
+        /* a positif, b negatif */
+        if (bigint_gt(a, neg_bigint(b)))
+          return sub_bigint_positif(a, b);
+        else
+          return neg_bigint(sub_bigint_positif(b, a));
     }
     else
     {
-      /* a negatif, b positif */
-      if (bigint_gt(neg_bigint(a), b))
-        return neg_bigint(sub_bigint_positif(a, b));
-      else
-        return sub_bigint_positif(b, a);
+        /* a negatif, b positif */
+        if (bigint_gt(neg_bigint(a), b))
+          return neg_bigint(sub_bigint_positif(a, b));
+        else
+          return sub_bigint_positif(b, a);
     }
   }
   
@@ -202,14 +202,14 @@ D'ou le nom de la fonction. */
       chiffres(k) = 0;
     for (i <- 0 to a.bigint_len - 1)
     {
-      var retenue: Int = 0;
-      for (j <- 0 to b.bigint_len - 1)
-      {
-        chiffres(i + j) = chiffres(i + j) + retenue + b.bigint_chiffres(j) * a.bigint_chiffres(i);
-        retenue = chiffres(i + j) / 10;
-        chiffres(i + j) = chiffres(i + j) % 10;
-      }
-      chiffres(i + b.bigint_len) = chiffres(i + b.bigint_len) + retenue;
+        var retenue: Int = 0;
+        for (j <- 0 to b.bigint_len - 1)
+        {
+            chiffres(i + j) = chiffres(i + j) + retenue + b.bigint_chiffres(j) * a.bigint_chiffres(i);
+            retenue = chiffres(i + j) / 10;
+            chiffres(i + j) = chiffres(i + j) % 10;
+        }
+        chiffres(i + b.bigint_len) = chiffres(i + b.bigint_len) + retenue;
     }
     chiffres(a.bigint_len + b.bigint_len) = chiffres(a.bigint_len + b.bigint_len - 1) / 10;
     chiffres(a.bigint_len + b.bigint_len - 1) = chiffres(a.bigint_len + b.bigint_len - 1) % 10;
@@ -269,8 +269,8 @@ Modulo
     var out0: Int = 1;
     while (a >= 10)
     {
-      a = a / 10;
-      out0 = out0 + 1;
+        a = a / 10;
+        out0 = out0 + 1;
     }
     return out0;
   }
@@ -287,8 +287,8 @@ Modulo
       t(j) = 0;
     for (k <- 0 to size - 1)
     {
-      t(k) = i % 10;
-      i = i / 10;
+        t(k) = i % 10;
+        i = i / 10;
     }
     return new Bigint(true, size, t);
   }
@@ -299,8 +299,8 @@ Modulo
     var out0: Bigint = one;
     while (!bigint_eq(a, one))
     {
-      out0 = mul_bigint(a, out0);
-      a = sub_bigint(a, one);
+        out0 = mul_bigint(a, out0);
+        a = sub_bigint(a, one);
     }
     return out0;
   }
@@ -346,11 +346,11 @@ Modulo
     var sum: Bigint = bigint_of_int(0);
     for (i <- 1 to 100)
     {
-      /* 1000 normalement */
-      var ib: Bigint = bigint_of_int(i);
-      var ibeib: Bigint = bigint_exp_10chiffres(ib, i);
-      sum = add_bigint(sum, ibeib);
-      sum = bigint_premiers_chiffres(sum, 10);
+        /* 1000 normalement */
+        var ib: Bigint = bigint_of_int(i);
+        var ibeib: Bigint = bigint_exp_10chiffres(ib, i);
+        sum = add_bigint(sum, ibeib);
+        sum = bigint_premiers_chiffres(sum, 10);
     }
     printf("euler 48 = ");
     print_bigint(sum);
@@ -370,11 +370,11 @@ Modulo
     var b: Bigint = bigint_of_int(1);
     while (b.bigint_len < 100)
     {
-      /* 1000 normalement */
-      var c: Bigint = add_bigint(a, b);
-      a = b;
-      b = c;
-      i = i + 1;
+        /* 1000 normalement */
+        var c: Bigint = add_bigint(a, b);
+        a = b;
+        b = c;
+        i = i + 1;
     }
     return i;
   }
@@ -400,32 +400,32 @@ Modulo
     var found: Boolean = true;
     while (found)
     {
-      var min0: Bigint = a0_bigint(0);
-      found = false;
-      for (i <- 2 to maxA)
-        if (b(i) <= maxB)
-      {
+        var min0: Bigint = a0_bigint(0);
+        found = false;
+        for (i <- 2 to maxA)
+          if (b(i) <= maxB)
+        {
+            if (found)
+            {
+                if (bigint_lt(a_bigint(i), min0))
+                  min0 = a_bigint(i);
+            }
+            else
+            {
+                min0 = a_bigint(i);
+                found = true;
+            }
+        }
         if (found)
         {
-          if (bigint_lt(a_bigint(i), min0))
-            min0 = a_bigint(i);
+            n = n + 1;
+            for (l <- 2 to maxA)
+              if (bigint_eq(a_bigint(l), min0) && b(l) <= maxB)
+            {
+                b(l) = b(l) + 1;
+                a_bigint(l) = mul_bigint(a_bigint(l), a0_bigint(l));
+            }
         }
-        else
-        {
-          min0 = a_bigint(i);
-          found = true;
-        }
-      }
-      if (found)
-      {
-        n = n + 1;
-        for (l <- 2 to maxA)
-          if (bigint_eq(a_bigint(l), min0) && b(l) <= maxB)
-        {
-          b(l) = b(l) + 1;
-          a_bigint(l) = mul_bigint(a_bigint(l), a0_bigint(l));
-        }
-      }
     }
     return n;
   }
@@ -437,9 +437,9 @@ Modulo
     var sum: Bigint = read_bigint(50);
     for (i <- 2 to 100)
     {
-      skip();
-      var tmp: Bigint = read_bigint(50);
-      sum = add_bigint(sum, tmp);
+        skip();
+        var tmp: Bigint = read_bigint(50);
+        sum = add_bigint(sum, tmp);
     }
     printf("euler13 = ");
     print_bigint(sum);

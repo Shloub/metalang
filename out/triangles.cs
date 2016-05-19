@@ -76,12 +76,12 @@ on le retrouve ici : http://projecteuler.net/problem=18
   static int find(int len, int[][] tab)
   {
     int[][] tab2 = new int[len][];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      int[] tab3 = new int[i + 1];
-      for (int j = 0 ; j < i + 1; j++)
-        tab3[j] = 0;
-      tab2[i] = tab3;
+        int[] tab3 = new int[i + 1];
+        for (int j = 0; j < i + 1; j++)
+          tab3[j] = 0;
+        tab2[i] = tab3;
     }
     return find0(len, tab, tab2, 0, 0);
   }
@@ -93,24 +93,24 @@ on le retrouve ici : http://projecteuler.net/problem=18
     len = readInt();
     stdin_sep();
     int[][] tab = new int[len][];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      int[] tab2 = new int[i + 1];
-      for (int j = 0 ; j < i + 1; j++)
-      {
-        int tmp = 0;
-        tmp = readInt();
-        stdin_sep();
-        tab2[j] = tmp;
-      }
-      tab[i] = tab2;
+        int[] tab2 = new int[i + 1];
+        for (int j = 0; j < i + 1; j++)
+        {
+            int tmp = 0;
+            tmp = readInt();
+            stdin_sep();
+            tab2[j] = tmp;
+        }
+        tab[i] = tab2;
     }
     Console.Write("" + find(len, tab) + "\n");
-    for (int k = 0 ; k < len; k++)
+    for (int k = 0; k < len; k++)
     {
-      for (int l = 0 ; l <= k; l ++)
-        Console.Write("" + tab[k][l] + " ");
-      Console.Write("\n");
+        for (int l = 0; l <= k; l ++)
+          Console.Write("" + tab[k][l] + " ");
+        Console.Write("\n");
     }
   }
   

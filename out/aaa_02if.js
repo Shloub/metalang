@@ -1,8 +1,9 @@
 var util = require("util");
-function f(i){
-  if (i == 0)
-    return true;
-  return false;
+
+function f(i) {
+    if (i == 0)
+      return true;
+    return false;
 }
 
 if (f(4))

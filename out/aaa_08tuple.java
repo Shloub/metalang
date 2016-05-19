@@ -3,13 +3,14 @@ import java.util.*;
 public class aaa_08tuple
 {
   static Scanner scanner = new Scanner(System.in);
-    static int[] read_int_line(){
-        String[] s = scanner.nextLine().split(" ");
-        int[] out = new int[s.length];
-        for (int i = 0; i < s.length; i ++)
-          out[i] = Integer.parseInt(s[i]);
-        return out;
-    }
+  static int[] read_int_line()
+  {
+    String[] s = scanner.nextLine().split(" ");
+    int[] out = new int[s.length];
+    for (int i = 0; i < s.length; i++)
+      out[i] = Integer.parseInt(s[i]);
+    return out;
+  }
 
   static class tuple_int_int {
     public int tuple_int_int_field_0;

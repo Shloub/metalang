@@ -28,14 +28,14 @@ def skip() {
     var i: Int = len - 2;
     while (i >= 0)
     {
-      var x: Int = tab(i);
-      while (j >= 0 && x > tab(len - j))
-        j = j - 1;
-      j = j + 1;
-      tab(len - j) = x;
-      if (j > max0)
-        max0 = j;
-      i = i - 1;
+        var x: Int = tab(i);
+        while (j >= 0 && x > tab(len - j))
+          j = j - 1;
+        j = j + 1;
+        tab(len - j) = x;
+        if (j > max0)
+          max0 = j;
+        i = i - 1;
     }
     return max0;
   }
@@ -49,10 +49,10 @@ def skip() {
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
     {
-      var x: Int = 0;
-      x = read_int()
-      skip();
-      tab(i) = x;
+        var x: Int = 0;
+        x = read_int()
+        skip();
+        tab(i) = x;
     }
     printf("%d", montagnes0(tab, len));
   }

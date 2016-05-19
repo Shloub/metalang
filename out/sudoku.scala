@@ -28,9 +28,9 @@ def skip() {
     var out0 :Array[Int] = new Array[Int](9 * 9);
     for (i <- 0 to 9 * 9 - 1)
     {
-      var k = read_int()
-      skip();
-      out0(i) = k;
+        var k = read_int()
+        skip();
+        out0(i) = k;
     }
     return out0;
   }
@@ -41,15 +41,15 @@ def skip() {
     var x: Int=0;
     for (y <- 0 to 8)
     {
-      for (x <- 0 to 8)
-      {
-        printf("%d ", sudoku0(x + y * 9));
-        if (x % 3 == 2)
-          printf(" ");
-      }
-      printf("\n");
-      if (y % 3 == 2)
+        for (x <- 0 to 8)
+        {
+            printf("%d ", sudoku0(x + y * 9));
+            if (x % 3 == 2)
+              printf(" ");
+        }
         printf("\n");
+        if (y % 3 == 2)
+          printf("\n");
     }
     printf("\n");
   }
@@ -91,14 +91,14 @@ def skip() {
     for (i <- 0 to 80)
       if (sudoku0(i) == 0)
     {
-      for (p <- 1 to 9)
-      {
-        sudoku0(i) = p;
-        if (solve(sudoku0))
-          return true;
-      }
-      sudoku0(i) = 0;
-      return false;
+        for (p <- 1 to 9)
+        {
+            sudoku0(i) = p;
+            if (solve(sudoku0))
+              return true;
+        }
+        sudoku0(i) = 0;
+        return false;
     }
     return false;
   }

@@ -52,8 +52,8 @@ static int readInt(){
       return 1;
     if (b % 2 == 0)
     {
-      int o = exp0(a, b / 2);
-      return o * o;
+        int o = exp0(a, b / 2);
+        return o * o;
     }
     else
       return a * exp0(a, b - 1);

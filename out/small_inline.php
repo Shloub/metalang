@@ -21,10 +21,10 @@ function scantrim(){
   }
 }
 $t = array();
-for ($d = 0 ; $d < 2; $d++)
+for ($d = 0; $d < 2; $d++)
 {
-  list($t[$d]) = scan("%d");
-  scantrim();
+    list($t[$d]) = scan("%d");
+    scantrim();
 }
 echo $t[0], " - ", $t[1], "\n";
-?>
+

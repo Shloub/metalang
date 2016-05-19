@@ -22,7 +22,7 @@ func montagnes0(tab []int, len int) int{
     for j >= 0 && x > tab[len - j]{
       j --;
     }
-    j ++;
+    j++;
     tab[len - j] = x;
     if j > max0 {
       max0 = j;

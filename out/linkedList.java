@@ -26,10 +26,10 @@ public class linkedList
       return acc;
     else
     {
-      intlist acc2 = new intlist();
-      acc2.head = torev.head;
-      acc2.tail = acc;
-      return rev2(acc, torev.tail);
+        intlist acc2 = new intlist();
+        acc2.head = torev.head;
+        acc2.tail = acc;
+        return rev2(acc, torev.tail);
     }
   }
   
@@ -44,14 +44,14 @@ public class linkedList
     int i = -1;
     while (i != 0)
     {
-      if (scanner.hasNext("^-")){
-        scanner.next("^-");
-        i = -scanner.nextInt();
-      }else{
-        i = scanner.nextInt();
-      }
-      if (i != 0)
-        list = cons(list, i);
+        if (scanner.hasNext("^-")) {
+          scanner.next("^-");
+          i = -scanner.nextInt();
+        }else{
+          i = scanner.nextInt();
+        }
+        if (i != 0)
+          list = cons(list, i);
     }
   }
   

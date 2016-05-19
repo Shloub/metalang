@@ -26,18 +26,20 @@ function read_int_(){
     }
   }
 }
-function mktoto(v1){
-  var t = {
-    foo : v1,
-    bar : 0,
-    blah : 0
-  };
-  return t;
+
+function mktoto(v1) {
+    var t = {
+      foo : v1,
+      bar : 0,
+      blah : 0
+    };
+    return t;
 }
 
-function result(t){
-  t.blah ++;
-  return t.foo + t.blah * t.bar + t.bar * t.foo;
+
+function result(t) {
+    t.blah++;
+    return t.foo + t.blah * t.bar + t.bar * t.foo;
 }
 
 var t = mktoto(4);

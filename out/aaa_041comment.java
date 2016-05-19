@@ -9,7 +9,7 @@ public class aaa_041comment
     int i = 4;
     /*while i < 10 do */
     System.out.printf("%d", i);
-    i ++;
+    i++;
     /*  end */
     System.out.printf("%d", i);
   }

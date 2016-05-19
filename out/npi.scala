@@ -47,20 +47,20 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
       ptrStr = ptrStr + 1;
     else if (is_number(str(ptrStr)))
     {
-      var num: Int = 0;
-      while (str(ptrStr) != ' ')
-      {
-        num = num * 10 + (str(ptrStr)).toInt - ('0').toInt;
-        ptrStr = ptrStr + 1;
-      }
-      stack(ptrStack) = num;
-      ptrStack = ptrStack + 1;
+        var num: Int = 0;
+        while (str(ptrStr) != ' ')
+        {
+            num = num * 10 + (str(ptrStr)).toInt - ('0').toInt;
+            ptrStr = ptrStr + 1;
+        }
+        stack(ptrStack) = num;
+        ptrStack = ptrStack + 1;
     }
     else if (str(ptrStr) == '+')
     {
-      stack(ptrStack - 2) = stack(ptrStack - 2) + stack(ptrStack - 1);
-      ptrStack = ptrStack - 1;
-      ptrStr = ptrStr + 1;
+        stack(ptrStack - 2) = stack(ptrStack - 2) + stack(ptrStack - 1);
+        ptrStack = ptrStack - 1;
+        ptrStr = ptrStr + 1;
     }
     return stack(0);
   }
@@ -74,9 +74,9 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
     {
-      var tmp: Char = '\u0000';
-      tmp = read_char()
-      tab(i) = tmp;
+        var tmp: Char = '\u0000';
+        tmp = read_char()
+        tab(i) = tmp;
     }
     var result: Int = npi0(tab, len);
     printf("%d", result);

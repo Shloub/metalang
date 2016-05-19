@@ -11,7 +11,7 @@ func periode(restes []int, len int, a int, b int) int{
         }
     }
     restes[len] = reste;
-    len ++;
+    len++;
     a = reste * 10;
   }
   return 0

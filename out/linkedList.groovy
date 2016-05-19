@@ -24,10 +24,10 @@ Intlist rev2(Intlist acc, Intlist torev)
     return acc
   else
   {
-    Intlist acc2 = new Intlist()
-    acc2.head = torev.head
-    acc2.tail = acc
-    return rev2(acc, torev.tail)
+      Intlist acc2 = new Intlist()
+      acc2.head = torev.head
+      acc2.tail = acc
+      return rev2(acc, torev.tail)
   }
 }
 
@@ -42,14 +42,14 @@ void test(Intlist empty)
   int i = -1
   while (i != 0)
   {
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      i = -scanner.nextInt();
-    }else{
-      i = scanner.nextInt();
-    }
-    if (i != 0)
-      list = cons(list, i)
+      if (scanner.hasNext("^-")) {
+        scanner.next("^-");
+        i = -scanner.nextInt();
+      }else{
+        i = scanner.nextInt();
+      }
+      if (i != 0)
+        list = cons(list, i)
   }
 }
 

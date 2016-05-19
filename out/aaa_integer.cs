@@ -14,7 +14,7 @@ public class aaa_integer
     Console.Write("" + i + "\n");
     i /= 2;
     Console.Write("" + i + "\n");
-    i ++;
+    i++;
     Console.Write("" + i + "\n");
     i /= 3;
     Console.Write("" + i + "\n");

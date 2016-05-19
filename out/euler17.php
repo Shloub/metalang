@@ -13,4 +13,4 @@ $one_to_eighty = $one_to_seventy + 7 * 9 + $one_to_nine + 6;
 $one_to_ninety = $one_to_eighty + 6 * 9 + $one_to_nine + 6;
 $one_to_ninety_nine = $one_to_ninety + 6 * 9 + $one_to_nine;
 echo $one_to_ninety_nine, "\n", 100 * $one_to_nine + $one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 3 + 8, "\n";
-?>
+

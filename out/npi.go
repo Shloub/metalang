@@ -29,19 +29,19 @@ func npi0(str []byte, len int) int{
   var ptrStr int = 0
   for ptrStr < len{
     if str[ptrStr] == ' ' {
-      ptrStr ++;
+      ptrStr++;
     } else if is_number(str[ptrStr]) {
       var num int = 0
         for str[ptrStr] != ' '{
           num = num * 10 + (int)(str[ptrStr]) - (int)('0');
-          ptrStr ++;
+          ptrStr++;
         }
         stack[ptrStack] = num;
-        ptrStack ++;
+        ptrStack++;
     } else if str[ptrStr] == '+' {
       stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
         ptrStack --;
-        ptrStr ++;
+        ptrStr++;
     }  
   }
   return stack[0]

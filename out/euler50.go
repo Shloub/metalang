@@ -12,7 +12,7 @@ func eratostene(t []int, max0 int) int{
   var n int = 0
   for i := 2 ; i < max0; i++ {
     if t[i] == i {
-        n ++;
+        n++;
           if max0 / i > i {
             var j int = i * i
               for j < max0 && j > 0{
@@ -40,7 +40,7 @@ func main() {
   for k := 2 ; k < maximumprimes; k++ {
     if era[k] == k {
         primes[l] = k;
-          l ++;
+          l++;
       }
   }
   fmt.Printf("%d == %d\n", l, nprimes);
@@ -69,7 +69,7 @@ func main() {
             }
         }
     }
-    len ++;
+    len++;
   }
   fmt.Printf("%d\n%d\n", resp, maxl);
 }

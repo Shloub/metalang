@@ -26,24 +26,24 @@ def skip() {
     var m: Int = (a + b) / 2;
     if (a == m)
     {
-      if (tab(a) == m)
-        return b;
-      else
-        return a;
+        if (tab(a) == m)
+          return b;
+        else
+          return a;
     }
     var i: Int = a;
     var j: Int = b;
     while (i < j)
     {
-      var e: Int = tab(i);
-      if (e < m)
-        i = i + 1;
-      else
-      {
-        j = j - 1;
-        tab(i) = tab(j);
-        tab(j) = e;
-      }
+        var e: Int = tab(i);
+        if (e < m)
+          i = i + 1;
+        else
+        {
+            j = j - 1;
+            tab(i) = tab(j);
+            tab(j) = e;
+        }
     }
     if (i < m)
       return go0(tab, a, m);
@@ -64,10 +64,10 @@ def skip() {
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
     {
-      var tmp: Int = 0;
-      tmp = read_int()
-      skip();
-      tab(i) = tmp;
+        var tmp: Int = 0;
+        tmp = read_int()
+        skip();
+        tab(i) = tmp;
     }
     printf("%d", plus_petit0(tab, len));
   }

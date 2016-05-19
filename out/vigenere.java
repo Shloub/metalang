@@ -21,15 +21,15 @@ public class vigenere
   
   static void crypte(int taille_cle, char[] cle, int taille, char[] message)
   {
-    for (int i = 0 ; i < taille; i++)
+    for (int i = 0; i < taille; i++)
     {
-      int lettre = position_alphabet(message[i]);
-      if (lettre != -1)
-      {
-        int addon = position_alphabet(cle[i % taille_cle]);
-        int new0 = (addon + lettre) % 26;
-        message[i] = of_position_alphabet(new0);
-      }
+        int lettre = position_alphabet(message[i]);
+        if (lettre != -1)
+        {
+            int addon = position_alphabet(cle[i % taille_cle]);
+            int new0 = (addon + lettre) % 26;
+            message[i] = of_position_alphabet(new0);
+        }
     }
   }
   
@@ -37,7 +37,7 @@ public class vigenere
   public static void main(String args[])
   {
     int taille_cle;
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       taille_cle = scanner.nextInt();
     } else {
@@ -45,14 +45,14 @@ public class vigenere
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] cle = new char[taille_cle];
-    for (int index = 0 ; index < taille_cle; index++)
+    for (int index = 0; index < taille_cle; index++)
     {
-      char out0 = scanner.findWithinHorizon(".", 1).charAt(0);
-      cle[index] = out0;
+        char out0 = scanner.findWithinHorizon(".", 1).charAt(0);
+        cle[index] = out0;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille;
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       taille = scanner.nextInt();
     } else {
@@ -60,13 +60,13 @@ public class vigenere
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] message = new char[taille];
-    for (int index2 = 0 ; index2 < taille; index2++)
+    for (int index2 = 0; index2 < taille; index2++)
     {
-      char out2 = scanner.findWithinHorizon(".", 1).charAt(0);
-      message[index2] = out2;
+        char out2 = scanner.findWithinHorizon(".", 1).charAt(0);
+        message[index2] = out2;
     }
     crypte(taille_cle, cle, taille, message);
-    for (int i = 0 ; i < taille; i++)
+    for (int i = 0; i < taille; i++)
       System.out.printf("%c", message[i]);
     System.out.print("\n");
   }

@@ -22,18 +22,19 @@ function scantrim(){
 }/*
 La suite de fibonaci
 */
-function fibo0($a, $b, $i){
-  $out0 = 0;
-  $a2 = $a;
-  $b2 = $b;
-  for ($j = 0 ; $j <= $i + 1; $j++)
-  {
-    $out0 += $a2;
-    $tmp = $b2;
-    $b2 += $a2;
-    $a2 = $tmp;
-  }
-  return $out0;
+
+function fibo0($a, $b, $i) {
+    $out0 = 0;
+    $a2 = $a;
+    $b2 = $b;
+    for ($j = 0; $j <= $i + 1; $j++)
+    {
+        $out0 += $a2;
+        $tmp = $b2;
+        $b2 += $a2;
+        $a2 = $tmp;
+    }
+    return $out0;
 }
 
 $a = 0;
@@ -45,4 +46,4 @@ list($b) = scan("%d");
 scantrim();
 list($i) = scan("%d");
 echo fibo0($a, $b, $i);
-?>
+

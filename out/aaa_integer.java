@@ -15,7 +15,7 @@ public class aaa_integer
     System.out.printf("%d\n", i);
     i /= 2;
     System.out.printf("%d\n", i);
-    i ++;
+    i++;
     System.out.printf("%d\n", i);
     i /= 3;
     System.out.printf("%d\n", i);

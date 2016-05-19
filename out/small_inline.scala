@@ -28,8 +28,8 @@ def skip() {
     var t :Array[Int] = new Array[Int](2);
     for (d <- 0 to 2 - 1)
     {
-      t(d) = read_int()
-      skip();
+        t(d) = read_int()
+        skip();
     }
     printf("%d - %d\n", t(0), t(1));
   }

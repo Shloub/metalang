@@ -20,44 +20,45 @@ function scantrim(){
     stdin_();
   }
 }
-function pathfind_aux(&$cache, &$tab, $len, $pos){
-  if ($pos >= $len - 1)
-    return 0;
-  else if ($cache[$pos] != -1)
-    return $cache[$pos];
-  else
-  {
-    $cache[$pos] = $len * 2;
-    $posval = pathfind_aux($cache, $tab, $len, $tab[$pos]);
-    $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
-    $out0 = 0;
-    if ($posval < $oneval)
-      $out0 = 1 + $posval;
+function pathfind_aux(&$cache, &$tab, $len, $pos) {
+    if ($pos >= $len - 1)
+      return 0;
+    else if ($cache[$pos] != -1)
+      return $cache[$pos];
     else
-      $out0 = 1 + $oneval;
-    $cache[$pos] = $out0;
-    return $out0;
-  }
+    {
+        $cache[$pos] = $len * 2;
+        $posval = pathfind_aux($cache, $tab, $len, $tab[$pos]);
+        $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
+        $out0 = 0;
+        if ($posval < $oneval)
+          $out0 = 1 + $posval;
+        else
+          $out0 = 1 + $oneval;
+        $cache[$pos] = $out0;
+        return $out0;
+    }
 }
 
-function pathfind(&$tab, $len){
-  $cache = array();
-  for ($i = 0 ; $i < $len; $i++)
-    $cache[$i] = -1;
-  return pathfind_aux($cache, $tab, $len, 0);
+
+function pathfind(&$tab, $len) {
+    $cache = array();
+    for ($i = 0; $i < $len; $i++)
+      $cache[$i] = -1;
+    return pathfind_aux($cache, $tab, $len, 0);
 }
 
 $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i < $len; $i++)
+for ($i = 0; $i < $len; $i++)
 {
-  $tmp = 0;
-  list($tmp) = scan("%d");
-  scantrim();
-  $tab[$i] = $tmp;
+    $tmp = 0;
+    list($tmp) = scan("%d");
+    scantrim();
+    $tab[$i] = $tmp;
 }
 $result = pathfind($tab, $len);
 echo $result;
-?>
+

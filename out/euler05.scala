@@ -18,8 +18,8 @@ object euler05
     while (n != 1 && d * d <= n)
       if (n % d == 0)
     {
-      tab(d) = tab(d) + 1;
-      n = n / d;
+        tab(d) = tab(d) + 1;
+        n = n / d;
     }
     else
       d = d + 1;
@@ -36,9 +36,9 @@ object euler05
       o(m) = 0;
     for (i <- 1 to lim)
     {
-      var t: Array[Int] = primesfactors(i);
-      for (j <- 1 to i)
-        o(j) = max2_0(o(j), t(j));
+        var t: Array[Int] = primesfactors(i);
+        for (j <- 1 to i)
+          o(j) = max2_0(o(j), t(j));
     }
     var product: Int = 1;
     for (k <- 1 to lim)

@@ -26,18 +26,18 @@ function read_int_(){
     }
   }
 }
-function summax(lst, len){
-  var current = 0;
-  var max0 = 0;
-  for (var i = 0 ; i < len; i++)
-  {
-    current += lst[i];
-    if (current < 0)
-      current = 0;
-    if (max0 < current)
-      max0 = current;
-  }
-  return max0;
+function summax(lst, len) {
+    var current = 0;
+    var max0 = 0;
+    for (var i = 0 ; i < len; i++)
+    {
+        current += lst[i];
+        if (current < 0)
+          current = 0;
+        if (max0 < current)
+          max0 = current;
+    }
+    return max0;
 }
 
 var len = 0;
@@ -46,10 +46,10 @@ stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i < len; i++)
 {
-  var tmp = 0;
-  tmp=read_int_();
-  stdinsep();
-  tab[i] = tmp;
+    var tmp = 0;
+    tmp=read_int_();
+    stdinsep();
+    tab[i] = tmp;
 }
 var result = summax(tab, len);
 util.print(result);

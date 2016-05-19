@@ -54,23 +54,23 @@ static int readInt(){
       return cache[pos];
     else
     {
-      cache[pos] = len * 2;
-      int posval = pathfind_aux(cache, tab, len, tab[pos]);
-      int oneval = pathfind_aux(cache, tab, len, pos + 1);
-      int out0 = 0;
-      if (posval < oneval)
-        out0 = 1 + posval;
-      else
-        out0 = 1 + oneval;
-      cache[pos] = out0;
-      return out0;
+        cache[pos] = len * 2;
+        int posval = pathfind_aux(cache, tab, len, tab[pos]);
+        int oneval = pathfind_aux(cache, tab, len, pos + 1);
+        int out0 = 0;
+        if (posval < oneval)
+          out0 = 1 + posval;
+        else
+          out0 = 1 + oneval;
+        cache[pos] = out0;
+        return out0;
     }
   }
   
   static int pathfind(int[] tab, int len)
   {
     int[] cache = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
       cache[i] = -1;
     return pathfind_aux(cache, tab, len, 0);
   }
@@ -82,12 +82,12 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      int tmp = 0;
-      tmp = readInt();
-      stdin_sep();
-      tab[i] = tmp;
+        int tmp = 0;
+        tmp = readInt();
+        stdin_sep();
+        tab[i] = tmp;
     }
     int result = pathfind(tab, len);
     Console.Write(result);

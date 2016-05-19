@@ -1,13 +1,15 @@
 <?php
-function g($i){
-  $j = $i * 4;
-  if ($j % 2 == 1)
-    return 0;
-  return $j;
+
+function g($i) {
+    $j = $i * 4;
+    if ($j % 2 == 1)
+      return 0;
+    return $j;
 }
 
-function h($i){
-  echo $i, "\n";
+
+function h($i) {
+    echo $i, "\n";
 }
 
 h(14);
@@ -19,4 +21,4 @@ h(15);
 $a = 2;
 $b = 1;
 echo $a + $b;
-?>
+

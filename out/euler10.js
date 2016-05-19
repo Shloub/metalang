@@ -1,21 +1,22 @@
 var util = require("util");
-function eratostene(t, max0){
-  var sum = 0;
-  for (var i = 2 ; i < max0; i++)
-    if (t[i] == i)
-  {
-    sum += i;
-    if (~~(max0 / i) > i)
+
+function eratostene(t, max0) {
+    var sum = 0;
+    for (var i = 2 ; i < max0; i++)
+      if (t[i] == i)
     {
-      var j = i * i;
-      while (j < max0 && j > 0)
-      {
-        t[j] = 0;
-        j += i;
-      }
+        sum += i;
+        if (~~(max0 / i) > i)
+        {
+            var j = i * i;
+            while (j < max0 && j > 0)
+            {
+                t[j] = 0;
+                j += i;
+            }
+        }
     }
-  }
-  return sum;
+    return sum;
 }
 
 var n = 100000;

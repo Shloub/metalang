@@ -8,24 +8,24 @@ public class plus_petit
     int m = (a + b) / 2;
     if (a == m)
     {
-      if (tab[a] == m)
-        return b;
-      else
-        return a;
+        if (tab[a] == m)
+          return b;
+        else
+          return a;
     }
     int i = a;
     int j = b;
     while (i < j)
     {
-      int e = tab[i];
-      if (e < m)
-        i ++;
-      else
-      {
-        j --;
-        tab[i] = tab[j];
-        tab[j] = e;
-      }
+        int e = tab[i];
+        if (e < m)
+          i++;
+        else
+        {
+            j --;
+            tab[i] = tab[j];
+            tab[j] = e;
+        }
     }
     if (i < m)
       return go0(tab, a, m);
@@ -42,7 +42,7 @@ public class plus_petit
   public static void main(String args[])
   {
     int len = 0;
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       len = -scanner.nextInt();
     }else{
@@ -50,17 +50,17 @@ public class plus_petit
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      int tmp = 0;
-      if (scanner.hasNext("^-")){
-        scanner.next("^-");
-        tmp = -scanner.nextInt();
-      }else{
-        tmp = scanner.nextInt();
-      }
-      scanner.findWithinHorizon("[\n\r ]*", 1);
-      tab[i] = tmp;
+        int tmp = 0;
+        if (scanner.hasNext("^-")) {
+          scanner.next("^-");
+          tmp = -scanner.nextInt();
+        }else{
+          tmp = scanner.nextInt();
+        }
+        scanner.findWithinHorizon("[\n\r ]*", 1);
+        tab[i] = tmp;
     }
     System.out.printf("%d", plus_petit0(tab, len));
   }

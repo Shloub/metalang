@@ -11,7 +11,7 @@ i *= 13;
 System.out.printf("%s\n", i);
 i /= 2;
 System.out.printf("%s\n", i);
-i ++;
+i++;
 System.out.printf("%s\n", i);
 i /= 3;
 System.out.printf("%s\n", i);

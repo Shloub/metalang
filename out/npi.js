@@ -32,40 +32,41 @@ function read_int_(){
     }
   }
 }
-function is_number(c){
-  return c.charCodeAt(0) <= '9'.charCodeAt(0) && c.charCodeAt(0) >= '0'.charCodeAt(0);
+function is_number(c) {
+    return c.charCodeAt(0) <= '9'.charCodeAt(0) && c.charCodeAt(0) >= '0'.charCodeAt(0);
 }
 
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-function npi0(str, len){
-  var stack = new Array(len);
-  for (var i = 0 ; i < len; i++)
-    stack[i] = 0;
-  var ptrStack = 0;
-  var ptrStr = 0;
-  while (ptrStr < len)
-    if (str[ptrStr] == ' ')
-    ptrStr ++;
-  else if (is_number(str[ptrStr]))
-  {
-    var num = 0;
-    while (str[ptrStr] != ' ')
+
+function npi0(str, len) {
+    var stack = new Array(len);
+    for (var i = 0 ; i < len; i++)
+      stack[i] = 0;
+    var ptrStack = 0;
+    var ptrStr = 0;
+    while (ptrStr < len)
+      if (str[ptrStr] == ' ')
+      ptrStr++;
+    else if (is_number(str[ptrStr]))
     {
-      num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
-      ptrStr ++;
+        var num = 0;
+        while (str[ptrStr] != ' ')
+        {
+            num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
+            ptrStr++;
+        }
+        stack[ptrStack] = num;
+        ptrStack++;
     }
-    stack[ptrStack] = num;
-    ptrStack ++;
-  }
-  else if (str[ptrStr] == '+')
-  {
-    stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-    ptrStack --;
-    ptrStr ++;
-  }
-  return stack[0];
+    else if (str[ptrStr] == '+')
+    {
+        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+        ptrStack --;
+        ptrStr++;
+    }
+    return stack[0];
 }
 
 var len = 0;
@@ -74,9 +75,9 @@ stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i < len; i++)
 {
-  var tmp = '\x00';
-  tmp=read_char_();
-  tab[i] = tmp;
+    var tmp = '\x00';
+    tmp=read_char_();
+    tab[i] = tmp;
 }
 var result = npi0(tab, len);
 util.print(result);

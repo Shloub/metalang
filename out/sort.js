@@ -26,56 +26,58 @@ function read_int_(){
     }
   }
 }
-function copytab(tab, len){
-  var o = new Array(len);
-  for (var i = 0 ; i < len; i++)
-    o[i] = tab[i];
-  return o;
+function copytab(tab, len) {
+    var o = new Array(len);
+    for (var i = 0 ; i < len; i++)
+      o[i] = tab[i];
+    return o;
 }
 
-function bubblesort(tab, len){
-  for (var i = 0 ; i < len; i++)
-    for (var j = i + 1 ; j < len; j++)
-      if (tab[i] > tab[j])
-  {
-    var tmp = tab[i];
-    tab[i] = tab[j];
-    tab[j] = tmp;
-  }
-}
 
-function qsort0(tab, len, i, j){
-  if (i < j)
-  {
-    var i0 = i;
-    var j0 = j;
-    /* pivot : tab[0] */
-    while (i != j)
-      if (tab[i] > tab[j])
+function bubblesort(tab, len) {
+    for (var i = 0 ; i < len; i++)
+      for (var j = i + 1 ; j < len; j++)
+        if (tab[i] > tab[j])
     {
-      if (i == j - 1)
-      {
-        /* on inverse simplement*/
         var tmp = tab[i];
         tab[i] = tab[j];
         tab[j] = tmp;
-        i ++;
-      }
-      else
-      {
-        /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
-        var tmp = tab[i];
-        tab[i] = tab[j];
-        tab[j] = tab[i + 1];
-        tab[i + 1] = tmp;
-        i ++;
-      }
     }
-    else
-      j --;
-    qsort0(tab, len, i0, i - 1);
-    qsort0(tab, len, i + 1, j0);
-  }
+}
+
+
+function qsort0(tab, len, i, j) {
+    if (i < j)
+    {
+        var i0 = i;
+        var j0 = j;
+        /* pivot : tab[0] */
+        while (i != j)
+          if (tab[i] > tab[j])
+        {
+            if (i == j - 1)
+            {
+                /* on inverse simplement*/
+                var tmp = tab[i];
+                tab[i] = tab[j];
+                tab[j] = tmp;
+                i++;
+            }
+            else
+            {
+                /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
+                var tmp = tab[i];
+                tab[i] = tab[j];
+                tab[j] = tab[i + 1];
+                tab[i + 1] = tmp;
+                i++;
+            }
+        }
+        else
+          j --;
+        qsort0(tab, len, i0, i - 1);
+        qsort0(tab, len, i + 1, j0);
+    }
 }
 
 var len = 2;
@@ -84,10 +86,10 @@ stdinsep();
 var tab = new Array(len);
 for (var i_ = 0 ; i_ < len; i_++)
 {
-  var tmp = 0;
-  tmp=read_int_();
-  stdinsep();
-  tab[i_] = tmp;
+    var tmp = 0;
+    tmp=read_int_();
+    stdinsep();
+    tab[i_] = tmp;
 }
 var tab2 = copytab(tab, len);
 bubblesort(tab2, len);

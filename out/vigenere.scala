@@ -46,13 +46,13 @@ def skip() {
     var i: Int=0;
     for (i <- 0 to taille - 1)
     {
-      var lettre: Int = position_alphabet(message(i));
-      if (lettre != -1)
-      {
-        var addon: Int = position_alphabet(cle(i % taille_cle));
-        var new0: Int = (addon + lettre) % 26;
-        message(i) = of_position_alphabet(new0);
-      }
+        var lettre: Int = position_alphabet(message(i));
+        if (lettre != -1)
+        {
+            var addon: Int = position_alphabet(cle(i % taille_cle));
+            var new0: Int = (addon + lettre) % 26;
+            message(i) = of_position_alphabet(new0);
+        }
     }
   }
   
@@ -64,8 +64,8 @@ def skip() {
     var cle :Array[Char] = new Array[Char](taille_cle);
     for (index <- 0 to taille_cle - 1)
     {
-      var out0 = read_char()
-      cle(index) = out0;
+        var out0 = read_char()
+        cle(index) = out0;
     }
     skip();
     var taille = read_int()
@@ -73,8 +73,8 @@ def skip() {
     var message :Array[Char] = new Array[Char](taille);
     for (index2 <- 0 to taille - 1)
     {
-      var out2 = read_char()
-      message(index2) = out2;
+        var out2 = read_char()
+        message(index2) = out2;
     }
     crypte(taille_cle, cle, taille, message);
     for (i <- 0 to taille - 1)

@@ -8,4 +8,4 @@ $t = array(
 
 list($a, $b) = $t["foo"];
 echo $a, " ", $b, " ", $t["bar"], "\n";
-?>
+

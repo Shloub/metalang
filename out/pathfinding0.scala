@@ -19,14 +19,14 @@ object pathfinding0
       return cache(posY)(posX);
     else
     {
-      cache(posY)(posX) = x * y * 10;
-      var val1: Int = pathfind_aux(cache, tab, x, y, posX + 1, posY);
-      var val2: Int = pathfind_aux(cache, tab, x, y, posX - 1, posY);
-      var val3: Int = pathfind_aux(cache, tab, x, y, posX, posY - 1);
-      var val4: Int = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      var out0: Int = 1 + min2_0(min2_0(min2_0(val1, val2), val3), val4);
-      cache(posY)(posX) = out0;
-      return out0;
+        cache(posY)(posX) = x * y * 10;
+        var val1: Int = pathfind_aux(cache, tab, x, y, posX + 1, posY);
+        var val2: Int = pathfind_aux(cache, tab, x, y, posX - 1, posY);
+        var val3: Int = pathfind_aux(cache, tab, x, y, posX, posY - 1);
+        var val4: Int = pathfind_aux(cache, tab, x, y, posX, posY + 1);
+        var out0: Int = 1 + min2_0(min2_0(min2_0(val1, val2), val3), val4);
+        cache(posY)(posX) = out0;
+        return out0;
     }
   }
   
@@ -36,14 +36,14 @@ object pathfinding0
     var cache :Array[Array[Int]] = new Array[Array[Int]](y);
     for (i <- 0 to y - 1)
     {
-      var tmp :Array[Int] = new Array[Int](x);
-      for (j <- 0 to x - 1)
-      {
-        printf("%c", tab(i)(j));
-        tmp(j) = -1;
-      }
-      printf("\n");
-      cache(i) = tmp;
+        var tmp :Array[Int] = new Array[Int](x);
+        for (j <- 0 to x - 1)
+        {
+            printf("%c", tab(i)(j));
+            tmp(j) = -1;
+        }
+        printf("\n");
+        cache(i) = tmp;
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
   }

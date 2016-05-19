@@ -17,8 +17,8 @@ object euler14
       return m(n);
     else
     {
-      m(n) = 1 + find(next0(n), m);
-      return m(n);
+        m(n) = 1 + find(next0(n), m);
+        return m(n);
     }
   }
   
@@ -32,13 +32,13 @@ object euler14
     var maxi: Int = 0;
     for (i <- 1 to 999)
     {
-      /* normalement on met 999999 mais ça dépasse les int32... */
-      var n2: Int = find(i, m);
-      if (n2 > max0)
-      {
-        max0 = n2;
-        maxi = i;
-      }
+        /* normalement on met 999999 mais ça dépasse les int32... */
+        var n2: Int = find(i, m);
+        if (n2 > max0)
+        {
+            max0 = n2;
+            maxi = i;
+        }
     }
     printf("%d\n%d\n", max0, maxi);
   }

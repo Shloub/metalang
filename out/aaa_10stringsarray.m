@@ -11,25 +11,28 @@
 @implementation toto 
 @end
 
-char* idstring(char* s){
-  return s;
+
+char* idstring(char* s) {
+    return s;
 }
 
-void printstring(char* s){
-  printf("%s\n", idstring(s));
+
+void printstring(char* s) {
+    printf("%s\n", idstring(s));
 }
 
-void print_toto(toto * t){
-  printf("%s = %d\n", t->s, t->v);
+
+void print_toto(toto * t) {
+    printf("%s = %d\n", t->s, t->v);
 }
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int j, i;
   char* *tab = calloc( 2 , sizeof(char*));
-  for (i = 0 ; i < 2; i++)
+  for (i = 0; i < 2; i++)
     tab[i] = idstring("chaine de test");
-  for (j = 0 ; j <= 1; j++)
+  for (j = 0; j <= 1; j++)
     printstring(idstring(tab[j]));
   toto * a = [toto alloc];
   a->s="one";

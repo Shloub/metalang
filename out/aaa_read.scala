@@ -44,19 +44,19 @@ read int, read char et skip
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
     {
-      var tmpi1 = read_int()
-      skip();
-      printf("%d=>%d ", i, tmpi1);
-      tab(i) = tmpi1;
+        var tmpi1 = read_int()
+        skip();
+        printf("%d=>%d ", i, tmpi1);
+        tab(i) = tmpi1;
     }
     printf("\n");
     var tab2 :Array[Int] = new Array[Int](len);
     for (i_0 <- 0 to len - 1)
     {
-      var tmpi2 = read_int()
-      skip();
-      printf("%d==>%d ", i_0, tmpi2);
-      tab2(i_0) = tmpi2;
+        var tmpi2 = read_int()
+        skip();
+        printf("%d==>%d ", i_0, tmpi2);
+        tab2(i_0) = tmpi2;
     }
     var strlen = read_int()
     skip();
@@ -64,12 +64,12 @@ read int, read char et skip
     var tab4 :Array[Char] = new Array[Char](strlen);
     for (toto <- 0 to strlen - 1)
     {
-      var tmpc = read_char()
-      var c: Int = (tmpc).toInt;
-      printf("%c:%d ", tmpc, c);
-      if (tmpc != ' ')
-        c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
-      tab4(toto) = (c).toChar;
+        var tmpc = read_char()
+        var c: Int = (tmpc).toInt;
+        printf("%c:%d ", tmpc, c);
+        if (tmpc != ' ')
+          c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
+        tab4(toto) = (c).toChar;
     }
     for (j <- 0 to strlen - 1)
       printf("%c", tab4(j));

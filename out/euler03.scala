@@ -10,25 +10,25 @@ object euler03
     var sqrtia: Int = math.sqrt(a).toInt;
     while (a != 1)
     {
-      var b: Int = b0;
-      var found: Boolean = false;
-      while (b <= sqrtia)
-      {
-        if (a % b == 0)
+        var b: Int = b0;
+        var found: Boolean = false;
+        while (b <= sqrtia)
         {
-          a = a / b;
-          b0 = b;
-          b = a;
-          sqrtia = math.sqrt(a).toInt;
-          found = true;
+            if (a % b == 0)
+            {
+                a = a / b;
+                b0 = b;
+                b = a;
+                sqrtia = math.sqrt(a).toInt;
+                found = true;
+            }
+            b = b + 1;
         }
-        b = b + 1;
-      }
-      if (!found)
-      {
-        printf("%d\n", a);
-        a = 1;
-      }
+        if (!found)
+        {
+            printf("%d\n", a);
+            a = 1;
+        }
     }
   }
   

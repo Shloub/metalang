@@ -8,9 +8,9 @@ boolean h(int i)
   int j = i - 2
   while (j <= i + 2)
   {
-    if (i % j == 5)
-      return true
-    j ++;
+      if (i % j == 5)
+        return true
+      j++;
   }
   return false
 }
@@ -18,17 +18,17 @@ boolean h(int i)
 
 
 int j = 0
-for (int k = 0 ; k <= 10; k ++)
+for (int k = 0; k <= 10; k ++)
 {
-  j += k;
-  System.out.printf("%s\n", j);
+    j += k;
+    System.out.printf("%s\n", j);
 }
 int i = 4
 while (i < 10)
 {
-  print(i)
-  i ++;
-  j += i;
+    print(i)
+    i++;
+    j += i;
 }
 System.out.printf("%s%sFIN TEST\n", j, i);
 

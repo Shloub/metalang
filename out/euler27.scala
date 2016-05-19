@@ -7,13 +7,13 @@ object euler27
     for (i <- 2 to max0 - 1)
       if (t(i) == i)
     {
-      n = n + 1;
-      var j: Int = i * i;
-      while (j < max0 && j > 0)
-      {
-        t(j) = 0;
-        j = j + i;
-      }
+        n = n + 1;
+        var j: Int = i * i;
+        while (j < max0 && j > 0)
+        {
+            t(j) = 0;
+            j = j + i;
+        }
     }
     return n;
   }
@@ -25,9 +25,9 @@ object euler27
       n = -n;
     while (primes(i) * primes(i) < n)
     {
-      if (n % primes(i) == 0)
-        return false;
-      i = i + 1;
+        if (n % primes(i) == 0)
+          return false;
+        i = i + 1;
     }
     return true;
   }
@@ -36,9 +36,9 @@ object euler27
     var n: Int=0;
     for (n <- 0 to 200)
     {
-      var j: Int = n * n + a * n + b;
-      if (!isPrime(j, primes, len))
-        return n;
+        var j: Int = n * n + a * n + b;
+        if (!isPrime(j, primes, len))
+          return n;
     }
     return 200;
   }
@@ -60,8 +60,8 @@ object euler27
     for (k <- 2 to maximumprimes - 1)
       if (era(k) == k)
     {
-      primes(l) = k;
-      l = l + 1;
+        primes(l) = k;
+        l = l + 1;
     }
     printf("%d == %d\n", l, nprimes);
     var ma: Int = 0;
@@ -70,22 +70,22 @@ object euler27
       if (era(b) == b)
       for (a <- -999 to 999)
       {
-        var n1: Int = test(a, b, primes, nprimes);
-        var n2: Int = test(a, -b, primes, nprimes);
-        if (n1 > max0)
-        {
-          max0 = n1;
-          result = a * b;
-          ma = a;
-          mb = b;
-        }
-        if (n2 > max0)
-        {
-          max0 = n2;
-          result = -a * b;
-          ma = a;
-          mb = -b;
-        }
+          var n1: Int = test(a, b, primes, nprimes);
+          var n2: Int = test(a, -b, primes, nprimes);
+          if (n1 > max0)
+          {
+              max0 = n1;
+              result = a * b;
+              ma = a;
+              mb = b;
+          }
+          if (n2 > max0)
+          {
+              max0 = n2;
+              result = -a * b;
+              ma = a;
+              mb = -b;
+          }
       }
     printf("%d %d\n%d\n%d\n", ma, mb, max0, result);
   }

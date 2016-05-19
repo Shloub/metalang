@@ -17,7 +17,7 @@ public class euler42
   {
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len;
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       len = scanner.nextInt();
     } else {
@@ -25,11 +25,11 @@ public class euler42
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int sum = 0;
-    for (int i = 1 ; i <= len; i ++)
+    for (int i = 1; i <= len; i ++)
     {
-      char c = scanner.findWithinHorizon(".", 1).charAt(0);
-      sum += (int)(c) - (int)('A') + 1;
-      /*		print c print " " print sum print " " */
+        char c = scanner.findWithinHorizon(".", 1).charAt(0);
+        sum += (int)(c) - (int)('A') + 1;
+        /*		print c print " " print sum print " " */
     }
     if (is_triangular(sum))
       return 1;
@@ -40,19 +40,19 @@ public class euler42
   
   public static void main(String args[])
   {
-    for (int i = 1 ; i <= 55; i ++)
+    for (int i = 1; i <= 55; i ++)
       if (is_triangular(i))
       System.out.printf("%d ", i);
     System.out.print("\n");
     int sum = 0;
     int n;
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       n = scanner.nextInt();
     } else {
       n = scanner.nextInt();
     }
-    for (int i = 1 ; i <= n; i ++)
+    for (int i = 1; i <= n; i ++)
       sum += score();
     System.out.printf("%d\n", sum);
   }

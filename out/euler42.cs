@@ -67,11 +67,11 @@ static int readInt(){
     int len = readInt();
     stdin_sep();
     int sum = 0;
-    for (int i = 1 ; i <= len; i ++)
+    for (int i = 1; i <= len; i ++)
     {
-      char c = readChar();
-      sum += (int)(c) - (int)('A') + 1;
-      /*		print c print " " print sum print " " */
+        char c = readChar();
+        sum += (int)(c) - (int)('A') + 1;
+        /*		print c print " " print sum print " " */
     }
     if (is_triangular(sum))
       return 1;
@@ -82,13 +82,13 @@ static int readInt(){
   
   public static void Main(String[] args)
   {
-    for (int i = 1 ; i <= 55; i ++)
+    for (int i = 1; i <= 55; i ++)
       if (is_triangular(i))
       Console.Write("" + i + " ");
     Console.Write("\n");
     int sum = 0;
     int n = readInt();
-    for (int i = 1 ; i <= n; i ++)
+    for (int i = 1; i <= n; i ++)
       sum += score();
     Console.Write("" + sum + "\n");
   }

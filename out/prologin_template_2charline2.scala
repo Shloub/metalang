@@ -7,14 +7,14 @@ object prologin_template_2charline2
     var out0: Int = 0;
     for (i <- 0 to taille1 - 1)
     {
-      out0 = out0 + (tableau1(i)).toInt * i;
-      printf("%c", tableau1(i));
+        out0 = out0 + (tableau1(i)).toInt * i;
+        printf("%c", tableau1(i));
     }
     printf("--\n");
     for (j <- 0 to taille2 - 1)
     {
-      out0 = out0 + (tableau2(j)).toInt * j * 100;
-      printf("%c", tableau2(j));
+        out0 = out0 + (tableau2(j)).toInt * j * 100;
+        printf("%c", tableau2(j));
     }
     printf("--\n");
     return out0;

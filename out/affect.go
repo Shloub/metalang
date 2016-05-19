@@ -49,7 +49,7 @@ func result(t_ * toto, t2_ * toto) int{
   t3 = t2;
   t = t2;
   t2 = t3;
-  (*t).blah ++;
+  (*t).blah++;
   var len int = 1
   var cache0 []int = make([]int, len)
   for i := 0 ; i < len; i++ {

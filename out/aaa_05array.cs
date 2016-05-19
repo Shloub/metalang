@@ -17,11 +17,11 @@ public class aaa_05array
   {
     int j = 0;
     bool[] a = new bool[5];
-    for (int i = 0 ; i < 5; i++)
+    for (int i = 0; i < 5; i++)
     {
-      Console.Write(i);
-      j += i;
-      a[i] = i % 2 == 0;
+        Console.Write(i);
+        j += i;
+        a[i] = i % 2 == 0;
     }
     Console.Write("" + j + " ");
     if (a[0])

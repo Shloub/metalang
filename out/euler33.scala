@@ -35,14 +35,14 @@ object euler33
         for (k <- 1 to 9)
           if (i != j && j != k)
         {
-          var a: Int = i * 10 + j;
-          var b: Int = j * 10 + k;
-          if (a * k == i * b)
-          {
-            printf("%d/%d\n", a, b);
-            top = top * a;
-            bottom = bottom * b;
-          }
+            var a: Int = i * 10 + j;
+            var b: Int = j * 10 + k;
+            if (a * k == i * b)
+            {
+                printf("%d/%d\n", a, b);
+                top = top * a;
+                bottom = bottom * b;
+            }
         }
     printf("%d/%d\n", top, bottom);
     var p: Int = pgcd(top, bottom);

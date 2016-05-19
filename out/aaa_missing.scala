@@ -13,8 +13,8 @@ object aaa_missing
       tab2(i) = false;
     for (i1 <- 0 to len - 1)
     {
-      printf("%d ", tab(i1));
-      tab2(tab(i1)) = true;
+        printf("%d ", tab(i1));
+        tab2(tab(i1)) = true;
     }
     printf("\n");
     for (i2 <- 0 to len - 1)

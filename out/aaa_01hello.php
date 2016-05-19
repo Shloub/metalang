@@ -26,4 +26,4 @@ if (true && !false && !(true && false))
 else
   echo "False";
 echo "\n";
-?>
+

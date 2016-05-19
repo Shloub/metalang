@@ -60,7 +60,7 @@ func main() {
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
-  current_pos ++;
+  current_pos++;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
@@ -76,7 +76,7 @@ func main() {
     current_pos --;
     mem[current_pos] = mem[current_pos] + 1;
     fmt.Printf("%c", (byte)(mem[current_pos]));
-    current_pos ++;
+    current_pos++;
   }
 }
 

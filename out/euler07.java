@@ -5,7 +5,7 @@ public class euler07
   
   static boolean divisible(int n, int[] t, int size)
   {
-    for (int i = 0 ; i < size; i++)
+    for (int i = 0; i < size; i++)
       if (n % t[i] == 0)
       return true;
     return false;
@@ -15,12 +15,12 @@ public class euler07
   {
     while (used != nth)
       if (divisible(n, t, used))
-      n ++;
+      n++;
     else
     {
-      t[used] = n;
-      n ++;
-      used ++;
+        t[used] = n;
+        n++;
+        used++;
     }
     return t[used - 1];
   }
@@ -30,7 +30,7 @@ public class euler07
   {
     int n = 10001;
     int[] t = new int[n];
-    for (int i = 0 ; i < n; i++)
+    for (int i = 0; i < n; i++)
       t[i] = 2;
     System.out.printf("%d\n", find(3, t, 1, n));
   }

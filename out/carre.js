@@ -33,13 +33,13 @@ stdinsep();
 var tab = new Array(y);
 for (var d = 0 ; d < y; d++)
 {
-  var e = new Array(x);
-  for (var f = 0 ; f < x; f++)
-  {
-    e[f]=read_int_();
-    stdinsep();
-  }
-  tab[d] = e;
+    var e = new Array(x);
+    for (var f = 0 ; f < x; f++)
+    {
+        e[f]=read_int_();
+        stdinsep();
+    }
+    tab[d] = e;
 }
 for (var ix = 1 ; ix < x; ix++)
   for (var iy = 1 ; iy < y; iy++)
@@ -48,8 +48,8 @@ for (var ix = 1 ; ix < x; ix++)
   Math.min(tab[iy][ix - 1], tab[iy - 1][ix], tab[iy - 1][ix - 1]) + 1;
 for (var jy = 0 ; jy < y; jy++)
 {
-  for (var jx = 0 ; jx < x; jx++)
-    util.print(tab[jy][jx], " ");
-  util.print("\n");
+    for (var jx = 0 ; jx < x; jx++)
+      util.print(tab[jy][jx], " ");
+    util.print("\n");
 }
 

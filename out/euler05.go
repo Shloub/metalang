@@ -19,7 +19,7 @@ func primesfactors(n int) []int{
       tab[d] = tab[d] + 1;
         n /= d;
     } else {
-      d ++;
+      d++;
     }
   }
   tab[n] = tab[n] + 1;
