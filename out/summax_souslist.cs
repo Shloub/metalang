@@ -50,13 +50,13 @@ static int readInt(){
   {
     int current = 0;
     int max0 = 0;
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      current += lst[i];
-      if (current < 0)
-        current = 0;
-      if (max0 < current)
-        max0 = current;
+        current += lst[i];
+        if (current < 0)
+          current = 0;
+        if (max0 < current)
+          max0 = current;
     }
     return max0;
   }
@@ -68,12 +68,12 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      int tmp = 0;
-      tmp = readInt();
-      stdin_sep();
-      tab[i] = tmp;
+        int tmp = 0;
+        tmp = readInt();
+        stdin_sep();
+        tab[i] = tmp;
     }
     int result = summax(tab, len);
     Console.Write(result);

@@ -12,11 +12,11 @@ func divisible(n int, t []int, size int) bool{
 func find(n int, t []int, used int, nth int) int{
   for used != nth{
     if divisible(n, t, used) {
-      n ++;
+      n++;
     } else {
       t[used] = n;
-      n ++;
-      used ++;
+      n++;
+      used++;
     }
   }
   return t[used - 1]

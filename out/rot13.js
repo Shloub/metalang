@@ -39,11 +39,11 @@ stdinsep();
 var tab4 = new Array(strlen);
 for (var toto = 0 ; toto < strlen; toto++)
 {
-  tmpc=read_char_();
-  var c = tmpc.charCodeAt(0);
-  if (tmpc != ' ')
-    c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
-  tab4[toto] = String.fromCharCode(c);
+    tmpc=read_char_();
+    var c = tmpc.charCodeAt(0);
+    if (tmpc != ' ')
+      c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
+    tab4[toto] = String.fromCharCode(c);
 }
 for (var j = 0 ; j < strlen; j++)
   util.print(tab4[j]);

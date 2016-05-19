@@ -63,26 +63,26 @@ static int readInt(){
       return cache[posY][posX];
     else
     {
-      cache[posY][posX] = x * y * 10;
-      int val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY);
-      int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
-      int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
-      int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int out0 = 1 + Math.Min(Math.Min(Math.Min(val1, val2), val3), val4);
-      cache[posY][posX] = out0;
-      return out0;
+        cache[posY][posX] = x * y * 10;
+        int val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY);
+        int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
+        int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
+        int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
+        int out0 = 1 + Math.Min(Math.Min(Math.Min(val1, val2), val3), val4);
+        cache[posY][posX] = out0;
+        return out0;
     }
   }
   
   static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
-    for (int i = 0 ; i < y; i++)
+    for (int i = 0; i < y; i++)
     {
-      int[] tmp = new int[x];
-      for (int j = 0 ; j < x; j++)
-        tmp[j] = -1;
-      cache[i] = tmp;
+        int[] tmp = new int[x];
+        for (int j = 0; j < x; j++)
+          tmp[j] = -1;
+        cache[i] = tmp;
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
   }
@@ -97,17 +97,17 @@ static int readInt(){
     y = readInt();
     stdin_sep();
     char[][] tab = new char[y][];
-    for (int i = 0 ; i < y; i++)
+    for (int i = 0; i < y; i++)
     {
-      char[] tab2 = new char[x];
-      for (int j = 0 ; j < x; j++)
-      {
-        char tmp = (char)0;
-        tmp = readChar();
-        tab2[j] = tmp;
-      }
-      stdin_sep();
-      tab[i] = tab2;
+        char[] tab2 = new char[x];
+        for (int j = 0; j < x; j++)
+        {
+            char tmp = (char)0;
+            tmp = readChar();
+            tab2[j] = tmp;
+        }
+        stdin_sep();
+        tab[i] = tab2;
     }
     int result = pathfind(tab, x, y);
     Console.Write(result);

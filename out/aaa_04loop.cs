@@ -10,9 +10,9 @@ public class aaa_04loop
     int j = i - 2;
     while (j <= i + 2)
     {
-      if (i % j == 5)
-        return true;
-      j ++;
+        if (i % j == 5)
+          return true;
+        j++;
     }
     return false;
   }
@@ -21,17 +21,17 @@ public class aaa_04loop
   public static void Main(String[] args)
   {
     int j = 0;
-    for (int k = 0 ; k <= 10; k ++)
+    for (int k = 0; k <= 10; k ++)
     {
-      j += k;
-      Console.Write("" + j + "\n");
+        j += k;
+        Console.Write("" + j + "\n");
     }
     int i = 4;
     while (i < 10)
     {
-      Console.Write(i);
-      i ++;
-      j += i;
+        Console.Write(i);
+        i++;
+        j += i;
     }
     Console.Write("" + j + i + "FIN TEST\n");
   }

@@ -32,12 +32,12 @@ function read_int_(){
     }
   }
 }
-function nth(tab, tofind, len){
-  var out0 = 0;
-  for (var i = 0 ; i < len; i++)
-    if (tab[i] == tofind)
-    out0 ++;
-  return out0;
+function nth(tab, tofind, len) {
+    var out0 = 0;
+    for (var i = 0 ; i < len; i++)
+      if (tab[i] == tofind)
+      out0++;
+    return out0;
 }
 
 var len = 0;
@@ -49,9 +49,9 @@ stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i < len; i++)
 {
-  var tmp = '\x00';
-  tmp=read_char_();
-  tab[i] = tmp;
+    var tmp = '\x00';
+    tmp=read_char_();
+    tab[i] = tmp;
 }
 var result = nth(tab, tofind, len);
 util.print(result);

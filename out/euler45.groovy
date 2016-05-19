@@ -51,10 +51,10 @@ boolean findHexa2(int n, int a, int b)
 
 
 
-for (int n = 285 ; n <= 55385; n ++)
+for (int n = 285; n <= 55385; n ++)
 {
-  int t = triangle(n)
-  if (findPenta2(t, n.intdiv(5), n) && findHexa2(t, n.intdiv(5), n.intdiv(2) + 10))
-    System.out.printf("%s\n%s\n", n, t);
+    int t = triangle(n)
+    if (findPenta2(t, n.intdiv(5), n) && findHexa2(t, n.intdiv(5), n.intdiv(2) + 10))
+      System.out.printf("%s\n%s\n", n, t);
 }
 

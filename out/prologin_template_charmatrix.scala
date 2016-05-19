@@ -7,12 +7,12 @@ object prologin_template_charmatrix
     var out0: Int = 0;
     for (i <- 0 to taille_y - 1)
     {
-      for (j <- 0 to taille_x - 1)
-      {
-        out0 = out0 + (tableau(i)(j)).toInt * (i + j * 2);
-        printf("%c", tableau(i)(j));
-      }
-      printf("--\n");
+        for (j <- 0 to taille_x - 1)
+        {
+            out0 = out0 + (tableau(i)(j)).toInt * (i + j * 2);
+            printf("%c", tableau(i)(j));
+        }
+        printf("--\n");
     }
     return out0;
   }

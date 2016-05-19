@@ -54,9 +54,9 @@ static int readInt(){
   static int nth(char[] tab, char tofind, int len)
   {
     int out0 = 0;
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
       if (tab[i] == tofind)
-      out0 ++;
+      out0++;
     return out0;
   }
   
@@ -70,11 +70,11 @@ static int readInt(){
     tofind = readChar();
     stdin_sep();
     char[] tab = new char[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      char tmp = (char)0;
-      tmp = readChar();
-      tab[i] = tmp;
+        char tmp = (char)0;
+        tmp = readChar();
+        tab[i] = tmp;
     }
     int result = nth(tab, tofind, len);
     Console.Write(result);

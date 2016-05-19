@@ -3,7 +3,7 @@ import "fmt"
 func main() {
   var n int = 10
   /* normalement on doit mettre 20 mais là on se tape un overflow */
-  n ++;
+  n++;
   var tab [][]int = make([][]int, n)
   for i := 0 ; i < n; i++ {
     var tab2 []int = make([]int, n)

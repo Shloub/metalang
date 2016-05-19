@@ -1,41 +1,44 @@
 var util = require("util");
-function eratostene(t, max0){
-  var n = 0;
-  for (var i = 2 ; i < max0; i++)
-    if (t[i] == i)
-  {
-    n ++;
-    var j = i * i;
-    while (j < max0 && j > 0)
+
+function eratostene(t, max0) {
+    var n = 0;
+    for (var i = 2 ; i < max0; i++)
+      if (t[i] == i)
     {
-      t[j] = 0;
-      j += i;
+        n++;
+        var j = i * i;
+        while (j < max0 && j > 0)
+        {
+            t[j] = 0;
+            j += i;
+        }
     }
-  }
-  return n;
+    return n;
 }
 
-function isPrime(n, primes, len){
-  var i = 0;
-  if (n < 0)
-    n = -n;
-  while (primes[i] * primes[i] < n)
-  {
-    if (~~(n % primes[i]) == 0)
-      return false;
-    i ++;
-  }
-  return true;
+
+function isPrime(n, primes, len) {
+    var i = 0;
+    if (n < 0)
+      n = -n;
+    while (primes[i] * primes[i] < n)
+    {
+        if (~~(n % primes[i]) == 0)
+          return false;
+        i++;
+    }
+    return true;
 }
 
-function test(a, b, primes, len){
-  for (var n = 0 ; n <= 200; n++)
-  {
-    var j = n * n + a * n + b;
-    if (!isPrime(j, primes, len))
-      return n;
-  }
-  return 200;
+
+function test(a, b, primes, len) {
+    for (var n = 0 ; n <= 200; n++)
+    {
+        var j = n * n + a * n + b;
+        if (!isPrime(j, primes, len))
+          return n;
+    }
+    return 200;
 }
 
 var maximumprimes = 1000;
@@ -52,8 +55,8 @@ var l = 0;
 for (var k = 2 ; k < maximumprimes; k++)
   if (era[k] == k)
 {
-  primes[l] = k;
-  l ++;
+    primes[l] = k;
+    l++;
 }
 util.print(l, " == ", nprimes, "\n");
 var ma = 0;
@@ -62,22 +65,22 @@ for (var b = 3 ; b <= 999; b++)
   if (era[b] == b)
   for (var a = -999 ; a <= 999; a++)
   {
-    var n1 = test(a, b, primes, nprimes);
-    var n2 = test(a, -b, primes, nprimes);
-    if (n1 > max0)
-    {
-      max0 = n1;
-      result = a * b;
-      ma = a;
-      mb = b;
-    }
-    if (n2 > max0)
-    {
-      max0 = n2;
-      result = -a * b;
-      ma = a;
-      mb = -b;
-    }
+      var n1 = test(a, b, primes, nprimes);
+      var n2 = test(a, -b, primes, nprimes);
+      if (n1 > max0)
+      {
+          max0 = n1;
+          result = a * b;
+          ma = a;
+          mb = b;
+      }
+      if (n2 > max0)
+      {
+          max0 = n2;
+          result = -a * b;
+          ma = a;
+          mb = -b;
+      }
 }
 util.print(ma, " ", mb, "\n", max0, "\n", result, "\n");
 

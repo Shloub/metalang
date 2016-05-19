@@ -14,18 +14,19 @@ var util = require("util");
 
 
 */
-function sumdiag(n){
-  var nterms = n * 2 - 1;
-  var un = 1;
-  var sum = 1;
-  for (var i = 0 ; i <= nterms - 2; i++)
-  {
-    var d = 2 * (1 + ~~(i / 4));
-    un += d;
-    /* print int d print "=>" print un print " " */
-    sum += un;
-  }
-  return sum;
+
+function sumdiag(n) {
+    var nterms = n * 2 - 1;
+    var un = 1;
+    var sum = 1;
+    for (var i = 0 ; i <= nterms - 2; i++)
+    {
+        var d = 2 * (1 + ~~(i / 4));
+        un += d;
+        /* print int d print "=>" print un print " " */
+        sum += un;
+    }
+    return sum;
 }
 
 util.print(sumdiag(1001));

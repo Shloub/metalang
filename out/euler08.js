@@ -14,33 +14,33 @@ var i = 1;
 var last = new Array(5);
 for (var j = 0 ; j < 5; j++)
 {
-  c=read_char_();
-  var d = c.charCodeAt(0) - '0'.charCodeAt(0);
-  i *= d;
-  last[j] = d;
+    c=read_char_();
+    var d = c.charCodeAt(0) - '0'.charCodeAt(0);
+    i *= d;
+    last[j] = d;
 }
 var max0 = i;
 var index = 0;
 var nskipdiv = 0;
 for (var k = 1 ; k <= 995; k++)
 {
-  e=read_char_();
-  var f = e.charCodeAt(0) - '0'.charCodeAt(0);
-  if (f == 0)
-  {
-    i = 1;
-    nskipdiv = 4;
-  }
-  else
-  {
-    i *= f;
-    if (nskipdiv < 0)
-      i = ~~(i / last[index]);
-    nskipdiv --;
-  }
-  last[index] = f;
-  index = ~~((index + 1) % 5);
-  max0 = Math.max(max0, i);
+    e=read_char_();
+    var f = e.charCodeAt(0) - '0'.charCodeAt(0);
+    if (f == 0)
+    {
+        i = 1;
+        nskipdiv = 4;
+    }
+    else
+    {
+        i *= f;
+        if (nskipdiv < 0)
+          i = ~~(i / last[index]);
+        nskipdiv --;
+    }
+    last[index] = f;
+    index = ~~((index + 1) % 5);
+    max0 = Math.max(max0, i);
 }
 util.print(max0, "\n");
 

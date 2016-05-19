@@ -7,16 +7,16 @@ object euler10
     for (i <- 2 to max0 - 1)
       if (t(i) == i)
     {
-      sum = sum + i;
-      if (max0 / i > i)
-      {
-        var j: Int = i * i;
-        while (j < max0 && j > 0)
+        sum = sum + i;
+        if (max0 / i > i)
         {
-          t(j) = 0;
-          j = j + i;
+            var j: Int = i * i;
+            while (j < max0 && j > 0)
+            {
+                t(j) = 0;
+                j = j + i;
+            }
         }
-      }
     }
     return sum;
   }

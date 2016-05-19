@@ -28,19 +28,19 @@ function read_int_(){
 }
 for (var i = 1 ; i <= 3; i++)
 {
-  a=read_int_();
-  stdinsep();
-  b=read_int_();
-  stdinsep();
-  c=read_int_();
-  stdinsep();
-  util.print("a = ", a, " b = ", b, "c =", c, "\n");
+    a=read_int_();
+    stdinsep();
+    b=read_int_();
+    stdinsep();
+    c=read_int_();
+    stdinsep();
+    util.print("a = ", a, " b = ", b, "c =", c, "\n");
 }
 var l = new Array(10);
 for (var d = 0 ; d < 10; d++)
 {
-  l[d]=read_int_();
-  stdinsep();
+    l[d]=read_int_();
+    stdinsep();
 }
 for (var j = 0 ; j <= 9; j++)
   util.print(l[j], "\n");

@@ -6,10 +6,10 @@ public class prologin_template_charline
   static int programme_candidat(char[] tableau, int taille)
   {
     int out0 = 0;
-    for (int i = 0 ; i < taille; i++)
+    for (int i = 0; i < taille; i++)
     {
-      out0 += (int)(tableau[i]) * i;
-      Console.Write(tableau[i]);
+        out0 += (int)(tableau[i]) * i;
+        Console.Write(tableau[i]);
     }
     Console.Write("--\n");
     return out0;

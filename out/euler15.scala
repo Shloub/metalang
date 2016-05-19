@@ -10,30 +10,30 @@ object euler15
     var tab :Array[Array[Int]] = new Array[Array[Int]](n);
     for (i <- 0 to n - 1)
     {
-      var tab2 :Array[Int] = new Array[Int](n);
-      for (j <- 0 to n - 1)
-        tab2(j) = 0;
-      tab(i) = tab2;
+        var tab2 :Array[Int] = new Array[Int](n);
+        for (j <- 0 to n - 1)
+          tab2(j) = 0;
+        tab(i) = tab2;
     }
     for (l <- 0 to n - 1)
     {
-      tab(n - 1)(l) = 1;
-      tab(l)(n - 1) = 1;
+        tab(n - 1)(l) = 1;
+        tab(l)(n - 1) = 1;
     }
     for (o <- 2 to n)
     {
-      var r: Int = n - o;
-      for (p <- 2 to n)
-      {
-        var q: Int = n - p;
-        tab(r)(q) = tab(r + 1)(q) + tab(r)(q + 1);
-      }
+        var r: Int = n - o;
+        for (p <- 2 to n)
+        {
+            var q: Int = n - p;
+            tab(r)(q) = tab(r + 1)(q) + tab(r)(q + 1);
+        }
     }
     for (m <- 0 to n - 1)
     {
-      for (k <- 0 to n - 1)
-        printf("%d ", tab(m)(k));
-      printf("\n");
+        for (k <- 0 to n - 1)
+          printf("%d ", tab(m)(k));
+        printf("\n");
     }
     printf("%d\n", tab(0)(0));
   }

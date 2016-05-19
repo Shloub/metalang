@@ -22,12 +22,12 @@ read int, read char et skip
     var tab4: Array[Char] = readLine().toCharArray();
     for (i3 <- 0 to strlen - 1)
     {
-      var tmpc: Char = tab4(i3);
-      var c: Int = (tmpc).toInt;
-      printf("%c:%d ", tmpc, c);
-      if (tmpc != ' ')
-        c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
-      tab4(i3) = (c).toChar;
+        var tmpc: Char = tab4(i3);
+        var c: Int = (tmpc).toInt;
+        printf("%c:%d ", tmpc, c);
+        if (tmpc != ' ')
+          c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
+        tab4(i3) = (c).toChar;
     }
     for (j <- 0 to strlen - 1)
       printf("%c", tab4(j));

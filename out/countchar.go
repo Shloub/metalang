@@ -17,7 +17,7 @@ func nth(tab []byte, tofind byte, len int) int{
   var out0 int = 0
   for i := 0 ; i < len; i++ {
     if tab[i] == tofind {
-        out0 ++;
+        out0++;
       }
   }
   return out0

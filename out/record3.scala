@@ -38,8 +38,8 @@ def skip() {
     var out0: Int = 0;
     for (j <- 0 to len - 1)
     {
-      t(j).blah = t(j).blah + 1;
-      out0 = out0 + t(j).foo + t(j).blah * t(j).bar + t(j).bar * t(j).foo;
+        t(j).blah = t(j).blah + 1;
+        out0 = out0 + t(j).foo + t(j).blah * t(j).bar + t(j).bar * t(j).foo;
     }
     return out0;
   }

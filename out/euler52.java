@@ -9,14 +9,14 @@ public class euler52
       return a;
     else
     {
-      int b = chiffre_sort(a / 10);
-      int c = a % 10;
-      int d = b % 10;
-      int e = b / 10;
-      if (c < d)
-        return c + b * 10;
-      else
-        return d + chiffre_sort(c + e * 10) * 10;
+        int b = chiffre_sort(a / 10);
+        int c = a % 10;
+        int d = b % 10;
+        int e = b / 10;
+        if (c < d)
+          return c + b * 10;
+        else
+          return d + chiffre_sort(c + e * 10) * 10;
     }
   }
   

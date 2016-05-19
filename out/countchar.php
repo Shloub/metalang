@@ -27,12 +27,12 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-function nth(&$tab, $tofind, $len){
-  $out0 = 0;
-  for ($i = 0 ; $i < $len; $i++)
-    if ($tab[$i] == $tofind)
-    $out0 ++;
-  return $out0;
+function nth(&$tab, $tofind, $len) {
+    $out0 = 0;
+    for ($i = 0; $i < $len; $i++)
+      if ($tab[$i] == $tofind)
+      $out0++;
+    return $out0;
 }
 
 $len = 0;
@@ -42,12 +42,12 @@ $tofind = "\x00";
 $tofind = nextChar();
 scantrim();
 $tab = array();
-for ($i = 0 ; $i < $len; $i++)
+for ($i = 0; $i < $len; $i++)
 {
-  $tmp = "\x00";
-  $tmp = nextChar();
-  $tab[$i] = $tmp;
+    $tmp = "\x00";
+    $tmp = nextChar();
+    $tab[$i] = $tmp;
 }
 $result = nth($tab, $tofind, $len);
 echo $result;
-?>
+

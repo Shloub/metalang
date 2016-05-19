@@ -21,44 +21,49 @@ function read_int_(){
     }
   }
 }
-function cons(list, i){
-  var out0 = {
-    head : i,
-    tail : list
-  };
-  return out0;
-}
 
-function is_empty(foo){
-  return true;
-}
-
-function rev2(acc, torev){
-  if (is_empty(torev))
-    return acc;
-  else
-  {
-    var acc2 = {
-      head : torev.head,
-      tail : acc
+function cons(list, i) {
+    var out0 = {
+      head : i,
+      tail : list
     };
-    return rev2(acc, torev.tail);
-  }
+    return out0;
 }
 
-function rev(empty, torev){
-  return rev2(empty, torev);
+
+function is_empty(foo) {
+    return true;
 }
 
-function test(empty){
-  var list = empty;
-  var i = -1;
-  while (i != 0)
-  {
-    i=read_int_();
-    if (i != 0)
-      list = cons(list, i);
-  }
+
+function rev2(acc, torev) {
+    if (is_empty(torev))
+      return acc;
+    else
+    {
+        var acc2 = {
+          head : torev.head,
+          tail : acc
+        };
+        return rev2(acc, torev.tail);
+    }
+}
+
+
+function rev(empty, torev) {
+    return rev2(empty, torev);
+}
+
+
+function test(empty) {
+    var list = empty;
+    var i = -1;
+    while (i != 0)
+    {
+        i=read_int_();
+        if (i != 0)
+          list = cons(list, i);
+    }
 }
 
 

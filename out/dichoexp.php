@@ -20,16 +20,16 @@ function scantrim(){
     stdin_();
   }
 }
-function exp0($a, $b){
-  if ($b == 0)
-    return 1;
-  if ($b % 2 == 0)
-  {
-    $o = exp0($a, intval($b / 2));
-    return $o * $o;
-  }
-  else
-    return $a * exp0($a, $b - 1);
+function exp0($a, $b) {
+    if ($b == 0)
+      return 1;
+    if ($b % 2 == 0)
+    {
+        $o = exp0($a, intval($b / 2));
+        return $o * $o;
+    }
+    else
+      return $a * exp0($a, $b - 1);
 }
 
 $a = 0;
@@ -38,4 +38,4 @@ list($a) = scan("%d");
 scantrim();
 list($b) = scan("%d");
 echo exp0($a, $b);
-?>
+

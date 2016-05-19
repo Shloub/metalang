@@ -16,9 +16,9 @@ object aaa_05array
     var a :Array[Boolean] = new Array[Boolean](5);
     for (i <- 0 to 5 - 1)
     {
-      printf("%d", i);
-      j = j + i;
-      a(i) = i % 2 == 0;
+        printf("%d", i);
+        j = j + i;
+        a(i) = i % 2 == 0;
     }
     printf("%d ", j);
     if (a(0))

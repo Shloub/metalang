@@ -10,14 +10,14 @@ object euler39
     for (a <- 1 to 1000)
       for (b <- 1 to 1000)
       {
-        var c2: Int = a * a + b * b;
-        var c: Int = math.sqrt(c2).toInt;
-        if (c * c == c2)
-        {
-          var p: Int = a + b + c;
-          if (p <= 1000)
-            t(p) = t(p) + 1;
-        }
+          var c2: Int = a * a + b * b;
+          var c: Int = math.sqrt(c2).toInt;
+          if (c * c == c2)
+          {
+              var p: Int = a + b + c;
+              if (p <= 1000)
+                t(p) = t(p) + 1;
+          }
       }
     var j: Int = 0;
     for (k <- 1 to 1000)

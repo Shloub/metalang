@@ -1,18 +1,19 @@
 import groovy.transform.Field
 import java.util.*
 
-    int[] read_int_line(){
-        String[] s = scanner.nextLine().split(" ");
-        int[] out = new int[s.length];
-        for (int i = 0; i < s.length; i ++)
-          out[i] = Integer.parseInt(s[i]);
-        return out;
-    }
+  int[] read_int_line()
+  {
+    String[] s = scanner.nextLine().split(" ");
+    int[] out = new int[s.length];
+    for (int i = 0; i < s.length; i++)
+      out[i] = Integer.parseInt(s[i]);
+    return out;
+  }
 
 int programme_candidat(int[] tableau, int taille)
 {
   int out0 = 0
-  for (int i = 0 ; i < taille; i++)
+  for (int i = 0; i < taille; i++)
     out0 += tableau[i];
   return out0
 }

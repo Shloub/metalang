@@ -50,10 +50,10 @@ static int readInt(){
   public static void Main(String[] args)
   {
     int[] t = new int[2];
-    for (int d = 0 ; d < 2; d++)
+    for (int d = 0; d < 2; d++)
     {
-      t[d] = readInt();
-      stdin_sep();
+        t[d] = readInt();
+        stdin_sep();
     }
     Console.Write("" + t[0] + " - " + t[1] + "\n");
   }

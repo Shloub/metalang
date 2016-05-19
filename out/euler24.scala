@@ -24,19 +24,19 @@ object euler24
       pris(j) = false;
     for (k <- 1 to lim - 1)
     {
-      var n: Int = fact(lim - k);
-      var nchiffre: Int = nth / n;
-      nth = nth % n;
-      for (l <- 0 to lim - 1)
-        if (!pris(l))
-      {
-        if (nchiffre == 0)
+        var n: Int = fact(lim - k);
+        var nchiffre: Int = nth / n;
+        nth = nth % n;
+        for (l <- 0 to lim - 1)
+          if (!pris(l))
         {
-          printf("%d", l);
-          pris(l) = true;
+            if (nchiffre == 0)
+            {
+                printf("%d", l);
+                pris(l) = true;
+            }
+            nchiffre = nchiffre - 1;
         }
-        nchiffre = nchiffre - 1;
-      }
     }
     for (m <- 0 to lim - 1)
       if (!pris(m))

@@ -27,8 +27,8 @@ def skip() {
       return 1;
     if (b % 2 == 0)
     {
-      var o: Int = exp0(a, b / 2);
-      return o * o;
+        var o: Int = exp0(a, b / 2);
+        return o * o;
     }
     else
       return a * exp0(a, b - 1);

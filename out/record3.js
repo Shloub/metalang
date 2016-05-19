@@ -26,23 +26,25 @@ function read_int_(){
     }
   }
 }
-function mktoto(v1){
-  var t = {
-    foo : v1,
-    bar : 0,
-    blah : 0
-  };
-  return t;
+
+function mktoto(v1) {
+    var t = {
+      foo : v1,
+      bar : 0,
+      blah : 0
+    };
+    return t;
 }
 
-function result(t, len){
-  var out0 = 0;
-  for (var j = 0 ; j < len; j++)
-  {
-    t[j].blah = t[j].blah + 1;
-    out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
-  }
-  return out0;
+
+function result(t, len) {
+    var out0 = 0;
+    for (var j = 0 ; j < len; j++)
+    {
+        t[j].blah = t[j].blah + 1;
+        out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
+    }
+    return out0;
 }
 
 var t = new Array(4);

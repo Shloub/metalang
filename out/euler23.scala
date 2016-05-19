@@ -7,13 +7,13 @@ object euler23
     for (i <- 2 to max0 - 1)
       if (t(i) == i)
     {
-      n = n + 1;
-      var j: Int = i * i;
-      while (j < max0 && j > 0)
-      {
-        t(j) = 0;
-        j = j + i;
-      }
+        n = n + 1;
+        var j: Int = i * i;
+        while (j < max0 && j > 0)
+        {
+            t(j) = 0;
+            j = j + i;
+        }
     }
     return n;
   }
@@ -23,14 +23,14 @@ object euler23
     var i: Int=0;
     for (i <- 0 to nprimes - 1)
     {
-      var d: Int = primes(i);
-      while (n % d == 0)
-      {
-        t(d) = t(d) + 1;
-        n = n / d;
-      }
-      if (n == 1)
-        return primes(i);
+        var d: Int = primes(i);
+        while (n % d == 0)
+        {
+            t(d) = t(d) + 1;
+            n = n / d;
+        }
+        if (n == 1)
+          return primes(i);
     }
     return n;
   }
@@ -50,15 +50,15 @@ object euler23
       return sumdivaux(t, n, sumdivaux2(t, n, i + 1));
     else
     {
-      var o: Int = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
-      var out0: Int = 0;
-      var p: Int = i;
-      for (j <- 1 to t(i))
-      {
-        out0 = out0 + p;
-        p = p * i;
-      }
-      return (out0 + 1) * o;
+        var o: Int = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
+        var out0: Int = 0;
+        var p: Int = i;
+        for (j <- 1 to t(i))
+        {
+            out0 = out0 + p;
+            p = p * i;
+        }
+        return (out0 + 1) * o;
     }
   }
   
@@ -86,8 +86,8 @@ object euler23
     for (k <- 2 to maximumprimes - 1)
       if (era(k) == k)
     {
-      primes(l) = k;
-      l = l + 1;
+        primes(l) = k;
+        l = l + 1;
     }
     var n: Int = 100;
     /* 28124 ça prend trop de temps mais on arrive a passer le test */
@@ -100,9 +100,9 @@ object euler23
     var sum: Int = 0;
     for (r <- 2 to n)
     {
-      var other: Int = sumdiv(nprimes, primes, r) - r;
-      if (other > r)
-        abondant(r) = true;
+        var other: Int = sumdiv(nprimes, primes, r) - r;
+        if (other > r)
+          abondant(r) = true;
     }
     for (i <- 1 to n)
       for (j <- 1 to n)

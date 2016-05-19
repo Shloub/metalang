@@ -29,16 +29,16 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
       return true;
     else
     {
-      var digit: Int = n % 10;
-      if (ok(digit))
-      {
-        ok(digit) = false;
-        var o: Boolean = okdigits(ok, n / 10);
-        ok(digit) = true;
-        return o;
-      }
-      else
-        return false;
+        var digit: Int = n % 10;
+        if (ok(digit))
+        {
+            ok(digit) = false;
+            var o: Boolean = okdigits(ok, n / 10);
+            ok(digit) = true;
+            return o;
+        }
+        else
+          return false;
     }
   }
   
@@ -54,54 +54,54 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
       counted(j) = false;
     for (e <- 1 to 9)
     {
-      allowed(e) = false;
-      for (b <- 1 to 9)
-        if (allowed(b))
-      {
-        allowed(b) = false;
-        var be: Int = b * e % 10;
-        if (allowed(be))
+        allowed(e) = false;
+        for (b <- 1 to 9)
+          if (allowed(b))
         {
-          allowed(be) = false;
-          for (a <- 1 to 9)
-            if (allowed(a))
-          {
-            allowed(a) = false;
-            for (c <- 1 to 9)
-              if (allowed(c))
+            allowed(b) = false;
+            var be: Int = b * e % 10;
+            if (allowed(be))
             {
-              allowed(c) = false;
-              for (d <- 1 to 9)
-                if (allowed(d))
-              {
-                allowed(d) = false;
-                /* 2 * 3 digits */
-                var product: Int = (a * 10 + b) * (c * 100 + d * 10 + e);
-                if (!counted(product) && okdigits(allowed, product / 10))
+                allowed(be) = false;
+                for (a <- 1 to 9)
+                  if (allowed(a))
                 {
-                  counted(product) = true;
-                  count = count + product;
-                  printf("%d ", product);
+                    allowed(a) = false;
+                    for (c <- 1 to 9)
+                      if (allowed(c))
+                    {
+                        allowed(c) = false;
+                        for (d <- 1 to 9)
+                          if (allowed(d))
+                        {
+                            allowed(d) = false;
+                            /* 2 * 3 digits */
+                            var product: Int = (a * 10 + b) * (c * 100 + d * 10 + e);
+                            if (!counted(product) && okdigits(allowed, product / 10))
+                            {
+                                counted(product) = true;
+                                count = count + product;
+                                printf("%d ", product);
+                            }
+                            /* 1  * 4 digits */
+                            var product2: Int = b * (a * 1000 + c * 100 + d * 10 + e);
+                            if (!counted(product2) && okdigits(allowed, product2 / 10))
+                            {
+                                counted(product2) = true;
+                                count = count + product2;
+                                printf("%d ", product2);
+                            }
+                            allowed(d) = true;
+                        }
+                        allowed(c) = true;
+                    }
+                    allowed(a) = true;
                 }
-                /* 1  * 4 digits */
-                var product2: Int = b * (a * 1000 + c * 100 + d * 10 + e);
-                if (!counted(product2) && okdigits(allowed, product2 / 10))
-                {
-                  counted(product2) = true;
-                  count = count + product2;
-                  printf("%d ", product2);
-                }
-                allowed(d) = true;
-              }
-              allowed(c) = true;
+                allowed(be) = true;
             }
-            allowed(a) = true;
-          }
-          allowed(be) = true;
+            allowed(b) = true;
         }
-        allowed(b) = true;
-      }
-      allowed(e) = true;
+        allowed(e) = true;
     }
     printf("%d\n", count);
   }

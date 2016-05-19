@@ -65,20 +65,20 @@ Tictactoe : un tictactoe avec une IA
   static void print_state(gamestate g)
   {
     Console.Write("\n|");
-    for (int y = 0 ; y <= 2; y ++)
+    for (int y = 0; y <= 2; y ++)
     {
-      for (int x = 0 ; x <= 2; x ++)
-      {
-        if (g.cases[x][y] == 0)
-          Console.Write(" ");
-        else if (g.cases[x][y] == 1)
-          Console.Write("O");
-        else
-          Console.Write("X");
-        Console.Write("|");
-      }
-      if (y != 2)
-        Console.Write("\n|-|-|-|\n|");
+        for (int x = 0; x <= 2; x ++)
+        {
+            if (g.cases[x][y] == 0)
+              Console.Write(" ");
+            else if (g.cases[x][y] == 1)
+              Console.Write("O");
+            else
+              Console.Write("X");
+            Console.Write("|");
+        }
+        if (y != 2)
+          Console.Write("\n|-|-|-|\n|");
     }
     Console.Write("\n");
   }
@@ -88,36 +88,36 @@ Tictactoe : un tictactoe avec une IA
   {
     int win = 0;
     int freecase = 0;
-    for (int y = 0 ; y <= 2; y ++)
+    for (int y = 0; y <= 2; y ++)
     {
-      int col = -1;
-      int lin = -1;
-      for (int x = 0 ; x <= 2; x ++)
-      {
-        if (g.cases[x][y] == 0)
-          freecase ++;
-        int colv = g.cases[x][y];
-        int linv = g.cases[y][x];
-        if (col == -1 && colv != 0)
-          col = colv;
-        else if (colv != col)
-          col = -2;
-        if (lin == -1 && linv != 0)
-          lin = linv;
-        else if (linv != lin)
-          lin = -2;
-      }
-      if (col >= 0)
-        win = col;
-      else if (lin >= 0)
-        win = lin;
+        int col = -1;
+        int lin = -1;
+        for (int x = 0; x <= 2; x ++)
+        {
+            if (g.cases[x][y] == 0)
+              freecase++;
+            int colv = g.cases[x][y];
+            int linv = g.cases[y][x];
+            if (col == -1 && colv != 0)
+              col = colv;
+            else if (colv != col)
+              col = -2;
+            if (lin == -1 && linv != 0)
+              lin = linv;
+            else if (linv != lin)
+              lin = -2;
+        }
+        if (col >= 0)
+          win = col;
+        else if (lin >= 0)
+          win = lin;
     }
-    for (int x = 1 ; x <= 2; x ++)
+    for (int x = 1; x <= 2; x ++)
     {
-      if (g.cases[0][0] == x && g.cases[1][1] == x && g.cases[2][2] == x)
-        win = x;
-      if (g.cases[0][2] == x && g.cases[1][1] == x && g.cases[2][0] == x)
-        win = x;
+        if (g.cases[0][0] == x && g.cases[1][1] == x && g.cases[2][2] == x)
+          win = x;
+        if (g.cases[0][2] == x && g.cases[1][1] == x && g.cases[2][0] == x)
+          win = x;
     }
     g.ended = win != 0 || freecase == 0;
     if (win == 1)
@@ -176,16 +176,16 @@ Un minimax classique, renvoie la note du plateau
     int maxNote = -10000;
     if (!g.firstToPlay)
       maxNote = 10000;
-    for (int x = 0 ; x <= 2; x ++)
-      for (int y = 0 ; y <= 2; y ++)
+    for (int x = 0; x <= 2; x ++)
+      for (int y = 0; y <= 2; y ++)
         if (can_move_xy(x, y, g))
     {
-      apply_move_xy(x, y, g);
-      int currentNote = minmax(g);
-      cancel_move_xy(x, y, g);
-      /* Minimum ou Maximum selon le coté ou l'on joue*/
-      if (currentNote > maxNote == g.firstToPlay)
-        maxNote = currentNote;
+        apply_move_xy(x, y, g);
+        int currentNote = minmax(g);
+        cancel_move_xy(x, y, g);
+        /* Minimum ou Maximum selon le coté ou l'on joue*/
+        if (currentNote > maxNote == g.firstToPlay)
+          maxNote = currentNote;
     }
     return maxNote;
   }
@@ -199,20 +199,20 @@ Renvoie le coup de l'IA
     minMove.x = 0;
     minMove.y = 0;
     int minNote = 10000;
-    for (int x = 0 ; x <= 2; x ++)
-      for (int y = 0 ; y <= 2; y ++)
+    for (int x = 0; x <= 2; x ++)
+      for (int y = 0; y <= 2; y ++)
         if (can_move_xy(x, y, g))
     {
-      apply_move_xy(x, y, g);
-      int currentNote = minmax(g);
-      Console.Write("" + x + ", " + y + ", " + currentNote + "\n");
-      cancel_move_xy(x, y, g);
-      if (currentNote < minNote)
-      {
-        minNote = currentNote;
-        minMove.x = x;
-        minMove.y = y;
-      }
+        apply_move_xy(x, y, g);
+        int currentNote = minmax(g);
+        Console.Write("" + x + ", " + y + ", " + currentNote + "\n");
+        cancel_move_xy(x, y, g);
+        if (currentNote < minNote)
+        {
+            minNote = currentNote;
+            minMove.x = x;
+            minMove.y = y;
+        }
     }
     Console.Write("" + minMove.x + minMove.y + "\n");
     return minMove;
@@ -221,12 +221,12 @@ Renvoie le coup de l'IA
   static gamestate init0()
   {
     int[][] cases = new int[3][];
-    for (int i = 0 ; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-      int[] tab = new int[3];
-      for (int j = 0 ; j < 3; j++)
-        tab[j] = 0;
-      cases[i] = tab;
+        int[] tab = new int[3];
+        for (int j = 0; j < 3; j++)
+          tab[j] = 0;
+        cases[i] = tab;
     }
     gamestate a = new gamestate();
     a.cases = cases;
@@ -251,31 +251,31 @@ Renvoie le coup de l'IA
   
   public static void Main(String[] args)
   {
-    for (int i = 0 ; i <= 1; i ++)
+    for (int i = 0; i <= 1; i ++)
     {
-      gamestate state = init0();
-      move c = new move();
-      c.x = 1;
-      c.y = 1;
-      apply_move(c, state);
-      move d = new move();
-      d.x = 0;
-      d.y = 0;
-      apply_move(d, state);
-      while (!state.ended)
-      {
-        print_state(state);
-        apply_move(play(state), state);
-        eval0(state);
-        print_state(state);
-        if (!state.ended)
+        gamestate state = init0();
+        move c = new move();
+        c.x = 1;
+        c.y = 1;
+        apply_move(c, state);
+        move d = new move();
+        d.x = 0;
+        d.y = 0;
+        apply_move(d, state);
+        while (!state.ended)
         {
-          apply_move(play(state), state);
-          eval0(state);
+            print_state(state);
+            apply_move(play(state), state);
+            eval0(state);
+            print_state(state);
+            if (!state.ended)
+            {
+                apply_move(play(state), state);
+                eval0(state);
+            }
         }
-      }
-      print_state(state);
-      Console.Write("" + state.note + "\n");
+        print_state(state);
+        Console.Write("" + state.note + "\n");
     }
   }
   

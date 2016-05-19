@@ -9,11 +9,11 @@ object euler02
     var sum: Int = 0;
     while (a < 4000000)
     {
-      if (a % 2 == 0)
-        sum = sum + a;
-      var c: Int = a;
-      a = b;
-      b = b + c;
+        if (a % 2 == 0)
+          sum = sum + a;
+        var c: Int = a;
+        a = b;
+        b = b + c;
     }
     printf("%d\n", sum);
   }

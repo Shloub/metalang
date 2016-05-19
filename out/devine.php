@@ -20,21 +20,21 @@ function scantrim(){
     stdin_();
   }
 }
-function devine0($nombre, &$tab, $len){
-  $min0 = $tab[0];
-  $max0 = $tab[1];
-  for ($i = 2 ; $i < $len; $i++)
-  {
-    if ($tab[$i] > $max0 || $tab[$i] < $min0)
-      return false;
-    if ($tab[$i] < $nombre)
-      $min0 = $tab[$i];
-    if ($tab[$i] > $nombre)
-      $max0 = $tab[$i];
-    if ($tab[$i] == $nombre && $len != $i + 1)
-      return false;
-  }
-  return true;
+function devine0($nombre, &$tab, $len) {
+    $min0 = $tab[0];
+    $max0 = $tab[1];
+    for ($i = 2; $i < $len; $i++)
+    {
+        if ($tab[$i] > $max0 || $tab[$i] < $min0)
+          return false;
+        if ($tab[$i] < $nombre)
+          $min0 = $tab[$i];
+        if ($tab[$i] > $nombre)
+          $max0 = $tab[$i];
+        if ($tab[$i] == $nombre && $len != $i + 1)
+          return false;
+    }
+    return true;
 }
 
 list($nombre) = scan("%d");
@@ -42,14 +42,14 @@ scantrim();
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i < $len; $i++)
+for ($i = 0; $i < $len; $i++)
 {
-  list($tmp) = scan("%d");
-  scantrim();
-  $tab[$i] = $tmp;
+    list($tmp) = scan("%d");
+    scantrim();
+    $tab[$i] = $tmp;
 }
 if (devine0($nombre, $tab, $len))
   echo "True";
 else
   echo "False";
-?>
+

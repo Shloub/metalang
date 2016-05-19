@@ -45,14 +45,14 @@ func qsort0(tab []int, len int, i int, j int) {
                 var tmp int = tab[i]
                 tab[i] = tab[j];
                 tab[j] = tmp;
-                i ++;
+                i++;
             } else {
               /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
               var tmp int = tab[i]
               tab[i] = tab[j];
               tab[j] = tab[i + 1];
               tab[i + 1] = tmp;
-              i ++;
+              i++;
             }
         } else {
           j --;

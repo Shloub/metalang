@@ -53,14 +53,14 @@ static int readInt(){
     int i = len - 2;
     while (i >= 0)
     {
-      int x = tab[i];
-      while (j >= 0 && x > tab[len - j])
-        j --;
-      j ++;
-      tab[len - j] = x;
-      if (j > max0)
-        max0 = j;
-      i --;
+        int x = tab[i];
+        while (j >= 0 && x > tab[len - j])
+          j --;
+        j++;
+        tab[len - j] = x;
+        if (j > max0)
+          max0 = j;
+        i --;
     }
     return max0;
   }
@@ -72,12 +72,12 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      int x = 0;
-      x = readInt();
-      stdin_sep();
-      tab[i] = x;
+        int x = 0;
+        x = readInt();
+        stdin_sep();
+        tab[i] = x;
     }
     Console.Write(montagnes0(tab, len));
   }

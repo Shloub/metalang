@@ -40,13 +40,13 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t3 = t2;
     t = t2;
     t2 = t3;
-    t.blah ++;
+    t.blah++;
     int len = 1;
     int[] cache0 = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
       cache0[i] = -i;
     int[] cache1 = new int[len];
-    for (int j = 0 ; j < len; j++)
+    for (int j = 0; j < len; j++)
       cache1[j] = j;
     int[] cache2 = cache0;
     cache0 = cache1;
@@ -59,28 +59,28 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
   {
     toto t = mktoto(4);
     toto t2 = mktoto(5);
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       t.bar = -scanner.nextInt();
     }else{
       t.bar = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       t.blah = -scanner.nextInt();
     }else{
       t.blah = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       t2.bar = -scanner.nextInt();
     }else{
       t2.bar = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    if (scanner.hasNext("^-")){
+    if (scanner.hasNext("^-")) {
       scanner.next("^-");
       t2.blah = -scanner.nextInt();
     }else{

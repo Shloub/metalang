@@ -31,7 +31,7 @@ def read_int() : Int = {
   def foo3(){
     if (1 == 1)
     {
-      
+        
     }
   }
   
@@ -42,17 +42,17 @@ def read_int() : Int = {
     /* On déclare un entier qui contiendra la somme */
     for (i <- 1 to n)
     {
-      /* La boucle : i est le diviseur potentiel*/
-      if (n % i == 0)
-      {
-        /* Si i divise */
-        out0 = out0 + i;
-        /* On incrémente */
-      }
-      else
-      {
-        /* nop */
-      }
+        /* La boucle : i est le diviseur potentiel*/
+        if (n % i == 0)
+        {
+            /* Si i divise */
+            out0 = out0 + i;
+            /* On incrémente */
+        }
+        else
+        {
+            /* nop */
+        }
     }
     return out0;
     /*On renvoie out*/

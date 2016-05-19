@@ -44,10 +44,10 @@ object euler11
       m(c) = readLine().split(" ").map(_.toInt);
     for (j <- 0 to 7)
     {
-      var (dx, dy) = directions(j)
-      for (x <- 0 to 19)
-        for (y <- 0 to 19)
-          max0 = max2_0(max0, find(4, m, x, y, dx, dy));
+        var (dx, dy) = directions(j)
+        for (x <- 0 to 19)
+          for (y <- 0 to 19)
+            max0 = max2_0(max0, find(4, m, x, y, dx, dy));
     }
     printf("%d\n", max0);
   }

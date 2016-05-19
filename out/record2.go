@@ -29,7 +29,7 @@ func mktoto(v1 int) * toto{
 }
 
 func result(t * toto) int{
-  (*t).blah ++;
+  (*t).blah++;
   return (*t).foo + (*t).blah * (*t).bar + (*t).bar * (*t).foo
 }
 

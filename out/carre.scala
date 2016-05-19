@@ -22,9 +22,9 @@ object carre
         tab(iy)(ix) = min2_0(min2_0(tab(iy)(ix - 1), tab(iy - 1)(ix)), tab(iy - 1)(ix - 1)) + 1;
     for (jy <- 0 to y - 1)
     {
-      for (jx <- 0 to x - 1)
-        printf("%d ", tab(jy)(jx));
-      printf("\n");
+        for (jx <- 0 to x - 1)
+          printf("%d ", tab(jy)(jx));
+        printf("\n");
     }
   }
   

@@ -29,4 +29,4 @@ list($param["bar"]) = scan("%d");
 scantrim();
 list($param["foo"]) = scan("%d");
 echo $param["bar"] + $param["foo"] * $param["bar"];
-?>
+

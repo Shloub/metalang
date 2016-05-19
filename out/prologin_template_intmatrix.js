@@ -26,12 +26,12 @@ function read_int_(){
     }
   }
 }
-function programme_candidat(tableau, x, y){
-  var out0 = 0;
-  for (var i = 0 ; i < y; i++)
-    for (var j = 0 ; j < x; j++)
-      out0 += tableau[i][j] * (i * 2 + j);
-  return out0;
+function programme_candidat(tableau, x, y) {
+    var out0 = 0;
+    for (var i = 0 ; i < y; i++)
+      for (var j = 0 ; j < x; j++)
+        out0 += tableau[i][j] * (i * 2 + j);
+    return out0;
 }
 
 taille_x=read_int_();
@@ -41,13 +41,13 @@ stdinsep();
 var tableau = new Array(taille_y);
 for (var a = 0 ; a < taille_y; a++)
 {
-  var b = new Array(taille_x);
-  for (var c = 0 ; c < taille_x; c++)
-  {
-    b[c]=read_int_();
-    stdinsep();
-  }
-  tableau[a] = b;
+    var b = new Array(taille_x);
+    for (var c = 0 ; c < taille_x; c++)
+    {
+        b[c]=read_int_();
+        stdinsep();
+    }
+    tableau[a] = b;
 }
 util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 

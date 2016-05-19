@@ -51,24 +51,24 @@ static int readInt(){
     int m = (a + b) / 2;
     if (a == m)
     {
-      if (tab[a] == m)
-        return b;
-      else
-        return a;
+        if (tab[a] == m)
+          return b;
+        else
+          return a;
     }
     int i = a;
     int j = b;
     while (i < j)
     {
-      int e = tab[i];
-      if (e < m)
-        i ++;
-      else
-      {
-        j --;
-        tab[i] = tab[j];
-        tab[j] = e;
-      }
+        int e = tab[i];
+        if (e < m)
+          i++;
+        else
+        {
+            j --;
+            tab[i] = tab[j];
+            tab[j] = e;
+        }
     }
     if (i < m)
       return go0(tab, a, m);
@@ -88,12 +88,12 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-      int tmp = 0;
-      tmp = readInt();
-      stdin_sep();
-      tab[i] = tmp;
+        int tmp = 0;
+        tmp = readInt();
+        stdin_sep();
+        tab[i] = tmp;
     }
     Console.Write(plus_petit0(tab, len));
   }

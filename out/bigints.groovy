@@ -9,16 +9,16 @@ class Bigint {
 Bigint read_bigint(int len)
 {
   int[] chiffres = new int[len]
-  for (int j = 0 ; j < len; j++)
+  for (int j = 0; j < len; j++)
   {
-    char c = scanner.findWithinHorizon(".", 1).charAt(0);
-    chiffres[j] = (0+c)
+      char c = scanner.findWithinHorizon(".", 1).charAt(0);
+      chiffres[j] = (0+c)
   }
-  for (int i = 0 ; i <= (len - 1).intdiv(2); i ++)
+  for (int i = 0; i <= (len - 1).intdiv(2); i ++)
   {
-    int tmp = chiffres[i]
-    chiffres[i] = chiffres[len - 1 - i]
-    chiffres[len - 1 - i] = tmp
+      int tmp = chiffres[i]
+      chiffres[i] = chiffres[len - 1 - i]
+      chiffres[len - 1 - i] = tmp
   }
   Bigint e = new Bigint()
   e.bigint_sign = true
@@ -31,7 +31,7 @@ void print_bigint(Bigint a)
 {
   if (!a.bigint_sign)
     print((char)'-')
-  for (int i = 0 ; i < a.bigint_len; i++)
+  for (int i = 0; i < a.bigint_len; i++)
     print(a.bigint_chiffres[a.bigint_len - 1 - i])
 }
 
@@ -44,10 +44,10 @@ boolean bigint_eq(Bigint a, Bigint b)
     return false
   else
   {
-    for (int i = 0 ; i < a.bigint_len; i++)
-      if (a.bigint_chiffres[i] != b.bigint_chiffres[i])
-      return false
-    return true
+      for (int i = 0; i < a.bigint_len; i++)
+        if (a.bigint_chiffres[i] != b.bigint_chiffres[i])
+        return false
+      return true
   }
 }
 
@@ -60,20 +60,20 @@ boolean bigint_gt(Bigint a, Bigint b)
     return false
   else
   {
-    if (a.bigint_len > b.bigint_len)
-      return a.bigint_sign
-    else if (a.bigint_len < b.bigint_len)
-      return !a.bigint_sign
-    else
-      for (int i = 0 ; i < a.bigint_len; i++)
-      {
-        int j = a.bigint_len - 1 - i
-        if (a.bigint_chiffres[j] > b.bigint_chiffres[j])
-          return a.bigint_sign
-        else if (a.bigint_chiffres[j] < b.bigint_chiffres[j])
-          return !a.bigint_sign
-    }
-    return true
+      if (a.bigint_len > b.bigint_len)
+        return a.bigint_sign
+      else if (a.bigint_len < b.bigint_len)
+        return !a.bigint_sign
+      else
+        for (int i = 0; i < a.bigint_len; i++)
+        {
+            int j = a.bigint_len - 1 - i
+            if (a.bigint_chiffres[j] > b.bigint_chiffres[j])
+              return a.bigint_sign
+            else if (a.bigint_chiffres[j] < b.bigint_chiffres[j])
+              return !a.bigint_sign
+      }
+      return true
   }
 }
 
@@ -88,15 +88,15 @@ Bigint add_bigint_positif(Bigint a, Bigint b)
   int len = Math.max(a.bigint_len, b.bigint_len) + 1
   int retenue = 0
   int[] chiffres = new int[len]
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
-    int tmp = retenue
-    if (i < a.bigint_len)
-      tmp += a.bigint_chiffres[i];
-    if (i < b.bigint_len)
-      tmp += b.bigint_chiffres[i];
-    retenue = tmp.intdiv(10)
-    chiffres[i] = tmp % 10
+      int tmp = retenue
+      if (i < a.bigint_len)
+        tmp += a.bigint_chiffres[i];
+      if (i < b.bigint_len)
+        tmp += b.bigint_chiffres[i];
+      retenue = tmp.intdiv(10)
+      chiffres[i] = tmp % 10
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
@@ -115,19 +115,19 @@ Pré-requis : a > b
   int len = a.bigint_len
   int retenue = 0
   int[] chiffres = new int[len]
-  for (int i = 0 ; i < len; i++)
+  for (int i = 0; i < len; i++)
   {
-    int tmp = retenue + a.bigint_chiffres[i]
-    if (i < b.bigint_len)
-      tmp -= b.bigint_chiffres[i];
-    if (tmp < 0)
-    {
-      tmp += 10;
-      retenue = -1
-    }
-    else
-      retenue = 0
-    chiffres[i] = tmp
+      int tmp = retenue + a.bigint_chiffres[i]
+      if (i < b.bigint_len)
+        tmp -= b.bigint_chiffres[i];
+      if (tmp < 0)
+      {
+          tmp += 10;
+          retenue = -1
+      }
+      else
+        retenue = 0
+      chiffres[i] = tmp
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
@@ -151,26 +151,26 @@ Bigint add_bigint(Bigint a, Bigint b)
 {
   if (a.bigint_sign == b.bigint_sign)
   {
-    if (a.bigint_sign)
-      return add_bigint_positif(a, b)
-    else
-      return neg_bigint(add_bigint_positif(a, b))
+      if (a.bigint_sign)
+        return add_bigint_positif(a, b)
+      else
+        return neg_bigint(add_bigint_positif(a, b))
   }
   else if (a.bigint_sign)
   {
-    /* a positif, b negatif */
-    if (bigint_gt(a, neg_bigint(b)))
-      return sub_bigint_positif(a, b)
-    else
-      return neg_bigint(sub_bigint_positif(b, a))
+      /* a positif, b negatif */
+      if (bigint_gt(a, neg_bigint(b)))
+        return sub_bigint_positif(a, b)
+      else
+        return neg_bigint(sub_bigint_positif(b, a))
   }
   else
   {
-    /* a negatif, b positif */
-    if (bigint_gt(neg_bigint(a), b))
-      return neg_bigint(sub_bigint_positif(a, b))
-    else
-      return sub_bigint_positif(b, a)
+      /* a negatif, b positif */
+      if (bigint_gt(neg_bigint(a), b))
+        return neg_bigint(sub_bigint_positif(a, b))
+      else
+        return sub_bigint_positif(b, a)
   }
 }
 
@@ -186,25 +186,25 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   int len = a.bigint_len + b.bigint_len + 1
   int[] chiffres = new int[len]
-  for (int k = 0 ; k < len; k++)
+  for (int k = 0; k < len; k++)
     chiffres[k] = 0
-  for (int i = 0 ; i < a.bigint_len; i++)
+  for (int i = 0; i < a.bigint_len; i++)
   {
-    int retenue = 0
-    for (int j = 0 ; j < b.bigint_len; j++)
-    {
-      chiffres[i + j] =
-      chiffres[i + j] + retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i]
-      retenue = chiffres[i + j].intdiv(10)
-      chiffres[i + j] = chiffres[i + j] % 10
-    }
-    chiffres[i + b.bigint_len] = chiffres[i + b.bigint_len] + retenue
+      int retenue = 0
+      for (int j = 0; j < b.bigint_len; j++)
+      {
+          chiffres[i + j] =
+          chiffres[i + j] + retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i]
+          retenue = chiffres[i + j].intdiv(10)
+          chiffres[i + j] = chiffres[i + j] % 10
+      }
+      chiffres[i + b.bigint_len] = chiffres[i + b.bigint_len] + retenue
   }
   chiffres[a.bigint_len + b.bigint_len] =
   chiffres[a.bigint_len + b.bigint_len - 1].intdiv(10)
   chiffres[a.bigint_len + b.bigint_len - 1] =
   chiffres[a.bigint_len + b.bigint_len - 1] % 10
-  for (int l = 0 ; l <= 2; l ++)
+  for (int l = 0; l <= 2; l ++)
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
   Bigint m = new Bigint()
@@ -229,7 +229,7 @@ Bigint bigint_premiers_chiffres(Bigint a, int i)
 Bigint bigint_shift(Bigint a, int i)
 {
   int[] chiffres = new int[a.bigint_len + i]
-  for (int k = 0 ; k < a.bigint_len + i; k++)
+  for (int k = 0; k < a.bigint_len + i; k++)
     if (k >= i)
     chiffres[k] = a.bigint_chiffres[k - i]
   else
@@ -274,8 +274,8 @@ int log10(int a)
   int out0 = 1
   while (a >= 10)
   {
-    a /= 10;
-    out0 ++;
+      a /= 10;
+      out0++;
   }
   return out0
 }
@@ -286,12 +286,12 @@ Bigint bigint_of_int(int i)
   if (i == 0)
     size = 0
   int[] t = new int[size]
-  for (int j = 0 ; j < size; j++)
+  for (int j = 0; j < size; j++)
     t[j] = 0
-  for (int k = 0 ; k < size; k++)
+  for (int k = 0; k < size; k++)
   {
-    t[k] = i % 10
-    i /= 10;
+      t[k] = i % 10
+      i /= 10;
   }
   Bigint q = new Bigint()
   q.bigint_sign = true
@@ -306,8 +306,8 @@ Bigint fact_bigint(Bigint a)
   Bigint out0 = one
   while (!bigint_eq(a, one))
   {
-    out0 = mul_bigint(a, out0)
-    a = sub_bigint(a, one)
+      out0 = mul_bigint(a, out0)
+      a = sub_bigint(a, one)
   }
   return out0
 }
@@ -315,7 +315,7 @@ Bigint fact_bigint(Bigint a)
 int sum_chiffres_bigint(Bigint a)
 {
   int out0 = 0
-  for (int i = 0 ; i < a.bigint_len; i++)
+  for (int i = 0; i < a.bigint_len; i++)
     out0 += a.bigint_chiffres[i];
   return out0
 }
@@ -353,13 +353,13 @@ Bigint bigint_exp_10chiffres(Bigint a, int b)
 void euler48()
 {
   Bigint sum = bigint_of_int(0)
-  for (int i = 1 ; i <= 100; i ++)
+  for (int i = 1; i <= 100; i ++)
   {
-    /* 1000 normalement */
-    Bigint ib = bigint_of_int(i)
-    Bigint ibeib = bigint_exp_10chiffres(ib, i)
-    sum = add_bigint(sum, ibeib)
-    sum = bigint_premiers_chiffres(sum, 10)
+      /* 1000 normalement */
+      Bigint ib = bigint_of_int(i)
+      Bigint ibeib = bigint_exp_10chiffres(ib, i)
+      sum = add_bigint(sum, ibeib)
+      sum = bigint_premiers_chiffres(sum, 10)
   }
   print("euler 48 = ")
   print_bigint(sum)
@@ -381,11 +381,11 @@ int euler25()
   Bigint b = bigint_of_int(1)
   while (b.bigint_len < 100)
   {
-    /* 1000 normalement */
-    Bigint c = add_bigint(a, b)
-    a = b
-    b = c
-    i ++;
+      /* 1000 normalement */
+      Bigint c = add_bigint(a, b)
+      a = b
+      b = c
+      i++;
   }
   return i
 }
@@ -395,44 +395,44 @@ int euler29()
   int maxA = 5
   int maxB = 5
   Bigint[] a_bigint = new Bigint[maxA + 1]
-  for (int j = 0 ; j < maxA + 1; j++)
+  for (int j = 0; j < maxA + 1; j++)
     a_bigint[j] = bigint_of_int(j * j)
   Bigint[] a0_bigint = new Bigint[maxA + 1]
-  for (int j2 = 0 ; j2 < maxA + 1; j2++)
+  for (int j2 = 0; j2 < maxA + 1; j2++)
     a0_bigint[j2] = bigint_of_int(j2)
   int[] b = new int[maxA + 1]
-  for (int k = 0 ; k < maxA + 1; k++)
+  for (int k = 0; k < maxA + 1; k++)
     b[k] = 2
   int n = 0
   boolean found = true
   while (found)
   {
-    Bigint min0 = a0_bigint[0]
-    found = false
-    for (int i = 2 ; i <= maxA; i ++)
-      if (b[i] <= maxB)
-    {
+      Bigint min0 = a0_bigint[0]
+      found = false
+      for (int i = 2; i <= maxA; i ++)
+        if (b[i] <= maxB)
+      {
+          if (found)
+          {
+              if (bigint_lt(a_bigint[i], min0))
+                min0 = a_bigint[i]
+          }
+          else
+          {
+              min0 = a_bigint[i]
+              found = true
+          }
+      }
       if (found)
       {
-        if (bigint_lt(a_bigint[i], min0))
-          min0 = a_bigint[i]
+          n++;
+          for (int l = 2; l <= maxA; l ++)
+            if (bigint_eq(a_bigint[l], min0) && b[l] <= maxB)
+          {
+              b[l] = b[l] + 1
+              a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l])
+          }
       }
-      else
-      {
-        min0 = a_bigint[i]
-        found = true
-      }
-    }
-    if (found)
-    {
-      n ++;
-      for (int l = 2 ; l <= maxA; l ++)
-        if (bigint_eq(a_bigint[l], min0) && b[l] <= maxB)
-      {
-        b[l] = b[l] + 1
-        a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l])
-      }
-    }
   }
   return n
 }
@@ -441,11 +441,11 @@ int euler29()
 @Field Scanner scanner = new Scanner(System.in)
 System.out.printf("%s\n", euler29());
 Bigint sum = read_bigint(50)
-for (int i = 2 ; i <= 100; i ++)
+for (int i = 2; i <= 100; i ++)
 {
-  scanner.findWithinHorizon("[\n\r ]*", 1)
-  Bigint tmp = read_bigint(50)
-  sum = add_bigint(sum, tmp)
+    scanner.findWithinHorizon("[\n\r ]*", 1)
+    Bigint tmp = read_bigint(50)
+    sum = add_bigint(sum, tmp)
 }
 print("euler13 = ")
 print_bigint(sum)

@@ -23,12 +23,12 @@ public class euler28
     int nterms = n * 2 - 1;
     int un = 1;
     int sum = 1;
-    for (int i = 0 ; i <= nterms - 2; i ++)
+    for (int i = 0; i <= nterms - 2; i ++)
     {
-      int d = 2 * (1 + i / 4);
-      un += d;
-      /* print int d print "=>" print un print " " */
-      sum += un;
+        int d = 2 * (1 + i / 4);
+        un += d;
+        /* print int d print "=>" print un print " " */
+        sum += un;
     }
     return sum;
   }

@@ -17,9 +17,9 @@ object euler40
       n = n - t(i) * i;
     else
     {
-      var nombre: Int = exp0(10, i - 1) + n / i;
-      var chiffre: Int = i - 1 - n % i;
-      return nombre / exp0(10, chiffre) % 10;
+        var nombre: Int = exp0(10, i - 1) + n / i;
+        var chiffre: Int = i - 1 - n % i;
+        return nombre / exp0(10, chiffre) % 10;
     }
     return -1;
   }
@@ -47,10 +47,10 @@ object euler40
     var out0: Int = 1;
     for (l <- 0 to 6)
     {
-      var puiss: Int = exp0(10, l);
-      var v: Int = e(t, puiss - 1);
-      out0 = out0 * v;
-      printf("10^%d=%d v=%d\n", l, puiss, v);
+        var puiss: Int = exp0(10, l);
+        var v: Int = e(t, puiss - 1);
+        out0 = out0 * v;
+        printf("10^%d=%d v=%d\n", l, puiss, v);
     }
     printf("%d\n", out0);
   }

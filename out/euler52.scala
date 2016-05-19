@@ -6,14 +6,14 @@ object euler52
       return a;
     else
     {
-      var b: Int = chiffre_sort(a / 10);
-      var c: Int = a % 10;
-      var d: Int = b % 10;
-      var e: Int = b / 10;
-      if (c < d)
-        return c + b * 10;
-      else
-        return d + chiffre_sort(c + e * 10) * 10;
+        var b: Int = chiffre_sort(a / 10);
+        var c: Int = a % 10;
+        var d: Int = b % 10;
+        var e: Int = b / 10;
+        if (c < d)
+          return c + b * 10;
+        else
+          return d + chiffre_sort(c + e * 10) * 10;
     }
   }
   

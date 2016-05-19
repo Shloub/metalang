@@ -26,13 +26,13 @@ function read_int_(){
     }
   }
 }
-function find(n, m, x, y, dx, dy){
-  if (x < 0 || x == 20 || y < 0 || y == 20)
-    return -1;
-  else if (n == 0)
-    return 1;
-  else
-    return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
+function find(n, m, x, y, dx, dy) {
+    if (x < 0 || x == 20 || y < 0 || y == 20)
+      return -1;
+    else if (n == 0)
+      return 1;
+    else
+      return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
 }
 
 
@@ -40,88 +40,88 @@ var directions = new Array(8);
 for (var i = 0 ; i < 8; i++)
   if (i == 0)
 {
-  var c = {
-    tuple_int_int_field_0 : 0,
-    tuple_int_int_field_1 : 1
-  };
-  directions[i] = c;
+    var c = {
+      tuple_int_int_field_0 : 0,
+      tuple_int_int_field_1 : 1
+    };
+    directions[i] = c;
 }
 else if (i == 1)
 {
-  var d = {
-    tuple_int_int_field_0 : 1,
-    tuple_int_int_field_1 : 0
-  };
-  directions[i] = d;
+    var d = {
+      tuple_int_int_field_0 : 1,
+      tuple_int_int_field_1 : 0
+    };
+    directions[i] = d;
 }
 else if (i == 2)
 {
-  var e = {
-    tuple_int_int_field_0 : 0,
-    tuple_int_int_field_1 : -1
-  };
-  directions[i] = e;
+    var e = {
+      tuple_int_int_field_0 : 0,
+      tuple_int_int_field_1 : -1
+    };
+    directions[i] = e;
 }
 else if (i == 3)
 {
-  var f = {
-    tuple_int_int_field_0 : -1,
-    tuple_int_int_field_1 : 0
-  };
-  directions[i] = f;
+    var f = {
+      tuple_int_int_field_0 : -1,
+      tuple_int_int_field_1 : 0
+    };
+    directions[i] = f;
 }
 else if (i == 4)
 {
-  var g = {
-    tuple_int_int_field_0 : 1,
-    tuple_int_int_field_1 : 1
-  };
-  directions[i] = g;
+    var g = {
+      tuple_int_int_field_0 : 1,
+      tuple_int_int_field_1 : 1
+    };
+    directions[i] = g;
 }
 else if (i == 5)
 {
-  var h = {
-    tuple_int_int_field_0 : 1,
-    tuple_int_int_field_1 : -1
-  };
-  directions[i] = h;
+    var h = {
+      tuple_int_int_field_0 : 1,
+      tuple_int_int_field_1 : -1
+    };
+    directions[i] = h;
 }
 else if (i == 6)
 {
-  var k = {
-    tuple_int_int_field_0 : -1,
-    tuple_int_int_field_1 : 1
-  };
-  directions[i] = k;
+    var k = {
+      tuple_int_int_field_0 : -1,
+      tuple_int_int_field_1 : 1
+    };
+    directions[i] = k;
 }
 else
 {
-  var l = {
-    tuple_int_int_field_0 : -1,
-    tuple_int_int_field_1 : -1
-  };
-  directions[i] = l;
+    var l = {
+      tuple_int_int_field_0 : -1,
+      tuple_int_int_field_1 : -1
+    };
+    directions[i] = l;
 }
 var max0 = 0;
 var m = new Array(20);
 for (var o = 0 ; o < 20; o++)
 {
-  var p = new Array(20);
-  for (var q = 0 ; q < 20; q++)
-  {
-    p[q]=read_int_();
-    stdinsep();
-  }
-  m[o] = p;
+    var p = new Array(20);
+    for (var q = 0 ; q < 20; q++)
+    {
+        p[q]=read_int_();
+        stdinsep();
+    }
+    m[o] = p;
 }
 for (var j = 0 ; j <= 7; j++)
 {
-  var r = directions[j];
-  var dx = r.tuple_int_int_field_0;
-  var dy = r.tuple_int_int_field_1;
-  for (var x = 0 ; x <= 19; x++)
-    for (var y = 0 ; y <= 19; y++)
-      max0 = Math.max(max0, find(4, m, x, y, dx, dy));
+    var r = directions[j];
+    var dx = r.tuple_int_int_field_0;
+    var dy = r.tuple_int_int_field_1;
+    for (var x = 0 ; x <= 19; x++)
+      for (var y = 0 ; y <= 19; y++)
+        max0 = Math.max(max0, find(4, m, x, y, dx, dy));
 }
 util.print(max0, "\n");
 

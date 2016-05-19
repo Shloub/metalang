@@ -27,7 +27,7 @@ func go0(tab []int, a int, b int) int{
   for i < j{
     var e int = tab[i]
     if e < m {
-      i ++;
+      i++;
     } else {
       j --;
       tab[i] = tab[j];

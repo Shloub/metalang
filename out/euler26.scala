@@ -7,14 +7,14 @@ object euler26
     var i: Int=0;
     while (a != 0)
     {
-      var chiffre: Int = a / b;
-      var reste: Int = a % b;
-      for (i <- 0 to len - 1)
-        if (restes(i) == reste)
-        return len - i;
-      restes(len) = reste;
-      len = len + 1;
-      a = reste * 10;
+        var chiffre: Int = a / b;
+        var reste: Int = a % b;
+        for (i <- 0 to len - 1)
+          if (restes(i) == reste)
+          return len - i;
+        restes(len) = reste;
+        len = len + 1;
+        a = reste * 10;
     }
     return 0;
   }
@@ -29,12 +29,12 @@ object euler26
     var mi: Int = 0;
     for (i <- 1 to 1000)
     {
-      var p: Int = periode(t, 0, 1, i);
-      if (p > m)
-      {
-        mi = i;
-        m = p;
-      }
+        var p: Int = periode(t, 0, 1, i);
+        if (p > m)
+        {
+            mi = i;
+            m = p;
+        }
     }
     printf("%d\n%d\n", mi, m);
   }

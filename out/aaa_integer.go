@@ -10,7 +10,7 @@ func main() {
   fmt.Printf("%d\n", i);
   i /= 2;
   fmt.Printf("%d\n", i);
-  i ++;
+  i++;
   fmt.Printf("%d\n", i);
   i /= 3;
   fmt.Printf("%d\n", i);

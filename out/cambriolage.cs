@@ -50,22 +50,22 @@ static int readInt(){
   {
     int max_ancient = 0;
     int max_recent = 0;
-    for (int i = 0 ; i < m; i++)
+    for (int i = 0; i < m; i++)
     {
-      if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
-        max_ancient = serrures[i][1];
-      if (serrures[i][0] == 1 && serrures[i][1] > max_recent)
-        max_recent = serrures[i][1];
+        if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
+          max_ancient = serrures[i][1];
+        if (serrures[i][0] == 1 && serrures[i][1] > max_recent)
+          max_recent = serrures[i][1];
     }
     int max_ancient_pp = 0;
     int max_recent_pp = 0;
-    for (int i = 0 ; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-      int[] pp = passepartout[i];
-      if (pp[0] >= max_ancient && pp[1] >= max_recent)
-        return 1;
-      max_ancient_pp = Math.Max(max_ancient_pp, pp[0]);
-      max_recent_pp = Math.Max(max_recent_pp, pp[1]);
+        int[] pp = passepartout[i];
+        if (pp[0] >= max_ancient && pp[1] >= max_recent)
+          return 1;
+        max_ancient_pp = Math.Max(max_ancient_pp, pp[0]);
+        max_recent_pp = Math.Max(max_recent_pp, pp[1]);
     }
     if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
       return 2;
@@ -79,30 +79,30 @@ static int readInt(){
     int n = readInt();
     stdin_sep();
     int[][] passepartout = new int[n][];
-    for (int i = 0 ; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-      int[] out0 = new int[2];
-      for (int j = 0 ; j < 2; j++)
-      {
-        int out01 = readInt();
-        stdin_sep();
-        out0[j] = out01;
-      }
-      passepartout[i] = out0;
+        int[] out0 = new int[2];
+        for (int j = 0; j < 2; j++)
+        {
+            int out01 = readInt();
+            stdin_sep();
+            out0[j] = out01;
+        }
+        passepartout[i] = out0;
     }
     int m = readInt();
     stdin_sep();
     int[][] serrures = new int[m][];
-    for (int k = 0 ; k < m; k++)
+    for (int k = 0; k < m; k++)
     {
-      int[] out1 = new int[2];
-      for (int l = 0 ; l < 2; l++)
-      {
-        int out_ = readInt();
-        stdin_sep();
-        out1[l] = out_;
-      }
-      serrures[k] = out1;
+        int[] out1 = new int[2];
+        for (int l = 0; l < 2; l++)
+        {
+            int out_ = readInt();
+            stdin_sep();
+            out1[l] = out_;
+        }
+        serrures[k] = out1;
     }
     Console.Write(nbPassePartout(n, passepartout, m, serrures));
   }

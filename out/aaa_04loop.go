@@ -9,7 +9,7 @@ func h(i int) bool{
     if i % j == 5 {
       return true
     }
-    j ++;
+    j++;
   }
   return false
 }
@@ -23,7 +23,7 @@ func main() {
   var i int = 4
   for i < 10{
     fmt.Printf("%d", i);
-    i ++;
+    i++;
     j += i;
   }
   fmt.Printf("%d%dFIN TEST\n", j, i);

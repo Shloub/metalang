@@ -12,44 +12,47 @@ function scan($format){
   $stdin = substr($stdin, strlen($out[0]));
   return $out;
 }
-function foo(){
-  $a = 0;
-  /* test */
-  $a ++;
-  /* test 2 */
+function foo() {
+    $a = 0;
+    /* test */
+    $a++;
+    /* test 2 */
 }
 
-function foo2(){
-  
-}
 
-function foo3(){
-  if (1 == 1)
-  {
+function foo2() {
     
-  }
 }
 
-function sumdiv($n){
-  /* On désire renvoyer la somme des diviseurs */
-  $out0 = 0;
-  /* On déclare un entier qui contiendra la somme */
-  for ($i = 1 ; $i <= $n; $i++)
-  {
-    /* La boucle : i est le diviseur potentiel*/
-    if ($n % $i == 0)
+
+function foo3() {
+    if (1 == 1)
     {
-      /* Si i divise */
-      $out0 += $i;
-      /* On incrémente */
+        
     }
-    else
+}
+
+
+function sumdiv($n) {
+    /* On désire renvoyer la somme des diviseurs */
+    $out0 = 0;
+    /* On déclare un entier qui contiendra la somme */
+    for ($i = 1; $i <= $n; $i++)
     {
-      /* nop */
+        /* La boucle : i est le diviseur potentiel*/
+        if ($n % $i == 0)
+        {
+            /* Si i divise */
+            $out0 += $i;
+            /* On incrémente */
+        }
+        else
+        {
+            /* nop */
+        }
     }
-  }
-  return $out0;
-  /*On renvoie out*/
+    return $out0;
+    /*On renvoie out*/
 }
 
 /* Programme principal */
@@ -57,4 +60,4 @@ $n = 0;
 list($n) = scan("%d");
 /* Lecture de l'entier */
 echo sumdiv($n);
-?>
+

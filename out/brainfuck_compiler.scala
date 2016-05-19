@@ -74,11 +74,11 @@ et qui produit les macros metalang correspondante
     mem(current_pos) = mem(current_pos) + 1;
     while (mem(current_pos) != 0)
     {
-      mem(current_pos) = mem(current_pos) - 1;
-      current_pos = current_pos - 1;
-      mem(current_pos) = mem(current_pos) + 1;
-      printf("%c", (mem(current_pos)).toChar);
-      current_pos = current_pos + 1;
+        mem(current_pos) = mem(current_pos) - 1;
+        current_pos = current_pos - 1;
+        mem(current_pos) = mem(current_pos) + 1;
+        printf("%c", (mem(current_pos)).toChar);
+        current_pos = current_pos + 1;
     }
   }
   

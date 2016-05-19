@@ -1,8 +1,9 @@
 <?php
-function f($i){
-  if ($i == 0)
-    return true;
-  return false;
+
+function f($i) {
+    if ($i == 0)
+      return true;
+    return false;
 }
 
 if (f(4))
@@ -10,4 +11,4 @@ if (f(4))
 else
   echo "false <-\n ->\n";
 echo "small test end\n";
-?>
+

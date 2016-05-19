@@ -46,14 +46,14 @@ def skip() {
       return cache(posY)(posX);
     else
     {
-      cache(posY)(posX) = x * y * 10;
-      var val1: Int = pathfind_aux(cache, tab, x, y, posX + 1, posY);
-      var val2: Int = pathfind_aux(cache, tab, x, y, posX - 1, posY);
-      var val3: Int = pathfind_aux(cache, tab, x, y, posX, posY - 1);
-      var val4: Int = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      var out0: Int = 1 + min2_0(min2_0(min2_0(val1, val2), val3), val4);
-      cache(posY)(posX) = out0;
-      return out0;
+        cache(posY)(posX) = x * y * 10;
+        var val1: Int = pathfind_aux(cache, tab, x, y, posX + 1, posY);
+        var val2: Int = pathfind_aux(cache, tab, x, y, posX - 1, posY);
+        var val3: Int = pathfind_aux(cache, tab, x, y, posX, posY - 1);
+        var val4: Int = pathfind_aux(cache, tab, x, y, posX, posY + 1);
+        var out0: Int = 1 + min2_0(min2_0(min2_0(val1, val2), val3), val4);
+        cache(posY)(posX) = out0;
+        return out0;
     }
   }
   
@@ -63,10 +63,10 @@ def skip() {
     var cache :Array[Array[Int]] = new Array[Array[Int]](y);
     for (i <- 0 to y - 1)
     {
-      var tmp :Array[Int] = new Array[Int](x);
-      for (j <- 0 to x - 1)
-        tmp(j) = -1;
-      cache(i) = tmp;
+        var tmp :Array[Int] = new Array[Int](x);
+        for (j <- 0 to x - 1)
+          tmp(j) = -1;
+        cache(i) = tmp;
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
   }
@@ -83,15 +83,15 @@ def skip() {
     var tab :Array[Array[Char]] = new Array[Array[Char]](y);
     for (i <- 0 to y - 1)
     {
-      var tab2 :Array[Char] = new Array[Char](x);
-      for (j <- 0 to x - 1)
-      {
-        var tmp: Char = '\u0000';
-        tmp = read_char()
-        tab2(j) = tmp;
-      }
-      skip();
-      tab(i) = tab2;
+        var tab2 :Array[Char] = new Array[Char](x);
+        for (j <- 0 to x - 1)
+        {
+            var tmp: Char = '\u0000';
+            tmp = read_char()
+            tab2(j) = tmp;
+        }
+        skip();
+        tab(i) = tab2;
     }
     var result: Int = pathfind(tab, x, y);
     printf("%d", result);

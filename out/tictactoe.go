@@ -62,7 +62,7 @@ func eval0(g * gamestate) {
       var lin int = -1
       for x := 0 ; x <= 2; x++ {
         if (*g).cases[x][y] == 0 {
-            freecase ++;
+            freecase++;
           }
           var colv int = (*g).cases[x][y]
           var linv int = (*g).cases[y][x]

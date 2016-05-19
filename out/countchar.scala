@@ -49,9 +49,9 @@ def skip() {
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
     {
-      var tmp: Char = '\u0000';
-      tmp = read_char()
-      tab(i) = tmp;
+        var tmp: Char = '\u0000';
+        tmp = read_char()
+        tab(i) = tmp;
     }
     var result: Int = nth(tab, tofind, len);
     printf("%d", result);

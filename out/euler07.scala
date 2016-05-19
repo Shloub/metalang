@@ -17,9 +17,9 @@ object euler07
       n = n + 1;
     else
     {
-      t(used) = n;
-      n = n + 1;
-      used = used + 1;
+        t(used) = n;
+        n = n + 1;
+        used = used + 1;
     }
     return t(used - 1);
   }

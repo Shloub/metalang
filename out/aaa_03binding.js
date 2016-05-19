@@ -1,13 +1,15 @@
 var util = require("util");
-function g(i){
-  var j = i * 4;
-  if (~~(j % 2) == 1)
-    return 0;
-  return j;
+
+function g(i) {
+    var j = i * 4;
+    if (~~(j % 2) == 1)
+      return 0;
+    return j;
 }
 
-function h(i){
-  util.print(i, "\n");
+
+function h(i) {
+    util.print(i, "\n");
 }
 
 h(14);

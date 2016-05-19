@@ -6,7 +6,7 @@ var reader *bufio.Reader
 func foo() {
   var a int = 0
   /* test */
-  a ++;
+  a++;
   /* test 2 */
 }
 

@@ -8,7 +8,7 @@ sub readchar{
   return $o;
 }
 sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
+  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar(); }
 }
 sub remainder {
     my ($a, $b) = @_;

@@ -11,11 +11,11 @@ La suite de fibonaci
     var b2: Int = b;
     for (j <- 0 to i + 1)
     {
-      printf("%d", j);
-      out_0 = out_0 + a2;
-      var tmp: Int = b2;
-      b2 = b2 + a2;
-      a2 = tmp;
+        printf("%d", j);
+        out_0 = out_0 + a2;
+        var tmp: Int = b2;
+        b2 = b2 + a2;
+        a2 = tmp;
     }
     return out_0;
   }

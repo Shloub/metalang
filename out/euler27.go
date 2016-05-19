@@ -4,7 +4,7 @@ func eratostene(t []int, max0 int) int{
   var n int = 0
   for i := 2 ; i < max0; i++ {
     if t[i] == i {
-        n ++;
+        n++;
           var j int = i * i
           for j < max0 && j > 0{
             t[j] = 0;
@@ -24,7 +24,7 @@ func isPrime(n int, primes []int, len int) bool{
     if n % primes[i] == 0 {
       return false
     }
-    i ++;
+    i++;
   }
   return true
 }
@@ -56,7 +56,7 @@ func main() {
   for k := 2 ; k < maximumprimes; k++ {
     if era[k] == k {
         primes[l] = k;
-          l ++;
+          l++;
       }
   }
   fmt.Printf("%d == %d\n", l, nprimes);

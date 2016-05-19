@@ -1,7 +1,7 @@
 i = 4
-"""while i < 10 do """
+"""while i < 10 do"""
 print("%d" % i, end='')
 i += 1
-"""  end """
+"""end"""
 print("%d" % i, end='')
 

@@ -39,11 +39,11 @@ Ce test effectue un rot13 sur une chaine lue en entrée
     var tab4 :Array[Char] = new Array[Char](strlen);
     for (toto <- 0 to strlen - 1)
     {
-      var tmpc = read_char()
-      var c: Int = (tmpc).toInt;
-      if (tmpc != ' ')
-        c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
-      tab4(toto) = (c).toChar;
+        var tmpc = read_char()
+        var c: Int = (tmpc).toInt;
+        if (tmpc != ' ')
+          c = (c - ('a').toInt + 13) % 26 + ('a').toInt;
+        tab4(toto) = (c).toChar;
     }
     for (j <- 0 to strlen - 1)
       printf("%c", tab4(j));

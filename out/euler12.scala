@@ -14,13 +14,13 @@ object euler12
     for (i <- 2 to max0 - 1)
       if (t(i) == i)
     {
-      var j: Int = i * i;
-      n = n + 1;
-      while (j < max0 && j > 0)
-      {
-        t(j) = 0;
-        j = j + i;
-      }
+        var j: Int = i * i;
+        n = n + 1;
+        while (j < max0 && j > 0)
+        {
+            t(j) = 0;
+            j = j + i;
+        }
     }
     return n;
   }
@@ -30,14 +30,14 @@ object euler12
     var i: Int=0;
     for (i <- 0 to nprimes - 1)
     {
-      var d: Int = primes(i);
-      while (n % d == 0)
-      {
-        t(d) = t(d) + 1;
-        n = n / d;
-      }
-      if (n == 1)
-        return primes(i);
+        var d: Int = primes(i);
+        while (n % d == 0)
+        {
+            t(d) = t(d) + 1;
+            n = n / d;
+        }
+        if (n == 1)
+          return primes(i);
     }
     return n;
   }
@@ -61,23 +61,23 @@ object euler12
     for (k <- 2 to maximumprimes - 1)
       if (era(k) == k)
     {
-      primes(l) = k;
-      l = l + 1;
+        primes(l) = k;
+        l = l + 1;
     }
     for (n <- 1 to 10000)
     {
-      var primesFactors :Array[Int] = new Array[Int](n + 2);
-      for (m <- 0 to n + 2 - 1)
-        primesFactors(m) = 0;
-      var max0: Int = max2_0(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
-      primesFactors(2) = primesFactors(2) - 1;
-      var ndivs: Int = 1;
-      for (i <- 0 to max0)
-        if (primesFactors(i) != 0)
-        ndivs = ndivs * (1 + primesFactors(i));
-      if (ndivs > ndiv2)
-        return n * (n + 1) / 2;
-      /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
+        var primesFactors :Array[Int] = new Array[Int](n + 2);
+        for (m <- 0 to n + 2 - 1)
+          primesFactors(m) = 0;
+        var max0: Int = max2_0(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+        primesFactors(2) = primesFactors(2) - 1;
+        var ndivs: Int = 1;
+        for (i <- 0 to max0)
+          if (primesFactors(i) != 0)
+          ndivs = ndivs * (1 + primesFactors(i));
+        if (ndivs > ndiv2)
+          return n * (n + 1) / 2;
+        /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
     }
     return 0;
   }

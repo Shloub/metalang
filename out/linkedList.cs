@@ -58,10 +58,10 @@ static int readInt(){
       return acc;
     else
     {
-      intlist acc2 = new intlist();
-      acc2.head = torev.head;
-      acc2.tail = acc;
-      return rev2(acc, torev.tail);
+        intlist acc2 = new intlist();
+        acc2.head = torev.head;
+        acc2.tail = acc;
+        return rev2(acc, torev.tail);
     }
   }
   
@@ -76,9 +76,9 @@ static int readInt(){
     int i = -1;
     while (i != 0)
     {
-      i = readInt();
-      if (i != 0)
-        list = cons(list, i);
+        i = readInt();
+        if (i != 0)
+          list = cons(list, i);
     }
   }
   

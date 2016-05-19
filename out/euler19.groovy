@@ -11,10 +11,10 @@ int ndayinmonth(int month, int year)
     return 31
   else if (month == 1)
   {
-    if (is_leap(year))
-      return 29
-    else
-      return 28
+      if (is_leap(year))
+        return 29
+      else
+        return 28
   }
   else if (month == 2)
     return 31
@@ -48,16 +48,16 @@ int dayofweek = 1
 int count = 0
 while (year != 2001)
 {
-  int ndays = ndayinmonth(month, year)
-  dayofweek = (dayofweek + ndays) % 7
-  month ++;
-  if (month == 12)
-  {
-    month = 0
-    year ++;
-  }
-  if (dayofweek % 7 == 6)
-    count ++;
+    int ndays = ndayinmonth(month, year)
+    dayofweek = (dayofweek + ndays) % 7
+    month++;
+    if (month == 12)
+    {
+        month = 0
+        year++;
+    }
+    if (dayofweek % 7 == 6)
+      count++;
 }
 System.out.printf("%s\n", count);
 

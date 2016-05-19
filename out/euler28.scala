@@ -23,10 +23,10 @@ object euler28
     var sum: Int = 1;
     for (i <- 0 to nterms - 2)
     {
-      var d: Int = 2 * (1 + i / 4);
-      un = un + d;
-      /* print int d print "=>" print un print " " */
-      sum = sum + un;
+        var d: Int = 2 * (1 + i / 4);
+        un = un + d;
+        /* print int d print "=>" print un print " " */
+        sum = sum + un;
     }
     return sum;
   }

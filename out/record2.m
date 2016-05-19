@@ -12,17 +12,19 @@
 @implementation toto 
 @end
 
-toto * mktoto(int v1){
-  toto * t = [toto alloc];
-  t->foo=v1;
-  t->bar=0;
-  t->blah=0;
-  return t;
+
+toto * mktoto(int v1) {
+    toto * t = [toto alloc];
+    t->foo=v1;
+    t->bar=0;
+    t->blah=0;
+    return t;
 }
 
-int result(toto * t){
-  t->blah ++;
-  return t->foo + t->blah * t->bar + t->bar * t->foo;
+
+int result(toto * t) {
+    t->blah++;
+    return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
 
 int main(void){
