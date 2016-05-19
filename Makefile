@@ -169,10 +169,10 @@ out/%.class : out/%.java
 	@javac $< || exit 1
 
 out/%.exe : out/%.cs
-	@gmcs $< || exit 1
+	@mcs $< || exit 1
 
 out/%.exeVB : out/%.vb
-	@vbnc2 -removeintchecks $< -out:$@ || exit 1
+	@vbnc -removeintchecks $< -out:$@ || exit 1
 
 out/%.fsscript.exe  : out/%.fsscript
 	fsharpc $< -o $@ || exit 1
@@ -216,7 +216,7 @@ out/%.hs.exe.out : out/%.hs.exe
 	./$< +RTS -K1G -RTS < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.fsscript.exe.out : out/%.fsscript.exe
-	./$< < tests/prog/$(basename $*).in > $@ || exit 1;
+	mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.go.out : out/%.go
 	go run $< < tests/prog/$(basename $*).in > $@ || exit 1;
@@ -274,7 +274,7 @@ out/%.groovy.out : out/%.groovy
 
 # test global
 
-out/%.test : out/%.fsscript.exe.out out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.cpp.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out out/%.lua.out out/%.scala.out out/%.st.out out/%.fs.out out/%.groovy.out
+out/%.test : out/%.fsscript.exe.out out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out out/%.lua.out out/%.scala.out out/%.st.out out/%.fs.out out/%.groovy.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
