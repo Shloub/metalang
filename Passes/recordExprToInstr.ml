@@ -101,7 +101,7 @@ let expand tyenv i = match Instr.unfix i with
       let instrs, li = List.fold_left_map (fun instrs -> function
         | (Instr.StringConst _ ) as e-> instrs, e
         | Instr.PrintExpr (ty, e) ->
-            let instrs, e = process tyenv [] e in
+            let instrs, e = process tyenv instrs e in
             instrs, Instr.PrintExpr (ty, e)) [] li
       in
       List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Print li)  ) :: instrs)
@@ -110,7 +110,7 @@ let expand tyenv i = match Instr.unfix i with
         | Instr.Separation -> instrs, Instr.Separation
         | (Instr.DeclRead _ ) as o -> instrs, o
         | Instr.ReadExpr (t, mut) ->
-            let instrs, mut = process_mut tyenv [] mut in
+            let instrs, mut = process_mut tyenv instrs mut in
             instrs, Instr.ReadExpr (t, mut) ) [] li
       in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Read li)  ) :: instrs)
