@@ -28,7 +28,7 @@ begin
   let max0 = ref( 0 ) in
   let m = Array.init 20 (fun _c ->
     let e = Array.init 20 (fun _f ->
-      let d = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      let d = Scanf.scanf "%d " (fun d -> d) in
       d) in
     e) in
   for j = 0 to 7 do

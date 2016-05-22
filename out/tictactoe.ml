@@ -163,7 +163,7 @@ let init0 () =
   ended=false}
 
 let read_move () =
-  let x, y = Scanf.scanf "%d %d " (fun v_0 v_1 -> v_0, v_1) in
+  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   {x=x;
   y=y}
 

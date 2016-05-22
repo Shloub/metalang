@@ -1,10 +1,9 @@
 let () =
 begin
-  let x = Scanf.scanf "%d " (fun x -> x) in
-  let y = Scanf.scanf "%d " (fun x -> x) in
+  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   let tab = Array.init y (fun _d ->
     let f = Array.init x (fun _g ->
-      let e = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      let e = Scanf.scanf "%d " (fun e -> e) in
       e) in
     f) in
   for ix = 1 to x - 1 do

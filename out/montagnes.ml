@@ -19,12 +19,12 @@ let montagnes0 tab len =
 
 let () =
 begin
-  let len = ref( 0 ) in
-  Scanf.scanf "%d " (fun v_0 -> len := v_0);
-  let tab = Array.init (!len) (fun _i ->
+  let len = 0 in
+  let len = Scanf.scanf "%d " (fun len -> len) in
+  let tab = Array.init len (fun _i ->
     let x = ref( 0 ) in
-    Scanf.scanf "%d " (fun v_0 -> x := v_0);
+    Scanf.scanf "%d " (fun a -> x := a);
     (!x)) in
-  Printf.printf "%d" (montagnes0 tab (!len))
+  Printf.printf "%d" (montagnes0 tab len)
 end
  

@@ -43,10 +43,10 @@ let () =
 begin
   let t = mktoto 4 in
   let t2 = mktoto 5 in
-  Scanf.scanf "%d %d %d %d" (fun v_0 v_1 v_2 v_3 -> t.bar <- v_0;
-                                                    t.blah <- v_1;
-                                                    t2.bar <- v_2;
-                                                    t2.blah <- v_3);
+  Scanf.scanf "%d %d %d %d" (fun a b c d -> t.bar <- a;
+                                            t.blah <- b;
+                                            t2.bar <- c;
+                                            t2.blah <- d);
   Printf.printf "%d%d" (result t t2) t.blah
 end
  

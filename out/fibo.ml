@@ -15,12 +15,10 @@ let fibo0 a b i =
 
 let () =
 begin
-  let a = ref( 0 ) in
-  let b = ref( 0 ) in
-  let i = ref( 0 ) in
-  Scanf.scanf "%d %d %d" (fun v_0 v_1 v_2 -> a := v_0;
-                                             b := v_1;
-                                             i := v_2);
-  Printf.printf "%d" (fibo0 (!a) (!b) (!i))
+  let a = 0 in
+  let b = 0 in
+  let i = 0 in
+  let a, b, i = Scanf.scanf "%d %d %d" (fun a b i -> a, b, i) in
+  Printf.printf "%d" (fibo0 a b i)
 end
  

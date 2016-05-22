@@ -34,12 +34,12 @@ let plus_petit0 tab len =
 
 let () =
 begin
-  let len = ref( 0 ) in
-  Scanf.scanf "%d " (fun v_0 -> len := v_0);
-  let tab = Array.init (!len) (fun _i ->
+  let len = 0 in
+  let len = Scanf.scanf "%d " (fun len -> len) in
+  let tab = Array.init len (fun _i ->
     let tmp = ref( 0 ) in
-    Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
+    Scanf.scanf "%d " (fun c -> tmp := c);
     (!tmp)) in
-  Printf.printf "%d" (plus_petit0 tab (!len))
+  Printf.printf "%d" (plus_petit0 tab len)
 end
  

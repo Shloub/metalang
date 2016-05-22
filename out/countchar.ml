@@ -8,15 +8,15 @@ let nth tab tofind len =
 
 let () =
 begin
-  let len = ref( 0 ) in
-  Scanf.scanf "%d " (fun v_0 -> len := v_0);
-  let tofind = ref( '\000' ) in
-  Scanf.scanf "%c " (fun v_0 -> tofind := v_0);
-  let tab = Array.init (!len) (fun _i ->
+  let len = 0 in
+  let len = Scanf.scanf "%d " (fun len -> len) in
+  let tofind = '\000' in
+  let tofind = Scanf.scanf "%c " (fun tofind -> tofind) in
+  let tab = Array.init len (fun _i ->
     let tmp = ref( '\000' ) in
-    Scanf.scanf "%c" (fun v_0 -> tmp := v_0);
+    Scanf.scanf "%c" (fun a -> tmp := a);
     (!tmp)) in
-  let result = nth tab (!tofind) (!len) in
+  let result = nth tab tofind len in
   Printf.printf "%d" result
 end
  
