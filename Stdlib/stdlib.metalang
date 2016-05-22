@@ -391,8 +391,7 @@ macro int native_expand_read_int()
 end
 
 def lexems expand_read_int()
-if current_language() == LANG_Ml ||
-current_language() == LANG_Fun_ml
+if current_language() == LANG_Fun_ml
 then
   return {
   return native_expand_read_int()
