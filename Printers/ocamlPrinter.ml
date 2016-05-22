@@ -175,10 +175,7 @@ class camlPrinter = object(self)
   (** show a type *)
   method ptype f (t : Ast.Type.t ) = OcamlFunPrinter.ptype f t
 
-  (** read spaces from stdin *)
-  method stdin_sep f =
-    Format.fprintf f
-      "@[<h>Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ())@]"
+  method stdin_sep f = assert false
 
   (** show a binary operator *)
   method print_op f op =
@@ -257,9 +254,11 @@ class camlPrinter = object(self)
 
   method ends_with_stop instr1 instrs2 =
     let rec ends_declread = function
-      | Instr.DeclRead _ :: tl -> false
+      | Instr.DeclRead _ :: _ -> false
+      | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) :: _ -> BindingSet.mem varname refbindings
       | Instr.Separation :: tl -> ends_declread tl
-      | _ -> true
+      | Instr.ReadExpr _ :: _ -> true
+      | [] -> true (* que des séparations *)
     in
     let instrs2 = nocomment instrs2 in
     if instrs2 = [] then false else
@@ -360,26 +359,10 @@ class camlPrinter = object(self)
         self#expr e
 
   (** read a value from stdin into a mutable *)
-  method read f t m =
-    Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value)@]"
-      self#format_type t
-      self#mutable_set m
-      (match m |> Mutable.Fixed.unfix with
-      | Mutable.Var _ -> ":="
-      | Mutable.Array _ -> "<-"
-      | Mutable.Dot _ -> "<-"
-      )
+  method read f t m = assert false
 
   (** declare a variable and read his value from stdin *)
-  method read_decl f t v =
-    if BindingSet.mem v refbindings then
-      Format.fprintf f "@[let %a = Scanf.scanf \"%a\" (fun x -> ref x) in@]"
-        self#binding v
-        self#format_type t
-    else
-      Format.fprintf f "@[let %a = Scanf.scanf \"%a\" (fun x -> x) in@]"
-        self#binding v
-        self#format_type t
+  method read_decl f t v = assert false
 
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
@@ -396,10 +379,6 @@ class camlPrinter = object(self)
           | _ -> acc
         ) acc i
     in let f tra acc i = match Instr.unfix i with
-    | Instr.Read li ->
-        List.fold_left (fun acc -> function
-          | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-          | _ -> acc) acc li
     | Instr.Loop (_, _, _, li)
     | Instr.While (_, li) -> List.fold_left g acc li
     | Instr.AllocArray (_, _, _, Some (_, li), _) -> List.fold_left g acc li
@@ -659,6 +638,14 @@ class camlPrinter = object(self)
         super#ptype t
 
   method multi_read f li =
+    let li = List.map (function (* on ne met pas de ref si on en a pas besoin *)
+      | (Instr.Separation | Instr.DeclRead (_, _, _) ) as r -> r
+      | Instr.ReadExpr (t, Mutable.Fixed.F(_, Mutable.Var binding)) as read ->
+          if BindingSet.mem binding refbindings then read
+          else Instr.DeclRead (t, binding, Instr.default_declaration_option)
+      | (Instr.ReadExpr _) as read -> read
+                      ) li in
+    
     let format, variables =
       List.fold_left (fun (format, variables) i -> match i with
       | Instr.DeclRead (t, v, _opt) ->
@@ -670,7 +657,14 @@ class camlPrinter = object(self)
       | Instr.Separation -> format ^ " ", variables
       ) ("", []) li
     in
-    let variables = List.mapi (fun i (b, m) -> (i, b, m) ) (List.rev variables) in
+    let variables = List.map (fun (b, m) ->
+      let name =
+        if b then match Mutable.unfix m with
+        | Mutable.Var (UserName v) -> v
+        | _ -> assert false
+        else  Fresh.fresh_user ()
+      in
+      (name, b, m) ) (List.rev variables) in
     let declares, affect = List.partition (fun (_, b, _) -> b) variables in
     let print_return : Format.formatter -> unit -> unit = match declares with
       | [] -> (fun _ () ->
@@ -681,13 +675,13 @@ class camlPrinter = object(self)
         Format.fprintf f "%a%a"
           (fun f () -> if [] <> affect then Format.fprintf f ";@\n") ()
           (print_list
-             (fun f (i, b, v) ->
+             (fun f (name, b, v) ->
                let v = match Mutable.unfix v with
                  | Mutable.Var v -> v
                  | _ -> assert false
                in
-               if BindingSet.mem v refbindings then Format.fprintf f "ref v_%d" i
-               else Format.fprintf f "v_%d" i) sep_c)
+               if BindingSet.mem v refbindings then Format.fprintf f "ref %s" name
+               else Format.fprintf f "%s" name) sep_c)
       declares )
     in
     let print_in : Format.formatter -> unit -> unit  = match declares with
@@ -699,7 +693,7 @@ class camlPrinter = object(self)
       | [] -> fun f () -> Format.fprintf f "()"
       | _ ->
         fun f () ->
-          print_list (fun f (i, b, m) -> Format.fprintf f "v_%d" i) sep_space
+          print_list (fun f (name, b, m) -> Format.fprintf f "%s" name) sep_space
             f
             variables
     in
@@ -710,17 +704,19 @@ class camlPrinter = object(self)
           (print_list
              (fun f (_, _, v) -> self#mutable_get f v) sep_c)
       declares )
-    in Format.fprintf f "%aScanf.scanf \"%s\" (fun %a -> @[<v>%a%a@])%a"
+    in match variables with
+    | [] -> Format.fprintf f "Scanf.scanf \"%s\" ()" format
+    | _ -> Format.fprintf f "%aScanf.scanf \"%s\" (fun %a -> @[<v>%a%a@])%a"
       print_let ()
       format
       print_variables ()
-      (print_list (fun f (i, b, m) -> Format.fprintf f "%a %s v_%d"
+      (print_list (fun f (name, b, m) -> Format.fprintf f "%a %s %s"
         self#mutable_get m
         (match Mutable.Fixed.unfix m with
         | Mutable.Var _ -> ":="
         | Mutable.Array _ -> "<-"
         | Mutable.Dot _ -> "<-"
-        ) i)
+        ) name)
          (sep "%a;@\n%a"))
       affect
       print_return ()
