@@ -54,21 +54,21 @@ let rec qsort0 tab len i j =
 
 let () =
 begin
-  let len = ref( 2 ) in
-  Scanf.scanf "%d " (fun v_0 -> len := v_0);
-  let tab = Array.init (!len) (fun _i_ ->
+  let len = 2 in
+  let len = Scanf.scanf "%d " (fun len -> len) in
+  let tab = Array.init len (fun _i_ ->
     let tmp = ref( 0 ) in
-    Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
+    Scanf.scanf "%d " (fun a -> tmp := a);
     (!tmp)) in
-  let tab2 = copytab tab (!len) in
-  bubblesort tab2 (!len);
-  for i = 0 to (!len) - 1 do
+  let tab2 = copytab tab len in
+  bubblesort tab2 len;
+  for i = 0 to len - 1 do
     Printf.printf "%d " tab2.(i)
   done;
   Printf.printf "\n";
-  let tab3 = copytab tab (!len) in
-  qsort0 tab3 (!len) 0 ((!len) - 1);
-  for i = 0 to (!len) - 1 do
+  let tab3 = copytab tab len in
+  qsort0 tab3 len 0 (len - 1);
+  for i = 0 to len - 1 do
     Printf.printf "%d " tab3.(i)
   done;
   Printf.printf "\n"

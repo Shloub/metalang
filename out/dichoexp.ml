@@ -11,10 +11,9 @@ let rec exp0 a b =
 
 let () =
 begin
-  let a = ref( 0 ) in
-  let b = ref( 0 ) in
-  Scanf.scanf "%d %d" (fun v_0 v_1 -> a := v_0;
-                                      b := v_1);
-  Printf.printf "%d" (exp0 (!a) (!b))
+  let a = 0 in
+  let b = 0 in
+  let a, b = Scanf.scanf "%d %d" (fun a b -> a, b) in
+  Printf.printf "%d" (exp0 a b)
 end
  

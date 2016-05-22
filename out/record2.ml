@@ -17,8 +17,8 @@ let result t =
 let () =
 begin
   let t = mktoto 4 in
-  Scanf.scanf "%d %d" (fun v_0 v_1 -> t.bar <- v_0;
-                                      t.blah <- v_1);
+  Scanf.scanf "%d %d" (fun a b -> t.bar <- a;
+                                  t.blah <- b);
   Printf.printf "%d" (result t)
 end
  

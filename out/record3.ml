@@ -22,8 +22,8 @@ let () =
 begin
   let t = Array.init 4 (fun i ->
     mktoto i) in
-  Scanf.scanf "%d %d" (fun v_0 v_1 -> t.(0).bar <- v_0;
-                                      t.(1).blah <- v_1);
+  Scanf.scanf "%d %d" (fun a b -> t.(0).bar <- a;
+                                  t.(1).blah <- b);
   let titi = result t 4 in
   Printf.printf "%d%d" titi t.(2).blah
 end

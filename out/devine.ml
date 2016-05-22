@@ -19,9 +19,9 @@ let devine0 nombre tab len =
 
 let () =
 begin
-  let nombre, len = Scanf.scanf "%d %d " (fun v_0 v_1 -> v_0, v_1) in
+  let nombre, len = Scanf.scanf "%d %d " (fun nombre len -> nombre, len) in
   let tab = Array.init len (fun _i ->
-    let tmp = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    let tmp = Scanf.scanf "%d " (fun tmp -> tmp) in
     tmp) in
   if devine0 nombre tab len then
     Printf.printf "True"
