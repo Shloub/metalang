@@ -23,13 +23,13 @@ let crypte taille_cle cle taille message =
 
 let () =
 begin
-  let taille_cle = Scanf.scanf "%d " (fun v_0 -> v_0) in
+  let taille_cle = Scanf.scanf "%d " (fun taille_cle -> taille_cle) in
   let cle = Array.init taille_cle (fun _index ->
-    let out0 = Scanf.scanf "%c" (fun v_0 -> v_0) in
+    let out0 = Scanf.scanf "%c" (fun out0 -> out0) in
     out0) in
-  let taille = Scanf.scanf " %d " (fun v_0 -> v_0) in
+  let taille = Scanf.scanf " %d " (fun taille -> taille) in
   let message = Array.init taille (fun _index2 ->
-    let out2 = Scanf.scanf "%c" (fun v_0 -> v_0) in
+    let out2 = Scanf.scanf "%c" (fun out2 -> out2) in
     out2) in
   crypte taille_cle cle taille message;
   for i = 0 to taille - 1 do

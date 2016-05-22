@@ -28,18 +28,17 @@ let pathfind tab x y =
 
 let () =
 begin
-  let x = ref( 0 ) in
-  let y = ref( 0 ) in
-  Scanf.scanf "%d %d " (fun v_0 v_1 -> x := v_0;
-                                       y := v_1);
-  let tab = Array.init (!y) (fun _i ->
-    let tab2 = Array.init (!x) (fun _j ->
+  let x = 0 in
+  let y = 0 in
+  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
+  let tab = Array.init y (fun _i ->
+    let tab2 = Array.init x (fun _j ->
       let tmp = ref( '\000' ) in
-      Scanf.scanf "%c" (fun v_0 -> tmp := v_0);
+      Scanf.scanf "%c" (fun e -> tmp := e);
       (!tmp)) in
-    Scanf.scanf " " (fun () -> ());
+    Scanf.scanf " " ();
     tab2) in
-  let result = pathfind tab (!x) (!y) in
+  let result = pathfind tab x y in
   Printf.printf "%d" result
 end
  

@@ -34,16 +34,16 @@ let find len tab =
 
 let () =
 begin
-  let len = ref( 0 ) in
-  Scanf.scanf "%d " (fun v_0 -> len := v_0);
-  let tab = Array.init (!len) (fun i ->
+  let len = 0 in
+  let len = Scanf.scanf "%d " (fun len -> len) in
+  let tab = Array.init len (fun i ->
     let tab2 = Array.init (i + 1) (fun _j ->
       let tmp = ref( 0 ) in
-      Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
+      Scanf.scanf "%d " (fun a -> tmp := a);
       (!tmp)) in
     tab2) in
-  Printf.printf "%d\n" (find (!len) tab);
-  for k = 0 to (!len) - 1 do
+  Printf.printf "%d\n" (find len tab);
+  for k = 0 to len - 1 do
     for l = 0 to k do
       Printf.printf "%d " tab.(k).(l)
     done;
