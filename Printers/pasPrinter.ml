@@ -32,7 +32,7 @@ open Stdlib
 open Ast
 open Helper
 
-let print_expr macros e f p =
+let config macros =
   let open Format in
   let open Expr in
   let prio_binop op = match op with
@@ -61,10 +61,6 @@ let print_expr macros e f p =
           in fprintf f "%s" ns ) () i;
         fprintf f "'"
     | x -> print_lief prio f x in
-  let print_expr0 config e f prio_parent = match e with
-  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
-  | _ -> print_expr0 config e f prio_parent
-  in
   let print_op f op = fprintf f (match op with
   | Add -> "+"
   | Sub -> "-"
@@ -81,7 +77,7 @@ let print_expr macros e f p =
   | Diff -> "<>") in
   let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a^.%s" conf) m f prio in
-  let config = {
+  {
     prio_binop;
     prio_unop;
     print_varname;
@@ -90,46 +86,118 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Fixed.Deep.fold (print_expr0 config) e f p
+  }
 
+let print_expr macros e f p =
+  let open Format in
+  let open Expr in
+  let print_expr0 config e f prio_parent = match e with
+  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
+  | _ -> print_expr0 config e f prio_parent
+  in
+  let config = config macros in
+  Fixed.Deep.fold (print_expr0 config) e f p
+
+let print_instr macros i =
+  let open Ast.Instr in
+  let open Format in
+  let config = config macros in
+  let instructions f instrs = print_list (fun f i -> i.p f ()) sep_nl f instrs in
+  let bloc f li = fprintf f "@[<v 2>begin@\n%a@]@\nend" instructions li in
+  let def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+        Format.fprintf f "%a^.%s := %a;"
+          print_varname name
+          fieldname
+          expr nop
+      ) sep_nl f li in
+  let typename_aux f t = match Type.unfix t with
+  | Type.Named n -> fprintf f "%s" n
+  | _ -> assert false in
+  let print f t expr = fprintf f "@[<h>Write(%a);@]" expr nop in
+  let read t pp f =
+    match Type.unfix t with
+    | Type.Integer -> fprintf f "@[<h>%a := read_int_();@]" pp ()
+    | Type.Char -> fprintf f "@[<h>%a := read_char_();@]" pp ()
+    | _ -> assert false (* type non géré*) in
+  let p f () = match i with
+      Tag _
+    | Untuple (_, _, _)
+    | Unquote _-> assert false
+    | Declare (var, _, expr, _) -> fprintf f "@[<h>%a@ :=@ %a;@]" print_varname var expr nop
+    | Affect (mutable_, expr) ->
+        fprintf f "@[<h>%a@ :=@ %a;@]" (config.print_mut config nop) mutable_ expr nop
+    | Loop (varname, expr1, expr2, li) -> fprintf f "@[<h>for@ %a@ :=@ %a@ to @ %a do@\n@]%a;"
+          print_varname varname expr1 nop expr2 nop bloc li
+    | While (expr, li) ->
+        fprintf f "@[<hov>while %a do@]@\n%a;" expr nop bloc li
+    | Comment s -> fprintf f "{%s}" s
+    | Return e -> fprintf f "@[<hov>exit(%a);@]" e nop
+    | AllocRecord (name, t, el, _) ->
+        fprintf f "new(%a);@\n%a" print_varname name (def_fields name) el
+    | AllocArray (binding, type_, len, None, u) ->
+        fprintf f "@[<hov>SetLength(%a, %a);@]" print_varname binding len nop
+    | AllocArray (binding, type_, len, Some ( (b, l) ), u) -> assert false
+    | AllocArrayConst (b, t, len, e, opt) -> assert false
+    | If (e, ifcase, elsecase) -> begin
+        match elsecase with
+        | [] -> fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v2>  %a;@]" e nop bloc ifcase
+        | [instr] when instr.is_if ->
+            fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nelse %a;"
+              e nop bloc ifcase instr.p ()
+        | _ -> fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a;@]"
+              e nop bloc ifcase bloc elsecase
+    end
+    | Call (var, li) -> begin match StringMap.find_opt var macros with
+      | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
+      | None ->
+          if li = [] then fprintf f "%s;" var
+          else fprintf f "%s(%a);" var (print_list (fun f expr -> expr f nop) sep_c) li
+    end
+    | Read li ->
+        let li = List.map (function
+          | Separation -> fun f -> fprintf f "@[<hov>skip();@]"
+          | DeclRead (t, var, _option) -> read t (fun f () -> print_varname f var)
+          | ReadExpr (t, m) -> read t (fun f () -> config.print_mut config nop f m)) li
+        in print_list (fun f e -> e f) sep_nl f li
+    | Print li ->
+        let li = List.map (function
+          | StringConst str -> fun f -> print f Type.string (fun f prio -> config.print_lief prio f (Expr.String str))
+          | PrintExpr (t, expr) -> fun f -> print f t expr ) li
+        in print_list (fun f e -> e f) sep_nl f li
+  in
+  let is_if = match i with If (_, _, _) -> true | _ -> false in
+  let is_comment = match i with Comment _ -> true | _ -> false in
+  {
+   is_if = is_if;
+   is_comment = is_comment;
+   p=p;
+   print_lief = print_lief;
+ }
+
+let print_instr macros i =
+  let open Ast.Instr.Fixed.Deep in
+  fold (print_instr macros) (mapg (print_expr macros) i)
+    
 class pasPrinter = object(self)
   inherit Printer.printer as super
 
-  method expr f e = print_expr
-      (StringMap.map (fun (ty, params, li) ->
+  val mutable declared_types : string TypeMap.t = TypeMap.empty
+
+ method instr f t =
+   let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
-
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr macros t).p f ()
+ 
   method lang () = "pas"
 
-  method hasSelfAffect op = false
-
-  val mutable current_function = ""
   val mutable bindings = BindingSet.empty
 
   method comment f str =
     Format.fprintf f "{%s}" str
-
-  method whileloop f expr li =
-    Format.fprintf f "@[<h>while %a@] do@\n%a;"
-      self#expr expr
-      self#bloc li
-
-  method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<h>for@ %a@ :=@ %a@ to @ %a do@\n@]%a;"
-      self#binding varname
-      self#expr expr1
-      self#expr expr2
-      self#bloc li
-
-
-  method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ :=@ %a;@]"
-      self#binding var
-      self#expr e
-
-  val mutable declared_types : string TypeMap.t = TypeMap.empty
 
   method ptype f t =
     match TypeMap.find_opt t declared_types with
@@ -183,7 +251,6 @@ class pasPrinter = object(self)
       self#instructions instrs
 
   method print_fun f funname t li instrs =
-    let () = current_function <- funname in
     declared_types <- self#declare_type declared_types f t;
     List.iter (fun (_, t) -> declared_types <- self#declare_type declared_types f t) li;
     self#declare_types f instrs;
@@ -192,36 +259,9 @@ class pasPrinter = object(self)
       self#print_proto (funname, t, li)
       self#print_body instrs
 
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] ->
-      Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v2>  %a;@]"
-        self#expr e
-        self#bloc ifcase
-    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nelse %a;"
-        self#expr e
-        self#bloc ifcase
-        self#instr instr
-    | _ ->
-      Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a;@]"
-        self#expr e
-        self#bloc ifcase
-        self#bloc elsecase
-
   method declare_type declared_types f t =
     Type.Fixed.Deep.fold_acc (fun declared_types t ->
       match Type.unfix t with
-(*
-      | Type.String ->
-          begin match TypeMap.find_opt t declared_types with
-          | Some _ -> declared_types
-          | None ->
-              let name = Fresh.fresh_user () in
-              Format.fprintf f "type %s = %a;@\n" name self#ptype t;
-              TypeMap.add t name declared_types
-          end
-*)
       | Type.Array _ -> begin match TypeMap.find_opt t declared_types with
         | Some _ -> declared_types
         | None ->
@@ -290,58 +330,6 @@ class pasPrinter = object(self)
       )
       bindings
       instrs
-
-
-  method allocrecord f name t el =
-    Format.fprintf f "new(%a);@\n%a"
-      self#binding name
-      (self#def_fields name) el
-
-  method base_m_field f m field = super#m_field f m field
-  method m_field f m field =
-    Format.fprintf f "%a^.%a"
-      self#mutable_get m
-      self#field field
-
-  method def_fields name f li =
-    print_list
-      (fun f (fieldname, expr) ->
-        Format.fprintf f "%a^.%a := %a;"
-          self#binding name
-          self#field fieldname
-          self#expr expr
-      ) sep_nl
-      f
-      li
-
-  method stdin_sep f =
-    Format.fprintf f "@[<h>skip();@]"
-
-  method read f t m = match Type.unfix t with
-  | Type.Integer ->
-    Format.fprintf f "@[<h>%a := read_int_();@]"
-      self#mutable_set m
-  | Type.Char ->
-    Format.fprintf f "@[<h>%a := read_char_();@]"
-      self#mutable_set m
-  | _ -> assert false (* type non géré*)
-
-  method read_decl f t v = match Type.unfix t with
-  | Type.Integer ->
-    Format.fprintf f "@[<h>%a := read_int_();@]"
-      self#binding v
-  | Type.Char ->
-    Format.fprintf f "@[<h>%a := read_char_();@]"
-      self#binding v
-  | _ -> assert false (* type non géré*)
-
-  method print f t expr =
-    Format.fprintf f "@[<h>Write(%a);@]" self#expr expr
-
-  method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>SetLength(%a, %a);@]"
-      self#binding binding
-      self#expr len
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -435,21 +423,6 @@ end;
   method main f main =
     self#declare_types f main;
     self#print_body f main
-
-  method affect f mutable_ (expr : Utils.expr) =
-    Format.fprintf f "@[<h>%a@ :=@ %a;@]" self#mutable_set mutable_ self#expr expr
-
-
-  method bloc f li = Format.fprintf f "@[<v 2>begin@\n%a@]@\nend"
-    (print_list self#instr sep_nl) li
-
-  method return f e =
-    (*    Format.fprintf f "@[<h>%a@ :=@ %a;@]"
-          self#binding current_function
-          self#expr e
-    *)
-    Format.fprintf f "@[<h>exit(%a);@]"
-      self#expr e
 
   method decl_type f name t =
     match (Type.unfix t) with
