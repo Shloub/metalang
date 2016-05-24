@@ -20,8 +20,38 @@ autres printers :
   rhino
   clojure
   rust
+  swift
 
 portage windows
 
 tests :
   prologin_template_dico
+
+
+supprimer les objets dans cette hiérarchie :
+
+Printer -> PasPrinter -> AdaPrinter
+        -> CPrinter   -> cppPrinter -> JavaPrinter -> CSharpPrinter -> VBDotNetPrinter
+                      -> cppPrinter -> JavaPrinter -> GroovyPrinter
+                      -> GoPrinter
+                      -> JSPrinter
+                      -> ObjCPrinter
+                      -> PerlPrinter
+                      -> PhpPrinter
+                      -> PyPrinter -> RbPrinter
+                      -> ScalaPrinter
+        -> CommonLispPrinter
+        -> FSharpPrinter
+        -> ForthPrinter
+        -> HtmlPrinter
+        -> LuaPrinter
+        -> OcamlPrinter
+        -> PosPrinter
+        -> SmalltalkPrinter
+HaskellPrinter
+OcamlFunPrinter
+RacketPrinter
+
+
+
+           
