@@ -730,7 +730,7 @@ begin
   Write(''#10'euler16 = ');
   Write(euler16());
   Write(''#10'');
-  euler48();
+  euler48;
   Write('euler20 = ');
   Write(euler20());
   Write(''#10'');
