@@ -188,8 +188,8 @@ let print_instr macros declared_types declared_types_assoc i =
         in print_list (fun f e -> e f) sep_nl f li
     | Print li ->
         let li = List.map (function
-          | Instr.StringConst str -> fun f -> print f Type.string (fun f prio -> config.print_lief prio f (Expr.String str))
-          | Instr.PrintExpr (t, expr) -> fun f -> print f t expr ) li
+          | StringConst str -> fun f -> print f Type.string (fun f prio -> config.print_lief prio f (Expr.String str))
+          | PrintExpr (t, expr) -> fun f -> print f t expr ) li
         in print_list (fun f e -> e f) sep_nl f li      
   in
   let is_if = match i with If (_, _, _) -> true | _ -> false in
@@ -314,7 +314,6 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
       bindings
       instrs
 
-
   val mutable addondeclaredvars = BindingMap.empty
 
   method print_fun f funname t li instrs =
@@ -341,7 +340,6 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
     in
     let li_assoc = List.filter_map (fun x -> x) li_assoc in
     addondeclaredvars <- List.fold_left (fun acc (name, t, _) -> BindingMap.add name t acc) BindingMap.empty li_assoc;
-    current_function <- funname;
     declared_types <- self#declare_type declared_types f t;
     self#declare_types f instrs;
     declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
