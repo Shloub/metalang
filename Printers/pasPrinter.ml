@@ -167,11 +167,10 @@ let print_instr macros i =
           | PrintExpr (t, expr) -> fun f -> print f t expr ) li
         in print_list (fun f e -> e f) sep_nl f li
   in
-  let is_if = match i with If (_, _, _) -> true | _ -> false in
-  let is_comment = match i with Comment _ -> true | _ -> false in
   {
-   is_if = is_if;
-   is_comment = is_comment;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
    p=p;
    print_lief = print_lief;
  }
