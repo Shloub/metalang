@@ -206,77 +206,14 @@ let format_type f t =
 
 type iprinter = {
     is_if : bool;
+    is_if_noelse : bool;
     is_comment : bool;
     p : Format.formatter -> unit -> unit;
     print_lief : int -> Format.formatter -> Ast.Expr.lief -> unit;
 }
-
-let print_ilist f li =
-  Format.fprintf f "{@\n%a@]@\n}" (print_list (fun f i -> i.p f ()) sep_nl) li
-
-let print_instr c i =
-  let open Ast.Instr in
-  let p f () =
-    let open Format in match i with
-    | Declare (var, ty, e, _) -> fprintf f "%a = %a;" c.print_varname var e nop
-    | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
-    | Loop (var, e1, e2, li) -> fprintf f "for (%a=%a; %a<=%a; %a++)%a"
-          c.print_varname var e1 nop
-          c.print_varname var e2 nop
-          c.print_varname var
-          print_ilist li
-    | While (e, li) -> fprintf f "@[<v 2>while(@[<h>%a@])%a" e nop print_ilist li
-    | Comment s -> fprintf f "/*%s*/" s
-    | Tag s -> fprintf f "/*%S*/" s
-    | Return e -> fprintf f "return %a;" e nop
-    | AllocArray (name, t, e, None, opt) -> fprintf f "var %a = array();" c.print_varname name
-    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
-    | AllocArrayConst (name, ty, len, lief, opt) ->
-        fprintf f "@[<h>%a = array_fill(0, %a, %a);@]" c.print_varname name
-          len nop (c.print_lief nop) lief
-    | AllocRecord (name, ty, list, opt) ->
-        fprintf f "%a = array(%a);" c.print_varname name
-          (print_list (fun f (field, x) -> fprintf f "%S => %a" field x nop) sep_c) list
-    | If (e, listif, []) ->
-        fprintf f "@[<v 2>if (%a)%a" e nop print_ilist listif
-    | If (e, listif, listelse) ->
-        fprintf f "@[<v 2>if (%a)%a@\n@[<v 2>else %a" e nop print_ilist listif print_ilist listelse
-    | Call (func, li) -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
-    | Print li->
-        fprintf f "echo %a;"
-          (print_list
-             (fun f -> function
-               | StringConst s -> c.print_lief nop f (Ast.Expr.String s)
-               | PrintExpr (_, e) -> e f nop) sep_c) li
-    | Read li ->
-        print_list
-          (fun f -> function
-            | Separation -> Format.fprintf f "@[scantrim();@]"
-            | DeclRead (ty, v, opt) ->
-                begin match Ast.Type.unfix ty with
-                | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" c.print_varname v
-                | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" c.print_varname v format_type ty
-                end
-            | ReadExpr (ty, mut) ->
-                begin match Ast.Type.unfix ty with
-                | Ast.Type.Char -> fprintf f "@[%a = nextChar();@]" (c.print_mut c nop) mut
-                | _ -> fprintf f "@[list(%a) = scan(\"%a\");@]" (c.print_mut c nop) mut format_type ty
-                end
-          ) sep_nl f li
-    | Untuple (li, expr, opt) -> fprintf f "list(%a)=%a;" (print_list c.print_varname sep_c) (List.map snd li) expr nop
-    | Unquote e -> assert false in
-  let is_if = match i with If (_, _, _) -> true | _ -> false in
-  let is_comment = match i with Comment _ -> true | _ -> false in
-  {
-   is_if = is_if;
-   is_comment = is_comment;
-   p=p;
-   print_lief = c.print_lief;
- }
-
-let print_instr c i =
-  let open Ast.Instr.Fixed.Deep in
-  (fold (print_instr c) (mapg (print_expr c) i)).p
+let is_if i = match i with Ast.Instr.If (_, _, _) -> true | _ -> false
+let is_if_noelse i = match i with Ast.Instr.If (_, _, []) -> true | _ -> false
+let is_comment i = match i with Ast.Instr.Comment _ -> true | _ -> false
 
 let print_mut0 fmt_array
     fmt_arrayindex
