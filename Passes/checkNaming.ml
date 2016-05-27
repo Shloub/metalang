@@ -167,6 +167,7 @@ let rec check_instr funname acc instr =
   | Instr.Declare (var, t, e, _) ->
     let () = check_expr funname acc e in
     add_local_in_acc funname var acc loc
+  | Instr.SelfAffect (mut, _, e)
   | Instr.Affect (mut, e) ->
     let () = check_mutable funname acc mut in
     let () = check_expr funname acc e in

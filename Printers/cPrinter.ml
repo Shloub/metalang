@@ -329,7 +329,6 @@ class cPrinter = object(self)
       | Instr.ReadExpr (t, mutable_) ->
         let addons = Printer.format_type t in
         (format ^ addons, mutable_::variables)
-      | _ -> assert false
       ) ("", []) li
     in
     Format.fprintf f "scanf(\"%s\"%a);"

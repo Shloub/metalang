@@ -100,6 +100,10 @@ let rec rename_instr acc (instr:Utils.instr) =
     let e = rename_e acc e in
     let mut = rename_mut acc mut
     in acc, Instr.Affect (mut, e) |> Instr.fixa annot
+  | Instr.SelfAffect (mut, op, e) ->
+    let e = rename_e acc e in
+    let mut = rename_mut acc mut
+    in acc, Instr.SelfAffect (mut, op, e) |> Instr.fixa annot
   | Instr.Loop (var, e1, e2, li) ->
     let e1 = rename_e acc e1 in
     let e2 = rename_e acc e2 in
@@ -266,6 +270,10 @@ and map_instr acc instr =
     let addon1, mut = map_mut acc mut in
     let addon2, e = map_e acc e in
     List.append addon1 (List.append addon2 [Instr.Affect (mut, e) |> Instr.fixa annot ])
+  | Instr.SelfAffect (mut, op, e) ->
+    let addon1, mut = map_mut acc mut in
+    let addon2, e = map_e acc e in
+    List.append addon1 (List.append addon2 [Instr.SelfAffect (mut, op, e) |> Instr.fixa annot ])
   | Instr.Loop (v, e1, e2, li) ->
     let addon1, e1 = map_e acc e1 in
     let addon2, e2 = map_e acc e2 in

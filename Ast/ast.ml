@@ -447,6 +447,23 @@ module Expr = struct
   | Tuple of 'a list
   | Record of (fieldname * 'a) list
 
+  let rec equals0 cmpa cmplex a b =
+    let rec cmpli li1 li2 = match li1, li2 with
+    | [], [] -> true
+    | hd1::tl1, hd2::tl2 -> cmpa hd1 hd2 && cmpli tl1 tl2
+    | _ -> false
+    in
+    match a, b with
+  | BinOp (a1, op1, b1), BinOp (a2, op2, b2) -> op1 = op2 && cmpa a1 a2 && cmpa b1 b2
+  | UnOp (a1, op1), UnOp (a2, op2) -> op1 = op2 && cmpa a1 a2
+  | Lief l1, Lief l2 -> l1 = l2
+  | Access m1, Access m2 -> Mutable.equals cmpa m1 m2
+  | Call (name1, li1), Call (name2, li2) -> String.equals name1 name2 && cmpli li1 li2
+  | Lexems _, Lexems _ -> assert false (* TODO *)
+  | Tuple li1, Tuple li2 -> cmpli li1 li2
+  | Record li1, Record li2 -> cmpli (List.map snd li1) (List.map snd li2)
+  | _ -> false
+        
 let pdebug f = function
   | BinOp(a, op, b) -> Format.fprintf f "E.BinOp(%a, %a, %a)" a () pdebug_binop op b ()
   | UnOp(a, unop) -> Format.fprintf f "E.UnOp(%a, %a)" a () pdebug_unop unop
@@ -459,7 +476,7 @@ let pdebug f = function
   | Tuple li -> Format.fprintf f "E.Tuple(%a)" punitlist li
   | Record li -> Format.fprintf f "E.Record(%a)" punitlist (List.map (fun (field, e) f () ->
       Format.fprintf f "(%S, %a)" field e ()) li)
-
+        
   (** {2 parcours} *)
 
   module Fixed = Fix2(struct
@@ -483,11 +500,9 @@ let pdebug f = function
           let f' (a, x) = ret (fun x -> a, x) <*> f x in
           ret (fun e -> Record e) <*>  fold_left_map f' li
       | Access m ->
-          let annot = Mutable.Fixed.annot m in
           ret (fun m -> Access m) <*> Mut.map f m
       | Lexems x -> ret (fun x -> Lexems x) <*> fold_left_map
             (Lex.map (Arrow.carrow f (Arrow.arrow g))) x
-
     end
   end)
 
@@ -495,6 +510,7 @@ let pdebug f = function
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
+  let rec equals e1 e2 = equals0 equals (=) (unfix e1) (unfix e2)
 
   let pdebug_deep f e = Fixed.Deep.fold (fun e f () -> pdebug f e) e f ()
 
@@ -590,6 +606,7 @@ module Instr = struct
   type ('a, 'expr) tofix =
     Declare of varname * Type.t * 'expr * declaration_option
   | Affect of 'expr Mutable.t * 'expr
+  | SelfAffect of 'expr Mutable.t * Expr.binop * 'expr
   | Loop of varname * 'expr * 'expr * 'a list
   | While of 'expr * 'a list
   | Comment of string
@@ -614,6 +631,9 @@ module Instr = struct
   | Affect (mut, e) ->
       let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
       Format.fprintf f "I.Affect(%a, %a)" mut () e ()
+  | SelfAffect (mut, op, e) ->
+      let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
+      Format.fprintf f "I.SelfAffect(%a, %a, %a)" mut () Expr.pdebug_binop op e ()
   | Loop (var, e1, e2, li) ->
       Format.fprintf f "I.Loop(%a, %a, %a, %a)"
         debug_varname var
@@ -681,10 +701,10 @@ module Instr = struct
     include ListApp(F)
     let foldmap_bloc f g t =
       let g' (a, x) = ret (fun x -> a, x) <*> g x in
-      let g'' (x, a) = ret (fun x -> x, a) <*> g x in
       match t with
       | Declare (a, b, c, d) -> ret (fun c -> Declare (a, b, c, d)) <*> g c 
       | Affect (m, e) -> ret (fun m e -> Affect (m, e)) <*> Mut.map g m <*> g e
+      | SelfAffect (m, op, e) -> ret (fun m e -> SelfAffect (m, op, e)) <*> Mut.map g m <*> g e
       | Comment s -> ret (Comment s)
       | Loop (var, e1, e2, li) -> ret (fun e1 e2 li -> Loop (var, e1, e2, li)) <*> g e1 <*> g e2 <*> f li
       | While (e, li) -> ret (fun e li -> While (e, li)) <*> g e <*> f li 
@@ -734,7 +754,7 @@ module Instr = struct
         | Declare (n, _, e, _)
         | AllocArray (n, _, e, None, _)
         | AllocArrayConst (n, _, e, _, _) ->  e @* BindingSet.add n
-        | Affect (m, e) -> e @* mut m
+        | Affect (m, e) | SelfAffect (m, _, e) -> e @* mut m
         | Loop (v, e, f, li) -> e @* f @* BindingSet.add v @* (fun acc -> List.fold_left (fun acc f -> f acc) acc li)
         | While (e, li) -> e @* fli li
         | Comment _
@@ -757,7 +777,6 @@ module Instr = struct
                   | ReadExpr (ty, m) -> mut m acc) acc0 li
         | Untuple (li, e, _) -> e @* (fun acc -> List.fold_left (fun acc (_, v) -> BindingSet.add v acc) acc li)
         | Unquote e -> e
-        | x -> (fun acc -> Fixed.Surface.fold (fun acc f -> f acc) acc x)
       )
       Expr.add_bindings x
 

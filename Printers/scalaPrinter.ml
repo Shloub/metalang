@@ -188,7 +188,8 @@ class scalaPrinter = object(self)
           List.fold_left (fun acc -> function
             | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
             | _ -> acc) acc li
-      | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) ->
+      | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _)
+      | Instr.SelfAffect (Mutable.Fixed.F (_, Mutable.Var varname), _, _) ->
           BindingSet.add varname acc
       | _ -> acc
     in let g acc i = Instr.Writer.Deep.fold g (g acc i) i

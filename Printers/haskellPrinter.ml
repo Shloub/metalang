@@ -335,6 +335,12 @@ class haskellPrinter = object(self)
             (List.combine params listr)
         in Format.fprintf f "(%s)" expanded
 
+  method apply_macro ~p f fun_ li =
+    begin match Ast.BindingMap.find_opt fun_ macros with
+    | None -> assert false
+    | Some ((t, params, code)) -> self#expand_macro_call f fun_ t params code li
+    end
+    
   method apply_nomacros ~p f e li =
     let li = List.map (fun e -> self#isPure e, self#expr', e) li in
     hsapply ~p f (fun f () -> self#expr f e) true li
@@ -430,7 +436,8 @@ class haskellPrinter = object(self)
   method expr f e = self#expr' ~p:nop f e
   method expr_ f e = self#expr' ~p:fun_priority f e
   method expr' ~p f e = match E.unfix e with
-    | E.MultiPrint (formats, exprs) -> self#multiprint ~p f formats exprs
+  | E.ApplyMacro (fun_, li) -> self#apply_macro ~p f fun_ li
+  | E.MultiPrint (formats, exprs) -> self#multiprint ~p f formats exprs
   | E.LetRecIn (name, params, e1, e2) -> self#letrecin ~p f name params e1 e2
   | E.BinOp (a, op, b) -> self#binop ~p f a op b
   | E.UnOp (a, op) -> self#unop ~p f a op

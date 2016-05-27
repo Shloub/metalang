@@ -112,9 +112,6 @@ let print_instr macros i =
           fieldname
           expr nop
       ) sep_nl f li in
-  let typename_aux f t = match Type.unfix t with
-  | Type.Named n -> fprintf f "%s" n
-  | _ -> assert false in
   let print f t expr = fprintf f "@[<h>Write(%a);@]" expr nop in
   let read t pp f =
     match Type.unfix t with
@@ -122,9 +119,7 @@ let print_instr macros i =
     | Type.Char -> fprintf f "@[<h>%a := read_char_();@]" pp ()
     | _ -> assert false (* type non géré*) in
   let p f () = match i with
-      Tag _
-    | Untuple (_, _, _)
-    | Unquote _-> assert false
+      Tag _ | Untuple _ | SelfAffect _ | Unquote _-> assert false
     | Declare (var, _, expr, _) -> fprintf f "@[<h>%a@ :=@ %a;@]" print_varname var expr nop
     | Affect (mutable_, expr) ->
         fprintf f "@[<h>%a@ :=@ %a;@]" (config.print_mut config nop) mutable_ expr nop
