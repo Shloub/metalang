@@ -140,6 +140,18 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       | Some v -> affect_mutable (F.Expr.fun_ [v] tl) m e
       | None -> affect_mutable tl m e
       end
+    | A.Instr.SelfAffect (m, op, e) ->
+        let accesm = accessmut m in
+        let v = name_of_mutable m in
+        let nenv = Option.map_default env (fun v -> if List.mem v env then env else v::env) v in
+        let tl = instrs suite contsuite contreturn nenv tl in
+        begin match v with
+        | Some v -> affect_mutable (F.Expr.fun_ [v] tl) m (F.Expr.binop accesm op e)
+        | None -> affect_mutable tl m e
+        end
+
+
+        
     | A.Instr.Read li ->
         let rec continue env = function
           | [] -> instrs suite contsuite contreturn env tl

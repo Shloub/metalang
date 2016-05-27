@@ -45,7 +45,7 @@ let print_expr tyenv macros e f p =
       fprintf f "%s.%s" (String.capitalize t) e
   | x -> JavaPrinter.print_lief tyenv prio f x in
   let print_expr0 config e f prio_parent = match e with
-  | BinOp (a, (Div as op), b) -> fprintf f "%a.intdiv(%a)" a 0 b nop
+  | BinOp (a, Div, b) -> fprintf f "%a.intdiv(%a)" a 0 b nop
   | _ -> print_expr0 config e f prio_parent in
   let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in

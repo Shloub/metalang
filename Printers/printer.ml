@@ -281,6 +281,10 @@ class printer = object(self)
     | Instr.Tag s ->  Format.fprintf f "tag %s@\n" s
     | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
     | Instr.Declare (varname, type_, expr, _option) -> self#declaration f varname type_ expr
+    | Instr.SelfAffect (mutable_, op, expr) ->
+        if self#hasSelfAffect op then
+          self#selfAssoc f mutable_ expr op
+        else self#affect f mutable_ (Expr.binop op (Expr.access mutable_) expr)
     | Instr.Affect (mutable_, expr) ->
       begin match Expr.unfix expr with
       | Expr.BinOp (e1, op, e2) ->

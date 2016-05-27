@@ -107,6 +107,8 @@ let rec process_instr map i =
       Instr.Declare (mapname map v, mapty map t, process_expr map e, option)
     | Instr.Affect (m, e) ->
       Instr.Affect ((mapmutable map m), process_expr map e)
+    | Instr.SelfAffect (m, op, e) ->
+      Instr.SelfAffect ((mapmutable map m), op, process_expr map e)
     | Instr.Loop (var, e1, e2, li) ->
       Instr.Loop (mapname map var, (process_expr map e1), (process_expr map e2), List.map (process_instr map) li )
     | Instr.While (e, li) ->

@@ -91,13 +91,12 @@ and getinfos_mut instr dad infos m =
     List.fold_left (getinfos_expr instr dad) infos li
   | Mutable.Dot (m, _) -> getinfos_mut instr dad infos m
 
-
-
 let rec getinfo_i dad infos hd = match Instr.unfix hd with
   | Instr.Declare (name, ty, e, _) ->
     let infos = addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
     in getinfos_expr hd dad infos e
-  | Instr.Affect (mut, e) ->
+  | Instr.Affect (mut, e)
+  | Instr.SelfAffect (mut, _, e) ->
     let infos = getinfos_expr hd dad infos e in
     let infos = getinfos_mut hd dad infos mut in
     let name = name_of_mut mut in

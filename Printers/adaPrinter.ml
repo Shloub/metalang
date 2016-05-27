@@ -140,8 +140,7 @@ let print_instr macros declared_types declared_types_assoc i =
     | _ -> Format.fprintf f "@[<hov>PString(%a);@]" expr nop in
   let p f () =
     match i with
-      Tag _
-    | Untuple (_, _, _)
+      Tag _ | Untuple _ | SelfAffect _
     | Unquote _-> assert false
     | Declare (var, _, expr, _) ->
         fprintf f "@[<h>%a@ :=@ %a;@]" print_varname var expr nop

@@ -63,6 +63,7 @@ module WalkDetectRecursion = WalkTop(DetectRecursion)
 module WalkArrayReIndex = Walk(ArrayReIndex)
 module WalkMergePrints = Walk(MergePrints)
 module WalkMergeReads = Walk(MergeReads)
+module WalkMakeSelfAffect = Walk(MakeSelfAffect)
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function

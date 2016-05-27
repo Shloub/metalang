@@ -253,11 +253,9 @@ class cppPrinter = object(self)
         | (t, m, s)::tl -> skipfirst, (t, m, true)::tl
         | [] -> true, []
       end
-      | _ -> assert false
       ) (false, []) li
     in
     let lastSkip = ref true in
-    let skipSet = ref true in
     Format.fprintf f "std::cin%a%a;"
       (fun f b -> if b then
         Format.fprintf f " >> std::skipws"

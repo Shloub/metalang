@@ -91,7 +91,8 @@ let print_instr c i =
     | _ -> fprintf f "@\n@[<v 4>{@\n%a@]@\n}" in
     format (print_list (fun f i -> i.p f ()) sep_nl) li in
   let p f () = match i with
-    | Declare (var, ty, e, _) -> fprintf f "%a = %a;" c.print_varname var e nop
+  | Declare (var, ty, e, _) -> fprintf f "%a = %a;" c.print_varname var e nop
+    | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a;" (c.print_mut c nop) mut c.print_op op e nop
     | Affect (mut, e) -> fprintf f "%a = %a;" (c.print_mut c nop) mut e nop
     | Loop (var, e1, e2, li) -> fprintf f "for (%a = %a; %a <= %a; %a++)%a"
           c.print_varname var e1 nop
