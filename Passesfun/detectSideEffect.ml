@@ -51,6 +51,7 @@ let add i v acc a = IntMap.add i v (acc a)
 
 let side_effects : int -> (acc * effect Expr.tofix) -> (acc * effect) = fun i (acc, e) ->
   let v = match e with
+  | Expr.ApplyMacro _ -> assert false
   | Expr.Fun _ -> EPure
   | Expr.FunTuple _ -> EPure
   | Expr.Lief (Expr.Binding (Ast.UserName a)) when Tags.is_taged ("macro_" ^ a ^ "_pure") -> EMacro

@@ -623,6 +623,13 @@ module EvalF (IO : EvalIO) = struct
       let mut = mut_setval env mutable_ in
       let e = e env in
       env, (fun execenv -> mut execenv (eval_expr execenv e))
+    | Instr.SelfAffect (mutable_, op, e) ->
+      let mutable_ = Mutable.Fixed.Deep.mapg (fun f -> f env) mutable_ in
+      let setmut = mut_setval env mutable_ in
+      let getmut = mut_val env mutable_ in
+      let e = e env in
+      let binop = binop loc op (WithEnv getmut) e in
+      env, (fun execenv -> setmut execenv (eval_expr execenv binop))
     | Instr.Loop (varname, e1, e2, instrs) ->
       let e1 = e1 env in
       let e2 = e2 env in

@@ -70,6 +70,10 @@ let expand tyenv i = match Instr.unfix i with
     let instrs, e = process tyenv [] e in
     let instrs, mut = process_mut tyenv instrs mut in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Affect (mut, e))  ) :: instrs)
+  | Instr.SelfAffect (mut, op, e) ->
+    let instrs, e = process tyenv [] e in
+    let instrs, mut = process_mut tyenv instrs mut in
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.SelfAffect (mut, op, e))  ) :: instrs)
   | Instr.Loop (v, e1, e2, li) ->
     let instrs, e1 = process tyenv [] e1 in
     let instrs, e2 = process tyenv instrs e2 in

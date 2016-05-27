@@ -540,6 +540,7 @@ let collect_contraintes_instruction env instruction =
         {env with
           contraintes = (contrainte_ty, contrainte_expr) ::
             env.contraintes}
+      | Instr.SelfAffect (mut, _, contrainte_expr) (* TODO operator constraint *)
       | Instr.Affect (mut, contrainte_expr) ->
           let env, contrainte_expr = contrainte_expr env in
         let env, contrainte_mut = collect_contraintes_mutable (fun e env -> e env) mut env in
