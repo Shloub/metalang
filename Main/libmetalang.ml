@@ -247,7 +247,8 @@ let languages, printers =
         pr#setTyperEnv typerEnv;
         pr#prog out processed
       end)
-  in let opselfaffect = [Expr.Add; Expr.Mul]      
+  in let opselfaffect = [Expr.Add; Expr.Mul; Expr.Div; Expr.Sub]
+  in let opselfaffecti = [Expr.Add; Expr.Mul; Expr.Sub]      
   in
   let ls = [
     "c",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new CPrinter.cPrinter ;
@@ -261,11 +262,11 @@ let languages, printers =
     "vb",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new VbDotNetPrinter.vbDotNetPrinter ;
     "java",    (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new JavaPrinter.javaPrinter ;
     "groovy",  (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new GroovyPrinter.groovyPrinter ;
-    "js",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new JsPrinter.jsPrinter ;
+    "js",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect:opselfaffecti   ) => new JsPrinter.jsPrinter ;
     "st",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:true  ~opselfaffect:[]) => new SmalltalkPrinter.smalltalkPrinter ;
     "go",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new GoPrinter.goPrinter ;
-    "cl",      (true , clike_passes ~tuple:true  ~record:true  ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new CommonLispPrinter.commonLispPrinter ;
-    "php",     (true , clike_passes ~tuple:false ~record:true  ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false ~opselfaffect   ) => new PhpPrinter.phpPrinter ;
+    "cl",      (true , clike_passes ~tuple:true  ~record:true  ~array:false ~mergeif:true  ~arrayconst:false ~arrayindex1:false ~opselfaffect:[]   ) => new CommonLispPrinter.commonLispPrinter ;
+    "php",     (true , clike_passes ~tuple:false ~record:true  ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false ~opselfaffect:opselfaffecti   ) => new PhpPrinter.phpPrinter ;
     "scala",   (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:false ~opselfaffect   ) => new ScalaPrinter.scalaPrinter ;
     "lua",     (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:false ~arrayindex1:true  ~opselfaffect   ) => new LuaPrinter.luaPrinter ;
     "py",      (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false ~arrayconst:true  ~arrayindex1:false ~opselfaffect   ) => new PyPrinter.pyPrinter ;
