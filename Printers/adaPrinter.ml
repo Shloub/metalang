@@ -196,6 +196,7 @@ let print_instr macros declared_types declared_types_assoc i =
    is_if_noelse=is_if_noelse i;
    is_comment=is_comment i;
    p=p;
+   default=();
    print_lief = print_lief;
  }
 
