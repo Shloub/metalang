@@ -204,11 +204,12 @@ let format_type f t =
   | Bool -> "%%"
   | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (type_t_to_string t))))
 
-type iprinter = {
+type 'a iprinter = {
     is_if : bool;
     is_if_noelse : bool;
     is_comment : bool;
-    p : Format.formatter -> unit -> unit;
+    p : Format.formatter -> 'a -> unit;
+    default : 'a;
     print_lief : int -> Format.formatter -> Ast.Expr.lief -> unit;
 }
 let is_if i = match i with Ast.Instr.If (_, _, _) -> true | _ -> false
