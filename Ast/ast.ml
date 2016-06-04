@@ -1,5 +1,5 @@
 (*
- * Copyright (c) 2012, Prologin
+ * Copyright (c) 2012 - 2016, Prologin
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -430,12 +430,12 @@ module Expr = struct
   | Bool of bool
   | Enum of string (** enumerateur *)
 
-  let pdebug_lief f = function
-    | Char c -> Format.fprintf f "Char %C" c
-    | String s -> Format.fprintf f "String %S" s
-    | Integer i -> Format.fprintf f "Integer %i" i
-    | Bool b -> Format.fprintf f "Bool %b" b
-    | Enum s -> Format.fprintf f "Enum %S" s
+  let pdebug_lief f = let open Format in function
+    | Char c -> fprintf f "Char %C" c
+    | String s -> fprintf f "String %S" s
+    | Integer i -> fprintf f "Integer %i" i
+    | Bool b -> fprintf f "Bool %b" b
+    | Enum s -> fprintf f "Enum %S" s
 
   type ('a, 'lex) tofix =
     BinOp of 'a * binop * 'a (** operations binaires *)
@@ -623,79 +623,65 @@ module Instr = struct
   | Untuple of (Type.t * varname) list * 'expr * declaration_option
   | Unquote of 'expr
 
-  let pdebug f = function
-  | Declare (va, ty, e, opt) -> Format.fprintf f "I.Declare(%a, %s, %a, %a)"
+  let pdebug f = let open Format in function
+  | Declare (va, ty, e, opt) -> fprintf f "I.Declare(%a, %s, %a, %a)"
         debug_varname va
         (Type.type_t_to_string ty)
         e ()
         popt opt
   | Affect (mut, e) ->
       let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
-      Format.fprintf f "I.Affect(%a, %a)" mut () e ()
+      fprintf f "I.Affect(%a, %a)" mut () e ()
   | SelfAffect (mut, op, e) ->
       let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
-      Format.fprintf f "I.SelfAffect(%a, %a, %a)" mut () Expr.pdebug_binop op e ()
+      fprintf f "I.SelfAffect(%a, %a, %a)" mut () Expr.pdebug_binop op e ()
   | Loop (var, e1, e2, li) ->
-      Format.fprintf f "I.Loop(%a, %a, %a, %a)"
-        debug_varname var
-        e1 () e2 () punitlist li
-  | ClikeLoop (init, cond, incr, li) -> Format.fprintf f "I.ClikeLoop(%a, %a, %a, %a)" punitlist init cond () punitlist incr punitlist li
-  | While (e, li) -> Format.fprintf f "I.While(%a, %a)" e () punitlist li
-  | Comment(s) -> Format.fprintf f "I.Comment(%S)" s
-  | Tag(s) -> Format.fprintf f "I.Tag(%S)" s
-  | Return(e) -> Format.fprintf f "I.Return(%a)" e ()
+      fprintf f "I.Loop(%a, %a, %a, %a)"
+        debug_varname var e1 () e2 () punitlist li
+  | ClikeLoop (init, cond, incr, li) -> fprintf f "I.ClikeLoop(%a, %a, %a, %a)" punitlist init cond () punitlist incr punitlist li
+  | While (e, li) -> fprintf f "I.While(%a, %a)" e () punitlist li
+  | Comment(s) -> fprintf f "I.Comment(%S)" s
+  | Tag(s) -> fprintf f "I.Tag(%S)" s
+  | Return(e) -> fprintf f "I.Return(%a)" e ()
   | AllocArray(name, ty, e, None, opt) ->
-      Format.fprintf f "I.AllocArray(%a, %s, %a, None, %a)"
-        debug_varname name
-        (Type.type_t_to_string ty)
-        e ()
+      fprintf f "I.AllocArray(%a, %s, %a, None, %a)"
+        debug_varname name (Type.type_t_to_string ty) e ()
         popt opt
   | AllocArray(name, ty, e, Some(name2, li), opt) ->
-      Format.fprintf f "I.AllocArray(%a, %s, %a, Some(%a, %a), %a)"
-        debug_varname name
-        (Type.type_t_to_string ty)
-        e ()
-        debug_varname name2
-        punitlist li
-        popt opt
+      fprintf f "I.AllocArray(%a, %s, %a, Some(%a, %a), %a)"
+        debug_varname name (Type.type_t_to_string ty) e ()
+        debug_varname name2 punitlist li popt opt
   | AllocArrayConst(name, ty, e, lief, opt) ->
-      Format.fprintf f "I.AllocArrayConst(%a, %s, %a, %a, %a)" debug_varname name
-        (Type.type_t_to_string ty)
-        e ()
-        Expr.pdebug_lief lief
-        popt opt
-  | AllocRecord(name, ty, li, opt) -> Format.fprintf f "I.AllocRecord(%a, %s, %a, %a)"
-        debug_varname name
-        (Type.type_t_to_string ty)
-        punitlist (List.map (fun (a, b) f () -> Format.fprintf f "(%S,@ %a)" a b () ) li)
-        popt opt
-  | If(e, a, b) -> Format.fprintf f "I.If(@[%a,@\n%a,@\n%a@])" e () punitlist a punitlist b
-  | Call(name, li) -> Format.fprintf f "I.Call(%S, %a)" name punitlist li
-  | Print li -> Format.fprintf f "I.Print(%a)"
+      fprintf f "I.AllocArrayConst(%a, %s, %a, %a, %a)" debug_varname name
+        (Type.type_t_to_string ty) e ()
+        Expr.pdebug_lief lief popt opt
+  | AllocRecord(name, ty, li, opt) -> fprintf f "I.AllocRecord(%a, %s, %a, %a)"
+        debug_varname name (Type.type_t_to_string ty)
+        punitlist (List.map (fun (a, b) f () -> fprintf f "(%S,@ %a)" a b () ) li) popt opt
+  | If(e, a, b) -> fprintf f "I.If(@[%a,@\n%a,@\n%a@])" e () punitlist a punitlist b
+  | Call(name, li) -> fprintf f "I.Call(%S, %a)" name punitlist li
+  | Print li -> fprintf f "I.Print(%a)"
         punitlist
         (List.map (fun e f () -> match e with
-          | StringConst s -> Format.fprintf f "%S" s
-          | PrintExpr (ty, e) -> Format.fprintf f "Expr(%s, %a)" (Type.type_t_to_string ty) e ()
-                  ) li)
+          | StringConst s -> fprintf f "%S" s
+          | PrintExpr (ty, e) -> fprintf f "Expr(%s, %a)" (Type.type_t_to_string ty) e ()) li)
   | Read li ->
-      Format.fprintf f "I.Read(%a)"
+      fprintf f "I.Read(%a)"
         punitlist
         (List.map (fun e f () -> match e with
-        | Separation -> Format.fprintf f "Sep"
+        | Separation -> fprintf f "Sep"
         | DeclRead(ty, name, opt) ->
-            Format.fprintf f "I.DeclRead(%s, %a, %a)" (Type.type_t_to_string ty)
-              debug_varname name
-              popt opt
+            fprintf f "I.DeclRead(%s, %a, %a)" (Type.type_t_to_string ty)
+              debug_varname name popt opt
         | ReadExpr (ty, mut) ->
             let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
-            Format.fprintf f "I.Mut(%s, %a)" (Type.type_t_to_string ty) mut ()
-                  ) li)
-  | Untuple(li, e, opt) -> Format.fprintf f "I.Untuple(%a, %a, %a)"
-        punitlist (List.map (fun (ty, name) f () -> Format.fprintf f "(%s,@ %a)"
+            fprintf f "I.Mut(%s, %a)" (Type.type_t_to_string ty) mut ()) li)
+  | Untuple(li, e, opt) -> fprintf f "I.Untuple(%a, %a, %a)"
+        punitlist (List.map (fun (ty, name) f () -> fprintf f "(%s,@ %a)"
             (Type.type_t_to_string ty)
             debug_varname name) li)
         e () popt opt
-  | Unquote(e) -> Format.fprintf f "I.Unquote(%a)" e ()
+  | Unquote(e) -> fprintf f "I.Unquote(%a)" e ()
 
   module Make(F:Applicative) = struct
     open F
