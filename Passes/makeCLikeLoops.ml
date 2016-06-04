@@ -25,8 +25,7 @@
 
 
 (**
-   Cette passe permet de déclarer une variable pour quelques expressions.
-   Elle est utilisée dans le but de réduire les ambiguités sur l'ordre d'execution
+   Cette passe permet de transformer une boucle type pascal en boucle C
 
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
