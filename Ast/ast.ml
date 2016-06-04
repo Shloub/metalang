@@ -608,6 +608,7 @@ module Instr = struct
   | Affect of 'expr Mutable.t * 'expr
   | SelfAffect of 'expr Mutable.t * Expr.binop * 'expr
   | Loop of varname * 'expr * 'expr * 'a list
+  | ClikeLoop of 'a list * 'expr * 'a list * 'a list
   | While of 'expr * 'a list
   | Comment of string
   | Tag of string
@@ -638,6 +639,7 @@ module Instr = struct
       Format.fprintf f "I.Loop(%a, %a, %a, %a)"
         debug_varname var
         e1 () e2 () punitlist li
+  | ClikeLoop (init, cond, incr, li) -> Format.fprintf f "I.ClikeLoop(%a, %a, %a, %a)" punitlist init cond () punitlist incr punitlist li
   | While (e, li) -> Format.fprintf f "I.While(%a, %a)" e () punitlist li
   | Comment(s) -> Format.fprintf f "I.Comment(%S)" s
   | Tag(s) -> Format.fprintf f "I.Tag(%S)" s
@@ -707,6 +709,7 @@ module Instr = struct
       | SelfAffect (m, op, e) -> ret (fun m e -> SelfAffect (m, op, e)) <*> Mut.map g m <*> g e
       | Comment s -> ret (Comment s)
       | Loop (var, e1, e2, li) -> ret (fun e1 e2 li -> Loop (var, e1, e2, li)) <*> g e1 <*> g e2 <*> f li
+      | ClikeLoop (i1, e, i2, i3) -> ret (fun i1 e i2 li3 -> ClikeLoop(i1, e, i2, li3)) <*> f i1 <*> g e <*> f i2 <*> f i3
       | While (e, li) -> ret (fun e li -> While (e, li)) <*> g e <*> f li 
       | If (e, cif, celse) -> ret (fun e cif celse -> If (e, cif, celse)) <*> g e <*> f cif <*> f celse
       | Return e -> ret (fun e -> Return e) <*> g e
@@ -755,14 +758,15 @@ module Instr = struct
         | AllocArray (n, _, e, None, _)
         | AllocArrayConst (n, _, e, _, _) ->  e @* BindingSet.add n
         | Affect (m, e) | SelfAffect (m, _, e) -> e @* mut m
-        | Loop (v, e, f, li) -> e @* f @* BindingSet.add v @* (fun acc -> List.fold_left (fun acc f -> f acc) acc li)
+        | Loop (v, e, f, li) -> e @* f @* BindingSet.add v @* fli li
+        | ClikeLoop (init, cond, incr, li) -> cond @* fli init @* fli incr @* fli li
         | While (e, li) -> e @* fli li
         | Comment _
         | Tag _ -> (fun acc -> acc)
         | AllocArray (n, _, e, Some (n2, li), _) -> e @* BindingSet.add n @* BindingSet.add n2 @* fli li
-        | AllocRecord (n, _, li, _) ->BindingSet.add n @* (fun acc -> List.fold_left (fun acc (_, f) -> f acc) acc li)
+        | AllocRecord (n, _, li, _) ->BindingSet.add n @* fli (List.map snd li)
         | If (e, l1, l2) -> e @* fli l1 @* fli l2
-        | Call (_, eli) -> (fun acc -> List.fold_left (fun acc f -> f acc) acc eli)
+        | Call (_, eli) -> fli eli
         | Return e -> e
         | Print li ->
             fun acc0 -> List.fold_left
