@@ -29,10 +29,8 @@
 *)
 
 open Stdlib
-
 open Ast
 open Fresh
-open PassesUtils
 
 let apply prog funs =
   let go f (li, used_functions) = match f with

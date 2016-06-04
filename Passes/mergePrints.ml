@@ -31,10 +31,8 @@
 *)
 
 open Stdlib
-
 open Ast
-open PassesUtils
-
+  
 type acc0 = unit
 type 'lex acc = unit
 let init_acc () = ()
