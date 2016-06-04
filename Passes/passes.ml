@@ -65,6 +65,7 @@ module WalkMergePrints = Walk(MergePrints)
 module WalkMergeReads = Walk(MergeReads)
 module WalkMakeSelfAffect = Walk(MakeSelfAffect)
 module WalkMakeCLikeLoops = Walk(MakeCLikeLoops)
+module WalkSimplifyExpressions = Walk(SimplifyExpressions)
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function
