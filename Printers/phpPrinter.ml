@@ -103,7 +103,7 @@ let print_instr c i =
           c.print_varname var e2 nop
           c.print_varname var
           block li
-    | ClikeLoop (init, cond, incr, li) -> fprintf f "for (%a;%a;%a)%a"
+    | ClikeLoop (init, cond, incr, li) -> fprintf f "for (%a; %a; %a)%a"
           plifor init
           cond nop
           plifor incr
