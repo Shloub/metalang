@@ -203,6 +203,7 @@ let clike_passes
   let p = Passes.WalkRemoveInternal.apply () p in
   let p = if clikeloop then Passes.WalkMakeCLikeLoops.apply () p else p in
   let p = Passes.WalkMakeSelfAffect.apply opselfaffect p in
+  let p = Passes.WalkSimplifyExpressions.apply () p in
   let () = check_reads p in
    (rec_, ty, p)
 
