@@ -208,6 +208,7 @@ type 'a iprinter = {
     is_if : bool;
     is_if_noelse : bool;
     is_comment : bool;
+    is_multi_instr : bool;
     p : Format.formatter -> 'a -> unit;
     default : 'a;
     print_lief : int -> Format.formatter -> Ast.Expr.lief -> unit;
@@ -216,6 +217,22 @@ let is_if i = match i with Ast.Instr.If (_, _, _) -> true | _ -> false
 let is_if_noelse i = match i with Ast.Instr.If (_, _, []) -> true | _ -> false
 let is_comment i = match i with Ast.Instr.Comment _ -> true | _ -> false
 
+let seppt f () = Format.fprintf f ";"
+let noseppt f () = ()
+let plifor f li = print_list (fun f i -> i.p f noseppt) (sep "%a,%a") f li
+let block f li =
+  let open Format in
+  let format = match List.filter (fun l -> not l.is_comment) li with
+  | [i] when not i.is_multi_instr -> fprintf f "@\n    @[<v>%a@]"
+  | _ -> fprintf f "@\n@[<v 4>{@\n%a@]@\n}" in
+  format (print_list (fun f i -> i.p f seppt) sep_nl) li
+let block_ifcase f li =
+  let open Format in
+  let format = match li with
+  | [i] when not (i.is_if_noelse || i.is_multi_instr) -> fprintf f "@\n    @[<v>%a@]"
+  | _ -> fprintf f "@\n@[<v 4>{@\n%a@]@\n}" in
+  format (print_list (fun f i -> i.p f seppt) sep_nl) li
+    
 let print_mut0 fmt_array
     fmt_arrayindex
     fmt_dot
