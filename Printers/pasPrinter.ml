@@ -163,6 +163,7 @@ let print_instr macros i =
         in print_list (fun f e -> e f) sep_nl f li
   in
   {
+   is_multi_instr = false;
    is_if=is_if i;
    is_if_noelse=is_if_noelse i;
    is_comment=is_comment i;

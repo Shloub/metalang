@@ -30,16 +30,16 @@ tests :
 
 supprimer les objets dans cette hiérarchie :
 
-Printer -> PasPrinter -> AdaPrinter
-        -> CPrinter   -> cppPrinter -> JavaPrinter -> CSharpPrinter -> VBDotNetPrinter
-                      -> cppPrinter -> JavaPrinter -> GroovyPrinter
-                      -> GoPrinter
-                      -> JSPrinter
-                      -> ObjCPrinter
-                      -> PerlPrinter
-                      -> PhpPrinter
-                      -> PyPrinter -> RbPrinter
-                      -> ScalaPrinter
+Printer -> PasPrinter[OK]-> AdaPrinter[OK]
+        -> CPrinter      -> cppPrinter -> JavaPrinter -> CSharpPrinter -> VBDotNetPrinter
+                         -> cppPrinter -> JavaPrinter -> GroovyPrinter
+                         -> GoPrinter
+                         -> JSPrinter[OK]
+                         -> ObjCPrinter
+                         -> PerlPrinter
+                         -> PhpPrinter[OK]
+                         -> PyPrinter -> RbPrinter
+                         -> ScalaPrinter
         -> CommonLispPrinter
         -> FSharpPrinter
         -> ForthPrinter
@@ -51,6 +51,9 @@ Printer -> PasPrinter -> AdaPrinter
 HaskellPrinter
 OcamlFunPrinter
 RacketPrinter
+
+passes à réécrire :
+rename
 
 
 

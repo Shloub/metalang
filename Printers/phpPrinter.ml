@@ -80,20 +80,6 @@ let print_expr config e f p =
 let print_instr c i =
   let open Ast.Instr in
   let open Format in
-  let seppt f () = fprintf f ";" in
-  let noseppt f () = () in
-  let plifor f li = print_list (fun f i -> i.p f noseppt) (sep "%a,%a") f li in
-  let block f li =
-    let format = match List.filter (fun l -> not l.is_comment) li with
-    | [i] -> fprintf f "@\n    @[<v>%a@]"
-    | _ -> fprintf f "@\n@[<v 4>{@\n%a@]@\n}" in
-    format (print_list (fun f i -> i.p f seppt) sep_nl) li in
-  
-  let block_ifcase f li =
-    let format = match li with
-    | [i] when not i.is_if_noelse -> fprintf f "@\n    @[<v>%a@]"
-    | _ -> fprintf f "@\n@[<v 4>{@\n%a@]@\n}" in
-    format (print_list (fun f i -> i.p f seppt) sep_nl) li in
   let p f pend = match i with
   | Declare (var, ty, e, _) -> fprintf f "%a = %a%a" c.print_varname var e nop pend ()
     | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
@@ -155,7 +141,11 @@ let print_instr c i =
           ) sep_nl f li
     | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
     | Unquote e -> assert false in
+  let is_multi_instr = match i with
+  | Read (hd::tl) -> true
+  | _ -> false in
   {
+   is_multi_instr=is_multi_instr;
    is_if=is_if i;
    is_if_noelse=is_if_noelse i;
    is_comment=is_comment i;
@@ -181,13 +171,6 @@ class phpPrinter = object(self)
         try List.assoc (self#lang ()) li
         with Not_found -> List.assoc "" li) macros
    in (print_instr macros t) f
-     
-  method declare_for s f li = ()
-
-  method untuple f li e =
-    Format.fprintf f "@[<h>list(%a) = %a;@]"
-      (print_list self#binding sep_c) (List.map snd li)
-      self#expr e
 
   method lang () = "php"
 
@@ -198,30 +181,6 @@ class phpPrinter = object(self)
       ->
       Format.fprintf f "&"
     | _ -> ()
-
-  method stdin_sep f = Format.fprintf f "@[scantrim();@]"
-     
-  method read f t m =
-    match Type.unfix t with
-    | Type.Char ->
-      Format.fprintf f "@[%a = nextChar();@]"
-        self#mutable_set m
-    | _ ->
-      Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
-        self#mutable_set m
-        self#format_type t
-
-  method read_decl f t v =
-    match Type.unfix t with
-    | Type.Char ->
-      Format.fprintf f "@[%a = nextChar();@]"
-        self#binding v
-    | _ ->
-      Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
-        self#binding v
-        self#format_type t
-
-  method m_field f m field = Format.fprintf f "%a[%S]" self#mutable_get m field
 
   method main f main = self#instructions f main
 
@@ -264,15 +223,6 @@ function nextChar(){
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method multi_print f li =
-    Format.fprintf f "@[<h>echo %a;@]"
-      (print_list
-         (fun f -> function
-           | Instr.StringConst str -> self#expr f (Expr.string str)
-           | Instr.PrintExpr (_t, e) -> self#expr f e) sep_c) li
-
-  method print f _t expr = Format.fprintf f "@[echo@ %a;@]" self#expr expr
-
   method print_proto f (funname, t, li) =
     Format.fprintf f "function %a%a(%a)"
       (fun f t -> match Type.unfix t with
@@ -291,37 +241,5 @@ function nextChar(){
 
   method binding f i = Format.fprintf f "$%a" super#binding i
 
-  method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ =@ %a;@]" self#binding var self#expr e
-
-  method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>%a@ =@ array();@]" self#binding binding
-
-  method allocarrayconst f binding type_ len e opt =
-    Format.fprintf f "@[<h>%a = array_fill(0, %a, %a);@]"
-      self#binding binding
-      self#expr len
-      (print_lief nop) e
-
-  method forloop f varname expr1 expr2 li =
-    self#forloop_content f (varname, expr1, expr2, li)
-
   method decl_type f name t = ()
-
-  method def_fields name f li =
-    print_list
-      (fun f (fieldname, expr) ->
-        Format.fprintf f "@[<h>\"%a\"=>%a@]"
-          self#field fieldname
-          self#expr expr
-      )
-      (sep "%a,@\n%a")
-      f
-      li
-
-  method allocrecord f name t el =
-    Format.fprintf f "%a = array(@\n@[<v 2>  %a@]@\n);@\n"
-      self#binding name
-      (self#def_fields name) el
-
 end
