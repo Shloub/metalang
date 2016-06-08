@@ -196,13 +196,14 @@ let print_expr0 c e f prio_parent =
 
 let print_expr c e f p = Ast.Expr.Fixed.Deep.fold (print_expr0 c) e f p
 
-let format_type f t =
-  let open Ast.Type in Format.fprintf f (match unfix t with
-  | Integer -> "%%d"
-  | Char -> "%%c"
-  | String ->  "%%s"
-  | Bool -> "%%"
-  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (type_t_to_string t))))
+let format_type t = match Ast.Type.unfix t with
+  | Ast.Type.Integer -> "%d"
+  | Ast.Type.Char -> "%c"
+  | Ast.Type.String ->  "%s"
+  | Ast.Type.Bool -> "%b"
+  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Ast.Type.type_t_to_string t))
+)
+let pformat_type f t = Format.fprintf f "%s" (format_type t)
 
 type 'a iprinter = {
     is_if : bool;
@@ -216,7 +217,16 @@ type 'a iprinter = {
 let is_if i = match i with Ast.Instr.If (_, _, _) -> true | _ -> false
 let is_if_noelse i = match i with Ast.Instr.If (_, _, []) -> true | _ -> false
 let is_comment i = match i with Ast.Instr.Comment _ -> true | _ -> false
-
+    
+let clike_noformat s = let s = Format.sprintf "%S" s in String.replace "%" "%%" s
+let extract_multi_print noformat formater_type li =
+  let s, e = List.fold_left (fun (format, exprs) -> function
+    | Ast.Instr.StringConst str ->
+        let s = noformat str in
+        format ^ (String.sub s 1 (String.length s - 2)), exprs
+    | Ast.Instr.PrintExpr (t, expr) -> format ^ (formater_type t), (t, expr)::exprs) ("",  []) li
+  in s, List.rev e
+    
 let seppt f () = Format.fprintf f ";"
 let noseppt f () = ()
 let plifor f li = print_list (fun f i -> i.p f noseppt) (sep "%a,%a") f li

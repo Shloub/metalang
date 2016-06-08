@@ -324,10 +324,10 @@ class cPrinter = object(self)
       | Instr.Separation -> (format ^ " ", variables)
       | Instr.DeclRead (t, var, _) ->
         let mutable_ = Mutable.var var in
-        let addons = Printer.format_type t in
+        let addons = format_type t in
         (format ^ addons, mutable_::variables)
       | Instr.ReadExpr (t, mutable_) ->
-        let addons = Printer.format_type t in
+        let addons = format_type t in
         (format ^ addons, mutable_::variables)
       ) ("", []) li
     in
