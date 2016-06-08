@@ -32,11 +32,11 @@
 open Ast
 open Helper
 open Stdlib
-
-let print_expr macros e f p =
+  
+let print_lief prio f l =
   let open Format in
   let open Expr in
-  let print_lief prio f l = match l with
+  match l with
   | Char c -> begin match c with
     | '$' -> fprintf f "\"\\$\""
     | _->
@@ -54,8 +54,11 @@ let print_expr macros e f p =
       else fprintf f "%i" i
   | Bool true -> fprintf f "1"
   | Bool false -> fprintf f "()"
-  | Enum s -> fprintf f "%S" s in
-  let print_op f op = fprintf f "%s"
+  | Enum s -> fprintf f "%S" s
+
+  let print_op f op =
+  let open Format in
+  let open Expr in fprintf f "%s"
       (match op with
       | Add -> "+"
       | Sub -> "-"
@@ -70,7 +73,30 @@ let print_expr macros e f p =
       | HigherEq -> ">="
       | Eq -> "eq"
       | Diff -> "ne"
-      ) in
+      )
+let print_mut c m f prio  =
+  let open Format in
+  let open Mutable in match m with
+  | Var v -> c.print_varname f v
+  | Array (m, fi) -> fprintf f "%a->%a" m prio
+        (print_list (fun f a -> fprintf f "[%a]" a nop) nosep) fi
+  | Dot (m, field) -> fprintf f "%a->{%S}" m prio field
+let print_mut conf prio f m = Mutable.Fixed.Deep.fold (print_mut conf) m f prio
+  
+let config macros = {
+  prio_binop = prio_binop_equal;
+  prio_unop;
+  print_varname=Helper.dolar_varname;
+  print_lief;
+  print_op;
+  print_unop;
+  print_mut;
+  macros
+}
+
+let print_expr config e f p =
+  let open Format in
+  let open Expr in
   let print_expr0 config e f prio_parent = match e with
   | BinOp (a, (Div as op), b) ->
       let prio, priol, prior = prio_binop op in
@@ -80,25 +106,92 @@ let print_expr macros e f p =
   | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
       fprintf f "%S => %a" name x nop) sep_c) li
   | _ -> print_expr0 config e f prio_parent in
-  let print_mut c m f prio  =
-    let open Mutable in match m with
-  | Var v -> c.print_varname f v
-  | Array (m, fi) -> fprintf f "%a->%a" m prio
-        (print_list (fun f a -> fprintf f "[%a]" a nop) nosep) fi
-  | Dot (m, field) -> fprintf f "%a->{%S}" m prio field in
-  let print_mut conf prio f m = Mutable.Fixed.Deep.fold (print_mut conf) m f prio in
-  let config = {
-    prio_binop = prio_binop_equal;
-    prio_unop;
-    print_varname=Helper.dolar_varname;
-    print_lief;
-    print_op;
-    print_unop;
-    print_mut;
-    macros
-  } in Fixed.Deep.fold (print_expr0 config) e f p
+  Fixed.Deep.fold (print_expr0 config) e f p
 
+let print_instr c i =
+  let open Ast.Instr in
+  let open Format in
+  let inprint f = function
+    | StringConst s -> print_lief nop f (Ast.Expr.String s)
+    | PrintExpr (_, e) -> e f nop in
+  let block f li = fprintf f "@\n@[<v 4>{@\n%a@]@\n}" (print_list (fun f i -> i.p f seppt) sep_nl) li in
+  let p f pend = match i with
+  | Declare (var, ty, e, _) -> fprintf f "my %a = %a%a" c.print_varname var e nop pend ()
+    | SelfAffect (mut, op, e) -> assert false
+    | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
+    | Loop (var, e1, e2, li) -> fprintf f "@[<h>foreach my %a (%a .. %a)@]%a"
+          c.print_varname var e1 nop
+          e2 nop
+          block li
+    | ClikeLoop (init, cond, incr, li) -> assert false
+    | While (e, li) -> fprintf f "while (@[<h>%a@])%a" e nop block li
+    | Comment s ->
+        let lic = String.split s '\n' in
+        print_list (fun f s -> fprintf f "#%s@\n" s) nosep f lic
+    | Tag s -> fprintf f "/*%S*/" s
+    | Return e -> fprintf f "return %a%a" e nop pend ()
+    | AllocArray (name, t, e, None, opt) -> fprintf f "my %a = []%a"
+          c.print_varname name
+          pend ()
+    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+    | AllocArrayConst (name, ty, len, lief, opt) ->
+        fprintf f "@[<h>%a = array_fill(0, %a, %a)%a@]" c.print_varname name
+          len nop (c.print_lief nop) lief pend ()
+    | AllocRecord (name, ty, list, opt) ->
+        fprintf f "@[<v 4>my %a = {@\n%a}%a@]" c.print_varname name
+          (print_list (fun f (field, x) -> fprintf f "%S=>%a" field x nop) (sep "%a,@\n%a")) list
+          pend ()
+    | If (e, listif, []) ->
+        fprintf f "if (%a)%a" e nop block listif
+    | If (e, listif, [elsecase]) when elsecase.is_if ->
+        fprintf f "if (%a)%a@\n@[<v 4>els%a@]" e nop block listif elsecase.p seppt
+    | If (e, listif, listelse) ->
+        fprintf f "if (%a)%a@\nelse%a" e nop block listif block listelse
+    | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
+      | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
+      | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
+    end
+    | Print [e]-> fprintf f "print %a%a" inprint e pend ()
+    | Print li-> fprintf f "print(%a)%a" (print_list inprint sep_c) li pend ()
+    | Read li ->
+        print_list
+          (fun f -> function
+            | Separation -> Format.fprintf f "@[readspaces()%a@]" pend ()
+            | DeclRead (ty, v, opt) ->
+                begin match Ast.Type.unfix ty with
+                | Ast.Type.Char -> fprintf f "@[my %a = readchar()%a@]" c.print_varname v pend ()
+                | Ast.Type.Integer -> fprintf f "@[my %a = readint()%a@]" c.print_varname v pend ()
+                | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                      (Type.type_t_to_string ty)))
+                end
+            | ReadExpr (ty, mut) ->
+                begin match Ast.Type.unfix ty with
+                | Ast.Type.Char -> fprintf f "@[%a = readchar()%a@]" (c.print_mut c nop) mut pend ()
+                | Ast.Type.Integer -> fprintf f "@[%a = readint()%a@]" (c.print_mut c nop) mut pend ()
+                | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                      (Type.type_t_to_string ty)))
+                end
+          ) sep_nl f li
+    | Untuple (li, expr, opt) -> fprintf f "my (%a) = @@{%a}%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
+    | Unquote e -> assert false in
+  let is_multi_instr = match i with
+  | Read (hd::tl) -> true
+  | _ -> false in
+  {
+   is_multi_instr = is_multi_instr;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
+   p=p;
+   default = seppt;
+   print_lief = c.print_lief;
+ }
 
+let print_instr macros i =
+  let open Ast.Instr.Fixed.Deep in
+  let c = config macros in
+  let i = (fold (print_instr c) (mapg (print_expr c) i))
+  in fun f -> i.p f i.default
 
 class perlPrinter = object(self)
   inherit CPrinter.cPrinter as baseprinter
@@ -111,43 +204,12 @@ class perlPrinter = object(self)
 
   method main f main = self#instructions f main
 
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] -> (*begin match ifcase with
-      | [item] ->
-        Format.fprintf f "%a if (%a);"
-          self#instr item
-          self#expr e
-      | _ ->*)
-        Format.fprintf f "@[<h>if@ (%a)@] {@\n  @[<v>%a@]@\n}"
-          self#expr e
-          self#instructions ifcase
-(*end*)
-    | [Instr.Fixed.F (_, Instr.If (e2, if2, els2))] ->
-
-      Format.fprintf f "@[<h>if@ (%a)@] {@\n  @[<v>%a@]@\n}els%a"
-        self#expr e
-        self#instructions ifcase
-        (fun f () -> self#if_ f e2 if2 els2) ()
-    | _ ->
-      Format.fprintf f "@[<h>if@ (%a)@] {@\n  @[<v>%a@]@\n}else{@\n  @[<v>%a@]@\n}"
-        self#expr e
-        self#instructions ifcase
-        self#instructions elsecase
-
-  method expr_inprint f expr = match Expr.unfix expr with
-  | Expr.BinOp _ -> Format.fprintf f "(%a)" self#expr expr
-  | _ -> self#expr f expr
-
-  method print f t expr =
-    Format.fprintf f "print %a;" self#expr_inprint expr
-
-  method multi_print f li =
-    Format.fprintf f "@[<h>print(%a);@]"
-      (print_list
-         (fun f -> function
-           | Instr.StringConst str -> self#expr f (Expr.string str)
-           | Instr.PrintExpr (_t, e) -> self#expr f e) sep_c) li
+  method instr f t =
+   let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr macros t) f
 
   method print_proto f (funname, t, li) =
     if li = [] then Format.fprintf f "sub %a{" self#funname funname
@@ -155,7 +217,6 @@ class perlPrinter = object(self)
     Format.fprintf f "sub %a{@\n@[<h>my(%a) = @@_;@]"
       self#funname funname
       (print_list self#binding sep_c) (List.map fst li)
-
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<v 2>%a@\n%a@]@\n}@\n"
@@ -214,67 +275,8 @@ class perlPrinter = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method declaration f var t e =
-    Format.fprintf f "@[<h>my %a@ =@ %a;@]"
-      self#binding var
-      self#expr e
-
   method comment f s =
     let lic = String.split s '\n' in
       print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
-
-  method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>my %a = [];@]"
-     self#binding binding
-
-  method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v 2>@[<h>foreach my %a (%a .. %a) {@]@\n%a@]@\n}"
-      self#binding varname
-      self#expr expr1
-      self#expr expr2
-      self#instructions li
-
-  method read_decl f t v = match Type.unfix t with
-  | Type.Char -> Format.fprintf f "my %a = readchar();" self#binding v
-  | Type.Integer ->  Format.fprintf f "my %a = readint();" self#binding v
-  | _ -> assert false
-
-  method read f t mutable_ = match Type.unfix t with
-  | Type.Char -> Format.fprintf f "%a = readchar();" self#mutable_set mutable_
-  | Type.Integer ->  Format.fprintf f "%a = readint();" self#mutable_set mutable_
-  | _ -> assert false
-
-  method stdin_sep f = Format.fprintf f "@[readspaces();@]"
-
-  method allocrecord f name t el =
-    Format.fprintf f "my %a = {@[<v>%a@]};"
-      self#binding name
-      ( print_list (fun f (fieldname, expr) ->
-	      Format.fprintf f "%S=>@[<h>%a@]" fieldname self#expr expr)
-	        (sep "%a,@\n%a")) el
-
-  method field f field = Format.fprintf f "%S" field
-
-  method untuple f li e =
-    Format.fprintf f "my (%a) = @@{ %a };"
-      (print_list self#binding sep_c) (List.map snd li) self#expr e
-
-  method hasSelfAffect op = false
-
-  method bloc f li =
-    Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
-
-  method m_field f m field =
-      Format.fprintf f "%a->{%S}" self#mutable_get m field
-
-  method m_array f m indexes =
-      Format.fprintf f "%a->[%a]"
-        self#mutable_get m
-        (print_list self#expr (sep "%a][%a")) indexes
-
-  method expr f e = print_expr (StringMap.map (fun (ty, params, li) ->
-    ty, params,
-    try List.assoc (self#lang ()) li
-    with Not_found -> List.assoc "" li) macros) e f nop
 
 end
