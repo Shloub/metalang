@@ -11,7 +11,7 @@ function g(&$t, $index) {
 
 $j = 0;
 $a = array();
-for ($i = 0; $i < 5; $i++)
+for ($i = 0; $i < 5; $i += 1)
 {
     echo $i;
     $j += $i;
@@ -19,14 +19,14 @@ for ($i = 0; $i < 5; $i++)
 }
 echo $j, " ";
 if ($a[0])
-  echo "True";
+    echo "True";
 else
-  echo "False";
+    echo "False";
 echo "\n";
 g(id($a), 0);
 if ($a[0])
-  echo "True";
+    echo "True";
 else
-  echo "False";
+    echo "False";
 echo "\n";
 

@@ -23,30 +23,28 @@ function scantrim(){
 function go0(&$tab, $a, $b) {
     $m = intval(($a + $b) / 2);
     if ($a == $m)
-    {
         if ($tab[$a] == $m)
-          return $b;
+            return $b;
         else
-          return $a;
-    }
+            return $a;
     $i = $a;
     $j = $b;
     while ($i < $j)
     {
         $e = $tab[$i];
         if ($e < $m)
-          $i++;
+            $i += 1;
         else
         {
-            $j --;
+            $j -= 1;
             $tab[$i] = $tab[$j];
             $tab[$j] = $e;
         }
     }
     if ($i < $m)
-      return go0($tab, $a, $m);
+        return go0($tab, $a, $m);
     else
-      return go0($tab, $m, $b);
+        return go0($tab, $m, $b);
 }
 
 
@@ -58,7 +56,7 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0; $i < $len; $i++)
+for ($i = 0; $i < $len; $i += 1)
 {
     $tmp = 0;
     list($tmp) = scan("%d");

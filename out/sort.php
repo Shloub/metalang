@@ -22,21 +22,21 @@ function scantrim(){
 }
 function &copytab(&$tab, $len) {
     $o = array();
-    for ($i = 0; $i < $len; $i++)
-      $o[$i] = $tab[$i];
+    for ($i = 0; $i < $len; $i += 1)
+        $o[$i] = $tab[$i];
     return $o;
 }
 
 
 function bubblesort(&$tab, $len) {
-    for ($i = 0; $i < $len; $i++)
-      for ($j = $i + 1; $j < $len; $j++)
-        if ($tab[$i] > $tab[$j])
-    {
-        $tmp = $tab[$i];
-        $tab[$i] = $tab[$j];
-        $tab[$j] = $tmp;
-    }
+    for ($i = 0; $i < $len; $i += 1)
+        for ($j = $i + 1; $j < $len; $j += 1)
+            if ($tab[$i] > $tab[$j])
+            {
+                $tmp = $tab[$i];
+                $tab[$i] = $tab[$j];
+                $tab[$j] = $tmp;
+            }
 }
 
 
@@ -47,28 +47,26 @@ function qsort0(&$tab, $len, $i, $j) {
         $j0 = $j;
         /* pivot : tab[0] */
         while ($i != $j)
-          if ($tab[$i] > $tab[$j])
-        {
-            if ($i == $j - 1)
-            {
-                /* on inverse simplement*/
-                $tmp = $tab[$i];
-                $tab[$i] = $tab[$j];
-                $tab[$j] = $tmp;
-                $i++;
-            }
+            if ($tab[$i] > $tab[$j])
+                if ($i == $j - 1)
+                {
+                    /* on inverse simplement*/
+                    $tmp = $tab[$i];
+                    $tab[$i] = $tab[$j];
+                    $tab[$j] = $tmp;
+                    $i += 1;
+                }
+                else
+                {
+                    /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
+                    $tmp = $tab[$i];
+                    $tab[$i] = $tab[$j];
+                    $tab[$j] = $tab[$i + 1];
+                    $tab[$i + 1] = $tmp;
+                    $i += 1;
+                }
             else
-            {
-                /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
-                $tmp = $tab[$i];
-                $tab[$i] = $tab[$j];
-                $tab[$j] = $tab[$i + 1];
-                $tab[$i + 1] = $tmp;
-                $i++;
-            }
-        }
-        else
-          $j --;
+                $j -= 1;
         qsort0($tab, $len, $i0, $i - 1);
         qsort0($tab, $len, $i + 1, $j0);
     }
@@ -78,7 +76,7 @@ $len = 2;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i_ = 0; $i_ < $len; $i_++)
+for ($i_ = 0; $i_ < $len; $i_ += 1)
 {
     $tmp = 0;
     list($tmp) = scan("%d");
@@ -87,12 +85,12 @@ for ($i_ = 0; $i_ < $len; $i_++)
 }
 $tab2 = copytab($tab, $len);
 bubblesort($tab2, $len);
-for ($i = 0; $i < $len; $i++)
-  echo $tab2[$i], " ";
+for ($i = 0; $i < $len; $i += 1)
+    echo $tab2[$i], " ";
 echo "\n";
 $tab3 = copytab($tab, $len);
 qsort0($tab3, $len, 0, $len - 1);
-for ($i = 0; $i < $len; $i++)
-  echo $tab3[$i], " ";
+for ($i = 0; $i < $len; $i += 1)
+    echo $tab3[$i], " ";
 echo "\n";
 
