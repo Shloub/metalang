@@ -20,30 +20,40 @@ sub readspaces {
 sub go0{
   my($tab, $a, $b) = @_;
   my $m = int(($a + $b) / 2);
-  if ($a eq $m) {
-    if ($tab->[$a] eq $m) {
-      return $b;
-    }else{
-      return $a;
-    }
+  if ($a eq $m)
+  {
+      if ($tab->[$a] eq $m)
+      {
+          return $b;
+      }
+      else
+      {
+          return $a;
+      }
   }
   my $i = $a;
   my $j = $b;
   while ($i < $j)
   {
-    my $e = $tab->[$i];
-    if ($e < $m) {
-      $i = $i + 1;
-    }else{
-      $j = $j - 1;
-      $tab->[$i] = $tab->[$j];
-      $tab->[$j] = $e;
-    }
+      my $e = $tab->[$i];
+      if ($e < $m)
+      {
+          $i = $i + 1;
+      }
+      else
+      {
+          $j = $j - 1;
+          $tab->[$i] = $tab->[$j];
+          $tab->[$j] = $e;
+      }
   }
-  if ($i < $m) {
-    return go0($tab, $a, $m);
-  }else{
-    return go0($tab, $m, $b);
+  if ($i < $m)
+  {
+      return go0($tab, $a, $m);
+  }
+  else
+  {
+      return go0($tab, $m, $b);
   }
 }
 
@@ -56,11 +66,12 @@ my $len = 0;
 $len = readint();
 readspaces();
 my $tab = [];
-foreach my $i (0 .. $len - 1) {
-  my $tmp = 0;
-  $tmp = readint();
-  readspaces();
-  $tab->[$i] = $tmp;
+foreach my $i (0 .. $len - 1)
+{
+    my $tmp = 0;
+    $tmp = readint();
+    readspaces();
+    $tab->[$i] = $tmp;
 }
 print plus_petit0($tab, $len);
 

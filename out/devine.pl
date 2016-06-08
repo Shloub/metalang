@@ -21,19 +21,24 @@ sub devine0{
   my($nombre, $tab, $len) = @_;
   my $min0 = $tab->[0];
   my $max0 = $tab->[1];
-  foreach my $i (2 .. $len - 1) {
-    if ($tab->[$i] > $max0 || $tab->[$i] < $min0) {
-      return ();
-    }
-    if ($tab->[$i] < $nombre) {
-      $min0 = $tab->[$i];
-    }
-    if ($tab->[$i] > $nombre) {
-      $max0 = $tab->[$i];
-    }
-    if ($tab->[$i] eq $nombre && $len ne $i + 1) {
-      return ();
-    }
+  foreach my $i (2 .. $len - 1)
+  {
+      if ($tab->[$i] > $max0 || $tab->[$i] < $min0)
+      {
+          return ();
+      }
+      if ($tab->[$i] < $nombre)
+      {
+          $min0 = $tab->[$i];
+      }
+      if ($tab->[$i] > $nombre)
+      {
+          $max0 = $tab->[$i];
+      }
+      if ($tab->[$i] eq $nombre && $len ne $i + 1)
+      {
+          return ();
+      }
   }
   return 1;
 }
@@ -43,15 +48,19 @@ readspaces();
 my $len = readint();
 readspaces();
 my $tab = [];
-foreach my $i (0 .. $len - 1) {
-  my $tmp = readint();
-  readspaces();
-  $tab->[$i] = $tmp;
+foreach my $i (0 .. $len - 1)
+{
+    my $tmp = readint();
+    readspaces();
+    $tab->[$i] = $tmp;
 }
-if (devine0($nombre, $tab, $len)) {
-  print "True";
-}else{
-  print "False";
+if (devine0($nombre, $tab, $len))
+{
+    print "True";
+}
+else
+{
+    print "False";
 }
 
 

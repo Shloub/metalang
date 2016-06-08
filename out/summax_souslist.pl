@@ -21,14 +21,17 @@ sub summax{
   my($lst, $len) = @_;
   my $current = 0;
   my $max0 = 0;
-  foreach my $i (0 .. $len - 1) {
-    $current = $current + $lst->[$i];
-    if ($current < 0) {
-      $current = 0;
-    }
-    if ($max0 < $current) {
-      $max0 = $current;
-    }
+  foreach my $i (0 .. $len - 1)
+  {
+      $current = $current + $lst->[$i];
+      if ($current < 0)
+      {
+          $current = 0;
+      }
+      if ($max0 < $current)
+      {
+          $max0 = $current;
+      }
   }
   return $max0;
 }
@@ -37,11 +40,12 @@ my $len = 0;
 $len = readint();
 readspaces();
 my $tab = [];
-foreach my $i (0 .. $len - 1) {
-  my $tmp = 0;
-  $tmp = readint();
-  readspaces();
-  $tab->[$i] = $tmp;
+foreach my $i (0 .. $len - 1)
+{
+    my $tmp = 0;
+    $tmp = readint();
+    readspaces();
+    $tab->[$i] = $tmp;
 }
 my $result = summax($tab, $len);
 print $result;

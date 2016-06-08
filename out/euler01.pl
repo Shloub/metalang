@@ -6,10 +6,12 @@ sub remainder {
 }
 
 my $sum = 0;
-foreach my $i (0 .. 999) {
-  if (remainder($i, 3) eq 0 || remainder($i, 5) eq 0) {
-    $sum = $sum + $i;
-  }
+foreach my $i (0 .. 999)
+{
+    if (remainder($i, 3) eq 0 || remainder($i, 5) eq 0)
+    {
+        $sum = $sum + $i;
+    }
 }
 print($sum, "\n");
 

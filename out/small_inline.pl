@@ -18,9 +18,10 @@ sub readspaces {
 }
 
 my $t = [];
-foreach my $d (0 .. 2 - 1) {
-  $t->[$d] = readint();
-  readspaces();
+foreach my $d (0 .. 2 - 1)
+{
+    $t->[$d] = readint();
+    readspaces();
 }
 print($t->[0], " - ", $t->[1], "\n");
 

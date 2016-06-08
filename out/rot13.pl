@@ -35,16 +35,19 @@ sub remainder {
 my $strlen = readint();
 readspaces();
 my $tab4 = [];
-foreach my $toto (0 .. $strlen - 1) {
-  my $tmpc = readchar();
-  my $c = ord($tmpc);
-  if ($tmpc ne " ") {
-    $c = remainder($c - ord("a") + 13, 26) + ord("a");
-  }
-  $tab4->[$toto] = chr($c);
+foreach my $toto (0 .. $strlen - 1)
+{
+    my $tmpc = readchar();
+    my $c = ord($tmpc);
+    if ($tmpc ne " ")
+    {
+        $c = remainder($c - ord("a") + 13, 26) + ord("a");
+    }
+    $tab4->[$toto] = chr($c);
 }
-foreach my $j (0 .. $strlen - 1) {
-  print $tab4->[$j];
+foreach my $j (0 .. $strlen - 1)
+{
+    print $tab4->[$j];
 }
 
 

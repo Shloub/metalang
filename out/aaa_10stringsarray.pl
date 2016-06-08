@@ -17,11 +17,13 @@ sub print_toto{
 }
 
 my $tab = [];
-foreach my $i (0 .. 2 - 1) {
-  $tab->[$i] = idstring("chaine de test");
+foreach my $i (0 .. 2 - 1)
+{
+    $tab->[$i] = idstring("chaine de test");
 }
-foreach my $j (0 .. 1) {
-  printstring(idstring($tab->[$j]));
+foreach my $j (0 .. 1)
+{
+    printstring(idstring($tab->[$j]));
 }
 print_toto({"s" => "one", "v" => 1});
 

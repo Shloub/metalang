@@ -40,35 +40,40 @@ $len = $len * 2;
 print("len*2=", $len, "\n");
 $len = int($len / 2);
 my $tab = [];
-foreach my $i (0 .. $len - 1) {
-  my $tmpi1 = readint();
-  readspaces();
-  print($i, "=>", $tmpi1, " ");
-  $tab->[$i] = $tmpi1;
+foreach my $i (0 .. $len - 1)
+{
+    my $tmpi1 = readint();
+    readspaces();
+    print($i, "=>", $tmpi1, " ");
+    $tab->[$i] = $tmpi1;
 }
 print "\n";
 my $tab2 = [];
-foreach my $i_ (0 .. $len - 1) {
-  my $tmpi2 = readint();
-  readspaces();
-  print($i_, "==>", $tmpi2, " ");
-  $tab2->[$i_] = $tmpi2;
+foreach my $i_ (0 .. $len - 1)
+{
+    my $tmpi2 = readint();
+    readspaces();
+    print($i_, "==>", $tmpi2, " ");
+    $tab2->[$i_] = $tmpi2;
 }
 my $strlen = readint();
 readspaces();
 print($strlen, "=strlen\n");
 my $tab4 = [];
-foreach my $toto (0 .. $strlen - 1) {
-  my $tmpc = readchar();
-  my $c = ord($tmpc);
-  print($tmpc, ":", $c, " ");
-  if ($tmpc ne " ") {
-    $c = remainder($c - ord("a") + 13, 26) + ord("a");
-  }
-  $tab4->[$toto] = chr($c);
+foreach my $toto (0 .. $strlen - 1)
+{
+    my $tmpc = readchar();
+    my $c = ord($tmpc);
+    print($tmpc, ":", $c, " ");
+    if ($tmpc ne " ")
+    {
+        $c = remainder($c - ord("a") + 13, 26) + ord("a");
+    }
+    $tab4->[$toto] = chr($c);
 }
-foreach my $j (0 .. $strlen - 1) {
-  print $tab4->[$j];
+foreach my $j (0 .. $strlen - 1)
+{
+    print $tab4->[$j];
 }
 
 
