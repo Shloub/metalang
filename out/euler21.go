@@ -19,7 +19,7 @@ func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   for i := 0 ; i < nprimes; i++ {
     var d int = primes[i]
       for n % d == 0{
-        t[d] = t[d] + 1;
+        t[d]++;
         n /= d;
       }
       if n == 1 {

@@ -52,7 +52,7 @@ int main() {
         for (int i = 0; i <= stop; i ++)
           if (i + len < nprimes)
         {
-            sum->at(i) = sum->at(i) + primes->at(i + len);
+            sum->at(i) += primes->at(i + len);
             if (maximumprimes > sum->at(i))
             {
                 process = true;

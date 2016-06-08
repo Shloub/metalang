@@ -194,13 +194,11 @@ D'ou le nom de la fonction. */
         int retenue = 0;
         for (int j = 0; j < b->bigint_len; j++)
         {
-            chiffres->at(i + j) =
-            chiffres->at(i + j) + retenue + b->bigint_chiffres->at(j) * a->bigint_chiffres->at(i);
+            chiffres->at(i + j) += retenue + b->bigint_chiffres->at(j) * a->bigint_chiffres->at(i);
             retenue = chiffres->at(i + j) / 10;
             chiffres->at(i + j) = chiffres->at(i + j) % 10;
         }
-        chiffres->at(i + b->bigint_len) =
-        chiffres->at(i + b->bigint_len) + retenue;
+        chiffres->at(i + b->bigint_len) += retenue;
     }
     chiffres->at(a->bigint_len + b->bigint_len) =
     chiffres->at(a->bigint_len + b->bigint_len - 1) / 10;
@@ -429,7 +427,7 @@ int euler29() {
             for (int l = 2; l <= maxA; l ++)
               if (bigint_eq(a_bigint->at(l), min0) && b->at(l) <= maxB)
             {
-                b->at(l) = b->at(l) + 1;
+                b->at(l)++;
                 a_bigint->at(l) = mul_bigint(a_bigint->at(l), a0_bigint->at(l));
             }
         }

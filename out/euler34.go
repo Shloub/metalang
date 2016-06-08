@@ -6,7 +6,7 @@ func main() {
     f[j] = 1;
   }
   for i := 1 ; i <= 9; i++ {
-    f[i] = f[i] * i * f[i - 1];
+    f[i] *= i * f[i - 1];
       fmt.Printf("%d ", f[i]);
   }
   var out0 int = 0

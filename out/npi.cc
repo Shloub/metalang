@@ -30,8 +30,7 @@ int npi0(std::vector<char> * str, int len) {
     }
     else if (str->at(ptrStr) == '+')
     {
-        stack->at(ptrStack - 2) =
-        stack->at(ptrStack - 2) + stack->at(ptrStack - 1);
+        stack->at(ptrStack - 2) += stack->at(ptrStack - 1);
         ptrStack --;
         ptrStr++;
     }

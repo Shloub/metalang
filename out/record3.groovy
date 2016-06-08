@@ -20,7 +20,7 @@ int result(Toto[] t, int len)
   int out0 = 0
   for (int j = 0; j < len; j++)
   {
-      t[j].blah = t[j].blah + 1
+      t[j].blah++;
       out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo
   }
   return out0

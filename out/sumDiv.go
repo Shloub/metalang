@@ -5,6 +5,7 @@ import "bufio"
 var reader *bufio.Reader
 func foo() {
   var a int = 0
+  _ = a
   /* test */
   a++;
   /* test 2 */

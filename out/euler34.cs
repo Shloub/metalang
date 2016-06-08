@@ -10,7 +10,7 @@ public class euler34
       f[j] = 1;
     for (int i = 1; i <= 9; i ++)
     {
-        f[i] = f[i] * i * f[i - 1];
+        f[i] *= i * f[i - 1];
         Console.Write("" + f[i] + " ");
     }
     int out0 = 0;

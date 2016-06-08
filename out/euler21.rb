@@ -21,7 +21,7 @@ def fillPrimesFactors( t, n, primes, nprimes )
     for i in (0 ..  nprimes - 1) do
       d = primes[i]
       while mod(n, d) == 0 do
-        t[d] = t[d] + 1
+        t[d] += 1
         n = (n.to_f / d).to_i
       end
       if n == 1 then

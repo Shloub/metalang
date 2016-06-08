@@ -8,7 +8,7 @@ end
 def result( t, len )
     out0 = 0
     for j in (0 ..  len - 1) do
-      t[j]["blah"] = t[j]["blah"] + 1
+      t[j]["blah"] += 1
       out0 = out0 + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"]
     end
     return (out0)
