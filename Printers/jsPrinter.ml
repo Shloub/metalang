@@ -217,7 +217,8 @@ function read_int_(){
       return out * sign;
     }
   }
-}" else "")
+}
+" else "")
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
