@@ -26,11 +26,12 @@ sub fibo0{
   my $out0 = 0;
   my $a2 = $a;
   my $b2 = $b;
-  foreach my $j (0 .. $i + 1) {
-    $out0 = $out0 + $a2;
-    my $tmp = $b2;
-    $b2 = $b2 + $a2;
-    $a2 = $tmp;
+  foreach my $j (0 .. $i + 1)
+  {
+      $out0 = $out0 + $a2;
+      my $tmp = $b2;
+      $b2 = $b2 + $a2;
+      $a2 = $tmp;
   }
   return $out0;
 }

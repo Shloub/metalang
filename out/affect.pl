@@ -45,12 +45,14 @@ sub result{
   $t->{"blah"} = $t->{"blah"} + 1;
   my $len = 1;
   my $cache0 = [];
-  foreach my $i (0 .. $len - 1) {
-    $cache0->[$i] = -$i;
+  foreach my $i (0 .. $len - 1)
+  {
+      $cache0->[$i] = -$i;
   }
   my $cache1 = [];
-  foreach my $j (0 .. $len - 1) {
-    $cache1->[$j] = $j;
+  foreach my $j (0 .. $len - 1)
+  {
+      $cache1->[$j] = $j;
   }
   my $cache2 = $cache0;
   $cache0 = $cache1;

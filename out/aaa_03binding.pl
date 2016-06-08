@@ -8,8 +8,9 @@ sub remainder {
 sub g{
   my($i) = @_;
   my $j = $i * 4;
-  if (remainder($j, 2) eq 1) {
-    return 0;
+  if (remainder($j, 2) eq 1)
+  {
+      return 0;
   }
   return $j;
 }
@@ -22,12 +23,12 @@ sub h{
 h(14);
 my $a = 4;
 my $b = 5;
-print ($a + $b);
+print $a + $b;
 # main 
 
 h(15);
 $a = 2;
 $b = 1;
-print ($a + $b);
+print $a + $b;
 
 

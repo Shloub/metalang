@@ -36,75 +36,98 @@ sub remainder {
 #
 
 my $allowed = [];
-foreach my $i (0 .. 10 - 1) {
-  $allowed->[$i] = 1;
+foreach my $i (0 .. 10 - 1)
+{
+    $allowed->[$i] = 1;
 }
-foreach my $i6 (0 .. 1) {
-  my $d6 = $i6 * 5;
-  if ($allowed->[$d6]) {
-    $allowed->[$d6] = ();
-    foreach my $d7 (0 .. 9) {
-      if ($allowed->[$d7]) {
-        $allowed->[$d7] = ();
-        foreach my $d8 (0 .. 9) {
-          if ($allowed->[$d8]) {
-            $allowed->[$d8] = ();
-            foreach my $d9 (0 .. 9) {
-              if ($allowed->[$d9]) {
-                $allowed->[$d9] = ();
-                foreach my $d10 (1 .. 9) {
-                  if ($allowed->[$d10] && remainder($d6 * 100 + $d7 * 10 + $d8, 11) eq 0 && remainder($d7 * 100 + $d8 * 10 + $d9, 13) eq 0 && remainder($d8 * 100 + $d9 * 10 + $d10, 17) eq 0) {
-                    $allowed->[$d10] = ();
-                    foreach my $d5 (0 .. 9) {
-                      if ($allowed->[$d5]) {
-                        $allowed->[$d5] = ();
-                        if (remainder($d5 * 100 + $d6 * 10 + $d7, 7) eq 0) {
-                          foreach my $i4 (0 .. 4) {
-                            my $d4 = $i4 * 2;
-                            if ($allowed->[$d4]) {
-                              $allowed->[$d4] = ();
-                              foreach my $d3 (0 .. 9) {
-                                if ($allowed->[$d3]) {
-                                  $allowed->[$d3] = ();
-                                  if (remainder($d3 + $d4 + $d5, 3) eq 0) {
-                                    foreach my $d2 (0 .. 9) {
-                                      if ($allowed->[$d2]) {
-                                        $allowed->[$d2] = ();
-                                        foreach my $d1 (0 .. 9) {
-                                          if ($allowed->[$d1]) {
-                                            $allowed->[$d1] = ();
-                                            print($d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, " + ");
-                                            $allowed->[$d1] = 1;
-                                          }
+foreach my $i6 (0 .. 1)
+{
+    my $d6 = $i6 * 5;
+    if ($allowed->[$d6])
+    {
+        $allowed->[$d6] = ();
+        foreach my $d7 (0 .. 9)
+        {
+            if ($allowed->[$d7])
+            {
+                $allowed->[$d7] = ();
+                foreach my $d8 (0 .. 9)
+                {
+                    if ($allowed->[$d8])
+                    {
+                        $allowed->[$d8] = ();
+                        foreach my $d9 (0 .. 9)
+                        {
+                            if ($allowed->[$d9])
+                            {
+                                $allowed->[$d9] = ();
+                                foreach my $d10 (1 .. 9)
+                                {
+                                    if ($allowed->[$d10] && remainder($d6 * 100 + $d7 * 10 + $d8, 11) eq 0 && remainder($d7 * 100 + $d8 * 10 + $d9, 13) eq 0 && remainder($d8 * 100 + $d9 * 10 + $d10, 17) eq 0)
+                                    {
+                                        $allowed->[$d10] = ();
+                                        foreach my $d5 (0 .. 9)
+                                        {
+                                            if ($allowed->[$d5])
+                                            {
+                                                $allowed->[$d5] = ();
+                                                if (remainder($d5 * 100 + $d6 * 10 + $d7, 7) eq 0)
+                                                {
+                                                    foreach my $i4 (0 .. 4)
+                                                    {
+                                                        my $d4 = $i4 * 2;
+                                                        if ($allowed->[$d4])
+                                                        {
+                                                            $allowed->[$d4] = ();
+                                                            foreach my $d3 (0 .. 9)
+                                                            {
+                                                                if ($allowed->[$d3])
+                                                                {
+                                                                    $allowed->[$d3] = ();
+                                                                    if (remainder($d3 + $d4 + $d5, 3) eq 0)
+                                                                    {
+                                                                        foreach my $d2 (0 .. 9)
+                                                                        {
+                                                                            if ($allowed->[$d2])
+                                                                            {
+                                                                                $allowed->[$d2] = ();
+                                                                                foreach my $d1 (0 .. 9)
+                                                                                {
+                                                                                if ($allowed->[$d1])
+                                                                                {
+                                                                                $allowed->[$d1] = ();
+                                                                                print($d1, $d2, $d3, $d4, $d5, $d6, $d7, $d8, $d9, $d10, " + ");
+                                                                                $allowed->[$d1] = 1;
+                                                                                }
+                                                                                }
+                                                                                $allowed->[$d2] = 1;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    $allowed->[$d3] = 1;
+                                                                }
+                                                            }
+                                                            $allowed->[$d4] = 1;
+                                                        }
+                                                    }
+                                                }
+                                                $allowed->[$d5] = 1;
+                                            }
                                         }
-                                        $allowed->[$d2] = 1;
-                                      }
+                                        $allowed->[$d10] = 1;
                                     }
-                                  }
-                                  $allowed->[$d3] = 1;
                                 }
-                              }
-                              $allowed->[$d4] = 1;
+                                $allowed->[$d9] = 1;
                             }
-                          }
                         }
-                        $allowed->[$d5] = 1;
-                      }
+                        $allowed->[$d8] = 1;
                     }
-                    $allowed->[$d10] = 1;
-                  }
                 }
-                $allowed->[$d9] = 1;
-              }
+                $allowed->[$d7] = 1;
             }
-            $allowed->[$d8] = 1;
-          }
         }
-        $allowed->[$d7] = 1;
-      }
+        $allowed->[$d6] = 1;
     }
-    $allowed->[$d6] = 1;
-  }
 }
 print(0, "\n");
 

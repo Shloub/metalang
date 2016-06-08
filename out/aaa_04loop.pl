@@ -14,25 +14,27 @@ sub h{
   my $j = $i - 2;
   while ($j <= $i + 2)
   {
-    if (remainder($i, $j) eq 5) {
-      return 1;
-    }
-    $j = $j + 1;
+      if (remainder($i, $j) eq 5)
+      {
+          return 1;
+      }
+      $j = $j + 1;
   }
   return ();
 }
 
 my $j = 0;
-foreach my $k (0 .. 10) {
-  $j = $j + $k;
-  print($j, "\n");
+foreach my $k (0 .. 10)
+{
+    $j = $j + $k;
+    print($j, "\n");
 }
 my $i = 4;
 while ($i < 10)
 {
-  print $i;
-  $i = $i + 1;
-  $j = $j + $i;
+    print $i;
+    $i = $i + 1;
+    $j = $j + $i;
 }
 print($j, $i, "FIN TEST\n");
 

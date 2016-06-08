@@ -7,18 +7,24 @@ sub remainder {
 
 sub chiffre_sort{
   my($a) = @_;
-  if ($a < 10) {
-    return $a;
-  }else{
-    my $b = chiffre_sort(int($a / 10));
-    my $c = remainder($a, 10);
-    my $d = remainder($b, 10);
-    my $e = int($b / 10);
-    if ($c < $d) {
-      return $c + $b * 10;
-    }else{
-      return $d + chiffre_sort($c + $e * 10) * 10;
-    }
+  if ($a < 10)
+  {
+      return $a;
+  }
+  else
+  {
+      my $b = chiffre_sort(int($a / 10));
+      my $c = remainder($a, 10);
+      my $d = remainder($b, 10);
+      my $e = int($b / 10);
+      if ($c < $d)
+      {
+          return $c + $b * 10;
+      }
+      else
+      {
+          return $d + chiffre_sort($c + $e * 10) * 10;
+      }
   }
 }
 
@@ -29,8 +35,9 @@ sub same_numbers{
 }
 
 my $num = 142857;
-if (same_numbers($num, $num * 2, $num * 3, $num * 4, $num * 6, $num * 5)) {
-  print($num, " ", $num * 2, " ", $num * 3, " ", $num * 4, " ", $num * 5, " ", $num * 6, "\n");
+if (same_numbers($num, $num * 2, $num * 3, $num * 4, $num * 6, $num * 5))
+{
+    print($num, " ", $num * 2, " ", $num * 3, " ", $num * 4, " ", $num * 5, " ", $num * 6, "\n");
 }
 
 

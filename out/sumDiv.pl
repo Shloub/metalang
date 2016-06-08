@@ -33,8 +33,9 @@ sub foo2{
 }
 
 sub foo3{
-  if (1 eq 1) {
-    
+  if (1 eq 1)
+  {
+      
   }
 }
 
@@ -45,19 +46,23 @@ sub sumdiv{
   my $out0 = 0;
   # On déclare un entier qui contiendra la somme 
   
-  foreach my $i (1 .. $n) {
-    # La boucle : i est le diviseur potentiel
-    
-    if (remainder($n, $i) eq 0) {
-      # Si i divise 
+  foreach my $i (1 .. $n)
+  {
+      # La boucle : i est le diviseur potentiel
       
-      $out0 = $out0 + $i;
-      # On incrémente 
-      
-    }else{
-      # nop 
-      
-    }
+      if (remainder($n, $i) eq 0)
+      {
+          # Si i divise 
+          
+          $out0 = $out0 + $i;
+          # On incrémente 
+          
+      }
+      else
+      {
+          # nop 
+          
+      }
   }
   return $out0;
   #On renvoie out
