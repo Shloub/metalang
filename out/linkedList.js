@@ -22,11 +22,11 @@ function read_int_(){
   }
 }
 
+
 function cons(list, i) {
     var out0 = {
-      head : i,
-      tail : list
-    };
+        "head":i,
+        "tail":list};
     return out0;
 }
 
@@ -38,14 +38,13 @@ function is_empty(foo) {
 
 function rev2(acc, torev) {
     if (is_empty(torev))
-      return acc;
+        return acc;
     else
     {
         var acc2 = {
-          head : torev.head,
-          tail : acc
-        };
-        return rev2(acc, torev.tail);
+            "head":torev["head"],
+            "tail":acc};
+        return rev2(acc, torev["tail"]);
     }
 }
 
@@ -60,9 +59,9 @@ function test(empty) {
     var i = -1;
     while (i != 0)
     {
-        i=read_int_();
+        i = read_int_();
         if (i != 0)
-          list = cons(list, i);
+            list = cons(list, i);
     }
 }
 

@@ -26,7 +26,8 @@ function read_int_(){
     }
   }
 }
-len=read_int_();
+
+var len = read_int_();
 stdinsep();
 util.print(len, "\n");
 

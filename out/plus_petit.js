@@ -26,33 +26,32 @@ function read_int_(){
     }
   }
 }
+
 function go0(tab, a, b) {
     var m = ~~((a + b) / 2);
     if (a == m)
-    {
         if (tab[a] == m)
-          return b;
+            return b;
         else
-          return a;
-    }
+            return a;
     var i = a;
     var j = b;
     while (i < j)
     {
         var e = tab[i];
         if (e < m)
-          i++;
+            i += 1;
         else
         {
-            j --;
+            j -= 1;
             tab[i] = tab[j];
             tab[j] = e;
         }
     }
     if (i < m)
-      return go0(tab, a, m);
+        return go0(tab, a, m);
     else
-      return go0(tab, m, b);
+        return go0(tab, m, b);
 }
 
 
@@ -61,13 +60,13 @@ function plus_petit0(tab, len) {
 }
 
 var len = 0;
-len=read_int_();
+len = read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0 ; i < len; i++)
+for (var i = 0; i < len; i += 1)
 {
     var tmp = 0;
-    tmp=read_int_();
+    tmp = read_int_();
     stdinsep();
     tab[i] = tmp;
 }

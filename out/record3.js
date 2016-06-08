@@ -27,32 +27,32 @@ function read_int_(){
   }
 }
 
+
 function mktoto(v1) {
     var t = {
-      foo : v1,
-      bar : 0,
-      blah : 0
-    };
+        "foo":v1,
+        "bar":0,
+        "blah":0};
     return t;
 }
 
 
 function result(t, len) {
     var out0 = 0;
-    for (var j = 0 ; j < len; j++)
+    for (var j = 0; j < len; j += 1)
     {
-        t[j].blah = t[j].blah + 1;
-        out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
+        t[j]["blah"] += 1;
+        out0 = out0 + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"];
     }
     return out0;
 }
 
 var t = new Array(4);
-for (var i = 0 ; i < 4; i++)
-  t[i] = mktoto(i);
-t[0].bar=read_int_();
+for (var i = 0; i < 4; i += 1)
+    t[i] = mktoto(i);
+t[0]["bar"] = read_int_();
 stdinsep();
-t[1].blah=read_int_();
+t[1]["blah"] = read_int_();
 var titi = result(t, 4);
-util.print(titi, t[2].blah);
+util.print(titi, t[2]["blah"]);
 

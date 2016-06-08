@@ -11,7 +11,7 @@ function g(t, index) {
 
 var j = 0;
 var a = new Array(5);
-for (var i = 0 ; i < 5; i++)
+for (var i = 0; i < 5; i += 1)
 {
     util.print(i);
     j += i;
@@ -19,14 +19,14 @@ for (var i = 0 ; i < 5; i++)
 }
 util.print(j, " ");
 if (a[0])
-  util.print("True");
+    util.print("True");
 else
-  util.print("False");
+    util.print("False");
 util.print("\n");
 g(id(a), 0);
 if (a[0])
-  util.print("True");
+    util.print("True");
 else
-  util.print("False");
+    util.print("False");
 util.print("\n");
 

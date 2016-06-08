@@ -17,7 +17,7 @@ while (a != 1)
             sqrtia = Math.floor(Math.sqrt(a));
             found = true;
         }
-        b++;
+        b += 1;
     }
     if (!found)
     {

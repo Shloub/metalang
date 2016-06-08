@@ -32,14 +32,16 @@ function read_int_(){
     }
   }
 }
+
 function position_alphabet(c) {
     var i = c.charCodeAt(0);
     if (i <= 'Z'.charCodeAt(0) && i >= 'A'.charCodeAt(0))
-      return i - 'A'.charCodeAt(0);
-    else if (i <= 'z'.charCodeAt(0) && i >= 'a'.charCodeAt(0))
-      return i - 'a'.charCodeAt(0);
+        return i - 'A'.charCodeAt(0);
     else
-      return -1;
+        if (i <= 'z'.charCodeAt(0) && i >= 'a'.charCodeAt(0))
+            return i - 'a'.charCodeAt(0);
+        else
+            return -1;
 }
 
 
@@ -49,7 +51,7 @@ function of_position_alphabet(c) {
 
 
 function crypte(taille_cle, cle, taille, message) {
-    for (var i = 0 ; i < taille; i++)
+    for (var i = 0; i < taille; i += 1)
     {
         var lettre = position_alphabet(message[i]);
         if (lettre != -1)
@@ -61,25 +63,25 @@ function crypte(taille_cle, cle, taille, message) {
     }
 }
 
-taille_cle=read_int_();
+var taille_cle = read_int_();
 stdinsep();
 var cle = new Array(taille_cle);
-for (var index = 0 ; index < taille_cle; index++)
+for (var index = 0; index < taille_cle; index += 1)
 {
-    out0=read_char_();
+    var out0 = read_char_();
     cle[index] = out0;
 }
 stdinsep();
-taille=read_int_();
+var taille = read_int_();
 stdinsep();
 var message = new Array(taille);
-for (var index2 = 0 ; index2 < taille; index2++)
+for (var index2 = 0; index2 < taille; index2 += 1)
 {
-    out2=read_char_();
+    var out2 = read_char_();
     message[index2] = out2;
 }
 crypte(taille_cle, cle, taille, message);
-for (var i = 0 ; i < taille; i++)
-  util.print(message[i]);
+for (var i = 0; i < taille; i += 1)
+    util.print(message[i]);
 util.print("\n");
 

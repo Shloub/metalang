@@ -31,20 +31,21 @@ function read_int_(){
       return out * sign;
     }
   }
-}/*
+}
+/*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
-strlen=read_int_();
+var strlen = read_int_();
 stdinsep();
 var tab4 = new Array(strlen);
-for (var toto = 0 ; toto < strlen; toto++)
+for (var toto = 0; toto < strlen; toto += 1)
 {
-    tmpc=read_char_();
+    var tmpc = read_char_();
     var c = tmpc.charCodeAt(0);
     if (tmpc != ' ')
-      c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
+        c = ~~((c - 'a'.charCodeAt(0) + 13) % 26) + 'a'.charCodeAt(0);
     tab4[toto] = String.fromCharCode(c);
 }
-for (var j = 0 ; j < strlen; j++)
-  util.print(tab4[j]);
+for (var j = 0; j < strlen; j += 1)
+    util.print(tab4[j]);
 

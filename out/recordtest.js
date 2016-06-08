@@ -26,12 +26,12 @@ function read_int_(){
     }
   }
 }
+
 var param = {
-  foo : 0,
-  bar : 0
-};
-param.bar=read_int_();
+    "foo":0,
+    "bar":0};
+param["bar"] = read_int_();
 stdinsep();
-param.foo=read_int_();
-util.print(param.bar + param.foo * param.bar);
+param["foo"] = read_int_();
+util.print(param["bar"] + param["foo"] * param["bar"]);
 

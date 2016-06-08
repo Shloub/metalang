@@ -26,55 +26,56 @@ function read_int_(){
     }
   }
 }
+
 function nbPassePartout(n, passepartout, m, serrures) {
     var max_ancient = 0;
     var max_recent = 0;
-    for (var i = 0 ; i < m; i++)
+    for (var i = 0; i < m; i += 1)
     {
         if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
-          max_ancient = serrures[i][1];
+            max_ancient = serrures[i][1];
         if (serrures[i][0] == 1 && serrures[i][1] > max_recent)
-          max_recent = serrures[i][1];
+            max_recent = serrures[i][1];
     }
     var max_ancient_pp = 0;
     var max_recent_pp = 0;
-    for (var i = 0 ; i < n; i++)
+    for (var i = 0; i < n; i += 1)
     {
         var pp = passepartout[i];
         if (pp[0] >= max_ancient && pp[1] >= max_recent)
-          return 1;
+            return 1;
         max_ancient_pp = Math.max(max_ancient_pp, pp[0]);
         max_recent_pp = Math.max(max_recent_pp, pp[1]);
     }
     if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
-      return 2;
+        return 2;
     else
-      return 0;
+        return 0;
 }
 
-n=read_int_();
+var n = read_int_();
 stdinsep();
 var passepartout = new Array(n);
-for (var i = 0 ; i < n; i++)
+for (var i = 0; i < n; i += 1)
 {
     var out0 = new Array(2);
-    for (var j = 0 ; j < 2; j++)
+    for (var j = 0; j < 2; j += 1)
     {
-        out01=read_int_();
+        var out01 = read_int_();
         stdinsep();
         out0[j] = out01;
     }
     passepartout[i] = out0;
 }
-m=read_int_();
+var m = read_int_();
 stdinsep();
 var serrures = new Array(m);
-for (var k = 0 ; k < m; k++)
+for (var k = 0; k < m; k += 1)
 {
     var out1 = new Array(2);
-    for (var l = 0 ; l < 2; l++)
+    for (var l = 0; l < 2; l += 1)
     {
-        out_=read_int_();
+        var out_ = read_int_();
         stdinsep();
         out1[l] = out_;
     }
