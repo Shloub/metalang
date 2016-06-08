@@ -2,8 +2,8 @@ object ocaml01
 {
   
   def foo(): Int = {
-    var i: Int=0;
     for (i <- 0 to 10)
+    
     {
         
     }
@@ -11,8 +11,8 @@ object ocaml01
   }
   
   def bar(): Int = {
-    var i: Int=0;
     for (i <- 0 to 10)
+    
     {
         var a: Int = 0;
     }

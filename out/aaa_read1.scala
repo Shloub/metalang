@@ -6,7 +6,8 @@ object aaa_read1
   {
     var str: Array[Char] = readLine().toCharArray();
     for (i <- 0 to 11)
-      printf("%c", str(i));
+    
+        printf("%c", str(i));
   }
   
 }

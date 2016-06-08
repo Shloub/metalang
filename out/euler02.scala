@@ -10,7 +10,7 @@ object euler02
     while (a < 4000000)
     {
         if (a % 2 == 0)
-          sum = sum + a;
+            sum = sum + a;
         var c: Int = a;
         a = b;
         b = b + c;

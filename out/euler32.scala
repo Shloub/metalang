@@ -26,7 +26,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 */
   def okdigits(ok : Array[Boolean], n : Int): Boolean = {
     if (n == 0)
-      return true;
+        return true;
     else
     {
         var digit: Int = n % 10;
@@ -38,7 +38,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
             return o;
         }
         else
-          return false;
+            return false;
     }
   }
   
@@ -48,59 +48,66 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
     var count: Int = 0;
     var allowed :Array[Boolean] = new Array[Boolean](10);
     for (i <- 0 to 10 - 1)
-      allowed(i) = i != 0;
+    
+        allowed(i) = i != 0;
     var counted :Array[Boolean] = new Array[Boolean](100000);
     for (j <- 0 to 100000 - 1)
-      counted(j) = false;
+    
+        counted(j) = false;
     for (e <- 1 to 9)
+    
     {
         allowed(e) = false;
         for (b <- 1 to 9)
-          if (allowed(b))
-        {
-            allowed(b) = false;
-            var be: Int = b * e % 10;
-            if (allowed(be))
+        
+            if (allowed(b))
             {
-                allowed(be) = false;
-                for (a <- 1 to 9)
-                  if (allowed(a))
+                allowed(b) = false;
+                var be: Int = b * e % 10;
+                if (allowed(be))
                 {
-                    allowed(a) = false;
-                    for (c <- 1 to 9)
-                      if (allowed(c))
-                    {
-                        allowed(c) = false;
-                        for (d <- 1 to 9)
-                          if (allowed(d))
+                    allowed(be) = false;
+                    for (a <- 1 to 9)
+                    
+                        if (allowed(a))
                         {
-                            allowed(d) = false;
-                            /* 2 * 3 digits */
-                            var product: Int = (a * 10 + b) * (c * 100 + d * 10 + e);
-                            if (!counted(product) && okdigits(allowed, product / 10))
-                            {
-                                counted(product) = true;
-                                count = count + product;
-                                printf("%d ", product);
-                            }
-                            /* 1  * 4 digits */
-                            var product2: Int = b * (a * 1000 + c * 100 + d * 10 + e);
-                            if (!counted(product2) && okdigits(allowed, product2 / 10))
-                            {
-                                counted(product2) = true;
-                                count = count + product2;
-                                printf("%d ", product2);
-                            }
-                            allowed(d) = true;
+                            allowed(a) = false;
+                            for (c <- 1 to 9)
+                            
+                                if (allowed(c))
+                                {
+                                    allowed(c) = false;
+                                    for (d <- 1 to 9)
+                                    
+                                        if (allowed(d))
+                                        {
+                                            allowed(d) = false;
+                                            /* 2 * 3 digits */
+                                            var product: Int = (a * 10 + b) * (c * 100 + d * 10 + e);
+                                            if (!counted(product) && okdigits(allowed, product / 10))
+                                            {
+                                                counted(product) = true;
+                                                count = count + product;
+                                                printf("%d ", product);
+                                            }
+                                            /* 1  * 4 digits */
+                                            var product2: Int = b * (a * 1000 + c * 100 + d * 10 + e);
+                                            if (!counted(product2) && okdigits(allowed, product2 / 10))
+                                            {
+                                                counted(product2) = true;
+                                                count = count + product2;
+                                                printf("%d ", product2);
+                                            }
+                                            allowed(d) = true;
+                                        }
+                                    allowed(c) = true;
+                                }
+                            allowed(a) = true;
                         }
-                        allowed(c) = true;
-                    }
-                    allowed(a) = true;
+                    allowed(be) = true;
                 }
-                allowed(be) = true;
+                allowed(b) = true;
             }
-            allowed(b) = true;
-        }
         allowed(e) = true;
     }
     printf("%d\n", count);

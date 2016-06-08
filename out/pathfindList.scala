@@ -21,32 +21,33 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def pathfind_aux(cache : Array[Int], tab : Array[Int], len : Int, pos : Int): Int = {
     if (pos >= len - 1)
-      return 0;
-    else if (cache(pos) != -1)
-      return cache(pos);
+        return 0;
     else
-    {
-        cache(pos) = len * 2;
-        var posval: Int = pathfind_aux(cache, tab, len, tab(pos));
-        var oneval: Int = pathfind_aux(cache, tab, len, pos + 1);
-        var out0: Int = 0;
-        if (posval < oneval)
-          out0 = 1 + posval;
+        if (cache(pos) != -1)
+            return cache(pos);
         else
-          out0 = 1 + oneval;
-        cache(pos) = out0;
-        return out0;
-    }
+        {
+            cache(pos) = len * 2;
+            var posval: Int = pathfind_aux(cache, tab, len, tab(pos));
+            var oneval: Int = pathfind_aux(cache, tab, len, pos + 1);
+            var out0: Int = 0;
+            if (posval < oneval)
+                out0 = 1 + posval;
+            else
+                out0 = 1 + oneval;
+            cache(pos) = out0;
+            return out0;
+        }
   }
   
   def pathfind(tab : Array[Int], len : Int): Int = {
-    var i: Int=0;
     var cache :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-      cache(i) = -1;
+    
+        cache(i) = -1;
     return pathfind_aux(cache, tab, len, 0);
   }
   
@@ -54,13 +55,14 @@ def skip() {
   def main(args : Array[String])
   {
     var len: Int = 0;
-    len = read_int()
+    len = read_int();
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
+    
     {
         var tmp: Int = 0;
-        tmp = read_int()
+        tmp = read_int();
         skip();
         tab(i) = tmp;
     }

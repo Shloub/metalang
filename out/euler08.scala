@@ -11,9 +11,9 @@ def read_char() : Char = {
 
   def max2_0(a : Int, b : Int): Int = {
     if (a > b)
-      return a;
+        return a;
     else
-      return b;
+        return b;
   }
   
   
@@ -22,8 +22,9 @@ def read_char() : Char = {
     var i: Int = 1;
     var last :Array[Int] = new Array[Int](5);
     for (j <- 0 to 5 - 1)
+    
     {
-        var c = read_char()
+        var c = read_char();
         var d: Int = (c).toInt - ('0').toInt;
         i = i * d;
         last(j) = d;
@@ -32,8 +33,9 @@ def read_char() : Char = {
     var index: Int = 0;
     var nskipdiv: Int = 0;
     for (k <- 1 to 995)
+    
     {
-        var e = read_char()
+        var e = read_char();
         var f: Int = (e).toInt - ('0').toInt;
         if (f == 0)
         {
@@ -44,7 +46,7 @@ def read_char() : Char = {
         {
             i = i * f;
             if (nskipdiv < 0)
-              i = i / last(index);
+                i = i / last(index);
             nskipdiv = nskipdiv - 1;
         }
         last(index) = f;

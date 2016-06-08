@@ -3,9 +3,9 @@ object min3
   
   def min2_0(a : Int, b : Int): Int = {
     if (a < b)
-      return a;
+        return a;
     else
-      return b;
+        return b;
   }
   
   

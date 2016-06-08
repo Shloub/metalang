@@ -21,21 +21,21 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def devine0(nombre : Int, tab : Array[Int], len : Int): Boolean = {
-    var i: Int=0;
     var min0: Int = tab(0);
     var max0: Int = tab(1);
     for (i <- 2 to len - 1)
+    
     {
         if (tab(i) > max0 || tab(i) < min0)
-          return false;
+            return false;
         if (tab(i) < nombre)
-          min0 = tab(i);
+            min0 = tab(i);
         if (tab(i) > nombre)
-          max0 = tab(i);
+            max0 = tab(i);
         if (tab(i) == nombre && len != i + 1)
-          return false;
+            return false;
     }
     return true;
   }
@@ -43,21 +43,22 @@ def skip() {
   
   def main(args : Array[String])
   {
-    var nombre = read_int()
+    var nombre = read_int();
     skip();
-    var len = read_int()
+    var len = read_int();
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
+    
     {
-        var tmp = read_int()
+        var tmp = read_int();
         skip();
         tab(i) = tmp;
     }
     if (devine0(nombre, tab, len))
-      printf("True");
+        printf("True");
     else
-      printf("False");
+        printf("False");
   }
   
 }

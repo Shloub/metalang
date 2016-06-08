@@ -21,23 +21,21 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def go0(tab : Array[Int], a : Int, b : Int): Int = {
     var m: Int = (a + b) / 2;
     if (a == m)
-    {
         if (tab(a) == m)
-          return b;
+            return b;
         else
-          return a;
-    }
+            return a;
     var i: Int = a;
     var j: Int = b;
     while (i < j)
     {
         var e: Int = tab(i);
         if (e < m)
-          i = i + 1;
+            i = i + 1;
         else
         {
             j = j - 1;
@@ -46,9 +44,9 @@ def skip() {
         }
     }
     if (i < m)
-      return go0(tab, a, m);
+        return go0(tab, a, m);
     else
-      return go0(tab, m, b);
+        return go0(tab, m, b);
   }
   
   def plus_petit0(tab : Array[Int], len : Int): Int = {
@@ -59,13 +57,14 @@ def skip() {
   def main(args : Array[String])
   {
     var len: Int = 0;
-    len = read_int()
+    len = read_int();
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
+    
     {
         var tmp: Int = 0;
-        tmp = read_int()
+        tmp = read_int();
         skip();
         tab(i) = tmp;
     }
