@@ -26,20 +26,20 @@ function read_int_(){
     }
   }
 }
-for (var i = 1 ; i <= 3; i++)
+for (var i = 1; i <= 3; i += 1)
 {
-    a=read_int_();
+    var a = read_int_();
     stdinsep();
-    b=read_int_();
+    var b = read_int_();
     stdinsep();
     util.print("a = ", a, " b = ", b, "\n");
 }
 var l = new Array(10);
-for (var c = 0 ; c < 10; c++)
+for (var c = 0; c < 10; c += 1)
 {
-    l[c]=read_int_();
+    l[c] = read_int_();
     stdinsep();
 }
-for (var j = 0 ; j <= 9; j++)
-  util.print(l[j], "\n");
+for (var j = 0; j <= 9; j += 1)
+    util.print(l[j], "\n");
 

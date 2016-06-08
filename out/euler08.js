@@ -9,12 +9,11 @@ function read_char_(){
     var out = current_char;
     current_char = read_char0();
     return out;
-}
-var i = 1;
+}var i = 1;
 var last = new Array(5);
-for (var j = 0 ; j < 5; j++)
+for (var j = 0; j < 5; j += 1)
 {
-    c=read_char_();
+    var c = read_char_();
     var d = c.charCodeAt(0) - '0'.charCodeAt(0);
     i *= d;
     last[j] = d;
@@ -22,9 +21,9 @@ for (var j = 0 ; j < 5; j++)
 var max0 = i;
 var index = 0;
 var nskipdiv = 0;
-for (var k = 1 ; k <= 995; k++)
+for (var k = 1; k <= 995; k += 1)
 {
-    e=read_char_();
+    var e = read_char_();
     var f = e.charCodeAt(0) - '0'.charCodeAt(0);
     if (f == 0)
     {
@@ -35,8 +34,8 @@ for (var k = 1 ; k <= 995; k++)
     {
         i *= f;
         if (nskipdiv < 0)
-          i = ~~(i / last[index]);
-        nskipdiv --;
+            i = ~~(i / last[index]);
+        nskipdiv -= 1;
     }
     last[index] = f;
     index = ~~((index + 1) % 5);

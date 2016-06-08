@@ -7,7 +7,7 @@ function fibo(a, b, i) {
     var out_ = 0;
     var a2 = a;
     var b2 = b;
-    for (var j = 0 ; j <= i + 1; j++)
+    for (var j = 0; j <= i + 1; j += 1)
     {
         util.print(j);
         out_ += a2;

@@ -26,19 +26,20 @@ function read_int_(){
     }
   }
 }
+
 function programme_candidat(tableau, taille) {
     var out0 = 0;
-    for (var i = 0 ; i < taille; i++)
-      out0 += tableau[i];
+    for (var i = 0; i < taille; i += 1)
+        out0 += tableau[i];
     return out0;
 }
 
-taille=read_int_();
+var taille = read_int_();
 stdinsep();
 var tableau = new Array(taille);
-for (var a = 0 ; a < taille; a++)
+for (var a = 0; a < taille; a += 1)
 {
-    tableau[a]=read_int_();
+    tableau[a] = read_int_();
     stdinsep();
 }
 util.print(programme_candidat(tableau, taille), "\n");

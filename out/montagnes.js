@@ -26,6 +26,7 @@ function read_int_(){
     }
   }
 }
+
 function montagnes0(tab, len) {
     var max0 = 1;
     var j = 1;
@@ -34,24 +35,24 @@ function montagnes0(tab, len) {
     {
         var x = tab[i];
         while (j >= 0 && x > tab[len - j])
-          j --;
-        j++;
+            j -= 1;
+        j += 1;
         tab[len - j] = x;
         if (j > max0)
-          max0 = j;
-        i --;
+            max0 = j;
+        i -= 1;
     }
     return max0;
 }
 
 var len = 0;
-len=read_int_();
+len = read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0 ; i < len; i++)
+for (var i = 0; i < len; i += 1)
 {
     var x = 0;
-    x=read_int_();
+    x = read_int_();
     stdinsep();
     tab[i] = x;
 }

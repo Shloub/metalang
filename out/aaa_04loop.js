@@ -8,14 +8,14 @@ function h(i) {
     while (j <= i + 2)
     {
         if (~~(i % j) == 5)
-          return true;
-        j++;
+            return true;
+        j += 1;
     }
     return false;
 }
 
 var j = 0;
-for (var k = 0 ; k <= 10; k++)
+for (var k = 0; k <= 10; k += 1)
 {
     j += k;
     util.print(j, "\n");
@@ -24,7 +24,7 @@ var i = 4;
 while (i < 10)
 {
     util.print(i);
-    i++;
+    i += 1;
     j += i;
 }
 util.print(j, i, "FIN TEST\n");

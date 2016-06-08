@@ -27,22 +27,21 @@ function read_int_(){
   }
 }
 
-bar_=read_int_();
+
+var bar_ = read_int_();
 stdinsep();
-c=read_int_();
+var c = read_int_();
 stdinsep();
-d=read_int_();
+var d = read_int_();
 stdinsep();
 var e = {
-  tuple_int_int_field_0 : c,
-  tuple_int_int_field_1 : d
-};
+    "tuple_int_int_field_0":c,
+    "tuple_int_int_field_1":d};
 var t = {
-  foo : e,
-  bar : bar_
-};
-var f = t.foo;
-var a = f.tuple_int_int_field_0;
-var b = f.tuple_int_int_field_1;
-util.print(a, " ", b, " ", t.bar, "\n");
+    "foo":e,
+    "bar":bar_};
+var f = t["foo"];
+var a = f["tuple_int_int_field_0"];
+var b = f["tuple_int_int_field_1"];
+util.print(a, " ", b, " ", t["bar"], "\n");
 
