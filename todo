@@ -36,10 +36,10 @@ Printer -> PasPrinter[OK]-> AdaPrinter[OK]
                          -> GoPrinter
                          -> JSPrinter[OK]
                          -> ObjCPrinter
-                         -> PerlPrinter
+                         -> PerlPrinter[OK]
                          -> PhpPrinter[OK]
                          -> PyPrinter -> RbPrinter
-                         -> ScalaPrinter
+                         -> ScalaPrinter[OK]
         -> CommonLispPrinter
         -> FSharpPrinter
         -> ForthPrinter
