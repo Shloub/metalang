@@ -7,7 +7,7 @@ for a in range(1, 1 + 1000):
         if c * c == c2:
             p = a + b + c
             if p <= 1000:
-                t[p] = t[p] + 1
+                t[p] += 1
 j = 0
 for k in range(1, 1 + 1000):
     if t[k] > t[j]:

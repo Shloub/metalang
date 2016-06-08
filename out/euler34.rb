@@ -3,7 +3,7 @@ f = [*0..10 - 1].map { |j|
                      next (1)
                      }
 for i in (1 ..  9) do
-  f[i] = f[i] * i * f[i - 1]
+  f[i] *= i * f[i - 1]
   printf "%d ", f[i]
 end
 out0 = 0

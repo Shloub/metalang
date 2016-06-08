@@ -28,7 +28,7 @@ def npi0( str, len )
         stack[ptrStack] = num
         ptrStack += 1
       elsif str[ptrStr] == "+" then
-        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1]
+        stack[ptrStack - 2] += stack[ptrStack - 1]
         ptrStack -= 1
         ptrStr += 1
       end

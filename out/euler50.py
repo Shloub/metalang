@@ -35,7 +35,7 @@ while (process):
     process = False
     for i in range(0, 1 + stop):
         if i + len < nprimes:
-            sum[i] = sum[i] + primes[i + len]
+            sum[i] += primes[i + len]
             if maximumprimes > sum[i]:
                 process = True
                 if era[sum[i]] == sum[i]:

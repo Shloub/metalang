@@ -17,7 +17,7 @@ def fillPrimesFactors(t, n, primes, nprimes):
     for i in range(0, nprimes):
         d = primes[i]
         while (mod(n, d) == 0):
-            t[d] = t[d] + 1
+            t[d] += 1
             n = math.trunc(n / d)
         if n == 1:
             return primes[i]

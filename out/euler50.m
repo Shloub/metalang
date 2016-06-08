@@ -64,7 +64,7 @@ int main(void){
       for (i = 0; i <= stop; i++)
         if (i + len < nprimes)
       {
-          sum[i] = sum[i] + primes[i + len];
+          sum[i] += primes[i + len];
           if (maximumprimes > sum[i])
           {
               process = 1;

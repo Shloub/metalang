@@ -14,7 +14,7 @@ int main() {
           {
               int p = a + b + c;
               if (p <= 1000)
-                t->at(p) = t->at(p) + 1;
+                t->at(p)++;
           }
     }
     int j = 0;

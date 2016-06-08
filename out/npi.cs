@@ -82,7 +82,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     }
     else if (str[ptrStr] == (char)43)
     {
-        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+        stack[ptrStack - 2] += stack[ptrStack - 1];
         ptrStack --;
         ptrStr++;
     }

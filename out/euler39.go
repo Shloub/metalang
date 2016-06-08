@@ -13,7 +13,7 @@ func main() {
           if c * c == c2 {
             var p int = a + b + c
               if p <= 1000 {
-                t[p] = t[p] + 1;
+                t[p]++;
               }
           }
       }

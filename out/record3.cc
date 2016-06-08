@@ -20,7 +20,7 @@ int result(std::vector<toto *> * t, int len) {
     int out0 = 0;
     for (int j = 0; j < len; j++)
     {
-        t->at(j)->blah = t->at(j)->blah + 1;
+        t->at(j)->blah++;
         out0 =
         out0 + t->at(j)->foo + t->at(j)->blah * t->at(j)->bar + t->at(j)->bar * t->at(j)->foo;
     }
