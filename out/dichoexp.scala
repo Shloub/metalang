@@ -21,17 +21,17 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def exp0(a : Int, b : Int): Int = {
     if (b == 0)
-      return 1;
+        return 1;
     if (b % 2 == 0)
     {
         var o: Int = exp0(a, b / 2);
         return o * o;
     }
     else
-      return a * exp0(a, b - 1);
+        return a * exp0(a, b - 1);
   }
   
   
@@ -39,9 +39,9 @@ def skip() {
   {
     var a: Int = 0;
     var b: Int = 0;
-    a = read_int()
+    a = read_int();
     skip();
-    b = read_int()
+    b = read_int();
     printf("%d", exp0(a, b));
   }
   

@@ -27,15 +27,16 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def position_alphabet(c : Char): Int = {
     var i: Int = (c).toInt;
     if (i <= ('Z').toInt && i >= ('A').toInt)
-      return i - ('A').toInt;
-    else if (i <= ('z').toInt && i >= ('a').toInt)
-      return i - ('a').toInt;
+        return i - ('A').toInt;
     else
-      return -1;
+        if (i <= ('z').toInt && i >= ('a').toInt)
+            return i - ('a').toInt;
+        else
+            return -1;
   }
   
   def of_position_alphabet(c : Int): Char = {
@@ -43,8 +44,8 @@ def skip() {
   }
   
   def crypte(taille_cle : Int, cle : Array[Char], taille : Int, message : Array[Char]){
-    var i: Int=0;
     for (i <- 0 to taille - 1)
+    
     {
         var lettre: Int = position_alphabet(message(i));
         if (lettre != -1)
@@ -59,26 +60,29 @@ def skip() {
   
   def main(args : Array[String])
   {
-    var taille_cle = read_int()
+    var taille_cle = read_int();
     skip();
     var cle :Array[Char] = new Array[Char](taille_cle);
     for (index <- 0 to taille_cle - 1)
+    
     {
-        var out0 = read_char()
+        var out0 = read_char();
         cle(index) = out0;
     }
     skip();
-    var taille = read_int()
+    var taille = read_int();
     skip();
     var message :Array[Char] = new Array[Char](taille);
     for (index2 <- 0 to taille - 1)
+    
     {
-        var out2 = read_char()
+        var out2 = read_char();
         message(index2) = out2;
     }
     crypte(taille_cle, cle, taille, message);
     for (i <- 0 to taille - 1)
-      printf("%c", message(i));
+    
+        printf("%c", message(i));
     printf("\n");
   }
   

@@ -27,16 +27,16 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def score(): Int = {
-    var i: Int=0;
     skip();
-    var len = read_int()
+    var len = read_int();
     skip();
     var sum: Int = 0;
     for (i <- 1 to len)
+    
     {
-        var c = read_char()
+        var c = read_char();
         sum = sum + (c).toInt - ('A').toInt + 1;
         /*		print c print " " print sum print " " */
     }
@@ -47,9 +47,10 @@ def skip() {
   def main(args : Array[String])
   {
     var sum: Int = 0;
-    var n = read_int()
+    var n = read_int();
     for (i <- 1 to n)
-      sum = sum + i * score();
+    
+        sum = sum + i * score();
     printf("%d\n", sum);
   }
   

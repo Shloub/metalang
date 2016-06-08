@@ -5,11 +5,11 @@ object calc
 La suite de fibonaci
 */
   def fibo(a : Int, b : Int, i : Int): Int = {
-    var j: Int=0;
     var out_0: Int = 0;
     var a2: Int = a;
     var b2: Int = b;
     for (j <- 0 to i + 1)
+    
     {
         printf("%d", j);
         out_0 = out_0 + a2;

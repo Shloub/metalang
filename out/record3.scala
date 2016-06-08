@@ -21,7 +21,7 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   class Toto(_foo: Int, _bar: Int, _blah: Int){
     var foo: Int=_foo;
     var bar: Int=_bar;
@@ -34,9 +34,9 @@ def skip() {
   }
   
   def result(t : Array[Toto], len : Int): Int = {
-    var j: Int=0;
     var out0: Int = 0;
     for (j <- 0 to len - 1)
+    
     {
         t(j).blah = t(j).blah + 1;
         out0 = out0 + t(j).foo + t(j).blah * t(j).bar + t(j).bar * t(j).foo;
@@ -49,10 +49,11 @@ def skip() {
   {
     var t :Array[Toto] = new Array[Toto](4);
     for (i <- 0 to 4 - 1)
-      t(i) = mktoto(i);
-    t(0).bar = read_int()
+    
+        t(i) = mktoto(i);
+    t(0).bar = read_int();
     skip();
-    t(1).blah = read_int()
+    t(1).blah = read_int();
     var titi: Int = result(t, 4);
     printf("%d%d", titi, t(2).blah);
   }

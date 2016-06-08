@@ -9,7 +9,7 @@ object aaa_04loop
     while (j <= i + 2)
     {
         if (i % j == 5)
-          return true;
+            return true;
         j = j + 1;
     }
     return false;
@@ -20,6 +20,7 @@ object aaa_04loop
   {
     var j: Int = 0;
     for (k <- 0 to 10)
+    
     {
         j = j + k;
         printf("%d\n", j);

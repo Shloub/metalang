@@ -27,7 +27,7 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def is_number(c : Char): Boolean = {
     return (c).toInt <= ('9').toInt && (c).toInt >= ('0').toInt;
   }
@@ -36,32 +36,34 @@ def skip() {
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
   def npi0(str : Array[Char], len : Int): Int = {
-    var i: Int=0;
     var stack :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-      stack(i) = 0;
+    
+        stack(i) = 0;
     var ptrStack: Int = 0;
     var ptrStr: Int = 0;
     while (ptrStr < len)
-      if (str(ptrStr) == ' ')
-      ptrStr = ptrStr + 1;
-    else if (is_number(str(ptrStr)))
-    {
-        var num: Int = 0;
-        while (str(ptrStr) != ' ')
-        {
-            num = num * 10 + (str(ptrStr)).toInt - ('0').toInt;
+        if (str(ptrStr) == ' ')
             ptrStr = ptrStr + 1;
-        }
-        stack(ptrStack) = num;
-        ptrStack = ptrStack + 1;
-    }
-    else if (str(ptrStr) == '+')
-    {
-        stack(ptrStack - 2) = stack(ptrStack - 2) + stack(ptrStack - 1);
-        ptrStack = ptrStack - 1;
-        ptrStr = ptrStr + 1;
-    }
+        else
+            if (is_number(str(ptrStr)))
+            {
+                var num: Int = 0;
+                while (str(ptrStr) != ' ')
+                {
+                    num = num * 10 + (str(ptrStr)).toInt - ('0').toInt;
+                    ptrStr = ptrStr + 1;
+                }
+                stack(ptrStack) = num;
+                ptrStack = ptrStack + 1;
+            }
+            else
+                if (str(ptrStr) == '+')
+                {
+                    stack(ptrStack - 2) = stack(ptrStack - 2) + stack(ptrStack - 1);
+                    ptrStack = ptrStack - 1;
+                    ptrStr = ptrStr + 1;
+                }
     return stack(0);
   }
   
@@ -69,13 +71,14 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
   def main(args : Array[String])
   {
     var len: Int = 0;
-    len = read_int()
+    len = read_int();
     skip();
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
+    
     {
         var tmp: Char = '\u0000';
-        tmp = read_char()
+        tmp = read_char();
         tab(i) = tmp;
     }
     var result: Int = npi0(tab, len);
