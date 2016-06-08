@@ -30,18 +30,20 @@ function find0($len, &$tab, &$cache, $x, $y) {
 	Cette fonction est récursive
 	*/
     if ($y == $len - 1)
-      return $tab[$y][$x];
-    else if ($x > $y)
-      return -10000;
-    else if ($cache[$y][$x] != 0)
-      return $cache[$y][$x];
+        return $tab[$y][$x];
+    else
+        if ($x > $y)
+            return -10000;
+        else
+            if ($cache[$y][$x] != 0)
+                return $cache[$y][$x];
     $result = 0;
     $out0 = find0($len, $tab, $cache, $x, $y + 1);
     $out1 = find0($len, $tab, $cache, $x + 1, $y + 1);
     if ($out0 > $out1)
-      $result = $out0 + $tab[$y][$x];
+        $result = $out0 + $tab[$y][$x];
     else
-      $result = $out1 + $tab[$y][$x];
+        $result = $out1 + $tab[$y][$x];
     $cache[$y][$x] = $result;
     return $result;
 }
@@ -49,7 +51,7 @@ function find0($len, &$tab, &$cache, $x, $y) {
 
 function find($len, &$tab) {
     $tab2 = array();
-    for ($i = 0; $i < $len; $i++)
+    for ($i = 0; $i < $len; $i += 1)
     {
         $tab3 = array_fill(0, $i + 1, 0);
         $tab2[$i] = $tab3;
@@ -61,10 +63,10 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0; $i < $len; $i++)
+for ($i = 0; $i < $len; $i += 1)
 {
     $tab2 = array();
-    for ($j = 0; $j < $i + 1; $j++)
+    for ($j = 0; $j <= $i; $j += 1)
     {
         $tmp = 0;
         list($tmp) = scan("%d");
@@ -74,10 +76,10 @@ for ($i = 0; $i < $len; $i++)
     $tab[$i] = $tab2;
 }
 echo find($len, $tab), "\n";
-for ($k = 0; $k < $len; $k++)
+for ($k = 0; $k < $len; $k += 1)
 {
-    for ($l = 0; $l <= $k; $l++)
-      echo $tab[$k][$l], " ";
+    for ($l = 0; $l <= $k; $l += 1)
+        echo $tab[$k][$l], " ";
     echo "\n";
 }
 

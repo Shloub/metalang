@@ -18,10 +18,9 @@ function nextChar(){
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
   return $out;
-}
-$i = 1;
+}$i = 1;
 $last = array();
-for ($j = 0; $j < 5; $j++)
+for ($j = 0; $j < 5; $j += 1)
 {
     $c = nextChar();
     $d = ord($c) - ord("0");
@@ -31,7 +30,7 @@ for ($j = 0; $j < 5; $j++)
 $max0 = $i;
 $index = 0;
 $nskipdiv = 0;
-for ($k = 1; $k <= 995; $k++)
+for ($k = 1; $k <= 995; $k += 1)
 {
     $e = nextChar();
     $f = ord($e) - ord("0");
@@ -44,8 +43,8 @@ for ($k = 1; $k <= 995; $k++)
     {
         $i *= $f;
         if ($nskipdiv < 0)
-          $i = intval($i / $last[$index]);
-        $nskipdiv --;
+            $i = intval($i / $last[$index]);
+        $nskipdiv -= 1;
     }
     $last[$index] = $f;
     $index = ($index + 1) % 5;

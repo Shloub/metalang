@@ -2,44 +2,44 @@
 
 function exp0($a, $e) {
     $o = 1;
-    for ($i = 1; $i <= $e; $i++)
-      $o *= $a;
+    for ($i = 1; $i <= $e; $i += 1)
+        $o *= $a;
     return $o;
 }
 
 
 function e(&$t, $n) {
-    for ($i = 1; $i <= 8; $i++)
-      if ($n >= $t[$i] * $i)
-      $n -= $t[$i] * $i;
-    else
-    {
-        $nombre = exp0(10, $i - 1) + intval($n / $i);
-        $chiffre = $i - 1 - $n % $i;
-        return intval($nombre / exp0(10, $chiffre)) % 10;
-    }
+    for ($i = 1; $i <= 8; $i += 1)
+        if ($n >= $t[$i] * $i)
+            $n -= $t[$i] * $i;
+        else
+        {
+            $nombre = exp0(10, $i - 1) + intval($n / $i);
+            $chiffre = $i - 1 - $n % $i;
+            return intval($nombre / exp0(10, $chiffre)) % 10;
+        }
     return -1;
 }
 
 $t = array();
-for ($i = 0; $i < 9; $i++)
-  $t[$i] = exp0(10, $i) - exp0(10, $i - 1);
-for ($i2 = 1; $i2 <= 8; $i2++)
-  echo $i2, " => ", $t[$i2], "\n";
-for ($j = 0; $j <= 80; $j++)
-  echo e($t, $j);
+for ($i = 0; $i < 9; $i += 1)
+    $t[$i] = exp0(10, $i) - exp0(10, $i - 1);
+for ($i2 = 1; $i2 <= 8; $i2 += 1)
+    echo $i2, " => ", $t[$i2], "\n";
+for ($j = 0; $j <= 80; $j += 1)
+    echo e($t, $j);
 echo "\n";
-for ($k = 1; $k <= 50; $k++)
-  echo $k;
+for ($k = 1; $k <= 50; $k += 1)
+    echo $k;
 echo "\n";
-for ($j2 = 169; $j2 <= 220; $j2++)
-  echo e($t, $j2);
+for ($j2 = 169; $j2 <= 220; $j2 += 1)
+    echo e($t, $j2);
 echo "\n";
-for ($k2 = 90; $k2 <= 110; $k2++)
-  echo $k2;
+for ($k2 = 90; $k2 <= 110; $k2 += 1)
+    echo $k2;
 echo "\n";
 $out0 = 1;
-for ($l = 0; $l <= 6; $l++)
+for ($l = 0; $l <= 6; $l += 1)
 {
     $puiss = exp0(10, $l);
     $v = e($t, $puiss - 1);

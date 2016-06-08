@@ -30,11 +30,12 @@ function nextChar(){
 function position_alphabet($c) {
     $i = ord($c);
     if ($i <= ord("Z") && $i >= ord("A"))
-      return $i - ord("A");
-    else if ($i <= ord("z") && $i >= ord("a"))
-      return $i - ord("a");
+        return $i - ord("A");
     else
-      return -1;
+        if ($i <= ord("z") && $i >= ord("a"))
+            return $i - ord("a");
+        else
+            return -1;
 }
 
 
@@ -44,7 +45,7 @@ function of_position_alphabet($c) {
 
 
 function crypte($taille_cle, &$cle, $taille, &$message) {
-    for ($i = 0; $i < $taille; $i++)
+    for ($i = 0; $i < $taille; $i += 1)
     {
         $lettre = position_alphabet($message[$i]);
         if ($lettre != -1)
@@ -59,7 +60,7 @@ function crypte($taille_cle, &$cle, $taille, &$message) {
 list($taille_cle) = scan("%d");
 scantrim();
 $cle = array();
-for ($index = 0; $index < $taille_cle; $index++)
+for ($index = 0; $index < $taille_cle; $index += 1)
 {
     $out0 = nextChar();
     $cle[$index] = $out0;
@@ -68,13 +69,13 @@ scantrim();
 list($taille) = scan("%d");
 scantrim();
 $message = array();
-for ($index2 = 0; $index2 < $taille; $index2++)
+for ($index2 = 0; $index2 < $taille; $index2 += 1)
 {
     $out2 = nextChar();
     $message[$index2] = $out2;
 }
 crypte($taille_cle, $cle, $taille, $message);
-for ($i = 0; $i < $taille; $i++)
-  echo $message[$i];
+for ($i = 0; $i < $taille; $i += 1)
+    echo $message[$i];
 echo "\n";
 

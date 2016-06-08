@@ -30,74 +30,76 @@ function nextChar(){
 
 function &read_bigint($len) {
     $chiffres = array();
-    for ($j = 0; $j < $len; $j++)
+    for ($j = 0; $j < $len; $j += 1)
     {
         $c = nextChar();
         $chiffres[$j] = ord($c);
     }
-    for ($i = 0; $i <= intval(($len - 1) / 2); $i++)
+    for ($i = 0; $i <= intval(($len - 1) / 2); $i += 1)
     {
         $tmp = $chiffres[$i];
         $chiffres[$i] = $chiffres[$len - 1 - $i];
         $chiffres[$len - 1 - $i] = $tmp;
     }
     $e = array(
-      "bigint_sign"=>true,
-      "bigint_len"=>$len,
-      "bigint_chiffres"=>$chiffres
-    );
-    
+        "bigint_sign" => true,
+        "bigint_len" => $len,
+        "bigint_chiffres" => $chiffres);
     return $e;
 }
 
 
 function print_bigint(&$a) {
     if (!$a["bigint_sign"])
-      echo "-";
-    for ($i = 0; $i < $a["bigint_len"]; $i++)
-      echo $a["bigint_chiffres"][$a["bigint_len"] - 1 - $i];
+        echo "-";
+    for ($i = 0; $i < $a["bigint_len"]; $i += 1)
+        echo $a["bigint_chiffres"][$a["bigint_len"] - 1 - $i];
 }
 
 
 function bigint_eq(&$a, &$b) {
     /* Renvoie vrai si a = b */
     if ($a["bigint_sign"] != $b["bigint_sign"])
-      return false;
-    else if ($a["bigint_len"] != $b["bigint_len"])
-      return false;
+        return false;
     else
-    {
-        for ($i = 0; $i < $a["bigint_len"]; $i++)
-          if ($a["bigint_chiffres"][$i] != $b["bigint_chiffres"][$i])
-          return false;
-        return true;
-    }
+        if ($a["bigint_len"] != $b["bigint_len"])
+            return false;
+        else
+        {
+            for ($i = 0; $i < $a["bigint_len"]; $i += 1)
+                if ($a["bigint_chiffres"][$i] != $b["bigint_chiffres"][$i])
+                    return false;
+            return true;
+        }
 }
 
 
 function bigint_gt(&$a, &$b) {
     /* Renvoie vrai si a > b */
     if ($a["bigint_sign"] && !$b["bigint_sign"])
-      return true;
-    else if (!$a["bigint_sign"] && $b["bigint_sign"])
-      return false;
-    else
-    {
-        if ($a["bigint_len"] > $b["bigint_len"])
-          return $a["bigint_sign"];
-        else if ($a["bigint_len"] < $b["bigint_len"])
-          return !$a["bigint_sign"];
-        else
-          for ($i = 0; $i < $a["bigint_len"]; $i++)
-          {
-              $j = $a["bigint_len"] - 1 - $i;
-              if ($a["bigint_chiffres"][$j] > $b["bigint_chiffres"][$j])
-                return $a["bigint_sign"];
-              else if ($a["bigint_chiffres"][$j] < $b["bigint_chiffres"][$j])
-                return !$a["bigint_sign"];
-        }
         return true;
-    }
+    else
+        if (!$a["bigint_sign"] && $b["bigint_sign"])
+            return false;
+        else
+        {
+            if ($a["bigint_len"] > $b["bigint_len"])
+                return $a["bigint_sign"];
+            else
+                if ($a["bigint_len"] < $b["bigint_len"])
+                    return !$a["bigint_sign"];
+                else
+                    for ($i = 0; $i < $a["bigint_len"]; $i += 1)
+                    {
+                        $j = $a["bigint_len"] - 1 - $i;
+                        if ($a["bigint_chiffres"][$j] > $b["bigint_chiffres"][$j])
+                            return $a["bigint_sign"];
+                        else
+                            if ($a["bigint_chiffres"][$j] < $b["bigint_chiffres"][$j])
+                                return !$a["bigint_sign"];
+                    }
+            return true;
+        }
 }
 
 
@@ -111,24 +113,22 @@ function &add_bigint_positif(&$a, &$b) {
     $len = max($a["bigint_len"], $b["bigint_len"]) + 1;
     $retenue = 0;
     $chiffres = array();
-    for ($i = 0; $i < $len; $i++)
+    for ($i = 0; $i < $len; $i += 1)
     {
         $tmp = $retenue;
         if ($i < $a["bigint_len"])
-          $tmp += $a["bigint_chiffres"][$i];
+            $tmp += $a["bigint_chiffres"][$i];
         if ($i < $b["bigint_len"])
-          $tmp += $b["bigint_chiffres"][$i];
+            $tmp += $b["bigint_chiffres"][$i];
         $retenue = intval($tmp / 10);
         $chiffres[$i] = $tmp % 10;
     }
     while ($len > 0 && $chiffres[$len - 1] == 0)
-      $len --;
+        $len -= 1;
     $f = array(
-      "bigint_sign"=>true,
-      "bigint_len"=>$len,
-      "bigint_chiffres"=>$chiffres
-    );
-    
+        "bigint_sign" => true,
+        "bigint_len" => $len,
+        "bigint_chiffres" => $chiffres);
     return $f;
 }
 
@@ -140,67 +140,60 @@ Pré-requis : a > b
     $len = $a["bigint_len"];
     $retenue = 0;
     $chiffres = array();
-    for ($i = 0; $i < $len; $i++)
+    for ($i = 0; $i < $len; $i += 1)
     {
         $tmp = $retenue + $a["bigint_chiffres"][$i];
         if ($i < $b["bigint_len"])
-          $tmp -= $b["bigint_chiffres"][$i];
+            $tmp -= $b["bigint_chiffres"][$i];
         if ($tmp < 0)
         {
             $tmp += 10;
             $retenue = -1;
         }
         else
-          $retenue = 0;
+            $retenue = 0;
         $chiffres[$i] = $tmp;
     }
     while ($len > 0 && $chiffres[$len - 1] == 0)
-      $len --;
+        $len -= 1;
     $g = array(
-      "bigint_sign"=>true,
-      "bigint_len"=>$len,
-      "bigint_chiffres"=>$chiffres
-    );
-    
+        "bigint_sign" => true,
+        "bigint_len" => $len,
+        "bigint_chiffres" => $chiffres);
     return $g;
 }
 
 
 function &neg_bigint(&$a) {
     $h = array(
-      "bigint_sign"=>!$a["bigint_sign"],
-      "bigint_len"=>$a["bigint_len"],
-      "bigint_chiffres"=>$a["bigint_chiffres"]
-    );
-    
+        "bigint_sign" => !$a["bigint_sign"],
+        "bigint_len" => $a["bigint_len"],
+        "bigint_chiffres" => $a["bigint_chiffres"]);
     return $h;
 }
 
 
 function &add_bigint(&$a, &$b) {
     if ($a["bigint_sign"] == $b["bigint_sign"])
-    {
         if ($a["bigint_sign"])
-          return add_bigint_positif($a, $b);
+            return add_bigint_positif($a, $b);
         else
-          return neg_bigint(add_bigint_positif($a, $b));
-    }
-    else if ($a["bigint_sign"])
-    {
-        /* a positif, b negatif */
-        if (bigint_gt($a, neg_bigint($b)))
-          return sub_bigint_positif($a, $b);
-        else
-          return neg_bigint(sub_bigint_positif($b, $a));
-    }
+            return neg_bigint(add_bigint_positif($a, $b));
     else
-    {
-        /* a negatif, b positif */
-        if (bigint_gt(neg_bigint($a), $b))
-          return neg_bigint(sub_bigint_positif($a, $b));
+        if ($a["bigint_sign"])
+        {
+            /* a positif, b negatif */
+            if (bigint_gt($a, neg_bigint($b)))
+                return sub_bigint_positif($a, $b);
+            else
+                return neg_bigint(sub_bigint_positif($b, $a));
+        }
         else
-          return sub_bigint_positif($b, $a);
-    }
+            /* a negatif, b positif */
+            if (bigint_gt(neg_bigint($a), $b))
+                return neg_bigint(sub_bigint_positif($a, $b));
+            else
+                return sub_bigint_positif($b, $a);
 }
 
 
@@ -215,32 +208,26 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
     $len = $a["bigint_len"] + $b["bigint_len"] + 1;
     $chiffres = array_fill(0, $len, 0);
-    for ($i = 0; $i < $a["bigint_len"]; $i++)
+    for ($i = 0; $i < $a["bigint_len"]; $i += 1)
     {
         $retenue = 0;
-        for ($j = 0; $j < $b["bigint_len"]; $j++)
+        for ($j = 0; $j < $b["bigint_len"]; $j += 1)
         {
-            $chiffres[$i + $j] =
-            $chiffres[$i + $j] + $retenue + $b["bigint_chiffres"][$j] * $a["bigint_chiffres"][$i];
+            $chiffres[$i + $j] += $retenue + $b["bigint_chiffres"][$j] * $a["bigint_chiffres"][$i];
             $retenue = intval($chiffres[$i + $j] / 10);
             $chiffres[$i + $j] = $chiffres[$i + $j] % 10;
         }
-        $chiffres[$i + $b["bigint_len"]] =
-        $chiffres[$i + $b["bigint_len"]] + $retenue;
+        $chiffres[$i + $b["bigint_len"]] += $retenue;
     }
-    $chiffres[$a["bigint_len"] + $b["bigint_len"]] =
-    intval($chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] / 10);
-    $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] =
-    $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] % 10;
-    for ($l = 0; $l <= 2; $l++)
-      if ($len != 0 && $chiffres[$len - 1] == 0)
-      $len --;
+    $chiffres[$a["bigint_len"] + $b["bigint_len"]] = intval($chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] / 10);
+    $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] = $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] % 10;
+    for ($l = 0; $l <= 2; $l += 1)
+        if ($len != 0 && $chiffres[$len - 1] == 0)
+            $len -= 1;
     $m = array(
-      "bigint_sign"=>$a["bigint_sign"] == $b["bigint_sign"],
-      "bigint_len"=>$len,
-      "bigint_chiffres"=>$chiffres
-    );
-    
+        "bigint_sign" => $a["bigint_sign"] == $b["bigint_sign"],
+        "bigint_len" => $len,
+        "bigint_chiffres" => $chiffres);
     return $m;
 }
 
@@ -248,41 +235,39 @@ D'ou le nom de la fonction. */
 function &bigint_premiers_chiffres(&$a, $i) {
     $len = min($i, $a["bigint_len"]);
     while ($len != 0 && $a["bigint_chiffres"][$len - 1] == 0)
-      $len --;
+        $len -= 1;
     $o = array(
-      "bigint_sign"=>$a["bigint_sign"],
-      "bigint_len"=>$len,
-      "bigint_chiffres"=>$a["bigint_chiffres"]
-    );
-    
+        "bigint_sign" => $a["bigint_sign"],
+        "bigint_len" => $len,
+        "bigint_chiffres" => $a["bigint_chiffres"]);
     return $o;
 }
 
 
 function &bigint_shift(&$a, $i) {
     $chiffres = array();
-    for ($k = 0; $k < $a["bigint_len"] + $i; $k++)
-      if ($k >= $i)
-      $chiffres[$k] = $a["bigint_chiffres"][$k - $i];
-    else
-      $chiffres[$k] = 0;
+    for ($k = 0; $k < $a["bigint_len"] + $i; $k += 1)
+        if ($k >= $i)
+            $chiffres[$k] = $a["bigint_chiffres"][$k - $i];
+        else
+            $chiffres[$k] = 0;
     $p = array(
-      "bigint_sign"=>$a["bigint_sign"],
-      "bigint_len"=>$a["bigint_len"] + $i,
-      "bigint_chiffres"=>$chiffres
-    );
-    
+        "bigint_sign" => $a["bigint_sign"],
+        "bigint_len" => $a["bigint_len"] + $i,
+        "bigint_chiffres" => $chiffres);
     return $p;
 }
 
 
 function &mul_bigint(&$aa, &$bb) {
     if ($aa["bigint_len"] == 0)
-      return $aa;
-    else if ($bb["bigint_len"] == 0)
-      return $bb;
-    else if ($aa["bigint_len"] < 3 || $bb["bigint_len"] < 3)
-      return mul_bigint_cp($aa, $bb);
+        return $aa;
+    else
+        if ($bb["bigint_len"] == 0)
+            return $bb;
+        else
+            if ($aa["bigint_len"] < 3 || $bb["bigint_len"] < 3)
+                return mul_bigint_cp($aa, $bb);
     /* Algorithme de Karatsuba */
     $split = intval(min($aa["bigint_len"], $bb["bigint_len"]) / 2);
     $a = bigint_shift($aa, -$split);
@@ -309,7 +294,7 @@ function log100($a) {
     while ($a >= 10)
     {
         $a = intval($a / 10);
-        $out0++;
+        $out0 += 1;
     }
     return $out0;
 }
@@ -318,19 +303,17 @@ function log100($a) {
 function &bigint_of_int($i) {
     $size = log100($i);
     if ($i == 0)
-      $size = 0;
+        $size = 0;
     $t = array_fill(0, $size, 0);
-    for ($k = 0; $k < $size; $k++)
+    for ($k = 0; $k < $size; $k += 1)
     {
         $t[$k] = $i % 10;
         $i = intval($i / 10);
     }
     $q = array(
-      "bigint_sign"=>true,
-      "bigint_len"=>$size,
-      "bigint_chiffres"=>$t
-    );
-    
+        "bigint_sign" => true,
+        "bigint_len" => $size,
+        "bigint_chiffres" => $t);
     return $q;
 }
 
@@ -349,8 +332,8 @@ function &fact_bigint(&$a) {
 
 function sum_chiffres_bigint(&$a) {
     $out0 = 0;
-    for ($i = 0; $i < $a["bigint_len"]; $i++)
-      $out0 += $a["bigint_chiffres"][$i];
+    for ($i = 0; $i < $a["bigint_len"]; $i += 1)
+        $out0 += $a["bigint_chiffres"][$i];
     return $out0;
 }
 
@@ -366,28 +349,30 @@ function euler20() {
 
 function &bigint_exp(&$a, $b) {
     if ($b == 1)
-      return $a;
-    else if ($b % 2 == 0)
-      return bigint_exp(mul_bigint($a, $a), intval($b / 2));
+        return $a;
     else
-      return mul_bigint($a, bigint_exp($a, $b - 1));
+        if ($b % 2 == 0)
+            return bigint_exp(mul_bigint($a, $a), intval($b / 2));
+        else
+            return mul_bigint($a, bigint_exp($a, $b - 1));
 }
 
 
 function &bigint_exp_10chiffres(&$a, $b) {
     $a = bigint_premiers_chiffres($a, 10);
     if ($b == 1)
-      return $a;
-    else if ($b % 2 == 0)
-      return bigint_exp_10chiffres(mul_bigint($a, $a), intval($b / 2));
+        return $a;
     else
-      return mul_bigint($a, bigint_exp_10chiffres($a, $b - 1));
+        if ($b % 2 == 0)
+            return bigint_exp_10chiffres(mul_bigint($a, $a), intval($b / 2));
+        else
+            return mul_bigint($a, bigint_exp_10chiffres($a, $b - 1));
 }
 
 
 function euler48() {
     $sum = bigint_of_int(0);
-    for ($i = 1; $i <= 100; $i++)
+    for ($i = 1; $i <= 100; $i += 1)
     {
         /* 1000 normalement */
         $ib = bigint_of_int($i);
@@ -419,7 +404,7 @@ function euler25() {
         $c = add_bigint($a, $b);
         $a = $b;
         $b = $c;
-        $i++;
+        $i += 1;
     }
     return $i;
 }
@@ -429,11 +414,11 @@ function euler29() {
     $maxA = 5;
     $maxB = 5;
     $a_bigint = array();
-    for ($j = 0; $j < $maxA + 1; $j++)
-      $a_bigint[$j] = bigint_of_int($j * $j);
+    for ($j = 0; $j <= $maxA; $j += 1)
+        $a_bigint[$j] = bigint_of_int($j * $j);
     $a0_bigint = array();
-    for ($j2 = 0; $j2 < $maxA + 1; $j2++)
-      $a0_bigint[$j2] = bigint_of_int($j2);
+    for ($j2 = 0; $j2 <= $maxA; $j2 += 1)
+        $a0_bigint[$j2] = bigint_of_int($j2);
     $b = array_fill(0, $maxA + 1, 2);
     $n = 0;
     $found = true;
@@ -441,29 +426,27 @@ function euler29() {
     {
         $min0 = $a0_bigint[0];
         $found = false;
-        for ($i = 2; $i <= $maxA; $i++)
-          if ($b[$i] <= $maxB)
-        {
-            if ($found)
-            {
-                if (bigint_lt($a_bigint[$i], $min0))
-                  $min0 = $a_bigint[$i];
-            }
-            else
-            {
-                $min0 = $a_bigint[$i];
-                $found = true;
-            }
-        }
+        for ($i = 2; $i <= $maxA; $i += 1)
+            if ($b[$i] <= $maxB)
+                if ($found)
+                {
+                    if (bigint_lt($a_bigint[$i], $min0))
+                        $min0 = $a_bigint[$i];
+                }
+                else
+                {
+                    $min0 = $a_bigint[$i];
+                    $found = true;
+                }
         if ($found)
         {
-            $n++;
-            for ($l = 2; $l <= $maxA; $l++)
-              if (bigint_eq($a_bigint[$l], $min0) && $b[$l] <= $maxB)
-            {
-                $b[$l] = $b[$l] + 1;
-                $a_bigint[$l] = mul_bigint($a_bigint[$l], $a0_bigint[$l]);
-            }
+            $n += 1;
+            for ($l = 2; $l <= $maxA; $l += 1)
+                if (bigint_eq($a_bigint[$l], $min0) && $b[$l] <= $maxB)
+                {
+                    $b[$l] += 1;
+                    $a_bigint[$l] = mul_bigint($a_bigint[$l], $a0_bigint[$l]);
+                }
         }
     }
     return $n;
@@ -471,7 +454,7 @@ function euler29() {
 
 echo euler29(), "\n";
 $sum = read_bigint(50);
-for ($i = 2; $i <= 100; $i++)
+for ($i = 2; $i <= 100; $i += 1)
 {
     scantrim();
     $tmp = read_bigint(50);
@@ -523,8 +506,8 @@ echo ">";
 print_bigint($b);
 echo "=";
 if (bigint_gt($a, $b))
-  echo "True";
+    echo "True";
 else
-  echo "False";
+    echo "False";
 echo "\n";
 

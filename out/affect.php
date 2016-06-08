@@ -26,22 +26,18 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 
 function &mktoto($v1) {
     $t = array(
-      "foo"=>$v1,
-      "bar"=>$v1,
-      "blah"=>$v1
-    );
-    
+        "foo" => $v1,
+        "bar" => $v1,
+        "blah" => $v1);
     return $t;
 }
 
 
 function &mktoto2($v1) {
     $t = array(
-      "foo"=>$v1 + 3,
-      "bar"=>$v1 + 2,
-      "blah"=>$v1 + 1
-    );
-    
+        "foo" => $v1 + 3,
+        "bar" => $v1 + 2,
+        "blah" => $v1 + 1);
     return $t;
 }
 
@@ -50,22 +46,20 @@ function result(&$t_, &$t2_) {
     $t = $t_;
     $t2 = $t2_;
     $t3 = array(
-      "foo"=>0,
-      "bar"=>0,
-      "blah"=>0
-    );
-    
+        "foo" => 0,
+        "bar" => 0,
+        "blah" => 0);
     $t3 = $t2;
     $t = $t2;
     $t2 = $t3;
-    $t["blah"]++;
+    $t["blah"] += 1;
     $len = 1;
     $cache0 = array();
-    for ($i = 0; $i < $len; $i++)
-      $cache0[$i] = -$i;
+    for ($i = 0; $i < $len; $i += 1)
+        $cache0[$i] = -$i;
     $cache1 = array();
-    for ($j = 0; $j < $len; $j++)
-      $cache1[$j] = $j;
+    for ($j = 0; $j < $len; $j += 1)
+        $cache1[$j] = $j;
     $cache2 = $cache0;
     $cache0 = $cache1;
     $cache2 = $cache0;

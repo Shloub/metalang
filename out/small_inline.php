@@ -19,12 +19,9 @@ function scantrim(){
     if ($stdin != '' || feof(STDIN)) break;
     stdin_();
   }
-}
-$t = array();
-for ($d = 0; $d < 2; $d++)
-{
+}$t = array();
+for ($d = 0; $d < 2; $d += 1)
     list($t[$d]) = scan("%d");
     scantrim();
-}
 echo $t[0], " - ", $t[1], "\n";
 

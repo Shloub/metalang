@@ -23,17 +23,15 @@ function scantrim(){
 
 function &mktoto($v1) {
     $t = array(
-      "foo"=>$v1,
-      "bar"=>0,
-      "blah"=>0
-    );
-    
+        "foo" => $v1,
+        "bar" => 0,
+        "blah" => 0);
     return $t;
 }
 
 
 function result(&$t) {
-    $t["blah"]++;
+    $t["blah"] += 1;
     return $t["foo"] + $t["blah"] * $t["bar"] + $t["bar"] * $t["foo"];
 }
 

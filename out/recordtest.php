@@ -21,10 +21,8 @@ function scantrim(){
   }
 }
 $param = array(
-  "foo"=>0,
-  "bar"=>0
-);
-
+    "foo" => 0,
+    "bar" => 0);
 list($param["bar"]) = scan("%d");
 scantrim();
 list($param["foo"]) = scan("%d");

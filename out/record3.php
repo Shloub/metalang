@@ -23,29 +23,26 @@ function scantrim(){
 
 function &mktoto($v1) {
     $t = array(
-      "foo"=>$v1,
-      "bar"=>0,
-      "blah"=>0
-    );
-    
+        "foo" => $v1,
+        "bar" => 0,
+        "blah" => 0);
     return $t;
 }
 
 
 function result(&$t, $len) {
     $out0 = 0;
-    for ($j = 0; $j < $len; $j++)
+    for ($j = 0; $j < $len; $j += 1)
     {
-        $t[$j]["blah"] = $t[$j]["blah"] + 1;
-        $out0 =
-        $out0 + $t[$j]["foo"] + $t[$j]["blah"] * $t[$j]["bar"] + $t[$j]["bar"] * $t[$j]["foo"];
+        $t[$j]["blah"] += 1;
+        $out0 = $out0 + $t[$j]["foo"] + $t[$j]["blah"] * $t[$j]["bar"] + $t[$j]["bar"] * $t[$j]["foo"];
     }
     return $out0;
 }
 
 $t = array();
-for ($i = 0; $i < 4; $i++)
-  $t[$i] = mktoto($i);
+for ($i = 0; $i < 4; $i += 1)
+    $t[$i] = mktoto($i);
 list($t[0]["bar"]) = scan("%d");
 scantrim();
 list($t[1]["blah"]) = scan("%d");

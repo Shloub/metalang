@@ -2,13 +2,13 @@
 
 function f($i) {
     if ($i == 0)
-      return true;
+        return true;
     return false;
 }
 
 if (f(4))
-  echo "true <-\n ->\n";
+    echo "true <-\n ->\n";
 else
-  echo "false <-\n ->\n";
+    echo "false <-\n ->\n";
 echo "small test end\n";
 
