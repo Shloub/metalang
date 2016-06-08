@@ -131,12 +131,12 @@ let print_instr c i =
             | DeclRead (ty, v, opt) ->
                 begin match Ast.Type.unfix ty with
                 | Ast.Type.Char -> fprintf f "@[%a = nextChar()%a@]" c.print_varname v pend ()
-                | _ -> fprintf f "@[list(%a) = scan(\"%a\")%a@]" c.print_varname v format_type ty pend ()
+                | _ -> fprintf f "@[list(%a) = scan(\"%a\")%a@]" c.print_varname v pformat_type ty pend ()
                 end
             | ReadExpr (ty, mut) ->
                 begin match Ast.Type.unfix ty with
                 | Ast.Type.Char -> fprintf f "@[%a = nextChar()%a@]" (c.print_mut c nop) mut pend ()
-                | _ -> fprintf f "@[list(%a) = scan(\"%a\")%a@]" (c.print_mut c nop) mut format_type ty pend ()
+                | _ -> fprintf f "@[list(%a) = scan(\"%a\")%a@]" (c.print_mut c nop) mut pformat_type ty pend ()
                 end
           ) sep_nl f li
     | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
