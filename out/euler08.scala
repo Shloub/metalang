@@ -22,7 +22,6 @@ def read_char() : Char = {
     var i: Int = 1;
     var last :Array[Int] = new Array[Int](5);
     for (j <- 0 to 5 - 1)
-    
     {
         var c = read_char();
         var d: Int = (c).toInt - ('0').toInt;
@@ -33,7 +32,6 @@ def read_char() : Char = {
     var index: Int = 0;
     var nskipdiv: Int = 0;
     for (k <- 1 to 995)
-    
     {
         var e = read_char();
         var f: Int = (e).toInt - ('0').toInt;

@@ -23,7 +23,6 @@ object euler11
   {
     var directions :Array[(Int, Int)] = new Array[(Int, Int)](8);
     for (i <- 0 to 8 - 1)
-    
         if (i == 0)
             directions(i) = (0, 1);
         else
@@ -49,16 +48,12 @@ object euler11
     var max0: Int = 0;
     var m :Array[Array[Int]] = new Array[Array[Int]](20);
     for (c <- 0 to 20 - 1)
-    
         m(c) = readLine().split(" ").map(_.toInt);
     for (j <- 0 to 7)
-    
     {
         var (dx, dy) = directions(j);
         for (x <- 0 to 19)
-        
             for (y <- 0 to 19)
-            
                 max0 = max2_0(max0, find(4, m, x, y, dx, dy));
     }
     printf("%d\n", max0);

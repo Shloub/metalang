@@ -48,18 +48,14 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
     var count: Int = 0;
     var allowed :Array[Boolean] = new Array[Boolean](10);
     for (i <- 0 to 10 - 1)
-    
         allowed(i) = i != 0;
     var counted :Array[Boolean] = new Array[Boolean](100000);
     for (j <- 0 to 100000 - 1)
-    
         counted(j) = false;
     for (e <- 1 to 9)
-    
     {
         allowed(e) = false;
         for (b <- 1 to 9)
-        
             if (allowed(b))
             {
                 allowed(b) = false;
@@ -68,17 +64,14 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                 {
                     allowed(be) = false;
                     for (a <- 1 to 9)
-                    
                         if (allowed(a))
                         {
                             allowed(a) = false;
                             for (c <- 1 to 9)
-                            
                                 if (allowed(c))
                                 {
                                     allowed(c) = false;
                                     for (d <- 1 to 9)
-                                    
                                         if (allowed(d))
                                         {
                                             allowed(d) = false;

@@ -25,16 +25,13 @@ def skip() {
   def copytab(tab : Array[Int], len : Int): Array[Int] = {
     var o :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
         o(i) = tab(i);
     return o;
   }
   
   def bubblesort(tab : Array[Int], len : Int){
     for (i <- 0 to len - 1)
-    
         for (j <- i + 1 to len - 1)
-        
             if (tab(i) > tab(j))
             {
                 var tmp: Int = tab(i);
@@ -85,7 +82,6 @@ def skip() {
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i_0 <- 0 to len - 1)
-    
     {
         var tmp: Int = 0;
         tmp = read_int();
@@ -95,13 +91,11 @@ def skip() {
     var tab2: Array[Int] = copytab(tab, len);
     bubblesort(tab2, len);
     for (i <- 0 to len - 1)
-    
         printf("%d ", tab2(i));
     printf("\n");
     var tab3: Array[Int] = copytab(tab, len);
     qsort0(tab3, len, 0, len - 1);
     for (i <- 0 to len - 1)
-    
         printf("%d ", tab3(i));
     printf("\n");
   }

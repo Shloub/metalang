@@ -23,10 +23,8 @@ object aaa_10stringsarray
   {
     var tab :Array[String] = new Array[String](2);
     for (i <- 0 to 2 - 1)
-    
         tab(i) = idstring("chaine de test");
     for (j <- 0 to 1)
-    
         printstring(idstring(tab(j)));
     print_toto(new Toto("one", 1));
   }

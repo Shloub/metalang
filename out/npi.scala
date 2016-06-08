@@ -38,7 +38,6 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
   def npi0(str : Array[Char], len : Int): Int = {
     var stack :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
         stack(i) = 0;
     var ptrStack: Int = 0;
     var ptrStr: Int = 0;
@@ -75,7 +74,6 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     skip();
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmp: Char = '\u0000';
         tmp = read_char();

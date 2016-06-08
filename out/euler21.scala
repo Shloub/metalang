@@ -4,7 +4,6 @@ object euler21
   def eratostene(t : Array[Int], max0 : Int): Int = {
     var n: Int = 0;
     for (i <- 2 to max0 - 1)
-    
         if (t(i) == i)
         {
             n = n + 1;
@@ -21,7 +20,6 @@ object euler21
   def fillPrimesFactors(t : Array[Int], _n : Int, primes : Array[Int], nprimes : Int): Int = {
     var n = _n;
     for (i <- 0 to nprimes - 1)
-    
     {
         var d: Int = primes(i);
         while (n % d == 0)
@@ -54,7 +52,6 @@ object euler21
             var out0: Int = 0;
             var p: Int = i;
             for (j <- 1 to t(i))
-            
             {
                 out0 = out0 + p;
                 p = p * i;
@@ -66,7 +63,6 @@ object euler21
   def sumdiv(nprimes : Int, primes : Array[Int], n : Int): Int = {
     var t :Array[Int] = new Array[Int](n + 1);
     for (i <- 0 to n + 1 - 1)
-    
         t(i) = 0;
     var max0: Int = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
@@ -78,16 +74,13 @@ object euler21
     var maximumprimes: Int = 1001;
     var era :Array[Int] = new Array[Int](maximumprimes);
     for (j <- 0 to maximumprimes - 1)
-    
         era(j) = j;
     var nprimes: Int = eratostene(era, maximumprimes);
     var primes :Array[Int] = new Array[Int](nprimes);
     for (o <- 0 to nprimes - 1)
-    
         primes(o) = 0;
     var l: Int = 0;
     for (k <- 2 to maximumprimes - 1)
-    
         if (era(k) == k)
         {
             primes(l) = k;
@@ -96,7 +89,6 @@ object euler21
     printf("%d == %d\n", l, nprimes);
     var sum: Int = 0;
     for (n <- 2 to 1000)
-    
     {
         var other: Int = sumdiv(nprimes, primes, n) - n;
         if (other > n)

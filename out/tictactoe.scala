@@ -43,10 +43,8 @@ Tictactoe : un tictactoe avec une IA
   def print_state(g : Gamestate){
     printf("\n|");
     for (y <- 0 to 2)
-    
     {
         for (x <- 0 to 2)
-        
         {
             if (g.cases(x)(y) == 0)
                 printf(" ");
@@ -68,12 +66,10 @@ Tictactoe : un tictactoe avec une IA
     var win: Int = 0;
     var freecase: Int = 0;
     for (y <- 0 to 2)
-    
     {
         var col: Int = -1;
         var lin: Int = -1;
         for (x <- 0 to 2)
-        
         {
             if (g.cases(x)(y) == 0)
                 freecase = freecase + 1;
@@ -97,7 +93,6 @@ Tictactoe : un tictactoe avec une IA
                 win = lin;
     }
     for (x <- 1 to 2)
-    
     {
         if (g.cases(0)(0) == x && g.cases(1)(1) == x && g.cases(2)(2) == x)
             win = x;
@@ -156,9 +151,7 @@ Un minimax classique, renvoie la note du plateau
     if (!g.firstToPlay)
         maxNote = 10000;
     for (x <- 0 to 2)
-    
         for (y <- 0 to 2)
-        
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -178,9 +171,7 @@ Renvoie le coup de l'IA
     var minMove: Move = new Move(0, 0);
     var minNote: Int = 10000;
     for (x <- 0 to 2)
-    
         for (y <- 0 to 2)
-        
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -201,11 +192,9 @@ Renvoie le coup de l'IA
   def init0(): Gamestate = {
     var cases :Array[Array[Int]] = new Array[Array[Int]](3);
     for (i <- 0 to 3 - 1)
-    
     {
         var tab :Array[Int] = new Array[Int](3);
         for (j <- 0 to 3 - 1)
-        
             tab(j) = 0;
         cases(i) = tab;
     }
@@ -224,7 +213,6 @@ Renvoie le coup de l'IA
   def main(args : Array[String])
   {
     for (i <- 0 to 1)
-    
     {
         var state: Gamestate = init0();
         apply_move(new Move(1, 1), state);

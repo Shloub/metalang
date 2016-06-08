@@ -31,11 +31,8 @@ object euler33
     var top: Int = 1;
     var bottom: Int = 1;
     for (i <- 1 to 9)
-    
         for (j <- 1 to 9)
-        
             for (k <- 1 to 9)
-            
                 if (i != j && j != k)
                 {
                     var a: Int = i * 10 + j;

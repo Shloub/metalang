@@ -31,7 +31,6 @@ def skip() {
   def nth(tab : Array[Char], tofind : Char, len : Int): Int = {
     var out0: Int = 0;
     for (i <- 0 to len - 1)
-    
         if (tab(i) == tofind)
             out0 = out0 + 1;
     return out0;
@@ -48,7 +47,6 @@ def skip() {
     skip();
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmp: Char = '\u0000';
         tmp = read_char();
