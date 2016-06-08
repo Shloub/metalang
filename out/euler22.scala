@@ -34,7 +34,6 @@ def skip() {
     skip();
     var sum: Int = 0;
     for (i <- 1 to len)
-    
     {
         var c = read_char();
         sum = sum + (c).toInt - ('A').toInt + 1;
@@ -49,7 +48,6 @@ def skip() {
     var sum: Int = 0;
     var n = read_int();
     for (i <- 1 to n)
-    
         sum = sum + i * score();
     printf("%d\n", sum);
   }

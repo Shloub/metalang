@@ -8,9 +8,7 @@ object euler09
 	a + b + c = 1000 && a * a + b * b = c * c
 	*/
     for (a <- 1 to 1000)
-    
         for (b <- a + 1 to 1000)
-        
         {
             var c: Int = 1000 - a - b;
             var a2b2: Int = a * a + b * b;

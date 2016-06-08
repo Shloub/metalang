@@ -43,7 +43,6 @@ read int, read char et skip
     len = len / 2;
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmpi1 = read_int();
         skip();
@@ -53,7 +52,6 @@ read int, read char et skip
     printf("\n");
     var tab2 :Array[Int] = new Array[Int](len);
     for (i_0 <- 0 to len - 1)
-    
     {
         var tmpi2 = read_int();
         skip();
@@ -65,7 +63,6 @@ read int, read char et skip
     printf("%d=strlen\n", strlen);
     var tab4 :Array[Char] = new Array[Char](strlen);
     for (toto <- 0 to strlen - 1)
-    
     {
         var tmpc = read_char();
         var c: Int = (tmpc).toInt;
@@ -75,7 +72,6 @@ read int, read char et skip
         tab4(toto) = (c).toChar;
     }
     for (j <- 0 to strlen - 1)
-    
         printf("%c", tab4(j));
   }
   

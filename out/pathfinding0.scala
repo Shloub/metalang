@@ -36,11 +36,9 @@ object pathfinding0
   def pathfind(tab : Array[Array[Char]], x : Int, y : Int): Int = {
     var cache :Array[Array[Int]] = new Array[Array[Int]](y);
     for (i <- 0 to y - 1)
-    
     {
         var tmp :Array[Int] = new Array[Int](x);
         for (j <- 0 to x - 1)
-        
         {
             printf("%c", tab(i)(j));
             tmp(j) = -1;
@@ -59,7 +57,6 @@ object pathfinding0
     printf("%d %d\n", x, y);
     var e :Array[Array[Char]] = new Array[Array[Char]](y);
     for (f <- 0 to y - 1)
-    
         e(f) = readLine().toCharArray();
     var tab: Array[Array[Char]] = e;
     var result: Int = pathfind(tab, x, y);

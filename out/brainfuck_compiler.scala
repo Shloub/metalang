@@ -13,7 +13,6 @@ et qui produit les macros metalang correspondante
     var current_pos: Int = 500;
     var mem :Array[Int] = new Array[Int](1000);
     for (i <- 0 to 1000 - 1)
-    
         mem(i) = 0;
     mem(current_pos) = mem(current_pos) + 1;
     mem(current_pos) = mem(current_pos) + 1;

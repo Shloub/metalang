@@ -29,12 +29,10 @@ object euler14
   {
     var m :Array[Int] = new Array[Int](1000000);
     for (j <- 0 to 1000000 - 1)
-    
         m(j) = 0;
     var max0: Int = 0;
     var maxi: Int = 0;
     for (i <- 1 to 999)
-    
     {
         /* normalement on met 999999 mais ça dépasse les int32... */
         var n2: Int = find(i, m);

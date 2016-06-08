@@ -37,13 +37,11 @@ def skip() {
   def read_bigint(len : Int): Bigint = {
     var chiffres :Array[Int] = new Array[Int](len);
     for (j <- 0 to len - 1)
-    
     {
         var c = read_char();
         chiffres(j) = (c).toInt;
     }
     for (i <- 0 to (len - 1) / 2)
-    
     {
         var tmp: Int = chiffres(i);
         chiffres(i) = chiffres(len - 1 - i);
@@ -56,7 +54,6 @@ def skip() {
     if (!a.bigint_sign)
         printf("%c", '-');
     for (i <- 0 to a.bigint_len - 1)
-    
         printf("%d", a.bigint_chiffres(a.bigint_len - 1 - i));
   }
   
@@ -70,7 +67,6 @@ def skip() {
         else
         {
             for (i <- 0 to a.bigint_len - 1)
-            
                 if (a.bigint_chiffres(i) != b.bigint_chiffres(i))
                     return false;
             return true;
@@ -93,7 +89,6 @@ def skip() {
                     return !a.bigint_sign;
                 else
                     for (i <- 0 to a.bigint_len - 1)
-                    
                     {
                         var j: Int = a.bigint_len - 1 - i;
                         if (a.bigint_chiffres(j) > b.bigint_chiffres(j))
@@ -116,7 +111,6 @@ def skip() {
     var retenue: Int = 0;
     var chiffres :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmp: Int = retenue;
         if (i < a.bigint_len)
@@ -139,7 +133,6 @@ Pré-requis : a > b
     var retenue: Int = 0;
     var chiffres :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmp: Int = retenue + a.bigint_chiffres(i);
         if (i < b.bigint_len)
@@ -196,14 +189,11 @@ D'ou le nom de la fonction. */
     var len: Int = a.bigint_len + b.bigint_len + 1;
     var chiffres :Array[Int] = new Array[Int](len);
     for (k <- 0 to len - 1)
-    
         chiffres(k) = 0;
     for (i <- 0 to a.bigint_len - 1)
-    
     {
         var retenue: Int = 0;
         for (j <- 0 to b.bigint_len - 1)
-        
         {
             chiffres(i + j) = chiffres(i + j) + retenue + b.bigint_chiffres(j) * a.bigint_chiffres(i);
             retenue = chiffres(i + j) / 10;
@@ -214,7 +204,6 @@ D'ou le nom de la fonction. */
     chiffres(a.bigint_len + b.bigint_len) = chiffres(a.bigint_len + b.bigint_len - 1) / 10;
     chiffres(a.bigint_len + b.bigint_len - 1) = chiffres(a.bigint_len + b.bigint_len - 1) % 10;
     for (l <- 0 to 2)
-    
         if (len != 0 && chiffres(len - 1) == 0)
             len = len - 1;
     return new Bigint(a.bigint_sign == b.bigint_sign, len, chiffres);
@@ -230,7 +219,6 @@ D'ou le nom de la fonction. */
   def bigint_shift(a : Bigint, i : Int): Bigint = {
     var chiffres :Array[Int] = new Array[Int](a.bigint_len + i);
     for (k <- 0 to a.bigint_len + i - 1)
-    
         if (k >= i)
             chiffres(k) = a.bigint_chiffres(k - i);
         else
@@ -285,10 +273,8 @@ Modulo
         size = 0;
     var t :Array[Int] = new Array[Int](size);
     for (j <- 0 to size - 1)
-    
         t(j) = 0;
     for (k <- 0 to size - 1)
-    
     {
         t(k) = i % 10;
         i = i / 10;
@@ -311,7 +297,6 @@ Modulo
   def sum_chiffres_bigint(a : Bigint): Int = {
     var out0: Int = 0;
     for (i <- 0 to a.bigint_len - 1)
-    
         out0 = out0 + a.bigint_chiffres(i);
     return out0;
   }
@@ -349,7 +334,6 @@ Modulo
   def euler48(){
     var sum: Bigint = bigint_of_int(0);
     for (i <- 1 to 100)
-    
     {
         /* 1000 normalement */
         var ib: Bigint = bigint_of_int(i);
@@ -389,15 +373,12 @@ Modulo
     var maxB: Int = 5;
     var a_bigint :Array[Bigint] = new Array[Bigint](maxA + 1);
     for (j <- 0 to maxA + 1 - 1)
-    
         a_bigint(j) = bigint_of_int(j * j);
     var a0_bigint :Array[Bigint] = new Array[Bigint](maxA + 1);
     for (j2 <- 0 to maxA + 1 - 1)
-    
         a0_bigint(j2) = bigint_of_int(j2);
     var b :Array[Int] = new Array[Int](maxA + 1);
     for (k <- 0 to maxA + 1 - 1)
-    
         b(k) = 2;
     var n: Int = 0;
     var found: Boolean = true;
@@ -406,7 +387,6 @@ Modulo
         var min0: Bigint = a0_bigint(0);
         found = false;
         for (i <- 2 to maxA)
-        
             if (b(i) <= maxB)
                 if (found)
                 {
@@ -422,7 +402,6 @@ Modulo
         {
             n = n + 1;
             for (l <- 2 to maxA)
-            
                 if (bigint_eq(a_bigint(l), min0) && b(l) <= maxB)
                 {
                     b(l) = b(l) + 1;
@@ -439,7 +418,6 @@ Modulo
     printf("%d\n", euler29());
     var sum: Bigint = read_bigint(50);
     for (i <- 2 to 100)
-    
     {
         skip();
         var tmp: Bigint = read_bigint(50);

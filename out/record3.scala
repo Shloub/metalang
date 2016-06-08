@@ -36,7 +36,6 @@ def skip() {
   def result(t : Array[Toto], len : Int): Int = {
     var out0: Int = 0;
     for (j <- 0 to len - 1)
-    
     {
         t(j).blah = t(j).blah + 1;
         out0 = out0 + t(j).foo + t(j).blah * t(j).bar + t(j).bar * t(j).foo;
@@ -49,7 +48,6 @@ def skip() {
   {
     var t :Array[Toto] = new Array[Toto](4);
     for (i <- 0 to 4 - 1)
-    
         t(i) = mktoto(i);
     t(0).bar = read_int();
     skip();

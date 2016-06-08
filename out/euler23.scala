@@ -4,7 +4,6 @@ object euler23
   def eratostene(t : Array[Int], max0 : Int): Int = {
     var n: Int = 0;
     for (i <- 2 to max0 - 1)
-    
         if (t(i) == i)
         {
             n = n + 1;
@@ -21,7 +20,6 @@ object euler23
   def fillPrimesFactors(t : Array[Int], _n : Int, primes : Array[Int], nprimes : Int): Int = {
     var n = _n;
     for (i <- 0 to nprimes - 1)
-    
     {
         var d: Int = primes(i);
         while (n % d == 0)
@@ -54,7 +52,6 @@ object euler23
             var out0: Int = 0;
             var p: Int = i;
             for (j <- 1 to t(i))
-            
             {
                 out0 = out0 + p;
                 p = p * i;
@@ -66,7 +63,6 @@ object euler23
   def sumdiv(nprimes : Int, primes : Array[Int], n : Int): Int = {
     var t :Array[Int] = new Array[Int](n + 1);
     for (i <- 0 to n + 1 - 1)
-    
         t(i) = 0;
     var max0: Int = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
@@ -78,16 +74,13 @@ object euler23
     var maximumprimes: Int = 30001;
     var era :Array[Int] = new Array[Int](maximumprimes);
     for (s <- 0 to maximumprimes - 1)
-    
         era(s) = s;
     var nprimes: Int = eratostene(era, maximumprimes);
     var primes :Array[Int] = new Array[Int](nprimes);
     for (t <- 0 to nprimes - 1)
-    
         primes(t) = 0;
     var l: Int = 0;
     for (k <- 2 to maximumprimes - 1)
-    
         if (era(k) == k)
         {
             primes(l) = k;
@@ -97,28 +90,22 @@ object euler23
     /* 28124 ça prend trop de temps mais on arrive a passer le test */
     var abondant :Array[Boolean] = new Array[Boolean](n + 1);
     for (p <- 0 to n + 1 - 1)
-    
         abondant(p) = false;
     var summable :Array[Boolean] = new Array[Boolean](n + 1);
     for (q <- 0 to n + 1 - 1)
-    
         summable(q) = false;
     var sum: Int = 0;
     for (r <- 2 to n)
-    
     {
         var other: Int = sumdiv(nprimes, primes, r) - r;
         if (other > r)
             abondant(r) = true;
     }
     for (i <- 1 to n)
-    
         for (j <- 1 to n)
-        
             if (abondant(i) && abondant(j) && i + j <= n)
                 summable(i + j) = true;
     for (o <- 1 to n)
-    
         if (!summable(o))
             sum = sum + o;
     printf("\n%d\n", sum);

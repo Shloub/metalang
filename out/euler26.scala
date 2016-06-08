@@ -9,7 +9,6 @@ object euler26
         var chiffre: Int = a / b;
         var reste: Int = a % b;
         for (i <- 0 to len - 1)
-        
             if (restes(i) == reste)
                 return len - i;
         restes(len) = reste;
@@ -24,12 +23,10 @@ object euler26
   {
     var t :Array[Int] = new Array[Int](1000);
     for (j <- 0 to 1000 - 1)
-    
         t(j) = 0;
     var m: Int = 0;
     var mi: Int = 0;
     for (i <- 1 to 1000)
-    
     {
         var p: Int = periode(t, 0, 1, i);
         if (p > m)

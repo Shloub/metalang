@@ -53,11 +53,9 @@ on le retrouve ici : http://projecteuler.net/problem=18
   def find(len : Int, tab : Array[Array[Int]]): Int = {
     var tab2 :Array[Array[Int]] = new Array[Array[Int]](len);
     for (i <- 0 to len - 1)
-    
     {
         var tab3 :Array[Int] = new Array[Int](i + 1);
         for (j <- 0 to i + 1 - 1)
-        
             tab3(j) = 0;
         tab2(i) = tab3;
     }
@@ -72,11 +70,9 @@ on le retrouve ici : http://projecteuler.net/problem=18
     skip();
     var tab :Array[Array[Int]] = new Array[Array[Int]](len);
     for (i <- 0 to len - 1)
-    
     {
         var tab2 :Array[Int] = new Array[Int](i + 1);
         for (j <- 0 to i + 1 - 1)
-        
         {
             var tmp: Int = 0;
             tmp = read_int();
@@ -87,10 +83,8 @@ on le retrouve ici : http://projecteuler.net/problem=18
     }
     printf("%d\n", find(len, tab));
     for (k <- 0 to len - 1)
-    
     {
         for (l <- 0 to k)
-        
             printf("%d ", tab(k)(l));
         printf("\n");
     }
