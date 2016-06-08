@@ -20,7 +20,6 @@ object aaa_04loop
   {
     var j: Int = 0;
     for (k <- 0 to 10)
-    
     {
         j = j + k;
         printf("%d\n", j);

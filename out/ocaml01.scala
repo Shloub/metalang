@@ -3,7 +3,6 @@ object ocaml01
   
   def foo(): Int = {
     for (i <- 0 to 10)
-    
     {
         
     }
@@ -12,7 +11,6 @@ object ocaml01
   
   def bar(): Int = {
     for (i <- 0 to 10)
-    
     {
         var a: Int = 0;
     }

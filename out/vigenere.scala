@@ -45,7 +45,6 @@ def skip() {
   
   def crypte(taille_cle : Int, cle : Array[Char], taille : Int, message : Array[Char]){
     for (i <- 0 to taille - 1)
-    
     {
         var lettre: Int = position_alphabet(message(i));
         if (lettre != -1)
@@ -64,7 +63,6 @@ def skip() {
     skip();
     var cle :Array[Char] = new Array[Char](taille_cle);
     for (index <- 0 to taille_cle - 1)
-    
     {
         var out0 = read_char();
         cle(index) = out0;
@@ -74,14 +72,12 @@ def skip() {
     skip();
     var message :Array[Char] = new Array[Char](taille);
     for (index2 <- 0 to taille - 1)
-    
     {
         var out2 = read_char();
         message(index2) = out2;
     }
     crypte(taille_cle, cle, taille, message);
     for (i <- 0 to taille - 1)
-    
         printf("%c", message(i));
     printf("\n");
   }

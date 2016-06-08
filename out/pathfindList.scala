@@ -46,7 +46,6 @@ def skip() {
   def pathfind(tab : Array[Int], len : Int): Int = {
     var cache :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
         cache(i) = -1;
     return pathfind_aux(cache, tab, len, 0);
   }
@@ -59,7 +58,6 @@ def skip() {
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmp: Int = 0;
         tmp = read_int();

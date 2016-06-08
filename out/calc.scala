@@ -9,7 +9,6 @@ La suite de fibonaci
     var a2: Int = a;
     var b2: Int = b;
     for (j <- 0 to i + 1)
-    
     {
         printf("%d", j);
         out_0 = out_0 + a2;

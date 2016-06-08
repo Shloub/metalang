@@ -61,7 +61,6 @@ def skip() {
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmp: Int = 0;
         tmp = read_int();

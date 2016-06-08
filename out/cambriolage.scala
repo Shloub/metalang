@@ -33,7 +33,6 @@ def skip() {
     var max_ancient: Int = 0;
     var max_recent: Int = 0;
     for (i <- 0 to m - 1)
-    
     {
         if (serrures(i)(0) == -1 && serrures(i)(1) > max_ancient)
             max_ancient = serrures(i)(1);
@@ -43,7 +42,6 @@ def skip() {
     var max_ancient_pp: Int = 0;
     var max_recent_pp: Int = 0;
     for (i <- 0 to n - 1)
-    
     {
         var pp: Array[Int] = passepartout(i);
         if (pp(0) >= max_ancient && pp(1) >= max_recent)
@@ -64,11 +62,9 @@ def skip() {
     skip();
     var passepartout :Array[Array[Int]] = new Array[Array[Int]](n);
     for (i <- 0 to n - 1)
-    
     {
         var out0 :Array[Int] = new Array[Int](2);
         for (j <- 0 to 2 - 1)
-        
         {
             var out01 = read_int();
             skip();
@@ -80,11 +76,9 @@ def skip() {
     skip();
     var serrures :Array[Array[Int]] = new Array[Array[Int]](m);
     for (k <- 0 to m - 1)
-    
     {
         var out1 :Array[Int] = new Array[Int](2);
         for (l <- 0 to 2 - 1)
-        
         {
             var out_0 = read_int();
             skip();

@@ -51,7 +51,6 @@ object euler45
   def main(args : Array[String])
   {
     for (n <- 285 to 55385)
-    
     {
         var t: Int = triangle(n);
         if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))

@@ -30,7 +30,6 @@ La suite de fibonaci
     var a2: Int = a;
     var b2: Int = b;
     for (j <- 0 to i + 1)
-    
     {
         out0 = out0 + a2;
         var tmp: Int = b2;

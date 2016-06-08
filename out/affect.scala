@@ -52,11 +52,9 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     var len: Int = 1;
     var cache0 :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
         cache0(i) = -i;
     var cache1 :Array[Int] = new Array[Int](len);
     for (j <- 0 to len - 1)
-    
         cache1(j) = j;
     var cache2: Array[Int] = cache0;
     cache0 = cache1;

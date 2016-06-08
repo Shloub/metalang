@@ -40,7 +40,6 @@ def read_int() : Int = {
     var out0: Int = 0;
     /* On déclare un entier qui contiendra la somme */
     for (i <- 1 to n)
-    
         /* La boucle : i est le diviseur potentiel*/
         if (n % i == 0)
         {

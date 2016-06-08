@@ -26,7 +26,6 @@ def skip() {
     var min0: Int = tab(0);
     var max0: Int = tab(1);
     for (i <- 2 to len - 1)
-    
     {
         if (tab(i) > max0 || tab(i) < min0)
             return false;
@@ -49,7 +48,6 @@ def skip() {
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-    
     {
         var tmp = read_int();
         skip();
