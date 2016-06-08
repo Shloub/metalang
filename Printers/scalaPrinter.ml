@@ -135,7 +135,7 @@ let print_instr c i =
         ptype ty e nop pend ()
     | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
     | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
-    | Loop (var, e1, e2, li) -> fprintf f "@[<h>for (%a <- %a to %a)@\n%a@]"
+    | Loop (var, e1, e2, li) -> fprintf f "for (%a <- %a to %a)%a"
           c.print_varname var e1 nop e2 nop
           block li
     | ClikeLoop (init, cond, incr, li) -> assert false
