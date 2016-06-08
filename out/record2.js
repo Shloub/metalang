@@ -27,24 +27,24 @@ function read_int_(){
   }
 }
 
+
 function mktoto(v1) {
     var t = {
-      foo : v1,
-      bar : 0,
-      blah : 0
-    };
+        "foo":v1,
+        "bar":0,
+        "blah":0};
     return t;
 }
 
 
 function result(t) {
-    t.blah++;
-    return t.foo + t.blah * t.bar + t.bar * t.foo;
+    t["blah"] += 1;
+    return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
 }
 
 var t = mktoto(4);
-t.bar=read_int_();
+t["bar"] = read_int_();
 stdinsep();
-t.blah=read_int_();
+t["blah"] = read_int_();
 util.print(result(t));
 

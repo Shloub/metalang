@@ -32,9 +32,10 @@ function read_int_(){
     }
   }
 }
+
 function programme_candidat(tableau, taille) {
     var out0 = 0;
-    for (var i = 0 ; i < taille; i++)
+    for (var i = 0; i < taille; i += 1)
     {
         out0 += tableau[i].charCodeAt(0) * i;
         util.print(tableau[i]);
@@ -43,12 +44,12 @@ function programme_candidat(tableau, taille) {
     return out0;
 }
 
-taille=read_int_();
+var taille = read_int_();
 stdinsep();
 var tableau = new Array(taille);
-for (var a = 0 ; a < taille; a++)
+for (var a = 0; a < taille; a += 1)
 {
-    tableau[a]=read_char_();
+    tableau[a] = read_char_();
 }
 stdinsep();
 util.print(programme_candidat(tableau, taille), "\n");

@@ -19,7 +19,7 @@ function sumdiag(n) {
     var nterms = n * 2 - 1;
     var un = 1;
     var sum = 1;
-    for (var i = 0 ; i <= nterms - 2; i++)
+    for (var i = 0; i < nterms - 1; i += 1)
     {
         var d = 2 * (1 + ~~(i / 4));
         un += d;

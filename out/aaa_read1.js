@@ -14,13 +14,12 @@ function stdinsep(){
     if (current_char == null) current_char = read_char0();
     while (current_char.match(/[\n\t\s]/g))
         current_char = read_char0();
-}
-var str = new Array(12);
-for (var a = 0 ; a < 12; a++)
+}var str = new Array(12);
+for (var a = 0; a < 12; a += 1)
 {
-    str[a]=read_char_();
+    str[a] = read_char_();
 }
 stdinsep();
-for (var i = 0 ; i <= 11; i++)
-  util.print(str[i]);
+for (var i = 0; i <= 11; i += 1)
+    util.print(str[i]);
 

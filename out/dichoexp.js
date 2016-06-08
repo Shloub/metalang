@@ -26,22 +26,23 @@ function read_int_(){
     }
   }
 }
+
 function exp0(a, b) {
     if (b == 0)
-      return 1;
+        return 1;
     if (~~(b % 2) == 0)
     {
         var o = exp0(a, ~~(b / 2));
         return o * o;
     }
     else
-      return a * exp0(a, b - 1);
+        return a * exp0(a, b - 1);
 }
 
 var a = 0;
 var b = 0;
-a=read_int_();
+a = read_int_();
 stdinsep();
-b=read_int_();
+b = read_int_();
 util.print(exp0(a, b));
 

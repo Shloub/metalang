@@ -26,22 +26,22 @@ function read_int_(){
     }
   }
 }
-for (var i = 1 ; i <= 3; i++)
+for (var i = 1; i <= 3; i += 1)
 {
-    a=read_int_();
+    var a = read_int_();
     stdinsep();
-    b=read_int_();
+    var b = read_int_();
     stdinsep();
-    c=read_int_();
+    var c = read_int_();
     stdinsep();
     util.print("a = ", a, " b = ", b, "c =", c, "\n");
 }
 var l = new Array(10);
-for (var d = 0 ; d < 10; d++)
+for (var d = 0; d < 10; d += 1)
 {
-    l[d]=read_int_();
+    l[d] = read_int_();
     stdinsep();
 }
-for (var j = 0 ; j <= 9; j++)
-  util.print(l[j], "\n");
+for (var j = 0; j <= 9; j += 1)
+    util.print(l[j], "\n");
 

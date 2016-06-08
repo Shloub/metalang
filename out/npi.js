@@ -32,6 +32,7 @@ function read_int_(){
     }
   }
 }
+
 function is_number(c) {
     return c.charCodeAt(0) <= '9'.charCodeAt(0) && c.charCodeAt(0) >= '0'.charCodeAt(0);
 }
@@ -42,41 +43,43 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 
 function npi0(str, len) {
     var stack = new Array(len);
-    for (var i = 0 ; i < len; i++)
-      stack[i] = 0;
+    for (var i = 0; i < len; i += 1)
+        stack[i] = 0;
     var ptrStack = 0;
     var ptrStr = 0;
     while (ptrStr < len)
-      if (str[ptrStr] == ' ')
-      ptrStr++;
-    else if (is_number(str[ptrStr]))
-    {
-        var num = 0;
-        while (str[ptrStr] != ' ')
-        {
-            num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
-            ptrStr++;
-        }
-        stack[ptrStack] = num;
-        ptrStack++;
-    }
-    else if (str[ptrStr] == '+')
-    {
-        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-        ptrStack --;
-        ptrStr++;
-    }
+        if (str[ptrStr] == ' ')
+            ptrStr += 1;
+        else
+            if (is_number(str[ptrStr]))
+            {
+                var num = 0;
+                while (str[ptrStr] != ' ')
+                {
+                    num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
+                    ptrStr += 1;
+                }
+                stack[ptrStack] = num;
+                ptrStack += 1;
+            }
+            else
+                if (str[ptrStr] == '+')
+                {
+                    stack[ptrStack - 2] += stack[ptrStack - 1];
+                    ptrStack -= 1;
+                    ptrStr += 1;
+                }
     return stack[0];
 }
 
 var len = 0;
-len=read_int_();
+len = read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0 ; i < len; i++)
+for (var i = 0; i < len; i += 1)
 {
     var tmp = '\x00';
-    tmp=read_char_();
+    tmp = read_char_();
     tab[i] = tmp;
 }
 var result = npi0(tab, len);
