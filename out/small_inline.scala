@@ -21,14 +21,15 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](2);
     for (d <- 0 to 2 - 1)
+    
     {
-        t(d) = read_int()
+        t(d) = read_int();
         skip();
     }
     printf("%d - %d\n", t(0), t(1));

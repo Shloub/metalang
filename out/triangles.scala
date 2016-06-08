@@ -21,7 +21,7 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   /* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
@@ -32,31 +32,33 @@ on le retrouve ici : http://projecteuler.net/problem=18
 	Cette fonction est récursive
 	*/
     if (y == len - 1)
-      return tab(y)(x);
-    else if (x > y)
-      return -10000;
-    else if (cache(y)(x) != 0)
-      return cache(y)(x);
+        return tab(y)(x);
+    else
+        if (x > y)
+            return -10000;
+        else
+            if (cache(y)(x) != 0)
+                return cache(y)(x);
     var result: Int = 0;
     var out0: Int = find0(len, tab, cache, x, y + 1);
     var out1: Int = find0(len, tab, cache, x + 1, y + 1);
     if (out0 > out1)
-      result = out0 + tab(y)(x);
+        result = out0 + tab(y)(x);
     else
-      result = out1 + tab(y)(x);
+        result = out1 + tab(y)(x);
     cache(y)(x) = result;
     return result;
   }
   
   def find(len : Int, tab : Array[Array[Int]]): Int = {
-    var i: Int=0;
-    var j: Int=0;
     var tab2 :Array[Array[Int]] = new Array[Array[Int]](len);
     for (i <- 0 to len - 1)
+    
     {
         var tab3 :Array[Int] = new Array[Int](i + 1);
         for (j <- 0 to i + 1 - 1)
-          tab3(j) = 0;
+        
+            tab3(j) = 0;
         tab2(i) = tab3;
     }
     return find0(len, tab, tab2, 0, 0);
@@ -66,16 +68,18 @@ on le retrouve ici : http://projecteuler.net/problem=18
   def main(args : Array[String])
   {
     var len: Int = 0;
-    len = read_int()
+    len = read_int();
     skip();
     var tab :Array[Array[Int]] = new Array[Array[Int]](len);
     for (i <- 0 to len - 1)
+    
     {
         var tab2 :Array[Int] = new Array[Int](i + 1);
         for (j <- 0 to i + 1 - 1)
+        
         {
             var tmp: Int = 0;
-            tmp = read_int()
+            tmp = read_int();
             skip();
             tab2(j) = tmp;
         }
@@ -83,9 +87,11 @@ on le retrouve ici : http://projecteuler.net/problem=18
     }
     printf("%d\n", find(len, tab));
     for (k <- 0 to len - 1)
+    
     {
         for (l <- 0 to k)
-          printf("%d ", tab(k)(l));
+        
+            printf("%d ", tab(k)(l));
         printf("\n");
     }
   }

@@ -27,13 +27,13 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def nth(tab : Array[Char], tofind : Char, len : Int): Int = {
-    var i: Int=0;
     var out0: Int = 0;
     for (i <- 0 to len - 1)
-      if (tab(i) == tofind)
-      out0 = out0 + 1;
+    
+        if (tab(i) == tofind)
+            out0 = out0 + 1;
     return out0;
   }
   
@@ -41,16 +41,17 @@ def skip() {
   def main(args : Array[String])
   {
     var len: Int = 0;
-    len = read_int()
+    len = read_int();
     skip();
     var tofind: Char = '\u0000';
-    tofind = read_char()
+    tofind = read_char();
     skip();
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
+    
     {
         var tmp: Char = '\u0000';
-        tmp = read_char()
+        tmp = read_char();
         tab(i) = tmp;
     }
     var result: Int = nth(tab, tofind, len);

@@ -33,7 +33,7 @@ def read_int() : Int = {
   
   def rev2(acc : Intlist, torev : Intlist): Intlist = {
     if (is_empty(torev))
-      return acc;
+        return acc;
     else
     {
         var acc2: Intlist = new Intlist(torev.head, acc);
@@ -50,9 +50,9 @@ def read_int() : Int = {
     var i: Int = -1;
     while (i != 0)
     {
-        i = read_int()
+        i = read_int();
         if (i != 0)
-          list = cons(list, i);
+            list = cons(list, i);
     }
   }
   

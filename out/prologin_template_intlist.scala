@@ -2,10 +2,10 @@ object prologin_template_intlist
 {
   
   def programme_candidat(tableau : Array[Int], taille : Int): Int = {
-    var i: Int=0;
     var out0: Int = 0;
     for (i <- 0 to taille - 1)
-      out0 = out0 + tableau(i);
+    
+        out0 = out0 + tableau(i);
     return out0;
   }
   

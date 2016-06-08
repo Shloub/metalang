@@ -36,12 +36,11 @@ def read_int() : Int = {
   }
   
   def sumdiv(n : Int): Int = {
-    var i: Int=0;
     /* On désire renvoyer la somme des diviseurs */
     var out0: Int = 0;
     /* On déclare un entier qui contiendra la somme */
     for (i <- 1 to n)
-    {
+    
         /* La boucle : i est le diviseur potentiel*/
         if (n % i == 0)
         {
@@ -53,7 +52,6 @@ def read_int() : Int = {
         {
             /* nop */
         }
-    }
     return out0;
     /*On renvoie out*/
   }
@@ -63,7 +61,7 @@ def read_int() : Int = {
   {
     /* Programme principal */
     var n: Int = 0;
-    n = read_int()
+    n = read_int();
     /* Lecture de l'entier */
     printf("%d", sumdiv(n));
   }

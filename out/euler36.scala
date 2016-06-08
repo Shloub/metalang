@@ -2,19 +2,19 @@ object euler36
 {
   
   def palindrome2(pow2 : Array[Int], n : Int): Boolean = {
-    var k: Int=0;
-    var j: Int=0;
-    var i: Int=0;
     var t :Array[Boolean] = new Array[Boolean](20);
     for (i <- 0 to 20 - 1)
-      t(i) = n / pow2(i) % 2 == 1;
+    
+        t(i) = n / pow2(i) % 2 == 1;
     var nnum: Int = 0;
     for (j <- 1 to 19)
-      if (t(j))
-      nnum = j;
+    
+        if (t(j))
+            nnum = j;
     for (k <- 0 to nnum / 2)
-      if (t(k) != t(nnum - k))
-      return false;
+    
+        if (t(k) != t(nnum - k))
+            return false;
     return true;
   }
   
@@ -24,12 +24,14 @@ object euler36
     var p: Int = 1;
     var pow2 :Array[Int] = new Array[Int](20);
     for (i <- 0 to 20 - 1)
+    
     {
         p = p * 2;
         pow2(i) = p / 2;
     }
     var sum: Int = 0;
     for (d <- 1 to 9)
+    
     {
         if (palindrome2(pow2, d))
         {
@@ -43,11 +45,14 @@ object euler36
         }
     }
     for (a0 <- 0 to 4)
+    
     {
         var a: Int = a0 * 2 + 1;
         for (b <- 0 to 9)
+        
         {
             for (c <- 0 to 9)
+            
             {
                 var num0: Int = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a;
                 if (palindrome2(pow2, num0))

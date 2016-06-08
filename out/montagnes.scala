@@ -21,7 +21,7 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   def montagnes0(tab : Array[Int], len : Int): Int = {
     var max0: Int = 1;
     var j: Int = 1;
@@ -30,11 +30,11 @@ def skip() {
     {
         var x: Int = tab(i);
         while (j >= 0 && x > tab(len - j))
-          j = j - 1;
+            j = j - 1;
         j = j + 1;
         tab(len - j) = x;
         if (j > max0)
-          max0 = j;
+            max0 = j;
         i = i - 1;
     }
     return max0;
@@ -44,13 +44,14 @@ def skip() {
   def main(args : Array[String])
   {
     var len: Int = 0;
-    len = read_int()
+    len = read_int();
     skip();
     var tab :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
+    
     {
         var x: Int = 0;
-        x = read_int()
+        x = read_int();
         skip();
         tab(i) = x;
     }

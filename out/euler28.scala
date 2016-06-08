@@ -17,11 +17,11 @@ object euler28
 
 */
   def sumdiag(n : Int): Int = {
-    var i: Int=0;
     var nterms: Int = n * 2 - 1;
     var un: Int = 1;
     var sum: Int = 1;
     for (i <- 0 to nterms - 2)
+    
     {
         var d: Int = 2 * (1 + i / 4);
         un = un + d;

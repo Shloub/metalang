@@ -21,7 +21,7 @@ def skip() {
   while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
     buffer = buffer.substring(1);
 }
-
+  
   /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
@@ -42,8 +42,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
   }
   
   def result(t_0 : Toto, t2_0 : Toto): Int = {
-    var j: Int=0;
-    var i: Int=0;
     var t: Toto = t_0;
     var t2: Toto = t2_0;
     var t3: Toto = new Toto(0, 0, 0);
@@ -54,10 +52,12 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     var len: Int = 1;
     var cache0 :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
-      cache0(i) = -i;
+    
+        cache0(i) = -i;
     var cache1 :Array[Int] = new Array[Int](len);
     for (j <- 0 to len - 1)
-      cache1(j) = j;
+    
+        cache1(j) = j;
     var cache2: Array[Int] = cache0;
     cache0 = cache1;
     cache2 = cache0;
@@ -69,13 +69,13 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
   {
     var t: Toto = mktoto(4);
     var t2: Toto = mktoto(5);
-    t.bar = read_int()
+    t.bar = read_int();
     skip();
-    t.blah = read_int()
+    t.blah = read_int();
     skip();
-    t2.bar = read_int()
+    t2.bar = read_int();
     skip();
-    t2.blah = read_int()
+    t2.blah = read_int();
     printf("%d%d", result(t, t2), t.blah);
   }
   
