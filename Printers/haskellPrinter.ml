@@ -285,7 +285,7 @@ class haskellPrinter = object(self)
         if self#isSideEffect expr then self#expr' ~p f expr
         else parens ~p (fun_priority - 1) f "return %a" self#expr_ expr
 
-  method format_type f t = Format.fprintf f "%S" (Printer.format_type t)
+  method format_type f t = Format.fprintf f "%S" (format_type t)
 
   method lief ~p f = function
     | E.Error -> Format.fprintf f "(assert false)"

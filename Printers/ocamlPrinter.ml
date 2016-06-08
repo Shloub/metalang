@@ -649,10 +649,10 @@ class camlPrinter = object(self)
     let format, variables =
       List.fold_left (fun (format, variables) i -> match i with
       | Instr.DeclRead (t, v, _opt) ->
-        let addons = Printer.format_type t in
+        let addons = format_type t in
         (format ^ addons, (true, Mutable.var v)::variables)
       | Instr.ReadExpr (t, mutable_) ->
-        let addons = Printer.format_type t in
+        let addons = format_type t in
         (format ^ addons, (false, mutable_)::variables)
       | Instr.Separation -> format ^ " ", variables
       ) ("", []) li

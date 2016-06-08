@@ -34,14 +34,6 @@ open Ast
 open Stdlib
 open Helper
 
-let format_type t = match Type.unfix t with
-  | Type.Integer -> "%d"
-  | Type.Char -> "%c"
-  | Type.String ->  "%s"
-  | Type.Bool -> "%b"
-  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t))
-)
-
 let lang = "abstract"
 
 type oppart =

@@ -98,7 +98,7 @@ let print_expr macros e f prio_parent =
         (print_list print_varname sep_space) params e1 nop e2 nop
   | Print (e, ty) ->
       parens prio_parent prio_apply f "Printf.printf %S %a"
-        (Printer.format_type ty) e prio_arg
+        (format_type ty) e prio_arg
   | FunTuple (params, e) ->
       fprintf f "(fun (%a) ->@[<v>%a@])" (print_list print_varname sep_c) params e nop
   | Lief l -> print_lief f l
@@ -133,7 +133,7 @@ let print_expr macros e f prio_parent =
       fprintf f "%a%a <- %a" tab prio_array (print_list (fun f a -> fprintf f ".(%a)" a nop) nosep) indexes v nop
   | LetIn (var, e, i) -> fprintf f "let %a = %a in@\n%a" print_varname var e nop i nop
   | Comment (s, i) -> fprintf f "(* %s *)@\n%a" s i prio_parent
-  | ReadIn (ty, next) -> parens prio_parent prio_apply f "Scanf.scanf %S@\n%a" (Printer.format_type ty) next prio_arg
+  | ReadIn (ty, next) -> parens prio_parent prio_apply f "Scanf.scanf %S@\n%a" (format_type ty) next prio_arg
   | ApplyMacro(m, li) ->
       let t, params, code = Ast.BindingMap.find m macros in
       pmacros f "(%s)" t params code li nop
