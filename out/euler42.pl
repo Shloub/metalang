@@ -39,29 +39,36 @@ sub score{
   my $len = readint();
   readspaces();
   my $sum = 0;
-  foreach my $i (1 .. $len) {
-    my $c = readchar();
-    $sum = $sum + ord($c) - ord("A") + 1;
-    #		print c print " " print sum print " " 
-    
+  foreach my $i (1 .. $len)
+  {
+      my $c = readchar();
+      $sum = $sum + ord($c) - ord("A") + 1;
+      #		print c print " " print sum print " " 
+      
   }
-  if (is_triangular($sum)) {
-    return 1;
-  }else{
-    return 0;
+  if (is_triangular($sum))
+  {
+      return 1;
+  }
+  else
+  {
+      return 0;
   }
 }
 
-foreach my $i (1 .. 55) {
-  if (is_triangular($i)) {
-    print($i, " ");
-  }
+foreach my $i (1 .. 55)
+{
+    if (is_triangular($i))
+    {
+        print($i, " ");
+    }
 }
 print "\n";
 my $sum = 0;
 my $n = readint();
-foreach my $i (1 .. $n) {
-  $sum = $sum + score();
+foreach my $i (1 .. $n)
+{
+    $sum = $sum + score();
 }
 print($sum, "\n");
 

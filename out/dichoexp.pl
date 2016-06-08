@@ -24,14 +24,18 @@ sub remainder {
 
 sub exp0{
   my($a, $b) = @_;
-  if ($b eq 0) {
-    return 1;
+  if ($b eq 0)
+  {
+      return 1;
   }
-  if (remainder($b, 2) eq 0) {
-    my $o = exp0($a, int($b / 2));
-    return $o * $o;
-  }else{
-    return $a * exp0($a, $b - 1);
+  if (remainder($b, 2) eq 0)
+  {
+      my $o = exp0($a, int($b / 2));
+      return $o * $o;
+  }
+  else
+  {
+      return $a * exp0($a, $b - 1);
   }
 }
 

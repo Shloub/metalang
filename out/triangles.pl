@@ -29,20 +29,28 @@ sub find0{
   #	Cette fonction est récursive
   #	
   
-  if ($y eq $len - 1) {
-    return $tab->[$y]->[$x];
-  }elsif ($x > $y) {
-    return -10000;
-  }elsif ($cache->[$y]->[$x] ne 0) {
-    return $cache->[$y]->[$x];
+  if ($y eq $len - 1)
+  {
+      return $tab->[$y]->[$x];
   }
+  elsif ($x > $y)
+      {
+          return -10000;
+      }
+      elsif ($cache->[$y]->[$x] ne 0)
+          {
+              return $cache->[$y]->[$x];
+          }
   my $result = 0;
   my $out0 = find0($len, $tab, $cache, $x, $y + 1);
   my $out1 = find0($len, $tab, $cache, $x + 1, $y + 1);
-  if ($out0 > $out1) {
-    $result = $out0 + $tab->[$y]->[$x];
-  }else{
-    $result = $out1 + $tab->[$y]->[$x];
+  if ($out0 > $out1)
+  {
+      $result = $out0 + $tab->[$y]->[$x];
+  }
+  else
+  {
+      $result = $out1 + $tab->[$y]->[$x];
   }
   $cache->[$y]->[$x] = $result;
   return $result;
@@ -51,12 +59,14 @@ sub find0{
 sub find{
   my($len, $tab) = @_;
   my $tab2 = [];
-  foreach my $i (0 .. $len - 1) {
-    my $tab3 = [];
-    foreach my $j (0 .. $i + 1 - 1) {
-      $tab3->[$j] = 0;
-    }
-    $tab2->[$i] = $tab3;
+  foreach my $i (0 .. $len - 1)
+  {
+      my $tab3 = [];
+      foreach my $j (0 .. $i + 1 - 1)
+      {
+          $tab3->[$j] = 0;
+      }
+      $tab2->[$i] = $tab3;
   }
   return find0($len, $tab, $tab2, 0, 0);
 }
@@ -65,22 +75,26 @@ my $len = 0;
 $len = readint();
 readspaces();
 my $tab = [];
-foreach my $i (0 .. $len - 1) {
-  my $tab2 = [];
-  foreach my $j (0 .. $i + 1 - 1) {
-    my $tmp = 0;
-    $tmp = readint();
-    readspaces();
-    $tab2->[$j] = $tmp;
-  }
-  $tab->[$i] = $tab2;
+foreach my $i (0 .. $len - 1)
+{
+    my $tab2 = [];
+    foreach my $j (0 .. $i + 1 - 1)
+    {
+        my $tmp = 0;
+        $tmp = readint();
+        readspaces();
+        $tab2->[$j] = $tmp;
+    }
+    $tab->[$i] = $tab2;
 }
 print(find($len, $tab), "\n");
-foreach my $k (0 .. $len - 1) {
-  foreach my $l (0 .. $k) {
-    print($tab->[$k]->[$l], " ");
-  }
-  print "\n";
+foreach my $k (0 .. $len - 1)
+{
+    foreach my $l (0 .. $k)
+    {
+        print($tab->[$k]->[$l], " ");
+    }
+    print "\n";
 }
 
 

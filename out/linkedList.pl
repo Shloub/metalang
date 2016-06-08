@@ -28,11 +28,14 @@ sub is_empty{
 
 sub rev2{
   my($acc, $torev) = @_;
-  if (is_empty($torev)) {
-    return $acc;
-  }else{
-    my $acc2 = {"head" => $torev->{"head"}, "tail" => $acc};
-    return rev2($acc, $torev->{"tail"});
+  if (is_empty($torev))
+  {
+      return $acc;
+  }
+  else
+  {
+      my $acc2 = {"head" => $torev->{"head"}, "tail" => $acc};
+      return rev2($acc, $torev->{"tail"});
   }
 }
 
@@ -47,10 +50,11 @@ sub test{
   my $i = -1;
   while ($i ne 0)
   {
-    $i = readint();
-    if ($i ne 0) {
-      $list = cons($list, $i);
-    }
+      $i = readint();
+      if ($i ne 0)
+      {
+          $list = cons($list, $i);
+      }
   }
 }
 

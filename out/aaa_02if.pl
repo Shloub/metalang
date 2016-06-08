@@ -2,16 +2,20 @@
 
 sub f{
   my($i) = @_;
-  if ($i eq 0) {
-    return 1;
+  if ($i eq 0)
+  {
+      return 1;
   }
   return ();
 }
 
-if (f(4)) {
-  print "true <-\n ->\n";
-}else{
-  print "false <-\n ->\n";
+if (f(4))
+{
+    print "true <-\n ->\n";
+}
+else
+{
+    print "false <-\n ->\n";
 }
 print "small test end\n";
 

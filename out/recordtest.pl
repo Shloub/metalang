@@ -22,6 +22,6 @@ my $param = {"foo" => 0, "bar" => 0};
 $param->{"bar"} = readint();
 readspaces();
 $param->{"foo"} = readint();
-print ($param->{"bar"} + $param->{"foo"} * $param->{"bar"});
+print $param->{"bar"} + $param->{"foo"} * $param->{"bar"};
 
 

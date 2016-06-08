@@ -3,8 +3,9 @@
 sub programme_candidat{
   my($tableau, $taille) = @_;
   my $out0 = 0;
-  foreach my $i (0 .. $taille - 1) {
-    $out0 = $out0 + $tableau->[$i];
+  foreach my $i (0 .. $taille - 1)
+  {
+      $out0 = $out0 + $tableau->[$i];
   }
   return $out0;
 }
