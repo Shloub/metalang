@@ -9,7 +9,7 @@ for a in (1 ..  1000) do
     if c * c == c2 then
       p = a + b + c
       if p <= 1000 then
-        t[p] = t[p] + 1
+        t[p] += 1
       end
     end
   end

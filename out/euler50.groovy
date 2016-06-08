@@ -52,7 +52,7 @@ while (process)
     for (int i = 0; i <= stop; i ++)
       if (i + len < nprimes)
     {
-        sum[i] = sum[i] + primes[i + len]
+        sum[i] += primes[i + len];
         if (maximumprimes > sum[i])
         {
             process = true

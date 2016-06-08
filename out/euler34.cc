@@ -6,7 +6,7 @@ int main() {
     std::fill(f->begin(), f->end(), 1);
     for (int i = 1; i <= 9; i ++)
     {
-        f->at(i) = f->at(i) * i * f->at(i - 1);
+        f->at(i) *= i * f->at(i - 1);
         std::cout << f->at(i) << " ";
     }
     int out0 = 0;

@@ -60,7 +60,7 @@ def npi0(str, len):
             stack[ptrStack] = num
             ptrStack += 1
         elif str[ptrStr] == '+':
-            stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1]
+            stack[ptrStack - 2] += stack[ptrStack - 1]
             ptrStack -= 1
             ptrStr += 1
     return stack[0]

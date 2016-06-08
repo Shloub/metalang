@@ -1,6 +1,6 @@
 f = [1] * 10
 for i in range(1, 1 + 9):
-    f[i] = f[i] * i * f[i - 1]
+    f[i] *= i * f[i - 1]
     print("%d " % (f[i]), end='')
 out0 = 0
 print("")

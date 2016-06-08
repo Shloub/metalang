@@ -9,12 +9,12 @@ std::vector<int> * primesfactors(int n) {
     while (n != 1 && d * d <= n)
       if (n % d == 0)
     {
-        tab->at(d) = tab->at(d) + 1;
+        tab->at(d)++;
         n /= d;
     }
     else
       d++;
-    tab->at(n) = tab->at(n) + 1;
+    tab->at(n)++;
     return tab;
 }
 

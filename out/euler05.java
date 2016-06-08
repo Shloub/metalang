@@ -12,12 +12,12 @@ public class euler05
     while (n != 1 && d * d <= n)
       if (n % d == 0)
     {
-        tab[d] = tab[d] + 1;
+        tab[d]++;
         n /= d;
     }
     else
       d++;
-    tab[n] = tab[n] + 1;
+    tab[n]++;
     return tab;
   }
   

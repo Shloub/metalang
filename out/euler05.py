@@ -7,11 +7,11 @@ def primesfactors(n):
     d = 2
     while (n != 1 and d * d <= n):
         if mod(n, d) == 0:
-            tab[d] = tab[d] + 1
+            tab[d] += 1
             n = math.trunc(n / d)
         else:
             d += 1
-    tab[n] = tab[n] + 1
+    tab[n] += 1
     return tab
 
 lim = 20

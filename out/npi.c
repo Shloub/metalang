@@ -33,7 +33,7 @@ int npi0(char* str, int len) {
     }
     else if (str[ptrStr] == '+')
     {
-        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+        stack[ptrStack - 2] += stack[ptrStack - 1];
         ptrStack --;
         ptrStr++;
     }

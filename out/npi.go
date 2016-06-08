@@ -39,7 +39,7 @@ func npi0(str []byte, len int) int{
         stack[ptrStack] = num;
         ptrStack++;
     } else if str[ptrStr] == '+' {
-      stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+      stack[ptrStack - 2] += stack[ptrStack - 1];
         ptrStack --;
         ptrStr++;
     }  

@@ -218,12 +218,11 @@ D'ou le nom de la fonction. */
         int retenue = 0;
         for (j = 0; j < b->bigint_len; j++)
         {
-            chiffres[i + j] =
-            chiffres[i + j] + retenue + b->bigint_chiffres[j] * a->bigint_chiffres[i];
+            chiffres[i + j] += retenue + b->bigint_chiffres[j] * a->bigint_chiffres[i];
             retenue = chiffres[i + j] / 10;
             chiffres[i + j] = chiffres[i + j] % 10;
         }
-        chiffres[i + b->bigint_len] = chiffres[i + b->bigint_len] + retenue;
+        chiffres[i + b->bigint_len] += retenue;
     }
     chiffres[a->bigint_len + b->bigint_len] =
     chiffres[a->bigint_len + b->bigint_len - 1] / 10;
@@ -459,7 +458,7 @@ int euler29() {
             for (l = 2; l <= maxA; l++)
               if (bigint_eq(a_bigint[l], min0) && b[l] <= maxB)
             {
-                b[l] = b[l] + 1;
+                b[l]++;
                 a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
             }
         }

@@ -24,7 +24,7 @@ int fillPrimesFactors(std::vector<int> * t, int n, std::vector<int> * primes, in
         int d = primes->at(i);
         while (n % d == 0)
         {
-            t->at(d) = t->at(d) + 1;
+            t->at(d)++;
             n /= d;
         }
         if (n == 1)

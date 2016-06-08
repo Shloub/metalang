@@ -17,7 +17,7 @@ public class euler39
           {
               int p = a + b + c;
               if (p <= 1000)
-                t[p] = t[p] + 1;
+                t[p]++;
           }
     }
     int j = 0;

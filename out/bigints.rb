@@ -187,11 +187,11 @@ D'ou le nom de la fonction.
     for i in (0 ..  a["bigint_len"] - 1) do
       retenue = 0
       for j in (0 ..  b["bigint_len"] - 1) do
-        chiffres[i + j] = chiffres[i + j] + retenue + b["bigint_chiffres"][j] * a["bigint_chiffres"][i]
+        chiffres[i + j] += retenue + b["bigint_chiffres"][j] * a["bigint_chiffres"][i]
         retenue = (chiffres[i + j].to_f / 10).to_i
         chiffres[i + j] = mod(chiffres[i + j], 10)
       end
-      chiffres[i + b["bigint_len"]] = chiffres[i + b["bigint_len"]] + retenue
+      chiffres[i + b["bigint_len"]] += retenue
     end
     chiffres[a["bigint_len"] + b["bigint_len"]] = (chiffres[a["bigint_len"] + b["bigint_len"] - 1].to_f / 10).to_i
     chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10)
@@ -421,7 +421,7 @@ def euler29(  )
         n += 1
         for l in (2 ..  maxA) do
           if bigint_eq(a_bigint[l], min0) && b[l] <= maxB then
-            b[l] = b[l] + 1
+            b[l] += 1
             a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l])
           end
         end

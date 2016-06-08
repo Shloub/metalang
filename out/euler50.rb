@@ -44,7 +44,7 @@ while process do
   process = false
   for i in (0 ..  stop) do
     if i + len < nprimes then
-      sum[i] = sum[i] + primes[i + len]
+      sum[i] += primes[i + len]
       if maximumprimes > sum[i] then
         process = true
         if era[sum[i]] == sum[i] then

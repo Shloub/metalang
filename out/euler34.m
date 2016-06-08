@@ -10,7 +10,7 @@ int main(void){
     f[j] = 1;
   for (i = 1; i <= 9; i++)
   {
-      f[i] = f[i] * i * f[i - 1];
+      f[i] *= i * f[i - 1];
       printf("%d ", f[i]);
   }
   int out0 = 0;
