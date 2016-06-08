@@ -15,10 +15,8 @@ function scan($format){
 
 function &cons(&$list, $i) {
     $out0 = array(
-      "head"=>$i,
-      "tail"=>$list
-    );
-    
+        "head" => $i,
+        "tail" => $list);
     return $out0;
 }
 
@@ -30,14 +28,12 @@ function is_empty(&$foo) {
 
 function &rev2(&$acc, &$torev) {
     if (is_empty($torev))
-      return $acc;
+        return $acc;
     else
     {
         $acc2 = array(
-          "head"=>$torev["head"],
-          "tail"=>$acc
-        );
-        
+            "head" => $torev["head"],
+            "tail" => $acc);
         return rev2($acc, $torev["tail"]);
     }
 }
@@ -55,7 +51,7 @@ function test(&$empty) {
     {
         list($i) = scan("%d");
         if ($i != 0)
-          $list = cons($list, $i);
+            $list = cons($list, $i);
     }
 }
 

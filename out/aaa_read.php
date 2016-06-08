@@ -37,7 +37,7 @@ $len *= 2;
 echo "len*2=", $len, "\n";
 $len = intval($len / 2);
 $tab = array();
-for ($i = 0; $i < $len; $i++)
+for ($i = 0; $i < $len; $i += 1)
 {
     list($tmpi1) = scan("%d");
     scantrim();
@@ -46,7 +46,7 @@ for ($i = 0; $i < $len; $i++)
 }
 echo "\n";
 $tab2 = array();
-for ($i_ = 0; $i_ < $len; $i_++)
+for ($i_ = 0; $i_ < $len; $i_ += 1)
 {
     list($tmpi2) = scan("%d");
     scantrim();
@@ -57,15 +57,15 @@ list($strlen) = scan("%d");
 scantrim();
 echo $strlen, "=strlen\n";
 $tab4 = array();
-for ($toto = 0; $toto < $strlen; $toto++)
+for ($toto = 0; $toto < $strlen; $toto += 1)
 {
     $tmpc = nextChar();
     $c = ord($tmpc);
     echo $tmpc, ":", $c, " ";
     if ($tmpc != " ")
-      $c = ($c - ord("a") + 13) % 26 + ord("a");
+        $c = ($c - ord("a") + 13) % 26 + ord("a");
     $tab4[$toto] = chr($c);
 }
-for ($j = 0; $j < $strlen; $j++)
-  echo $tab4[$j];
+for ($j = 0; $j < $strlen; $j += 1)
+    echo $tab4[$j];
 

@@ -28,12 +28,12 @@ function montagnes0(&$tab, $len) {
     {
         $x = $tab[$i];
         while ($j >= 0 && $x > $tab[$len - $j])
-          $j --;
-        $j++;
+            $j -= 1;
+        $j += 1;
         $tab[$len - $j] = $x;
         if ($j > $max0)
-          $max0 = $j;
-        $i --;
+            $max0 = $j;
+        $i -= 1;
     }
     return $max0;
 }
@@ -42,7 +42,7 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0; $i < $len; $i++)
+for ($i = 0; $i < $len; $i += 1)
 {
     $x = 0;
     list($x) = scan("%d");
