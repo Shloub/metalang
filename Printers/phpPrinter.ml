@@ -240,6 +240,6 @@ function nextChar(){
              self#binding a) sep_c ) li
 
   method binding f i = Format.fprintf f "$%a" super#binding i
-
+  method declare_for s f li = ()
   method decl_type f name t = ()
 end
