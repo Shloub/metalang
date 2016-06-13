@@ -2,9 +2,9 @@ package main
 import "fmt"
 func max2_(a int, b int) int{
   if a > b {
-    return a
-  } else {
-    return b
+      return a
+  }else {
+      return b
   }
 }
 
@@ -28,23 +28,23 @@ c * f * 10000
 */
 func chiffre(c int, m int) int{
   if c == 0 {
-    return m % 10
-  } else {
-    return chiffre(c - 1, m / 10)
+      return m % 10
+  }else {
+      return chiffre(c - 1, m / 10)
   }
 }
 
 func main() {
-  var m int = 1
-  for a := 0 ; a <= 9; a++ {
-    for f := 1 ; f <= 9; f++ {
-        for d := 0 ; d <= 9; d++ {
-            for c := 1 ; c <= 9; c++ {
-                for b := 0 ; b <= 9; b++ {
-                    for e := 0 ; e <= 9; e++ {
-                        var mul int = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
+  m := 1
+  for a := 0; a <= 9; a += 1 {
+      for f := 1; f <= 9; f += 1 {
+          for d := 0; d <= 9; d += 1 {
+              for c := 1; c <= 9; c += 1 {
+                  for b := 0; b <= 9; b += 1 {
+                      for e := 0; e <= 9; e += 1 {
+                          mul := a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
                           if chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul) {
-                            m = max2_(mul, m);
+                              m = max2_(mul, m)
                           }
                       }
                   }
@@ -52,6 +52,6 @@ func main() {
           }
       }
   }
-  fmt.Printf("%d\n", m);
+  fmt.Printf("%d\n", m)
 }
 

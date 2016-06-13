@@ -22,44 +22,44 @@ func main() {
   var len int
   fmt.Fscanf(reader, "%d", &len)
   skip()
-  fmt.Printf("%d=len\n", len);
-  len *= 2;
-  fmt.Printf("len*2=%d\n", len);
-  len /= 2;
+  fmt.Printf("%d=len\n", len)
+  len *= 2
+  fmt.Printf("len*2=%d\n", len)
+  len /= 2
   var tab []int = make([]int, len)
-  for i := 0 ; i < len; i++ {
-    var tmpi1 int
-    fmt.Fscanf(reader, "%d", &tmpi1)
+  for i := 0; i < len; i += 1 {
+      var tmpi1 int
+      fmt.Fscanf(reader, "%d", &tmpi1)
       skip()
-      fmt.Printf("%d=>%d ", i, tmpi1);
-      tab[i] = tmpi1;
+      fmt.Printf("%d=>%d ", i, tmpi1)
+      tab[i] = tmpi1
   }
-  fmt.Printf("\n");
+  fmt.Printf("\n")
   var tab2 []int = make([]int, len)
-  for i_ := 0 ; i_ < len; i_++ {
-    var tmpi2 int
-    fmt.Fscanf(reader, "%d", &tmpi2)
+  for i_ := 0; i_ < len; i_ += 1 {
+      var tmpi2 int
+      fmt.Fscanf(reader, "%d", &tmpi2)
       skip()
-      fmt.Printf("%d==>%d ", i_, tmpi2);
-      tab2[i_] = tmpi2;
+      fmt.Printf("%d==>%d ", i_, tmpi2)
+      tab2[i_] = tmpi2
   }
   var strlen int
   fmt.Fscanf(reader, "%d", &strlen)
   skip()
-  fmt.Printf("%d=strlen\n", strlen);
+  fmt.Printf("%d=strlen\n", strlen)
   var tab4 []byte = make([]byte, strlen)
-  for toto := 0 ; toto < strlen; toto++ {
-    var tmpc byte
-    fmt.Fscanf(reader, "%c", &tmpc)
-      var c int = (int)(tmpc)
-      fmt.Printf("%c:%d ", tmpc, c);
+  for toto := 0; toto < strlen; toto += 1 {
+      var tmpc byte
+      fmt.Fscanf(reader, "%c", &tmpc)
+      c := (int)(tmpc)
+      fmt.Printf("%c:%d ", tmpc, c)
       if tmpc != ' ' {
-        c = (c - (int)('a') + 13) % 26 + (int)('a');
+          c = (c - (int)('a') + 13) % 26 + (int)('a')
       }
-      tab4[toto] = (byte)(c);
+      tab4[toto] = (byte)(c)
   }
-  for j := 0 ; j < strlen; j++ {
-    fmt.Printf("%c", tab4[j]);
+  for j := 0; j < strlen; j += 1 {
+      fmt.Printf("%c", tab4[j])
   }
 }
 

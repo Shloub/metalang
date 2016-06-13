@@ -18,17 +18,17 @@ func skip() {
 */
 func result(len int, tab []int) int{
   var tab2 []bool = make([]bool, len)
-  for i := 0 ; i < len; i++ {
-    tab2[i] = false;
+  for i := 0; i < len; i += 1 {
+      tab2[i] = false
   }
-  for i1 := 0 ; i1 < len; i1++ {
-    fmt.Printf("%d ", tab[i1]);
-      tab2[tab[i1]] = true;
+  for i1 := 0; i1 < len; i1 += 1 {
+      fmt.Printf("%d ", tab[i1])
+      tab2[tab[i1]] = true
   }
-  fmt.Printf("\n");
-  for i2 := 0 ; i2 < len; i2++ {
-    if !tab2[i2] {
-        return i2
+  fmt.Printf("\n")
+  for i2 := 0; i2 < len; i2 += 1 {
+      if !tab2[i2] {
+          return i2
       }
   }
   return -1
@@ -39,12 +39,12 @@ func main() {
   var len int
   fmt.Fscanf(reader, "%d", &len)
   skip()
-  fmt.Printf("%d\n", len);
+  fmt.Printf("%d\n", len)
   var tab []int = make([]int, len)
-  for a := 0 ; a < len; a++ {
-    fmt.Fscanf(reader, "%d", &tab[a])
+  for a := 0; a < len; a += 1 {
+      fmt.Fscanf(reader, "%d", &tab[a])
       skip()
   }
-  fmt.Printf("%d\n", result(len, tab));
+  fmt.Printf("%d\n", result(len, tab))
 }
 

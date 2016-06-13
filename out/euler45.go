@@ -2,17 +2,17 @@ package main
 import "fmt"
 func triangle(n int) int{
   if n % 2 == 0 {
-    return (n / 2) * (n + 1)
-  } else {
-    return n * ((n + 1) / 2)
+      return (n / 2) * (n + 1)
+  }else {
+      return n * ((n + 1) / 2)
   }
 }
 
 func penta(n int) int{
   if n % 2 == 0 {
-    return (n / 2) * (3 * n - 1)
-  } else {
-    return ((3 * n - 1) / 2) * n
+      return (n / 2) * (3 * n - 1)
+  }else {
+      return ((3 * n - 1) / 2) * n
   }
 }
 
@@ -22,39 +22,43 @@ func hexa(n int) int{
 
 func findPenta2(n int, a int, b int) bool{
   if b == a + 1 {
-    return penta(a) == n || penta(b) == n
+      return penta(a) == n || penta(b) == n
   }
-  var c int = (a + b) / 2
-  var p int = penta(c)
+  c := (a + b) / 2
+  p := penta(c)
   if p == n {
-    return true
-  } else if p < n {
-    return findPenta2(n, c, b)
-  } else {
-    return findPenta2(n, a, c)
-  } 
+      return true
+  }else {
+      if p < n {
+          return findPenta2(n, c, b)
+      }else {
+          return findPenta2(n, a, c)
+      }
+  }
 }
 
 func findHexa2(n int, a int, b int) bool{
   if b == a + 1 {
-    return hexa(a) == n || hexa(b) == n
+      return hexa(a) == n || hexa(b) == n
   }
-  var c int = (a + b) / 2
-  var p int = hexa(c)
+  c := (a + b) / 2
+  p := hexa(c)
   if p == n {
-    return true
-  } else if p < n {
-    return findHexa2(n, c, b)
-  } else {
-    return findHexa2(n, a, c)
-  } 
+      return true
+  }else {
+      if p < n {
+          return findHexa2(n, c, b)
+      }else {
+          return findHexa2(n, a, c)
+      }
+  }
 }
 
 func main() {
-  for n := 285 ; n <= 55385; n++ {
-    var t int = triangle(n)
+  for n := 285; n <= 55385; n += 1 {
+      t := triangle(n)
       if findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10) {
-        fmt.Printf("%d\n%d\n", n, t);
+          fmt.Printf("%d\n%d\n", n, t)
       }
   }
 }

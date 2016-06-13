@@ -22,43 +22,47 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 */
 func npi0(str []byte, len int) int{
   var stack []int = make([]int, len)
-  for i := 0 ; i < len; i++ {
-    stack[i] = 0;
+  for i := 0; i < len; i += 1 {
+      stack[i] = 0
   }
-  var ptrStack int = 0
-  var ptrStr int = 0
-  for ptrStr < len{
-    if str[ptrStr] == ' ' {
-      ptrStr++;
-    } else if is_number(str[ptrStr]) {
-      var num int = 0
-        for str[ptrStr] != ' '{
-          num = num * 10 + (int)(str[ptrStr]) - (int)('0');
-          ptrStr++;
-        }
-        stack[ptrStack] = num;
-        ptrStack++;
-    } else if str[ptrStr] == '+' {
-      stack[ptrStack - 2] += stack[ptrStack - 1];
-        ptrStack --;
-        ptrStr++;
-    }  
+  ptrStack := 0
+  ptrStr := 0
+  for ptrStr < len {
+      if str[ptrStr] == ' ' {
+          ptrStr += 1
+      }else {
+          if is_number(str[ptrStr]) {
+              num := 0
+              for str[ptrStr] != ' ' {
+                  num = num * 10 + (int)(str[ptrStr]) - (int)('0')
+                  ptrStr += 1
+              }
+              stack[ptrStack] = num
+              ptrStack += 1
+          }else {
+              if str[ptrStr] == '+' {
+                  stack[ptrStack - 2] += stack[ptrStack - 1]
+                  ptrStack -= 1
+                  ptrStr += 1
+              }
+          }
+      }
   }
   return stack[0]
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = 0
+  len := 0
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []byte = make([]byte, len)
-  for i := 0 ; i < len; i++ {
-    var tmp byte = '\x00'
+  for i := 0; i < len; i += 1 {
+      var tmp byte = '\x00'
       fmt.Fscanf(reader, "%c", &tmp)
-      tab[i] = tmp;
+      tab[i] = tmp
   }
-  var result int = npi0(tab, len)
-  fmt.Printf("%d", result);
+  result := npi0(tab, len)
+  fmt.Printf("%d", result)
 }
 

@@ -7,6 +7,6 @@ const (
 );
 func main() {
   var foo_val foo_t = Foo
-  _ = foo_val
+  _  = foo_val
 }
 

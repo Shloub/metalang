@@ -25,77 +25,77 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 */
 func okdigits(ok []bool, n int) bool{
   if n == 0 {
-    return true
-  } else {
-    var digit int = n % 10
-    if ok[digit] {
-      ok[digit] = false;
-        var o bool = okdigits(ok, n / 10)
-        ok[digit] = true;
-        return o
-    } else {
-      return false
-    }
+      return true
+  }else {
+      digit := n % 10
+      if ok[digit] {
+          ok[digit] = false
+          var o bool = okdigits(ok, n / 10)
+          ok[digit] = true
+          return o
+      }else {
+          return false
+      }
   }
 }
 
 func main() {
-  var count int = 0
+  count := 0
   var allowed []bool = make([]bool, 10)
-  for i := 0 ; i < 10; i++ {
-    allowed[i] = i != 0;
+  for i := 0; i < 10; i += 1 {
+      allowed[i] = i != 0
   }
   var counted []bool = make([]bool, 100000)
-  for j := 0 ; j < 100000; j++ {
-    counted[j] = false;
+  for j := 0; j < 100000; j += 1 {
+      counted[j] = false
   }
-  for e := 1 ; e <= 9; e++ {
-    allowed[e] = false;
-      for b := 1 ; b <= 9; b++ {
-        if allowed[b] {
-            allowed[b] = false;
-              var be int = b * e % 10
+  for e := 1; e <= 9; e += 1 {
+      allowed[e] = false
+      for b := 1; b <= 9; b += 1 {
+          if allowed[b] {
+              allowed[b] = false
+              be := b * e % 10
               if allowed[be] {
-                allowed[be] = false;
-                  for a := 1 ; a <= 9; a++ {
-                    if allowed[a] {
-                        allowed[a] = false;
-                          for c := 1 ; c <= 9; c++ {
-                            if allowed[c] {
-                                allowed[c] = false;
-                                  for d := 1 ; d <= 9; d++ {
-                                    if allowed[d] {
-                                        allowed[d] = false;
+                  allowed[be] = false
+                  for a := 1; a <= 9; a += 1 {
+                      if allowed[a] {
+                          allowed[a] = false
+                          for c := 1; c <= 9; c += 1 {
+                              if allowed[c] {
+                                  allowed[c] = false
+                                  for d := 1; d <= 9; d += 1 {
+                                      if allowed[d] {
+                                          allowed[d] = false
                                           /* 2 * 3 digits */
-                                          var product int = (a * 10 + b) * (c * 100 + d * 10 + e)
+                                          product := (a * 10 + b) * (c * 100 + d * 10 + e)
                                           if !counted[product] && okdigits(allowed, product / 10) {
-                                            counted[product] = true;
-                                              count += product;
-                                              fmt.Printf("%d ", product);
+                                              counted[product] = true
+                                              count += product
+                                              fmt.Printf("%d ", product)
                                           }
                                           /* 1  * 4 digits */
-                                          var product2 int = b * (a * 1000 + c * 100 + d * 10 + e)
+                                          product2 := b * (a * 1000 + c * 100 + d * 10 + e)
                                           if !counted[product2] && okdigits(allowed, product2 / 10) {
-                                            counted[product2] = true;
-                                              count += product2;
-                                              fmt.Printf("%d ", product2);
+                                              counted[product2] = true
+                                              count += product2
+                                              fmt.Printf("%d ", product2)
                                           }
-                                          allowed[d] = true;
+                                          allowed[d] = true
                                       }
                                   }
-                                  allowed[c] = true;
+                                  allowed[c] = true
                               }
                           }
-                          allowed[a] = true;
+                          allowed[a] = true
                       }
                   }
-                  allowed[be] = true;
+                  allowed[be] = true
               }
-              allowed[b] = true;
+              allowed[b] = true
           }
       }
-      allowed[e] = true;
+      allowed[e] = true
   }
-  fmt.Printf("%d\n", count);
+  fmt.Printf("%d\n", count)
 }
 

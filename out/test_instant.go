@@ -5,6 +5,6 @@ func foo(a int, b int) int{
 }
 
 func main() {
-  fmt.Printf("%d", 10);
+  fmt.Printf("%d", 10)
 }
 

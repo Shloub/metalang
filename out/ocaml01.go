@@ -1,14 +1,14 @@
 package main
 func foo() int{
-  for i := 0 ; i <= 10; i++ {
-    
+  for i := 0; i <= 10; i += 1 {
+      
   }
   return 0
 }
 
 func bar() int{
-  for i := 0 ; i <= 10; i++ {
-    var a int = 0
+  for i := 0; i <= 10; i += 1 {
+      a := 0
       _ = a
   }
   return 0
