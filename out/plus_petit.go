@@ -14,30 +14,30 @@ func skip() {
   }
 }
 func go0(tab []int, a int, b int) int{
-  var m int = (a + b) / 2
+  m := (a + b) / 2
   if a == m {
-    if tab[a] == m {
-        return b
-      } else {
-        return a
+      if tab[a] == m {
+          return b
+      }else {
+          return a
       }
   }
-  var i int = a
-  var j int = b
-  for i < j{
-    var e int = tab[i]
-    if e < m {
-      i++;
-    } else {
-      j --;
-      tab[i] = tab[j];
-      tab[j] = e;
-    }
+  i := a
+  j := b
+  for i < j {
+      e := tab[i]
+      if e < m {
+          i += 1
+      }else {
+          j -= 1
+          tab[i] = tab[j]
+          tab[j] = e
+      }
   }
   if i < m {
-    return go0(tab, a, m)
-  } else {
-    return go0(tab, m, b)
+      return go0(tab, a, m)
+  }else {
+      return go0(tab, m, b)
   }
 }
 
@@ -47,16 +47,16 @@ func plus_petit0(tab []int, len int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = 0
+  len := 0
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0 ; i < len; i++ {
-    var tmp int = 0
+  for i := 0; i < len; i += 1 {
+      tmp := 0
       fmt.Fscanf(reader, "%d", &tmp)
       skip()
-      tab[i] = tmp;
+      tab[i] = tmp
   }
-  fmt.Printf("%d", plus_petit0(tab, len));
+  fmt.Printf("%d", plus_petit0(tab, len))
 }
 

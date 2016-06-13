@@ -18,6 +18,6 @@ func main() {
   var len int
   fmt.Fscanf(reader, "%d", &len)
   skip()
-  fmt.Printf("%d\n", len);
+  fmt.Printf("%d\n", len)
 }
 

@@ -4,10 +4,10 @@ import "os"
 import "bufio"
 var reader *bufio.Reader
 func foo() {
-  var a int = 0
+  a := 0
   _ = a
   /* test */
-  a++;
+  a += 1
   /* test 2 */
 }
 
@@ -17,22 +17,22 @@ func foo2() {
 
 func foo3() {
   if 1 == 1 {
-    
+      
   }
 }
 
 func sumdiv(n int) int{
   /* On désire renvoyer la somme des diviseurs */
-  var out0 int = 0
+  out0 := 0
   /* On déclare un entier qui contiendra la somme */
-  for i := 1 ; i <= n; i++ {
-    /* La boucle : i est le diviseur potentiel*/
+  for i := 1; i <= n; i += 1 {
+      /* La boucle : i est le diviseur potentiel*/
       if n % i == 0 {
-        /* Si i divise */
-          out0 += i;
+          /* Si i divise */
+          out0 += i
           /* On incrémente */
-      } else {
-        /* nop */
+      }else {
+          /* nop */
       }
   }
   return out0
@@ -42,9 +42,9 @@ func sumdiv(n int) int{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   /* Programme principal */
-  var n int = 0
+  n := 0
   fmt.Fscanf(reader, "%d", &n)
   /* Lecture de l'entier */
-  fmt.Printf("%d", sumdiv(n));
+  fmt.Printf("%d", sumdiv(n))
 }
 

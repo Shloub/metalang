@@ -1,10 +1,10 @@
 package main
 import "fmt"
 func main() {
-  var lim int = 100
-  var sum int = lim * (lim + 1) / 2
-  var carressum int = sum * sum
-  var sumcarres int = lim * (lim + 1) * (2 * lim + 1) / 6
-  fmt.Printf("%d", carressum - sumcarres);
+  lim := 100
+  sum := lim * (lim + 1) / 2
+  carressum := sum * sum
+  sumcarres := lim * (lim + 1) * (2 * lim + 1) / 6
+  fmt.Printf("%d", carressum - sumcarres)
 }
 

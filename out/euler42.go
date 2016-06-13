@@ -19,43 +19,43 @@ func is_triangular(n int) bool{
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-  var a int = int(math.Sqrt(float64(n * 2)))
+  a := int(math.Sqrt(float64(n * 2)))
   return a * (a + 1) == n * 2
 }
 
 func score() int{
-  skip()
   var len int
+  skip()
   fmt.Fscanf(reader, "%d", &len)
   skip()
-  var sum int = 0
-  for i := 1 ; i <= len; i++ {
-    var c byte
-    fmt.Fscanf(reader, "%c", &c)
-      sum += (int)(c) - (int)('A') + 1;
+  sum := 0
+  for i := 1; i <= len; i += 1 {
+      var c byte
+      fmt.Fscanf(reader, "%c", &c)
+      sum += (int)(c) - (int)('A') + 1
       /*		print c print " " print sum print " " */
   }
   if is_triangular(sum) {
-    return 1
-  } else {
-    return 0
+      return 1
+  }else {
+      return 0
   }
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  for i := 1 ; i <= 55; i++ {
-    if is_triangular(i) {
-        fmt.Printf("%d ", i);
+  for i := 1; i <= 55; i += 1 {
+      if is_triangular(i) {
+          fmt.Printf("%d ", i)
       }
   }
-  fmt.Printf("\n");
-  var sum int = 0
+  fmt.Printf("\n")
+  sum := 0
   var n int
   fmt.Fscanf(reader, "%d", &n)
-  for i := 1 ; i <= n; i++ {
-    sum += score();
+  for i := 1; i <= n; i += 1 {
+      sum += score()
   }
-  fmt.Printf("%d\n", sum);
+  fmt.Printf("%d\n", sum)
 }
 

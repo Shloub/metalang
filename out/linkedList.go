@@ -11,8 +11,8 @@ type intlist struct {
 
 func cons(list * intlist, i int) * intlist{
   var out0 * intlist = new (intlist)
-  (*out0).head=i
-  (*out0).tail=list
+      (*out0).head=i
+      (*out0).tail=list
   return out0
 }
 
@@ -22,12 +22,12 @@ func is_empty(foo * intlist) bool{
 
 func rev2(acc * intlist, torev * intlist) * intlist{
   if is_empty(torev) {
-    return acc
-  } else {
-    var acc2 * intlist = new (intlist)
-    (*acc2).head=(*torev).head
-    (*acc2).tail=acc
-    return rev2(acc, (*torev).tail)
+      return acc
+  }else {
+      var acc2 * intlist = new (intlist)
+          (*acc2).head=(*torev).head
+          (*acc2).tail=acc
+      return rev2(acc, (*torev).tail)
   }
 }
 
@@ -37,12 +37,12 @@ func rev(empty * intlist, torev * intlist) * intlist{
 
 func test(empty * intlist) {
   var list * intlist = empty
-  var i int = -1
-  for i != 0{
-    fmt.Fscanf(reader, "%d", &i)
-    if i != 0 {
-      list = cons(list, i);
-    }
+  i := -1
+  for i != 0 {
+      fmt.Fscanf(reader, "%d", &i)
+      if i != 0 {
+          list = cons(list, i)
+      }
   }
 }
 

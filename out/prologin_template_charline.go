@@ -14,12 +14,12 @@ func skip() {
   }
 }
 func programme_candidat(tableau []byte, taille int) int{
-  var out0 int = 0
-  for i := 0 ; i < taille; i++ {
-    out0 += (int)(tableau[i]) * i;
-      fmt.Printf("%c", tableau[i]);
+  out0 := 0
+  for i := 0; i < taille; i += 1 {
+      out0 += (int)(tableau[i]) * i
+      fmt.Printf("%c", tableau[i])
   }
-  fmt.Printf("--\n");
+  fmt.Printf("--\n")
   return out0
 }
 
@@ -29,10 +29,10 @@ func main() {
   fmt.Fscanf(reader, "%d", &taille)
   skip()
   var tableau []byte = make([]byte, taille)
-  for a := 0 ; a < taille; a++ {
-    fmt.Fscanf(reader, "%c", &tableau[a])
+  for a := 0; a < taille; a += 1 {
+      fmt.Fscanf(reader, "%c", &tableau[a])
   }
   skip()
-  fmt.Printf("%d\n", programme_candidat(tableau, taille));
+  fmt.Printf("%d\n", programme_candidat(tableau, taille))
 }
 

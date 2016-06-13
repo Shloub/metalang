@@ -17,28 +17,28 @@ func skip() {
 La suite de fibonaci
 */
 func fibo0(a int, b int, i int) int{
-  var out0 int = 0
-  var a2 int = a
-  var b2 int = b
-  for j := 0 ; j <= i + 1; j++ {
-    out0 += a2;
-      var tmp int = b2
-      b2 += a2;
-      a2 = tmp;
+  out0 := 0
+  a2 := a
+  b2 := b
+  for j := 0; j <= i + 1; j += 1 {
+      out0 += a2
+      tmp := b2
+      b2 += a2
+      a2 = tmp
   }
   return out0
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var a int = 0
-  var b int = 0
-  var i int = 0
+  a := 0
+  b := 0
+  i := 0
   fmt.Fscanf(reader, "%d", &a)
   skip()
   fmt.Fscanf(reader, "%d", &b)
   skip()
   fmt.Fscanf(reader, "%d", &i)
-  fmt.Printf("%d", fibo0(a, b, i));
+  fmt.Printf("%d", fibo0(a, b, i))
 }
 
