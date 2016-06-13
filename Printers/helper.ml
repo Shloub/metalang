@@ -358,3 +358,17 @@ let format_to_string li =
     | CharFormat -> "%c"
     | StringConstant s -> String.replace "%" "%%" s ) li
   in String.concat "" li
+
+let split_multi_read li space_format format_type =
+  let open Ast in
+  let format, variables, declared = List.fold_left (fun (format, variables, declared) i -> match i with
+  | Instr.Separation -> (format ^ space_format, variables, declared)
+  | Instr.DeclRead (t, var, _) ->
+      let mutable_ = Mutable.var var in
+      let addons = format_type t in
+      (format ^ addons, mutable_::variables, (t, var)::declared)
+  | Instr.ReadExpr (t, mutable_) ->
+      let addons = format_type t in
+      (format ^ addons, mutable_::variables, declared)
+                                                   ) ("", [], []) li
+      in format, List.rev variables, declared
