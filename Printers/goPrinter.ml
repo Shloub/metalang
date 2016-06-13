@@ -88,63 +88,66 @@ let print_instr tyenv used_variables c i =
   let ptype = ptype tyenv in
   let open Ast.Instr in
   let open Format in
-  let block f li = fprintf f " {@\n%a@]@\n}" (print_list (fun f i -> i.p f noseppt) sep_nl) li in
-  let p f pend = match i with
+  let block f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f false) sep_nl) li in  
+  let plifor f li = print_list (fun f i -> i.p f false) (sep "%a,%a") f li in
+  let p f inelseif = match i with
   | Declare (var,  Type.Fixed.F(_, Type.Integer), e, _) ->
       if BindingSet.mem var used_variables then
-        fprintf f "%a := %a%a" c.print_varname var e nop pend ()
+        fprintf f "%a := %a" c.print_varname var e nop
       else
-        fprintf f "%a := %a%a@\n@[<h>_ = %a@]%a"
-          c.print_varname var e nop pend ()
-          c.print_varname var pend ()
+        fprintf f "%a := %a@\n@[<h>_ = %a@]"
+          c.print_varname var e nop
+          c.print_varname var
   | Declare (var, ty, e, _) -> if BindingSet.mem var used_variables then
-      fprintf f "var %a %a = %a%a" c.print_varname var ptype ty e nop pend ()
+      fprintf f "var %a %a = %a" c.print_varname var ptype ty e nop
   else
-      fprintf f "var %a %a = %a%a@\n_  = %a%a" c.print_varname var ptype ty e nop pend ()
-        c.print_varname var pend ()
-    | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
-    | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
+      fprintf f "var %a %a = %a@\n_  = %a" c.print_varname var ptype ty e nop
+        c.print_varname var
+    | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a" (c.print_mut c nop) mut c.print_op op e nop
+    | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
     | Loop (var, e1, e2, li) -> assert false
     | ClikeLoop (init, cond, incr, li) ->
-        fprintf f "@[<v 4>for %a; %a; %a%a"
-          plifor init
-          cond nop
-          plifor incr
-          block li
-    | While (e, li) -> fprintf f "@[<v 4>for @[<h>%a@]%a" e nop block li
+        fprintf f "@[<v 4>for %a; %a; %a {%a@]@\n}"
+          plifor init cond nop plifor incr block li
+    | While (e, li) -> fprintf f "@[<v 4>for @[<h>%a@] {%a@]@\n}" e nop block li
     | Comment s -> fprintf f "/*%s*/" s
     | Tag s -> fprintf f "/*%S*/" s
-    | Return e -> fprintf f "return %a%a" e nop pend ()
+    | Return e -> fprintf f "return %a" e nop
     | AllocArray (name, t, e, None, opt) -> fprintf f
-          "@[<h>var %a@ []%a@ = make([]%a, %a)%a@]"
-          c.print_varname name
-          ptype t ptype t
-          e nop
-          pend ()
+          "@[<h>var %a@ []%a@ = make([]%a, %a)@]"
+          c.print_varname name ptype t ptype t e nop
     | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
     | AllocArrayConst (name, ty, len, lief, opt) -> assert false
     | AllocRecord (name, ty, list, opt) ->
-        fprintf f "@[<v 4>var %a %a = new (%a)@\n%a%a@]" c.print_varname name
+        fprintf f "@[<v 4>var %a %a = new (%a)@\n%a@]" c.print_varname name
           ptype ty
           ptypename ty
           (print_list (fun f (field, x) -> fprintf f "(*%a).%s=%a"
               c.print_varname name
               field x nop) sep_nl) list
-          pend ()
+    | If (e, listif, []) when inelseif ->
+        fprintf f "if %a {%a@]@\n}" e nop block listif
+    | If (e, listif, [elsecase]) when inelseif && elsecase.is_if ->
+        fprintf f "if %a {%a@]@\n@[<v 4>} else %a" e nop block listif elsecase.p true          
+    | If (e, listif, listelse)  when inelseif ->
+        fprintf f "if %a {%a@]@\n@[<v 4>} else {%a@]@\n}" e nop block listif block listelse
     | If (e, listif, []) ->
-        fprintf f "@[<v 4>if %a%a" e nop block listif
+        fprintf f "@[<v 4>if %a {%a@]@\n}" e nop block listif
+    | If (e, listif, [elsecase]) when elsecase.is_if ->
+        fprintf f "@[<v 4>if %a {%a@]@\n@[<v 4>} else %a" e nop block listif elsecase.p true          
     | If (e, listif, listelse) ->
-        fprintf f "@[<v 4>if %a%a@[<v 3>else%a" e nop block listif block listelse
+        fprintf f "@[<v 4>if %a {%a@]@\n@[<v 4>} else {%a@]@\n}" e nop block listif block listelse
+          
     | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
-      | Some ( (t, params, code) ) -> pmacros f "%s%a" t params code li nop pend ()
-      | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
+      | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
+      | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
     end
     | Print li->
         let format, exprs = extract_multi_print clike_noformat format_type li in
         begin match exprs with
-        | [] -> fprintf f "fmt.Printf(\"%s\")%a" format pend ()
-        | _ -> fprintf f "fmt.Printf(\"%s\", %a)%a" format
-              (print_list (fun f (t, e) -> e f nop) sep_c) exprs pend ()
+        | [] -> fprintf f "fmt.Printf(\"%s\")" format
+        | _ -> fprintf f "fmt.Printf(\"%s\", %a)" format
+              (print_list (fun f (t, e) -> e f nop) sep_c) exprs
         end
     | Read li ->
         let declare_variables f = function
@@ -166,7 +169,7 @@ let print_instr tyenv used_variables c i =
         fprintf f "%a%a"
           declare_variables declared
           (print_list (fun f g -> g f) sep_nl) li
-    | Untuple (li, expr, opt) -> fprintf f "var (%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
+    | Untuple (li, expr, opt) -> fprintf f "var (%a) = %a" (print_list c.print_varname sep_c) (List.map snd li) expr nop
     | Unquote e -> assert false in
   let is_multi_instr = match i with
   | Read (hd::tl) -> true
@@ -178,7 +181,7 @@ let print_instr tyenv used_variables c i =
    is_if_noelse=is_if_noelse i;
    is_comment=is_comment i;
    p=p;
-   default = noseppt;
+   default = false;
    print_lief = c.print_lief;
  }
 
