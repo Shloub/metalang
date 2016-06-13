@@ -14,15 +14,15 @@ func skip() {
   }
 }
 func summax(lst []int, len int) int{
-  var current int = 0
-  var max0 int = 0
-  for i := 0 ; i < len; i++ {
-    current += lst[i];
+  current := 0
+  max0 := 0
+  for i := 0; i < len; i += 1 {
+      current += lst[i]
       if current < 0 {
-        current = 0;
+          current = 0
       }
       if max0 < current {
-        max0 = current;
+          max0 = current
       }
   }
   return max0
@@ -30,17 +30,17 @@ func summax(lst []int, len int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = 0
+  len := 0
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0 ; i < len; i++ {
-    var tmp int = 0
+  for i := 0; i < len; i += 1 {
+      tmp := 0
       fmt.Fscanf(reader, "%d", &tmp)
       skip()
-      tab[i] = tmp;
+      tab[i] = tmp
   }
-  var result int = summax(tab, len)
-  fmt.Printf("%d", result);
+  result := summax(tab, len)
+  fmt.Printf("%d", result)
 }
 

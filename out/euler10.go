@@ -1,15 +1,15 @@
 package main
 import "fmt"
 func eratostene(t []int, max0 int) int{
-  var sum int = 0
-  for i := 2 ; i < max0; i++ {
-    if t[i] == i {
-        sum += i;
+  sum := 0
+  for i := 2; i < max0; i += 1 {
+      if t[i] == i {
+          sum += i
           if max0 / i > i {
-            var j int = i * i
-              for j < max0 && j > 0{
-                t[j] = 0;
-                j += i;
+              j := i * i
+              for j < max0 && j > 0 {
+                  t[j] = 0
+                  j += i
               }
           }
       }
@@ -18,13 +18,13 @@ func eratostene(t []int, max0 int) int{
 }
 
 func main() {
-  var n int = 100000
+  n := 100000
   /* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages */
   var t []int = make([]int, n)
-  for i := 0 ; i < n; i++ {
-    t[i] = i;
+  for i := 0; i < n; i += 1 {
+      t[i] = i
   }
-  t[1] = 0;
-  fmt.Printf("%d\n", eratostene(t, n));
+  t[1] = 0
+  fmt.Printf("%d\n", eratostene(t, n))
 }
 

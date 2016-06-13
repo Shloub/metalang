@@ -16,19 +16,19 @@ import "fmt"
 
 */
 func sumdiag(n int) int{
-  var nterms int = n * 2 - 1
-  var un int = 1
-  var sum int = 1
-  for i := 0 ; i <= nterms - 2; i++ {
-    var d int = 2 * (1 + i / 4)
-      un += d;
+  nterms := n * 2 - 1
+  un := 1
+  sum := 1
+  for i := 0; i < nterms - 1; i += 1 {
+      d := 2 * (1 + i / 4)
+      un += d
       /* print int d print "=>" print un print " " */
-      sum += un;
+      sum += un
   }
   return sum
 }
 
 func main() {
-  fmt.Printf("%d", sumdiag(1001));
+  fmt.Printf("%d", sumdiag(1001))
 }
 

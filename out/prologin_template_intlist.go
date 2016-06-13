@@ -14,9 +14,9 @@ func skip() {
   }
 }
 func programme_candidat(tableau []int, taille int) int{
-  var out0 int = 0
-  for i := 0 ; i < taille; i++ {
-    out0 += tableau[i];
+  out0 := 0
+  for i := 0; i < taille; i += 1 {
+      out0 += tableau[i]
   }
   return out0
 }
@@ -27,10 +27,10 @@ func main() {
   fmt.Fscanf(reader, "%d", &taille)
   skip()
   var tableau []int = make([]int, taille)
-  for a := 0 ; a < taille; a++ {
-    fmt.Fscanf(reader, "%d", &tableau[a])
+  for a := 0; a < taille; a += 1 {
+      fmt.Fscanf(reader, "%d", &tableau[a])
       skip()
   }
-  fmt.Printf("%d\n", programme_candidat(tableau, taille));
+  fmt.Printf("%d\n", programme_candidat(tableau, taille))
 }
 

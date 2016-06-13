@@ -2,22 +2,22 @@ package main
 import "fmt"
 func min2_(a int, b int) int{
   if a < b {
-    return a
-  } else {
-    return b
+      return a
+  }else {
+      return b
   }
 }
 
 func eratostene(t []int, max0 int) int{
-  var n int = 0
-  for i := 2 ; i < max0; i++ {
-    if t[i] == i {
-        n++;
+  n := 0
+  for i := 2; i < max0; i += 1 {
+      if t[i] == i {
+          n += 1
           if max0 / i > i {
-            var j int = i * i
-              for j < max0 && j > 0{
-                t[j] = 0;
-                j += i;
+              j := i * i
+              for j < max0 && j > 0 {
+                  t[j] = 0
+                  j += i
               }
           }
       }
@@ -26,51 +26,51 @@ func eratostene(t []int, max0 int) int{
 }
 
 func main() {
-  var maximumprimes int = 1000001
+  maximumprimes := 1000001
   var era []int = make([]int, maximumprimes)
-  for j := 0 ; j < maximumprimes; j++ {
-    era[j] = j;
+  for j := 0; j < maximumprimes; j += 1 {
+      era[j] = j
   }
-  var nprimes int = eratostene(era, maximumprimes)
+  nprimes := eratostene(era, maximumprimes)
   var primes []int = make([]int, nprimes)
-  for o := 0 ; o < nprimes; o++ {
-    primes[o] = 0;
+  for o := 0; o < nprimes; o += 1 {
+      primes[o] = 0
   }
-  var l int = 0
-  for k := 2 ; k < maximumprimes; k++ {
-    if era[k] == k {
-        primes[l] = k;
-          l++;
+  l := 0
+  for k := 2; k < maximumprimes; k += 1 {
+      if era[k] == k {
+          primes[l] = k
+          l += 1
       }
   }
-  fmt.Printf("%d == %d\n", l, nprimes);
+  fmt.Printf("%d == %d\n", l, nprimes)
   var sum []int = make([]int, nprimes)
-  for i_ := 0 ; i_ < nprimes; i_++ {
-    sum[i_] = primes[i_];
+  for i_ := 0; i_ < nprimes; i_ += 1 {
+      sum[i_] = primes[i_]
   }
-  var maxl int = 0
+  maxl := 0
   var process bool = true
-  var stop int = maximumprimes - 1
-  var len int = 1
-  var resp int = 1
-  for process{
-    process = false;
-    for i := 0 ; i <= stop; i++ {
-      if i + len < nprimes {
-          sum[i] += primes[i + len];
-            if maximumprimes > sum[i] {
-              process = true;
-                if era[sum[i]] == sum[i] {
-                  maxl = len;
-                    resp = sum[i];
-                }
-            } else {
-              stop = min2_(stop, i);
-            }
-        }
-    }
-    len++;
+  stop := maximumprimes - 1
+  len := 1
+  resp := 1
+  for process {
+      process = false
+      for i := 0; i <= stop; i += 1 {
+          if i + len < nprimes {
+              sum[i] += primes[i + len]
+              if maximumprimes > sum[i] {
+                  process = true
+                  if era[sum[i]] == sum[i] {
+                      maxl = len
+                      resp = sum[i]
+                  }
+              }else {
+                  stop = min2_(stop, i)
+              }
+          }
+      }
+      len += 1
   }
-  fmt.Printf("%d\n%d\n", resp, maxl);
+  fmt.Printf("%d\n%d\n", resp, maxl)
 }
 

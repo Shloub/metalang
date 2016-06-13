@@ -15,41 +15,41 @@ func skip() {
 }
 func min2_(a int, b int) int{
   if a < b {
-    return a
-  } else {
-    return b
+      return a
+  }else {
+      return b
   }
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
+  var y int
   var x int
   fmt.Fscanf(reader, "%d", &x)
   skip()
-  var y int
   fmt.Fscanf(reader, "%d", &y)
   skip()
   var tab [][]int = make([][]int, y)
-  for d := 0 ; d < y; d++ {
-    var e []int = make([]int, x)
-      for f := 0 ; f < x; f++ {
-        fmt.Fscanf(reader, "%d", &e[f])
+  for d := 0; d < y; d += 1 {
+      var e []int = make([]int, x)
+      for f := 0; f < x; f += 1 {
+          fmt.Fscanf(reader, "%d", &e[f])
           skip()
       }
-      tab[d] = e;
+      tab[d] = e
   }
-  for ix := 1 ; ix < x; ix++ {
-    for iy := 1 ; iy < y; iy++ {
-        if tab[iy][ix] == 1 {
-            tab[iy][ix] = min2_(min2_(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1;
+  for ix := 1; ix < x; ix += 1 {
+      for iy := 1; iy < y; iy += 1 {
+          if tab[iy][ix] == 1 {
+              tab[iy][ix] = min2_(min2_(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1
           }
       }
   }
-  for jy := 0 ; jy < y; jy++ {
-    for jx := 0 ; jx < x; jx++ {
-        fmt.Printf("%d ", tab[jy][jx]);
+  for jy := 0; jy < y; jy += 1 {
+      for jx := 0; jx < x; jx += 1 {
+          fmt.Printf("%d ", tab[jy][jx])
       }
-      fmt.Printf("\n");
+      fmt.Printf("\n")
   }
 }
 

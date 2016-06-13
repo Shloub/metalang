@@ -14,14 +14,16 @@ func skip() {
   }
 }
 func position_alphabet(c byte) int{
-  var i int = (int)(c)
+  i := (int)(c)
   if i <= (int)('Z') && i >= (int)('A') {
-    return i - (int)('A')
-  } else if i <= (int)('z') && i >= (int)('a') {
-    return i - (int)('a')
-  } else {
-    return -1
-  } 
+      return i - (int)('A')
+  }else {
+      if i <= (int)('z') && i >= (int)('a') {
+          return i - (int)('a')
+      }else {
+          return -1
+      }
+  }
 }
 
 func of_position_alphabet(c int) byte{
@@ -29,12 +31,12 @@ func of_position_alphabet(c int) byte{
 }
 
 func crypte(taille_cle int, cle []byte, taille int, message []byte) {
-  for i := 0 ; i < taille; i++ {
-    var lettre int = position_alphabet(message[i])
+  for i := 0; i < taille; i += 1 {
+      lettre := position_alphabet(message[i])
       if lettre != -1 {
-        var addon int = position_alphabet(cle[i % taille_cle])
-          var new0 int = (addon + lettre) % 26
-          message[i] = of_position_alphabet(new0);
+          addon := position_alphabet(cle[i % taille_cle])
+          new0 := (addon + lettre) % 26
+          message[i] = of_position_alphabet(new0)
       }
   }
 }
@@ -45,25 +47,25 @@ func main() {
   fmt.Fscanf(reader, "%d", &taille_cle)
   skip()
   var cle []byte = make([]byte, taille_cle)
-  for index := 0 ; index < taille_cle; index++ {
-    var out0 byte
-    fmt.Fscanf(reader, "%c", &out0)
-      cle[index] = out0;
+  for index := 0; index < taille_cle; index += 1 {
+      var out0 byte
+      fmt.Fscanf(reader, "%c", &out0)
+      cle[index] = out0
   }
-  skip()
   var taille int
+  skip()
   fmt.Fscanf(reader, "%d", &taille)
   skip()
   var message []byte = make([]byte, taille)
-  for index2 := 0 ; index2 < taille; index2++ {
-    var out2 byte
-    fmt.Fscanf(reader, "%c", &out2)
-      message[index2] = out2;
+  for index2 := 0; index2 < taille; index2 += 1 {
+      var out2 byte
+      fmt.Fscanf(reader, "%c", &out2)
+      message[index2] = out2
   }
-  crypte(taille_cle, cle, taille, message);
-  for i := 0 ; i < taille; i++ {
-    fmt.Printf("%c", message[i]);
+  crypte(taille_cle, cle, taille, message)
+  for i := 0; i < taille; i += 1 {
+      fmt.Printf("%c", message[i])
   }
-  fmt.Printf("\n");
+  fmt.Printf("\n")
 }
 

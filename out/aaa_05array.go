@@ -5,30 +5,30 @@ func id(b []bool) []bool{
 }
 
 func g(t []bool, index int) {
-  t[index] = false;
+  t[index] = false
 }
 
 func main() {
-  var j int = 0
+  j := 0
   var a []bool = make([]bool, 5)
-  for i := 0 ; i < 5; i++ {
-    fmt.Printf("%d", i);
-      j += i;
-      a[i] = i % 2 == 0;
+  for i := 0; i < 5; i += 1 {
+      fmt.Printf("%d", i)
+      j += i
+      a[i] = i % 2 == 0
   }
-  fmt.Printf("%d ", j);
+  fmt.Printf("%d ", j)
   if a[0] {
-    fmt.Printf("True");
-  } else {
-    fmt.Printf("False");
+      fmt.Printf("True")
+  }else {
+      fmt.Printf("False")
   }
-  fmt.Printf("\n");
-  g(id(a), 0);
+  fmt.Printf("\n")
+  g(id(a), 0)
   if a[0] {
-    fmt.Printf("True");
-  } else {
-    fmt.Printf("False");
+      fmt.Printf("True")
+  }else {
+      fmt.Printf("False")
   }
-  fmt.Printf("\n");
+  fmt.Printf("\n")
 }
 

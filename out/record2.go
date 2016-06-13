@@ -22,14 +22,14 @@ type toto struct {
 
 func mktoto(v1 int) * toto{
   var t * toto = new (toto)
-  (*t).foo=v1
-  (*t).bar=0
-  (*t).blah=0
+      (*t).foo=v1
+      (*t).bar=0
+      (*t).blah=0
   return t
 }
 
 func result(t * toto) int{
-  (*t).blah++;
+  (*t).blah += 1
   return (*t).foo + (*t).blah * (*t).bar + (*t).bar * (*t).foo
 }
 
@@ -39,6 +39,6 @@ func main() {
   fmt.Fscanf(reader, "%d", &(*t).bar)
   skip()
   fmt.Fscanf(reader, "%d", &(*t).blah)
-  fmt.Printf("%d", result(t));
+  fmt.Printf("%d", result(t))
 }
 
