@@ -16,7 +16,7 @@ func skip() {
 func min2_(a int, b int) int{
   if a < b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -24,27 +24,21 @@ func min2_(a int, b int) int{
 func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int) int{
   if posX == x - 1 && posY == y - 1 {
       return 0
-  }else {
-      if posX < 0 || posY < 0 || posX >= x || posY >= y {
-          return x * y * 10
-      }else {
-          if tab[posY][posX] == '#' {
-              return x * y * 10
-          }else {
-              if cache[posY][posX] != -1 {
-                  return cache[posY][posX]
-              }else {
-                  cache[posY][posX] = x * y * 10
-                  val1 := pathfind_aux(cache, tab, x, y, posX + 1, posY)
-                  val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY)
-                  val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1)
-                  val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1)
-                  out0 := 1 + min2_(min2_(min2_(val1, val2), val3), val4)
-                  cache[posY][posX] = out0
-                  return out0
-              }
-          }
-      }
+  } else if posX < 0 || posY < 0 || posX >= x || posY >= y {
+      return x * y * 10
+  } else if tab[posY][posX] == '#' {
+      return x * y * 10
+  } else if cache[posY][posX] != -1 {
+      return cache[posY][posX]
+  } else {
+      cache[posY][posX] = x * y * 10
+      val1 := pathfind_aux(cache, tab, x, y, posX + 1, posY)
+      val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY)
+      val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1)
+      val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1)
+      out0 := 1 + min2_(min2_(min2_(val1, val2), val3), val4)
+      cache[posY][posX] = out0
+      return out0
   }
 }
 

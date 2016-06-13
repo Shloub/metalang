@@ -16,7 +16,7 @@ func skip() {
 func min2_(a int, b int) int{
   if a < b {
       return a
-  }else {
+  } else {
       return b
   }
 }

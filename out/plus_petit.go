@@ -18,7 +18,7 @@ func go0(tab []int, a int, b int) int{
   if a == m {
       if tab[a] == m {
           return b
-      }else {
+      } else {
           return a
       }
   }
@@ -28,7 +28,7 @@ func go0(tab []int, a int, b int) int{
       e := tab[i]
       if e < m {
           i += 1
-      }else {
+      } else {
           j -= 1
           tab[i] = tab[j]
           tab[j] = e
@@ -36,7 +36,7 @@ func go0(tab []int, a int, b int) int{
   }
   if i < m {
       return go0(tab, a, m)
-  }else {
+  } else {
       return go0(tab, m, b)
   }
 }

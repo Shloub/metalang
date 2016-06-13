@@ -46,7 +46,7 @@ func qsort0(tab []int, len int, i int, j int) {
                   tab[i] = tab[j]
                   tab[j] = tmp
                   i += 1
-              }else {
+              } else {
                   /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
                   tmp := tab[i]
                   tab[i] = tab[j]
@@ -54,7 +54,7 @@ func qsort0(tab []int, len int, i int, j int) {
                   tab[i + 1] = tmp
                   i += 1
               }
-          }else {
+          } else {
               j -= 1
           }
       }

@@ -26,14 +26,14 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 func okdigits(ok []bool, n int) bool{
   if n == 0 {
       return true
-  }else {
+  } else {
       digit := n % 10
       if ok[digit] {
           ok[digit] = false
           var o bool = okdigits(ok, n / 10)
           ok[digit] = true
           return o
-      }else {
+      } else {
           return false
       }
   }

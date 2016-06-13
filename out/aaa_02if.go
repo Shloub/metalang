@@ -10,7 +10,7 @@ func f(i int) bool{
 func main() {
   if f(4) {
       fmt.Printf("true <-\n ->\n")
-  }else {
+  } else {
       fmt.Printf("false <-\n ->\n")
   }
   fmt.Printf("small test end\n")

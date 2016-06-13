@@ -6,7 +6,7 @@ var reader *bufio.Reader
 func max2_(a int, b int) int{
   if a > b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -32,7 +32,7 @@ func main() {
       if f == 0 {
           i = 1
           nskipdiv = 4
-      }else {
+      } else {
           i *= f
           if nskipdiv < 0 {
               i /= last[index]

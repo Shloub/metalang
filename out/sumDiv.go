@@ -31,7 +31,7 @@ func sumdiv(n int) int{
           /* Si i divise */
           out0 += i
           /* On incrémente */
-      }else {
+      } else {
           /* nop */
       }
   }

@@ -3,7 +3,7 @@ import "fmt"
 func max2_(a int, b int) int{
   if a > b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -29,7 +29,7 @@ c * f * 10000
 func chiffre(c int, m int) int{
   if c == 0 {
       return m % 10
-  }else {
+  } else {
       return chiffre(c - 1, m / 10)
   }
 }

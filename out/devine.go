@@ -50,7 +50,7 @@ func main() {
   }
   if devine0(nombre, tab, len) {
       fmt.Printf("True")
-  }else {
+  } else {
       fmt.Printf("False")
   }
 }

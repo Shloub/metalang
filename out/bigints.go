@@ -16,7 +16,7 @@ func skip() {
 func max2_(a int, b int) int{
   if a > b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -24,7 +24,7 @@ func max2_(a int, b int) int{
 func min2_(a int, b int) int{
   if a < b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -68,17 +68,15 @@ func bigint_eq(a * bigint, b * bigint) bool{
   /* Renvoie vrai si a = b */
   if (*a).bigint_sign != (*b).bigint_sign {
       return false
-  }else {
-      if (*a).bigint_len != (*b).bigint_len {
-          return false
-      }else {
-          for i := 0; i < (*a).bigint_len; i += 1 {
-              if (*a).bigint_chiffres[i] != (*b).bigint_chiffres[i] {
-                  return false
-              }
+  } else if (*a).bigint_len != (*b).bigint_len {
+      return false
+  } else {
+      for i := 0; i < (*a).bigint_len; i += 1 {
+          if (*a).bigint_chiffres[i] != (*b).bigint_chiffres[i] {
+              return false
           }
-          return true
       }
+      return true
   }
 }
 
@@ -86,30 +84,24 @@ func bigint_gt(a * bigint, b * bigint) bool{
   /* Renvoie vrai si a > b */
   if (*a).bigint_sign && !(*b).bigint_sign {
       return true
-  }else {
-      if !(*a).bigint_sign && (*b).bigint_sign {
-          return false
-      }else {
-          if (*a).bigint_len > (*b).bigint_len {
-              return (*a).bigint_sign
-          }else {
-              if (*a).bigint_len < (*b).bigint_len {
+  } else if !(*a).bigint_sign && (*b).bigint_sign {
+      return false
+  } else {
+      if (*a).bigint_len > (*b).bigint_len {
+          return (*a).bigint_sign
+      } else if (*a).bigint_len < (*b).bigint_len {
+          return !(*a).bigint_sign
+      } else {
+          for i := 0; i < (*a).bigint_len; i += 1 {
+              j := (*a).bigint_len - 1 - i
+              if (*a).bigint_chiffres[j] > (*b).bigint_chiffres[j] {
+                  return (*a).bigint_sign
+              } else if (*a).bigint_chiffres[j] < (*b).bigint_chiffres[j] {
                   return !(*a).bigint_sign
-              }else {
-                  for i := 0; i < (*a).bigint_len; i += 1 {
-                      j := (*a).bigint_len - 1 - i
-                      if (*a).bigint_chiffres[j] > (*b).bigint_chiffres[j] {
-                          return (*a).bigint_sign
-                      }else {
-                          if (*a).bigint_chiffres[j] < (*b).bigint_chiffres[j] {
-                              return !(*a).bigint_sign
-                          }
-                      }
-                  }
               }
           }
-          return true
       }
+      return true
   }
 }
 
@@ -158,7 +150,7 @@ Pré-requis : a > b
       if tmp < 0 {
           tmp += 10
           retenue = -1
-      }else {
+      } else {
           retenue = 0
       }
       chiffres[i] = tmp
@@ -185,24 +177,22 @@ func add_bigint(a * bigint, b * bigint) * bigint{
   if (*a).bigint_sign == (*b).bigint_sign {
       if (*a).bigint_sign {
           return add_bigint_positif(a, b)
-      }else {
+      } else {
           return neg_bigint(add_bigint_positif(a, b))
       }
-  }else {
-      if (*a).bigint_sign {
-          /* a positif, b negatif */
-          if bigint_gt(a, neg_bigint(b)) {
-              return sub_bigint_positif(a, b)
-          }else {
-              return neg_bigint(sub_bigint_positif(b, a))
-          }
-      }else {
-          /* a negatif, b positif */
-          if bigint_gt(neg_bigint(a), b) {
-              return neg_bigint(sub_bigint_positif(a, b))
-          }else {
-              return sub_bigint_positif(b, a)
-          }
+  } else if (*a).bigint_sign {
+      /* a positif, b negatif */
+      if bigint_gt(a, neg_bigint(b)) {
+          return sub_bigint_positif(a, b)
+      } else {
+          return neg_bigint(sub_bigint_positif(b, a))
+      }
+  } else {
+      /* a negatif, b positif */
+      if bigint_gt(neg_bigint(a), b) {
+          return neg_bigint(sub_bigint_positif(a, b))
+      } else {
+          return sub_bigint_positif(b, a)
       }
   }
 }
@@ -260,7 +250,7 @@ func bigint_shift(a * bigint, i int) * bigint{
   for k := 0; k < (*a).bigint_len + i; k += 1 {
       if k >= i {
           chiffres[k] = (*a).bigint_chiffres[k - i]
-      }else {
+      } else {
           chiffres[k] = 0
       }
   }
@@ -274,14 +264,10 @@ func bigint_shift(a * bigint, i int) * bigint{
 func mul_bigint(aa * bigint, bb * bigint) * bigint{
   if (*aa).bigint_len == 0 {
       return aa
-  }else {
-      if (*bb).bigint_len == 0 {
-          return bb
-      }else {
-          if (*aa).bigint_len < 3 || (*bb).bigint_len < 3 {
-              return mul_bigint_cp(aa, bb)
-          }
-      }
+  } else if (*bb).bigint_len == 0 {
+      return bb
+  } else if (*aa).bigint_len < 3 || (*bb).bigint_len < 3 {
+      return mul_bigint_cp(aa, bb)
   }
   /* Algorithme de Karatsuba */
   split := min2_((*aa).bigint_len, (*bb).bigint_len) / 2
@@ -361,12 +347,10 @@ func euler20() int{
 func bigint_exp(a * bigint, b int) * bigint{
   if b == 1 {
       return a
-  }else {
-      if b % 2 == 0 {
-          return bigint_exp(mul_bigint(a, a), b / 2)
-      }else {
-          return mul_bigint(a, bigint_exp(a, b - 1))
-      }
+  } else if b % 2 == 0 {
+      return bigint_exp(mul_bigint(a, a), b / 2)
+  } else {
+      return mul_bigint(a, bigint_exp(a, b - 1))
   }
 }
 
@@ -374,12 +358,10 @@ func bigint_exp_10chiffres(a * bigint, b int) * bigint{
   a = bigint_premiers_chiffres(a, 10)
   if b == 1 {
       return a
-  }else {
-      if b % 2 == 0 {
-          return bigint_exp_10chiffres(mul_bigint(a, a), b / 2)
-      }else {
-          return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
-      }
+  } else if b % 2 == 0 {
+      return bigint_exp_10chiffres(mul_bigint(a, a), b / 2)
+  } else {
+      return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
   }
 }
 
@@ -444,7 +426,7 @@ func euler29() int{
                   if bigint_lt(a_bigint[i], min0) {
                       min0 = a_bigint[i]
                   }
-              }else {
+              } else {
                   min0 = a_bigint[i]
                   found = true
               }
@@ -519,7 +501,7 @@ func main() {
   fmt.Printf("=")
   if bigint_gt(a, b) {
       fmt.Printf("True")
-  }else {
+  } else {
       fmt.Printf("False")
   }
   fmt.Printf("\n")

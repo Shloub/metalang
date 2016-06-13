@@ -16,7 +16,7 @@ func skip() {
 func max2_(a int, b int) int{
   if a > b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -44,7 +44,7 @@ func nbPassePartout(n int, passepartout [][]int, m int, serrures [][]int) int{
   }
   if max_ancient_pp >= max_ancient && max_recent_pp >= max_recent {
       return 2
-  }else {
+  } else {
       return 0
   }
 }
