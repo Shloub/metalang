@@ -13,7 +13,7 @@ func find(n int, t []int, used int, nth int) int{
   for used != nth {
       if divisible(n, t, used) {
           n += 1
-      }else {
+      } else {
           t[used] = n
           n += 1
           used += 1

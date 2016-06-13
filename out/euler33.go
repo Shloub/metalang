@@ -3,7 +3,7 @@ import "fmt"
 func max2_(a int, b int) int{
   if a > b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -11,7 +11,7 @@ func max2_(a int, b int) int{
 func min2_(a int, b int) int{
   if a < b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -22,7 +22,7 @@ func pgcd(a int, b int) int{
   reste := d % c
   if reste == 0 {
       return c
-  }else {
+  } else {
       return pgcd(c, reste)
   }
 }

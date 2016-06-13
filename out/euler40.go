@@ -12,7 +12,7 @@ func e(t []int, n int) int{
   for i := 1; i <= 8; i += 1 {
       if n >= t[i] * i {
           n -= t[i] * i
-      }else {
+      } else {
           nombre := exp0(10, i - 1) + n / i
           chiffre := i - 1 - n % i
           return nombre / exp0(10, chiffre) % 10

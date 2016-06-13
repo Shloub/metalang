@@ -3,7 +3,7 @@ import "fmt"
 func triangle(n int) int{
   if n % 2 == 0 {
       return (n / 2) * (n + 1)
-  }else {
+  } else {
       return n * ((n + 1) / 2)
   }
 }
@@ -11,7 +11,7 @@ func triangle(n int) int{
 func penta(n int) int{
   if n % 2 == 0 {
       return (n / 2) * (3 * n - 1)
-  }else {
+  } else {
       return ((3 * n - 1) / 2) * n
   }
 }
@@ -28,12 +28,10 @@ func findPenta2(n int, a int, b int) bool{
   p := penta(c)
   if p == n {
       return true
-  }else {
-      if p < n {
-          return findPenta2(n, c, b)
-      }else {
-          return findPenta2(n, a, c)
-      }
+  } else if p < n {
+      return findPenta2(n, c, b)
+  } else {
+      return findPenta2(n, a, c)
   }
 }
 
@@ -45,12 +43,10 @@ func findHexa2(n int, a int, b int) bool{
   p := hexa(c)
   if p == n {
       return true
-  }else {
-      if p < n {
-          return findHexa2(n, c, b)
-      }else {
-          return findHexa2(n, a, c)
-      }
+  } else if p < n {
+      return findHexa2(n, c, b)
+  } else {
+      return findHexa2(n, a, c)
   }
 }
 

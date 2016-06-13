@@ -37,7 +37,7 @@ func score() int{
   }
   if is_triangular(sum) {
       return 1
-  }else {
+  } else {
       return 0
   }
 }

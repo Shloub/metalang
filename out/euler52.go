@@ -3,14 +3,14 @@ import "fmt"
 func chiffre_sort(a int) int{
   if a < 10 {
       return a
-  }else {
+  } else {
       b := chiffre_sort(a / 10)
       c := a % 10
       d := b % 10
       e := b / 10
       if c < d {
           return c + b * 10
-      }else {
+      } else {
           return d + chiffre_sort(c + e * 10) * 10
       }
   }

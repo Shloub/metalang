@@ -24,21 +24,17 @@ func find0(len int, tab [][]int, cache [][]int, x int, y int) int{
 	*/
   if y == len - 1 {
       return tab[y][x]
-  }else {
-      if x > y {
-          return -10000
-      }else {
-          if cache[y][x] != 0 {
-              return cache[y][x]
-          }
-      }
+  } else if x > y {
+      return -10000
+  } else if cache[y][x] != 0 {
+      return cache[y][x]
   }
   result := 0
   out0 := find0(len, tab, cache, x, y + 1)
   out1 := find0(len, tab, cache, x + 1, y + 1)
   if out0 > out1 {
       result = out0 + tab[y][x]
-  }else {
+  } else {
       result = out1 + tab[y][x]
   }
   cache[y][x] = result
