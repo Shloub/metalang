@@ -3,7 +3,7 @@ import "fmt"
 func max2_(a int, b int) int{
   if a > b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -18,7 +18,7 @@ func primesfactors(n int) []int{
       if n % d == 0 {
           tab[d] += 1
           n /= d
-      }else {
+      } else {
           d += 1
       }
   }

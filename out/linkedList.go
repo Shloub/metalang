@@ -23,7 +23,7 @@ func is_empty(foo * intlist) bool{
 func rev2(acc * intlist, torev * intlist) * intlist{
   if is_empty(torev) {
       return acc
-  }else {
+  } else {
       var acc2 * intlist = new (intlist)
           (*acc2).head=(*torev).head
           (*acc2).tail=acc

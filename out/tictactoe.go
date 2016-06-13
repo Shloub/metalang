@@ -39,12 +39,10 @@ func print_state(g * gamestate) {
       for x := 0; x <= 2; x += 1 {
           if (*g).cases[x][y] == 0 {
               fmt.Printf(" ")
-          }else {
-              if (*g).cases[x][y] == 1 {
-                  fmt.Printf("O")
-              }else {
-                  fmt.Printf("X")
-              }
+          } else if (*g).cases[x][y] == 1 {
+              fmt.Printf("O")
+          } else {
+              fmt.Printf("X")
           }
           fmt.Printf("|")
       }
@@ -70,25 +68,19 @@ func eval0(g * gamestate) {
           linv := (*g).cases[y][x]
           if col == -1 && colv != 0 {
               col = colv
-          }else {
-              if colv != col {
-                  col = -2
-              }
+          } else if colv != col {
+              col = -2
           }
           if lin == -1 && linv != 0 {
               lin = linv
-          }else {
-              if linv != lin {
-                  lin = -2
-              }
+          } else if linv != lin {
+              lin = -2
           }
       }
       if col >= 0 {
           win = col
-      }else {
-          if lin >= 0 {
-              win = lin
-          }
+      } else if lin >= 0 {
+          win = lin
       }
   }
   for x := 1; x <= 2; x += 1 {
@@ -102,12 +94,10 @@ func eval0(g * gamestate) {
   (*g).ended = win != 0 || freecase == 0
   if win == 1 {
       (*g).note = 1000
-  }else {
-      if win == 2 {
-          (*g).note = -1000
-      }else {
-          (*g).note = 0
-      }
+  } else if win == 2 {
+      (*g).note = -1000
+  } else {
+      (*g).note = 0
   }
 }
 

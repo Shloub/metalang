@@ -17,12 +17,10 @@ func position_alphabet(c byte) int{
   i := (int)(c)
   if i <= (int)('Z') && i >= (int)('A') {
       return i - (int)('A')
-  }else {
-      if i <= (int)('z') && i >= (int)('a') {
-          return i - (int)('a')
-      }else {
-          return -1
-      }
+  } else if i <= (int)('z') && i >= (int)('a') {
+      return i - (int)('a')
+  } else {
+      return -1
   }
 }
 

@@ -19,14 +19,14 @@ func main() {
   fmt.Printf("%d ", j)
   if a[0] {
       fmt.Printf("True")
-  }else {
+  } else {
       fmt.Printf("False")
   }
   fmt.Printf("\n")
   g(id(a), 0)
   if a[0] {
       fmt.Printf("True")
-  }else {
+  } else {
       fmt.Printf("False")
   }
   fmt.Printf("\n")

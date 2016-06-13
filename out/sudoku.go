@@ -100,7 +100,7 @@ func main() {
   print_sudoku(sudoku0)
   if solve(sudoku0) {
       print_sudoku(sudoku0)
-  }else {
+  } else {
       fmt.Printf("no solution\n")
   }
 }

@@ -3,7 +3,7 @@ import "fmt"
 func min2_(a int, b int) int{
   if a < b {
       return a
-  }else {
+  } else {
       return b
   }
 }
@@ -64,7 +64,7 @@ func main() {
                       maxl = len
                       resp = sum[i]
                   }
-              }else {
+              } else {
                   stop = min2_(stop, i)
               }
           }

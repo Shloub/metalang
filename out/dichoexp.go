@@ -20,7 +20,7 @@ func exp0(a int, b int) int{
   if b % 2 == 0 {
       o := exp0(a, b / 2)
       return o * o
-  }else {
+  } else {
       return a * exp0(a, b - 1)
   }
 }
