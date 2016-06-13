@@ -88,7 +88,7 @@ let print_instr tyenv used_variables c i =
   let ptype = ptype tyenv in
   let open Ast.Instr in
   let open Format in
-  let block f li = fprintf f " {@\n%a@]@\n}" (print_list (fun f i -> i.p f seppt) sep_nl) li in
+  let block f li = fprintf f " {@\n%a@]@\n}" (print_list (fun f i -> i.p f noseppt) sep_nl) li in
   let p f pend = match i with
   | Declare (var,  Type.Fixed.F(_, Type.Integer), e, _) ->
       if BindingSet.mem var used_variables then
