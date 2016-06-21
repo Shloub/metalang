@@ -146,6 +146,7 @@ let print_instr macros declared_types declared_types_assoc i =
         fprintf f "@[<h>%a@ :=@ %a;@]" print_varname var expr nop
     | Affect (mutable_, expr) ->
         fprintf f "@[<h>%a@ :=@ %a;@]" (config.print_mut config nop) mutable_ expr nop
+    | ClikeLoop (init, cond, incr, li) -> assert false
     | Loop (varname, expr1, expr2, li) ->
         fprintf f "@[<hov>for@ %a@ in integer range %a..%a loop@\n@]  @[<v>%a@]@\nend loop;"
       print_varname varname expr1 nop expr2 nop instructions li
