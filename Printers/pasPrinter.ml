@@ -123,6 +123,7 @@ let print_instr macros i =
     | Declare (var, _, expr, _) -> fprintf f "@[<h>%a@ :=@ %a;@]" print_varname var expr nop
     | Affect (mutable_, expr) ->
         fprintf f "@[<h>%a@ :=@ %a;@]" (config.print_mut config nop) mutable_ expr nop
+    | ClikeLoop (init, cond, incr, li) -> assert false
     | Loop (varname, expr1, expr2, li) -> fprintf f "@[<h>for@ %a@ :=@ %a@ to @ %a do@\n@]%a;"
           print_varname varname expr1 nop expr2 nop bloc li
     | While (expr, li) ->
