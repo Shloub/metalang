@@ -1,16 +1,10 @@
 require "scanf.rb"
 i = 4
-
-=begin
-while i < 10 do 
-=end
+#while i < 10 do 
 
 printf "%d", i
 i += 1
-
-=begin
-  end 
-=end
+#  end 
 
 printf "%d", i
 

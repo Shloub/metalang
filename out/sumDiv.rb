@@ -3,87 +3,54 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 def foo(  )
-    a = 0
-    
-=begin
- test 
-=end
-
-    a += 1
-    
-=begin
- test 2 
-=end
-
+  a = 0
+  # test 
+  
+  a += 1
+  # test 2 
+  
 end
 
 def foo2(  )
-    
+  
 end
 
 def foo3(  )
-    if 1 == 1 then
+  if 1 == 1 then
       
-    end
+  end
 end
 
 def sumdiv( n )
-    
-=begin
- On désire renvoyer la somme des diviseurs 
-=end
-
-    out0 = 0
-    
-=begin
- On déclare un entier qui contiendra la somme 
-=end
-
-    for i in (1 ..  n) do
+  # On désire renvoyer la somme des diviseurs 
+  
+  out0 = 0
+  # On déclare un entier qui contiendra la somme 
+  
+  for i in (1 ..  n) do
+      # La boucle : i est le diviseur potentiel
       
-=begin
- La boucle : i est le diviseur potentiel
-=end
-
       if mod(n, i) == 0 then
-        
-=begin
- Si i divise 
-=end
-
-        out0 += i
-        
-=begin
- On incrémente 
-=end
-
-      else
-        
-=begin
- nop 
-=end
-
+          # Si i divise 
+          
+          out0 += i
+          # On incrémente 
+          
+       else 
+          # nop 
+          
       end
-    end
-    return (out0)
-    
-=begin
-On renvoie out
-=end
-
-end
-
-
-=begin
- Programme principal 
-=end
-
-n = 0
-n=scanf("%d")[0]
-
-=begin
- Lecture de l'entier 
-=end
-
-printf "%d", sumdiv(n)
-
+      end
+      return out0
+      #On renvoie out
+      
+  end
+  # Programme principal 
+  
+  n = 0
+  n = scanf("%d")[0]
+  # Lecture de l'entier 
+  
+  printf "%d", sumdiv(n)
+  
+  

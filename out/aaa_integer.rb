@@ -17,12 +17,9 @@ i = (i.to_f / 3).to_i
 printf "%d\n", i
 i -= 1
 printf "%d\n", i
-
-=begin
-
-http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
-
-=end
+#
+#http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
+#
 
 printf "%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n", (117.to_f / 17).to_i, (117.to_f / -17).to_i, (-117.to_f / 17).to_i, (-117.to_f / -17).to_i, mod(117, 17), mod(117, -17), mod(-117, 17), mod(-117, -17)
 
