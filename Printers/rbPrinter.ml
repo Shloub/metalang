@@ -203,22 +203,16 @@ class rbPrinter = object(self)
 end
 " else "")
     (print_list (fun f -> function
-      | Prog.DeclarFun (var, t, li, instrs, _opt) -> self#print_fun f var t li instrs
+      | Prog.DeclarFun (funname, _t, li, instrs, _opt) ->
+          Format.fprintf f "@[<h>def %s( %a )@]@\n@[<v 2>  %a@]@\nend@\n"
+            funname (print_list print_varname sep_c) (List.map fst li)
+            self#instructions instrs
       | Prog.Macro (name, t, params, code) ->
           macros <- StringMap.add name (t, params, code) macros;
+      | Prog.Comment s ->
+          let lic = String.split s '\n' in
+          print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
       | _ -> ()) sep_nl) prog.Prog.funs
       (print_option self#instructions) prog.Prog.main
       
-  method comment f s =
-    let lic = String.split s '\n' in
-    print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
-
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "def %s( %a )" funname (print_list print_varname sep_c) (List.map fst li)
-
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\nend@\n"
-      self#print_proto (funname, t, li)
-      self#instructions instrs
-
 end
