@@ -111,15 +111,15 @@ let print_instr tyenv c i =
     | If (e, listif, []) when inelseif ->
         fprintf f "if %a then%a@]@\nend" e nop block listif
     | If (e, listif, [elsecase]) when inelseif && elsecase.is_if ->
-        fprintf f "if %a then%a@]@\n@[<v 4> els%a" e nop block listif elsecase.p (true, inlambda)          
+        fprintf f "if %a then%a@]@\n@[<v 4>els%a" e nop block listif elsecase.p (true, inlambda)          
     | If (e, listif, listelse)  when inelseif ->
-        fprintf f "if %a then%a@]@\n@[<v 4> else %a@]@\nend" e nop block listif block listelse
+        fprintf f "if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
     | If (e, listif, []) ->
         fprintf f "@[<v 4>if %a then%a@]@\nend" e nop block listif
     | If (e, listif, [elsecase]) when elsecase.is_if ->
-        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4> els%a" e nop block listif elsecase.p (true, inlambda)          
+        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>els%a" e nop block listif elsecase.p (true, inlambda)          
     | If (e, listif, listelse) ->
-        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4> else %a@]@\nend" e nop block listif block listelse
+        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
     | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
       | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
       | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
