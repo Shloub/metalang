@@ -7,6 +7,10 @@ end
 
 
 
+#
+#Ce test permet de vérifier si les différents backends pour les langages implémentent bien
+#read int, read char et skip
+#
 len = STDIN.readline.to_i(10)
 printf "%d=len\n", len
 tab = STDIN.readline.split(" ").map{ |x| x.to_i(10) }

@@ -4,6 +4,10 @@ def mod(x, y)
 end
 
 
+#
+#Ce test permet de vérifier si les différents backends pour les langages implémentent bien
+#read int, read char et skip
+#
 len = scanf("%d")[0]
 scanf("%*\n")
 printf "%d=len\n", len

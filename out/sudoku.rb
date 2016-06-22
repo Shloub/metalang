@@ -2,6 +2,7 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
+# lit un sudoku sur l'entrée standard 
 
 def read_sudoku(  )
   out0 = [*0..9 * 9-1].map { |i|
@@ -13,6 +14,7 @@ def read_sudoku(  )
   return out0
 end
 
+# affiche un sudoku 
 
 def print_sudoku( sudoku0 )
   for y in (0 ..  8) do
@@ -30,8 +32,11 @@ def print_sudoku( sudoku0 )
           print "\n"
       end
       
+      # dit si les variables sont toutes différentes 
       
+      # dit si les variables sont toutes différentes 
       
+      # dit si le sudoku est terminé de remplir 
       
       def sudoku_done( s )
         for i in (0 ..  80) do
@@ -42,6 +47,7 @@ def print_sudoku( sudoku0 )
             return true
         end
         
+        # dit si il y a une erreur dans le sudoku 
         
         def sudoku_error( s )
           out1 = false
@@ -59,6 +65,7 @@ def print_sudoku( sudoku0 )
                       return out1 || out2 || out3
                   end
                   
+                  # résout le sudoku
                   
                   def solve( sudoku0 )
                     if sudoku_error(sudoku0) then

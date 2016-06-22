@@ -1,9 +1,15 @@
 require "scanf.rb"
+#
+#Tictactoe : un tictactoe avec une IA
+#
+
+# La structure de donnée 
 
 
+# Un Mouvement 
 
 
-
+# On affiche l'état 
 
 def print_state( g )
   print "\n|"
@@ -25,6 +31,7 @@ def print_state( g )
           print "\n"
       end
       
+      # On dit qui gagne (info stoquées dans g.ended et g.note ) 
       
       def eval0( g )
         win = 0
@@ -73,6 +80,7 @@ def print_state( g )
                     end
                 end
                 
+                # On applique un mouvement 
                 
                 def apply_move_xy( x, y, g )
                   player = 2
@@ -105,6 +113,9 @@ def print_state( g )
                   return can_move_xy(m["x"], m["y"], g)
                 end
                 
+                #
+                #Un minimax classique, renvoie la note du plateau
+                #
                 
                 def minmax( g )
                   eval0(g)
@@ -132,6 +143,9 @@ def print_state( g )
                           return maxNote
                       end
                       
+                      #
+                      #Renvoie le coup de l'IA
+                      #
                       
                       def play( g )
                         minMove = {"x" => 0, "y" => 0}

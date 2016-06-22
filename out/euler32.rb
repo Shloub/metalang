@@ -2,6 +2,29 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
+#
+#We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
+#for example, the 5-digit number, 15234, is 1 through 5 pandigital.
+#
+#The product 7254 is unusual, as the identity, 39 × 186 = 7254, containing multiplicand, multiplier,
+#and product is 1 through 9 pandigital.
+#
+#Find the sum of all products whose multiplicand/multiplier/product identity can be written as a
+#1 through 9 pandigital.
+#
+#HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
+#
+#
+#(a * 10 + b) ( c * 100 + d * 10 + e) =
+#  a * c * 1000 +
+#  a * d * 100 +
+#  a * e * 10 +
+#  b * c * 100 +
+#  b * d * 10 +
+#  b * e
+#  => b != e != b * e % 10 ET
+#  a != d != (b * e / 10 + b * d + a * e ) % 10
+#
 
 def okdigits( ok, n )
   if n == 0 then
