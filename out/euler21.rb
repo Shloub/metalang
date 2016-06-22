@@ -41,9 +41,9 @@ def eratostene( t, max0 )
     def sumdivaux( t, n, i )
       if i > n then
           return 1
-       elsif t[i] == 0 then
+      elsif t[i] == 0 then
           return sumdivaux(t, n, sumdivaux2(t, n, i + 1))
-       else 
+      else 
           o = sumdivaux(t, n, sumdivaux2(t, n, i + 1))
           out0 = 0
           p = i

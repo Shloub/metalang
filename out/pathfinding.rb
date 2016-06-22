@@ -3,13 +3,13 @@ require "scanf.rb"
 def pathfind_aux( cache, tab, x, y, posX, posY )
   if posX == x - 1 && posY == y - 1 then
       return 0
-   elsif posX < 0 || posY < 0 || posX >= x || posY >= y then
+  elsif posX < 0 || posY < 0 || posX >= x || posY >= y then
       return x * y * 10
-   elsif tab[posY][posX] == "#" then
+  elsif tab[posY][posX] == "#" then
       return x * y * 10
-   elsif cache[posY][posX] != -1 then
+  elsif cache[posY][posX] != -1 then
       return cache[posY][posX]
-   else 
+  else 
       cache[posY][posX] = x * y * 10
       val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY)
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)

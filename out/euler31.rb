@@ -2,9 +2,9 @@ require "scanf.rb"
 def result( sum, t, maxIndex, cache )
   if cache[sum][maxIndex] != 0 then
       return cache[sum][maxIndex]
-   elsif sum == 0 || maxIndex == 0 then
+  elsif sum == 0 || maxIndex == 0 then
       return 1
-   else 
+  else 
       out0 = 0
       div = (sum.to_f / t[maxIndex]).to_i
       for i in (0 ..  div) do

@@ -92,7 +92,7 @@ def print_sudoku( sudoku0 )
                         print_sudoku(sudoku0)
                         if solve(sudoku0) then
                             print_sudoku(sudoku0)
-                         else 
+                        else 
                             print "no solution\n"
                         end
                         

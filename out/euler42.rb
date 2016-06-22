@@ -24,7 +24,7 @@ def score(  )
       end
       if is_triangular(sum) then
           return 1
-       else 
+      else 
           return 0
       end
   end

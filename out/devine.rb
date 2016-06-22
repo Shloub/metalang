@@ -30,7 +30,7 @@ def devine0( nombre, tab, len )
     }
   if devine0(nombre, tab, len) then
       print "True"
-   else 
+  else 
       print "False"
   end
   

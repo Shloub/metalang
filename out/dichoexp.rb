@@ -9,7 +9,7 @@ def exp0( a, b )
   if mod(b, 2) == 0 then
       o = exp0(a, (b.to_f / 2).to_i)
       return o * o
-   else 
+  else 
       return a * exp0(a, b - 1)
   end
 end

@@ -34,7 +34,7 @@ def bubblesort( tab, len )
                         tab[i] = tab[j]
                         tab[j] = tmp
                         i += 1
-                     else 
+                    else 
                         # on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
                         
                         tmp = tab[i]
@@ -43,7 +43,7 @@ def bubblesort( tab, len )
                         tab[i + 1] = tmp
                         i += 1
                     end
-                 else 
+                else 
                     j -= 1
                 end
             end

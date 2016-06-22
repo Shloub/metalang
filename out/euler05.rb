@@ -13,7 +13,7 @@ def primesfactors( n )
       if mod(n, d) == 0 then
           tab[d] += 1
           n = (n.to_f / d).to_i
-       else 
+      else 
           d += 1
       end
   end

@@ -10,7 +10,7 @@ def pgcd( a, b )
   reste = mod(d, c)
   if reste == 0 then
       return c
-   else 
+  else 
       return pgcd(c, reste)
   end
 end

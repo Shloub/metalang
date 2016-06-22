@@ -14,7 +14,7 @@ def exp0( a, e )
     for i in (1 ..  8) do
         if n >= t[i] * i then
             n -= t[i] * i
-         else 
+        else 
             nombre = exp0(10, i - 1) + (n.to_f / i).to_i
             chiffre = i - 1 - mod(n, i)
             return mod((nombre.to_f / exp0(10, chiffre)).to_i, 10)

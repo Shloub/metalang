@@ -34,9 +34,9 @@ def read_bigint( len )
       
       if a["bigint_sign"] != b["bigint_sign"] then
           return false
-       elsif a["bigint_len"] != b["bigint_len"] then
+      elsif a["bigint_len"] != b["bigint_len"] then
           return false
-       else 
+      else 
           for i in (0 ..  a["bigint_len"] - 1) do
               if a["bigint_chiffres"][i] != b["bigint_chiffres"][i] then
                   return false
@@ -51,19 +51,19 @@ def read_bigint( len )
         
         if a["bigint_sign"] && !b["bigint_sign"] then
             return true
-         elsif !a["bigint_sign"] && b["bigint_sign"] then
+        elsif !a["bigint_sign"] && b["bigint_sign"] then
             return false
-         else 
+        else 
             if a["bigint_len"] > b["bigint_len"] then
                 return a["bigint_sign"]
-             elsif a["bigint_len"] < b["bigint_len"] then
+            elsif a["bigint_len"] < b["bigint_len"] then
                 return !a["bigint_sign"]
-             else 
+            else 
                 for i in (0 ..  a["bigint_len"] - 1) do
                     j = a["bigint_len"] - 1 - i
                     if a["bigint_chiffres"][j] > b["bigint_chiffres"][j] then
                         return a["bigint_sign"]
-                     elsif a["bigint_chiffres"][j] < b["bigint_chiffres"][j] then
+                    elsif a["bigint_chiffres"][j] < b["bigint_chiffres"][j] then
                         return !a["bigint_sign"]
                     end
                     end
@@ -115,7 +115,7 @@ def read_bigint( len )
             if tmp < 0 then
                 tmp += 10
                 retenue = -1
-             else 
+            else 
                 retenue = 0
             end
             next tmp
@@ -134,23 +134,23 @@ def read_bigint( len )
           if a["bigint_sign"] == b["bigint_sign"] then
               if a["bigint_sign"] then
                   return add_bigint_positif(a, b)
-               else 
+              else 
                   return neg_bigint(add_bigint_positif(a, b))
               end
-           elsif a["bigint_sign"] then
+          elsif a["bigint_sign"] then
               # a positif, b negatif 
               
               if bigint_gt(a, neg_bigint(b)) then
                   return sub_bigint_positif(a, b)
-               else 
+              else 
                   return neg_bigint(sub_bigint_positif(b, a))
               end
-           else 
+          else 
               # a negatif, b positif 
               
               if bigint_gt(neg_bigint(a), b) then
                   return neg_bigint(sub_bigint_positif(a, b))
-               else 
+              else 
                   return sub_bigint_positif(b, a)
               end
           end
@@ -202,7 +202,7 @@ def read_bigint( len )
                       
                       if k >= i then
                           next a["bigint_chiffres"][k - i]
-                       else 
+                      else 
                           next 0
                       end
                       }
@@ -212,9 +212,9 @@ def read_bigint( len )
                   def mul_bigint( aa, bb )
                     if aa["bigint_len"] == 0 then
                         return aa
-                     elsif bb["bigint_len"] == 0 then
+                    elsif bb["bigint_len"] == 0 then
                         return bb
-                     elsif aa["bigint_len"] < 3 || bb["bigint_len"] < 3 then
+                    elsif aa["bigint_len"] < 3 || bb["bigint_len"] < 3 then
                         return mul_bigint_cp(aa, bb)
                     end
                     # Algorithme de Karatsuba 
@@ -296,9 +296,9 @@ def read_bigint( len )
                       def bigint_exp( a, b )
                         if b == 1 then
                             return a
-                         elsif mod(b, 2) == 0 then
+                        elsif mod(b, 2) == 0 then
                             return bigint_exp(mul_bigint(a, a), (b.to_f / 2).to_i)
-                         else 
+                        else 
                             return mul_bigint(a, bigint_exp(a, b - 1))
                         end
                       end
@@ -307,9 +307,9 @@ def read_bigint( len )
                         a = bigint_premiers_chiffres(a, 10)
                         if b == 1 then
                             return a
-                         elsif mod(b, 2) == 0 then
+                        elsif mod(b, 2) == 0 then
                             return bigint_exp_10chiffres(mul_bigint(a, a), (b.to_f / 2).to_i)
-                         else 
+                        else 
                             return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
                         end
                       end
@@ -378,7 +378,7 @@ def read_bigint( len )
                                           if bigint_lt(a_bigint[i], min0) then
                                               min0 = a_bigint[i]
                                           end
-                                       else 
+                                      else 
                                           min0 = a_bigint[i]
                                           found = true
                                       end
@@ -450,7 +450,7 @@ def read_bigint( len )
                                   print "="
                                   if bigint_gt(a, b) then
                                       print "True"
-                                   else 
+                                  else 
                                       print "False"
                                   end
                                   print "\n"

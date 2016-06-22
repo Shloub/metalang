@@ -5,14 +5,14 @@ end
 def chiffre_sort( a )
   if a < 10 then
       return a
-   else 
+  else 
       b = chiffre_sort((a.to_f / 10).to_i)
       c = mod(a, 10)
       d = mod(b, 10)
       e = (b.to_f / 10).to_i
       if c < d then
           return c + b * 10
-       else 
+      else 
           return d + chiffre_sort(c + e * 10) * 10
       end
   end

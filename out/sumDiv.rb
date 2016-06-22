@@ -36,7 +36,7 @@ def sumdiv( n )
           out0 += i
           # On incrémente 
           
-       else 
+      else 
           # nop 
           
       end
