@@ -12,9 +12,9 @@ def find0( len, tab, cache, x, y )
   
   if y == len - 1 then
       return tab[y][x]
-   elsif x > y then
+  elsif x > y then
       return -10000
-   elsif cache[y][x] != 0 then
+  elsif cache[y][x] != 0 then
       return cache[y][x]
   end
   result = 0
@@ -22,7 +22,7 @@ def find0( len, tab, cache, x, y )
   out1 = find0(len, tab, cache, x + 1, y + 1)
   if out0 > out1 then
       result = out0 + tab[y][x]
-   else 
+  else 
       result = out1 + tab[y][x]
   end
   cache[y][x] = result

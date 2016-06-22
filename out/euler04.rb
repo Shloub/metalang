@@ -25,7 +25,7 @@ end
 def chiffre( c, m )
   if c == 0 then
       return mod(m, 10)
-   else 
+  else 
       return chiffre(c - 1, (m.to_f / 10).to_i)
   end
 end

@@ -4,7 +4,7 @@ def go0( tab, a, b )
   if a == m then
       if tab[a] == m then
           return b
-       else 
+      else 
           return a
       end
   end
@@ -14,7 +14,7 @@ def go0( tab, a, b )
       e = tab[i]
       if e < m then
           i += 1
-       else 
+      else 
           j -= 1
           tab[i] = tab[j]
           tab[j] = e
@@ -22,7 +22,7 @@ def go0( tab, a, b )
   end
   if i < m then
       return go0(tab, a, m)
-   else 
+  else 
       return go0(tab, m, b)
   end
 end

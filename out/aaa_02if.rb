@@ -7,7 +7,7 @@ def f( i )
 end
 if f(4) then
     print "true <-\n ->\n"
- else 
+else 
     print "false <-\n ->\n"
 end
 print "small test end\n"

@@ -9,31 +9,31 @@ end
 def ndayinmonth( month, year )
   if month == 0 then
       return 31
-   elsif month == 1 then
+  elsif month == 1 then
       if is_leap(year) then
           return 29
-       else 
+      else 
           return 28
       end
-   elsif month == 2 then
+  elsif month == 2 then
       return 31
-   elsif month == 3 then
+  elsif month == 3 then
       return 30
-   elsif month == 4 then
+  elsif month == 4 then
       return 31
-   elsif month == 5 then
+  elsif month == 5 then
       return 30
-   elsif month == 6 then
+  elsif month == 6 then
       return 31
-   elsif month == 7 then
+  elsif month == 7 then
       return 31
-   elsif month == 8 then
+  elsif month == 8 then
       return 30
-   elsif month == 9 then
+  elsif month == 9 then
       return 31
-   elsif month == 10 then
+  elsif month == 10 then
       return 30
-   elsif month == 11 then
+  elsif month == 11 then
       return 31
   end
   return 0

@@ -54,7 +54,7 @@ def eratostene( t, max0 )
                           maxl = len
                           resp = sum[i]
                       end
-                   else 
+                  else 
                       stop = [stop, i].min
                   end
               end

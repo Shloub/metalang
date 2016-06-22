@@ -17,9 +17,9 @@ def print_state( g )
       for x in (0 ..  2) do
           if g["cases"][x][y] == 0 then
               print " "
-           elsif g["cases"][x][y] == 1 then
+          elsif g["cases"][x][y] == 1 then
               print "O"
-           else 
+          else 
               print "X"
           end
           print "|"
@@ -47,18 +47,18 @@ def print_state( g )
                 linv = g["cases"][y][x]
                 if col == -1 && colv != 0 then
                     col = colv
-                 elsif colv != col then
+                elsif colv != col then
                     col = -2
                 end
                 if lin == -1 && linv != 0 then
                     lin = linv
-                 elsif linv != lin then
+                elsif linv != lin then
                     lin = -2
                 end
                 end
                 if col >= 0 then
                     win = col
-                 elsif lin >= 0 then
+                elsif lin >= 0 then
                     win = lin
                 end
                 end
@@ -73,9 +73,9 @@ def print_state( g )
                     g["ended"] = win != 0 || freecase == 0
                     if win == 1 then
                         g["note"] = 1000
-                     elsif win == 2 then
+                    elsif win == 2 then
                         g["note"] = -1000
-                     else 
+                    else 
                         g["note"] = 0
                     end
                 end

@@ -5,7 +5,7 @@ end
 def next0( n )
   if mod(n, 2) == 0 then
       return (n.to_f / 2).to_i
-   else 
+  else 
       return 3 * n + 1
   end
 end
@@ -13,11 +13,11 @@ end
 def find( n, m )
   if n == 1 then
       return 1
-   elsif n >= 1000000 then
+  elsif n >= 1000000 then
       return 1 + find(next0(n), m)
-   elsif m[n] != 0 then
+  elsif m[n] != 0 then
       return m[n]
-   else 
+  else 
       m[n] = 1 + find(next0(n), m)
       return m[n]
   end

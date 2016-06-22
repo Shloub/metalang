@@ -12,7 +12,7 @@ end
 def rev2( acc, torev )
   if is_empty(torev) then
       return acc
-   else 
+  else 
       acc2 = {"head" => torev["head"], "tail" => acc}
       return rev2(acc, torev["tail"])
   end

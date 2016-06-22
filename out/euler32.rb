@@ -29,14 +29,14 @@ end
 def okdigits( ok, n )
   if n == 0 then
       return true
-   else 
+  else 
       digit = mod(n, 10)
       if ok[digit] then
           ok[digit] = false
           o = okdigits(ok, (n.to_f / 10).to_i)
           ok[digit] = true
           return o
-       else 
+      else 
           return false
       end
   end

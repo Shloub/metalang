@@ -19,14 +19,14 @@ a = [*0..5-1].map { |i|
 printf "%d ", j
 if a[0] then
     print "True"
- else 
+else 
     print "False"
 end
 print "\n"
 g(id(a), 0)
 if a[0] then
     print "True"
- else 
+else 
     print "False"
 end
 print "\n"

@@ -23,7 +23,7 @@ def nbPassePartout( n, passepartout, m, serrures )
           end
           if max_ancient_pp >= max_ancient && max_recent_pp >= max_recent then
               return 2
-           else 
+          else 
               return 0
           end
       end

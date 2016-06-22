@@ -5,7 +5,7 @@ end
 def triangle( n )
   if mod(n, 2) == 0 then
       return (n.to_f / 2).to_i * (n + 1)
-   else 
+  else 
       return n * ((n + 1).to_f / 2).to_i
   end
 end
@@ -13,7 +13,7 @@ end
 def penta( n )
   if mod(n, 2) == 0 then
       return (n.to_f / 2).to_i * (3 * n - 1)
-   else 
+  else 
       return ((3 * n - 1).to_f / 2).to_i * n
   end
 end
@@ -30,9 +30,9 @@ def findPenta2( n, a, b )
   p = penta(c)
   if p == n then
       return true
-   elsif p < n then
+  elsif p < n then
       return findPenta2(n, c, b)
-   else 
+  else 
       return findPenta2(n, a, c)
   end
 end
@@ -45,9 +45,9 @@ def findHexa2( n, a, b )
   p = hexa(c)
   if p == n then
       return true
-   elsif p < n then
+  elsif p < n then
       return findHexa2(n, c, b)
-   else 
+  else 
       return findHexa2(n, a, c)
   end
 end

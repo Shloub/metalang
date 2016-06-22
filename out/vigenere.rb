@@ -8,9 +8,9 @@ def position_alphabet( c )
   i = c.ord
   if i <= "Z".ord && i >= "A".ord then
       return i - "A".ord
-   elsif i <= "z".ord && i >= "a".ord then
+  elsif i <= "z".ord && i >= "a".ord then
       return i - "a".ord
-   else 
+  else 
       return -1
   end
 end

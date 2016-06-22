@@ -15,7 +15,7 @@ def divisible( n, t, size )
     while used != nth do
         if divisible(n, t, used) then
             n += 1
-         else 
+        else 
             t[used] = n
             n += 1
             used += 1

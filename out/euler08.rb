@@ -20,7 +20,7 @@ for k in (1 ..  995) do
     if f == 0 then
         i = 1
         nskipdiv = 4
-     else 
+    else 
         i *= f
         if nskipdiv < 0 then
             i = (i.to_f / last[index]).to_i
