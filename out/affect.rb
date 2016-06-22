@@ -1,4 +1,7 @@
 require "scanf.rb"
+#
+#Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
+#
 
 
 def mktoto( v1 )

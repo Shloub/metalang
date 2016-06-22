@@ -1,6 +1,9 @@
 require "scanf.rb"
 
 
+#
+#  Ce test a été généré par Metalang.
+#
 
 def result( len, tab )
   tab2 = [*0..len-1].map { |i|

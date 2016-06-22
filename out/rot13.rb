@@ -4,6 +4,9 @@ def mod(x, y)
 end
 
 
+#
+#Ce test effectue un rot13 sur une chaine lue en entrée
+#
 strlen = scanf("%d")[0]
 scanf("%*\n")
 tab4 = [*0..strlen-1].map { |toto|

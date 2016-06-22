@@ -235,6 +235,10 @@ def read_bigint( len )
                     
                   end
                   
+                  #
+                  #Division,
+                  #Modulo
+                  #
                   
                   def log10( a )
                     out0 = 1
@@ -279,6 +283,7 @@ def read_bigint( len )
                           return out0
                       end
                       
+                      # http://projecteuler.net/problem=20 
                       
                       def euler20(  )
                         a = bigint_of_int(15)

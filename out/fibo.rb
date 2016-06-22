@@ -1,4 +1,7 @@
 require "scanf.rb"
+#
+#La suite de fibonaci
+#
 
 def fibo0( a, b, i )
   out0 = 0
