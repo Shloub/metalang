@@ -199,69 +199,30 @@ let print_instr tyenv c i =
    print_lief = c.print_lief;
  }
 
-let print_instr tyenv macros i =
-  let open Ast.Instr.Fixed.Deep in
-  let c = config macros in
-  let i = (fold (print_instr tyenv c) (mapg (print_expr c) i))
-  in fun f -> i.p f i.default
-  
 class pyPrinter = object(self)
   inherit CPrinter.cPrinter as super
 
-  method instr f (t:Utils.instr) =
+  method main f main = self#instructions f main
+      
+  method instructions f li =
+  let open Ast.Instr.Fixed.Deep in
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "py" li
-        with Not_found -> List.assoc "" li) macros
-   in (print_instr typerEnv macros t) f
-
-  method multi_read f li = self#base_multi_read f li
-
-  method declare_for s f li = ()
-  method separator f () = ()
-
-  method selfAssoc f m e2 = function
-  | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_set m self#expr e2
-  | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_set m self#expr e2
-  | Expr.Mul -> Format.fprintf f "@[<h>%a *= %a@]" self#mutable_set m self#expr e2
-  | Expr.Div -> Format.fprintf f "@[<h>%a = math.trunc(%a / %a)@]" self#mutable_set m self#mutable_get m self#expr e2
-  | Expr.Mod -> Format.fprintf f "@[<h>%a = mod(%a, %a)@]" self#mutable_set m self#mutable_get m self#expr e2
-  | _ -> assert false
-
-  method read f t mutable_ =
-    match Type.unfix t with
-    | Type.Integer ->
-      Format.fprintf f "@[%a = readint()@]"
-        self#mutable_set mutable_
-    | Type.Char ->
-      Format.fprintf f "@[%a = readchar()@]"
-        self#mutable_set mutable_
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
-      (Type.type_t_to_string t)
-    ))
-
-  method read_decl f t v =
-    match Type.unfix t with
-    | Type.Integer ->
-      Format.fprintf f "@[%a = readint()@]"
-        self#binding v
-    | Type.Char ->
-      Format.fprintf f "@[%a = readchar()@]"
-        self#binding v
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
-      (Type.type_t_to_string t)
-    ))
-
-  method stdin_sep f = Format.fprintf f "@[stdinsep()@]"
-
-  method main f main = self#instructions f main
-
+        with Not_found -> List.assoc "" li) macros in
+   let c = config macros in
+   let li = List.map (fun i -> (fold (print_instr (super#getTyperEnv ()) c) (mapg (print_expr c) i))) li in
+   let p f () = print_list (fun f i -> i.p f i.default) sep_nl f li in
+   if List.for_all (fun i -> i.is_comment) li then
+     Format.fprintf f "@[<h>pass@]"
+   else p f ()
+        
   method header f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "%s%s%s%s%s%s"
+    Format.fprintf f "%s%s%s%s%s%s@\n"
       (if Tags.is_taged "__internal__div" ||
           Tags.is_taged "__internal__mod" ||
           Tags.is_taged "use_math"
@@ -331,32 +292,6 @@ def skipchar():
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-
-  method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ =@ %a@]" self#binding var self#expr e
-
-  method bloc f li =
-    match li with
-    | [] -> Format.fprintf f "@[<h>    pass@]"
-    | _ -> Format.fprintf f "@[<v 4>    %a@]" self#instructions li
-
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] ->
-      Format.fprintf f "@[<h>if@ %a:@]@\n%a"
-        self#expr e
-        self#bloc ifcase
-    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nel%a"
-        self#expr e
-        self#bloc ifcase
-        self#instr instr
-    | _ ->
-      Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse:@\n%a"
-        self#expr e
-        self#bloc ifcase
-        self#bloc elsecase
-
   method comment f str =
     let trimmed = String.trim str in
       if not (String.starts_with trimmed "\"" || String.ends_with trimmed "\"") then
@@ -366,35 +301,12 @@ def skipchar():
       else
         Format.fprintf f "\"\"\"@\n%s@\n\"\"\"" trimmed
 
-  method whileloop f expr li =
-    Format.fprintf f "@[<h>while (%a):@]@\n%a" self#expr expr self#bloc li
-
   method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a@]@\n@[<v 4>%a@]@\n"
-      self#print_proto (funname, t, li)
-      self#bloc instrs
+    Format.fprintf f "@[<v 4>@[<h>def %a(%a):@]@\n%a@]@\n"
+      self#funname funname
+      (print_list self#binding sep_c) (List.map fst li)
+      self#instructions instrs
 
   method decl_type f name t = ()
 
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "def %a(%a):"
-      self#funname funname
-      (print_list self#binding sep_c) (List.map fst li)
-
-  method print_args =
-    print_list
-      (fun f (t, expr) ->
-        (self#expr) f expr)
-      sep_c
-
-  method multi_print f li =
-    let format, exprs = self#extract_multi_print li in
-      if String.ends_with format "\n" then
-        let l = String.length format in
-        Format.fprintf f "@[<h>print(\"%s\" %% (%a))@]" (String.sub format 0 (l - 1) )
-          self#print_args exprs
-      else
-        Format.fprintf f "@[<h>print(\"%s\" %% (%a), end='')@]" format self#print_args exprs
-
-  method m_field f m field = Format.fprintf f "%a[%a]" self#mutable_get m self#field field
 end
