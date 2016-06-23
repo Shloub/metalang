@@ -36,13 +36,14 @@ def readint():
         else:
             return out * sign
 
+
 def montagnes0(tab, len):
     max0 = 1
     j = 1
     i = len - 2
-    while (i >= 0):
+    while i >= 0:
         x = tab[i]
-        while (j >= 0 and x > tab[len - j]):
+        while j >= 0 and x > tab[len - j]:
             j -= 1
         j += 1
         tab[len - j] = x
@@ -55,7 +56,7 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, len):
+for i in range(0, 1 + len - 1):
     x = 0
     x = readint()
     stdinsep()

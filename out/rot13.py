@@ -45,16 +45,17 @@ def readint():
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 """Ce test effectue un rot13 sur une chaine lue en entrée"""
 strlen = readint()
 stdinsep()
 tab4 = [None] * strlen
-for toto in range(0, strlen):
+for toto in range(0, 1 + strlen - 1):
     tmpc = readchar()
     c = ord(tmpc)
     if tmpc != ' ':
         c = mod(c - ord('a') + 13, 26) + ord('a')
     tab4[toto] = c
-for j in range(0, strlen):
+for j in range(0, 1 + strlen - 1):
     print("%c" % tab4[j], end='')
 

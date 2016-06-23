@@ -2,6 +2,7 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def triangle(n):
     if mod(n, 2) == 0:
         return math.trunc(n / 2) * (n + 1)

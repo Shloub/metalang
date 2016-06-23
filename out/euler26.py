@@ -2,11 +2,12 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def periode(restes, len, a, b):
-    while (a != 0):
+    while a != 0:
         chiffre = math.trunc(a / b)
         reste = mod(a, b)
-        for i in range(0, len):
+        for i in range(0, 1 + len - 1):
             if restes[i] == reste:
                 return len - i
         restes[len] = reste

@@ -37,6 +37,7 @@ def readint():
         else:
             return out * sign
 
+
 def go0(tab, a, b):
     m = math.trunc((a + b) / 2)
     if a == m:
@@ -46,7 +47,7 @@ def go0(tab, a, b):
             return a
     i = a
     j = b
-    while (i < j):
+    while i < j:
         e = tab[i]
         if e < m:
             i += 1
@@ -66,7 +67,7 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, len):
+for i in range(0, 1 + len - 1):
     tmp = 0
     tmp = readint()
     stdinsep()

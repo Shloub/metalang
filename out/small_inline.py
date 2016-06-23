@@ -36,8 +36,9 @@ def readint():
         else:
             return out * sign
 
+
 t = [None] * 2
-for d in range(0, 2):
+for d in range(0, 1 + 2 - 1):
     t[d] = readint()
     stdinsep()
 print("%d - %d\n" % (t[0], t[1]), end='')

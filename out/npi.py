@@ -41,6 +41,7 @@ def readint():
         else:
             return out * sign
 
+
 def is_number(c):
     return ord(c) <= ord('9') and ord(c) >= ord('0')
 
@@ -49,12 +50,12 @@ def npi0(str, len):
     stack = [0] * len
     ptrStack = 0
     ptrStr = 0
-    while (ptrStr < len):
+    while ptrStr < len:
         if str[ptrStr] == ' ':
             ptrStr += 1
         elif is_number(str[ptrStr]):
             num = 0
-            while (str[ptrStr] != ' '):
+            while str[ptrStr] != ' ':
                 num = num * 10 + ord(str[ptrStr]) - ord('0')
                 ptrStr += 1
             stack[ptrStack] = num
@@ -69,7 +70,7 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, len):
+for i in range(0, 1 + len - 1):
     tmp = '\u0000'
     tmp = readchar()
     tab[i] = tmp

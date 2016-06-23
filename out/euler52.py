@@ -2,6 +2,7 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def chiffre_sort(a):
     if a < 10:
         return a

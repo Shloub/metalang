@@ -1,4 +1,5 @@
 import math
+
 t = [0] * 1001
 for a in range(1, 1 + 1000):
     for b in range(1, 1 + 1000):

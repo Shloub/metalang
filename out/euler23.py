@@ -2,21 +2,22 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def eratostene(t, max0):
     n = 0
-    for i in range(2, max0):
+    for i in range(2, 1 + max0 - 1):
         if t[i] == i:
             n += 1
             j = i * i
-            while (j < max0 and j > 0):
+            while j < max0 and j > 0:
                 t[j] = 0
                 j += i
     return n
 
 def fillPrimesFactors(t, n, primes, nprimes):
-    for i in range(0, nprimes):
+    for i in range(0, 1 + nprimes - 1):
         d = primes[i]
-        while (mod(n, d) == 0):
+        while mod(n, d) == 0:
             t[d] += 1
             n = math.trunc(n / d)
         if n == 1:
@@ -24,7 +25,7 @@ def fillPrimesFactors(t, n, primes, nprimes):
     return n
 
 def sumdivaux2(t, n, i):
-    while (i < n and t[i] == 0):
+    while i < n and t[i] == 0:
         i += 1
     return i
 
@@ -49,17 +50,18 @@ def sumdiv(nprimes, primes, n):
 
 maximumprimes = 30001
 era = [None] * maximumprimes
-for s in range(0, maximumprimes):
+for s in range(0, 1 + maximumprimes - 1):
     era[s] = s
 nprimes = eratostene(era, maximumprimes)
 primes = [0] * nprimes
 l = 0
-for k in range(2, maximumprimes):
+for k in range(2, 1 + maximumprimes - 1):
     if era[k] == k:
         primes[l] = k
         l += 1
 n = 100
-"""28124 ça prend trop de temps mais on arrive a passer le test"""
+# 28124 ça prend trop de temps mais on arrive a passer le test 
+
 abondant = [False] * (n + 1)
 summable = [False] * (n + 1)
 sum = 0
@@ -74,5 +76,5 @@ for i in range(1, 1 + n):
 for o in range(1, 1 + n):
     if not summable[o]:
         sum += o
-print("\n%d\n" % (sum), end='')
+print("\n%d\n" % sum, end='')
 

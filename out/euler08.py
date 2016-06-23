@@ -21,9 +21,10 @@ def readchar():
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 i = 1
 last = [None] * 5
-for j in range(0, 5):
+for j in range(0, 1 + 5 - 1):
     c = readchar()
     d = ord(c) - ord('0')
     i *= d
@@ -45,5 +46,5 @@ for k in range(1, 1 + 995):
     last[index] = f
     index = mod(index + 1, 5)
     max0 = max(max0, i)
-print("%d\n" % (max0), end='')
+print("%d\n" % max0, end='')
 

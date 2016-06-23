@@ -42,9 +42,13 @@ def readint():
         else:
             return out * sign
 
+
 def is_triangular(n):
-    """n = k * (k + 1) / 2
-	  n * 2 = k * (k + 1)"""
+    #
+    #   n = k * (k + 1) / 2
+    #	  n * 2 = k * (k + 1)
+    #   
+    
     a = math.floor(math.sqrt(n * 2))
     return a * (a + 1) == n * 2
 
@@ -56,7 +60,8 @@ def score():
     for i in range(1, 1 + len):
         c = readchar()
         sum += ord(c) - ord('A') + 1
-        '''print c print " " print sum print " "'''
+        #		print c print " " print sum print " " 
+        
     if is_triangular(sum):
         return 1
     else:
@@ -64,11 +69,11 @@ def score():
 
 for i in range(1, 1 + 55):
     if is_triangular(i):
-        print("%d " % (i), end='')
-print("")
+        print("%d " % i, end='')
+print("\n", end='')
 sum = 0
 n = readint()
 for i in range(1, 1 + n):
     sum += score()
-print("%d\n" % (sum), end='')
+print("%d\n" % sum, end='')
 

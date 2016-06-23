@@ -29,6 +29,7 @@ def readint():
             return out * sign
 
 
+
 def cons(list, i):
     out0 = {"head":i, "tail":list}
     return out0
@@ -49,10 +50,10 @@ def rev(empty, torev):
 def test(empty):
     list = empty
     i = -1
-    while (i != 0):
+    while i != 0:
         i = readint()
         if i != 0:
             list = cons(list, i)
 
-
+pass
 

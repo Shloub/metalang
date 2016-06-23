@@ -32,11 +32,14 @@ def readint():
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def foo():
     a = 0
-    """test"""
+    # test 
+    
     a += 1
-    """test 2"""
+    # test 2 
+    
 
 def foo2():
     pass
@@ -46,23 +49,31 @@ def foo3():
         pass
 
 def sumdiv(n):
-    """On désire renvoyer la somme des diviseurs"""
+    # On désire renvoyer la somme des diviseurs 
+    
     out0 = 0
-    """On déclare un entier qui contiendra la somme"""
+    # On déclare un entier qui contiendra la somme 
+    
     for i in range(1, 1 + n):
-        """La boucle : i est le diviseur potentiel"""
+        # La boucle : i est le diviseur potentiel
+        
         if mod(n, i) == 0:
-            """Si i divise"""
+            # Si i divise 
+            
             out0 += i
-            """On incrémente"""
+            # On incrémente 
+            
         else:
-            """nop"""
+            pass
     return out0
-    """On renvoie out"""
+    #On renvoie out
+    
 
-"""Programme principal"""
+# Programme principal 
+
 n = 0
 n = readint()
-"""Lecture de l'entier"""
+# Lecture de l'entier 
+
 print("%d" % sumdiv(n), end='')
 

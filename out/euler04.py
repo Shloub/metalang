@@ -2,6 +2,7 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 """(a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
 a * d + a * e * 10 + a * f * 100 +
 10 * (b * d + b * e * 10 + b * f * 100)+
@@ -32,5 +33,5 @@ for a in range(0, 1 + 9):
                         mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
                         if chiffre(0, mul) == chiffre(5, mul) and chiffre(1, mul) == chiffre(4, mul) and chiffre(2, mul) == chiffre(3, mul):
                             m = max(mul, m)
-print("%d\n" % (m), end='')
+print("%d\n" % m, end='')
 

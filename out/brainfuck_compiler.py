@@ -1,3 +1,4 @@
+
 """Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 et qui produit les macros metalang correspondante"""
@@ -62,7 +63,7 @@ mem[current_pos] += 1
 mem[current_pos] += 1
 mem[current_pos] += 1
 mem[current_pos] += 1
-while (mem[current_pos] != 0):
+while mem[current_pos] != 0:
     mem[current_pos] -= 1
     current_pos -= 1
     mem[current_pos] += 1

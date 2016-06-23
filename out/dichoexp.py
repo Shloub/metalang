@@ -40,6 +40,7 @@ def readint():
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def exp0(a, b):
     if b == 0:
         return 1

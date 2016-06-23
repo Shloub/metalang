@@ -40,10 +40,11 @@ def readint():
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 """lit un sudoku sur l'entrée standard"""
 def read_sudoku():
     out0 = [None] * 9 * 9
-    for i in range(0, 9 * 9):
+    for i in range(0, 1 + 9 * 9 - 1):
         k = readint()
         stdinsep()
         out0[i] = k
@@ -53,13 +54,13 @@ def read_sudoku():
 def print_sudoku(sudoku0):
     for y in range(0, 1 + 8):
         for x in range(0, 1 + 8):
-            print("%d " % (sudoku0[x + y * 9]), end='')
+            print("%d " % sudoku0[x + y * 9], end='')
             if mod(x, 3) == 2:
                 print(" ", end='')
-        print("")
+        print("\n", end='')
         if mod(y, 3) == 2:
-            print("")
-    print("")
+            print("\n", end='')
+    print("\n", end='')
 
 """dit si les variables sont toutes différentes"""
 """dit si les variables sont toutes différentes"""
@@ -104,5 +105,5 @@ print_sudoku(sudoku0)
 if solve(sudoku0):
     print_sudoku(sudoku0)
 else:
-    print("no solution")
+    print("no solution\n", end='')
 

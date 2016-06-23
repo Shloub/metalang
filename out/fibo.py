@@ -36,6 +36,7 @@ def readint():
         else:
             return out * sign
 
+
 """La suite de fibonaci"""
 def fibo0(a, b, i):
     out0 = 0

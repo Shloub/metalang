@@ -36,12 +36,16 @@ def readint():
         else:
             return out * sign
 
+
 """Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18"""
 def find0(len, tab, cache, x, y):
-    """Cette fonction est récursive"""
+    #
+    #	Cette fonction est récursive
+    #	
+    
     if y == len - 1:
         return tab[y][x]
     elif x > y:
@@ -60,7 +64,7 @@ def find0(len, tab, cache, x, y):
 
 def find(len, tab):
     tab2 = [None] * len
-    for i in range(0, len):
+    for i in range(0, 1 + len - 1):
         tab3 = [0] * (i + 1)
         tab2[i] = tab3
     return find0(len, tab, tab2, 0, 0)
@@ -69,17 +73,17 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, len):
+for i in range(0, 1 + len - 1):
     tab2 = [None] * (i + 1)
-    for j in range(0, i + 1):
+    for j in range(0, 1 + i + 1 - 1):
         tmp = 0
         tmp = readint()
         stdinsep()
         tab2[j] = tmp
     tab[i] = tab2
-print("%d\n" % (find(len, tab)), end='')
-for k in range(0, len):
+print("%d\n" % find(len, tab), end='')
+for k in range(0, 1 + len - 1):
     for l in range(0, 1 + k):
-        print("%d " % (tab[k][l]), end='')
-    print("")
+        print("%d " % tab[k][l], end='')
+    print("\n", end='')
 
