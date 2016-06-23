@@ -1,21 +1,23 @@
 import math
+
 def eratostene(t, max0):
     sum = 0
-    for i in range(2, max0):
+    for i in range(2, 1 + max0 - 1):
         if t[i] == i:
             sum += i
             if math.trunc(max0 / i) > i:
                 j = i * i
-                while (j < max0 and j > 0):
+                while j < max0 and j > 0:
                     t[j] = 0
                     j += i
     return sum
 
 n = 100000
-"""normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages"""
+# normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
+
 t = [None] * n
-for i in range(0, n):
+for i in range(0, 1 + n - 1):
     t[i] = i
 t[1] = 0
-print("%d\n" % (eratostene(t, n)), end='')
+print("%d\n" % eratostene(t, n), end='')
 

@@ -45,38 +45,39 @@ def readint():
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 """Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip"""
 len = readint()
 stdinsep()
-print("%d=len\n" % (len), end='')
+print("%d=len\n" % len, end='')
 len *= 2
-print("len*2=%d\n" % (len), end='')
+print("len*2=%d\n" % len, end='')
 len = math.trunc(len / 2)
 tab = [None] * len
-for i in range(0, len):
+for i in range(0, 1 + len - 1):
     tmpi1 = readint()
     stdinsep()
     print("%d=>%d " % (i, tmpi1), end='')
     tab[i] = tmpi1
-print("")
+print("\n", end='')
 tab2 = [None] * len
-for i_ in range(0, len):
+for i_ in range(0, 1 + len - 1):
     tmpi2 = readint()
     stdinsep()
     print("%d==>%d " % (i_, tmpi2), end='')
     tab2[i_] = tmpi2
 strlen = readint()
 stdinsep()
-print("%d=strlen\n" % (strlen), end='')
+print("%d=strlen\n" % strlen, end='')
 tab4 = [None] * strlen
-for toto in range(0, strlen):
+for toto in range(0, 1 + strlen - 1):
     tmpc = readchar()
     c = ord(tmpc)
     print("%c:%d " % (tmpc, c), end='')
     if tmpc != ' ':
         c = mod(c - ord('a') + 13, 26) + ord('a')
     tab4[toto] = c
-for j in range(0, strlen):
+for j in range(0, 1 + strlen - 1):
     print("%c" % tab4[j], end='')
 

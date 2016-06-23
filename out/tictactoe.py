@@ -36,6 +36,7 @@ def readint():
         else:
             return out * sign
 
+
 """Tictactoe : un tictactoe avec une IA"""
 """La structure de donnée"""
 
@@ -55,7 +56,7 @@ def print_state(g):
             print("|", end='')
         if y != 2:
             print("\n|-|-|-|\n|", end='')
-    print("")
+    print("\n", end='')
 
 """On dit qui gagne (info stoquées dans g.ended et g.note )"""
 def eval0(g):
@@ -133,7 +134,8 @@ def minmax(g):
                 apply_move_xy(x, y, g)
                 currentNote = minmax(g)
                 cancel_move_xy(x, y, g)
-                """Minimum ou Maximum selon le coté ou l'on joue"""
+                # Minimum ou Maximum selon le coté ou l'on joue
+                
                 if (currentNote > maxNote) == g["firstToPlay"]:
                     maxNote = currentNote
     return maxNote
@@ -158,7 +160,7 @@ def play(g):
 
 def init0():
     cases = [None] * 3
-    for i in range(0, 3):
+    for i in range(0, 1 + 3 - 1):
         tab = [0] * 3
         cases[i] = tab
     return {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
@@ -174,7 +176,7 @@ for i in range(0, 1 + 1):
     state = init0()
     apply_move({"x":1, "y":1}, state)
     apply_move({"x":0, "y":0}, state)
-    while (not state["ended"]):
+    while not state["ended"]:
         print_state(state)
         apply_move(play(state), state)
         eval0(state)
@@ -183,5 +185,5 @@ for i in range(0, 1 + 1):
             apply_move(play(state), state)
             eval0(state)
     print_state(state)
-    print("%d\n" % (state["note"]), end='')
+    print("%d\n" % state["note"], end='')
 

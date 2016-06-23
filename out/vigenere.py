@@ -45,6 +45,7 @@ def readint():
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def position_alphabet(c):
     i = ord(c)
     if i <= ord('Z') and i >= ord('A'):
@@ -58,7 +59,7 @@ def of_position_alphabet(c):
     return c + ord('a')
 
 def crypte(taille_cle, cle, taille, message):
-    for i in range(0, taille):
+    for i in range(0, 1 + taille - 1):
         lettre = position_alphabet(message[i])
         if lettre != -1:
             addon = position_alphabet(cle[mod(i, taille_cle)])
@@ -68,18 +69,18 @@ def crypte(taille_cle, cle, taille, message):
 taille_cle = readint()
 stdinsep()
 cle = [None] * taille_cle
-for index in range(0, taille_cle):
+for index in range(0, 1 + taille_cle - 1):
     out0 = readchar()
     cle[index] = out0
 stdinsep()
 taille = readint()
 stdinsep()
 message = [None] * taille
-for index2 in range(0, taille):
+for index2 in range(0, 1 + taille - 1):
     out2 = readchar()
     message[index2] = out2
 crypte(taille_cle, cle, taille, message)
-for i in range(0, taille):
+for i in range(0, 1 + taille - 1):
     print("%c" % message[i], end='')
-print("")
+print("\n", end='')
 

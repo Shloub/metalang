@@ -1,3 +1,4 @@
+
 def foo():
     for i in range(0, 1 + 10):
         pass
@@ -8,5 +9,5 @@ def bar():
         a = 0
     return 0
 
-
+pass
 

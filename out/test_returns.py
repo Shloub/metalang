@@ -2,6 +2,7 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def is_pair(i):
     j = 1
     if i < 10:
@@ -21,5 +22,5 @@ def is_pair(i):
         j = 8
     return mod(i, 2) == 0
 
-
+pass
 

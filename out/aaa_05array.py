@@ -2,6 +2,7 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def id(b):
     return b
 
@@ -10,20 +11,20 @@ def g(t, index):
 
 j = 0
 a = [None] * 5
-for i in range(0, 5):
+for i in range(0, 1 + 5 - 1):
     print("%d" % i, end='')
     j += i
     a[i] = mod(i, 2) == 0
-print("%d " % (j), end='')
+print("%d " % j, end='')
 if a[0]:
     print("True", end='')
 else:
     print("False", end='')
-print("")
+print("\n", end='')
 g(id(a), 0)
 if a[0]:
     print("True", end='')
 else:
     print("False", end='')
-print("")
+print("\n", end='')
 

@@ -1,9 +1,10 @@
+
 f = [1] * 10
 for i in range(1, 1 + 9):
     f[i] *= i * f[i - 1]
-    print("%d " % (f[i]), end='')
+    print("%d " % f[i], end='')
 out0 = 0
-print("")
+print("\n", end='')
 for a in range(0, 1 + 9):
     for b in range(0, 1 + 9):
         for c in range(0, 1 + 9):
@@ -22,6 +23,6 @@ for a in range(0, 1 + 9):
                                         sum -= 1
                         if sum == num and sum != 1 and sum != 2:
                             out0 += num
-                            print("%d " % (num), end='')
-print("\n%d\n" % (out0), end='')
+                            print("%d " % num, end='')
+print("\n%d\n" % out0, end='')
 

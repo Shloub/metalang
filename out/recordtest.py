@@ -37,6 +37,7 @@ def readint():
             return out * sign
 
 
+
 param = {"foo":0, "bar":0}
 param["bar"] = readint()
 stdinsep()

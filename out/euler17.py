@@ -1,6 +1,7 @@
+
 print("%d\n" % (3 + 3 + 5 + 4 + 4), end='')
 one_to_nine = 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4
-print("%d\n" % (one_to_nine), end='')
+print("%d\n" % one_to_nine, end='')
 one_to_ten = one_to_nine + 3
 one_to_twenty = one_to_ten + 6 + 6 + 8 + 8 + 7 + 7 + 9 + 8 + 8 + 6
 one_to_thirty = one_to_twenty + 6 * 9 + one_to_nine + 6

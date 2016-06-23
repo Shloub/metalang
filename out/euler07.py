@@ -2,14 +2,15 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def divisible(n, t, size):
-    for i in range(0, size):
+    for i in range(0, 1 + size - 1):
         if mod(n, t[i]) == 0:
             return True
     return False
 
 def find(n, t, used, nth):
-    while (used != nth):
+    while used != nth:
         if divisible(n, t, used):
             n += 1
         else:
@@ -20,5 +21,5 @@ def find(n, t, used, nth):
 
 n = 10001
 t = [2] * n
-print("%d\n" % (find(3, t, 1, n)), end='')
+print("%d\n" % find(3, t, 1, n), end='')
 

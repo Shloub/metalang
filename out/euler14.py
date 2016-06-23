@@ -2,6 +2,7 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def next0(n):
     if mod(n, 2) == 0:
         return math.trunc(n / 2)
@@ -23,7 +24,8 @@ m = [0] * 1000000
 max0 = 0
 maxi = 0
 for i in range(1, 1 + 999):
-    """normalement on met 999999 mais ça dépasse les int32..."""
+    # normalement on met 999999 mais ça dépasse les int32... 
+    
     n2 = find(i, m)
     if n2 > max0:
         max0 = n2

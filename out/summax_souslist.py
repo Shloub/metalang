@@ -36,10 +36,11 @@ def readint():
         else:
             return out * sign
 
+
 def summax(lst, len):
     current = 0
     max0 = 0
-    for i in range(0, len):
+    for i in range(0, 1 + len - 1):
         current += lst[i]
         if current < 0:
             current = 0
@@ -51,7 +52,7 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, len):
+for i in range(0, 1 + len - 1):
     tmp = 0
     tmp = readint()
     stdinsep()

@@ -2,10 +2,11 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def primesfactors(n):
     tab = [0] * (n + 1)
     d = 2
-    while (n != 1 and d * d <= n):
+    while n != 1 and d * d <= n:
         if mod(n, d) == 0:
             tab[d] += 1
             n = math.trunc(n / d)
@@ -24,5 +25,5 @@ product = 1
 for k in range(1, 1 + lim):
     for l in range(1, 1 + o[k]):
         product *= k
-print("%d\n" % (product), end='')
+print("%d\n" % product, end='')
 

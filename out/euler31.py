@@ -1,4 +1,5 @@
 import math
+
 def result(sum, t, maxIndex, cache):
     if cache[sum][maxIndex] != 0:
         return cache[sum][maxIndex]
@@ -22,7 +23,7 @@ t[5] = 50
 t[6] = 100
 t[7] = 200
 cache = [None] * 201
-for j in range(0, 201):
+for j in range(0, 1 + 201 - 1):
     o = [0] * 8
     cache[j] = o
 print("%d" % result(200, t, 7, cache), end='')

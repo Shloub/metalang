@@ -41,6 +41,7 @@ def readint():
         else:
             return out * sign
 
+
 def score():
     stdinsep()
     len = readint()
@@ -49,12 +50,13 @@ def score():
     for i in range(1, 1 + len):
         c = readchar()
         sum += ord(c) - ord('A') + 1
-        '''print c print " " print sum print " "'''
+        #		print c print " " print sum print " " 
+        
     return sum
 
 sum = 0
 n = readint()
 for i in range(1, 1 + n):
     sum += i * score()
-print("%d\n" % (sum), end='')
+print("%d\n" % sum, end='')
 

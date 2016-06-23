@@ -2,6 +2,7 @@ import math
 def mod(x, y):
     return x - y * math.trunc(x / y)
 
+
 def pgcd(a, b):
     c = min(a, b)
     d = max(a, b)

@@ -1,4 +1,5 @@
 import math
+
 """43 44 45 46 47 48 49
 42 21 22 23 24 25 26
 41 20  7  8  9 10 27
@@ -16,7 +17,8 @@ def sumdiag(n):
     for i in range(0, 1 + nterms - 2):
         d = 2 * (1 + math.trunc(i / 4))
         un += d
-        '''print int d print "=>" print un print " "'''
+        # print int d print "=>" print un print " " 
+        
         sum += un
     return sum
 
