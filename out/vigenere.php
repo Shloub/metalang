@@ -31,11 +31,10 @@ function position_alphabet($c) {
     $i = ord($c);
     if ($i <= ord("Z") && $i >= ord("A"))
         return $i - ord("A");
+    else if ($i <= ord("z") && $i >= ord("a"))
+        return $i - ord("a");
     else
-        if ($i <= ord("z") && $i >= ord("a"))
-            return $i - ord("a");
-        else
-            return -1;
+        return -1;
 }
 
 

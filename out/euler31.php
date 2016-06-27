@@ -3,18 +3,17 @@
 function result($sum, &$t, $maxIndex, &$cache) {
     if ($cache[$sum][$maxIndex] != 0)
         return $cache[$sum][$maxIndex];
+    else if ($sum == 0 || $maxIndex == 0)
+        return 1;
     else
-        if ($sum == 0 || $maxIndex == 0)
-            return 1;
-        else
-        {
-            $out0 = 0;
-            $div = intval($sum / $t[$maxIndex]);
-            for ($i = 0; $i <= $div; $i += 1)
-                $out0 += result($sum - $i * $t[$maxIndex], $t, $maxIndex - 1, $cache);
-            $cache[$sum][$maxIndex] = $out0;
-            return $out0;
-        }
+    {
+        $out0 = 0;
+        $div = intval($sum / $t[$maxIndex]);
+        for ($i = 0; $i <= $div; $i += 1)
+            $out0 += result($sum - $i * $t[$maxIndex], $t, $maxIndex - 1, $cache);
+        $cache[$sum][$maxIndex] = $out0;
+        return $out0;
+    }
 }
 
 $t = array_fill(0, 8, 0);

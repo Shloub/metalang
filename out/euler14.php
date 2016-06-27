@@ -11,17 +11,15 @@ function next0($n) {
 function find($n, &$m) {
     if ($n == 1)
         return 1;
+    else if ($n >= 1000000)
+        return 1 + find(next0($n), $m);
+    else if ($m[$n] != 0)
+        return $m[$n];
     else
-        if ($n >= 1000000)
-            return 1 + find(next0($n), $m);
-        else
-            if ($m[$n] != 0)
-                return $m[$n];
-            else
-            {
-                $m[$n] = 1 + find(next0($n), $m);
-                return $m[$n];
-            }
+    {
+        $m[$n] = 1 + find(next0($n), $m);
+        return $m[$n];
+    }
 }
 
 $m = array_fill(0, 1000000, 0);

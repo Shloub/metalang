@@ -3,18 +3,17 @@ var util = require("util");
 function result(sum, t, maxIndex, cache) {
     if (cache[sum][maxIndex] != 0)
         return cache[sum][maxIndex];
+    else if (sum == 0 || maxIndex == 0)
+        return 1;
     else
-        if (sum == 0 || maxIndex == 0)
-            return 1;
-        else
-        {
-            var out0 = 0;
-            var div = ~~(sum / t[maxIndex]);
-            for (var i = 0; i <= div; i += 1)
-                out0 += result(sum - i * t[maxIndex], t, maxIndex - 1, cache);
-            cache[sum][maxIndex] = out0;
-            return out0;
-        }
+    {
+        var out0 = 0;
+        var div = ~~(sum / t[maxIndex]);
+        for (var i = 0; i <= div; i += 1)
+            out0 += result(sum - i * t[maxIndex], t, maxIndex - 1, cache);
+        cache[sum][maxIndex] = out0;
+        return out0;
+    }
 }
 
 var t = new Array(8);

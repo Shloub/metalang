@@ -49,16 +49,15 @@ function bigint_eq(a, b) {
     /* Renvoie vrai si a = b */
     if (a["bigint_sign"] != b["bigint_sign"])
         return false;
+    else if (a["bigint_len"] != b["bigint_len"])
+        return false;
     else
-        if (a["bigint_len"] != b["bigint_len"])
-            return false;
-        else
-        {
-            for (var i = 0; i < a["bigint_len"]; i += 1)
-                if (a["bigint_chiffres"][i] != b["bigint_chiffres"][i])
-                    return false;
-            return true;
-        }
+    {
+        for (var i = 0; i < a["bigint_len"]; i += 1)
+            if (a["bigint_chiffres"][i] != b["bigint_chiffres"][i])
+                return false;
+        return true;
+    }
 }
 
 
@@ -66,28 +65,25 @@ function bigint_gt(a, b) {
     /* Renvoie vrai si a > b */
     if (a["bigint_sign"] && !b["bigint_sign"])
         return true;
+    else if (!a["bigint_sign"] && b["bigint_sign"])
+        return false;
     else
-        if (!a["bigint_sign"] && b["bigint_sign"])
-            return false;
+    {
+        if (a["bigint_len"] > b["bigint_len"])
+            return a["bigint_sign"];
+        else if (a["bigint_len"] < b["bigint_len"])
+            return !a["bigint_sign"];
         else
-        {
-            if (a["bigint_len"] > b["bigint_len"])
-                return a["bigint_sign"];
-            else
-                if (a["bigint_len"] < b["bigint_len"])
+            for (var i = 0; i < a["bigint_len"]; i += 1)
+            {
+                var j = a["bigint_len"] - 1 - i;
+                if (a["bigint_chiffres"][j] > b["bigint_chiffres"][j])
+                    return a["bigint_sign"];
+                else if (a["bigint_chiffres"][j] < b["bigint_chiffres"][j])
                     return !a["bigint_sign"];
-                else
-                    for (var i = 0; i < a["bigint_len"]; i += 1)
-                    {
-                        var j = a["bigint_len"] - 1 - i;
-                        if (a["bigint_chiffres"][j] > b["bigint_chiffres"][j])
-                            return a["bigint_sign"];
-                        else
-                            if (a["bigint_chiffres"][j] < b["bigint_chiffres"][j])
-                                return !a["bigint_sign"];
-                    }
-            return true;
-        }
+            }
+        return true;
+    }
 }
 
 
@@ -167,21 +163,20 @@ function add_bigint(a, b) {
             return add_bigint_positif(a, b);
         else
             return neg_bigint(add_bigint_positif(a, b));
-    else
-        if (a["bigint_sign"])
-        {
-            /* a positif, b negatif */
-            if (bigint_gt(a, neg_bigint(b)))
-                return sub_bigint_positif(a, b);
-            else
-                return neg_bigint(sub_bigint_positif(b, a));
-        }
+    else if (a["bigint_sign"])
+    {
+        /* a positif, b negatif */
+        if (bigint_gt(a, neg_bigint(b)))
+            return sub_bigint_positif(a, b);
         else
-            /* a negatif, b positif */
-            if (bigint_gt(neg_bigint(a), b))
-                return neg_bigint(sub_bigint_positif(a, b));
-            else
-                return sub_bigint_positif(b, a);
+            return neg_bigint(sub_bigint_positif(b, a));
+    }
+    else
+        /* a negatif, b positif */
+        if (bigint_gt(neg_bigint(a), b))
+            return neg_bigint(sub_bigint_positif(a, b));
+        else
+            return sub_bigint_positif(b, a);
 }
 
 
@@ -252,12 +247,10 @@ function bigint_shift(a, i) {
 function mul_bigint(aa, bb) {
     if (aa["bigint_len"] == 0)
         return aa;
-    else
-        if (bb["bigint_len"] == 0)
-            return bb;
-        else
-            if (aa["bigint_len"] < 3 || bb["bigint_len"] < 3)
-                return mul_bigint_cp(aa, bb);
+    else if (bb["bigint_len"] == 0)
+        return bb;
+    else if (aa["bigint_len"] < 3 || bb["bigint_len"] < 3)
+        return mul_bigint_cp(aa, bb);
     /* Algorithme de Karatsuba */
     var split = ~~(Math.min(aa["bigint_len"], bb["bigint_len"]) / 2);
     var a = bigint_shift(aa, -split);
@@ -342,11 +335,10 @@ function euler20() {
 function bigint_exp(a, b) {
     if (b == 1)
         return a;
+    else if (~~(b % 2) == 0)
+        return bigint_exp(mul_bigint(a, a), ~~(b / 2));
     else
-        if (~~(b % 2) == 0)
-            return bigint_exp(mul_bigint(a, a), ~~(b / 2));
-        else
-            return mul_bigint(a, bigint_exp(a, b - 1));
+        return mul_bigint(a, bigint_exp(a, b - 1));
 }
 
 
@@ -354,11 +346,10 @@ function bigint_exp_10chiffres(a, b) {
     a = bigint_premiers_chiffres(a, 10);
     if (b == 1)
         return a;
+    else if (~~(b % 2) == 0)
+        return bigint_exp_10chiffres(mul_bigint(a, a), ~~(b / 2));
     else
-        if (~~(b % 2) == 0)
-            return bigint_exp_10chiffres(mul_bigint(a, a), ~~(b / 2));
-        else
-            return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
+        return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
 }
 
 

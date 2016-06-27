@@ -23,22 +23,21 @@ function scantrim(){
 function pathfind_aux(&$cache, &$tab, $len, $pos) {
     if ($pos >= $len - 1)
         return 0;
+    else if ($cache[$pos] != -1)
+        return $cache[$pos];
     else
-        if ($cache[$pos] != -1)
-            return $cache[$pos];
+    {
+        $cache[$pos] = $len * 2;
+        $posval = pathfind_aux($cache, $tab, $len, $tab[$pos]);
+        $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
+        $out0 = 0;
+        if ($posval < $oneval)
+            $out0 = 1 + $posval;
         else
-        {
-            $cache[$pos] = $len * 2;
-            $posval = pathfind_aux($cache, $tab, $len, $tab[$pos]);
-            $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
-            $out0 = 0;
-            if ($posval < $oneval)
-                $out0 = 1 + $posval;
-            else
-                $out0 = 1 + $oneval;
-            $cache[$pos] = $out0;
-            return $out0;
-        }
+            $out0 = 1 + $oneval;
+        $cache[$pos] = $out0;
+        return $out0;
+    }
 }
 
 

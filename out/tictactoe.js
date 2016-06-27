@@ -43,11 +43,10 @@ function print_state(g) {
         {
             if (g["cases"][x][y] == 0)
                 util.print(" ");
+            else if (g["cases"][x][y] == 1)
+                util.print("O");
             else
-                if (g["cases"][x][y] == 1)
-                    util.print("O");
-                else
-                    util.print("X");
+                util.print("X");
             util.print("|");
         }
         if (y != 2)
@@ -73,20 +72,17 @@ function eval0(g) {
             var linv = g["cases"][y][x];
             if (col == -1 && colv != 0)
                 col = colv;
-            else
-                if (colv != col)
-                    col = -2;
+            else if (colv != col)
+                col = -2;
             if (lin == -1 && linv != 0)
                 lin = linv;
-            else
-                if (linv != lin)
-                    lin = -2;
+            else if (linv != lin)
+                lin = -2;
         }
         if (col >= 0)
             win = col;
-        else
-            if (lin >= 0)
-                win = lin;
+        else if (lin >= 0)
+            win = lin;
     }
     for (var x = 1; x <= 2; x += 1)
     {
@@ -98,11 +94,10 @@ function eval0(g) {
     g["ended"] = win != 0 || freecase == 0;
     if (win == 1)
         g["note"] = 1000;
+    else if (win == 2)
+        g["note"] = -1000;
     else
-        if (win == 2)
-            g["note"] = -1000;
-        else
-            g["note"] = 0;
+        g["note"] = 0;
 }
 
 /* On applique un mouvement */
