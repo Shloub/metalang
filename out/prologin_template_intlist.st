@@ -18,9 +18,7 @@ Object subclass: prologin_template_intlist [
   ]
    programme_candidat: tableau taille: taille [|out0|
     out0 := 0.
-    (0 to: (taille - 1)) do: [:i|
-      out0 :=  (out0 + (tableau at: (i + 1))).
-    ].
+    (0 to: (taille - 1)) do: [:i| out0 := out0 + (tableau at: (i + 1)).].
     ^ out0
   ]
   
@@ -28,10 +26,8 @@ Object subclass: prologin_template_intlist [
     |taille tableau|taille := self read_int.
     self skip.
     tableau := Array new: taille.
-    (0 to: (taille - 1)) do: [:a|
-      tableau at: (a + 1) put: self read_int.
-      self skip.
-    ].
+    (0 to: (taille - 1)) do: [:a| tableau at: (a + 1) put: self read_int.
+      self skip.].
     (self programme_candidat: tableau taille: taille) display.
     '
 ' display.

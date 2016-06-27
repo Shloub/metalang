@@ -3,7 +3,7 @@ Object subclass: aaa_041comment [
     |i|i := 4.
     "while i < 10 do "
     i display.
-    i :=  (i + 1).
+    i := i + 1.
     "  end "
     i display.
     ]

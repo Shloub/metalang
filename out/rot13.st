@@ -35,12 +35,10 @@ Ce test effectue un rot13 sur une chaine lue en entrée
       tmpc := self read_char.
       c := ((tmpc) asciiValue).
       (tmpc ~= $ )
-        ifTrue:[c :=  (((c - (($a) asciiValue) + 13) rem: 26) + (($a) asciiValue)).].
-      tab4 at: (toto + 1) put:  ((c) asCharacter).
+      ifTrue:[c := ((c - (($a) asciiValue) + 13) rem: 26) + (($a) asciiValue).].
+      tab4 at: (toto + 1) put: ((c) asCharacter).
     ].
-    (0 to: (strlen - 1)) do: [:j|
-      (tab4 at: (j + 1)) display.
-    ].
+    (0 to: (strlen - 1)) do: [:j| (tab4 at: (j + 1)) display.].
     ]
 ]
 Eval [ (rot13 new) main. ]

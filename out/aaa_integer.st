@@ -1,31 +1,31 @@
 Object subclass: aaa_integer [
   main [
     |i|i := 0.
-    i :=  (i - 1).
+    i := i - 1.
     i display.
     '
 ' display.
-    i :=  (i + 55).
+    i := i + 55.
     i display.
     '
 ' display.
-    i :=  (i * 13).
+    i := i * 13.
     i display.
     '
 ' display.
-    i :=  (i quo: 2).
+    i := i quo: 2.
     i display.
     '
 ' display.
-    i :=  (i + 1).
+    i := i + 1.
     i display.
     '
 ' display.
-    i :=  (i quo: 3).
+    i := i quo: 3.
     i display.
     '
 ' display.
-    i :=  (i - 1).
+    i := i - 1.
     i display.
     '
 ' display.

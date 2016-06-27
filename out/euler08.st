@@ -14,8 +14,8 @@ Object subclass: euler08 [
     (0 to: (5 - 1)) do: [:j|
       c := self read_char.
       d := ((c) asciiValue) - (($0) asciiValue).
-      i :=  (i * d).
-      last at: (j + 1) put:  d.
+      i := i * d.
+      last at: (j + 1) put: d.
     ].
     max0 := i.
     index := 0.
@@ -24,19 +24,19 @@ Object subclass: euler08 [
       e := self read_char.
       f := ((e) asciiValue) - (($0) asciiValue).
       (f = 0)
-        ifTrue:[
-               i :=  1.
-               nskipdiv :=  4.
-        ]
-        ifFalse:[
-                i :=  (i * f).
-                (nskipdiv < 0)
-                  ifTrue:[i :=  (i quo: (last at: (index + 1))).].
-                nskipdiv :=  (nskipdiv - 1).
-        ].
-      last at: (index + 1) put:  f.
-      index :=  ((index + 1) rem: 5).
-      max0 :=  ((max0) max: (i)).
+      ifTrue:[
+        i := 1.
+        nskipdiv := 4.
+      ]
+      ifFalse:[
+        i := i * f.
+        (nskipdiv < 0)
+        ifTrue:[i := i quo: (last at: (index + 1)).].
+        nskipdiv := nskipdiv - 1.
+      ].
+      last at: (index + 1) put: f.
+      index := (index + 1) rem: 5.
+      max0 := ((max0) max: (i)).
     ].
     max0 display.
     '

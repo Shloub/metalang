@@ -31,13 +31,13 @@ Object subclass: linkedList [
   
    rev2: acc torev: torev [|acc2|
     (self is_empty: torev)
-      ifTrue:[^ acc]
-      ifFalse:[
-              acc2 := intlist new.
-              acc2 head: torev head.
-              acc2 tail: acc.
-              ^ (self rev2: acc torev: torev tail)
-      ].
+    ifTrue:[^ acc]
+    ifFalse:[
+      acc2 := intlist new.
+      acc2 head: torev head.
+      acc2 tail: acc.
+      ^ (self rev2: acc torev: torev tail)
+    ].
   ]
   
    rev: empty torev: torev [
@@ -47,11 +47,10 @@ Object subclass: linkedList [
    test: empty  [|list i|
     list := empty.
     i := 0 - 1.
-    [i ~= 0] whileTrue:
-    [
-    i := self read_int.
-    (i ~= 0)
-      ifTrue:[list :=  (self cons: list i: i).].
+    [i ~= 0] whileTrue:[
+      i := self read_int.
+      (i ~= 0)
+      ifTrue:[list := (self cons: list i: i).].
     ].
   ]
   

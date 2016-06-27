@@ -23,33 +23,25 @@ Object subclass: aaa_readints [
     '=len
 ' display.
     tab1 := Array new: len.
-    (0 to: (len - 1)) do: [:a|
-      tab1 at: (a + 1) put: self read_int.
-      self skip.
-    ].
-    (0 to: (len - 1)) do: [:i|
-      i display.
+    (0 to: (len - 1)) do: [:a| tab1 at: (a + 1) put: self read_int.
+      self skip.].
+    (0 to: (len - 1)) do: [:i| i display.
       '=>' display.
       (tab1 at: (i + 1)) display.
       '
-' display.
-    ].
+' display.].
     len := self read_int.
     self skip.
     tab2 := Array new: (len - 1).
     (0 to: (len - 1 - 1)) do: [:b|
       c := Array new: len.
-      (0 to: (len - 1)) do: [:d|
-        c at: (d + 1) put: self read_int.
-        self skip.
-      ].
-      tab2 at: (b + 1) put:  c.
+      (0 to: (len - 1)) do: [:d| c at: (d + 1) put: self read_int.
+        self skip.].
+      tab2 at: (b + 1) put: c.
     ].
     (0 to: (len - 2)) do: [:i|
-      (0 to: (len - 1)) do: [:j|
-        ((tab2 at: (i + 1)) at: (j + 1)) display.
-        ' ' display.
-      ].
+      (0 to: (len - 1)) do: [:j| ((tab2 at: (i + 1)) at: (j + 1)) display.
+        ' ' display.].
       '
 ' display.
     ].

@@ -27,16 +27,12 @@ Object subclass: aaa_10stringsarray [
   
   main [
     |tab a|tab := Array new: 2.
-    (0 to: (2 - 1)) do: [:i|
-      tab at: (i + 1) put:  (self idstring: 'chaine de test').
-    ].
-    (0 to: 1) do: [:j|
-      (self printstring: (self idstring: (tab at: (j + 1)))).
-    ].
+    (0 to: (2 - 1)) do: [:i| tab at: (i + 1) put: (self idstring: 'chaine de test').].
+    (0 to: 1) do: [:j| (self printstring:(self idstring: (tab at: (j + 1)))).].
     a := toto new.
     a s: 'one'.
     a v: 1.
-    (self print_toto: a).
+    (self print_toto:a).
     ]
 ]
 Eval [ (aaa_10stringsarray new) main. ]

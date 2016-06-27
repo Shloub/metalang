@@ -24,23 +24,15 @@ Object subclass: carre [
     tab := Array new: y.
     (0 to: (y - 1)) do: [:d|
       e := Array new: x.
-      (0 to: (x - 1)) do: [:f|
-        e at: (f + 1) put: self read_int.
-        self skip.
-      ].
-      tab at: (d + 1) put:  e.
+      (0 to: (x - 1)) do: [:f| e at: (f + 1) put: self read_int.
+        self skip.].
+      tab at: (d + 1) put: e.
     ].
-    (1 to: (x - 1)) do: [:ix|
-      (1 to: (y - 1)) do: [:iy|
-        (((tab at: (iy + 1)) at: (ix + 1)) = 1)
-          ifTrue:[(tab at: (iy + 1)) at: (ix + 1) put:  ((((((tab at: (iy + 1)) at: ix) min: ((tab at: iy) at: (ix + 1)))) min: ((tab at: iy) at: ix)) + 1).].
-      ].
-    ].
+    (1 to: (x - 1)) do: [:ix| (1 to: (y - 1)) do: [:iy| (((tab at: (iy + 1)) at: (ix + 1)) = 1)
+                                ifTrue:[(tab at: (iy + 1)) at: (ix + 1) put: ((((((tab at: (iy + 1)) at: ix) min: ((tab at: iy) at: (ix + 1)))) min: ((tab at: iy) at: ix)) + 1).].].].
     (0 to: (y - 1)) do: [:jy|
-      (0 to: (x - 1)) do: [:jx|
-        ((tab at: (jy + 1)) at: (jx + 1)) display.
-        ' ' display.
-      ].
+      (0 to: (x - 1)) do: [:jx| ((tab at: (jy + 1)) at: (jx + 1)) display.
+        ' ' display.].
       '
 ' display.
     ].

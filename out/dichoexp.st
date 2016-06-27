@@ -18,13 +18,13 @@ Object subclass: dichoexp [
   ]
    exp0: a b: b [|o|
     (b = 0)
-      ifTrue:[^ 1].
+    ifTrue:[^ 1].
     ((b rem: 2) = 0)
-      ifTrue:[
-             o := (self exp0: a b: (b quo: 2)).
-             ^ o * o
-      ]
-      ifFalse:[^ a * (self exp0: a b: (b - 1))].
+    ifTrue:[
+      o := (self exp0: a b: (b quo: 2)).
+      ^ o * o
+    ]
+    ifFalse:[^ a * (self exp0: a b: (b - 1))].
   ]
   
   main [
