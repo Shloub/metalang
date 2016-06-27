@@ -71,72 +71,48 @@ let print_instr c i =
   let open Format in
   let p f pend = match i with
   | Declare (var, ty, e, _) -> fprintf f "var %a = %a%a" c.print_varname var e nop pend ()
-    | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
-    | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
-    | Loop (var, e1, e2, li) -> fprintf f "for (var %a = %a; %a <= %a; %a++)%a"
-          c.print_varname var e1 nop
-          c.print_varname var e2 nop
-          c.print_varname var
-          block li
-    | ClikeLoop (init, cond, incr, li) -> fprintf f "for (%a; %a; %a)%a"
-          plifor init
-          cond nop
-          plifor incr
-          block li
-    | While (e, li) -> fprintf f "while (@[<h>%a@])%a" e nop block li
-    | Comment s -> fprintf f "/*%s*/" s
-    | Tag s -> fprintf f "/*%S*/" s
-    | Return e -> fprintf f "return %a%a" e nop pend ()
-    | AllocArray (name, t, e, None, opt) -> fprintf f "var %a = new Array(%a)%a"
-          c.print_varname name
-          e nop
-          pend ()
-    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
-    | AllocArrayConst (name, ty, len, lief, opt) ->
-        fprintf f "@[<h>%a = array_fill(0, %a, %a)%a@]" c.print_varname name
-          len nop (c.print_lief nop) lief pend ()
-    | AllocRecord (name, ty, list, opt) ->
-        fprintf f "@[<v 4>var %a = {@\n%a}%a@]" c.print_varname name
-          (print_list (fun f (field, x) -> fprintf f "%S:%a" field x nop) (sep "%a,@\n%a")) list
-          pend ()
-    | If (e, listif, []) ->
-        fprintf f "if (%a)%a" e nop block listif
-    | If (e, listif, [elsecase]) when elsecase.is_if ->
-        fprintf f "if (%a)%a@\n@[<v 4>else@\n%a@]" e nop block_ifcase listif elsecase.p seppt
-    | If (e, listif, listelse) ->
-        fprintf f "if (%a)%a@\nelse%a" e nop block_ifcase listif block listelse
-    | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
-      | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
-      | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
-    end
-    | Print li->
-        fprintf f "util.print(%a)%a"
-          (print_list
-             (fun f -> function
-               | StringConst s -> c.print_lief nop f (Ast.Expr.String s)
-               | PrintExpr (_, e) -> e f nop) sep_c) li
-          pend ()
-    | Read li ->
-        print_list
-          (fun f -> function
-            | Separation -> Format.fprintf f "@[stdinsep()%a@]" pend ()
-            | DeclRead (ty, v, opt) ->
-                begin match Ast.Type.unfix ty with
-                | Ast.Type.Char -> fprintf f "@[var %a = read_char_()%a@]" c.print_varname v pend ()
-                | Ast.Type.Integer -> fprintf f "@[var %a = read_int_()%a@]" c.print_varname v pend ()
-                | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                      (Type.type_t_to_string ty)))
-                end
-            | ReadExpr (ty, mut) ->
-                begin match Ast.Type.unfix ty with
-                | Ast.Type.Char -> fprintf f "@[%a = read_char_()%a@]" (c.print_mut c nop) mut pend ()
-                | Ast.Type.Integer -> fprintf f "@[%a = read_int_()%a@]" (c.print_mut c nop) mut pend ()
-                | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                      (Type.type_t_to_string ty)))
-                end
-          ) sep_nl f li
-    | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
-    | Unquote e -> assert false in
+  | AllocArray (name, t, e, None, opt) -> fprintf f "var %a = new Array(%a)%a"
+        c.print_varname name
+        e nop
+        pend ()
+  | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+  | AllocArrayConst (name, ty, len, lief, opt) ->
+      fprintf f "@[<h>%a = array_fill(0, %a, %a)%a@]" c.print_varname name
+        len nop (c.print_lief nop) lief pend ()
+  | AllocRecord (name, ty, list, opt) ->
+      fprintf f "@[<v 4>var %a = {@\n%a}%a@]" c.print_varname name
+        (print_list (fun f (field, x) -> fprintf f "%S:%a" field x nop) (sep "%a,@\n%a")) list
+        pend ()
+  | Print li->
+      fprintf f "util.print(%a)%a"
+        (print_list
+           (fun f -> function
+             | StringConst s -> c.print_lief nop f (Ast.Expr.String s)
+             | PrintExpr (_, e) -> e f nop) sep_c) li
+        pend ()
+  | Read li ->
+      print_list
+        (fun f -> function
+          | Separation -> Format.fprintf f "@[stdinsep()%a@]" pend ()
+          | DeclRead (ty, v, opt) ->
+              begin match Ast.Type.unfix ty with
+              | Ast.Type.Char -> fprintf f "@[var %a = read_char_()%a@]" c.print_varname v pend ()
+              | Ast.Type.Integer -> fprintf f "@[var %a = read_int_()%a@]" c.print_varname v pend ()
+              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                    (Type.type_t_to_string ty)))
+              end
+          | ReadExpr (ty, mut) ->
+              begin match Ast.Type.unfix ty with
+              | Ast.Type.Char -> fprintf f "@[%a = read_char_()%a@]" (c.print_mut c nop) mut pend ()
+              | Ast.Type.Integer -> fprintf f "@[%a = read_int_()%a@]" (c.print_mut c nop) mut pend ()
+              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                    (Type.type_t_to_string ty)))
+              end
+        ) sep_nl f li
+  | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
+  | Unquote e -> assert false
+  | _ -> clike_print_instr c i f pend
+  in
   let is_multi_instr = match i with
   | Read (hd::tl) -> true
   | _ -> false in
