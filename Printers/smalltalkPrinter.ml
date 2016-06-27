@@ -236,62 +236,6 @@ class smalltalkPrinter = object(self)
 
   method lang () = "st"
 
-  method separator f () = Format.fprintf f "."
-(*
-  method affect f mutable_ (expr : 'lex Expr.t) =
-    Format.fprintf f "@[<hov>%a @ %a%a@]"
-      self#mutable_set mutable_
-      (self#expr_prio prio_message) expr self#separator ()
-*)
-  method declaration f var t e =
-    Format.fprintf f "@[<hov>%a@ :=@ %a%a@]" self#binding var self#expr e self#separator ()
-          (*
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] ->
-      Format.fprintf f "@[<hov>%a@]@\n@[<v 2>  ifTrue:%a@]."
-        (self#expr_prio prio_object) e
-        self#bloc ifcase
-    | _ ->
-      Format.fprintf f "@[<hov>%a@]@\n@[<v 2>  ifTrue:%a@\nifFalse:%a@]."
-        (self#expr_prio prio_object) e
-        self#bloc ifcase
-        self#bloc elsecase
-
-  method m_variable_set f b = Format.fprintf f "%a :=" self#binding b
-  method m_field_set f m field = Format.fprintf f "%a %a:" self#mutable_get m self#field field
-  method m_array_set f m indexes = Format.fprintf f "%a at: %a put:"
-        self#mutable_get m
-        (print_list
-           (fun f e -> (self#expr_prio prio_message) f e)
-           (sep "%a at: %a"))
-        indexes
-
-  method m_field_get f m field = Format.fprintf f "(%a %a)" self#mutable_get m self#field field
-
-  method m_array_get f m indexes = Format.fprintf f "(%a at: %a)"
-        self#mutable_get m
-        (print_list
-           (fun f e -> (self#expr_prio prio_message) f e)
-           (sep "%a at: %a"))
-           indexes
-
-  method allocarray f binding type_ len useless =
-    Format.fprintf f "@[<h>%a := Array new: %a.@]"
-      self#binding binding
-      (self#expr_prio prio_message) len
-
-  method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v 2>@[<h>(%a to: %a) do: [:%a|@]@\n%a@]@\n]%a"
-      (self#expr_prio prio_object) expr1
-      (self#expr_prio prio_message) expr2
-      self#binding varname
-      self#instructions li
-      self#separator ()
-
-  method return f e =
-    Format.fprintf f "@[<hov>^@ %a@]" self#expr e
-*)
   method instructions f li =
     let open Ast.Instr.Fixed.Deep in
     let macros = StringMap.map (fun (ty, params, li) ->
@@ -301,12 +245,6 @@ class smalltalkPrinter = object(self)
     let c = config macros in
     let li = List.map (fun i -> (fold (print_instr prototypes c) (mapg (print_expr prototypes c) i))) li in
     print_list (fun f i -> i.p f i.default) sep_nl f li
-       
-  method bloc f = function
-    | [] -> Format.fprintf f "[]"
-    | [i] -> Format.fprintf f "@[<v>[%a]@]" self#instr i
-    | li -> Format.fprintf f "@[<v>[@\n%a@]@\n]"
-          (print_list self#instr sep_nl) li
 
   method declaredvars bindings instrs =
     List.fold_left
@@ -327,31 +265,6 @@ class smalltalkPrinter = object(self)
       )
       bindings
       instrs
-(*
-  method apply f var li =
-    match StringMap.find_opt var macros with
-    | Some _ -> base#apply f var li
-    | None ->
-        match li with
-        | [] -> Format.fprintf f "(self %a)" self#funname var
-        | _ ->
-            Format.fprintf f
-              "(self %a)"
-              (print_list
-                 (fun f (a,b) ->
-                   Format.fprintf f "%a: %a"
-                     a ()
-                     (self#expr_prio prio_message) b)
-                 sep_space
-              ) (List.zip (StringMap.find var prototypes) li) *)
-
-  method whileloop f expr li =
-    Format.fprintf f "@[<h>[%a] whileTrue:@]@\n%a."
-      self#expr expr
-      self#bloc li
-
-  method hasSelfAffect op = false
-  method call f var li = Format.fprintf f "%a%a" (fun f () -> self#apply f var li) () self#separator ()
 
   method comment f str =
     Format.fprintf f "\"%s\"" (String.replace "\"" "\"\"" str)
@@ -423,8 +336,8 @@ class smalltalkPrinter = object(self)
       Format.fprintf f "%a := %a.@\n"
         self#binding a
         self#binding b)
-      nosep f li
-
+        nosep f li
+    
   method print_fun f funname t li instrs =
     self#calc_refs instrs;
     let li2, liproto = List.map (fun (n, t) ->
@@ -438,16 +351,6 @@ class smalltalkPrinter = object(self)
       (self#declarevars li) instrs
       self#ref_alias li2
       self#instructions instrs
-
-  method stdin_sep f = Format.fprintf f "@[self skip.@]"
-
-  method read_decl f t v = self#read f t (Mutable.var v)
-
-  method read f t m =
-    match Type.unfix t with
-    | Type.Char -> Format.fprintf f "%a self read_char." self#mutable_set  m
-    | Type.Integer -> Format.fprintf f "%a self read_int." self#mutable_set m
-    | _ -> assert false
 
   method header f prog =
     let p f li = print_list (fun f s -> Format.fprintf f "%s" s) sep_nl f li
@@ -493,27 +396,10 @@ class smalltalkPrinter = object(self)
     "]"]
 
   method decl_type f name t = ()
-(*
-  method def_fields name f li =
-      print_list
-         (fun f (fieldname, expr) ->
-           Format.fprintf f "%a %a: %a."
-             self#binding name
-             self#field fieldname
-             (self#expr_prio prio_message) expr
-         ) sep_nl f li *)
-
   method ptype f (t:Type.t) =
     match Type.unfix t with
     | Type.Named n -> Format.fprintf f "%s" n
     | _ -> assert false
-
-  method allocrecord f name t el =
-    Format.fprintf f "%a := %a new.@\n%a"
-      self#binding name
-      self#ptype t
-      (self#def_fields name) el
-
 
   method structDeclarations f li =
     print_list
