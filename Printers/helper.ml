@@ -235,13 +235,13 @@ let block f li =
   let format = match List.filter (fun l -> not l.is_comment) li with
   | [i] when not i.is_multi_instr -> fprintf f "@\n    @[<v>%a@]"
   | _ -> fprintf f "@\n@[<v 4>{@\n%a@]@\n}" in
-  format (print_list (fun f i -> i.p f seppt) sep_nl) li
+  format (print_list (fun f i -> i.p f i.default) sep_nl) li
 let block_ifcase f li =
   let open Format in
   let format = match li with
   | [i] when not (i.is_if_noelse || i.is_multi_instr) -> fprintf f "@\n    @[<v>%a@]"
   | _ -> fprintf f "@\n@[<v 4>{@\n%a@]@\n}" in
-  format (print_list (fun f i -> i.p f seppt) sep_nl) li
+  format (print_list (fun f i -> i.p f i.default) sep_nl) li
     
 let print_mut0 fmt_array
     fmt_arrayindex
@@ -372,3 +372,35 @@ let split_multi_read li space_format format_type =
       (format ^ addons, mutable_::variables, declared)
                                                    ) ("", [], []) li
       in format, List.rev variables, declared
+
+let clike_print_instr c i =
+  let open Ast.Instr in
+  let open Format in
+  let p f pend = match i with
+  | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
+  | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
+  | If (e, listif, []) ->
+      fprintf f "if (%a)%a" e nop block listif
+  | If (e, listif, [elsecase]) when elsecase.is_if ->
+      fprintf f "if (%a)%a@\nelse %a" e nop block_ifcase listif elsecase.p seppt
+  | If (e, listif, listelse) ->
+      fprintf f "if (%a)%a@\nelse%a" e nop block_ifcase listif block listelse
+  | ClikeLoop (init, cond, incr, li) -> fprintf f "for (%a; %a; %a)%a"
+        plifor init
+        cond nop
+        plifor incr
+        block li
+  | While (e, li) -> fprintf f "while (@[<h>%a@])%a" e nop block li
+  | Comment s -> fprintf f "/*%s*/" s
+  | Tag s -> fprintf f "/*%S*/" s
+  | Return e -> fprintf f "return %a%a" e nop pend ()
+  | Declare _
+  | Print _ | Read _ | Unquote _ | Untuple _ | AllocRecord _
+  | Loop _ | AllocArray _ | AllocArrayConst _ -> assert false
+  | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
+    | Some ( (t, params, code) ) -> pmacros f "%s%a" t params code li nop pend ()
+    | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
+  end
+
+        
+  in p

@@ -82,22 +82,6 @@ let print_instr c i =
   let open Format in
   let p f pend = match i with
   | Declare (var, ty, e, _) -> fprintf f "%a = %a%a" c.print_varname var e nop pend ()
-    | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
-    | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
-    | Loop (var, e1, e2, li) -> fprintf f "for (%a = %a; %a <= %a; %a++)%a"
-          c.print_varname var e1 nop
-          c.print_varname var e2 nop
-          c.print_varname var
-          block li
-    | ClikeLoop (init, cond, incr, li) -> fprintf f "for (%a; %a; %a)%a"
-          plifor init
-          cond nop
-          plifor incr
-          block li
-    | While (e, li) -> fprintf f "while (@[<h>%a@])%a" e nop block li
-    | Comment s -> fprintf f "/*%s*/" s
-    | Tag s -> fprintf f "/*%S*/" s
-    | Return e -> fprintf f "return %a%a" e nop pend ()
     | AllocArray (name, t, e, None, opt) -> fprintf f "%a = array()%a" c.print_varname name pend ()
     | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
     | AllocArrayConst (name, ty, len, lief, opt) ->
@@ -107,16 +91,6 @@ let print_instr c i =
         fprintf f "@[<v 4>%a = array(@\n%a)%a@]" c.print_varname name
           (print_list (fun f (field, x) -> fprintf f "%S => %a" field x nop) (sep "%a,@\n%a")) list
           pend ()
-    | If (e, listif, []) ->
-        fprintf f "if (%a)%a" e nop block listif
-    | If (e, listif, [elsecase]) when elsecase.is_if ->
-        fprintf f "if (%a)%a@\n@[<v 4>else@\n%a@]" e nop block_ifcase listif elsecase.p seppt
-    | If (e, listif, listelse) ->
-        fprintf f "if (%a)%a@\nelse%a" e nop block_ifcase listif block listelse
-    | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
-      | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
-      | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
-    end
     | Print li->
         fprintf f "echo %a%a"
           (print_list
@@ -140,7 +114,9 @@ let print_instr c i =
                 end
           ) sep_nl f li
     | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
-    | Unquote e -> assert false in
+    | Unquote e -> assert false
+    | _ -> clike_print_instr c i f pend
+  in
   let is_multi_instr = match i with
   | Read (hd::tl) -> true
   | _ -> false in
