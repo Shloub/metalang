@@ -30,15 +30,11 @@ Object subclass: aaa_06readcouple [
 ' display.
     ].
     l := Array new: 10.
-    (0 to: (10 - 1)) do: [:c|
-      l at: (c + 1) put: self read_int.
-      self skip.
-    ].
-    (0 to: 9) do: [:j|
-      (l at: (j + 1)) display.
+    (0 to: (10 - 1)) do: [:c| l at: (c + 1) put: self read_int.
+      self skip.].
+    (0 to: 9) do: [:j| (l at: (j + 1)) display.
       '
-' display.
-    ].
+' display.].
     ]
 ]
 Eval [ (aaa_06readcouple new) main. ]

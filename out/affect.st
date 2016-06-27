@@ -52,22 +52,18 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t3 foo: 0.
     t3 bar: 0.
     t3 blah: 0.
-    t3 :=  t2.
-    t :=  t2.
-    t2 :=  t3.
-    t blah:  (t blah + 1).
+    t3 := t2.
+    t := t2.
+    t2 := t3.
+    t blah: (t blah + 1).
     len := 1.
     cache0 := Array new: len.
-    (0 to: (len - 1)) do: [:i|
-      cache0 at: (i + 1) put:  (0 - i).
-    ].
+    (0 to: (len - 1)) do: [:i| cache0 at: (i + 1) put: (0 - i).].
     cache1 := Array new: len.
-    (0 to: (len - 1)) do: [:j|
-      cache1 at: (j + 1) put:  j.
-    ].
+    (0 to: (len - 1)) do: [:j| cache1 at: (j + 1) put: j.].
     cache2 := cache0.
-    cache0 :=  cache1.
-    cache2 :=  cache0.
+    cache0 := cache1.
+    cache2 := cache0.
     ^ t foo + (t blah * t bar) + (t bar * t foo)
   ]
   

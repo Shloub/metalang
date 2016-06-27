@@ -19,25 +19,24 @@ Object subclass: plus_petit [
    go0: tab a: a b: b [|m j i e|
     m := (a + b) quo: 2.
     (a = m)
-      ifTrue:[((tab at: (a + 1)) = m)
-               ifTrue:[^ b]
-               ifFalse:[^ a].].
+    ifTrue:[((tab at: (a + 1)) = m)
+      ifTrue:[^ b]
+      ifFalse:[^ a].].
     i := a.
     j := b.
-    [i < j] whileTrue:
-    [
-    e := tab at: (i + 1).
-    (e < m)
-      ifTrue:[i :=  (i + 1).]
+    [i < j] whileTrue:[
+      e := tab at: (i + 1).
+      (e < m)
+      ifTrue:[i := i + 1.]
       ifFalse:[
-              j :=  (j - 1).
-              tab at: (i + 1) put:  (tab at: (j + 1)).
-              tab at: (j + 1) put:  e.
+        j := j - 1.
+        tab at: (i + 1) put: (tab at: (j + 1)).
+        tab at: (j + 1) put: e.
       ].
     ].
     (i < m)
-      ifTrue:[^ (self go0: tab a: a b: m)]
-      ifFalse:[^ (self go0: tab a: m b: b)].
+    ifTrue:[^ (self go0: tab a: a b: m)]
+    ifFalse:[^ (self go0: tab a: m b: b)].
   ]
   
    plus_petit0: tab len: len [
@@ -53,7 +52,7 @@ Object subclass: plus_petit [
       tmp := 0.
       tmp := self read_int.
       self skip.
-      tab at: (i + 1) put:  tmp.
+      tab at: (i + 1) put: tmp.
     ].
     (self plus_petit0: tab len: len) display.
     ]

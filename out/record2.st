@@ -35,7 +35,7 @@ Object subclass: record2 [
   ]
   
    result: t  [
-    t blah:  (t blah + 1).
+    t blah: (t blah + 1).
     ^ t foo + (t blah * t bar) + (t bar * t foo)
   ]
   

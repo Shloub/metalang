@@ -21,20 +21,16 @@ Object subclass: aaa_missing [
 "
    result: len tab: tab [|tab2|
     tab2 := Array new: len.
-    (0 to: (len - 1)) do: [:i|
-      tab2 at: (i + 1) put:  false.
-    ].
+    (0 to: (len - 1)) do: [:i| tab2 at: (i + 1) put: false.].
     (0 to: (len - 1)) do: [:i1|
       (tab at: (i1 + 1)) display.
       ' ' display.
-      tab2 at: ((tab at: (i1 + 1)) + 1) put:  true.
+      tab2 at: ((tab at: (i1 + 1)) + 1) put: true.
     ].
     '
 ' display.
-    (0 to: (len - 1)) do: [:i2|
-      ((tab2 at: (i2 + 1)) not)
-        ifTrue:[^ i2].
-    ].
+    (0 to: (len - 1)) do: [:i2| ((tab2 at: (i2 + 1)) not)
+      ifTrue:[^ i2].].
     ^ 0 - 1
   ]
   
@@ -45,10 +41,8 @@ Object subclass: aaa_missing [
     '
 ' display.
     tab := Array new: len.
-    (0 to: (len - 1)) do: [:a|
-      tab at: (a + 1) put: self read_int.
-      self skip.
-    ].
+    (0 to: (len - 1)) do: [:a| tab at: (a + 1) put: self read_int.
+      self skip.].
     (self result: len tab: tab) display.
     '
 ' display.

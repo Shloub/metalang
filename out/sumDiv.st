@@ -13,7 +13,7 @@ Object subclass: sumDiv [
   foo [|a|
     a := 0.
     " test "
-    a :=  (a + 1).
+    a := a + 1.
     " test 2 "
   ]
   
@@ -23,7 +23,7 @@ Object subclass: sumDiv [
   
   foo3 [
     (1 = 1)
-      ifTrue:[].
+    ifTrue:[].
   ]
   
    sumdiv: n  [|out0|
@@ -33,12 +33,12 @@ Object subclass: sumDiv [
     (1 to: n) do: [:i|
       " La boucle : i est le diviseur potentiel"
       ((n rem: i) = 0)
-        ifTrue:[
-               " Si i divise "
-               out0 :=  (out0 + i).
-               " On incrémente "
-        ]
-        ifFalse:[" nop "].
+      ifTrue:[
+        " Si i divise "
+        out0 := out0 + i.
+        " On incrémente "
+      ]
+      ifFalse:[" nop "].
     ].
     ^ out0
     "On renvoie out"

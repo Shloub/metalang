@@ -40,27 +40,23 @@ Object subclass: euler42 [
     sum := 0.
     (1 to: len) do: [:i|
       c := self read_char.
-      sum :=  (sum + (((c) asciiValue) - (($A) asciiValue) + 1)).
+      sum := sum + (((c) asciiValue) - (($A) asciiValue) + 1).
       "		print c print "" "" print sum print "" "" "
     ].
     (self is_triangular: sum)
-      ifTrue:[^ 1]
-      ifFalse:[^ 0].
+    ifTrue:[^ 1]
+    ifFalse:[^ 0].
   ]
   
   main [
-    |sum n|(1 to: 55) do: [:i|
-             (self is_triangular: i)
-               ifTrue:[i display.
-                      ' ' display.].
-    ].
+    |sum n|(1 to: 55) do: [:i| (self is_triangular: i)
+             ifTrue:[i display.
+               ' ' display.].].
     '
 ' display.
     sum := 0.
     n := self read_int.
-    (1 to: n) do: [:i|
-      sum :=  (sum + (self score)).
-    ].
+    (1 to: n) do: [:i| sum := sum + (self score).].
     sum display.
     '
 ' display.

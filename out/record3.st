@@ -37,17 +37,15 @@ Object subclass: record3 [
    result: t len: len [|out0|
     out0 := 0.
     (0 to: (len - 1)) do: [:j|
-      (t at: (j + 1)) blah:  ((t at: (j + 1)) blah + 1).
-      out0 :=  (out0 + (t at: (j + 1)) foo + ((t at: (j + 1)) blah * (t at: (j + 1)) bar) + ((t at: (j + 1)) bar * (t at: (j + 1)) foo)).
+      (t at: (j + 1)) blah: ((t at: (j + 1)) blah + 1).
+      out0 := out0 + (t at: (j + 1)) foo + ((t at: (j + 1)) blah * (t at: (j + 1)) bar) + ((t at: (j + 1)) bar * (t at: (j + 1)) foo).
     ].
     ^ out0
   ]
   
   main [
     |titi t|t := Array new: 4.
-    (0 to: (4 - 1)) do: [:i|
-      t at: (i + 1) put:  (self mktoto: i).
-    ].
+    (0 to: (4 - 1)) do: [:i| t at: (i + 1) put: (self mktoto: i).].
     (t at: (0 + 1)) bar: self read_int.
     self skip.
     (t at: (1 + 1)) blah: self read_int.

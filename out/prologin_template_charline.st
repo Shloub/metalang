@@ -27,7 +27,7 @@ Object subclass: prologin_template_charline [
    programme_candidat: tableau taille: taille [|out0|
     out0 := 0.
     (0 to: (taille - 1)) do: [:i|
-      out0 :=  (out0 + (((tableau at: (i + 1)) asciiValue) * i)).
+      out0 := out0 + (((tableau at: (i + 1)) asciiValue) * i).
       (tableau at: (i + 1)) display.
     ].
     '--
@@ -39,9 +39,7 @@ Object subclass: prologin_template_charline [
     |taille tableau|taille := self read_int.
     self skip.
     tableau := Array new: taille.
-    (0 to: (taille - 1)) do: [:a|
-      tableau at: (a + 1) put: self read_char.
-    ].
+    (0 to: (taille - 1)) do: [:a| tableau at: (a + 1) put: self read_char.].
     self skip.
     (self programme_candidat: tableau taille: taille) display.
     '

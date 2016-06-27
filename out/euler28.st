@@ -20,9 +20,9 @@ Object subclass: euler28 [
     sum := 1.
     (0 to: (nterms - 2)) do: [:i|
       d := 2 * (1 + (i quo: 4)).
-      un :=  (un + d).
+      un := un + d.
       " print int d print ""=>"" print un print "" "" "
-      sum :=  (sum + un).
+      sum := sum + un.
     ].
     ^ sum
   ]

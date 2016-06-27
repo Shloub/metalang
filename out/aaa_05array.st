@@ -4,7 +4,7 @@ Object subclass: aaa_05array [
   ]
   
    g: t index: index [
-    t at: (index + 1) put:  false.
+    t at: (index + 1) put: false.
   ]
   
   main [
@@ -12,20 +12,20 @@ Object subclass: aaa_05array [
     a := Array new: 5.
     (0 to: (5 - 1)) do: [:i|
       i display.
-      j :=  (j + i).
-      a at: (i + 1) put:  ((i rem: 2) = 0).
+      j := j + i.
+      a at: (i + 1) put: ((i rem: 2) = 0).
     ].
     j display.
     ' ' display.
     (a at: (0 + 1))
-      ifTrue:['True' display.]
-      ifFalse:['False' display.].
+    ifTrue:['True' display.]
+    ifFalse:['False' display.].
     '
 ' display.
-    (self g: (self id: a) index: 0).
+    (self g:(self id: a) index:0).
     (a at: (0 + 1))
-      ifTrue:['True' display.]
-      ifFalse:['False' display.].
+    ifTrue:['True' display.]
+    ifFalse:['False' display.].
     '
 ' display.
     ]

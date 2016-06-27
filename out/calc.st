@@ -8,10 +8,10 @@ La suite de fibonaci
     b2 := b.
     (0 to: (i + 1)) do: [:j|
       j display.
-      out_ :=  (out_ + a2).
+      out_ := out_ + a2.
       tmp := b2.
-      b2 :=  (b2 + a2).
-      a2 :=  tmp.
+      b2 := b2 + a2.
+      a2 := tmp.
     ].
     ^ out_
   ]

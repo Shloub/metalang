@@ -24,10 +24,10 @@ La suite de fibonaci
     a2 := a.
     b2 := b.
     (0 to: (i + 1)) do: [:j|
-      out0 :=  (out0 + a2).
+      out0 := out0 + a2.
       tmp := b2.
-      b2 :=  (b2 + a2).
-      a2 :=  tmp.
+      b2 := b2 + a2.
+      a2 := tmp.
     ].
     ^ out0
   ]

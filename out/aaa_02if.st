@@ -1,16 +1,16 @@
 Object subclass: aaa_02if [
    f: i  [
     (i = 0)
-      ifTrue:[^ true].
+    ifTrue:[^ true].
     ^ false
   ]
   
   main [
     (self f: 4)
-      ifTrue:['true <-
+    ifTrue:['true <-
  ->
 ' display.]
-      ifFalse:['false <-
+    ifFalse:['false <-
  ->
 ' display.].
     'small test end

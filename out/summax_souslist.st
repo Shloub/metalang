@@ -20,11 +20,11 @@ Object subclass: summax_souslist [
     current := 0.
     max0 := 0.
     (0 to: (len - 1)) do: [:i|
-      current :=  (current + (lst at: (i + 1))).
+      current := current + (lst at: (i + 1)).
       (current < 0)
-        ifTrue:[current :=  0.].
+      ifTrue:[current := 0.].
       (max0 < current)
-        ifTrue:[max0 :=  current.].
+      ifTrue:[max0 := current.].
     ].
     ^ max0
   ]
@@ -38,7 +38,7 @@ Object subclass: summax_souslist [
       tmp := 0.
       tmp := self read_int.
       self skip.
-      tab at: (i + 1) put:  tmp.
+      tab at: (i + 1) put: tmp.
     ].
     result := (self summax: tab len: len).
     result display.

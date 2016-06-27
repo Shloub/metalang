@@ -18,11 +18,7 @@ Object subclass: prologin_template_intmatrix [
   ]
    programme_candidat: tableau x: x y: y [|out0|
     out0 := 0.
-    (0 to: (y - 1)) do: [:i|
-      (0 to: (x - 1)) do: [:j|
-        out0 :=  (out0 + (((tableau at: (i + 1)) at: (j + 1)) * (i * 2 + j))).
-      ].
-    ].
+    (0 to: (y - 1)) do: [:i| (0 to: (x - 1)) do: [:j| out0 := out0 + (((tableau at: (i + 1)) at: (j + 1)) * (i * 2 + j)).].].
     ^ out0
   ]
   
@@ -34,11 +30,9 @@ Object subclass: prologin_template_intmatrix [
     tableau := Array new: taille_y.
     (0 to: (taille_y - 1)) do: [:a|
       b := Array new: taille_x.
-      (0 to: (taille_x - 1)) do: [:c|
-        b at: (c + 1) put: self read_int.
-        self skip.
-      ].
-      tableau at: (a + 1) put:  b.
+      (0 to: (taille_x - 1)) do: [:c| b at: (c + 1) put: self read_int.
+        self skip.].
+      tableau at: (a + 1) put: b.
     ].
     (self programme_candidat: tableau x: taille_x y: taille_y) display.
     '

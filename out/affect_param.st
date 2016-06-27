@@ -1,12 +1,12 @@
 Object subclass: affect_param [
    foo: b  [|a|
     a := b.
-    a :=  4.
+    a := 4.
   ]
   
   main [
     |a|a := 0.
-    (self foo: a).
+    (self foo:a).
     a display.
     '
 ' display.
