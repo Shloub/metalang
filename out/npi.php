@@ -42,25 +42,23 @@ function npi0(&$str, $len) {
     while ($ptrStr < $len)
         if ($str[$ptrStr] == " ")
             $ptrStr += 1;
-        else
-            if (is_number($str[$ptrStr]))
+        else if (is_number($str[$ptrStr]))
+        {
+            $num = 0;
+            while ($str[$ptrStr] != " ")
             {
-                $num = 0;
-                while ($str[$ptrStr] != " ")
-                {
-                    $num = $num * 10 + ord($str[$ptrStr]) - ord("0");
-                    $ptrStr += 1;
-                }
-                $stack[$ptrStack] = $num;
-                $ptrStack += 1;
+                $num = $num * 10 + ord($str[$ptrStr]) - ord("0");
+                $ptrStr += 1;
             }
-            else
-                if ($str[$ptrStr] == "+")
-                {
-                    $stack[$ptrStack - 2] += $stack[$ptrStack - 1];
-                    $ptrStack -= 1;
-                    $ptrStr += 1;
-                }
+            $stack[$ptrStack] = $num;
+            $ptrStack += 1;
+        }
+        else if ($str[$ptrStr] == "+")
+        {
+            $stack[$ptrStack - 2] += $stack[$ptrStack - 1];
+            $ptrStack -= 1;
+            $ptrStr += 1;
+        }
     return $stack[0];
 }
 

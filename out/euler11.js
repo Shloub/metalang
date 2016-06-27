@@ -30,11 +30,10 @@ function read_int_(){
 function find(n, m, x, y, dx, dy) {
     if (x < 0 || x == 20 || y < 0 || y == 20)
         return -1;
+    else if (n == 0)
+        return 1;
     else
-        if (n == 0)
-            return 1;
-        else
-            return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
+        return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
 }
 
 
@@ -47,61 +46,55 @@ for (var i = 0; i < 8; i += 1)
             "tuple_int_int_field_1":1};
         directions[i] = c;
     }
+    else if (i == 1)
+    {
+        var d = {
+            "tuple_int_int_field_0":1,
+            "tuple_int_int_field_1":0};
+        directions[i] = d;
+    }
+    else if (i == 2)
+    {
+        var e = {
+            "tuple_int_int_field_0":0,
+            "tuple_int_int_field_1":-1};
+        directions[i] = e;
+    }
+    else if (i == 3)
+    {
+        var f = {
+            "tuple_int_int_field_0":-1,
+            "tuple_int_int_field_1":0};
+        directions[i] = f;
+    }
+    else if (i == 4)
+    {
+        var g = {
+            "tuple_int_int_field_0":1,
+            "tuple_int_int_field_1":1};
+        directions[i] = g;
+    }
+    else if (i == 5)
+    {
+        var h = {
+            "tuple_int_int_field_0":1,
+            "tuple_int_int_field_1":-1};
+        directions[i] = h;
+    }
+    else if (i == 6)
+    {
+        var k = {
+            "tuple_int_int_field_0":-1,
+            "tuple_int_int_field_1":1};
+        directions[i] = k;
+    }
     else
-        if (i == 1)
-        {
-            var d = {
-                "tuple_int_int_field_0":1,
-                "tuple_int_int_field_1":0};
-            directions[i] = d;
-        }
-        else
-            if (i == 2)
-            {
-                var e = {
-                    "tuple_int_int_field_0":0,
-                    "tuple_int_int_field_1":-1};
-                directions[i] = e;
-            }
-            else
-                if (i == 3)
-                {
-                    var f = {
-                        "tuple_int_int_field_0":-1,
-                        "tuple_int_int_field_1":0};
-                    directions[i] = f;
-                }
-                else
-                    if (i == 4)
-                    {
-                        var g = {
-                            "tuple_int_int_field_0":1,
-                            "tuple_int_int_field_1":1};
-                        directions[i] = g;
-                    }
-                    else
-                        if (i == 5)
-                        {
-                            var h = {
-                                "tuple_int_int_field_0":1,
-                                "tuple_int_int_field_1":-1};
-                            directions[i] = h;
-                        }
-                        else
-                            if (i == 6)
-                            {
-                                var k = {
-                                    "tuple_int_int_field_0":-1,
-                                    "tuple_int_int_field_1":1};
-                                directions[i] = k;
-                            }
-                            else
-                            {
-                                var l = {
-                                    "tuple_int_int_field_0":-1,
-                                    "tuple_int_int_field_1":-1};
-                                directions[i] = l;
-                            }
+    {
+        var l = {
+            "tuple_int_int_field_0":-1,
+            "tuple_int_int_field_1":-1};
+        directions[i] = l;
+    }
 var max0 = 0;
 var m = new Array(20);
 for (var o = 0; o < 20; o += 1)

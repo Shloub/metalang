@@ -37,11 +37,10 @@ function position_alphabet(c) {
     var i = c.charCodeAt(0);
     if (i <= 'Z'.charCodeAt(0) && i >= 'A'.charCodeAt(0))
         return i - 'A'.charCodeAt(0);
+    else if (i <= 'z'.charCodeAt(0) && i >= 'a'.charCodeAt(0))
+        return i - 'a'.charCodeAt(0);
     else
-        if (i <= 'z'.charCodeAt(0) && i >= 'a'.charCodeAt(0))
-            return i - 'a'.charCodeAt(0);
-        else
-            return -1;
+        return -1;
 }
 
 

@@ -28,11 +28,10 @@ function findPenta2($n, $a, $b) {
     $p = penta($c);
     if ($p == $n)
         return true;
+    else if ($p < $n)
+        return findPenta2($n, $c, $b);
     else
-        if ($p < $n)
-            return findPenta2($n, $c, $b);
-        else
-            return findPenta2($n, $a, $c);
+        return findPenta2($n, $a, $c);
 }
 
 
@@ -43,11 +42,10 @@ function findHexa2($n, $a, $b) {
     $p = hexa($c);
     if ($p == $n)
         return true;
+    else if ($p < $n)
+        return findHexa2($n, $c, $b);
     else
-        if ($p < $n)
-            return findHexa2($n, $c, $b);
-        else
-            return findHexa2($n, $a, $c);
+        return findHexa2($n, $a, $c);
 }
 
 for ($n = 285; $n <= 55385; $n += 1)

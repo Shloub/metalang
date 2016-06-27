@@ -38,12 +38,10 @@ function find0(len, tab, cache, x, y) {
 	*/
     if (y == len - 1)
         return tab[y][x];
-    else
-        if (x > y)
-            return -10000;
-        else
-            if (cache[y][x] != 0)
-                return cache[y][x];
+    else if (x > y)
+        return -10000;
+    else if (cache[y][x] != 0)
+        return cache[y][x];
     var result = 0;
     var out0 = find0(len, tab, cache, x, y + 1);
     var out1 = find0(len, tab, cache, x + 1, y + 1);

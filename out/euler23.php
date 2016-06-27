@@ -43,21 +43,20 @@ function sumdivaux2(&$t, $n, $i) {
 function sumdivaux(&$t, $n, $i) {
     if ($i > $n)
         return 1;
+    else if ($t[$i] == 0)
+        return sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
     else
-        if ($t[$i] == 0)
-            return sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
-        else
+    {
+        $o = sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
+        $out0 = 0;
+        $p = $i;
+        for ($j = 1; $j <= $t[$i]; $j += 1)
         {
-            $o = sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
-            $out0 = 0;
-            $p = $i;
-            for ($j = 1; $j <= $t[$i]; $j += 1)
-            {
-                $out0 += $p;
-                $p *= $i;
-            }
-            return ($out0 + 1) * $o;
+            $out0 += $p;
+            $p *= $i;
         }
+        return ($out0 + 1) * $o;
+    }
 }
 
 
