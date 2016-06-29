@@ -82,8 +82,7 @@ let print_lief tyenv prio f = function
 let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f priority
 
-let print_expr tyenv macros e f p =
-  let config = {
+let config tyenv macros = {
     prio_binop;
     prio_unop;
     print_varname;
@@ -92,39 +91,135 @@ let print_expr tyenv macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
-
+  } 
+    
+let prio_operator = -100
+    
+let print_expr tyenv config e f p = Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
+let rec ptype f t =
+  let open Type in let open Format in
+  match Type.unfix t with
+    | Integer -> fprintf f "Integer"
+    | String -> fprintf f "String"
+    | Array a -> fprintf f "%a()" ptype a
+    | Void ->  fprintf f "Void"
+    | Bool -> fprintf f "Boolean"
+    | Char -> fprintf f "Char"
+    | Named n -> fprintf f "%s" n
+    | Struct li -> fprintf f "a struct"
+    | Enum _ -> fprintf f "an enum"
+    | Auto | Lexems | Tuple _ -> assert false
+          
+let print_instr tyenv c i =
+  let open Ast.Instr in
+  let open Format in
+  let block value f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f (false, value)) sep_nl) li in
+  let block_lambda = block true in
+  let pread f ty = match Type.unfix ty with
+  | Type.Integer -> fprintf f "readInt"
+  | Type.Char -> fprintf f "readChar"
+  | _ -> assert false in
+  let p f (inelseif, inlambda) =
+    let block = block inlambda in match i with
+    | Declare (var, ty, e, _) -> fprintf f "Dim %a As %a = %a" c.print_varname var
+          ptype ty
+          e nop
+    | SelfAffect _ -> assert false
+    | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
+    | ClikeLoop (init, cond, incr, li) -> assert false
+    | Loop (var, e1, e2, li) -> fprintf f "@[<v 4>@[<h>For %a As Integer = %a To %a@]%a@]@\nNext"
+          c.print_varname var e1 nop e2 nop
+          block li
+    | While (e, li) -> fprintf f "@[<v 4>Do While @[<h>%a@]%a@]@\nLoop" e nop block li
+    | Comment s -> let lic = String.split s '\n' in
+        print_list (fun f s -> Format.fprintf f "'%s@\n" s) nosep f lic
+    | Tag s -> assert false
+    | Return e -> fprintf f "Return %a" e nop
+    | AllocArray (name, t, e, None, opt) ->
+        let rec g f t = match Type.unfix t with
+        | Type.Array ty -> g (fun ff () -> Format.fprintf ff "%a()" f ()) ty
+        | _ -> f, t
+        in let parent, t = g (fun f () -> ()) t in
+        fprintf f "@[<hov>Dim %a(%a)%a As %a"
+          c.print_varname name
+          e nop
+          parent ()
+          ptype t
+    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+    | AllocArrayConst (name, ty, len, lief, opt) -> assert false
+    | AllocRecord (name, ty, list, opt) ->
+        fprintf f "Dim %a As %a = new %a()@\n%a"
+          c.print_varname name
+          ptype ty
+          ptype ty
+          (print_list (fun f (field, x) -> fprintf f "%a.%s = %a" 
+          c.print_varname name field x nop) sep_nl) list
+    | If (e, listif, []) when inelseif ->
+        fprintf f "If %a Then%a@]@\nEnd If" e nop block listif
+    | If (e, listif, [elsecase]) when inelseif && elsecase.is_if ->
+        fprintf f "If %a Then%a@]@\n@[<v 4>Else%a" e nop block listif elsecase.p (true, inlambda)          
+    | If (e, listif, listelse)  when inelseif ->
+        fprintf f "If %a Then%a@]@\n@[<v 4>Else %a@]@\nEnd If" e nop block listif block listelse
+    | If (e, listif, []) ->
+        fprintf f "@[<v 4>If %a Then%a@]@\nEnd If" e nop block listif
+    | If (e, listif, [elsecase]) when elsecase.is_if ->
+        fprintf f "@[<v 4>If %a Then%a@]@\n@[<v 4>Else%a" e nop block listif elsecase.p (true, inlambda)          
+    | If (e, listif, listelse) ->
+        fprintf f "@[<v 4>If %a Then%a@]@\n@[<v 4>Else %a@]@\nEnd If" e nop block listif block listelse
+    | Call (func, li) ->
+        begin match StringMap.find_opt func c.macros with
+      | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
+      | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
+    end
+    | Print [StringConst s] -> fprintf f "Console.Write(%a)" (c.print_lief prio_operator) (Expr.String s)
+    | Print [PrintExpr (_, e)] -> fprintf f "Console.Write(%a)" e nop
+    | Print li->
+        fprintf f "Console.Write(%a)"
+          (print_list
+             (fun f e ->
+               match e with
+               | StringConst s -> c.print_lief prio_operator f (Expr.String s)
+               | PrintExpr (_, e) -> e f prio_operator)
+             (fun t f1 e1 f2 e2 -> Format.fprintf t "%a & %a" f1 e1 f2 e2)) li
+    | Read li ->
+        let li = List.map (function
+          | Separation -> fun f -> fprintf f "@[stdin_sep@]"
+          | DeclRead (t, name, _) -> fun f -> fprintf f "Dim %a As %a = %a"
+                c.print_varname name ptype t pread t
+          | ReadExpr (t, m) -> fun f -> fprintf f "%a = %a"
+                (c.print_mut c nop) m pread t) li
+        in
+        fprintf f "%a" (print_list (fun f g -> g f) sep_nl) li
+    | Untuple (li, expr, opt) -> assert false
+    | Unquote e -> assert false in
+  let is_multi_instr = match i with
+  | Read (hd::tl) -> true
+  | _ -> false in
+  {
+   is_multi_instr = is_multi_instr;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
+   p=p;
+   default = (false, false);
+   print_lief = c.print_lief;
+ }
+    
+let print_instr tyenv macros i =
+  let open Ast.Instr.Fixed.Deep in
+  let c = config tyenv macros in
+  let i = (fold (print_instr tyenv c) (mapg (print_expr tyenv c) i))
+  in fun f -> i.p f i.default
+      
 class vbDotNetPrinter = object(self)
-  inherit CsharpPrinter.csharpPrinter as super
+  inherit Printer.printer as super
 
-  method exprp p f e = print_expr (self#getTyperEnv ())
-      (StringMap.map (fun (ty, params, li) ->
+  method instr f (t:Utils.instr) =
+   let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f p
-
-  method combine_formats () = false
-
-  method lang () = "vb"
-
-  method read_decl f t v =
-    match Type.unfix t with
-    | Type.Integer ->
-      Format.fprintf f "@[<h>Dim %a As %a = readInt()%a@]"
-        self#binding v
-        self#ptype t
-	self#separator ()
-    | Type.Char -> Format.fprintf f "@[<h>Dim %a As %a = readChar()%a@]"
-        self#binding v
-        self#ptype t
-      self#separator ()
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
-
-  method declaration f var t e =
-    Format.fprintf f "@[<hov>Dim %a@ As %a@ =@ %a@]"
-      self#binding var
-      self#ptype t
-      self#expr e
+        try List.assoc "vb" li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr typerEnv macros t) f
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -200,19 +295,9 @@ End Function" else "")
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-
-  method separator f () = Format.fprintf f ""
-
   method main f main =
     Format.fprintf f "Sub Main()@\n  @[<v>%a@]@\nEnd Sub@\n"
       self#instructions main
-
-  method forloop f varname expr1 expr2 li =
-      Format.fprintf f "@[<h>For@  %a As Integer @ =@ %a@ to @ %a@\n@]  @[<v>%a@]@\nNext"
-        self#binding varname
-        self#expr expr1
-        self#expr expr2
-        self#bloc li
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "%a(%a)%a"
@@ -222,13 +307,13 @@ End Function" else "")
            Format.fprintf t "%a %a@ as@ %a"
 	     self#val_or_ref type_
              self#binding binding
-             self#prototype type_
+             ptype type_
          ) sep_c
       ) li
       (fun f () -> match Type.unfix t with
       | Type.Void -> ()
       | _ ->
-	Format.fprintf f " As %a" self#prototype t) ()
+	Format.fprintf f " As %a" ptype t) ()
 
   method val_or_ref f t = match Type.unfix t with
     | Type.Integer
@@ -237,23 +322,6 @@ End Function" else "")
     | Type.Char
     | Type.Enum _ ->  Format.fprintf f "ByVal"
     | _ ->  Format.fprintf f "ByRef"
-
-  method ptype f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "Integer"
-    | Type.String -> Format.fprintf f "String"
-    | Type.Array a -> Format.fprintf f "%a()" self#ptype a
-    | Type.Void ->  Format.fprintf f "Void"
-    | Type.Bool -> Format.fprintf f "Boolean"
-    | Type.Char -> Format.fprintf f "Char"
-    | Type.Named n -> Format.fprintf f "%s" n
-    | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Auto -> assert false
-    | Type.Lexems -> assert false
-    | Type.Tuple _ -> assert false
-
-  method return f e = Format.fprintf f "@[<h>Return@ %a@]" self#expr e
 
   method print_fun f funname t li instrs =
     match Type.unfix t with
@@ -266,56 +334,12 @@ End Function" else "")
 	self#print_proto (funname, t, li)
 	self#instructions instrs
 
-
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] -> Format.fprintf f "@[<h>If@ %a Then@]@\n  @[<v>%a@]@\nEnd If"
-      self#expr e
-      self#bloc ifcase
-    | [Instr.Fixed.F ( _, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>If@ %a Then@]@\n  @[<v>%a@]@\nElse%a"
-        self#expr e
-        self#bloc ifcase
-        self#instr instr
-    | _ -> Format.fprintf f "@[<h>If@ %a Then@]@\n  @[<v>%a@]@\nElse@\n  @[<v>%a@]@\nEnd If"
-      self#expr e
-      self#bloc ifcase
-      self#bloc elsecase
-
-  method hasSelfAffect op = false
-
   method comment f s =
     let lic = String.split s '\n' in
     print_list
       (fun f s -> Format.fprintf f "'%s@\n" s) nosep
       f
       lic
-
-  method concat_operator f () = Format.fprintf f "&"
-
-  method whileloop f expr li =
-    Format.fprintf f "@[<hov>Do While %a@]@\n  @[<v>%a@]@\nLoop"
-      self#expr expr
-      self#bloc li
-
-  method bloc f li = print_list self#instr sep_nl f li
-
-  method m_array f m indexes =
-    Format.fprintf f "%a(%a)"
-      self#mutable_get m
-      (print_list self#expr (sep "%a)(%a")) indexes
-
-  method allocarray f binding type_ len useless =
-    let rec g f t = match Type.unfix t with
-      | Type.Array ty -> g (fun ff () -> Format.fprintf ff "%a()" f ()) ty
-      | _ -> f, t
-    in let parent, ty = g (fun f () -> ()) type_ in
-    Format.fprintf f "@[<hov>Dim %a(%a)%a As %a"
-      self#binding binding
-      self#expr len
-      parent ()
-      self#ptype ty
-
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -324,8 +348,7 @@ End Function" else "")
           self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "Public %a As %a%a" self#field name self#ptype type_ 
-		 self#separator ()
+               Format.fprintf t "Public %a As %a" self#field name ptype type_ 
              ) sep_nl
           ) li
     | Type.Enum li ->
@@ -337,13 +360,5 @@ End Function" else "")
            ) sep_nl
         ) li
     | _ -> super#decl_type f name t
-
-  method allocrecord f name t el =
-    Format.fprintf f "Dim %a As %a = new %a()@\n%a"
-      self#binding name
-      self#ptype t
-      self#ptype t
-      (self#def_fields name) el
-
 
 end
