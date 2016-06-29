@@ -31,14 +31,14 @@ tests :
 supprimer les objets dans cette hiérarchie :
 
 Printer -> PasPrinter[OK]-> AdaPrinter[OK]
-        -> CPrinter      -> cppPrinter -> JavaPrinter -> CSharpPrinter -> VBDotNetPrinter
+        -> CPrinter      -> cppPrinter -> JavaPrinter -> CSharpPrinter
                          -> cppPrinter -> JavaPrinter -> GroovyPrinter
                          -> GoPrinter[OK]
                          -> JSPrinter[OK]
                          -> ObjCPrinter
                          -> PerlPrinter[OK]
                          -> PhpPrinter[OK]
-                         -> PyPrinter
+                         -> PyPrinter[OK]
                          -> ScalaPrinter[OK]
         -> CommonLispPrinter
         -> FSharpPrinter
@@ -47,8 +47,9 @@ Printer -> PasPrinter[OK]-> AdaPrinter[OK]
         -> LuaPrinter
         -> OcamlPrinter
         -> PosPrinter
-        -> SmalltalkPrinter
-        -> RbPrinter[OK]
+        -> SmalltalkPrinter[OK]
+        -> VBDotNetPrinter[OK]
+RbPrinter[OK]
 HaskellPrinter
 OcamlFunPrinter
 RacketPrinter

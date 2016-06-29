@@ -53,12 +53,12 @@ End Function
   
   Function rev2(ByRef acc as intlist, ByRef torev as intlist) As intlist
     If is_empty(torev) Then
-      Return acc
-    Else
-      Dim acc2 As intlist = new intlist()
-      acc2.head = torev.head
-      acc2.tail = acc
-      Return rev2(acc, torev.tail)
+        Return acc
+    Else 
+        Dim acc2 As intlist = new intlist()
+        acc2.head = torev.head
+        acc2.tail = acc
+        Return rev2(acc, torev.tail)
     End If
   End Function
   
@@ -70,10 +70,10 @@ End Function
     Dim list As intlist = empty
     Dim i As Integer = -1
     Do While i <> 0
-      i = readInt()
-      If i <> 0 Then
-        list = cons(list, i)
-      End If
+        i = readInt
+        If i <> 0 Then
+            list = cons(list, i)
+        End If
     Loop
   End Sub
   

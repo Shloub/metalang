@@ -10,12 +10,12 @@ Module calc
     Dim out_ As Integer = 0
     Dim a2 As Integer = a
     Dim b2 As Integer = b
-    For  j As Integer  = 0 to  i + 1
-      Console.Write(j)
-      out_ = out_ + a2
-      Dim tmp As Integer = b2
-      b2 = b2 + a2
-      a2 = tmp
+    For j As Integer = 0 To i + 1
+        Console.Write(j)
+        out_ = out_ + a2
+        Dim tmp As Integer = b2
+        b2 = b2 + a2
+        a2 = tmp
     Next
     Return out_
   End Function

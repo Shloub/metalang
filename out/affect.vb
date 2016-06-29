@@ -88,12 +88,12 @@ End Function
     t.blah = t.blah + 1
     Dim len As Integer = 1
     Dim cache0(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      cache0(i) = -i
+    For i As Integer = 0 To len - 1
+        cache0(i) = -i
     Next
     Dim cache1(len) As Integer
-    For  j As Integer  = 0 to  len - 1
-      cache1(j) = j
+    For j As Integer = 0 To len - 1
+        cache1(j) = j
     Next
     Dim cache2 As Integer() = cache0
     cache0 = cache1
@@ -105,14 +105,14 @@ End Function
     Sub Main()
       Dim t As toto = mktoto(4)
       Dim t2 As toto = mktoto(5)
-      t.bar = readInt()
-      stdin_sep()
-      t.blah = readInt()
-      stdin_sep()
-      t2.bar = readInt()
-      stdin_sep()
-      t2.blah = readInt()
-      Console.Write("" & result(t, t2) & t.blah)
+      t.bar = readInt
+      stdin_sep
+      t.blah = readInt
+      stdin_sep
+      t2.bar = readInt
+      stdin_sep
+      t2.blah = readInt
+      Console.Write(result(t, t2) & t.blah)
     End Sub
     
     End Module

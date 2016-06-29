@@ -59,9 +59,9 @@ End Function
     Dim param As toto = new toto()
     param.foo = 0
     param.bar = 0
-    param.bar = readInt()
-    stdin_sep()
-    param.foo = readInt()
+    param.bar = readInt
+    stdin_sep
+    param.foo = readInt
     Console.Write(param.bar + param.foo * param.bar)
   End Sub
   

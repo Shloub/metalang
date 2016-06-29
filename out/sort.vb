@@ -52,79 +52,79 @@ Function readInt() As Integer
 End Function
   Function copytab(ByRef tab as Integer(), ByVal len as Integer) As Integer()
     Dim o(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      o(i) = tab(i)
+    For i As Integer = 0 To len - 1
+        o(i) = tab(i)
     Next
     Return o
     End Function
     
     Sub bubblesort(ByRef tab as Integer(), ByVal len as Integer)
-      For  i As Integer  = 0 to  len - 1
-        For  j As Integer  = i + 1 to  len - 1
-          If tab(i) > tab(j) Then
-            Dim tmp As Integer = tab(i)
-            tab(i) = tab(j)
-            tab(j) = tmp
-          End If
-        Next
+      For i As Integer = 0 To len - 1
+          For j As Integer = i + 1 To len - 1
+              If tab(i) > tab(j) Then
+                  Dim tmp As Integer = tab(i)
+                  tab(i) = tab(j)
+                  tab(j) = tmp
+              End If
+          Next
       Next
     End Sub
     
     Sub qsort0(ByRef tab as Integer(), ByVal len as Integer, ByVal i as Integer, ByVal j as Integer)
       If i < j Then
-        Dim i0 As Integer = i
-        Dim j0 As Integer = j
-        ' pivot : tab[0] 
-        
-        Do While i <> j
-          If tab(i) > tab(j) Then
-            If i = j - 1 Then
-              ' on inverse simplement
-              
-              Dim tmp As Integer = tab(i)
-              tab(i) = tab(j)
-              tab(j) = tmp
-              i = i + 1
-            Else
-              ' on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
-              
-              Dim tmp As Integer = tab(i)
-              tab(i) = tab(j)
-              tab(j) = tab(i + 1)
-              tab(i + 1) = tmp
-              i = i + 1
-            End If
-          Else
-            j = j - 1
-          End If
-        Loop
-        qsort0(tab, len, i0, i - 1)
-        qsort0(tab, len, i + 1, j0)
+          Dim i0 As Integer = i
+          Dim j0 As Integer = j
+          ' pivot : tab[0] 
+          
+          Do While i <> j
+              If tab(i) > tab(j) Then
+                  If i = j - 1 Then
+                      ' on inverse simplement
+                      
+                      Dim tmp As Integer = tab(i)
+                      tab(i) = tab(j)
+                      tab(j) = tmp
+                      i = i + 1
+                  Else 
+                      ' on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
+                      
+                      Dim tmp As Integer = tab(i)
+                      tab(i) = tab(j)
+                      tab(j) = tab(i + 1)
+                      tab(i + 1) = tmp
+                      i = i + 1
+                  End If
+              Else 
+                  j = j - 1
+              End If
+          Loop
+          qsort0(tab, len, i0, i - 1)
+          qsort0(tab, len, i + 1, j0)
       End If
     End Sub
     
     
     Sub Main()
       Dim len As Integer = 2
-      len = readInt()
-      stdin_sep()
+      len = readInt
+      stdin_sep
       Dim tab(len) As Integer
-      For  i_ As Integer  = 0 to  len - 1
-        Dim tmp As Integer = 0
-        tmp = readInt()
-        stdin_sep()
-        tab(i_) = tmp
+      For i_ As Integer = 0 To len - 1
+          Dim tmp As Integer = 0
+          tmp = readInt
+          stdin_sep
+          tab(i_) = tmp
       Next
       Dim tab2 As Integer() = copytab(tab, len)
       bubblesort(tab2, len)
-      For  i As Integer  = 0 to  len - 1
-        Console.Write("" & tab2(i) & " ")
+      For i As Integer = 0 To len - 1
+          Console.Write(tab2(i) & " ")
       Next
       Console.Write(Chr(10))
       Dim tab3 As Integer() = copytab(tab, len)
       qsort0(tab3, len, 0, len - 1)
-      For  i As Integer  = 0 to  len - 1
-        Console.Write("" & tab3(i) & " ")
+      For i As Integer = 0 To len - 1
+          Console.Write(tab3(i) & " ")
       Next
       Console.Write(Chr(10))
       End Sub

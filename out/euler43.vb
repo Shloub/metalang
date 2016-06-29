@@ -35,77 +35,77 @@ Module euler43
     '
     
     Dim allowed(10) As Boolean
-    For  i As Integer  = 0 to  10 - 1
-      allowed(i) = true
+    For i As Integer = 0 To 10 - 1
+        allowed(i) = true
     Next
-    For  i6 As Integer  = 0 to  1
-      Dim d6 As Integer = i6 * 5
-      If allowed(d6) Then
-        allowed(d6) = false
-        For  d7 As Integer  = 0 to  9
-          If allowed(d7) Then
-            allowed(d7) = false
-            For  d8 As Integer  = 0 to  9
-              If allowed(d8) Then
-                allowed(d8) = false
-                For  d9 As Integer  = 0 to  9
-                  If allowed(d9) Then
-                    allowed(d9) = false
-                    For  d10 As Integer  = 1 to  9
-                      If allowed(d10) AndAlso (d6 * 100 + d7 * 10 + d8) Mod 11 = 0 AndAlso (d7 * 100 + d8 * 10 + d9) Mod 13 = 0 AndAlso (d8 * 100 + d9 * 10 + d10) Mod 17 = 0 Then
-                        allowed(d10) = false
-                        For  d5 As Integer  = 0 to  9
-                          If allowed(d5) Then
-                            allowed(d5) = false
-                            If (d5 * 100 + d6 * 10 + d7) Mod 7 = 0 Then
-                              For  i4 As Integer  = 0 to  4
-                                Dim d4 As Integer = i4 * 2
-                                If allowed(d4) Then
-                                  allowed(d4) = false
-                                  For  d3 As Integer  = 0 to  9
-                                    If allowed(d3) Then
-                                      allowed(d3) = false
-                                      If (d3 + d4 + d5) Mod 3 = 0 Then
-                                        For  d2 As Integer  = 0 to  9
-                                          If allowed(d2) Then
-                                            allowed(d2) = false
-                                            For  d1 As Integer  = 0 to  9
-                                              If allowed(d1) Then
-                                                allowed(d1) = false
-                                                Console.Write("" & d1 & d2 & d3 & d4 & d5 & d6 & d7 & d8 & d9 & d10 & " + ")
-                                                allowed(d1) = true
-                                              End If
+    For i6 As Integer = 0 To 1
+        Dim d6 As Integer = i6 * 5
+        If allowed(d6) Then
+            allowed(d6) = false
+            For d7 As Integer = 0 To 9
+                If allowed(d7) Then
+                    allowed(d7) = false
+                    For d8 As Integer = 0 To 9
+                        If allowed(d8) Then
+                            allowed(d8) = false
+                            For d9 As Integer = 0 To 9
+                                If allowed(d9) Then
+                                    allowed(d9) = false
+                                    For d10 As Integer = 1 To 9
+                                        If allowed(d10) AndAlso (d6 * 100 + d7 * 10 + d8) Mod 11 = 0 AndAlso (d7 * 100 + d8 * 10 + d9) Mod 13 = 0 AndAlso (d8 * 100 + d9 * 10 + d10) Mod 17 = 0 Then
+                                            allowed(d10) = false
+                                            For d5 As Integer = 0 To 9
+                                                If allowed(d5) Then
+                                                    allowed(d5) = false
+                                                    If (d5 * 100 + d6 * 10 + d7) Mod 7 = 0 Then
+                                                        For i4 As Integer = 0 To 4
+                                                            Dim d4 As Integer = i4 * 2
+                                                            If allowed(d4) Then
+                                                                allowed(d4) = false
+                                                                For d3 As Integer = 0 To 9
+                                                                    If allowed(d3) Then
+                                                                        allowed(d3) = false
+                                                                        If (d3 + d4 + d5) Mod 3 = 0 Then
+                                                                            For d2 As Integer = 0 To 9
+                                                                                If allowed(d2) Then
+                                                                                    allowed(d2) = false
+                                                                                    For d1 As Integer = 0 To 9
+                                                                                        If allowed(d1) Then
+                                                                                            allowed(d1) = false
+                                                                                            Console.Write(d1 & d2 & d3 & d4 & d5 & d6 & d7 & d8 & d9 & d10 & " + ")
+                                                                                            allowed(d1) = true
+                                                                                        End If
+                                                                                    Next
+                                                                                    allowed(d2) = true
+                                                                                End If
+                                                                            Next
+                                                                        End If
+                                                                        allowed(d3) = true
+                                                                    End If
+                                                                Next
+                                                                allowed(d4) = true
+                                                            End If
+                                                        Next
+                                                    End If
+                                                    allowed(d5) = true
+                                                End If
                                             Next
-                                            allowed(d2) = true
-                                          End If
-                                        Next
-                                      End If
-                                      allowed(d3) = true
-                                    End If
-                                  Next
-                                  allowed(d4) = true
+                                            allowed(d10) = true
+                                        End If
+                                    Next
+                                    allowed(d9) = true
                                 End If
-                              Next
-                            End If
-                            allowed(d5) = true
-                          End If
-                        Next
-                        allowed(d10) = true
-                      End If
+                            Next
+                            allowed(d8) = true
+                        End If
                     Next
-                    allowed(d9) = true
-                  End If
-                Next
-                allowed(d8) = true
-              End If
+                    allowed(d7) = true
+                End If
             Next
-            allowed(d7) = true
-          End If
-        Next
-        allowed(d6) = true
-      End If
+            allowed(d6) = true
+        End If
     Next
-    Console.Write("" & 0 & Chr(10))
+    Console.Write(0 & Chr(10))
     End Sub
     
   End Module

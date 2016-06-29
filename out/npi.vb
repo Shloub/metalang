@@ -65,27 +65,27 @@ End Function
   
   Function npi0(ByRef str as Char(), ByVal len as Integer) As Integer
     Dim stack(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      stack(i) = 0
+    For i As Integer = 0 To len - 1
+        stack(i) = 0
     Next
     Dim ptrStack As Integer = 0
     Dim ptrStr As Integer = 0
     Do While ptrStr < len
-      If str(ptrStr) = Chr(32) Then
-        ptrStr = ptrStr + 1
-      ElseIf is_number(str(ptrStr)) Then
-        Dim num As Integer = 0
-        Do While str(ptrStr) <> Chr(32)
-          num = num * 10 + Asc(str(ptrStr)) - Asc("0"C)
-          ptrStr = ptrStr + 1
-        Loop
-        stack(ptrStack) = num
-        ptrStack = ptrStack + 1
-      ElseIf str(ptrStr) = Chr(43) Then
-        stack(ptrStack - 2) = stack(ptrStack - 2) + stack(ptrStack - 1)
-        ptrStack = ptrStack - 1
-        ptrStr = ptrStr + 1
-      End If
+        If str(ptrStr) = Chr(32) Then
+            ptrStr = ptrStr + 1
+        ElseIf is_number(str(ptrStr)) Then
+            Dim num As Integer = 0
+            Do While str(ptrStr) <> Chr(32)
+                num = num * 10 + Asc(str(ptrStr)) - Asc("0"C)
+                ptrStr = ptrStr + 1
+            Loop
+            stack(ptrStack) = num
+            ptrStack = ptrStack + 1
+        ElseIf str(ptrStr) = Chr(43) Then
+            stack(ptrStack - 2) = stack(ptrStack - 2) + stack(ptrStack - 1)
+            ptrStack = ptrStack - 1
+            ptrStr = ptrStr + 1
+        End If
     Loop
     Return stack(0)
     End Function
@@ -93,13 +93,13 @@ End Function
     
     Sub Main()
       Dim len As Integer = 0
-      len = readInt()
-      stdin_sep()
+      len = readInt
+      stdin_sep
       Dim tab(len) As Char
-      For  i As Integer  = 0 to  len - 1
-        Dim tmp As Char = Chr(0)
-        tmp = readChar()
-        tab(i) = tmp
+      For i As Integer = 0 To len - 1
+          Dim tmp As Char = Chr(0)
+          tmp = readChar
+          tab(i) = tmp
       Next
       Dim result As Integer = npi0(tab, len)
       Console.Write(result)

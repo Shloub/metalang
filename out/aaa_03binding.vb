@@ -5,13 +5,13 @@ Module aaa_03binding
   Function g(ByVal i as Integer) As Integer
     Dim j As Integer = i * 4
     If j Mod 2 = 1 Then
-      Return 0
+        Return 0
     End If
     Return j
   End Function
   
   Sub h(ByVal i as Integer)
-    Console.Write("" & i & Chr(10))
+    Console.Write(i & Chr(10))
   End Sub
   
   

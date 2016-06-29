@@ -11,15 +11,15 @@ Module loop_unroll
   Sub Main()
     Dim j As Integer = 0
     j = 0
-    Console.Write("" & j & Chr(10))
+    Console.Write(j & Chr(10))
     j = 1
-    Console.Write("" & j & Chr(10))
+    Console.Write(j & Chr(10))
     j = 2
-    Console.Write("" & j & Chr(10))
+    Console.Write(j & Chr(10))
     j = 3
-    Console.Write("" & j & Chr(10))
+    Console.Write(j & Chr(10))
     j = 4
-    Console.Write("" & j & Chr(10))
+    Console.Write(j & Chr(10))
   End Sub
   
 End Module

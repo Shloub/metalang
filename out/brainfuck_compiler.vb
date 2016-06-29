@@ -13,8 +13,8 @@ Module brainfuck_compiler
     Dim input As Char = Chr(32)
     Dim current_pos As Integer = 500
     Dim mem(1000) As Integer
-    For  i As Integer  = 0 to  1000 - 1
-      mem(i) = 0
+    For i As Integer = 0 To 1000 - 1
+        mem(i) = 0
     Next
     mem(current_pos) = mem(current_pos) + 1
     mem(current_pos) = mem(current_pos) + 1
@@ -75,11 +75,11 @@ Module brainfuck_compiler
     mem(current_pos) = mem(current_pos) + 1
     mem(current_pos) = mem(current_pos) + 1
     Do While mem(current_pos) <> 0
-      mem(current_pos) = mem(current_pos) - 1
-      current_pos = current_pos - 1
-      mem(current_pos) = mem(current_pos) + 1
-      Console.Write(Chr(mem(current_pos)))
-      current_pos = current_pos + 1
+        mem(current_pos) = mem(current_pos) - 1
+        current_pos = current_pos - 1
+        mem(current_pos) = mem(current_pos) + 1
+        Console.Write(Chr(mem(current_pos)))
+        current_pos = current_pos + 1
     Loop
     End Sub
     

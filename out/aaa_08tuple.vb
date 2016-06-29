@@ -24,7 +24,7 @@ Module aaa_08tuple
     Dim e As tuple_int_int = t.foo
     Dim a As Integer = e.tuple_int_int_field_0
     Dim b As Integer = e.tuple_int_int_field_1
-    Console.Write("" & a & " " & b & " " & t.bar & Chr(10))
+    Console.Write(a & " " & b & " " & t.bar & Chr(10))
   End Sub
   
 End Module

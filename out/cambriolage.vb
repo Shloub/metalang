@@ -53,60 +53,60 @@ End Function
   Function nbPassePartout(ByVal n as Integer, ByRef passepartout as Integer()(), ByVal m as Integer, ByRef serrures as Integer()()) As Integer
     Dim max_ancient As Integer = 0
     Dim max_recent As Integer = 0
-    For  i As Integer  = 0 to  m - 1
-      If serrures(i)(0) = -1 AndAlso serrures(i)(1) > max_ancient Then
-        max_ancient = serrures(i)(1)
-      End If
-      If serrures(i)(0) = 1 AndAlso serrures(i)(1) > max_recent Then
-        max_recent = serrures(i)(1)
-      End If
+    For i As Integer = 0 To m - 1
+        If serrures(i)(0) = -1 AndAlso serrures(i)(1) > max_ancient Then
+            max_ancient = serrures(i)(1)
+        End If
+        If serrures(i)(0) = 1 AndAlso serrures(i)(1) > max_recent Then
+            max_recent = serrures(i)(1)
+        End If
     Next
     Dim max_ancient_pp As Integer = 0
     Dim max_recent_pp As Integer = 0
-    For  i As Integer  = 0 to  n - 1
-      Dim pp As Integer() = passepartout(i)
-      If pp(0) >= max_ancient AndAlso pp(1) >= max_recent Then
-        Return 1
-      End If
-      max_ancient_pp = Math.Max(max_ancient_pp, pp(0))
-      max_recent_pp = Math.Max(max_recent_pp, pp(1))
+    For i As Integer = 0 To n - 1
+        Dim pp As Integer() = passepartout(i)
+        If pp(0) >= max_ancient AndAlso pp(1) >= max_recent Then
+            Return 1
+        End If
+        max_ancient_pp = Math.Max(max_ancient_pp, pp(0))
+        max_recent_pp = Math.Max(max_recent_pp, pp(1))
     Next
     If max_ancient_pp >= max_ancient AndAlso max_recent_pp >= max_recent Then
-      Return 2
-    Else
-      Return 0
+        Return 2
+    Else 
+        Return 0
     End If
   End Function
   
   
   Sub Main()
-    Dim n As Integer = readInt()
-    stdin_sep()
+    Dim n As Integer = readInt
+    stdin_sep
     Dim passepartout(n)() As Integer
-    For  i As Integer  = 0 to  n - 1
-      Dim out0(2) As Integer
-      For  j As Integer  = 0 to  2 - 1
-        Dim out01 As Integer = readInt()
-        stdin_sep()
-        out0(j) = out01
-      Next
-      passepartout(i) = out0
-      Next
-      Dim m As Integer = readInt()
-      stdin_sep()
-      Dim serrures(m)() As Integer
-      For  k As Integer  = 0 to  m - 1
-        Dim out1(2) As Integer
-        For  l As Integer  = 0 to  2 - 1
-          Dim out_ As Integer = readInt()
-          stdin_sep()
-          out1(l) = out_
+    For i As Integer = 0 To n - 1
+        Dim out0(2) As Integer
+        For j As Integer = 0 To 2 - 1
+            Dim out01 As Integer = readInt
+            stdin_sep
+            out0(j) = out01
         Next
-        serrures(k) = out1
+        passepartout(i) = out0
         Next
-        Console.Write(nbPassePartout(n, passepartout, m, serrures))
-      End Sub
-      
-      End Module
-      
-      
+        Dim m As Integer = readInt
+        stdin_sep
+        Dim serrures(m)() As Integer
+        For k As Integer = 0 To m - 1
+            Dim out1(2) As Integer
+            For l As Integer = 0 To 2 - 1
+                Dim out_ As Integer = readInt
+                stdin_sep
+                out1(l) = out_
+            Next
+            serrures(k) = out1
+            Next
+            Console.Write(nbPassePartout(n, passepartout, m, serrures))
+        End Sub
+        
+        End Module
+        
+        

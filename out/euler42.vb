@@ -66,37 +66,37 @@ End Function
   End Function
   
   Function score() As Integer
-    stdin_sep()
-    Dim len As Integer = readInt()
-    stdin_sep()
+    stdin_sep
+    Dim len As Integer = readInt
+    stdin_sep
     Dim sum As Integer = 0
-    For  i As Integer  = 1 to  len
-      Dim c As Char = readChar()
-      sum = sum + Asc(c) - Asc("A"C) + 1
-      '		print c print " " print sum print " " 
-      
+    For i As Integer = 1 To len
+        Dim c As Char = readChar
+        sum = sum + Asc(c) - Asc("A"C) + 1
+        '		print c print " " print sum print " " 
+        
     Next
     If is_triangular(sum) Then
-      Return 1
-    Else
-      Return 0
+        Return 1
+    Else 
+        Return 0
     End If
   End Function
   
   
   Sub Main()
-    For  i As Integer  = 1 to  55
-      If is_triangular(i) Then
-        Console.Write("" & i & " ")
-      End If
+    For i As Integer = 1 To 55
+        If is_triangular(i) Then
+            Console.Write(i & " ")
+        End If
     Next
     Console.Write(Chr(10))
     Dim sum As Integer = 0
-    Dim n As Integer = readInt()
-    For  i As Integer  = 1 to  n
-      sum = sum + score()
+    Dim n As Integer = readInt
+    For i As Integer = 1 To n
+        sum = sum + score()
     Next
-    Console.Write("" & sum & Chr(10))
+    Console.Write(sum & Chr(10))
   End Sub
   
 End Module

@@ -10,7 +10,7 @@ Module affect_param
   Sub Main()
     Dim a As Integer = 0
     foo(a)
-    Console.Write("" & a & Chr(10))
+    Console.Write(a & Chr(10))
   End Sub
   
 End Module

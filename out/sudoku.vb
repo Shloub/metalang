@@ -54,10 +54,10 @@ End Function
   
   Function read_sudoku() As Integer()
     Dim out0(9 * 9) As Integer
-    For  i As Integer  = 0 to  9 * 9 - 1
-      Dim k As Integer = readInt()
-      stdin_sep()
-      out0(i) = k
+    For i As Integer = 0 To 9 * 9 - 1
+        Dim k As Integer = readInt
+        stdin_sep
+        out0(i) = k
     Next
     Return out0
     End Function
@@ -65,17 +65,17 @@ End Function
     ' affiche un sudoku 
     
     Sub print_sudoku(ByRef sudoku0 as Integer())
-      For  y As Integer  = 0 to  8
-        For  x As Integer  = 0 to  8
-          Console.Write("" & sudoku0(x + y * 9) & " ")
-          If x Mod 3 = 2 Then
-            Console.Write(" ")
-          End If
-        Next
-        Console.Write(Chr(10))
-        If y Mod 3 = 2 Then
+      For y As Integer = 0 To 8
+          For x As Integer = 0 To 8
+              Console.Write(sudoku0(x + y * 9) & " ")
+              If x Mod 3 = 2 Then
+                  Console.Write(" ")
+              End If
+          Next
           Console.Write(Chr(10))
-        End If
+          If y Mod 3 = 2 Then
+              Console.Write(Chr(10))
+          End If
       Next
       Console.Write(Chr(10))
     End Sub
@@ -87,10 +87,10 @@ End Function
     ' dit si le sudoku est terminé de remplir 
     
     Function sudoku_done(ByRef s as Integer()) As Boolean
-      For  i As Integer  = 0 to  80
-        If s(i) = 0 Then
-          Return false
-        End If
+      For i As Integer = 0 To 80
+          If s(i) = 0 Then
+              Return false
+          End If
       Next
       Return true
     End Function
@@ -99,16 +99,16 @@ End Function
     
     Function sudoku_error(ByRef s as Integer()) As Boolean
       Dim out1 As Boolean = false
-      For  x As Integer  = 0 to  8
-        out1 = out1 OrElse s(x) <> 0 AndAlso s(x) = s(x + 9) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 2) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 2) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 3) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 3) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 3) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 4) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 4) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 4) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 4) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 5) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 5) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 5) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 5) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 5) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 6) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 6) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 6) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 6) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 6) OrElse s(x + 9 * 5) <> 0 AndAlso s(x + 9 * 5) = s(x + 9 * 6) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 7) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 7) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 7) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 7) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 7) OrElse s(x + 9 * 5) <> 0 AndAlso s(x + 9 * 5) = s(x + 9 * 7) OrElse s(x + 9 * 6) <> 0 AndAlso s(x + 9 * 6) = s(x + 9 * 7) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 8) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 8) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 8) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 8) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 8) OrElse s(x + 9 * 5) <> 0 AndAlso s(x + 9 * 5) = s(x + 9 * 8) OrElse s(x + 9 * 6) <> 0 AndAlso s(x + 9 * 6) = s(x + 9 * 8) OrElse s(x + 9 * 7) <> 0 AndAlso s(x + 9 * 7) = s(x + 9 * 8)
+      For x As Integer = 0 To 8
+          out1 = out1 OrElse s(x) <> 0 AndAlso s(x) = s(x + 9) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 2) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 2) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 3) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 3) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 3) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 4) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 4) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 4) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 4) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 5) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 5) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 5) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 5) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 5) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 6) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 6) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 6) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 6) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 6) OrElse s(x + 9 * 5) <> 0 AndAlso s(x + 9 * 5) = s(x + 9 * 6) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 7) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 7) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 7) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 7) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 7) OrElse s(x + 9 * 5) <> 0 AndAlso s(x + 9 * 5) = s(x + 9 * 7) OrElse s(x + 9 * 6) <> 0 AndAlso s(x + 9 * 6) = s(x + 9 * 7) OrElse s(x) <> 0 AndAlso s(x) = s(x + 9 * 8) OrElse s(x + 9) <> 0 AndAlso s(x + 9) = s(x + 9 * 8) OrElse s(x + 9 * 2) <> 0 AndAlso s(x + 9 * 2) = s(x + 9 * 8) OrElse s(x + 9 * 3) <> 0 AndAlso s(x + 9 * 3) = s(x + 9 * 8) OrElse s(x + 9 * 4) <> 0 AndAlso s(x + 9 * 4) = s(x + 9 * 8) OrElse s(x + 9 * 5) <> 0 AndAlso s(x + 9 * 5) = s(x + 9 * 8) OrElse s(x + 9 * 6) <> 0 AndAlso s(x + 9 * 6) = s(x + 9 * 8) OrElse s(x + 9 * 7) <> 0 AndAlso s(x + 9 * 7) = s(x + 9 * 8)
       Next
       Dim out2 As Boolean = false
-      For  x As Integer  = 0 to  8
-        out2 = out2 OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 1) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 2) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 2) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 3) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 3) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 3) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 4) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 4) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 4) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 4) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 5) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 5) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 5) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 5) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 5) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 6) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 6) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 6) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 6) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 6) OrElse s(x * 9 + 5) <> 0 AndAlso s(x * 9 + 5) = s(x * 9 + 6) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 7) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 7) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 7) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 7) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 7) OrElse s(x * 9 + 5) <> 0 AndAlso s(x * 9 + 5) = s(x * 9 + 7) OrElse s(x * 9 + 6) <> 0 AndAlso s(x * 9 + 6) = s(x * 9 + 7) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 8) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 8) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 8) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 8) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 8) OrElse s(x * 9 + 5) <> 0 AndAlso s(x * 9 + 5) = s(x * 9 + 8) OrElse s(x * 9 + 6) <> 0 AndAlso s(x * 9 + 6) = s(x * 9 + 8) OrElse s(x * 9 + 7) <> 0 AndAlso s(x * 9 + 7) = s(x * 9 + 8)
+      For x As Integer = 0 To 8
+          out2 = out2 OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 1) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 2) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 2) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 3) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 3) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 3) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 4) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 4) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 4) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 4) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 5) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 5) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 5) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 5) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 5) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 6) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 6) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 6) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 6) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 6) OrElse s(x * 9 + 5) <> 0 AndAlso s(x * 9 + 5) = s(x * 9 + 6) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 7) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 7) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 7) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 7) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 7) OrElse s(x * 9 + 5) <> 0 AndAlso s(x * 9 + 5) = s(x * 9 + 7) OrElse s(x * 9 + 6) <> 0 AndAlso s(x * 9 + 6) = s(x * 9 + 7) OrElse s(x * 9) <> 0 AndAlso s(x * 9) = s(x * 9 + 8) OrElse s(x * 9 + 1) <> 0 AndAlso s(x * 9 + 1) = s(x * 9 + 8) OrElse s(x * 9 + 2) <> 0 AndAlso s(x * 9 + 2) = s(x * 9 + 8) OrElse s(x * 9 + 3) <> 0 AndAlso s(x * 9 + 3) = s(x * 9 + 8) OrElse s(x * 9 + 4) <> 0 AndAlso s(x * 9 + 4) = s(x * 9 + 8) OrElse s(x * 9 + 5) <> 0 AndAlso s(x * 9 + 5) = s(x * 9 + 8) OrElse s(x * 9 + 6) <> 0 AndAlso s(x * 9 + 6) = s(x * 9 + 8) OrElse s(x * 9 + 7) <> 0 AndAlso s(x * 9 + 7) = s(x * 9 + 8)
       Next
       Dim out3 As Boolean = false
-      For  x As Integer  = 0 to  8
-        out3 = out3 OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2)
+      For x As Integer = 0 To 8
+          out3 = out3 OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s((x Mod 3) * 3 * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) <> 0 AndAlso s(((x Mod 3) * 3 + 1) * 9 + (x \ 3) * 3 + 2) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) <> 0 AndAlso s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2) OrElse s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) <> 0 AndAlso s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 1) = s(((x Mod 3) * 3 + 2) * 9 + (x \ 3) * 3 + 2)
       Next
       Return out1 OrElse out2 OrElse out3
     End Function
@@ -117,22 +117,22 @@ End Function
     
     Function solve(ByRef sudoku0 as Integer()) As Boolean
       If sudoku_error(sudoku0) Then
-        Return false
+          Return false
       End If
       If sudoku_done(sudoku0) Then
-        Return true
+          Return true
       End If
-      For  i As Integer  = 0 to  80
-        If sudoku0(i) = 0 Then
-          For  p As Integer  = 1 to  9
-            sudoku0(i) = p
-            If solve(sudoku0) Then
-              Return true
-            End If
-          Next
-          sudoku0(i) = 0
-          Return false
-        End If
+      For i As Integer = 0 To 80
+          If sudoku0(i) = 0 Then
+              For p As Integer = 1 To 9
+                  sudoku0(i) = p
+                  If solve(sudoku0) Then
+                      Return true
+                  End If
+              Next
+              sudoku0(i) = 0
+              Return false
+          End If
       Next
       Return false
     End Function
@@ -142,9 +142,9 @@ End Function
       Dim sudoku0 As Integer() = read_sudoku()
       print_sudoku(sudoku0)
       If solve(sudoku0) Then
-        print_sudoku(sudoku0)
-      Else
-        Console.Write("no solution" & Chr(10))
+          print_sudoku(sudoku0)
+      Else 
+          Console.Write("no solution" & Chr(10))
       End If
     End Sub
     

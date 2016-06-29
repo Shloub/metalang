@@ -52,28 +52,28 @@ Function readInt() As Integer
 End Function
   Function pathfind_aux(ByRef cache as Integer(), ByRef tab as Integer(), ByVal len as Integer, ByVal pos as Integer) As Integer
     If pos >= len - 1 Then
-      Return 0
+        Return 0
     ElseIf cache(pos) <> -1 Then
-      Return cache(pos)
-    Else
-      cache(pos) = len * 2
-      Dim posval As Integer = pathfind_aux(cache, tab, len, tab(pos))
-      Dim oneval As Integer = pathfind_aux(cache, tab, len, pos + 1)
-      Dim out0 As Integer = 0
-      If posval < oneval Then
-        out0 = 1 + posval
-      Else
-        out0 = 1 + oneval
-      End If
-      cache(pos) = out0
-      Return out0
+        Return cache(pos)
+    Else 
+        cache(pos) = len * 2
+        Dim posval As Integer = pathfind_aux(cache, tab, len, tab(pos))
+        Dim oneval As Integer = pathfind_aux(cache, tab, len, pos + 1)
+        Dim out0 As Integer = 0
+        If posval < oneval Then
+            out0 = 1 + posval
+        Else 
+            out0 = 1 + oneval
+        End If
+        cache(pos) = out0
+        Return out0
     End If
   End Function
   
   Function pathfind(ByRef tab as Integer(), ByVal len as Integer) As Integer
     Dim cache(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      cache(i) = -1
+    For i As Integer = 0 To len - 1
+        cache(i) = -1
     Next
     Return pathfind_aux(cache, tab, len, 0)
     End Function
@@ -81,14 +81,14 @@ End Function
     
     Sub Main()
       Dim len As Integer = 0
-      len = readInt()
-      stdin_sep()
+      len = readInt
+      stdin_sep
       Dim tab(len) As Integer
-      For  i As Integer  = 0 to  len - 1
-        Dim tmp As Integer = 0
-        tmp = readInt()
-        stdin_sep()
-        tab(i) = tmp
+      For i As Integer = 0 To len - 1
+          Dim tmp As Integer = 0
+          tmp = readInt
+          stdin_sep
+          tab(i) = tmp
       Next
       Dim result As Integer = pathfind(tab, len)
       Console.Write(result)

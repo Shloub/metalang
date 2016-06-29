@@ -53,39 +53,39 @@ End Function
   Function devine0(ByVal nombre as Integer, ByRef tab as Integer(), ByVal len as Integer) As Boolean
     Dim min0 As Integer = tab(0)
     Dim max0 As Integer = tab(1)
-    For  i As Integer  = 2 to  len - 1
-      If tab(i) > max0 OrElse tab(i) < min0 Then
-        Return false
-      End If
-      If tab(i) < nombre Then
-        min0 = tab(i)
-      End If
-      If tab(i) > nombre Then
-        max0 = tab(i)
-      End If
-      If tab(i) = nombre AndAlso len <> i + 1 Then
-        Return false
-      End If
+    For i As Integer = 2 To len - 1
+        If tab(i) > max0 OrElse tab(i) < min0 Then
+            Return false
+        End If
+        If tab(i) < nombre Then
+            min0 = tab(i)
+        End If
+        If tab(i) > nombre Then
+            max0 = tab(i)
+        End If
+        If tab(i) = nombre AndAlso len <> i + 1 Then
+            Return false
+        End If
     Next
     Return true
   End Function
   
   
   Sub Main()
-    Dim nombre As Integer = readInt()
-    stdin_sep()
-    Dim len As Integer = readInt()
-    stdin_sep()
+    Dim nombre As Integer = readInt
+    stdin_sep
+    Dim len As Integer = readInt
+    stdin_sep
     Dim tab(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      Dim tmp As Integer = readInt()
-      stdin_sep()
-      tab(i) = tmp
+    For i As Integer = 0 To len - 1
+        Dim tmp As Integer = readInt
+        stdin_sep
+        tab(i) = tmp
     Next
     If devine0(nombre, tab, len) Then
-      Console.Write("True")
-    Else
-      Console.Write("False")
+        Console.Write("True")
+    Else 
+        Console.Write("False")
     End If
     End Sub
     
