@@ -28,17 +28,17 @@ Module euler32
   
   Function okdigits(ByRef ok as Boolean(), ByVal n as Integer) As Boolean
     If n = 0 Then
-      Return true
-    Else
-      Dim digit As Integer = n Mod 10
-      If ok(digit) Then
-        ok(digit) = false
-        Dim o As Boolean = okdigits(ok, n \ 10)
-        ok(digit) = true
-        Return o
-      Else
-        Return false
-      End If
+        Return true
+    Else 
+        Dim digit As Integer = n Mod 10
+        If ok(digit) Then
+            ok(digit) = false
+            Dim o As Boolean = okdigits(ok, n \ 10)
+            ok(digit) = true
+            Return o
+        Else 
+            Return false
+        End If
     End If
   End Function
   
@@ -46,63 +46,63 @@ Module euler32
   Sub Main()
     Dim count As Integer = 0
     Dim allowed(10) As Boolean
-    For  i As Integer  = 0 to  10 - 1
-      allowed(i) = i <> 0
+    For i As Integer = 0 To 10 - 1
+        allowed(i) = i <> 0
     Next
     Dim counted(100000) As Boolean
-    For  j As Integer  = 0 to  100000 - 1
-      counted(j) = false
+    For j As Integer = 0 To 100000 - 1
+        counted(j) = false
     Next
-    For  e As Integer  = 1 to  9
-      allowed(e) = false
-      For  b As Integer  = 1 to  9
-        If allowed(b) Then
-          allowed(b) = false
-          Dim be As Integer = b * e Mod 10
-          If allowed(be) Then
-            allowed(be) = false
-            For  a As Integer  = 1 to  9
-              If allowed(a) Then
-                allowed(a) = false
-                For  c As Integer  = 1 to  9
-                  If allowed(c) Then
-                    allowed(c) = false
-                    For  d As Integer  = 1 to  9
-                      If allowed(d) Then
-                        allowed(d) = false
-                        ' 2 * 3 digits 
-                        
-                        Dim product As Integer = (a * 10 + b) * (c * 100 + d * 10 + e)
-                        If Not counted(product) AndAlso okdigits(allowed, product \ 10) Then
-                          counted(product) = true
-                          count = count + product
-                          Console.Write("" & product & " ")
+    For e As Integer = 1 To 9
+        allowed(e) = false
+        For b As Integer = 1 To 9
+            If allowed(b) Then
+                allowed(b) = false
+                Dim be As Integer = b * e Mod 10
+                If allowed(be) Then
+                    allowed(be) = false
+                    For a As Integer = 1 To 9
+                        If allowed(a) Then
+                            allowed(a) = false
+                            For c As Integer = 1 To 9
+                                If allowed(c) Then
+                                    allowed(c) = false
+                                    For d As Integer = 1 To 9
+                                        If allowed(d) Then
+                                            allowed(d) = false
+                                            ' 2 * 3 digits 
+                                            
+                                            Dim product As Integer = (a * 10 + b) * (c * 100 + d * 10 + e)
+                                            If Not counted(product) AndAlso okdigits(allowed, product \ 10) Then
+                                                counted(product) = true
+                                                count = count + product
+                                                Console.Write(product & " ")
+                                            End If
+                                            ' 1  * 4 digits 
+                                            
+                                            Dim product2 As Integer = b * (a * 1000 + c * 100 + d * 10 + e)
+                                            If Not counted(product2) AndAlso okdigits(allowed, product2 \ 10) Then
+                                                counted(product2) = true
+                                                count = count + product2
+                                                Console.Write(product2 & " ")
+                                            End If
+                                            allowed(d) = true
+                                        End If
+                                    Next
+                                    allowed(c) = true
+                                End If
+                            Next
+                            allowed(a) = true
                         End If
-                        ' 1  * 4 digits 
-                        
-                        Dim product2 As Integer = b * (a * 1000 + c * 100 + d * 10 + e)
-                        If Not counted(product2) AndAlso okdigits(allowed, product2 \ 10) Then
-                          counted(product2) = true
-                          count = count + product2
-                          Console.Write("" & product2 & " ")
-                        End If
-                        allowed(d) = true
-                      End If
                     Next
-                    allowed(c) = true
-                  End If
-                Next
-                allowed(a) = true
-              End If
-            Next
-            allowed(be) = true
-          End If
-          allowed(b) = true
-        End If
-      Next
-      allowed(e) = true
+                    allowed(be) = true
+                End If
+                allowed(b) = true
+            End If
+        Next
+        allowed(e) = true
     Next
-    Console.Write("" & count & Chr(10))
+    Console.Write(count & Chr(10))
     End Sub
     
     End Module

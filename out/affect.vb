@@ -88,12 +88,12 @@ End Function
     t.blah = t.blah + 1
     Dim len As Integer = 1
     Dim cache0(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      cache0(i) = -i
+    For i As Integer = 0 To len - 1
+        cache0(i) = -i
     Next
     Dim cache1(len) As Integer
-    For  j As Integer  = 0 to  len - 1
-      cache1(j) = j
+    For j As Integer = 0 To len - 1
+        cache1(j) = j
     Next
     Dim cache2 As Integer() = cache0
     cache0 = cache1
@@ -112,7 +112,7 @@ End Function
       t2.bar = readInt()
       stdin_sep()
       t2.blah = readInt()
-      Console.Write("" & result(t, t2) & t.blah)
+      Console.Write(result(t, t2) & t.blah)
     End Sub
     
     End Module

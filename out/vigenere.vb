@@ -58,11 +58,11 @@ End Function
   Function position_alphabet(ByVal c as Char) As Integer
     Dim i As Integer = Asc(c)
     If i <= Asc("Z"C) AndAlso i >= Asc("A"C) Then
-      Return i - Asc("A"C)
+        Return i - Asc("A"C)
     ElseIf i <= Asc("z"C) AndAlso i >= Asc("a"C) Then
-      Return i - Asc("a"C)
-    Else
-      Return -1
+        Return i - Asc("a"C)
+    Else 
+        Return -1
     End If
   End Function
   
@@ -71,13 +71,13 @@ End Function
   End Function
   
   Sub crypte(ByVal taille_cle as Integer, ByRef cle as Char(), ByVal taille as Integer, ByRef message as Char())
-    For  i As Integer  = 0 to  taille - 1
-      Dim lettre As Integer = position_alphabet(message(i))
-      If lettre <> -1 Then
-        Dim addon As Integer = position_alphabet(cle(i Mod taille_cle))
-        Dim new0 As Integer = (addon + lettre) Mod 26
-        message(i) = of_position_alphabet(new0)
-      End If
+    For i As Integer = 0 To taille - 1
+        Dim lettre As Integer = position_alphabet(message(i))
+        If lettre <> -1 Then
+            Dim addon As Integer = position_alphabet(cle(i Mod taille_cle))
+            Dim new0 As Integer = (addon + lettre) Mod 26
+            message(i) = of_position_alphabet(new0)
+        End If
     Next
   End Sub
   
@@ -86,21 +86,21 @@ End Function
     Dim taille_cle As Integer = readInt()
     stdin_sep()
     Dim cle(taille_cle) As Char
-    For  index As Integer  = 0 to  taille_cle - 1
-      Dim out0 As Char = readChar()
-      cle(index) = out0
+    For index As Integer = 0 To taille_cle - 1
+        Dim out0 As Char = readChar()
+        cle(index) = out0
     Next
     stdin_sep()
     Dim taille As Integer = readInt()
     stdin_sep()
     Dim message(taille) As Char
-    For  index2 As Integer  = 0 to  taille - 1
-      Dim out2 As Char = readChar()
-      message(index2) = out2
+    For index2 As Integer = 0 To taille - 1
+        Dim out2 As Char = readChar()
+        message(index2) = out2
     Next
     crypte(taille_cle, cle, taille, message)
-    For  i As Integer  = 0 to  taille - 1
-      Console.Write(message(i))
+    For i As Integer = 0 To taille - 1
+        Console.Write(message(i))
     Next
     Console.Write(Chr(10))
     End Sub

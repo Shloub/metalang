@@ -64,16 +64,16 @@ End Function
     Dim strlen As Integer = readInt()
     stdin_sep()
     Dim tab4(strlen) As Char
-    For  toto As Integer  = 0 to  strlen - 1
-      Dim tmpc As Char = readChar()
-      Dim c As Integer = Asc(tmpc)
-      If tmpc <> Chr(32) Then
-        c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)
-      End If
-      tab4(toto) = Chr(c)
+    For toto As Integer = 0 To strlen - 1
+        Dim tmpc As Char = readChar()
+        Dim c As Integer = Asc(tmpc)
+        If tmpc <> Chr(32) Then
+            c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)
+        End If
+        tab4(toto) = Chr(c)
     Next
-    For  j As Integer  = 0 to  strlen - 1
-      Console.Write(tab4(j))
+    For j As Integer = 0 To strlen - 1
+        Console.Write(tab4(j))
     Next
     End Sub
     

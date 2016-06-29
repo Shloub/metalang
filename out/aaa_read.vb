@@ -64,40 +64,40 @@ End Function
   Sub Main()
     Dim len As Integer = readInt()
     stdin_sep()
-    Console.Write("" & len & "=len" & Chr(10))
+    Console.Write(len & "=len" & Chr(10))
     len = len * 2
     Console.Write("len*2=" & len & Chr(10))
     len = len \ 2
     Dim tab(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      Dim tmpi1 As Integer = readInt()
-      stdin_sep()
-      Console.Write("" & i & "=>" & tmpi1 & " ")
-      tab(i) = tmpi1
+    For i As Integer = 0 To len - 1
+        Dim tmpi1 As Integer = readInt()
+        stdin_sep()
+        Console.Write(i & "=>" & tmpi1 & " ")
+        tab(i) = tmpi1
     Next
     Console.Write(Chr(10))
     Dim tab2(len) As Integer
-    For  i_ As Integer  = 0 to  len - 1
-      Dim tmpi2 As Integer = readInt()
-      stdin_sep()
-      Console.Write("" & i_ & "==>" & tmpi2 & " ")
-      tab2(i_) = tmpi2
+    For i_ As Integer = 0 To len - 1
+        Dim tmpi2 As Integer = readInt()
+        stdin_sep()
+        Console.Write(i_ & "==>" & tmpi2 & " ")
+        tab2(i_) = tmpi2
     Next
     Dim strlen As Integer = readInt()
     stdin_sep()
-    Console.Write("" & strlen & "=strlen" & Chr(10))
+    Console.Write(strlen & "=strlen" & Chr(10))
     Dim tab4(strlen) As Char
-    For  toto As Integer  = 0 to  strlen - 1
-      Dim tmpc As Char = readChar()
-      Dim c As Integer = Asc(tmpc)
-      Console.Write("" & tmpc & ":" & c & " ")
-      If tmpc <> Chr(32) Then
-        c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)
-      End If
-      tab4(toto) = Chr(c)
+    For toto As Integer = 0 To strlen - 1
+        Dim tmpc As Char = readChar()
+        Dim c As Integer = Asc(tmpc)
+        Console.Write(tmpc & ":" & c & " ")
+        If tmpc <> Chr(32) Then
+            c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)
+        End If
+        tab4(toto) = Chr(c)
     Next
-    For  j As Integer  = 0 to  strlen - 1
-      Console.Write(tab4(j))
+    For j As Integer = 0 To strlen - 1
+        Console.Write(tab4(j))
     Next
     End Sub
     

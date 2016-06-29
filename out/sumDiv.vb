@@ -51,7 +51,7 @@ End Function
   
   Sub foo3()
     If 1 = 1 Then
-      
+        
     End If
   End Sub
   
@@ -61,19 +61,19 @@ End Function
     Dim out0 As Integer = 0
     ' On déclare un entier qui contiendra la somme 
     
-    For  i As Integer  = 1 to  n
-      ' La boucle : i est le diviseur potentiel
-      
-      If n Mod i = 0 Then
-        ' Si i divise 
+    For i As Integer = 1 To n
+        ' La boucle : i est le diviseur potentiel
         
-        out0 = out0 + i
-        ' On incrémente 
-        
-      Else
-        ' nop 
-        
-      End If
+        If n Mod i = 0 Then
+            ' Si i divise 
+            
+            out0 = out0 + i
+            ' On incrémente 
+            
+        Else 
+            ' nop 
+            
+        End If
     Next
     Return out0
     'On renvoie out

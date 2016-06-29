@@ -72,20 +72,20 @@ End Function
   
   Sub print_state(ByRef g as gamestate)
     Console.Write(Chr(10) & "|")
-    For  y As Integer  = 0 to  2
-      For  x As Integer  = 0 to  2
-        If g.cases(x)(y) = 0 Then
-          Console.Write(" ")
-        ElseIf g.cases(x)(y) = 1 Then
-          Console.Write("O")
-        Else
-          Console.Write("X")
+    For y As Integer = 0 To 2
+        For x As Integer = 0 To 2
+            If g.cases(x)(y) = 0 Then
+                Console.Write(" ")
+            ElseIf g.cases(x)(y) = 1 Then
+                Console.Write("O")
+            Else 
+                Console.Write("X")
+            End If
+            Console.Write("|")
+        Next
+        If y <> 2 Then
+            Console.Write(Chr(10) & "|-|-|-|" & Chr(10) & "|")
         End If
-        Console.Write("|")
-      Next
-      If y <> 2 Then
-        Console.Write(Chr(10) & "|-|-|-|" & Chr(10) & "|")
-      End If
     Next
     Console.Write(Chr(10))
   End Sub
@@ -95,47 +95,47 @@ End Function
   Sub eval0(ByRef g as gamestate)
     Dim win As Integer = 0
     Dim freecase As Integer = 0
-    For  y As Integer  = 0 to  2
-      Dim col As Integer = -1
-      Dim lin As Integer = -1
-      For  x As Integer  = 0 to  2
-        If g.cases(x)(y) = 0 Then
-          freecase = freecase + 1
+    For y As Integer = 0 To 2
+        Dim col As Integer = -1
+        Dim lin As Integer = -1
+        For x As Integer = 0 To 2
+            If g.cases(x)(y) = 0 Then
+                freecase = freecase + 1
+            End If
+            Dim colv As Integer = g.cases(x)(y)
+            Dim linv As Integer = g.cases(y)(x)
+            If col = -1 AndAlso colv <> 0 Then
+                col = colv
+            ElseIf colv <> col Then
+                col = -2
+            End If
+            If lin = -1 AndAlso linv <> 0 Then
+                lin = linv
+            ElseIf linv <> lin Then
+                lin = -2
+            End If
+        Next
+        If col >= 0 Then
+            win = col
+        ElseIf lin >= 0 Then
+            win = lin
         End If
-        Dim colv As Integer = g.cases(x)(y)
-        Dim linv As Integer = g.cases(y)(x)
-        If col = -1 AndAlso colv <> 0 Then
-          col = colv
-        ElseIf colv <> col Then
-          col = -2
-        End If
-        If lin = -1 AndAlso linv <> 0 Then
-          lin = linv
-        ElseIf linv <> lin Then
-          lin = -2
-        End If
-      Next
-      If col >= 0 Then
-        win = col
-      ElseIf lin >= 0 Then
-        win = lin
-      End If
     Next
-    For  x As Integer  = 1 to  2
-      If g.cases(0)(0) = x AndAlso g.cases(1)(1) = x AndAlso g.cases(2)(2) = x Then
-        win = x
-      End If
-      If g.cases(0)(2) = x AndAlso g.cases(1)(1) = x AndAlso g.cases(2)(0) = x Then
-        win = x
-      End If
+    For x As Integer = 1 To 2
+        If g.cases(0)(0) = x AndAlso g.cases(1)(1) = x AndAlso g.cases(2)(2) = x Then
+            win = x
+        End If
+        If g.cases(0)(2) = x AndAlso g.cases(1)(1) = x AndAlso g.cases(2)(0) = x Then
+            win = x
+        End If
     Next
     g.ended = win <> 0 OrElse freecase = 0
     If win = 1 Then
-      g.note = 1000
+        g.note = 1000
     ElseIf win = 2 Then
-      g.note = -1000
-    Else
-      g.note = 0
+        g.note = -1000
+    Else 
+        g.note = 0
     End If
   End Sub
   
@@ -144,7 +144,7 @@ End Function
   Sub apply_move_xy(ByVal x as Integer, ByVal y as Integer, ByRef g as gamestate)
     Dim player As Integer = 2
     If g.firstToPlay Then
-      player = 1
+        player = 1
     End If
     g.cases(x)(y) = player
     g.firstToPlay = Not g.firstToPlay
@@ -179,25 +179,25 @@ End Function
   Function minmax(ByRef g as gamestate) As Integer
     eval0(g)
     If g.ended Then
-      Return g.note
+        Return g.note
     End If
     Dim maxNote As Integer = -10000
     If Not g.firstToPlay Then
-      maxNote = 10000
+        maxNote = 10000
     End If
-    For  x As Integer  = 0 to  2
-      For  y As Integer  = 0 to  2
-        If can_move_xy(x, y, g) Then
-          apply_move_xy(x, y, g)
-          Dim currentNote As Integer = minmax(g)
-          cancel_move_xy(x, y, g)
-          ' Minimum ou Maximum selon le coté ou l'on joue
-          
-          If currentNote > maxNote = g.firstToPlay Then
-            maxNote = currentNote
-          End If
-        End If
-      Next
+    For x As Integer = 0 To 2
+        For y As Integer = 0 To 2
+            If can_move_xy(x, y, g) Then
+                apply_move_xy(x, y, g)
+                Dim currentNote As Integer = minmax(g)
+                cancel_move_xy(x, y, g)
+                ' Minimum ou Maximum selon le coté ou l'on joue
+                
+                If currentNote > maxNote = g.firstToPlay Then
+                    maxNote = currentNote
+                End If
+            End If
+        Next
     Next
     Return maxNote
   End Function
@@ -211,40 +211,40 @@ End Function
     minMove.x = 0
     minMove.y = 0
     Dim minNote As Integer = 10000
-    For  x As Integer  = 0 to  2
-      For  y As Integer  = 0 to  2
-        If can_move_xy(x, y, g) Then
-          apply_move_xy(x, y, g)
-          Dim currentNote As Integer = minmax(g)
-          Console.Write("" & x & ", " & y & ", " & currentNote & Chr(10))
-          cancel_move_xy(x, y, g)
-          If currentNote < minNote Then
-            minNote = currentNote
-            minMove.x = x
-            minMove.y = y
-          End If
-        End If
-      Next
+    For x As Integer = 0 To 2
+        For y As Integer = 0 To 2
+            If can_move_xy(x, y, g) Then
+                apply_move_xy(x, y, g)
+                Dim currentNote As Integer = minmax(g)
+                Console.Write(x & ", " & y & ", " & currentNote & Chr(10))
+                cancel_move_xy(x, y, g)
+                If currentNote < minNote Then
+                    minNote = currentNote
+                    minMove.x = x
+                    minMove.y = y
+                End If
+            End If
+        Next
     Next
-    Console.Write("" & minMove.x & minMove.y & Chr(10))
+    Console.Write(minMove.x & minMove.y & Chr(10))
     Return minMove
   End Function
   
   Function init0() As gamestate
     Dim cases(3)() As Integer
-    For  i As Integer  = 0 to  3 - 1
-      Dim tab(3) As Integer
-      For  j As Integer  = 0 to  3 - 1
-        tab(j) = 0
-      Next
-      cases(i) = tab
-      Next
-      Dim a As gamestate = new gamestate()
-      a.cases = cases
-      a.firstToPlay = true
-      a.note = 0
-      a.ended = false
-      Return a
+    For i As Integer = 0 To 3 - 1
+        Dim tab(3) As Integer
+        For j As Integer = 0 To 3 - 1
+            tab(j) = 0
+        Next
+        cases(i) = tab
+        Next
+        Dim a As gamestate = new gamestate()
+        a.cases = cases
+        a.firstToPlay = true
+        a.note = 0
+        a.ended = false
+        Return a
     End Function
     
     Function read_move() As move
@@ -260,28 +260,29 @@ End Function
     
     
     Sub Main()
-      For  i As Integer  = 0 to  1
-        Dim state As gamestate = init0()
-        Dim c As move = new move()
-        c.x = 1
-        c.y = 1
-        apply_move(c, state)
-        Dim d As move = new move()
-        d.x = 0
-        d.y = 0
-        apply_move(d, state)
-        Do While Not state.ended
+      For i As Integer = 0 To 1
+          Dim state As gamestate = init0()
+          Dim c As move = new move()
+          c.x = 1
+          c.y = 1
+          apply_move(c, state)
+          Dim d As move = new move()
+          d.x = 0
+          d.y = 0
+          apply_move(d, state)
+          Do While Not state.ended
+              
+              print_state(state)
+              apply_move(play(state), state)
+              eval0(state)
+              print_state(state)
+              If Not state.ended Then
+                  apply_move(play(state), state)
+                  eval0(state)
+              End If
+          Loop
           print_state(state)
-          apply_move(play(state), state)
-          eval0(state)
-          print_state(state)
-          If Not state.ended Then
-            apply_move(play(state), state)
-            eval0(state)
-          End If
-        Loop
-        print_state(state)
-        Console.Write("" & state.note & Chr(10))
+          Console.Write(state.note & Chr(10))
       Next
     End Sub
     

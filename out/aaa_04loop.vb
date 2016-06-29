@@ -9,10 +9,11 @@ Module aaa_04loop
     
     Dim j As Integer = i - 2
     Do While j <= i + 2
-      If i Mod j = 5 Then
-        Return true
-      End If
-      j = j + 1
+        
+        If i Mod j = 5 Then
+            Return true
+        End If
+        j = j + 1
     Loop
     Return false
   End Function
@@ -20,17 +21,18 @@ Module aaa_04loop
   
   Sub Main()
     Dim j As Integer = 0
-    For  k As Integer  = 0 to  10
-      j = j + k
-      Console.Write("" & j & Chr(10))
+    For k As Integer = 0 To 10
+        j = j + k
+        Console.Write(j & Chr(10))
     Next
     Dim i As Integer = 4
     Do While i < 10
-      Console.Write(i)
-      i = i + 1
-      j = j + i
+        
+        Console.Write(i)
+        i = i + 1
+        j = j + i
     Loop
-    Console.Write("" & j & i & "FIN TEST" & Chr(10))
+    Console.Write(j & i & "FIN TEST" & Chr(10))
   End Sub
   
 End Module

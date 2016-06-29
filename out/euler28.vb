@@ -22,12 +22,12 @@ Module euler28
     Dim nterms As Integer = n * 2 - 1
     Dim un As Integer = 1
     Dim sum As Integer = 1
-    For  i As Integer  = 0 to  nterms - 2
-      Dim d As Integer = 2 * (1 + i \ 4)
-      un = un + d
-      ' print int d print "=>" print un print " " 
-      
-      sum = sum + un
+    For i As Integer = 0 To nterms - 2
+        Dim d As Integer = 2 * (1 + i \ 4)
+        un = un + d
+        ' print int d print "=>" print un print " " 
+        
+        sum = sum + un
     Next
     Return sum
   End Function

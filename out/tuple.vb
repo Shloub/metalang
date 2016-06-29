@@ -25,7 +25,7 @@ Module tuple
     Dim g As tuple_int_int = t
     Dim a As Integer = g.tuple_int_int_field_0
     Dim b As Integer = g.tuple_int_int_field_1
-    Console.Write("" & a & " -- " & b & "--" & Chr(10))
+    Console.Write(a & " -- " & b & "--" & Chr(10))
   End Sub
   
 End Module

@@ -65,9 +65,9 @@ End Function
   
   Function result(ByRef t as toto(), ByVal len as Integer) As Integer
     Dim out0 As Integer = 0
-    For  j As Integer  = 0 to  len - 1
-      t(j).blah = t(j).blah + 1
-      out0 = out0 + t(j).foo + t(j).blah * t(j).bar + t(j).bar * t(j).foo
+    For j As Integer = 0 To len - 1
+        t(j).blah = t(j).blah + 1
+        out0 = out0 + t(j).foo + t(j).blah * t(j).bar + t(j).bar * t(j).foo
     Next
     Return out0
   End Function
@@ -75,14 +75,14 @@ End Function
   
   Sub Main()
     Dim t(4) As toto
-    For  i As Integer  = 0 to  4 - 1
-      t(i) = mktoto(i)
+    For i As Integer = 0 To 4 - 1
+        t(i) = mktoto(i)
     Next
     t(0).bar = readInt()
     stdin_sep()
     t(1).blah = readInt()
     Dim titi As Integer = result(t, 4)
-    Console.Write("" & titi & t(2).blah)
+    Console.Write(titi & t(2).blah)
     End Sub
     
   End Module

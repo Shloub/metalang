@@ -43,14 +43,14 @@ End Sub
   End Class
   Function read_bigint(ByVal len as Integer) As bigint
     Dim chiffres(len) As Integer
-    For  j As Integer  = 0 to  len - 1
-      Dim c As Char = readChar()
-      chiffres(j) = Asc(c)
+    For j As Integer = 0 To len - 1
+        Dim c As Char = readChar()
+        chiffres(j) = Asc(c)
     Next
-    For  i As Integer  = 0 to  (len - 1) \ 2
-      Dim tmp As Integer = chiffres(i)
-      chiffres(i) = chiffres(len - 1 - i)
-      chiffres(len - 1 - i) = tmp
+    For i As Integer = 0 To (len - 1) \ 2
+        Dim tmp As Integer = chiffres(i)
+        chiffres(i) = chiffres(len - 1 - i)
+        chiffres(len - 1 - i) = tmp
     Next
     Dim e As bigint = new bigint()
     e.bigint_sign = true
@@ -61,10 +61,10 @@ End Sub
     
     Sub print_bigint(ByRef a as bigint)
       If Not a.bigint_sign Then
-        Console.Write("-"C)
+          Console.Write("-"C)
       End If
-      For  i As Integer  = 0 to  a.bigint_len - 1
-        Console.Write(a.bigint_chiffres(a.bigint_len - 1 - i))
+      For i As Integer = 0 To a.bigint_len - 1
+          Console.Write(a.bigint_chiffres(a.bigint_len - 1 - i))
       Next
     End Sub
     
@@ -72,16 +72,16 @@ End Sub
       ' Renvoie vrai si a = b 
       
       If a.bigint_sign <> b.bigint_sign Then
-        Return false
+          Return false
       ElseIf a.bigint_len <> b.bigint_len Then
-        Return false
-      Else
-        For  i As Integer  = 0 to  a.bigint_len - 1
-          If a.bigint_chiffres(i) <> b.bigint_chiffres(i) Then
-            Return false
-          End If
-        Next
-        Return true
+          Return false
+      Else 
+          For i As Integer = 0 To a.bigint_len - 1
+              If a.bigint_chiffres(i) <> b.bigint_chiffres(i) Then
+                  Return false
+              End If
+          Next
+          Return true
       End If
     End Function
     
@@ -89,25 +89,25 @@ End Sub
       ' Renvoie vrai si a > b 
       
       If a.bigint_sign AndAlso Not b.bigint_sign Then
-        Return true
+          Return true
       ElseIf Not a.bigint_sign AndAlso b.bigint_sign Then
-        Return false
-      Else
-        If a.bigint_len > b.bigint_len Then
-          Return a.bigint_sign
-        ElseIf a.bigint_len < b.bigint_len Then
-          Return Not a.bigint_sign
-        Else
-          For  i As Integer  = 0 to  a.bigint_len - 1
-            Dim j As Integer = a.bigint_len - 1 - i
-            If a.bigint_chiffres(j) > b.bigint_chiffres(j) Then
+          Return false
+      Else 
+          If a.bigint_len > b.bigint_len Then
               Return a.bigint_sign
-            ElseIf a.bigint_chiffres(j) < b.bigint_chiffres(j) Then
+          ElseIf a.bigint_len < b.bigint_len Then
               Return Not a.bigint_sign
-            End If
-          Next
-        End If
-        Return true
+          Else 
+              For i As Integer = 0 To a.bigint_len - 1
+                  Dim j As Integer = a.bigint_len - 1 - i
+                  If a.bigint_chiffres(j) > b.bigint_chiffres(j) Then
+                      Return a.bigint_sign
+                  ElseIf a.bigint_chiffres(j) < b.bigint_chiffres(j) Then
+                      Return Not a.bigint_sign
+                  End If
+              Next
+          End If
+          Return true
       End If
     End Function
     
@@ -121,19 +121,20 @@ End Sub
       Dim len As Integer = Math.Max(a.bigint_len, b.bigint_len) + 1
       Dim retenue As Integer = 0
       Dim chiffres(len) As Integer
-      For  i As Integer  = 0 to  len - 1
-        Dim tmp As Integer = retenue
-        If i < a.bigint_len Then
-          tmp = tmp + a.bigint_chiffres(i)
-        End If
-        If i < b.bigint_len Then
-          tmp = tmp + b.bigint_chiffres(i)
-        End If
-        retenue = tmp \ 10
-        chiffres(i) = tmp Mod 10
+      For i As Integer = 0 To len - 1
+          Dim tmp As Integer = retenue
+          If i < a.bigint_len Then
+              tmp = tmp + a.bigint_chiffres(i)
+          End If
+          If i < b.bigint_len Then
+              tmp = tmp + b.bigint_chiffres(i)
+          End If
+          retenue = tmp \ 10
+          chiffres(i) = tmp Mod 10
       Next
       Do While len > 0 AndAlso chiffres(len - 1) = 0
-        len = len - 1
+          
+          len = len - 1
       Loop
       Dim f As bigint = new bigint()
       f.bigint_sign = true
@@ -150,21 +151,22 @@ End Sub
         Dim len As Integer = a.bigint_len
         Dim retenue As Integer = 0
         Dim chiffres(len) As Integer
-        For  i As Integer  = 0 to  len - 1
-          Dim tmp As Integer = retenue + a.bigint_chiffres(i)
-          If i < b.bigint_len Then
-            tmp = tmp - b.bigint_chiffres(i)
-          End If
-          If tmp < 0 Then
-            tmp = tmp + 10
-            retenue = -1
-          Else
-            retenue = 0
-          End If
-          chiffres(i) = tmp
+        For i As Integer = 0 To len - 1
+            Dim tmp As Integer = retenue + a.bigint_chiffres(i)
+            If i < b.bigint_len Then
+                tmp = tmp - b.bigint_chiffres(i)
+            End If
+            If tmp < 0 Then
+                tmp = tmp + 10
+                retenue = -1
+            Else 
+                retenue = 0
+            End If
+            chiffres(i) = tmp
         Next
         Do While len > 0 AndAlso chiffres(len - 1) = 0
-          len = len - 1
+            
+            len = len - 1
         Loop
         Dim g As bigint = new bigint()
         g.bigint_sign = true
@@ -183,27 +185,27 @@ End Sub
         
         Function add_bigint(ByRef a as bigint, ByRef b as bigint) As bigint
           If a.bigint_sign = b.bigint_sign Then
-            If a.bigint_sign Then
-              Return add_bigint_positif(a, b)
-            Else
-              Return neg_bigint(add_bigint_positif(a, b))
-            End If
+              If a.bigint_sign Then
+                  Return add_bigint_positif(a, b)
+              Else 
+                  Return neg_bigint(add_bigint_positif(a, b))
+              End If
           ElseIf a.bigint_sign Then
-            ' a positif, b negatif 
-            
-            If bigint_gt(a, neg_bigint(b)) Then
-              Return sub_bigint_positif(a, b)
-            Else
-              Return neg_bigint(sub_bigint_positif(b, a))
-            End If
-          Else
-            ' a negatif, b positif 
-            
-            If bigint_gt(neg_bigint(a), b) Then
-              Return neg_bigint(sub_bigint_positif(a, b))
-            Else
-              Return sub_bigint_positif(b, a)
-            End If
+              ' a positif, b negatif 
+              
+              If bigint_gt(a, neg_bigint(b)) Then
+                  Return sub_bigint_positif(a, b)
+              Else 
+                  Return neg_bigint(sub_bigint_positif(b, a))
+              End If
+          Else 
+              ' a negatif, b positif 
+              
+              If bigint_gt(neg_bigint(a), b) Then
+                  Return neg_bigint(sub_bigint_positif(a, b))
+              Else 
+                  Return sub_bigint_positif(b, a)
+              End If
           End If
         End Function
         
@@ -218,24 +220,24 @@ End Sub
           
           Dim len As Integer = a.bigint_len + b.bigint_len + 1
           Dim chiffres(len) As Integer
-          For  k As Integer  = 0 to  len - 1
-            chiffres(k) = 0
+          For k As Integer = 0 To len - 1
+              chiffres(k) = 0
           Next
-          For  i As Integer  = 0 to  a.bigint_len - 1
-            Dim retenue As Integer = 0
-            For  j As Integer  = 0 to  b.bigint_len - 1
-              chiffres(i + j) = chiffres(i + j) + retenue + b.bigint_chiffres(j) * a.bigint_chiffres(i)
-              retenue = chiffres(i + j) \ 10
-              chiffres(i + j) = chiffres(i + j) Mod 10
-            Next
-            chiffres(i + b.bigint_len) = chiffres(i + b.bigint_len) + retenue
+          For i As Integer = 0 To a.bigint_len - 1
+              Dim retenue As Integer = 0
+              For j As Integer = 0 To b.bigint_len - 1
+                  chiffres(i + j) = chiffres(i + j) + retenue + b.bigint_chiffres(j) * a.bigint_chiffres(i)
+                  retenue = chiffres(i + j) \ 10
+                  chiffres(i + j) = chiffres(i + j) Mod 10
+              Next
+              chiffres(i + b.bigint_len) = chiffres(i + b.bigint_len) + retenue
           Next
           chiffres(a.bigint_len + b.bigint_len) = chiffres(a.bigint_len + b.bigint_len - 1) \ 10
           chiffres(a.bigint_len + b.bigint_len - 1) = chiffres(a.bigint_len + b.bigint_len - 1) Mod 10
-          For  l As Integer  = 0 to  2
-            If len <> 0 AndAlso chiffres(len - 1) = 0 Then
-              len = len - 1
-            End If
+          For l As Integer = 0 To 2
+              If len <> 0 AndAlso chiffres(len - 1) = 0 Then
+                  len = len - 1
+              End If
           Next
           Dim m As bigint = new bigint()
           m.bigint_sign = a.bigint_sign = b.bigint_sign
@@ -247,7 +249,8 @@ End Sub
           Function bigint_premiers_chiffres(ByRef a as bigint, ByVal i as Integer) As bigint
             Dim len As Integer = Math.Min(i, a.bigint_len)
             Do While len <> 0 AndAlso a.bigint_chiffres(len - 1) = 0
-              len = len - 1
+                
+                len = len - 1
             Loop
             Dim o As bigint = new bigint()
             o.bigint_sign = a.bigint_sign
@@ -258,12 +261,12 @@ End Sub
           
           Function bigint_shift(ByRef a as bigint, ByVal i as Integer) As bigint
             Dim chiffres(a.bigint_len + i) As Integer
-            For  k As Integer  = 0 to  a.bigint_len + i - 1
-              If k >= i Then
-                chiffres(k) = a.bigint_chiffres(k - i)
-              Else
-                chiffres(k) = 0
-              End If
+            For k As Integer = 0 To a.bigint_len + i - 1
+                If k >= i Then
+                    chiffres(k) = a.bigint_chiffres(k - i)
+                Else 
+                    chiffres(k) = 0
+                End If
             Next
             Dim p As bigint = new bigint()
             p.bigint_sign = a.bigint_sign
@@ -274,11 +277,11 @@ End Sub
             
             Function mul_bigint(ByRef aa as bigint, ByRef bb as bigint) As bigint
               If aa.bigint_len = 0 Then
-                Return aa
+                  Return aa
               ElseIf bb.bigint_len = 0 Then
-                Return bb
+                  Return bb
               ElseIf aa.bigint_len < 3 OrElse bb.bigint_len < 3 Then
-                Return mul_bigint_cp(aa, bb)
+                  Return mul_bigint_cp(aa, bb)
               End If
               ' Algorithme de Karatsuba 
               
@@ -306,8 +309,9 @@ End Sub
             Function log10(ByVal a as Integer) As Integer
               Dim out0 As Integer = 1
               Do While a >= 10
-                a = a \ 10
-                out0 = out0 + 1
+                  
+                  a = a \ 10
+                  out0 = out0 + 1
               Loop
               Return out0
             End Function
@@ -315,15 +319,15 @@ End Sub
             Function bigint_of_int(ByVal i as Integer) As bigint
               Dim size As Integer = log10(i)
               If i = 0 Then
-                size = 0
+                  size = 0
               End If
               Dim t(size) As Integer
-              For  j As Integer  = 0 to  size - 1
-                t(j) = 0
+              For j As Integer = 0 To size - 1
+                  t(j) = 0
               Next
-              For  k As Integer  = 0 to  size - 1
-                t(k) = i Mod 10
-                i = i \ 10
+              For k As Integer = 0 To size - 1
+                  t(k) = i Mod 10
+                  i = i \ 10
               Next
               Dim q As bigint = new bigint()
               q.bigint_sign = true
@@ -336,16 +340,17 @@ End Sub
                 Dim one As bigint = bigint_of_int(1)
                 Dim out0 As bigint = one
                 Do While Not bigint_eq(a, one)
-                  out0 = mul_bigint(a, out0)
-                  a = sub_bigint(a, one)
+                    
+                    out0 = mul_bigint(a, out0)
+                    a = sub_bigint(a, one)
                 Loop
                 Return out0
               End Function
               
               Function sum_chiffres_bigint(ByRef a as bigint) As Integer
                 Dim out0 As Integer = 0
-                For  i As Integer  = 0 to  a.bigint_len - 1
-                  out0 = out0 + a.bigint_chiffres(i)
+                For i As Integer = 0 To a.bigint_len - 1
+                    out0 = out0 + a.bigint_chiffres(i)
                 Next
                 Return out0
               End Function
@@ -362,34 +367,34 @@ End Sub
               
               Function bigint_exp(ByRef a as bigint, ByVal b as Integer) As bigint
                 If b = 1 Then
-                  Return a
+                    Return a
                 ElseIf b Mod 2 = 0 Then
-                  Return bigint_exp(mul_bigint(a, a), b \ 2)
-                Else
-                  Return mul_bigint(a, bigint_exp(a, b - 1))
+                    Return bigint_exp(mul_bigint(a, a), b \ 2)
+                Else 
+                    Return mul_bigint(a, bigint_exp(a, b - 1))
                 End If
               End Function
               
               Function bigint_exp_10chiffres(ByRef a as bigint, ByVal b as Integer) As bigint
                 a = bigint_premiers_chiffres(a, 10)
                 If b = 1 Then
-                  Return a
+                    Return a
                 ElseIf b Mod 2 = 0 Then
-                  Return bigint_exp_10chiffres(mul_bigint(a, a), b \ 2)
-                Else
-                  Return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
+                    Return bigint_exp_10chiffres(mul_bigint(a, a), b \ 2)
+                Else 
+                    Return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
                 End If
               End Function
               
               Sub euler48()
                 Dim sum As bigint = bigint_of_int(0)
-                For  i As Integer  = 1 to  100
-                  ' 1000 normalement 
-                  
-                  Dim ib As bigint = bigint_of_int(i)
-                  Dim ibeib As bigint = bigint_exp_10chiffres(ib, i)
-                  sum = add_bigint(sum, ibeib)
-                  sum = bigint_premiers_chiffres(sum, 10)
+                For i As Integer = 1 To 100
+                    ' 1000 normalement 
+                    
+                    Dim ib As bigint = bigint_of_int(i)
+                    Dim ibeib As bigint = bigint_exp_10chiffres(ib, i)
+                    sum = add_bigint(sum, ibeib)
+                    sum = bigint_premiers_chiffres(sum, 10)
                 Next
                 Console.Write("euler 48 = ")
                 print_bigint(sum)
@@ -409,12 +414,13 @@ End Sub
                 Dim a As bigint = bigint_of_int(1)
                 Dim b As bigint = bigint_of_int(1)
                 Do While b.bigint_len < 100
-                  ' 1000 normalement 
-                  
-                  Dim c As bigint = add_bigint(a, b)
-                  a = b
-                  b = c
-                  i = i + 1
+                    
+                    ' 1000 normalement 
+                    
+                    Dim c As bigint = add_bigint(a, b)
+                    a = b
+                    b = c
+                    i = i + 1
                 Loop
                 Return i
               End Function
@@ -423,55 +429,56 @@ End Sub
                 Dim maxA As Integer = 5
                 Dim maxB As Integer = 5
                 Dim a_bigint(maxA + 1) As bigint
-                For  j As Integer  = 0 to  maxA + 1 - 1
-                  a_bigint(j) = bigint_of_int(j * j)
+                For j As Integer = 0 To maxA + 1 - 1
+                    a_bigint(j) = bigint_of_int(j * j)
                 Next
                 Dim a0_bigint(maxA + 1) As bigint
-                For  j2 As Integer  = 0 to  maxA + 1 - 1
-                  a0_bigint(j2) = bigint_of_int(j2)
+                For j2 As Integer = 0 To maxA + 1 - 1
+                    a0_bigint(j2) = bigint_of_int(j2)
                 Next
                 Dim b(maxA + 1) As Integer
-                For  k As Integer  = 0 to  maxA + 1 - 1
-                  b(k) = 2
+                For k As Integer = 0 To maxA + 1 - 1
+                    b(k) = 2
                 Next
                 Dim n As Integer = 0
                 Dim found As Boolean = true
                 Do While found
-                  Dim min0 As bigint = a0_bigint(0)
-                  found = false
-                  For  i As Integer  = 2 to  maxA
-                    If b(i) <= maxB Then
-                      If found Then
-                        If bigint_lt(a_bigint(i), min0) Then
-                          min0 = a_bigint(i)
+                    
+                    Dim min0 As bigint = a0_bigint(0)
+                    found = false
+                    For i As Integer = 2 To maxA
+                        If b(i) <= maxB Then
+                            If found Then
+                                If bigint_lt(a_bigint(i), min0) Then
+                                    min0 = a_bigint(i)
+                                End If
+                            Else 
+                                min0 = a_bigint(i)
+                                found = true
+                            End If
                         End If
-                      Else
-                        min0 = a_bigint(i)
-                        found = true
-                      End If
-                    End If
-                  Next
-                  If found Then
-                    n = n + 1
-                    For  l As Integer  = 2 to  maxA
-                      If bigint_eq(a_bigint(l), min0) AndAlso b(l) <= maxB Then
-                        b(l) = b(l) + 1
-                        a_bigint(l) = mul_bigint(a_bigint(l), a0_bigint(l))
-                      End If
                     Next
-                  End If
+                    If found Then
+                        n = n + 1
+                        For l As Integer = 2 To maxA
+                            If bigint_eq(a_bigint(l), min0) AndAlso b(l) <= maxB Then
+                                b(l) = b(l) + 1
+                                a_bigint(l) = mul_bigint(a_bigint(l), a0_bigint(l))
+                            End If
+                        Next
+                    End If
                 Loop
                 Return n
                 End Function
                 
                 
                 Sub Main()
-                  Console.Write("" & euler29() & Chr(10))
+                  Console.Write(euler29() & Chr(10))
                   Dim sum As bigint = read_bigint(50)
-                  For  i As Integer  = 2 to  100
-                    stdin_sep()
-                    Dim tmp As bigint = read_bigint(50)
-                    sum = add_bigint(sum, tmp)
+                  For i As Integer = 2 To 100
+                      stdin_sep()
+                      Dim tmp As bigint = read_bigint(50)
+                      sum = add_bigint(sum, tmp)
                   Next
                   Console.Write("euler13 = ")
                   print_bigint(sum)
@@ -519,9 +526,9 @@ End Sub
                   print_bigint(b)
                   Console.Write("=")
                   If bigint_gt(a, b) Then
-                    Console.Write("True")
-                  Else
-                    Console.Write("False")
+                      Console.Write("True")
+                  Else 
+                      Console.Write("False")
                   End If
                   Console.Write(Chr(10))
                 End Sub

@@ -62,19 +62,19 @@ End Function
     '	
     
     If y = len - 1 Then
-      Return tab(y)(x)
+        Return tab(y)(x)
     ElseIf x > y Then
-      Return -10000
+        Return -10000
     ElseIf cache(y)(x) <> 0 Then
-      Return cache(y)(x)
+        Return cache(y)(x)
     End If
     Dim result As Integer = 0
     Dim out0 As Integer = find0(len, tab, cache, x, y + 1)
     Dim out1 As Integer = find0(len, tab, cache, x + 1, y + 1)
     If out0 > out1 Then
-      result = out0 + tab(y)(x)
-    Else
-      result = out1 + tab(y)(x)
+        result = out0 + tab(y)(x)
+    Else 
+        result = out1 + tab(y)(x)
     End If
     cache(y)(x) = result
     Return result
@@ -82,14 +82,14 @@ End Function
   
   Function find(ByVal len as Integer, ByRef tab as Integer()()) As Integer
     Dim tab2(len)() As Integer
-    For  i As Integer  = 0 to  len - 1
-      Dim tab3(i + 1) As Integer
-      For  j As Integer  = 0 to  i + 1 - 1
-        tab3(j) = 0
-      Next
-      tab2(i) = tab3
-      Next
-      Return find0(len, tab, tab2, 0, 0)
+    For i As Integer = 0 To len - 1
+        Dim tab3(i + 1) As Integer
+        For j As Integer = 0 To i + 1 - 1
+            tab3(j) = 0
+        Next
+        tab2(i) = tab3
+        Next
+        Return find0(len, tab, tab2, 0, 0)
     End Function
     
     
@@ -98,23 +98,23 @@ End Function
       len = readInt()
       stdin_sep()
       Dim tab(len)() As Integer
-      For  i As Integer  = 0 to  len - 1
-        Dim tab2(i + 1) As Integer
-        For  j As Integer  = 0 to  i + 1 - 1
-          Dim tmp As Integer = 0
-          tmp = readInt()
-          stdin_sep()
-          tab2(j) = tmp
-        Next
-        tab(i) = tab2
-        Next
-        Console.Write("" & find(len, tab) & Chr(10))
-        For  k As Integer  = 0 to  len - 1
-          For  l As Integer  = 0 to  k
-            Console.Write("" & tab(k)(l) & " ")
+      For i As Integer = 0 To len - 1
+          Dim tab2(i + 1) As Integer
+          For j As Integer = 0 To i + 1 - 1
+              Dim tmp As Integer = 0
+              tmp = readInt()
+              stdin_sep()
+              tab2(j) = tmp
           Next
-          Console.Write(Chr(10))
-        Next
+          tab(i) = tab2
+          Next
+          Console.Write(find(len, tab) & Chr(10))
+          For k As Integer = 0 To len - 1
+              For l As Integer = 0 To k
+                  Console.Write(tab(k)(l) & " ")
+              Next
+              Console.Write(Chr(10))
+          Next
       End Sub
       
       End Module

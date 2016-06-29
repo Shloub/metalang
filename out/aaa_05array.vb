@@ -14,23 +14,23 @@ Module aaa_05array
   Sub Main()
     Dim j As Integer = 0
     Dim a(5) As Boolean
-    For  i As Integer  = 0 to  5 - 1
-      Console.Write(i)
-      j = j + i
-      a(i) = i Mod 2 = 0
+    For i As Integer = 0 To 5 - 1
+        Console.Write(i)
+        j = j + i
+        a(i) = i Mod 2 = 0
     Next
-    Console.Write("" & j & " ")
+    Console.Write(j & " ")
     If a(0) Then
-      Console.Write("True")
-    Else
-      Console.Write("False")
+        Console.Write("True")
+    Else 
+        Console.Write("False")
     End If
     Console.Write(Chr(10))
     g(id(a), 0)
     If a(0) Then
-      Console.Write("True")
-    Else
-      Console.Write("False")
+        Console.Write("True")
+    Else 
+        Console.Write("False")
     End If
     Console.Write(Chr(10))
     End Sub

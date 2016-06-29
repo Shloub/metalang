@@ -52,13 +52,13 @@ Function readInt() As Integer
 End Function
   Function exp0(ByVal a as Integer, ByVal b as Integer) As Integer
     If b = 0 Then
-      Return 1
+        Return 1
     End If
     If b Mod 2 = 0 Then
-      Dim o As Integer = exp0(a, b \ 2)
-      Return o * o
-    Else
-      Return a * exp0(a, b - 1)
+        Dim o As Integer = exp0(a, b \ 2)
+        Return o * o
+    Else 
+        Return a * exp0(a, b - 1)
     End If
   End Function
   

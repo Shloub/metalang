@@ -53,14 +53,14 @@ End Function
   Function summax(ByRef lst as Integer(), ByVal len as Integer) As Integer
     Dim current As Integer = 0
     Dim max0 As Integer = 0
-    For  i As Integer  = 0 to  len - 1
-      current = current + lst(i)
-      If current < 0 Then
-        current = 0
-      End If
-      If max0 < current Then
-        max0 = current
-      End If
+    For i As Integer = 0 To len - 1
+        current = current + lst(i)
+        If current < 0 Then
+            current = 0
+        End If
+        If max0 < current Then
+            max0 = current
+        End If
     Next
     Return max0
   End Function
@@ -71,11 +71,11 @@ End Function
     len = readInt()
     stdin_sep()
     Dim tab(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      Dim tmp As Integer = 0
-      tmp = readInt()
-      stdin_sep()
-      tab(i) = tmp
+    For i As Integer = 0 To len - 1
+        Dim tmp As Integer = 0
+        tmp = readInt()
+        stdin_sep()
+        tab(i) = tmp
     Next
     Dim result As Integer = summax(tab, len)
     Console.Write(result)

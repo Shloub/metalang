@@ -57,10 +57,10 @@ Function readInt() As Integer
 End Function
   Function nth(ByRef tab as Char(), ByVal tofind as Char, ByVal len as Integer) As Integer
     Dim out0 As Integer = 0
-    For  i As Integer  = 0 to  len - 1
-      If tab(i) = tofind Then
-        out0 = out0 + 1
-      End If
+    For i As Integer = 0 To len - 1
+        If tab(i) = tofind Then
+            out0 = out0 + 1
+        End If
     Next
     Return out0
   End Function
@@ -74,10 +74,10 @@ End Function
     tofind = readChar()
     stdin_sep()
     Dim tab(len) As Char
-    For  i As Integer  = 0 to  len - 1
-      Dim tmp As Char = Chr(0)
-      tmp = readChar()
-      tab(i) = tmp
+    For i As Integer = 0 To len - 1
+        Dim tmp As Char = Chr(0)
+        tmp = readChar()
+        tab(i) = tmp
     Next
     Dim result As Integer = nth(tab, tofind, len)
     Console.Write(result)

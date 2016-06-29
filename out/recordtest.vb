@@ -62,7 +62,7 @@ End Function
     param.bar = readInt()
     stdin_sep()
     param.foo = readInt()
-    Console.Write(param.bar + param.foo * param.bar)
+    Console.Write((param.bar + param.foo * param.bar))
   End Sub
   
 End Module

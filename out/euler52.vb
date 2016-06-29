@@ -4,17 +4,17 @@ Module euler52
 
   Function chiffre_sort(ByVal a as Integer) As Integer
     If a < 10 Then
-      Return a
-    Else
-      Dim b As Integer = chiffre_sort(a \ 10)
-      Dim c As Integer = a Mod 10
-      Dim d As Integer = b Mod 10
-      Dim e As Integer = b \ 10
-      If c < d Then
-        Return c + b * 10
-      Else
-        Return d + chiffre_sort(c + e * 10) * 10
-      End If
+        Return a
+    Else 
+        Dim b As Integer = chiffre_sort(a \ 10)
+        Dim c As Integer = a Mod 10
+        Dim d As Integer = b Mod 10
+        Dim e As Integer = b \ 10
+        If c < d Then
+            Return c + b * 10
+        Else 
+            Return d + chiffre_sort(c + e * 10) * 10
+        End If
     End If
   End Function
   
@@ -27,7 +27,7 @@ Module euler52
   Sub Main()
     Dim num As Integer = 142857
     If same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5) Then
-      Console.Write("" & num & " " & (num * 2) & " " & (num * 3) & " " & (num * 4) & " " & (num * 5) & " " & (num * 6) & Chr(10))
+        Console.Write(num & " " & (num * 2) & " " & (num * 3) & " " & (num * 4) & " " & (num * 5) & " " & (num * 6) & Chr(10))
     End If
   End Sub
   

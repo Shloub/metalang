@@ -53,28 +53,29 @@ End Function
   Function go0(ByRef tab as Integer(), ByVal a as Integer, ByVal b as Integer) As Integer
     Dim m As Integer = (a + b) \ 2
     If a = m Then
-      If tab(a) = m Then
-        Return b
-      Else
-        Return a
-      End If
+        If tab(a) = m Then
+            Return b
+        Else 
+            Return a
+        End If
     End If
     Dim i As Integer = a
     Dim j As Integer = b
     Do While i < j
-      Dim e As Integer = tab(i)
-      If e < m Then
-        i = i + 1
-      Else
-        j = j - 1
-        tab(i) = tab(j)
-        tab(j) = e
-      End If
+        
+        Dim e As Integer = tab(i)
+        If e < m Then
+            i = i + 1
+        Else 
+            j = j - 1
+            tab(i) = tab(j)
+            tab(j) = e
+        End If
     Loop
     If i < m Then
-      Return go0(tab, a, m)
-    Else
-      Return go0(tab, m, b)
+        Return go0(tab, a, m)
+    Else 
+        Return go0(tab, m, b)
     End If
   End Function
   
@@ -88,11 +89,11 @@ End Function
     len = readInt()
     stdin_sep()
     Dim tab(len) As Integer
-    For  i As Integer  = 0 to  len - 1
-      Dim tmp As Integer = 0
-      tmp = readInt()
-      stdin_sep()
-      tab(i) = tmp
+    For i As Integer = 0 To len - 1
+        Dim tmp As Integer = 0
+        tmp = readInt()
+        stdin_sep()
+        tab(i) = tmp
     Next
     Console.Write(plus_petit0(tab, len))
     End Sub
