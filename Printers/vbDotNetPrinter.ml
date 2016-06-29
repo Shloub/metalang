@@ -116,8 +116,8 @@ let print_instr tyenv c i =
     | Type.Lexems -> assert false
     | Type.Tuple _ -> assert false in
   let pread f ty = match Type.unfix ty with
-  | Type.Integer -> fprintf f "readInt()"
-  | Type.Char -> fprintf f "readChar()"
+  | Type.Integer -> fprintf f "readInt"
+  | Type.Char -> fprintf f "readChar"
   | _ -> assert false in
   let p f (inelseif, inlambda) =
     let block = block inlambda in match i with
@@ -130,7 +130,7 @@ let print_instr tyenv c i =
     | Loop (var, e1, e2, li) -> fprintf f "@[<v 4>@[<h>For %a As Integer = %a To %a@]%a@]@\nNext"
           c.print_varname var e1 nop e2 nop
           block li
-    | While (e, li) -> fprintf f "@[<v 4>Do While @[<h>%a@]@\n%a@]@\nLoop" e nop block li
+    | While (e, li) -> fprintf f "@[<v 4>Do While @[<h>%a@]%a@]@\nLoop" e nop block li
     | Comment s -> let lic = String.split s '\n' in
         print_list (fun f s -> Format.fprintf f "'%s@\n" s) nosep f lic
     | Tag s -> assert false
@@ -166,28 +166,31 @@ let print_instr tyenv c i =
         fprintf f "@[<v 4>If %a Then%a@]@\n@[<v 4>Else%a" e nop block listif elsecase.p (true, inlambda)          
     | If (e, listif, listelse) ->
         fprintf f "@[<v 4>If %a Then%a@]@\n@[<v 4>Else %a@]@\nEnd If" e nop block listif block listelse
-    | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
+    | Call (func, li) ->
+        begin match StringMap.find_opt func c.macros with
       | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
       | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
     end
+    | Print [StringConst s] -> fprintf f "Console.Write(%a)" (c.print_lief prio_operator) (Expr.String s)
+    | Print [PrintExpr (_, e)] -> fprintf f "Console.Write(%a)" e nop
     | Print li->
         fprintf f "Console.Write(%a)"
           (print_list
              (fun f e ->
                match e with
-               | Instr.StringConst s -> c.print_lief prio_operator f (Expr.String s)
-               | Instr.PrintExpr (_, e) -> e f prio_operator)
+               | StringConst s -> c.print_lief prio_operator f (Expr.String s)
+               | PrintExpr (_, e) -> e f prio_operator)
              (fun t f1 e1 f2 e2 -> Format.fprintf t "%a & %a" f1 e1 f2 e2)) li
     | Read li ->
         let li = List.map (function
-          | Separation -> fun f -> fprintf f "@[stdin_sep()@]"
+          | Separation -> fun f -> fprintf f "@[stdin_sep@]"
           | DeclRead (t, name, _) -> fun f -> fprintf f "Dim %a As %a = %a"
                 c.print_varname name ptype t pread t
           | ReadExpr (t, m) -> fun f -> fprintf f "%a = %a"
                 (c.print_mut c nop) m pread t) li
         in
         fprintf f "%a" (print_list (fun f g -> g f) sep_nl) li
-    | Untuple (li, expr, opt) -> fprintf f "(%a) = %a" (print_list c.print_varname sep_c) (List.map snd li) expr nop
+    | Untuple (li, expr, opt) -> assert false
     | Unquote e -> assert false in
   let is_multi_instr = match i with
   | Read (hd::tl) -> true
