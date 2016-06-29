@@ -55,10 +55,8 @@ End Function
     Dim j As Integer = 1
     Dim i As Integer = len - 2
     Do While i >= 0
-        
         Dim x As Integer = tab(i)
         Do While j >= 0 AndAlso x > tab(len - j)
-            
             j = j - 1
         Loop
         j = j + 1
@@ -74,13 +72,13 @@ End Function
   
   Sub Main()
     Dim len As Integer = 0
-    len = readInt()
-    stdin_sep()
+    len = readInt
+    stdin_sep
     Dim tab(len) As Integer
     For i As Integer = 0 To len - 1
         Dim x As Integer = 0
-        x = readInt()
-        stdin_sep()
+        x = readInt
+        stdin_sep
         tab(i) = x
     Next
     Console.Write(montagnes0(tab, len))

@@ -72,14 +72,14 @@ End Function
   
   
   Sub Main()
-    Dim nombre As Integer = readInt()
-    stdin_sep()
-    Dim len As Integer = readInt()
-    stdin_sep()
+    Dim nombre As Integer = readInt
+    stdin_sep
+    Dim len As Integer = readInt
+    stdin_sep
     Dim tab(len) As Integer
     For i As Integer = 0 To len - 1
-        Dim tmp As Integer = readInt()
-        stdin_sep()
+        Dim tmp As Integer = readInt
+        stdin_sep
         tab(i) = tmp
     Next
     If devine0(nombre, tab, len) Then

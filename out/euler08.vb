@@ -27,7 +27,7 @@ End Function
     Dim i As Integer = 1
     Dim last(5) As Integer
     For j As Integer = 0 To 5 - 1
-        Dim c As Char = readChar()
+        Dim c As Char = readChar
         Dim d As Integer = Asc(c) - Asc("0"C)
         i = i * d
         last(j) = d
@@ -36,7 +36,7 @@ End Function
     Dim index As Integer = 0
     Dim nskipdiv As Integer = 0
     For k As Integer = 1 To 995
-        Dim e As Char = readChar()
+        Dim e As Char = readChar
         Dim f As Integer = Asc(e) - Asc("0"C)
         If f = 0 Then
             i = 1

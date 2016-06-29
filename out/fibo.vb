@@ -72,11 +72,11 @@ End Function
     Dim a As Integer = 0
     Dim b As Integer = 0
     Dim i As Integer = 0
-    a = readInt()
-    stdin_sep()
-    b = readInt()
-    stdin_sep()
-    i = readInt()
+    a = readInt
+    stdin_sep
+    b = readInt
+    stdin_sep
+    i = readInt
     Console.Write(fibo0(a, b, i))
   End Sub
   

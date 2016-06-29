@@ -95,15 +95,15 @@ End Function
     
     Sub Main()
       Dim len As Integer = 0
-      len = readInt()
-      stdin_sep()
+      len = readInt
+      stdin_sep
       Dim tab(len)() As Integer
       For i As Integer = 0 To len - 1
           Dim tab2(i + 1) As Integer
           For j As Integer = 0 To i + 1 - 1
               Dim tmp As Integer = 0
-              tmp = readInt()
-              stdin_sep()
+              tmp = readInt
+              stdin_sep
               tab2(j) = tmp
           Next
           tab(i) = tab2

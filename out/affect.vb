@@ -105,13 +105,13 @@ End Function
     Sub Main()
       Dim t As toto = mktoto(4)
       Dim t2 As toto = mktoto(5)
-      t.bar = readInt()
-      stdin_sep()
-      t.blah = readInt()
-      stdin_sep()
-      t2.bar = readInt()
-      stdin_sep()
-      t2.blah = readInt()
+      t.bar = readInt
+      stdin_sep
+      t.blah = readInt
+      stdin_sep
+      t2.bar = readInt
+      stdin_sep
+      t2.blah = readInt
       Console.Write(result(t, t2) & t.blah)
     End Sub
     

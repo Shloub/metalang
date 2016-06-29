@@ -70,8 +70,7 @@ End Function
     Dim list As intlist = empty
     Dim i As Integer = -1
     Do While i <> 0
-        
-        i = readInt()
+        i = readInt
         If i <> 0 Then
             list = cons(list, i)
         End If

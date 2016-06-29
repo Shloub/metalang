@@ -44,7 +44,7 @@ End Sub
   Function read_bigint(ByVal len as Integer) As bigint
     Dim chiffres(len) As Integer
     For j As Integer = 0 To len - 1
-        Dim c As Char = readChar()
+        Dim c As Char = readChar
         chiffres(j) = Asc(c)
     Next
     For i As Integer = 0 To (len - 1) \ 2
@@ -133,7 +133,6 @@ End Sub
           chiffres(i) = tmp Mod 10
       Next
       Do While len > 0 AndAlso chiffres(len - 1) = 0
-          
           len = len - 1
       Loop
       Dim f As bigint = new bigint()
@@ -165,7 +164,6 @@ End Sub
             chiffres(i) = tmp
         Next
         Do While len > 0 AndAlso chiffres(len - 1) = 0
-            
             len = len - 1
         Loop
         Dim g As bigint = new bigint()
@@ -249,7 +247,6 @@ End Sub
           Function bigint_premiers_chiffres(ByRef a as bigint, ByVal i as Integer) As bigint
             Dim len As Integer = Math.Min(i, a.bigint_len)
             Do While len <> 0 AndAlso a.bigint_chiffres(len - 1) = 0
-                
                 len = len - 1
             Loop
             Dim o As bigint = new bigint()
@@ -309,7 +306,6 @@ End Sub
             Function log10(ByVal a as Integer) As Integer
               Dim out0 As Integer = 1
               Do While a >= 10
-                  
                   a = a \ 10
                   out0 = out0 + 1
               Loop
@@ -340,7 +336,6 @@ End Sub
                 Dim one As bigint = bigint_of_int(1)
                 Dim out0 As bigint = one
                 Do While Not bigint_eq(a, one)
-                    
                     out0 = mul_bigint(a, out0)
                     a = sub_bigint(a, one)
                 Loop
@@ -414,7 +409,6 @@ End Sub
                 Dim a As bigint = bigint_of_int(1)
                 Dim b As bigint = bigint_of_int(1)
                 Do While b.bigint_len < 100
-                    
                     ' 1000 normalement 
                     
                     Dim c As bigint = add_bigint(a, b)
@@ -443,7 +437,6 @@ End Sub
                 Dim n As Integer = 0
                 Dim found As Boolean = true
                 Do While found
-                    
                     Dim min0 As bigint = a0_bigint(0)
                     found = false
                     For i As Integer = 2 To maxA
@@ -476,7 +469,7 @@ End Sub
                   Console.Write(euler29() & Chr(10))
                   Dim sum As bigint = read_bigint(50)
                   For i As Integer = 2 To 100
-                      stdin_sep()
+                      stdin_sep
                       Dim tmp As bigint = read_bigint(50)
                       sum = add_bigint(sum, tmp)
                   Next

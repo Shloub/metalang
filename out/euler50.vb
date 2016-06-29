@@ -10,7 +10,6 @@ Module euler50
             If max0 \ i > i Then
                 Dim j As Integer = i * i
                 Do While j < max0 AndAlso j > 0
-                    
                     t(j) = 0
                     j = j + i
                 Loop
@@ -50,7 +49,6 @@ Module euler50
     Dim len As Integer = 1
     Dim resp As Integer = 1
     Do While process
-        
         process = false
         For i As Integer = 0 To stop0
             If i + len < nprimes Then

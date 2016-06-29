@@ -71,13 +71,11 @@ End Function
     Dim ptrStack As Integer = 0
     Dim ptrStr As Integer = 0
     Do While ptrStr < len
-        
         If str(ptrStr) = Chr(32) Then
             ptrStr = ptrStr + 1
         ElseIf is_number(str(ptrStr)) Then
             Dim num As Integer = 0
             Do While str(ptrStr) <> Chr(32)
-                
                 num = num * 10 + Asc(str(ptrStr)) - Asc("0"C)
                 ptrStr = ptrStr + 1
             Loop
@@ -95,12 +93,12 @@ End Function
     
     Sub Main()
       Dim len As Integer = 0
-      len = readInt()
-      stdin_sep()
+      len = readInt
+      stdin_sep
       Dim tab(len) As Char
       For i As Integer = 0 To len - 1
           Dim tmp As Char = Chr(0)
-          tmp = readChar()
+          tmp = readChar
           tab(i) = tmp
       Next
       Dim result As Integer = npi0(tab, len)

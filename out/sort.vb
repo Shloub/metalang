@@ -77,7 +77,6 @@ End Function
           ' pivot : tab[0] 
           
           Do While i <> j
-              
               If tab(i) > tab(j) Then
                   If i = j - 1 Then
                       ' on inverse simplement
@@ -107,13 +106,13 @@ End Function
     
     Sub Main()
       Dim len As Integer = 2
-      len = readInt()
-      stdin_sep()
+      len = readInt
+      stdin_sep
       Dim tab(len) As Integer
       For i_ As Integer = 0 To len - 1
           Dim tmp As Integer = 0
-          tmp = readInt()
-          stdin_sep()
+          tmp = readInt
+          stdin_sep
           tab(i_) = tmp
       Next
       Dim tab2 As Integer() = copytab(tab, len)

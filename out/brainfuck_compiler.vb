@@ -75,7 +75,6 @@ Module brainfuck_compiler
     mem(current_pos) = mem(current_pos) + 1
     mem(current_pos) = mem(current_pos) + 1
     Do While mem(current_pos) <> 0
-        
         mem(current_pos) = mem(current_pos) - 1
         current_pos = current_pos - 1
         mem(current_pos) = mem(current_pos) + 1

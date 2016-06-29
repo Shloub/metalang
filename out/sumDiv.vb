@@ -85,7 +85,7 @@ End Function
     ' Programme principal 
     
     Dim n As Integer = 0
-    n = readInt()
+    n = readInt
     ' Lecture de l'entier 
     
     Console.Write(sumdiv(n))

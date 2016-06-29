@@ -71,9 +71,9 @@ End Function
   
   Sub Main()
     Dim t As toto = mktoto(4)
-    t.bar = readInt()
-    stdin_sep()
-    t.blah = readInt()
+    t.bar = readInt
+    stdin_sep
+    t.blah = readInt
     Console.Write(result(t))
   End Sub
   

@@ -9,7 +9,6 @@ Module euler05
     Next
     Dim d As Integer = 2
     Do While n <> 1 AndAlso d * d <= n
-        
         If n Mod d = 0 Then
             tab(d) = tab(d) + 1
             n = n \ d

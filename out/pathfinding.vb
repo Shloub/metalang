@@ -92,19 +92,19 @@ End Function
     Sub Main()
       Dim x As Integer = 0
       Dim y As Integer = 0
-      x = readInt()
-      stdin_sep()
-      y = readInt()
-      stdin_sep()
+      x = readInt
+      stdin_sep
+      y = readInt
+      stdin_sep
       Dim tab(y)() As Char
       For i As Integer = 0 To y - 1
           Dim tab2(x) As Char
           For j As Integer = 0 To x - 1
               Dim tmp As Char = Chr(0)
-              tmp = readChar()
+              tmp = readChar
               tab2(j) = tmp
           Next
-          stdin_sep()
+          stdin_sep
           tab(i) = tab2
           Next
           Dim result As Integer = pathfind(tab, x, y)

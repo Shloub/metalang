@@ -54,8 +54,8 @@ End Function
   Sub Main()
     Dim t(2) As Integer
     For d As Integer = 0 To 2 - 1
-        t(d) = readInt()
-        stdin_sep()
+        t(d) = readInt
+        stdin_sep
     Next
     Console.Write(t(0) & " - " & t(1) & Chr(10))
     End Sub

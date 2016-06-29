@@ -10,7 +10,6 @@ Module euler10
             If max0 \ i > i Then
                 Dim j As Integer = i * i
                 Do While j < max0 AndAlso j > 0
-                    
                     t(j) = 0
                     j = j + i
                 Loop

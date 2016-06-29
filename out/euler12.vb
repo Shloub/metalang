@@ -9,7 +9,6 @@ Module euler12
             Dim j As Integer = i * i
             n = n + 1
             Do While j < max0 AndAlso j > 0
-                
                 t(j) = 0
                 j = j + i
             Loop
@@ -22,7 +21,6 @@ Module euler12
     For i As Integer = 0 To nprimes - 1
         Dim d As Integer = primes(i)
         Do While n Mod d = 0
-            
             t(d) = t(d) + 1
             n = n \ d
         Loop

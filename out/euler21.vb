@@ -9,7 +9,6 @@ Module euler21
             n = n + 1
             Dim j As Integer = i * i
             Do While j < max0 AndAlso j > 0
-                
                 t(j) = 0
                 j = j + i
             Loop
@@ -22,7 +21,6 @@ Module euler21
     For i As Integer = 0 To nprimes - 1
         Dim d As Integer = primes(i)
         Do While n Mod d = 0
-            
             t(d) = t(d) + 1
             n = n \ d
         Loop
@@ -35,7 +33,6 @@ Module euler21
   
   Function sumdivaux2(ByRef t as Integer(), ByVal n as Integer, ByVal i as Integer) As Integer
     Do While i < n AndAlso t(i) = 0
-        
         i = i + 1
     Loop
     Return i

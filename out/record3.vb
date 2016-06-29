@@ -78,9 +78,9 @@ End Function
     For i As Integer = 0 To 4 - 1
         t(i) = mktoto(i)
     Next
-    t(0).bar = readInt()
-    stdin_sep()
-    t(1).blah = readInt()
+    t(0).bar = readInt
+    stdin_sep
+    t(1).blah = readInt
     Dim titi As Integer = result(t, 4)
     Console.Write(titi & t(2).blah)
     End Sub

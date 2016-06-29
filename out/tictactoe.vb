@@ -248,10 +248,10 @@ End Function
     End Function
     
     Function read_move() As move
-      Dim x As Integer = readInt()
-      stdin_sep()
-      Dim y As Integer = readInt()
-      stdin_sep()
+      Dim x As Integer = readInt
+      stdin_sep
+      Dim y As Integer = readInt
+      stdin_sep
       Dim b As move = new move()
       b.x = x
       b.y = y
@@ -271,7 +271,6 @@ End Function
           d.y = 0
           apply_move(d, state)
           Do While Not state.ended
-              
               print_state(state)
               apply_move(play(state), state)
               eval0(state)

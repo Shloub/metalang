@@ -19,13 +19,13 @@ Module aaa_03binding
     h(14)
     Dim a As Integer = 4
     Dim b As Integer = 5
-    Console.Write((a + b))
+    Console.Write(a + b)
     ' main 
     
     h(15)
     a = 2
     b = 1
-    Console.Write((a + b))
+    Console.Write(a + b)
   End Sub
   
 End Module

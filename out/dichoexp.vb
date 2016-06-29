@@ -66,9 +66,9 @@ End Function
   Sub Main()
     Dim a As Integer = 0
     Dim b As Integer = 0
-    a = readInt()
-    stdin_sep()
-    b = readInt()
+    a = readInt
+    stdin_sep
+    b = readInt
     Console.Write(exp0(a, b))
   End Sub
   

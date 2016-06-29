@@ -48,7 +48,6 @@ Module euler19
     
     Dim count As Integer = 0
     Do While year <> 2001
-        
         Dim ndays As Integer = ndayinmonth(month, year)
         dayofweek = (dayofweek + ndays) Mod 7
         month = month + 1

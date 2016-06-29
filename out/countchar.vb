@@ -68,15 +68,15 @@ End Function
   
   Sub Main()
     Dim len As Integer = 0
-    len = readInt()
-    stdin_sep()
+    len = readInt
+    stdin_sep
     Dim tofind As Char = Chr(0)
-    tofind = readChar()
-    stdin_sep()
+    tofind = readChar
+    stdin_sep
     Dim tab(len) As Char
     For i As Integer = 0 To len - 1
         Dim tmp As Char = Chr(0)
-        tmp = readChar()
+        tmp = readChar
         tab(i) = tmp
     Next
     Dim result As Integer = nth(tab, tofind, len)

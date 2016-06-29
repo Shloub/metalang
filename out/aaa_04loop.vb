@@ -9,7 +9,6 @@ Module aaa_04loop
     
     Dim j As Integer = i - 2
     Do While j <= i + 2
-        
         If i Mod j = 5 Then
             Return true
         End If
@@ -27,7 +26,6 @@ Module aaa_04loop
     Next
     Dim i As Integer = 4
     Do While i < 10
-        
         Console.Write(i)
         i = i + 1
         j = j + i

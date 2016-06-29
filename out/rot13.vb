@@ -61,11 +61,11 @@ End Function
   
   
   Sub Main()
-    Dim strlen As Integer = readInt()
-    stdin_sep()
+    Dim strlen As Integer = readInt
+    stdin_sep
     Dim tab4(strlen) As Char
     For toto As Integer = 0 To strlen - 1
-        Dim tmpc As Char = readChar()
+        Dim tmpc As Char = readChar
         Dim c As Integer = Asc(tmpc)
         If tmpc <> Chr(32) Then
             c = (c - Asc("a"C) + 13) Mod 26 + Asc("a"C)

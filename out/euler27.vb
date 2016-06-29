@@ -9,7 +9,6 @@ Module euler27
             n = n + 1
             Dim j As Integer = i * i
             Do While j < max0 AndAlso j > 0
-                
                 t(j) = 0
                 j = j + i
             Loop
@@ -24,7 +23,6 @@ Module euler27
         n = -n
     End If
     Do While primes(i) * primes(i) < n
-        
         If n Mod primes(i) = 0 Then
             Return false
         End If

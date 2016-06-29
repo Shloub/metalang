@@ -56,12 +56,12 @@ Function readInt() As Integer
   Loop
 End Function
   Function score() As Integer
-    stdin_sep()
-    Dim len As Integer = readInt()
-    stdin_sep()
+    stdin_sep
+    Dim len As Integer = readInt
+    stdin_sep
     Dim sum As Integer = 0
     For i As Integer = 1 To len
-        Dim c As Char = readChar()
+        Dim c As Char = readChar
         sum = sum + Asc(c) - Asc("A"C) + 1
         '		print c print " " print sum print " " 
         
@@ -72,7 +72,7 @@ End Function
   
   Sub Main()
     Dim sum As Integer = 0
-    Dim n As Integer = readInt()
+    Dim n As Integer = readInt
     For i As Integer = 1 To n
         sum = sum + i * score()
     Next

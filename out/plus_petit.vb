@@ -62,7 +62,6 @@ End Function
     Dim i As Integer = a
     Dim j As Integer = b
     Do While i < j
-        
         Dim e As Integer = tab(i)
         If e < m Then
             i = i + 1
@@ -86,13 +85,13 @@ End Function
   
   Sub Main()
     Dim len As Integer = 0
-    len = readInt()
-    stdin_sep()
+    len = readInt
+    stdin_sep
     Dim tab(len) As Integer
     For i As Integer = 0 To len - 1
         Dim tmp As Integer = 0
-        tmp = readInt()
-        stdin_sep()
+        tmp = readInt
+        stdin_sep
         tab(i) = tmp
     Next
     Console.Write(plus_petit0(tab, len))

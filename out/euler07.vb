@@ -13,7 +13,6 @@ Module euler07
   
   Function find(ByVal n as Integer, ByRef t as Integer(), ByVal used as Integer, ByVal nth as Integer) As Integer
     Do While used <> nth
-        
         If divisible(n, t, used) Then
             n = n + 1
         Else 

@@ -4,7 +4,6 @@ Module euler26
 
   Function periode(ByRef restes as Integer(), ByVal len as Integer, ByVal a as Integer, ByVal b as Integer) As Integer
     Do While a <> 0
-        
         Dim chiffre As Integer = a \ b
         Dim reste As Integer = a Mod b
         For i As Integer = 0 To len - 1
