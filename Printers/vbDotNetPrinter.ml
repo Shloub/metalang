@@ -96,25 +96,25 @@ let config tyenv macros = {
 let prio_operator = -100
     
 let print_expr tyenv config e f p = Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
-
+let rec ptype f t =
+  let open Type in let open Format in
+  match Type.unfix t with
+    | Integer -> fprintf f "Integer"
+    | String -> fprintf f "String"
+    | Array a -> fprintf f "%a()" ptype a
+    | Void ->  fprintf f "Void"
+    | Bool -> fprintf f "Boolean"
+    | Char -> fprintf f "Char"
+    | Named n -> fprintf f "%s" n
+    | Struct li -> fprintf f "a struct"
+    | Enum _ -> fprintf f "an enum"
+    | Auto | Lexems | Tuple _ -> assert false
+          
 let print_instr tyenv c i =
   let open Ast.Instr in
   let open Format in
   let block value f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f (false, value)) sep_nl) li in
   let block_lambda = block true in
-  let rec ptype f t = match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "Integer"
-    | Type.String -> Format.fprintf f "String"
-    | Type.Array a -> Format.fprintf f "%a()" ptype a
-    | Type.Void ->  Format.fprintf f "Void"
-    | Type.Bool -> Format.fprintf f "Boolean"
-    | Type.Char -> Format.fprintf f "Char"
-    | Type.Named n -> Format.fprintf f "%s" n
-    | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Auto -> assert false
-    | Type.Lexems -> assert false
-    | Type.Tuple _ -> assert false in
   let pread f ty = match Type.unfix ty with
   | Type.Integer -> fprintf f "readInt"
   | Type.Char -> fprintf f "readChar"
@@ -307,13 +307,13 @@ End Function" else "")
            Format.fprintf t "%a %a@ as@ %a"
 	     self#val_or_ref type_
              self#binding binding
-             self#ptype type_
+             ptype type_
          ) sep_c
       ) li
       (fun f () -> match Type.unfix t with
       | Type.Void -> ()
       | _ ->
-	Format.fprintf f " As %a" self#ptype t) ()
+	Format.fprintf f " As %a" ptype t) ()
 
   method val_or_ref f t = match Type.unfix t with
     | Type.Integer
@@ -322,21 +322,6 @@ End Function" else "")
     | Type.Char
     | Type.Enum _ ->  Format.fprintf f "ByVal"
     | _ ->  Format.fprintf f "ByRef"
-
-  method ptype f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "Integer"
-    | Type.String -> Format.fprintf f "String"
-    | Type.Array a -> Format.fprintf f "%a()" self#ptype a
-    | Type.Void ->  Format.fprintf f "Void"
-    | Type.Bool -> Format.fprintf f "Boolean"
-    | Type.Char -> Format.fprintf f "Char"
-    | Type.Named n -> Format.fprintf f "%s" n
-    | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Auto -> assert false
-    | Type.Lexems -> assert false
-    | Type.Tuple _ -> assert false
 
   method print_fun f funname t li instrs =
     match Type.unfix t with
@@ -363,7 +348,7 @@ End Function" else "")
           self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "Public %a As %a" self#field name self#ptype type_ 
+               Format.fprintf t "Public %a As %a" self#field name ptype type_ 
              ) sep_nl
           ) li
     | Type.Enum li ->
