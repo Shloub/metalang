@@ -34,9 +34,7 @@ open Helper
 open Ast
 
 let prio_operator = -100
-
-let print_expr tyenv macros e f p =
-  let print_lief tyenv prio f = function
+let print_lief tyenv prio f = function
     | Expr.Char c ->
         if (c >= 'A' && c <= 'Z' ) ||
         (c >= 'a' && c <= 'z' ) ||
@@ -47,45 +45,156 @@ let print_expr tyenv macros e f p =
     | Ast.Expr.Enum e ->
         let t = Typer.typename_for_enum e tyenv in
         Format.fprintf f "%s.%s" t e
-    | x -> print_lief prio f x in
-  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
-      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
-  let config = {
-    prio_binop;
-    prio_unop;
-    print_varname;
-    print_lief = print_lief tyenv;
-    print_op;
-    print_unop;
-    print_mut;
-    macros
-  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
+    | x -> print_lief prio f x
+
+let print_mut conf prio f m = Mutable.Fixed.Deep.fold
+    (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio
+let config tyenv macros = {
+  prio_binop;
+  prio_unop;
+  print_varname;
+  print_lief = print_lief tyenv;
+  print_op;
+  print_unop;
+  print_mut;
+  macros
+} 
+let print_expr config e f p =
+   Expr.Fixed.Deep.fold (print_expr0 config) e f p
+
+let ptype t f () =
+  let open Type in let open Format in
+  match t with
+  | Integer -> fprintf f "int"
+  | String -> fprintf f "String"
+  | Array a -> fprintf f "%a[]" a ()
+  | Void ->  fprintf f "void"
+  | Bool -> fprintf f "bool"
+  | Char -> fprintf f "char"
+  | Named n -> fprintf f "%s" n
+  | Struct li -> fprintf f "a struct"
+  | Enum _ -> fprintf f "an enum"
+  | Auto | Tuple _ | Lexems -> assert false
+let ptype f t = Ast.Type.Fixed.Deep.fold ptype t f ()
+        
+let rec prefix_type f t =
+  match Type.unfix t with
+  | Type.Array t2 -> prefix_type f t2
+  | t2 -> ptype f t
+
+let rec suffix_type f t =
+  match Type.unfix t with
+  | Type.Array t2 ->
+      Format.fprintf f "[]%a" suffix_type t2
+  | _ -> Format.fprintf f ""
+          
+let print_instr c i =
+  let open Ast.Instr in
+  let open Format in
+  let p f pend = match i with
+  | Declare (var, ty, e, _) -> fprintf f "%a %a = %a%a" ptype ty c.print_varname var e nop pend ()
+  | AllocArrayConst (name, ty, len, lief, opt) -> assert false
+  | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+  | AllocArray (name, t, e, None, opt) ->    
+      begin match Type.unfix t with
+      | Type.Array t2 ->
+          fprintf f "@[<h>%a[] %a = new %a[%a]%a%a@]"
+            ptype t
+            c.print_varname name
+            prefix_type t2
+            e nop
+            suffix_type t pend ()
+      | _ ->
+          fprintf f "@[<h>%a[] %a = new %a[%a]%a@]"
+            ptype t
+            c.print_varname name
+            ptype t
+            e nop pend ()
+      end
+  | AllocRecord (name, ty, list, opt) ->
+      fprintf f "%a %a = new %a()%a@\n%a"
+        ptype ty c.print_varname name ptype ty pend ()
+        (print_list (fun f (field, x) -> fprintf f "%a.%s = %a%a" 
+            c.print_varname name field x nop pend ()) sep_nl) list
+  | Print [StringConst s] -> fprintf f "Console.Write(%a);" (c.print_lief prio_operator) (Expr.String s)
+  | Print [PrintExpr (_, e)] -> fprintf f "Console.Write(%a);" e nop
+  | Print li->
+      fprintf f "Console.Write(%a%a);"
+        (fun f () ->
+          match li with
+          | (PrintExpr (_, _))::(PrintExpr (_, _))::_ -> fprintf f "\"\" + "
+          | _ -> ()
+        ) ()
+          (print_list
+             (fun f e ->
+               match e with
+               | StringConst s -> c.print_lief prio_operator f (Expr.String s)
+               | PrintExpr (_, e) -> e f prio_operator)
+             (fun t f1 e1 f2 e2 -> Format.fprintf t "%a + %a" f1 e1 f2 e2)) li
+  | Read li ->
+      print_list
+        (fun f -> function
+          | Separation -> Format.fprintf f "@[stdin_sep()%a@]" pend ()
+          | DeclRead (ty, v, opt) ->
+              begin match Ast.Type.unfix ty with
+              | Ast.Type.Char -> fprintf f "@[%a %a = readChar()%a@]" ptype ty c.print_varname v pend ()
+              | Ast.Type.Integer -> fprintf f "@[%a %a = readInt()%a@]" ptype ty c.print_varname v pend ()
+              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                    (Type.type_t_to_string ty)))
+              end
+          | ReadExpr (ty, mut) ->
+              begin match Ast.Type.unfix ty with
+              | Ast.Type.Char -> fprintf f "@[%a = readChar()%a@]" (c.print_mut c nop) mut pend ()
+              | Ast.Type.Integer -> fprintf f "@[%a = readInt()%a@]" (c.print_mut c nop) mut pend ()
+              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                    (Type.type_t_to_string ty)))
+              end
+        ) sep_nl f li
+  | Untuple (li, expr, opt) -> assert false
+  | Unquote e -> assert false
+  | _ -> clike_print_instr c i f pend
+  in
+  let is_multi_instr = match i with
+  | Read (hd::tl) -> true
+  | Declare _ -> true
+  | _ -> false in
+  {
+   is_multi_instr = is_multi_instr;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
+   p=p;
+   default = seppt;
+   print_lief = c.print_lief;
+ }
+    
+let print_instr tyenv macros i =
+  let open Ast.Instr.Fixed.Deep in
+  let c = config tyenv macros in
+  let i = (fold (print_instr c) (mapg (print_expr c) i))
+  in fun f -> i.p f i.default
 
 class csharpPrinter = object(self)
   inherit JavaPrinter.javaPrinter as super
 
+  method instr f t =
+   let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc (self#lang ()) li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr (self#getTyperEnv ()) macros t) f
+
   method lang () = "csharp"
 
-  method exprp p f e = print_expr (self#getTyperEnv ())
+  method exprp p f e =
+    let config = config (self#getTyperEnv ())
       (StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f p
+        with Not_found -> List.assoc "" li) macros) in
+    print_expr config e f p
 
   method expr f e = self#exprp nop f e
-
-  method ptype f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "int"
-    | Type.String -> Format.fprintf f "String"
-    | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
-    | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "bool"
-    | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> Format.fprintf f "%s" n
-    | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -209,11 +318,11 @@ static int readInt(){
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[<h>%a %a = readInt()%a@]"
-        self#ptype t
+        ptype t
         self#binding v
 	self#separator ()
     | Type.Char -> Format.fprintf f "@[<h>%a %a = readChar()%a@]"
-        self#ptype t
+        ptype t
         self#binding v
       self#separator ()
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
@@ -225,7 +334,7 @@ static int readInt(){
           self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "public %a %a%a" self#ptype type_ self#field name
+               Format.fprintf t "public %a %a%a" ptype type_ self#field name
 		 self#separator ()
              )
              sep_nl
@@ -236,5 +345,17 @@ static int readInt(){
         (print_list self#enumfield (sep "%a,@\n %a")
         ) li
     | _ -> super#decl_type f name t
+
+  method print_proto f (funname, t, li) =
+    Format.fprintf f "%a%a %a(%a)"
+      self#static () ptype t
+      self#funname funname
+      (print_list
+         (fun t (binding, type_) ->
+           Format.fprintf t "%a@ %a"
+             ptype type_
+             self#binding binding
+         ) sep_c
+      ) li
 
 end
