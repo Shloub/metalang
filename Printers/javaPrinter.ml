@@ -41,28 +41,147 @@ let print_lief tyenv prio f = function
       Format.fprintf f "%s.%s" t e
   | x -> print_lief prio f x
 
-let print_expr tyenv macros e f p =
-  let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold
-      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
-  let config = {
-    prio_binop;
-    prio_unop;
-    print_varname;
-    print_lief = print_lief tyenv;
-    print_op;
-    print_unop;
-    print_mut;
-    macros
-  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
+let print_mut conf prio f m = Ast.Mutable.Fixed.Deep.fold (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio
 
+let config tyenv macros = {
+  prio_binop;
+  prio_unop;
+  print_varname;
+  print_lief = print_lief tyenv;
+  print_op;
+  print_unop;
+  print_mut;
+  macros
+}
+        
+let print_expr config e f p = Expr.Fixed.Deep.fold (print_expr0 config) e f p
+    
+let ptype f t =
+  let open Type in
+  let open Format in
+  let ptype ty f () = match ty with
+  | Integer -> fprintf f "int"
+  | String -> fprintf f "String"
+  | Array a -> fprintf f "%a[]" a ()
+  | Void ->  fprintf f "void"
+  | Bool -> fprintf f "boolean"
+  | Char -> fprintf f "char"
+  | Named n -> fprintf f "%s" n
+  | Enum _ -> fprintf f "an enum"
+  | Struct li -> fprintf f "a struct"
+  | Auto | Tuple _ | Lexems -> assert false
+  in Fixed.Deep.fold ptype t f ()
+
+let rec prefix_type f t =
+  match Type.unfix t with
+  | Type.Array t2 -> prefix_type f t2
+  | t2 -> ptype f t
+
+let rec suffix_type f t =
+  match Type.unfix t with
+  | Type.Array t2 ->
+      Format.fprintf f "[]%a" suffix_type t2
+  | _ -> Format.fprintf f ""
+
+let prio_operator = -100
+     
+let print_instr c i =
+  let open Ast.Instr in
+  let open Format in
+  let p f pend = match i with
+  | Declare (var, ty, e, _) -> fprintf f "%a %a = %a%a" ptype ty c.print_varname var e nop pend ()
+  | AllocArrayConst (name, ty, len, lief, opt) -> assert false
+  | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+  | AllocArray (name, t, e, None, opt) ->    
+      begin match Type.unfix t with
+      | Type.Array t2 ->
+          fprintf f "@[<h>%a[] %a = new %a[%a]%a%a@]"
+            ptype t
+            c.print_varname name
+            prefix_type t2
+            e nop
+            suffix_type t pend ()
+      | _ ->
+          fprintf f "@[<h>%a[] %a = new %a[%a]%a@]"
+            ptype t
+            c.print_varname name
+            ptype t
+            e nop pend ()
+      end
+  | AllocRecord (name, ty, list, opt) ->
+      fprintf f "%a %a = new %a()%a@\n%a"
+        ptype ty c.print_varname name ptype ty pend ()
+        (print_list (fun f (field, x) -> fprintf f "%a.%s = %a%a" 
+            c.print_varname name field x nop pend ()) sep_nl) list
+  | Print [StringConst s] -> fprintf f "System.out.print(%a);" (c.print_lief prio_operator) (Expr.String s)
+  | Print [PrintExpr (_, e)] -> fprintf f "System.out.print(%a);" e nop
+  | Print li-> 
+      let format, exprs = extract_multi_print clike_noformat format_type li in
+      fprintf f "System.out.printf(\"%s\", %a);"
+        format (print_list (fun f (_, e) -> e f nop) sep_c) exprs
+  | Read li ->
+      print_list
+        (fun f -> function
+          | Separation -> Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1)%a@]" pend ()
+          | DeclRead (ty, v, opt) ->
+              begin match Ast.Type.unfix ty with
+              | Ast.Type.Char ->  fprintf f "@[<h>char %a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]" c.print_varname v
+              | Ast.Type.Integer -> fprintf f "@[<h>%a %a;@\nif (scanner.hasNext(\"^-\")) {@\n  scanner.next(\"^-\");@\n  %a = scanner.nextInt();@\n} else {@\n  %a = scanner.nextInt();@\n}@]"
+        ptype ty c.print_varname v c.print_varname v c.print_varname v
+              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                    (Type.type_t_to_string ty)))
+              end
+          | ReadExpr (ty, mut) ->
+              begin match Ast.Type.unfix ty with
+              | Ast.Type.Char ->fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]" (c.print_mut c nop) mut
+              | Ast.Type.Integer -> fprintf f "@[<h>if (scanner.hasNext(\"^-\")) {@\n  scanner.next(\"^-\");@\n  %a = -scanner.nextInt();@\n}else{@\n  %a = scanner.nextInt();@\n}@]"
+        (c.print_mut c nop) mut (c.print_mut c nop) mut
+              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                    (Type.type_t_to_string ty)))
+              end
+        ) sep_nl f li
+  | Untuple (li, expr, opt) -> assert false
+  | Unquote e -> assert false
+  | _ -> clike_print_instr c i f pend
+  in
+  let is_multi_instr = match i with
+  | Read (hd::tl) -> true
+  | Declare _ -> true
+  | _ -> false in
+  {
+   is_multi_instr = is_multi_instr;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
+   p=p;
+   default = seppt;
+   print_lief = c.print_lief;
+ }
+    
+let print_instr tyenv macros i =
+  let open Ast.Instr.Fixed.Deep in
+  let c = config tyenv macros in
+  let i = (fold (print_instr c) (mapg (print_expr c) i))
+  in fun f -> i.p f i.default
+   
+    
 class javaPrinter = object(self)
   inherit CppPrinter.cppPrinter as cppprinter
 
-  method expr f e = print_expr (self#getTyperEnv ())
-      (StringMap.map (fun (ty, params, li) ->
+  method instr f t =
+   let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
+        try List.assoc "java" li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr (self#getTyperEnv ()) macros t) f
+     
+  method expr f e =
+    let config = config (self#getTyperEnv ())
+        (StringMap.map (fun (ty, params, li) ->
+          ty, params,
+          try List.assoc (self#lang ()) li
+          with Not_found -> List.assoc "" li) macros)
+        in print_expr config e f nop
 
   method declare_for s f li = ()
 
