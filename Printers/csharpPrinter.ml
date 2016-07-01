@@ -175,26 +175,14 @@ let print_instr tyenv macros i =
   in fun f -> i.p f i.default
 
 class csharpPrinter = object(self)
-  inherit JavaPrinter.javaPrinter as super
+  inherit Printer.printer as super
 
   method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
+        try List.assoc "csharp" li
         with Not_found -> List.assoc "" li) macros
    in (print_instr (self#getTyperEnv ()) macros t) f
-
-  method lang () = "csharp"
-
-  method exprp p f e =
-    let config = config (self#getTyperEnv ())
-      (StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) in
-    print_expr config e f p
-
-  method expr f e = self#exprp nop f e
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -224,14 +212,12 @@ static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }" else "")
-
       (if need_readchar then "
 static char readChar(){
   char out_ = readChar_();
   consommeChar();
   return out_;
 }" else "")
-
       (if need_stdinsep then "
 static void stdin_sep(){
   do{
@@ -266,66 +252,9 @@ static int readInt(){
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method print f t expr =
-    Format.fprintf f "@[Console.Write(%a)%a@]" self#expr expr self#separator ()
-
   method main f main =
     Format.fprintf f "public static void Main(String[] args)@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#instructions main
-
-  method stdin_sep f  =
-    Format.fprintf f "@[stdin_sep()%a@]" self#separator ()
-
-  method concat_operator f () = Format.fprintf f "+"
-
-  method multi_print f exprs =
-    let exprs = (Instr.StringConst "") :: exprs in
-    let rec compress = function
-      | (e1::e2::tl ) as li ->
-	begin match e1, e2 with
-	| Instr.StringConst s1, Instr.StringConst s2 ->
-	  Instr.StringConst (s2^s1)::tl
-	| _ -> li
-	end
-      | x -> x
-    in let exprs = List.fold_left (fun acc e ->
-      let nacc = e::acc in
-      compress nacc
-    ) [] exprs in
-    let exprs = List.rev exprs in
-      Format.fprintf f "@[<h>Console.Write(%a)%a@]"
-        (print_list
-           (fun f e ->
-             match e with
-             | Instr.StringConst s -> self#exprp prio_operator f (Expr.string s)
-             | Instr.PrintExpr (_, e) -> self#exprp prio_operator f e)
-           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a %a %a"
-	     f1 e1
-	     self#concat_operator ()
-	     f2 e2)) exprs
-	self#separator ()
-
-  method read f t m =
-    match Type.unfix t with
-    | Type.Integer ->
-      Format.fprintf f "@[<h>%a = readInt()%a@]"
-        self#mutable_set m self#separator ()
-    | Type.Char -> Format.fprintf f "@[<h>%a = readChar()%a@]"
-      self#mutable_set m self#separator ()
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
-
-  method read_decl f t v =
-    match Type.unfix t with
-    | Type.Integer ->
-      Format.fprintf f "@[<h>%a %a = readInt()%a@]"
-        ptype t
-        self#binding v
-	self#separator ()
-    | Type.Char -> Format.fprintf f "@[<h>%a %a = readChar()%a@]"
-        ptype t
-        self#binding v
-      self#separator ()
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -346,9 +275,9 @@ static int readInt(){
         ) li
     | _ -> super#decl_type f name t
 
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "%a%a %a(%a)"
-      self#static () ptype t
+  method print_fun f funname t li instrs =
+    Format.fprintf f "@[<h>static %a %a(%a)@]@\n@[<v 2>{@\n%a@]@\n}@\n"
+      ptype t
       self#funname funname
       (print_list
          (fun t (binding, type_) ->
@@ -357,5 +286,6 @@ static int readInt(){
              self#binding binding
          ) sep_c
       ) li
+      self#instructions instrs
 
 end
