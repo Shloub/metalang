@@ -7,13 +7,13 @@ public class summax_souslist
   {
     int current = 0;
     int max0 = 0;
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         current += lst[i];
         if (current < 0)
-          current = 0;
+            current = 0;
         if (max0 < current)
-          max0 = current;
+            max0 = current;
     }
     return max0;
   }
@@ -30,7 +30,7 @@ public class summax_souslist
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int tmp = 0;
         if (scanner.hasNext("^-")) {
@@ -43,7 +43,7 @@ public class summax_souslist
         tab[i] = tmp;
     }
     int result = summax(tab, len);
-    System.out.printf("%d", result);
+    System.out.print(result);
   }
   
 }

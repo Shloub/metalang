@@ -24,7 +24,7 @@ public class euler03
                 sqrtia = (int)Math.sqrt(a);
                 found = true;
             }
-            b++;
+            b += 1;
         }
         if (!found)
         {

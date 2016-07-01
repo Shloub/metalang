@@ -7,7 +7,7 @@ public class small_inline
   public static void main(String args[])
   {
     int[] t = new int[2];
-    for (int d = 0; d < 2; d++)
+    for (int d = 0; d < 2; d += 1)
     {
         if (scanner.hasNext("^-")) {
           scanner.next("^-");

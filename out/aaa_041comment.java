@@ -8,10 +8,10 @@ public class aaa_041comment
   {
     int i = 4;
     /*while i < 10 do */
-    System.out.printf("%d", i);
-    i++;
+    System.out.print(i);
+    i += 1;
     /*  end */
-    System.out.printf("%d", i);
+    System.out.print(i);
   }
   
 }

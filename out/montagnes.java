@@ -12,12 +12,12 @@ public class montagnes
     {
         int x = tab[i];
         while (j >= 0 && x > tab[len - j])
-          j --;
-        j++;
+            j -= 1;
+        j += 1;
         tab[len - j] = x;
         if (j > max0)
-          max0 = j;
-        i --;
+            max0 = j;
+        i -= 1;
     }
     return max0;
   }
@@ -34,7 +34,7 @@ public class montagnes
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int x = 0;
         if (scanner.hasNext("^-")) {
@@ -46,7 +46,7 @@ public class montagnes
         scanner.findWithinHorizon("[\n\r ]*", 1);
         tab[i] = x;
     }
-    System.out.printf("%d", montagnes0(tab, len));
+    System.out.print(montagnes0(tab, len));
   }
   
 }

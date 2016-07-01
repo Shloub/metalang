@@ -6,13 +6,13 @@ public class pathfinding
   static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
-      return 0;
+        return 0;
     else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
-      return x * y * 10;
+        return x * y * 10;
     else if (tab[posY][posX] == '#')
-      return x * y * 10;
+        return x * y * 10;
     else if (cache[posY][posX] != -1)
-      return cache[posY][posX];
+        return cache[posY][posX];
     else
     {
         cache[posY][posX] = x * y * 10;
@@ -29,11 +29,11 @@ public class pathfinding
   static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
-    for (int i = 0; i < y; i++)
+    for (int i = 0; i < y; i += 1)
     {
         int[] tmp = new int[x];
-        for (int j = 0; j < x; j++)
-          tmp[j] = -1;
+        for (int j = 0; j < x; j += 1)
+            tmp[j] = -1;
         cache[i] = tmp;
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
@@ -59,10 +59,10 @@ public class pathfinding
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[][] tab = new char[y][];
-    for (int i = 0; i < y; i++)
+    for (int i = 0; i < y; i += 1)
     {
         char[] tab2 = new char[x];
-        for (int j = 0; j < x; j++)
+        for (int j = 0; j < x; j += 1)
         {
             char tmp = '\u0000';
             tmp = scanner.findWithinHorizon(".", 1).charAt(0);
@@ -72,7 +72,7 @@ public class pathfinding
         tab[i] = tab2;
     }
     int result = pathfind(tab, x, y);
-    System.out.printf("%d", result);
+    System.out.print(result);
   }
   
 }

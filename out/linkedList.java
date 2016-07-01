@@ -23,7 +23,7 @@ public class linkedList
   static intlist rev2(intlist acc, intlist torev)
   {
     if (is_empty(torev))
-      return acc;
+        return acc;
     else
     {
         intlist acc2 = new intlist();
@@ -51,7 +51,7 @@ public class linkedList
           i = scanner.nextInt();
         }
         if (i != 0)
-          list = cons(list, i);
+            list = cons(list, i);
     }
   }
   

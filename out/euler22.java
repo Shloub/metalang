@@ -15,7 +15,7 @@ public class euler22
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int sum = 0;
-    for (int i = 1; i <= len; i ++)
+    for (int i = 1; i <= len; i += 1)
     {
         char c = scanner.findWithinHorizon(".", 1).charAt(0);
         sum += (int)(c) - (int)('A') + 1;
@@ -35,8 +35,8 @@ public class euler22
     } else {
       n = scanner.nextInt();
     }
-    for (int i = 1; i <= n; i ++)
-      sum += i * score();
+    for (int i = 1; i <= n; i += 1)
+        sum += i * score();
     System.out.printf("%d\n", sum);
   }
   

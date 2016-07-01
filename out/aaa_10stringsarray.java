@@ -26,10 +26,10 @@ public class aaa_10stringsarray
   public static void main(String args[])
   {
     String[] tab = new String[2];
-    for (int i = 0; i < 2; i++)
-      tab[i] = idstring("chaine de test");
-    for (int j = 0; j <= 1; j ++)
-      printstring(idstring(tab[j]));
+    for (int i = 0; i < 2; i += 1)
+        tab[i] = idstring("chaine de test");
+    for (int j = 0; j <= 1; j += 1)
+        printstring(idstring(tab[j]));
     toto a = new toto();
     a.s = "one";
     a.v = 1;

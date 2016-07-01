@@ -7,16 +7,16 @@ public class devine
   {
     int min0 = tab[0];
     int max0 = tab[1];
-    for (int i = 2; i < len; i++)
+    for (int i = 2; i < len; i += 1)
     {
         if (tab[i] > max0 || tab[i] < min0)
-          return false;
+            return false;
         if (tab[i] < nombre)
-          min0 = tab[i];
+            min0 = tab[i];
         if (tab[i] > nombre)
-          max0 = tab[i];
+            max0 = tab[i];
         if (tab[i] == nombre && len != i + 1)
-          return false;
+            return false;
     }
     return true;
   }
@@ -41,7 +41,7 @@ public class devine
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int tmp;
         if (scanner.hasNext("^-")) {
@@ -54,9 +54,9 @@ public class devine
         tab[i] = tmp;
     }
     if (devine0(nombre, tab, len))
-      System.out.print("True");
+        System.out.print("True");
     else
-      System.out.print("False");
+        System.out.print("False");
   }
   
 }

@@ -7,7 +7,7 @@ public class sumDiv
   {
     int a = 0;
     /* test */
-    a++;
+    a += 1;
     /* test 2 */
   }
   
@@ -29,8 +29,7 @@ public class sumDiv
     /* On désire renvoyer la somme des diviseurs */
     int out0 = 0;
     /* On déclare un entier qui contiendra la somme */
-    for (int i = 1; i <= n; i ++)
-    {
+    for (int i = 1; i <= n; i += 1)
         /* La boucle : i est le diviseur potentiel*/
         if (n % i == 0)
         {
@@ -42,7 +41,6 @@ public class sumDiv
         {
             /* nop */
         }
-    }
     return out0;
     /*On renvoie out*/
   }
@@ -59,7 +57,7 @@ public class sumDiv
       n = scanner.nextInt();
     }
     /* Lecture de l'entier */
-    System.out.printf("%d", sumdiv(n));
+    System.out.print(sumdiv(n));
   }
   
 }
