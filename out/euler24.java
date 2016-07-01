@@ -6,38 +6,38 @@ public class euler24
   static int fact(int n)
   {
     int prod = 1;
-    for (int i = 2; i <= n; i ++)
-      prod *= i;
+    for (int i = 2; i <= n; i += 1)
+        prod *= i;
     return prod;
   }
   
   static void show(int lim, int nth)
   {
     int[] t = new int[lim];
-    for (int i = 0; i < lim; i++)
-      t[i] = i;
+    for (int i = 0; i < lim; i += 1)
+        t[i] = i;
     boolean[] pris = new boolean[lim];
-    for (int j = 0; j < lim; j++)
-      pris[j] = false;
-    for (int k = 1; k < lim; k++)
+    for (int j = 0; j < lim; j += 1)
+        pris[j] = false;
+    for (int k = 1; k < lim; k += 1)
     {
         int n = fact(lim - k);
         int nchiffre = nth / n;
-        nth %= n;
-        for (int l = 0; l < lim; l++)
-          if (!pris[l])
-        {
-            if (nchiffre == 0)
+        nth = nth % n;
+        for (int l = 0; l < lim; l += 1)
+            if (!pris[l])
             {
-                System.out.printf("%d", l);
-                pris[l] = true;
+                if (nchiffre == 0)
+                {
+                    System.out.print(l);
+                    pris[l] = true;
+                }
+                nchiffre -= 1;
             }
-            nchiffre --;
-        }
     }
-    for (int m = 0; m < lim; m++)
-      if (!pris[m])
-      System.out.printf("%d", m);
+    for (int m = 0; m < lim; m += 1)
+        if (!pris[m])
+            System.out.print(m);
     System.out.print("\n");
   }
   

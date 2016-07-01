@@ -8,7 +8,7 @@ public class euler08
   {
     int i = 1;
     int[] last = new int[5];
-    for (int j = 0; j < 5; j++)
+    for (int j = 0; j < 5; j += 1)
     {
         char c = scanner.findWithinHorizon(".", 1).charAt(0);
         int d = (int)(c) - (int)('0');
@@ -18,7 +18,7 @@ public class euler08
     int max0 = i;
     int index = 0;
     int nskipdiv = 0;
-    for (int k = 1; k <= 995; k ++)
+    for (int k = 1; k <= 995; k += 1)
     {
         char e = scanner.findWithinHorizon(".", 1).charAt(0);
         int f = (int)(e) - (int)('0');
@@ -31,8 +31,8 @@ public class euler08
         {
             i *= f;
             if (nskipdiv < 0)
-              i /= last[index];
-            nskipdiv --;
+                i /= last[index];
+            nskipdiv -= 1;
         }
         last[index] = f;
         index = (index + 1) % 5;

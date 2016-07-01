@@ -7,27 +7,27 @@ public class cambriolage
   {
     int max_ancient = 0;
     int max_recent = 0;
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < m; i += 1)
     {
         if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
-          max_ancient = serrures[i][1];
+            max_ancient = serrures[i][1];
         if (serrures[i][0] == 1 && serrures[i][1] > max_recent)
-          max_recent = serrures[i][1];
+            max_recent = serrures[i][1];
     }
     int max_ancient_pp = 0;
     int max_recent_pp = 0;
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i += 1)
     {
         int[] pp = passepartout[i];
         if (pp[0] >= max_ancient && pp[1] >= max_recent)
-          return 1;
+            return 1;
         max_ancient_pp = Math.max(max_ancient_pp, pp[0]);
         max_recent_pp = Math.max(max_recent_pp, pp[1]);
     }
     if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
-      return 2;
+        return 2;
     else
-      return 0;
+        return 0;
   }
   
   
@@ -42,10 +42,10 @@ public class cambriolage
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[][] passepartout = new int[n][];
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i += 1)
     {
         int[] out0 = new int[2];
-        for (int j = 0; j < 2; j++)
+        for (int j = 0; j < 2; j += 1)
         {
             int out01;
             if (scanner.hasNext("^-")) {
@@ -68,10 +68,10 @@ public class cambriolage
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[][] serrures = new int[m][];
-    for (int k = 0; k < m; k++)
+    for (int k = 0; k < m; k += 1)
     {
         int[] out1 = new int[2];
-        for (int l = 0; l < 2; l++)
+        for (int l = 0; l < 2; l += 1)
         {
             int out_;
             if (scanner.hasNext("^-")) {
@@ -85,7 +85,7 @@ public class cambriolage
         }
         serrures[k] = out1;
     }
-    System.out.printf("%d", nbPassePartout(n, passepartout, m, serrures));
+    System.out.print(nbPassePartout(n, passepartout, m, serrures));
   }
   
 }

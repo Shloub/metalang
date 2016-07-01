@@ -11,7 +11,7 @@ public class test_instant
   
   public static void main(String args[])
   {
-    System.out.printf("%d", 10);
+    System.out.print(10);
   }
   
 }

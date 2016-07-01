@@ -7,11 +7,11 @@ public class vigenere
   {
     int i = (int)(c);
     if (i <= (int)('Z') && i >= (int)('A'))
-      return i - (int)('A');
+        return i - (int)('A');
     else if (i <= (int)('z') && i >= (int)('a'))
-      return i - (int)('a');
+        return i - (int)('a');
     else
-      return -1;
+        return -1;
   }
   
   static char of_position_alphabet(int c)
@@ -21,7 +21,7 @@ public class vigenere
   
   static void crypte(int taille_cle, char[] cle, int taille, char[] message)
   {
-    for (int i = 0; i < taille; i++)
+    for (int i = 0; i < taille; i += 1)
     {
         int lettre = position_alphabet(message[i]);
         if (lettre != -1)
@@ -45,7 +45,7 @@ public class vigenere
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] cle = new char[taille_cle];
-    for (int index = 0; index < taille_cle; index++)
+    for (int index = 0; index < taille_cle; index += 1)
     {
         char out0 = scanner.findWithinHorizon(".", 1).charAt(0);
         cle[index] = out0;
@@ -60,14 +60,14 @@ public class vigenere
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] message = new char[taille];
-    for (int index2 = 0; index2 < taille; index2++)
+    for (int index2 = 0; index2 < taille; index2 += 1)
     {
         char out2 = scanner.findWithinHorizon(".", 1).charAt(0);
         message[index2] = out2;
     }
     crypte(taille_cle, cle, taille, message);
-    for (int i = 0; i < taille; i++)
-      System.out.printf("%c", message[i]);
+    for (int i = 0; i < taille; i += 1)
+        System.out.print(message[i]);
     System.out.print("\n");
   }
   

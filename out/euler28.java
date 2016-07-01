@@ -23,7 +23,7 @@ public class euler28
     int nterms = n * 2 - 1;
     int un = 1;
     int sum = 1;
-    for (int i = 0; i <= nterms - 2; i ++)
+    for (int i = 0; i < nterms - 1; i += 1)
     {
         int d = 2 * (1 + i / 4);
         un += d;
@@ -36,7 +36,7 @@ public class euler28
   
   public static void main(String args[])
   {
-    System.out.printf("%d", sumdiag(1001));
+    System.out.print(sumdiag(1001));
   }
   
 }

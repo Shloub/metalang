@@ -26,7 +26,7 @@ public class recordtest
     }else{
       param.foo = scanner.nextInt();
     }
-    System.out.printf("%d", param.bar + param.foo * param.bar);
+    System.out.print(param.bar + param.foo * param.bar);
   }
   
 }

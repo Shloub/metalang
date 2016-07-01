@@ -19,7 +19,7 @@ public class record2
   
   static int result(toto t)
   {
-    t.blah++;
+    t.blah += 1;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   
@@ -40,7 +40,7 @@ public class record2
     }else{
       t.blah = scanner.nextInt();
     }
-    System.out.printf("%d", result(t));
+    System.out.print(result(t));
   }
   
 }

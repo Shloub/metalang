@@ -6,7 +6,7 @@ public class aaa_02if
   static boolean f(int i)
   {
     if (i == 0)
-      return true;
+        return true;
     return false;
   }
   
@@ -14,9 +14,9 @@ public class aaa_02if
   public static void main(String args[])
   {
     if (f(4))
-      System.out.print("true <-\n ->\n");
+        System.out.print("true <-\n ->\n");
     else
-      System.out.print("false <-\n ->\n");
+        System.out.print("false <-\n ->\n");
     System.out.print("small test end\n");
   }
   

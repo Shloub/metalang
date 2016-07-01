@@ -18,23 +18,23 @@ public class aaa_05array
   {
     int j = 0;
     boolean[] a = new boolean[5];
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i += 1)
     {
-        System.out.printf("%d", i);
+        System.out.print(i);
         j += i;
         a[i] = i % 2 == 0;
     }
     System.out.printf("%d ", j);
     if (a[0])
-      System.out.print("True");
+        System.out.print("True");
     else
-      System.out.print("False");
+        System.out.print("False");
     System.out.print("\n");
     g(id(a), 0);
     if (a[0])
-      System.out.print("True");
+        System.out.print("True");
     else
-      System.out.print("False");
+        System.out.print("False");
     System.out.print("\n");
   }
   

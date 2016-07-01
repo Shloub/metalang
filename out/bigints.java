@@ -11,12 +11,12 @@ public class bigints
   static bigint read_bigint(int len)
   {
     int[] chiffres = new int[len];
-    for (int j = 0; j < len; j++)
+    for (int j = 0; j < len; j += 1)
     {
         char c = scanner.findWithinHorizon(".", 1).charAt(0);
         chiffres[j] = (int)(c);
     }
-    for (int i = 0; i <= (len - 1) / 2; i ++)
+    for (int i = 0; i <= (len - 1) / 2; i += 1)
     {
         int tmp = chiffres[i];
         chiffres[i] = chiffres[len - 1 - i];
@@ -32,23 +32,23 @@ public class bigints
   static void print_bigint(bigint a)
   {
     if (!a.bigint_sign)
-      System.out.printf("%c", '-');
-    for (int i = 0; i < a.bigint_len; i++)
-      System.out.printf("%d", a.bigint_chiffres[a.bigint_len - 1 - i]);
+        System.out.print('-');
+    for (int i = 0; i < a.bigint_len; i += 1)
+        System.out.print(a.bigint_chiffres[a.bigint_len - 1 - i]);
   }
   
   static boolean bigint_eq(bigint a, bigint b)
   {
     /* Renvoie vrai si a = b */
     if (a.bigint_sign != b.bigint_sign)
-      return false;
+        return false;
     else if (a.bigint_len != b.bigint_len)
-      return false;
+        return false;
     else
     {
-        for (int i = 0; i < a.bigint_len; i++)
-          if (a.bigint_chiffres[i] != b.bigint_chiffres[i])
-          return false;
+        for (int i = 0; i < a.bigint_len; i += 1)
+            if (a.bigint_chiffres[i] != b.bigint_chiffres[i])
+                return false;
         return true;
     }
   }
@@ -57,24 +57,24 @@ public class bigints
   {
     /* Renvoie vrai si a > b */
     if (a.bigint_sign && !b.bigint_sign)
-      return true;
+        return true;
     else if (!a.bigint_sign && b.bigint_sign)
-      return false;
+        return false;
     else
     {
         if (a.bigint_len > b.bigint_len)
-          return a.bigint_sign;
+            return a.bigint_sign;
         else if (a.bigint_len < b.bigint_len)
-          return !a.bigint_sign;
+            return !a.bigint_sign;
         else
-          for (int i = 0; i < a.bigint_len; i++)
-          {
-              int j = a.bigint_len - 1 - i;
-              if (a.bigint_chiffres[j] > b.bigint_chiffres[j])
-                return a.bigint_sign;
-              else if (a.bigint_chiffres[j] < b.bigint_chiffres[j])
-                return !a.bigint_sign;
-        }
+            for (int i = 0; i < a.bigint_len; i += 1)
+            {
+                int j = a.bigint_len - 1 - i;
+                if (a.bigint_chiffres[j] > b.bigint_chiffres[j])
+                    return a.bigint_sign;
+                else if (a.bigint_chiffres[j] < b.bigint_chiffres[j])
+                    return !a.bigint_sign;
+            }
         return true;
     }
   }
@@ -90,18 +90,18 @@ public class bigints
     int len = Math.max(a.bigint_len, b.bigint_len) + 1;
     int retenue = 0;
     int[] chiffres = new int[len];
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int tmp = retenue;
         if (i < a.bigint_len)
-          tmp += a.bigint_chiffres[i];
+            tmp += a.bigint_chiffres[i];
         if (i < b.bigint_len)
-          tmp += b.bigint_chiffres[i];
+            tmp += b.bigint_chiffres[i];
         retenue = tmp / 10;
         chiffres[i] = tmp % 10;
     }
     while (len > 0 && chiffres[len - 1] == 0)
-      len --;
+        len -= 1;
     bigint f = new bigint();
     f.bigint_sign = true;
     f.bigint_len = len;
@@ -117,22 +117,22 @@ Pré-requis : a > b
     int len = a.bigint_len;
     int retenue = 0;
     int[] chiffres = new int[len];
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int tmp = retenue + a.bigint_chiffres[i];
         if (i < b.bigint_len)
-          tmp -= b.bigint_chiffres[i];
+            tmp -= b.bigint_chiffres[i];
         if (tmp < 0)
         {
             tmp += 10;
             retenue = -1;
         }
         else
-          retenue = 0;
+            retenue = 0;
         chiffres[i] = tmp;
     }
     while (len > 0 && chiffres[len - 1] == 0)
-      len --;
+        len -= 1;
     bigint g = new bigint();
     g.bigint_sign = true;
     g.bigint_len = len;
@@ -152,28 +152,24 @@ Pré-requis : a > b
   static bigint add_bigint(bigint a, bigint b)
   {
     if (a.bigint_sign == b.bigint_sign)
-    {
         if (a.bigint_sign)
-          return add_bigint_positif(a, b);
+            return add_bigint_positif(a, b);
         else
-          return neg_bigint(add_bigint_positif(a, b));
-    }
+            return neg_bigint(add_bigint_positif(a, b));
     else if (a.bigint_sign)
     {
         /* a positif, b negatif */
         if (bigint_gt(a, neg_bigint(b)))
-          return sub_bigint_positif(a, b);
+            return sub_bigint_positif(a, b);
         else
-          return neg_bigint(sub_bigint_positif(b, a));
+            return neg_bigint(sub_bigint_positif(b, a));
     }
     else
-    {
         /* a negatif, b positif */
         if (bigint_gt(neg_bigint(a), b))
-          return neg_bigint(sub_bigint_positif(a, b));
+            return neg_bigint(sub_bigint_positif(a, b));
         else
-          return sub_bigint_positif(b, a);
-    }
+            return sub_bigint_positif(b, a);
   }
   
   static bigint sub_bigint(bigint a, bigint b)
@@ -188,12 +184,12 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
     int len = a.bigint_len + b.bigint_len + 1;
     int[] chiffres = new int[len];
-    for (int k = 0; k < len; k++)
-      chiffres[k] = 0;
-    for (int i = 0; i < a.bigint_len; i++)
+    for (int k = 0; k < len; k += 1)
+        chiffres[k] = 0;
+    for (int i = 0; i < a.bigint_len; i += 1)
     {
         int retenue = 0;
-        for (int j = 0; j < b.bigint_len; j++)
+        for (int j = 0; j < b.bigint_len; j += 1)
         {
             chiffres[i + j] += retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i];
             retenue = chiffres[i + j] / 10;
@@ -201,13 +197,11 @@ D'ou le nom de la fonction. */
         }
         chiffres[i + b.bigint_len] += retenue;
     }
-    chiffres[a.bigint_len + b.bigint_len] =
-    chiffres[a.bigint_len + b.bigint_len - 1] / 10;
-    chiffres[a.bigint_len + b.bigint_len - 1] =
-    chiffres[a.bigint_len + b.bigint_len - 1] % 10;
-    for (int l = 0; l <= 2; l ++)
-      if (len != 0 && chiffres[len - 1] == 0)
-      len --;
+    chiffres[a.bigint_len + b.bigint_len] = chiffres[a.bigint_len + b.bigint_len - 1] / 10;
+    chiffres[a.bigint_len + b.bigint_len - 1] = chiffres[a.bigint_len + b.bigint_len - 1] % 10;
+    for (int l = 0; l <= 2; l += 1)
+        if (len != 0 && chiffres[len - 1] == 0)
+            len -= 1;
     bigint m = new bigint();
     m.bigint_sign = a.bigint_sign == b.bigint_sign;
     m.bigint_len = len;
@@ -219,7 +213,7 @@ D'ou le nom de la fonction. */
   {
     int len = Math.min(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres[len - 1] == 0)
-      len --;
+        len -= 1;
     bigint o = new bigint();
     o.bigint_sign = a.bigint_sign;
     o.bigint_len = len;
@@ -230,11 +224,11 @@ D'ou le nom de la fonction. */
   static bigint bigint_shift(bigint a, int i)
   {
     int[] chiffres = new int[a.bigint_len + i];
-    for (int k = 0; k < a.bigint_len + i; k++)
-      if (k >= i)
-      chiffres[k] = a.bigint_chiffres[k - i];
-    else
-      chiffres[k] = 0;
+    for (int k = 0; k < a.bigint_len + i; k += 1)
+        if (k >= i)
+            chiffres[k] = a.bigint_chiffres[k - i];
+        else
+            chiffres[k] = 0;
     bigint p = new bigint();
     p.bigint_sign = a.bigint_sign;
     p.bigint_len = a.bigint_len + i;
@@ -245,11 +239,11 @@ D'ou le nom de la fonction. */
   static bigint mul_bigint(bigint aa, bigint bb)
   {
     if (aa.bigint_len == 0)
-      return aa;
+        return aa;
     else if (bb.bigint_len == 0)
-      return bb;
+        return bb;
     else if (aa.bigint_len < 3 || bb.bigint_len < 3)
-      return mul_bigint_cp(aa, bb);
+        return mul_bigint_cp(aa, bb);
     /* Algorithme de Karatsuba */
     int split = Math.min(aa.bigint_len, bb.bigint_len) / 2;
     bigint a = bigint_shift(aa, -split);
@@ -276,7 +270,7 @@ Modulo
     while (a >= 10)
     {
         a /= 10;
-        out0++;
+        out0 += 1;
     }
     return out0;
   }
@@ -285,11 +279,11 @@ Modulo
   {
     int size = log10(i);
     if (i == 0)
-      size = 0;
+        size = 0;
     int[] t = new int[size];
-    for (int j = 0; j < size; j++)
-      t[j] = 0;
-    for (int k = 0; k < size; k++)
+    for (int j = 0; j < size; j += 1)
+        t[j] = 0;
+    for (int k = 0; k < size; k += 1)
     {
         t[k] = i % 10;
         i /= 10;
@@ -316,8 +310,8 @@ Modulo
   static int sum_chiffres_bigint(bigint a)
   {
     int out0 = 0;
-    for (int i = 0; i < a.bigint_len; i++)
-      out0 += a.bigint_chiffres[i];
+    for (int i = 0; i < a.bigint_len; i += 1)
+        out0 += a.bigint_chiffres[i];
     return out0;
   }
   
@@ -333,28 +327,28 @@ Modulo
   static bigint bigint_exp(bigint a, int b)
   {
     if (b == 1)
-      return a;
+        return a;
     else if (b % 2 == 0)
-      return bigint_exp(mul_bigint(a, a), b / 2);
+        return bigint_exp(mul_bigint(a, a), b / 2);
     else
-      return mul_bigint(a, bigint_exp(a, b - 1));
+        return mul_bigint(a, bigint_exp(a, b - 1));
   }
   
   static bigint bigint_exp_10chiffres(bigint a, int b)
   {
     a = bigint_premiers_chiffres(a, 10);
     if (b == 1)
-      return a;
+        return a;
     else if (b % 2 == 0)
-      return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
+        return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
     else
-      return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
+        return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
   }
   
   static void euler48()
   {
     bigint sum = bigint_of_int(0);
-    for (int i = 1; i <= 100; i ++)
+    for (int i = 1; i <= 100; i += 1)
     {
         /* 1000 normalement */
         bigint ib = bigint_of_int(i);
@@ -386,7 +380,7 @@ Modulo
         bigint c = add_bigint(a, b);
         a = b;
         b = c;
-        i++;
+        i += 1;
     }
     return i;
   }
@@ -396,43 +390,41 @@ Modulo
     int maxA = 5;
     int maxB = 5;
     bigint[] a_bigint = new bigint[maxA + 1];
-    for (int j = 0; j < maxA + 1; j++)
-      a_bigint[j] = bigint_of_int(j * j);
+    for (int j = 0; j <= maxA; j += 1)
+        a_bigint[j] = bigint_of_int(j * j);
     bigint[] a0_bigint = new bigint[maxA + 1];
-    for (int j2 = 0; j2 < maxA + 1; j2++)
-      a0_bigint[j2] = bigint_of_int(j2);
+    for (int j2 = 0; j2 <= maxA; j2 += 1)
+        a0_bigint[j2] = bigint_of_int(j2);
     int[] b = new int[maxA + 1];
-    for (int k = 0; k < maxA + 1; k++)
-      b[k] = 2;
+    for (int k = 0; k <= maxA; k += 1)
+        b[k] = 2;
     int n = 0;
     boolean found = true;
     while (found)
     {
         bigint min0 = a0_bigint[0];
         found = false;
-        for (int i = 2; i <= maxA; i ++)
-          if (b[i] <= maxB)
-        {
-            if (found)
-            {
-                if (bigint_lt(a_bigint[i], min0))
-                  min0 = a_bigint[i];
-            }
-            else
-            {
-                min0 = a_bigint[i];
-                found = true;
-            }
-        }
+        for (int i = 2; i <= maxA; i += 1)
+            if (b[i] <= maxB)
+                if (found)
+                {
+                    if (bigint_lt(a_bigint[i], min0))
+                        min0 = a_bigint[i];
+                }
+                else
+                {
+                    min0 = a_bigint[i];
+                    found = true;
+                }
         if (found)
         {
-            n++;
-            for (int l = 2; l <= maxA; l ++)
-              if (bigint_eq(a_bigint[l], min0) && b[l] <= maxB)
-            {
-                b[l]++;
-                a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
-            }
+            n += 1;
+            for (int l = 2; l <= maxA; l += 1)
+                if (bigint_eq(a_bigint[l], min0) && b[l] <= maxB)
+                {
+                    b[l] += 1;
+                    a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
+                }
         }
     }
     return n;
@@ -443,7 +435,7 @@ Modulo
   {
     System.out.printf("%d\n", euler29());
     bigint sum = read_bigint(50);
-    for (int i = 2; i <= 100; i ++)
+    for (int i = 2; i <= 100; i += 1)
     {
         scanner.findWithinHorizon("[\n\r ]*", 1);
         bigint tmp = read_bigint(50);
@@ -495,9 +487,9 @@ Modulo
     print_bigint(b);
     System.out.print("=");
     if (bigint_gt(a, b))
-      System.out.print("True");
+        System.out.print("True");
     else
-      System.out.print("False");
+        System.out.print("False");
     System.out.print("\n");
   }
   

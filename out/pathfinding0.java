@@ -6,13 +6,13 @@ public class pathfinding0
   static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
-      return 0;
+        return 0;
     else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
-      return x * y * 10;
+        return x * y * 10;
     else if (tab[posY][posX] == '#')
-      return x * y * 10;
+        return x * y * 10;
     else if (cache[posY][posX] != -1)
-      return cache[posY][posX];
+        return cache[posY][posX];
     else
     {
         cache[posY][posX] = x * y * 10;
@@ -29,12 +29,12 @@ public class pathfinding0
   static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
-    for (int i = 0; i < y; i++)
+    for (int i = 0; i < y; i += 1)
     {
         int[] tmp = new int[x];
-        for (int j = 0; j < x; j++)
+        for (int j = 0; j < x; j += 1)
         {
-            System.out.printf("%c", tab[i][j]);
+            System.out.print(tab[i][j]);
             tmp[j] = -1;
         }
         System.out.print("\n");
@@ -50,11 +50,11 @@ public class pathfinding0
     int y = Integer.parseInt(scanner.nextLine());
     System.out.printf("%d %d\n", x, y);
     char[][] e = new char[y][];
-    for (int f = 0; f < y; f++)
-      e[f] = scanner.nextLine().toCharArray();
+    for (int f = 0; f < y; f += 1)
+        e[f] = scanner.nextLine().toCharArray();
     char[][] tab = e;
     int result = pathfind(tab, x, y);
-    System.out.printf("%d", result);
+    System.out.print(result);
   }
   
 }
