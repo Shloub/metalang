@@ -11,8 +11,8 @@ public class aaa_04loop
     while (j <= i + 2)
     {
         if (i % j == 5)
-          return true;
-        j++;
+            return true;
+        j += 1;
     }
     return false;
   }
@@ -21,16 +21,16 @@ public class aaa_04loop
   public static void Main(String[] args)
   {
     int j = 0;
-    for (int k = 0; k <= 10; k ++)
+    for (int k = 0; k <= 10; k += 1)
     {
         j += k;
-        Console.Write("" + j + "\n");
+        Console.Write(j + "\n");
     }
     int i = 4;
     while (i < 10)
     {
         Console.Write(i);
-        i++;
+        i += 1;
         j += i;
     }
     Console.Write("" + j + i + "FIN TEST\n");

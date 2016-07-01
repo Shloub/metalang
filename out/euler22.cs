@@ -57,7 +57,7 @@ static int readInt(){
     int len = readInt();
     stdin_sep();
     int sum = 0;
-    for (int i = 1; i <= len; i ++)
+    for (int i = 1; i <= len; i += 1)
     {
         char c = readChar();
         sum += (int)(c) - (int)('A') + 1;
@@ -71,9 +71,9 @@ static int readInt(){
   {
     int sum = 0;
     int n = readInt();
-    for (int i = 1; i <= n; i ++)
-      sum += i * score();
-    Console.Write("" + sum + "\n");
+    for (int i = 1; i <= n; i += 1)
+        sum += i * score();
+    Console.Write(sum + "\n");
   }
   
 }

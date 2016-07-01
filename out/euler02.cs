@@ -11,12 +11,12 @@ public class euler02
     while (a < 4000000)
     {
         if (a % 2 == 0)
-          sum += a;
+            sum += a;
         int c = a;
         a = b;
         b += c;
     }
-    Console.Write("" + sum + "\n");
+    Console.Write(sum + "\n");
   }
   
 }

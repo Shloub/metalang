@@ -5,7 +5,7 @@ public class euler52
   static int chiffre_sort(int a)
   {
     if (a < 10)
-      return a;
+        return a;
     else
     {
         int b = chiffre_sort(a / 10);
@@ -13,9 +13,9 @@ public class euler52
         int d = b % 10;
         int e = b / 10;
         if (c < d)
-          return c + b * 10;
+            return c + b * 10;
         else
-          return d + chiffre_sort(c + e * 10) * 10;
+            return d + chiffre_sort(c + e * 10) * 10;
     }
   }
   
@@ -30,7 +30,7 @@ public class euler52
   {
     int num = 142857;
     if (same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5))
-      Console.Write("" + num + " " + (num * 2) + " " + (num * 3) + " " + (num * 4) + " " + (num * 5) + " " + (num * 6) + "\n");
+        Console.Write(num + " " + (num * 2) + " " + (num * 3) + " " + (num * 4) + " " + (num * 5) + " " + (num * 6) + "\n");
   }
   
 }

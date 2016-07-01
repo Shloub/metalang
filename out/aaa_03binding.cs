@@ -6,13 +6,13 @@ public class aaa_03binding
   {
     int j = i * 4;
     if (j % 2 == 1)
-      return 0;
+        return 0;
     return j;
   }
   
   static void h(int i)
   {
-    Console.Write("" + i + "\n");
+    Console.Write(i + "\n");
   }
   
   

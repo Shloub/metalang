@@ -25,7 +25,7 @@ public class aaa_08tuple
     tuple_int_int e = t.foo;
     int a = e.tuple_int_int_field_0;
     int b = e.tuple_int_int_field_1;
-    Console.Write("" + a + " " + b + " " + t.bar + "\n");
+    Console.Write(a + " " + b + " " + t.bar + "\n");
   }
   
 }

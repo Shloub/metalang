@@ -83,14 +83,14 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t3 = t2;
     t = t2;
     t2 = t3;
-    t.blah++;
+    t.blah += 1;
     int len = 1;
     int[] cache0 = new int[len];
-    for (int i = 0; i < len; i++)
-      cache0[i] = -i;
+    for (int i = 0; i < len; i += 1)
+        cache0[i] = -i;
     int[] cache1 = new int[len];
-    for (int j = 0; j < len; j++)
-      cache1[j] = j;
+    for (int j = 0; j < len; j += 1)
+        cache1[j] = j;
     int[] cache2 = cache0;
     cache0 = cache1;
     cache2 = cache0;

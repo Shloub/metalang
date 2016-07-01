@@ -60,16 +60,16 @@ Ce test effectue un rot13 sur une chaine lue en entrée
     int strlen = readInt();
     stdin_sep();
     char[] tab4 = new char[strlen];
-    for (int toto = 0; toto < strlen; toto++)
+    for (int toto = 0; toto < strlen; toto += 1)
     {
         char tmpc = readChar();
         int c = (int)(tmpc);
         if (tmpc != (char)32)
-          c = (c - (int)('a') + 13) % 26 + (int)('a');
+            c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4[toto] = (char)(c);
     }
-    for (int j = 0; j < strlen; j++)
-      Console.Write(tab4[j]);
+    for (int j = 0; j < strlen; j += 1)
+        Console.Write(tab4[j]);
   }
   
 }

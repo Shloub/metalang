@@ -27,7 +27,7 @@ static char readChar(){
   {
     int i = 1;
     int[] last = new int[5];
-    for (int j = 0; j < 5; j++)
+    for (int j = 0; j < 5; j += 1)
     {
         char c = readChar();
         int d = (int)(c) - (int)('0');
@@ -37,7 +37,7 @@ static char readChar(){
     int max0 = i;
     int index = 0;
     int nskipdiv = 0;
-    for (int k = 1; k <= 995; k ++)
+    for (int k = 1; k <= 995; k += 1)
     {
         char e = readChar();
         int f = (int)(e) - (int)('0');
@@ -50,14 +50,14 @@ static char readChar(){
         {
             i *= f;
             if (nskipdiv < 0)
-              i /= last[index];
-            nskipdiv --;
+                i /= last[index];
+            nskipdiv -= 1;
         }
         last[index] = f;
         index = (index + 1) % 5;
         max0 = Math.Max(max0, i);
     }
-    Console.Write("" + max0 + "\n");
+    Console.Write(max0 + "\n");
   }
   
 }

@@ -50,30 +50,28 @@ static int readInt(){
   {
     int m = (a + b) / 2;
     if (a == m)
-    {
         if (tab[a] == m)
-          return b;
+            return b;
         else
-          return a;
-    }
+            return a;
     int i = a;
     int j = b;
     while (i < j)
     {
         int e = tab[i];
         if (e < m)
-          i++;
+            i += 1;
         else
         {
-            j --;
+            j -= 1;
             tab[i] = tab[j];
             tab[j] = e;
         }
     }
     if (i < m)
-      return go0(tab, a, m);
+        return go0(tab, a, m);
     else
-      return go0(tab, m, b);
+        return go0(tab, m, b);
   }
   
   static int plus_petit0(int[] tab, int len)
@@ -88,7 +86,7 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int tmp = 0;
         tmp = readInt();

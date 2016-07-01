@@ -67,30 +67,30 @@ static int readInt(){
     int len = readInt();
     stdin_sep();
     int sum = 0;
-    for (int i = 1; i <= len; i ++)
+    for (int i = 1; i <= len; i += 1)
     {
         char c = readChar();
         sum += (int)(c) - (int)('A') + 1;
         /*		print c print " " print sum print " " */
     }
     if (is_triangular(sum))
-      return 1;
+        return 1;
     else
-      return 0;
+        return 0;
   }
   
   
   public static void Main(String[] args)
   {
-    for (int i = 1; i <= 55; i ++)
-      if (is_triangular(i))
-      Console.Write("" + i + " ");
+    for (int i = 1; i <= 55; i += 1)
+        if (is_triangular(i))
+            Console.Write(i + " ");
     Console.Write("\n");
     int sum = 0;
     int n = readInt();
-    for (int i = 1; i <= n; i ++)
-      sum += score();
-    Console.Write("" + sum + "\n");
+    for (int i = 1; i <= n; i += 1)
+        sum += score();
+    Console.Write(sum + "\n");
   }
   
 }
