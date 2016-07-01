@@ -8,10 +8,10 @@ int sum = 0
 while (a < 4000000)
 {
     if (a % 2 == 0)
-      sum += a;
+        sum += a
     int c = a
     a = b
-    b += c;
+    b += c
 }
-System.out.printf("%s\n", sum);
+System.out.printf("%d\n", sum)
 

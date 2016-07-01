@@ -20,20 +20,20 @@ class Move {
 void print_state(Gamestate g)
 {
   print("\n|")
-  for (int y = 0; y <= 2; y ++)
+  for (int y = 0; y <= 2; y += 1)
   {
-      for (int x = 0; x <= 2; x ++)
+      for (int x = 0; x <= 2; x += 1)
       {
           if (g.cases[x][y] == 0)
-            print(" ")
+              print(" ")
           else if (g.cases[x][y] == 1)
-            print("O")
+              print("O")
           else
-            print("X")
+              print("X")
           print("|")
       }
       if (y != 2)
-        print("\n|-|-|-|\n|")
+          print("\n|-|-|-|\n|")
   }
   print("\n")
 }
@@ -43,44 +43,44 @@ void eval0(Gamestate g)
 {
   int win = 0
   int freecase = 0
-  for (int y = 0; y <= 2; y ++)
+  for (int y = 0; y <= 2; y += 1)
   {
       int col = -1
       int lin = -1
-      for (int x = 0; x <= 2; x ++)
+      for (int x = 0; x <= 2; x += 1)
       {
           if (g.cases[x][y] == 0)
-            freecase++;
+              freecase += 1
           int colv = g.cases[x][y]
           int linv = g.cases[y][x]
           if (col == -1 && colv != 0)
-            col = colv
+              col = colv
           else if (colv != col)
-            col = -2
+              col = -2
           if (lin == -1 && linv != 0)
-            lin = linv
+              lin = linv
           else if (linv != lin)
-            lin = -2
+              lin = -2
       }
       if (col >= 0)
-        win = col
+          win = col
       else if (lin >= 0)
-        win = lin
+          win = lin
   }
-  for (int x = 1; x <= 2; x ++)
+  for (int x = 1; x <= 2; x += 1)
   {
       if (g.cases[0][0] == x && g.cases[1][1] == x && g.cases[2][2] == x)
-        win = x
+          win = x
       if (g.cases[0][2] == x && g.cases[1][1] == x && g.cases[2][0] == x)
-        win = x
+          win = x
   }
   g.ended = win != 0 || freecase == 0
   if (win == 1)
-    g.note = 1000
+      g.note = 1000
   else if (win == 2)
-    g.note = -1000
+      g.note = -1000
   else
-    g.note = 0
+      g.note = 0
 }
 
 /* On applique un mouvement */
@@ -88,7 +88,7 @@ void apply_move_xy(int x, int y, Gamestate g)
 {
   int player = 2
   if (g.firstToPlay)
-    player = 1
+      player = 1
   g.cases[x][y] = player
   g.firstToPlay = !g.firstToPlay
 }
@@ -127,21 +127,21 @@ int minmax(Gamestate g)
 {
   eval0(g)
   if (g.ended)
-    return g.note
+      return g.note
   int maxNote = -10000
   if (!g.firstToPlay)
-    maxNote = 10000
-  for (int x = 0; x <= 2; x ++)
-    for (int y = 0; y <= 2; y ++)
-      if (can_move_xy(x, y, g))
-  {
-      apply_move_xy(x, y, g)
-      int currentNote = minmax(g)
-      cancel_move_xy(x, y, g)
-      /* Minimum ou Maximum selon le coté ou l'on joue*/
-      if (currentNote > maxNote == g.firstToPlay)
-        maxNote = currentNote
-  }
+      maxNote = 10000
+  for (int x = 0; x <= 2; x += 1)
+      for (int y = 0; y <= 2; y += 1)
+          if (can_move_xy(x, y, g))
+          {
+              apply_move_xy(x, y, g)
+              int currentNote = minmax(g)
+              cancel_move_xy(x, y, g)
+              /* Minimum ou Maximum selon le coté ou l'on joue*/
+              if (currentNote > maxNote == g.firstToPlay)
+                  maxNote = currentNote
+          }
   return maxNote
 }
 
@@ -154,33 +154,33 @@ Move play(Gamestate g)
   minMove.x = 0
   minMove.y = 0
   int minNote = 10000
-  for (int x = 0; x <= 2; x ++)
-    for (int y = 0; y <= 2; y ++)
-      if (can_move_xy(x, y, g))
-  {
-      apply_move_xy(x, y, g)
-      int currentNote = minmax(g)
-      System.out.printf("%s, %s, %s\n", x, y, currentNote);
-      cancel_move_xy(x, y, g)
-      if (currentNote < minNote)
-      {
-          minNote = currentNote
-          minMove.x = x
-          minMove.y = y
-      }
-  }
-  System.out.printf("%s%s\n", minMove.x, minMove.y);
+  for (int x = 0; x <= 2; x += 1)
+      for (int y = 0; y <= 2; y += 1)
+          if (can_move_xy(x, y, g))
+          {
+              apply_move_xy(x, y, g)
+              int currentNote = minmax(g)
+              System.out.printf("%d, %d, %d\n", x, y, currentNote)
+              cancel_move_xy(x, y, g)
+              if (currentNote < minNote)
+              {
+                  minNote = currentNote
+                  minMove.x = x
+                  minMove.y = y
+              }
+          }
+  System.out.printf("%d%d\n", minMove.x, minMove.y)
   return minMove
 }
 
 Gamestate init0()
 {
   int[][] cases = new int[3][]
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 3; i += 1)
   {
       int[] tab = new int[3]
-      for (int j = 0; j < 3; j++)
-        tab[j] = 0
+      for (int j = 0; j < 3; j += 1)
+          tab[j] = 0
       cases[i] = tab
   }
   Gamestate a = new Gamestate()
@@ -193,20 +193,20 @@ Gamestate init0()
 
 Move read_move()
 {
-  int x;
+  int x
   if (scanner.hasNext("^-")) {
-    scanner.next("^-");
-    x = scanner.nextInt();
+    scanner.next("^-")
+    x = scanner.nextInt()
   } else {
-    x = scanner.nextInt();
+    x = scanner.nextInt()
   }
   scanner.findWithinHorizon("[\n\r ]*", 1)
-  int y;
+  int y
   if (scanner.hasNext("^-")) {
-    scanner.next("^-");
-    y = scanner.nextInt();
+    scanner.next("^-")
+    y = scanner.nextInt()
   } else {
-    y = scanner.nextInt();
+    y = scanner.nextInt()
   }
   scanner.findWithinHorizon("[\n\r ]*", 1)
   Move b = new Move()
@@ -217,7 +217,7 @@ Move read_move()
 
 
 @Field Scanner scanner = new Scanner(System.in)
-for (int i = 0; i <= 1; i ++)
+for (int i = 0; i <= 1; i += 1)
 {
     Gamestate state = init0()
     Move c = new Move()
@@ -241,6 +241,6 @@ for (int i = 0; i <= 1; i ++)
         }
     }
     print_state(state)
-    System.out.printf("%s\n", state.note);
+    System.out.printf("%d\n", state.note)
 }
 

@@ -24,5 +24,5 @@ Tuple_int_int t = f(e)
 Tuple_int_int g = t
 int a = g.tuple_int_int_field_0
 int b = g.tuple_int_int_field_1
-System.out.printf("%s -- %s--\n", a, b);
+System.out.printf("%d -- %d--\n", a, b)
 

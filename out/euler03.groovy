@@ -14,17 +14,17 @@ while (a != 1)
     {
         if (a % b == 0)
         {
-            a /= b;
+            a /= b
             b0 = b
             b = a
             sqrtia = (int)Math.sqrt(a)
             found = true
         }
-        b++;
+        b += 1
     }
     if (!found)
     {
-        System.out.printf("%s\n", a);
+        System.out.printf("%d\n", a)
         a = 1
     }
 }

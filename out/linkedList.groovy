@@ -21,7 +21,7 @@ boolean is_empty(Intlist foo)
 Intlist rev2(Intlist acc, Intlist torev)
 {
   if (is_empty(torev))
-    return acc
+      return acc
   else
   {
       Intlist acc2 = new Intlist()
@@ -43,13 +43,13 @@ void test(Intlist empty)
   while (i != 0)
   {
       if (scanner.hasNext("^-")) {
-        scanner.next("^-");
-        i = -scanner.nextInt();
+        scanner.next("^-")
+        i = -scanner.nextInt()
       }else{
-        i = scanner.nextInt();
+        i = scanner.nextInt()
       }
       if (i != 0)
-        list = cons(list, i)
+          list = cons(list, i)
   }
 }
 

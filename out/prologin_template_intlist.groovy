@@ -13,8 +13,8 @@ import java.util.*
 int programme_candidat(int[] tableau, int taille)
 {
   int out0 = 0
-  for (int i = 0; i < taille; i++)
-    out0 += tableau[i];
+  for (int i = 0; i < taille; i += 1)
+      out0 += tableau[i]
   return out0
 }
 
@@ -22,5 +22,5 @@ int programme_candidat(int[] tableau, int taille)
 @Field Scanner scanner = new Scanner(System.in)
 int taille = Integer.parseInt(scanner.nextLine())
 int[] tableau = read_int_line()
-System.out.printf("%s\n", programme_candidat(tableau, taille));
+System.out.printf("%d\n", programme_candidat(tableau, taille))
 

@@ -12,14 +12,14 @@ import java.util.*
 
 
 @Field Scanner scanner = new Scanner(System.in)
-for (int i = 1; i <= 3; i ++)
+for (int i = 1; i <= 3; i += 1)
 {
     int[] c = read_int_line()
     int a = c[0]
     int b = c[1]
-    System.out.printf("a = %s b = %s\n", a, b);
+    System.out.printf("a = %d b = %d\n", a, b)
 }
 int[] l = read_int_line()
-for (int j = 0; j <= 9; j ++)
-  System.out.printf("%s\n", l[j]);
+for (int j = 0; j <= 9; j += 1)
+    System.out.printf("%d\n", l[j])
 

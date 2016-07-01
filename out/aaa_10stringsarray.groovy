@@ -11,21 +11,21 @@ String idstring(String s)
 
 void printstring(String s)
 {
-  System.out.printf("%s\n", idstring(s));
+  System.out.printf("%s\n", idstring(s))
 }
 
 void print_toto(Toto t)
 {
-  System.out.printf("%s = %s\n", t.s, t.v);
+  System.out.printf("%s = %d\n", t.s, t.v)
 }
 
 
 
 String[] tab = new String[2]
-for (int i = 0; i < 2; i++)
-  tab[i] = idstring("chaine de test")
-for (int j = 0; j <= 1; j ++)
-  printstring(idstring(tab[j]))
+for (int i = 0; i < 2; i += 1)
+    tab[i] = idstring("chaine de test")
+for (int j = 0; j <= 1; j += 1)
+    printstring(idstring(tab[j]))
 Toto a = new Toto()
 a.s = "one"
 a.v = 1
