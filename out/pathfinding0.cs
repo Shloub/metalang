@@ -6,13 +6,13 @@ public class pathfinding0
   static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
-      return 0;
+        return 0;
     else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
-      return x * y * 10;
+        return x * y * 10;
     else if (tab[posY][posX] == (char)35)
-      return x * y * 10;
+        return x * y * 10;
     else if (cache[posY][posX] != -1)
-      return cache[posY][posX];
+        return cache[posY][posX];
     else
     {
         cache[posY][posX] = x * y * 10;
@@ -29,10 +29,10 @@ public class pathfinding0
   static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
-    for (int i = 0; i < y; i++)
+    for (int i = 0; i < y; i += 1)
     {
         int[] tmp = new int[x];
-        for (int j = 0; j < x; j++)
+        for (int j = 0; j < x; j += 1)
         {
             Console.Write(tab[i][j]);
             tmp[j] = -1;
@@ -48,10 +48,10 @@ public class pathfinding0
   {
     int x = int.Parse(Console.ReadLine());
     int y = int.Parse(Console.ReadLine());
-    Console.Write("" + x + " " + y + "\n");
+    Console.Write(x + " " + y + "\n");
     char[][] e = new char[y][];
-    for (int f = 0; f < y; f++)
-      e[f] = Console.ReadLine().ToCharArray();
+    for (int f = 0; f < y; f += 1)
+        e[f] = Console.ReadLine().ToCharArray();
     char[][] tab = e;
     int result = pathfind(tab, x, y);
     Console.Write(result);

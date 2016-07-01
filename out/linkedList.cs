@@ -55,7 +55,7 @@ static int readInt(){
   static intlist rev2(intlist acc, intlist torev)
   {
     if (is_empty(torev))
-      return acc;
+        return acc;
     else
     {
         intlist acc2 = new intlist();
@@ -78,7 +78,7 @@ static int readInt(){
     {
         i = readInt();
         if (i != 0)
-          list = cons(list, i);
+            list = cons(list, i);
     }
   }
   

@@ -54,7 +54,7 @@ La suite de fibonaci
     int out0 = 0;
     int a2 = a;
     int b2 = b;
-    for (int j = 0; j <= i + 1; j ++)
+    for (int j = 0; j <= i + 1; j += 1)
     {
         out0 += a2;
         int tmp = b2;

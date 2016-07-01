@@ -12,7 +12,7 @@ public class affect_param
   {
     int a = 0;
     foo(a);
-    Console.Write("" + a + "\n");
+    Console.Write(a + "\n");
   }
   
 }

@@ -23,11 +23,11 @@ public class euler03
                 sqrtia = (int)Math.Sqrt(a);
                 found = true;
             }
-            b++;
+            b += 1;
         }
         if (!found)
         {
-            Console.Write("" + a + "\n");
+            Console.Write(a + "\n");
             a = 1;
         }
     }

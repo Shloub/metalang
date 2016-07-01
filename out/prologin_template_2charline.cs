@@ -6,13 +6,13 @@ public class prologin_template_2charline
   static int programme_candidat(char[] tableau1, int taille1, char[] tableau2, int taille2)
   {
     int out0 = 0;
-    for (int i = 0; i < taille1; i++)
+    for (int i = 0; i < taille1; i += 1)
     {
         out0 += (int)(tableau1[i]) * i;
         Console.Write(tableau1[i]);
     }
     Console.Write("--\n");
-    for (int j = 0; j < taille2; j++)
+    for (int j = 0; j < taille2; j += 1)
     {
         out0 += (int)(tableau2[j]) * j * 100;
         Console.Write(tableau2[j]);
@@ -28,7 +28,7 @@ public class prologin_template_2charline
     char[] tableau1 = Console.ReadLine().ToCharArray();
     int taille2 = int.Parse(Console.ReadLine());
     char[] tableau2 = Console.ReadLine().ToCharArray();
-    Console.Write("" + programme_candidat(tableau1, taille1, tableau2, taille2) + "\n");
+    Console.Write(programme_candidat(tableau1, taille1, tableau2, taille2) + "\n");
   }
   
 }

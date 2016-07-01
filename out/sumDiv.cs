@@ -39,7 +39,7 @@ static int readInt(){
   {
     int a = 0;
     /* test */
-    a++;
+    a += 1;
     /* test 2 */
   }
   
@@ -61,8 +61,7 @@ static int readInt(){
     /* On désire renvoyer la somme des diviseurs */
     int out0 = 0;
     /* On déclare un entier qui contiendra la somme */
-    for (int i = 1; i <= n; i ++)
-    {
+    for (int i = 1; i <= n; i += 1)
         /* La boucle : i est le diviseur potentiel*/
         if (n % i == 0)
         {
@@ -74,7 +73,6 @@ static int readInt(){
         {
             /* nop */
         }
-    }
     return out0;
     /*On renvoie out*/
   }
