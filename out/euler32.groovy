@@ -26,7 +26,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 boolean okdigits(boolean[] ok, int n)
 {
   if (n == 0)
-    return true
+      return true
   else
   {
       int digit = n % 10
@@ -38,7 +38,7 @@ boolean okdigits(boolean[] ok, int n)
           return o
       }
       else
-        return false
+          return false
   }
 }
 
@@ -46,61 +46,61 @@ boolean okdigits(boolean[] ok, int n)
 
 int count = 0
 boolean[] allowed = new boolean[10]
-for (int i = 0; i < 10; i++)
-  allowed[i] = i != 0
+for (int i = 0; i < 10; i += 1)
+    allowed[i] = i != 0
 boolean[] counted = new boolean[100000]
-for (int j = 0; j < 100000; j++)
-  counted[j] = false
-for (int e = 1; e <= 9; e ++)
+for (int j = 0; j < 100000; j += 1)
+    counted[j] = false
+for (int e = 1; e <= 9; e += 1)
 {
     allowed[e] = false
-    for (int b = 1; b <= 9; b ++)
-      if (allowed[b])
-    {
-        allowed[b] = false
-        int be = b * e % 10
-        if (allowed[be])
+    for (int b = 1; b <= 9; b += 1)
+        if (allowed[b])
         {
-            allowed[be] = false
-            for (int a = 1; a <= 9; a ++)
-              if (allowed[a])
+            allowed[b] = false
+            int be = b * e % 10
+            if (allowed[be])
             {
-                allowed[a] = false
-                for (int c = 1; c <= 9; c ++)
-                  if (allowed[c])
-                {
-                    allowed[c] = false
-                    for (int d = 1; d <= 9; d ++)
-                      if (allowed[d])
+                allowed[be] = false
+                for (int a = 1; a <= 9; a += 1)
+                    if (allowed[a])
                     {
-                        allowed[d] = false
-                        /* 2 * 3 digits */
-                        int product = (a * 10 + b) * (c * 100 + d * 10 + e)
-                        if (!counted[product] && okdigits(allowed, product.intdiv(10)))
-                        {
-                            counted[product] = true
-                            count += product;
-                            System.out.printf("%s ", product);
-                        }
-                        /* 1  * 4 digits */
-                        int product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-                        if (!counted[product2] && okdigits(allowed, product2.intdiv(10)))
-                        {
-                            counted[product2] = true
-                            count += product2;
-                            System.out.printf("%s ", product2);
-                        }
-                        allowed[d] = true
+                        allowed[a] = false
+                        for (int c = 1; c <= 9; c += 1)
+                            if (allowed[c])
+                            {
+                                allowed[c] = false
+                                for (int d = 1; d <= 9; d += 1)
+                                    if (allowed[d])
+                                    {
+                                        allowed[d] = false
+                                        /* 2 * 3 digits */
+                                        int product = (a * 10 + b) * (c * 100 + d * 10 + e)
+                                        if (!counted[product] && okdigits(allowed, product.intdiv(10)))
+                                        {
+                                            counted[product] = true
+                                            count += product
+                                            System.out.printf("%d ", product)
+                                        }
+                                        /* 1  * 4 digits */
+                                        int product2 = b * (a * 1000 + c * 100 + d * 10 + e)
+                                        if (!counted[product2] && okdigits(allowed, product2.intdiv(10)))
+                                        {
+                                            counted[product2] = true
+                                            count += product2
+                                            System.out.printf("%d ", product2)
+                                        }
+                                        allowed[d] = true
+                                    }
+                                allowed[c] = true
+                            }
+                        allowed[a] = true
                     }
-                    allowed[c] = true
-                }
-                allowed[a] = true
+                allowed[be] = true
             }
-            allowed[be] = true
+            allowed[b] = true
         }
-        allowed[b] = true
-    }
     allowed[e] = true
 }
-System.out.printf("%s\n", count);
+System.out.printf("%d\n", count)
 

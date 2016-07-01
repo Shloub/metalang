@@ -17,7 +17,7 @@ Toto mktoto(int v1)
 
 int result(Toto t)
 {
-  t.blah++;
+  t.blah += 1
   return t.foo + t.blah * t.bar + t.bar * t.foo
 }
 
@@ -25,17 +25,17 @@ int result(Toto t)
 @Field Scanner scanner = new Scanner(System.in)
 Toto t = mktoto(4)
 if (scanner.hasNext("^-")) {
-  scanner.next("^-");
-  t.bar = -scanner.nextInt();
+  scanner.next("^-")
+  t.bar = -scanner.nextInt()
 }else{
-  t.bar = scanner.nextInt();
+  t.bar = scanner.nextInt()
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 if (scanner.hasNext("^-")) {
-  scanner.next("^-");
-  t.blah = -scanner.nextInt();
+  scanner.next("^-")
+  t.blah = -scanner.nextInt()
 }else{
-  t.blah = scanner.nextInt();
+  t.blah = scanner.nextInt()
 }
 print(result(t))
 

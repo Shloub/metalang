@@ -4,19 +4,19 @@ import java.util.*
 int score()
 {
   scanner.findWithinHorizon("[\n\r ]*", 1)
-  int len;
+  int len
   if (scanner.hasNext("^-")) {
-    scanner.next("^-");
-    len = scanner.nextInt();
+    scanner.next("^-")
+    len = scanner.nextInt()
   } else {
-    len = scanner.nextInt();
+    len = scanner.nextInt()
   }
   scanner.findWithinHorizon("[\n\r ]*", 1)
   int sum = 0
-  for (int i = 1; i <= len; i ++)
+  for (int i = 1; i <= len; i += 1)
   {
-      char c = scanner.findWithinHorizon(".", 1).charAt(0);
-      sum += (0+c) - (0+(char)'A') + 1;
+      char c = scanner.findWithinHorizon(".", 1).charAt(0)
+      sum += (0+c) - (0+(char)'A') + 1
       /*		print c print " " print sum print " " */
   }
   return sum
@@ -25,14 +25,14 @@ int score()
 
 @Field Scanner scanner = new Scanner(System.in)
 int sum = 0
-int n;
+int n
 if (scanner.hasNext("^-")) {
-  scanner.next("^-");
-  n = scanner.nextInt();
+  scanner.next("^-")
+  n = scanner.nextInt()
 } else {
-  n = scanner.nextInt();
+  n = scanner.nextInt()
 }
-for (int i = 1; i <= n; i ++)
-  sum += i * score();
-System.out.printf("%s\n", sum);
+for (int i = 1; i <= n; i += 1)
+    sum += i * score()
+System.out.printf("%d\n", sum)
 

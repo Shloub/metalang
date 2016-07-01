@@ -23,7 +23,7 @@ boolean is_pair(int i)
   if (i < 20)
   {
       if (i == 22)
-        j = 0
+          j = 0
       j = 8
   }
   return i % 2 == 0

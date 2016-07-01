@@ -4,13 +4,13 @@ import java.util.*
 int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
 {
   if (posX == x - 1 && posY == y - 1)
-    return 0
+      return 0
   else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
-    return x * y * 10
+      return x * y * 10
   else if (tab[posY][posX] == (char)'#')
-    return x * y * 10
+      return x * y * 10
   else if (cache[posY][posX] != -1)
-    return cache[posY][posX]
+      return cache[posY][posX]
   else
   {
       cache[posY][posX] = x * y * 10
@@ -27,11 +27,11 @@ int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
 int pathfind(char[][] tab, int x, int y)
 {
   int[][] cache = new int[y][]
-  for (int i = 0; i < y; i++)
+  for (int i = 0; i < y; i += 1)
   {
       int[] tmp = new int[x]
-      for (int j = 0; j < x; j++)
-        tmp[j] = -1
+      for (int j = 0; j < x; j += 1)
+          tmp[j] = -1
       cache[i] = tmp
   }
   return pathfind_aux(cache, tab, x, y, 0, 0)
@@ -42,27 +42,27 @@ int pathfind(char[][] tab, int x, int y)
 int x = 0
 int y = 0
 if (scanner.hasNext("^-")) {
-  scanner.next("^-");
-  x = -scanner.nextInt();
+  scanner.next("^-")
+  x = -scanner.nextInt()
 }else{
-  x = scanner.nextInt();
+  x = scanner.nextInt()
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 if (scanner.hasNext("^-")) {
-  scanner.next("^-");
-  y = -scanner.nextInt();
+  scanner.next("^-")
+  y = -scanner.nextInt()
 }else{
-  y = scanner.nextInt();
+  y = scanner.nextInt()
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 char[][] tab = new char[y][]
-for (int i = 0; i < y; i++)
+for (int i = 0; i < y; i += 1)
 {
     char[] tab2 = new char[x]
-    for (int j = 0; j < x; j++)
+    for (int j = 0; j < x; j += 1)
     {
         char tmp = (char)0
-        tmp = scanner.findWithinHorizon(".", 1).charAt(0);
+        tmp = scanner.findWithinHorizon(".", 1).charAt(0)
         tab2[j] = tmp
     }
     scanner.findWithinHorizon("[\n\r ]*", 1)

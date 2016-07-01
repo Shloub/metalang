@@ -3,32 +3,32 @@ import java.util.*
 int eratostene(int[] t, int max0)
 {
   int n = 0
-  for (int i = 2; i < max0; i++)
-    if (t[i] == i)
-  {
-      int j = i * i
-      n++;
-      while (j < max0 && j > 0)
+  for (int i = 2; i < max0; i += 1)
+      if (t[i] == i)
       {
-          t[j] = 0
-          j += i;
+          int j = i * i
+          n += 1
+          while (j < max0 && j > 0)
+          {
+              t[j] = 0
+              j += i
+          }
       }
-  }
   return n
 }
 
 int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
 {
-  for (int i = 0; i < nprimes; i++)
+  for (int i = 0; i < nprimes; i += 1)
   {
       int d = primes[i]
       while (n % d == 0)
       {
-          t[d]++;
-          n /= d;
+          t[d] += 1
+          n /= d
       }
       if (n == 1)
-        return primes[i]
+          return primes[i]
   }
   return n
 }
@@ -37,32 +37,32 @@ int find(int ndiv2)
 {
   int maximumprimes = 110
   int[] era = new int[maximumprimes]
-  for (int j = 0; j < maximumprimes; j++)
-    era[j] = j
+  for (int j = 0; j < maximumprimes; j += 1)
+      era[j] = j
   int nprimes = eratostene(era, maximumprimes)
   int[] primes = new int[nprimes]
-  for (int o = 0; o < nprimes; o++)
-    primes[o] = 0
+  for (int o = 0; o < nprimes; o += 1)
+      primes[o] = 0
   int l = 0
-  for (int k = 2; k < maximumprimes; k++)
-    if (era[k] == k)
-  {
-      primes[l] = k
-      l++;
-  }
-  for (int n = 1; n <= 10000; n ++)
+  for (int k = 2; k < maximumprimes; k += 1)
+      if (era[k] == k)
+      {
+          primes[l] = k
+          l += 1
+      }
+  for (int n = 1; n <= 10000; n += 1)
   {
       int[] primesFactors = new int[n + 2]
-      for (int m = 0; m < n + 2; m++)
-        primesFactors[m] = 0
+      for (int m = 0; m < n + 2; m += 1)
+          primesFactors[m] = 0
       int max0 = Math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
-      primesFactors[2] --;
+      primesFactors[2] -= 1
       int ndivs = 1
-      for (int i = 0; i <= max0; i ++)
-        if (primesFactors[i] != 0)
-        ndivs *= 1 + primesFactors[i];
+      for (int i = 0; i <= max0; i += 1)
+          if (primesFactors[i] != 0)
+              ndivs *= 1 + primesFactors[i]
       if (ndivs > ndiv2)
-        return (n * (n + 1)).intdiv(2)
+          return (n * (n + 1)).intdiv(2)
       /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
   }
   return 0
@@ -70,5 +70,5 @@ int find(int ndiv2)
 
 
 
-System.out.printf("%s\n", find(500));
+System.out.printf("%d\n", find(500))
 

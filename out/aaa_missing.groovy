@@ -16,24 +16,24 @@ import java.util.*
 int result(int len, int[] tab)
 {
   boolean[] tab2 = new boolean[len]
-  for (int i = 0; i < len; i++)
-    tab2[i] = false
-  for (int i1 = 0; i1 < len; i1++)
+  for (int i = 0; i < len; i += 1)
+      tab2[i] = false
+  for (int i1 = 0; i1 < len; i1 += 1)
   {
-      System.out.printf("%s ", tab[i1]);
+      System.out.printf("%d ", tab[i1])
       tab2[tab[i1]] = true
   }
   print("\n")
-  for (int i2 = 0; i2 < len; i2++)
-    if (!tab2[i2])
-    return i2
+  for (int i2 = 0; i2 < len; i2 += 1)
+      if (!tab2[i2])
+          return i2
   return -1
 }
 
 
 @Field Scanner scanner = new Scanner(System.in)
 int len = Integer.parseInt(scanner.nextLine())
-System.out.printf("%s\n", len);
+System.out.printf("%d\n", len)
 int[] tab = read_int_line()
-System.out.printf("%s\n", result(len, tab));
+System.out.printf("%d\n", result(len, tab))
 

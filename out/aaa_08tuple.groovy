@@ -31,5 +31,5 @@ t.bar = bar_
 Tuple_int_int e = t.foo
 int a = e.tuple_int_int_field_0
 int b = e.tuple_int_int_field_1
-System.out.printf("%s %s %s\n", a, b, t.bar);
+System.out.printf("%d %d %d\n", a, b, t.bar)
 

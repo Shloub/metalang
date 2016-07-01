@@ -9,5 +9,5 @@ void foo(int a)
 
 int a = 0
 foo(a)
-System.out.printf("%s\n", a);
+System.out.printf("%d\n", a)
 

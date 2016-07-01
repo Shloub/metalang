@@ -4,13 +4,13 @@ int g(int i)
 {
   int j = i * 4
   if (j % 2 == 1)
-    return 0
+      return 0
   return j
 }
 
 void h(int i)
 {
-  System.out.printf("%s\n", i);
+  System.out.printf("%d\n", i)
 }
 
 

@@ -20,12 +20,12 @@ int sumdiag(int n)
   int nterms = n * 2 - 1
   int un = 1
   int sum = 1
-  for (int i = 0; i <= nterms - 2; i ++)
+  for (int i = 0; i < nterms - 1; i += 1)
   {
       int d = 2 * (1 + i.intdiv(4))
-      un += d;
+      un += d
       /* print int d print "=>" print un print " " */
-      sum += un;
+      sum += un
   }
   return sum
 }
