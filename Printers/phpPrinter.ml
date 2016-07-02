@@ -137,9 +137,7 @@ let print_instr macros i =
   in fun f -> i.p f i.default
     
 class phpPrinter = object(self)
-  inherit CPrinter.cPrinter as super
-
-  method multi_read f li = self#base_multi_read f li
+  inherit Printer.printer as super
 
  method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
@@ -166,8 +164,7 @@ class phpPrinter = object(self)
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "<?php@\n%s%s%s%a%a@\n"
-      (if need then "
-$stdin='';
+      (if need then "$stdin='';
 function stdin_(){
   global $stdin;
   if ( !feof(STDIN)) $stdin.=fgets(STDIN).\"\\n\";
@@ -178,29 +175,30 @@ function scan($format){
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
   return $out;
-}" else "")
-      (if need_stdinsep then "
-function scantrim(){
+}
+" else "")
+      (if need_stdinsep then "function scantrim(){
   global $stdin;
   while(true){
     $stdin = ltrim($stdin);
     if ($stdin != '' || feof(STDIN)) break;
     stdin_();
   }
-}" else "")
-      (if need_readchar then "
-function nextChar(){
+}
+" else "")
+      (if need_readchar then "function nextChar(){
  stdin_();
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
   return $out;
-}" else "")
+}
+" else "")
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "function %a%a(%a)"
+  method print_fun f funname t li instrs =
+    Format.fprintf f "function %a%a(%a) {@\n@[<v 4>    %a@]@\n}@\n"
       (fun f t -> match Type.unfix t with
       | Type.Array _
       | Type.Named _ ->
@@ -214,8 +212,8 @@ function nextChar(){
              "%a%a"
              self#prototype type_
              self#binding a) sep_c ) li
+      self#instructions instrs
 
   method binding f i = Format.fprintf f "$%a" super#binding i
-  method declare_for s f li = ()
   method decl_type f name t = ()
 end

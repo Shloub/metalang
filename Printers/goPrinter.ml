@@ -192,16 +192,14 @@ let print_instr tyenv used_variables macros i =
   in fun f -> i.p f i.default
 
 class goPrinter = object(self)
-  inherit CPrinter.cPrinter as super
+  inherit Printer.printer as super
 
   method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
+        try List.assoc "go" li
         with Not_found -> List.assoc "" li) macros
    in (print_instr (self#getTyperEnv ()) used_variables macros t) f
-     
-  method lang () = "go"
 
   method print_fun f funname t li instrs =
     self#calc_used_variables instrs;
@@ -209,7 +207,6 @@ class goPrinter = object(self)
       self#print_proto (funname, t, li)
       self#instructions instrs
 
-  val mutable reader = false
   method prog f prog =
     let need li = List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
       | Instr.Print _ -> true
@@ -227,7 +224,7 @@ class goPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    reader <- need;
+    let reader = need in
     Format.fprintf f
       "package main@\n%a%a%a%a%a%a"
       (fun f () -> if need || need_print then Format.fprintf f "import \"fmt\"@\n") ()
@@ -248,15 +245,13 @@ func skip() {
 }
 ") ()
       self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method main f main =
-    self#calc_used_variables main;
-    (if reader then
+    (print_option (fun f main ->
+      self#calc_used_variables main;
+      (if reader then
         Format.fprintf f "func main() {@\n  reader = bufio.NewReader(os.Stdin)@\n  @[<v>%a@]@\n}@\n"
-     else
+      else
         Format.fprintf f "func main() {@\n  @[<v>%a@]@\n}@\n")
-      self#instructions main
+        self#instructions main)) prog.Prog.main
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "func %a(%a) %a"
@@ -265,25 +260,10 @@ func skip() {
          (fun t (binding, type_) ->
            Format.fprintf t "%a@ %a"
              self#binding binding
-             self#prototype type_
+             (ptype (self#getTyperEnv ())) type_
          ) sep_c
       ) li
-      self#ptype t
-
-  method ptype f t = match Type.unfix t with
-  | Type.Array a -> Format.fprintf f "[]%a" self#ptype a
-  | Type.String -> Format.fprintf f "string"
-  | Type.Char -> Format.fprintf f "byte"
-  | Type.Bool -> Format.fprintf f "bool"
-  | Type.Void -> Format.fprintf f ""
-  | Type.Named n ->
-    begin match Typer.expand (super#getTyperEnv ()) t
-        default_location |> Type.unfix with
-        | Type.Struct _ -> Format.fprintf f "* %s" n
-        | Type.Enum _ -> Format.fprintf f "%s" n
-        | _ -> assert false
-    end
-  | _ -> super#ptype f t
+      (ptype (self#getTyperEnv ())) t
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -292,7 +272,7 @@ func skip() {
         self#typename name
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a %a;" self#field name self#ptype type_
+             Format.fprintf t "%a %a;" self#field name (ptype (self#getTyperEnv ())) type_
            ) sep_nl
         ) li
     | Type.Enum li ->
@@ -303,7 +283,7 @@ func skip() {
              Format.fprintf t "%s %s = iota" fname name
            ) sep_nl
         ) li
-    | _ -> Format.fprintf f "type %a %a;" self#typename name self#ptype t
+    | _ -> Format.fprintf f "type %a %a;" self#typename name (ptype (self#getTyperEnv ())) t
 
 end
 

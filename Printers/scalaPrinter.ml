@@ -215,7 +215,7 @@ let print_instr tyenv macros i =
   in fun f -> i.p f i.default
 
 class scalaPrinter = object(self)
-  inherit CPrinter.cPrinter as printer
+  inherit Printer.printer as printer
 
   method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
