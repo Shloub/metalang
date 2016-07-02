@@ -33,7 +33,6 @@ open Stdlib
 open Helper
 open Ast
 
-let prio_operator = -100
 let print_lief tyenv prio f = function
     | Expr.Char c ->
         if (c >= 'A' && c <= 'Z' ) ||
@@ -76,21 +75,16 @@ let ptype t f () =
   | Enum _ -> fprintf f "an enum"
   | Auto | Tuple _ | Lexems -> assert false
 let ptype f t = Ast.Type.Fixed.Deep.fold ptype t f ()
-        
-let rec prefix_type f t =
-  match Type.unfix t with
-  | Type.Array t2 -> prefix_type f t2
-  | t2 -> ptype f t
-
-let rec suffix_type f t =
-  match Type.unfix t with
-  | Type.Array t2 ->
-      Format.fprintf f "[]%a" suffix_type t2
-  | _ -> Format.fprintf f ""
           
 let print_instr c i =
   let open Ast.Instr in
   let open Format in
+  let pread f ty = match Ast.Type.unfix ty with
+    | Ast.Type.Char -> fprintf f "readChar()"
+    | Ast.Type.Integer -> fprintf f "readInt()"
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+          (Type.type_t_to_string ty)))
+  in
   let p f pend = match i with
   | Declare (var, ty, e, _) -> fprintf f "%a %a = %a%a" ptype ty c.print_varname var e nop pend ()
   | AllocArrayConst (name, ty, len, lief, opt) -> assert false
@@ -101,9 +95,9 @@ let print_instr c i =
           fprintf f "@[<h>%a[] %a = new %a[%a]%a%a@]"
             ptype t
             c.print_varname name
-            prefix_type t2
+            (jlike_prefix_type ptype) t2
             e nop
-            suffix_type t pend ()
+            jlike_suffix_type t pend ()
       | _ ->
           fprintf f "@[<h>%a[] %a = new %a[%a]%a@]"
             ptype t
@@ -116,7 +110,7 @@ let print_instr c i =
         ptype ty c.print_varname name ptype ty pend ()
         (print_list (fun f (field, x) -> fprintf f "%a.%s = %a%a" 
             c.print_varname name field x nop pend ()) sep_nl) list
-  | Print [StringConst s] -> fprintf f "Console.Write(%a);" (c.print_lief prio_operator) (Expr.String s)
+  | Print [StringConst s] -> fprintf f "Console.Write(%a);" (c.print_lief jlike_prio_operator) (Expr.String s)
   | Print [PrintExpr (_, e)] -> fprintf f "Console.Write(%a);" e nop
   | Print li->
       fprintf f "Console.Write(%a%a);"
@@ -128,27 +122,15 @@ let print_instr c i =
           (print_list
              (fun f e ->
                match e with
-               | StringConst s -> c.print_lief prio_operator f (Expr.String s)
-               | PrintExpr (_, e) -> e f prio_operator)
+               | StringConst s -> c.print_lief jlike_prio_operator f (Expr.String s)
+               | PrintExpr (_, e) -> e f jlike_prio_operator)
              (fun t f1 e1 f2 e2 -> Format.fprintf t "%a + %a" f1 e1 f2 e2)) li
   | Read li ->
       print_list
         (fun f -> function
           | Separation -> Format.fprintf f "@[stdin_sep()%a@]" pend ()
-          | DeclRead (ty, v, opt) ->
-              begin match Ast.Type.unfix ty with
-              | Ast.Type.Char -> fprintf f "@[%a %a = readChar()%a@]" ptype ty c.print_varname v pend ()
-              | Ast.Type.Integer -> fprintf f "@[%a %a = readInt()%a@]" ptype ty c.print_varname v pend ()
-              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                    (Type.type_t_to_string ty)))
-              end
-          | ReadExpr (ty, mut) ->
-              begin match Ast.Type.unfix ty with
-              | Ast.Type.Char -> fprintf f "@[%a = readChar()%a@]" (c.print_mut c nop) mut pend ()
-              | Ast.Type.Integer -> fprintf f "@[%a = readInt()%a@]" (c.print_mut c nop) mut pend ()
-              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                    (Type.type_t_to_string ty)))
-              end
+          | DeclRead (ty, v, opt) -> fprintf f "@[%a %a = %a%a@]" ptype ty c.print_varname v pread ty pend ()
+          | ReadExpr (ty, mut) -> fprintf f "@[%a = %a%a@]" (c.print_mut c nop) mut pread ty pend ()
         ) sep_nl f li
   | Untuple (li, expr, opt) -> assert false
   | Unquote e -> assert false

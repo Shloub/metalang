@@ -401,6 +401,20 @@ let clike_print_instr c i =
     | Some ( (t, params, code) ) -> pmacros f "%s%a" t params code li nop pend ()
     | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
   end
-
-        
   in p
+
+    
+let jlike_prio_operator = -100
+
+let rec jlike_prefix_type ptype f t =
+  let open Ast.Type in
+  match unfix t with
+  | Array t2 -> jlike_prefix_type ptype f t2
+  | t2 -> ptype f t
+
+let rec jlike_suffix_type f t =
+  let open Ast.Type in let open Format in
+  match unfix t with
+  | Array t2 ->
+      fprintf f "[]%a" jlike_suffix_type t2
+  | _ -> fprintf f ""

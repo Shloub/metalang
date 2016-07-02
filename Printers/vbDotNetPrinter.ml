@@ -91,9 +91,7 @@ let config tyenv macros = {
     print_unop;
     print_mut;
     macros
-  } 
-    
-let prio_operator = -100
+  }
     
 let print_expr tyenv config e f p = Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
 let rec ptype f t =
@@ -171,15 +169,15 @@ let print_instr tyenv c i =
       | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
       | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
     end
-    | Print [StringConst s] -> fprintf f "Console.Write(%a)" (c.print_lief prio_operator) (Expr.String s)
+    | Print [StringConst s] -> fprintf f "Console.Write(%a)" (c.print_lief jlike_prio_operator) (Expr.String s)
     | Print [PrintExpr (_, e)] -> fprintf f "Console.Write(%a)" e nop
     | Print li->
         fprintf f "Console.Write(%a)"
           (print_list
              (fun f e ->
                match e with
-               | StringConst s -> c.print_lief prio_operator f (Expr.String s)
-               | PrintExpr (_, e) -> e f prio_operator)
+               | StringConst s -> c.print_lief jlike_prio_operator f (Expr.String s)
+               | PrintExpr (_, e) -> e f jlike_prio_operator)
              (fun t f1 e1 f2 e2 -> Format.fprintf t "%a & %a" f1 e1 f2 e2)) li
     | Read li ->
         let li = List.map (function

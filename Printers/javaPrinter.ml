@@ -71,19 +71,6 @@ let ptype f t =
   | Struct li -> fprintf f "a struct"
   | Auto | Tuple _ | Lexems -> assert false
   in Fixed.Deep.fold ptype t f ()
-
-let rec prefix_type f t =
-  match Type.unfix t with
-  | Type.Array t2 -> prefix_type f t2
-  | t2 -> ptype f t
-
-let rec suffix_type f t =
-  match Type.unfix t with
-  | Type.Array t2 ->
-      Format.fprintf f "[]%a" suffix_type t2
-  | _ -> Format.fprintf f ""
-
-let prio_operator = -100
      
 let print_instr c i =
   let open Ast.Instr in
@@ -98,9 +85,9 @@ let print_instr c i =
           fprintf f "@[<h>%a[] %a = new %a[%a]%a%a@]"
             ptype t
             c.print_varname name
-            prefix_type t2
+            (jlike_prefix_type ptype) t2
             e nop
-            suffix_type t pend ()
+            jlike_suffix_type t pend ()
       | _ ->
           fprintf f "@[<h>%a[] %a = new %a[%a]%a@]"
             ptype t
@@ -113,7 +100,7 @@ let print_instr c i =
         ptype ty c.print_varname name ptype ty pend ()
         (print_list (fun f (field, x) -> fprintf f "%a.%s = %a%a" 
             c.print_varname name field x nop pend ()) sep_nl) list
-  | Print [StringConst s] -> fprintf f "System.out.print(%a);" (c.print_lief prio_operator) (Expr.String s)
+  | Print [StringConst s] -> fprintf f "System.out.print(%a);" (c.print_lief jlike_prio_operator) (Expr.String s)
   | Print [PrintExpr (_, e)] -> fprintf f "System.out.print(%a);" e nop
   | Print li-> 
       let format, exprs = extract_multi_print clike_noformat format_type li in
