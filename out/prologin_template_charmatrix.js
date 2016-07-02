@@ -33,7 +33,7 @@ function read_int_(){
   }
 }
 
-function programme_candidat(tableau, taille_x, taille_y) {
+function programme_candidat(tableau, taille_x, taille_y){
     var out0 = 0;
     for (var i = 0; i < taille_y; i += 1)
     {

@@ -34,8 +34,7 @@ Tictactoe : un tictactoe avec une IA
 /* Un Mouvement */
 
 /* On affiche l'état */
-
-function print_state(g) {
+function print_state(g){
     util.print("\n|");
     for (var y = 0; y <= 2; y += 1)
     {
@@ -56,8 +55,7 @@ function print_state(g) {
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-
-function eval0(g) {
+function eval0(g){
     var win = 0;
     var freecase = 0;
     for (var y = 0; y <= 2; y += 1)
@@ -101,8 +99,7 @@ function eval0(g) {
 }
 
 /* On applique un mouvement */
-
-function apply_move_xy(x, y, g) {
+function apply_move_xy(x, y, g){
     var player = 2;
     if (g["firstToPlay"])
         player = 1;
@@ -110,38 +107,32 @@ function apply_move_xy(x, y, g) {
     g["firstToPlay"] = !g["firstToPlay"];
 }
 
-
-function apply_move(m, g) {
+function apply_move(m, g){
     apply_move_xy(m["x"], m["y"], g);
 }
 
-
-function cancel_move_xy(x, y, g) {
+function cancel_move_xy(x, y, g){
     g["cases"][x][y] = 0;
     g["firstToPlay"] = !g["firstToPlay"];
     g["ended"] = false;
 }
 
-
-function cancel_move(m, g) {
+function cancel_move(m, g){
     cancel_move_xy(m["x"], m["y"], g);
 }
 
-
-function can_move_xy(x, y, g) {
+function can_move_xy(x, y, g){
     return g["cases"][x][y] == 0;
 }
 
-
-function can_move(m, g) {
+function can_move(m, g){
     return can_move_xy(m["x"], m["y"], g);
 }
 
 /*
 Un minimax classique, renvoie la note du plateau
 */
-
-function minmax(g) {
+function minmax(g){
     eval0(g);
     if (g["ended"])
         return g["note"];
@@ -165,8 +156,7 @@ function minmax(g) {
 /*
 Renvoie le coup de l'IA
 */
-
-function play(g) {
+function play(g){
     var minMove = {
         "x":0,
         "y":0};
@@ -190,8 +180,7 @@ function play(g) {
     return minMove;
 }
 
-
-function init0() {
+function init0(){
     var cases = new Array(3);
     for (var i = 0; i < 3; i += 1)
     {
@@ -208,8 +197,7 @@ function init0() {
     return a;
 }
 
-
-function read_move() {
+function read_move(){
     var x = read_int_();
     stdinsep();
     var y = read_int_();

@@ -22,28 +22,25 @@ function read_int_(){
   }
 }
 
-function foo() {
+function foo(){
     var a = 0;
     /* test */
     a += 1;
     /* test 2 */
 }
 
-
-function foo2() {
+function foo2(){
     
 }
 
-
-function foo3() {
+function foo3(){
     if (1 == 1)
     {
         
     }
 }
 
-
-function sumdiv(n) {
+function sumdiv(n){
     /* On désire renvoyer la somme des diviseurs */
     var out0 = 0;
     /* On déclare un entier qui contiendra la somme */

@@ -1,6 +1,5 @@
 var util = require("util");
-
-function eratostene(t, max0) {
+function eratostene(t, max0){
     var n = 0;
     for (var i = 2; i < max0; i += 1)
         if (t[i] == i)
@@ -16,8 +15,7 @@ function eratostene(t, max0) {
     return n;
 }
 
-
-function fillPrimesFactors(t, n, primes, nprimes) {
+function fillPrimesFactors(t, n, primes, nprimes){
     for (var i = 0; i < nprimes; i += 1)
     {
         var d = primes[i];
@@ -32,8 +30,7 @@ function fillPrimesFactors(t, n, primes, nprimes) {
     return n;
 }
 
-
-function find(ndiv2) {
+function find(ndiv2){
     var maximumprimes = 110;
     var era = new Array(maximumprimes);
     for (var j = 0; j < maximumprimes; j += 1)

@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function summax(lst, len) {
+function summax(lst, len){
     var current = 0;
     var max0 = 0;
     for (var i = 0; i < len; i += 1)

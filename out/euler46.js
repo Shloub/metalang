@@ -1,6 +1,5 @@
 var util = require("util");
-
-function eratostene(t, max0) {
+function eratostene(t, max0){
     var n = 0;
     for (var i = 2; i < max0; i += 1)
         if (t[i] == i)

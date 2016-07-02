@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -19,11 +18,9 @@ function foo() {
     /* test 2 */
 }
 
-
 function foo2() {
     
 }
-
 
 function foo3() {
     if (1 == 1)
@@ -31,7 +28,6 @@ function foo3() {
         
     }
 }
-
 
 function sumdiv($n) {
     /* On désire renvoyer la somme des diviseurs */

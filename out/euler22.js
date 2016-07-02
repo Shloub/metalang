@@ -33,7 +33,7 @@ function read_int_(){
   }
 }
 
-function score() {
+function score(){
     stdinsep();
     var len = read_int_();
     stdinsep();

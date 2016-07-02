@@ -2,7 +2,6 @@
 /*
   Ce test a été généré par Metalang.
 */
-
 function result($len, &$tab) {
     $tab2 = array_fill(0, $len, false);
     for ($i1 = 0; $i1 < $len; $i1 += 1)

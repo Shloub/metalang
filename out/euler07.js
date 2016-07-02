@@ -1,14 +1,12 @@
 var util = require("util");
-
-function divisible(n, t, size) {
+function divisible(n, t, size){
     for (var i = 0; i < size; i += 1)
         if (~~(n % t[i]) == 0)
             return true;
     return false;
 }
 
-
-function find(n, t, used, nth) {
+function find(n, t, used, nth){
     while (used != nth)
         if (divisible(n, t, used))
             n += 1;

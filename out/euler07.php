@@ -1,12 +1,10 @@
 <?php
-
 function divisible($n, &$t, $size) {
     for ($i = 0; $i < $size; $i += 1)
         if ($n % $t[$i] == 0)
             return true;
     return false;
 }
-
 
 function find($n, &$t, $used, $nth) {
     while ($used != $nth)

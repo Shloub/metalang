@@ -1,17 +1,14 @@
 var util = require("util");
 
-
-function idstring(s) {
+function idstring(s){
     return s;
 }
 
-
-function printstring(s) {
+function printstring(s){
     util.print(idstring(s), "\n");
 }
 
-
-function print_toto(t) {
+function print_toto(t){
     util.print(t["s"], " = ", t["v"], "\n");
 }
 

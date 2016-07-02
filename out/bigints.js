@@ -15,8 +15,7 @@ function stdinsep(){
     while (current_char.match(/[\n\t\s]/g))
         current_char = read_char0();
 }
-
-function read_bigint(len) {
+function read_bigint(len){
     var chiffres = new Array(len);
     for (var j = 0; j < len; j += 1)
     {
@@ -36,16 +35,14 @@ function read_bigint(len) {
     return e;
 }
 
-
-function print_bigint(a) {
+function print_bigint(a){
     if (!a["bigint_sign"])
         util.print('-');
     for (var i = 0; i < a["bigint_len"]; i += 1)
         util.print(a["bigint_chiffres"][a["bigint_len"] - 1 - i]);
 }
 
-
-function bigint_eq(a, b) {
+function bigint_eq(a, b){
     /* Renvoie vrai si a = b */
     if (a["bigint_sign"] != b["bigint_sign"])
         return false;
@@ -60,8 +57,7 @@ function bigint_eq(a, b) {
     }
 }
 
-
-function bigint_gt(a, b) {
+function bigint_gt(a, b){
     /* Renvoie vrai si a > b */
     if (a["bigint_sign"] && !b["bigint_sign"])
         return true;
@@ -86,13 +82,11 @@ function bigint_gt(a, b) {
     }
 }
 
-
-function bigint_lt(a, b) {
+function bigint_lt(a, b){
     return !bigint_gt(a, b);
 }
 
-
-function add_bigint_positif(a, b) {
+function add_bigint_positif(a, b){
     /* Une addition ou on en a rien a faire des signes */
     var len = Math.max(a["bigint_len"], b["bigint_len"]) + 1;
     var retenue = 0;
@@ -116,8 +110,7 @@ function add_bigint_positif(a, b) {
     return f;
 }
 
-
-function sub_bigint_positif(a, b) {
+function sub_bigint_positif(a, b){
     /* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
 */
@@ -147,8 +140,7 @@ Pré-requis : a > b
     return g;
 }
 
-
-function neg_bigint(a) {
+function neg_bigint(a){
     var h = {
         "bigint_sign":!a["bigint_sign"],
         "bigint_len":a["bigint_len"],
@@ -156,8 +148,7 @@ function neg_bigint(a) {
     return h;
 }
 
-
-function add_bigint(a, b) {
+function add_bigint(a, b){
     if (a["bigint_sign"] == b["bigint_sign"])
         if (a["bigint_sign"])
             return add_bigint_positif(a, b);
@@ -179,13 +170,11 @@ function add_bigint(a, b) {
             return sub_bigint_positif(b, a);
 }
 
-
-function sub_bigint(a, b) {
+function sub_bigint(a, b){
     return add_bigint(a, neg_bigint(b));
 }
 
-
-function mul_bigint_cp(a, b) {
+function mul_bigint_cp(a, b){
     /* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
@@ -216,8 +205,7 @@ D'ou le nom de la fonction. */
     return m;
 }
 
-
-function bigint_premiers_chiffres(a, i) {
+function bigint_premiers_chiffres(a, i){
     var len = Math.min(i, a["bigint_len"]);
     while (len != 0 && a["bigint_chiffres"][len - 1] == 0)
         len -= 1;
@@ -228,8 +216,7 @@ function bigint_premiers_chiffres(a, i) {
     return o;
 }
 
-
-function bigint_shift(a, i) {
+function bigint_shift(a, i){
     var chiffres = new Array(a["bigint_len"] + i);
     for (var k = 0; k < a["bigint_len"] + i; k += 1)
         if (k >= i)
@@ -243,8 +230,7 @@ function bigint_shift(a, i) {
     return p;
 }
 
-
-function mul_bigint(aa, bb) {
+function mul_bigint(aa, bb){
     if (aa["bigint_len"] == 0)
         return aa;
     else if (bb["bigint_len"] == 0)
@@ -271,8 +257,7 @@ function mul_bigint(aa, bb) {
 Division,
 Modulo
 */
-
-function log10(a) {
+function log10(a){
     var out0 = 1;
     while (a >= 10)
     {
@@ -282,8 +267,7 @@ function log10(a) {
     return out0;
 }
 
-
-function bigint_of_int(i) {
+function bigint_of_int(i){
     var size = log10(i);
     if (i == 0)
         size = 0;
@@ -302,8 +286,7 @@ function bigint_of_int(i) {
     return q;
 }
 
-
-function fact_bigint(a) {
+function fact_bigint(a){
     var one = bigint_of_int(1);
     var out0 = one;
     while (!bigint_eq(a, one))
@@ -314,8 +297,7 @@ function fact_bigint(a) {
     return out0;
 }
 
-
-function sum_chiffres_bigint(a) {
+function sum_chiffres_bigint(a){
     var out0 = 0;
     for (var i = 0; i < a["bigint_len"]; i += 1)
         out0 += a["bigint_chiffres"][i];
@@ -323,16 +305,14 @@ function sum_chiffres_bigint(a) {
 }
 
 /* http://projecteuler.net/problem=20 */
-
-function euler20() {
+function euler20(){
     var a = bigint_of_int(15);
     /* normalement c'est 100 */
     a = fact_bigint(a);
     return sum_chiffres_bigint(a);
 }
 
-
-function bigint_exp(a, b) {
+function bigint_exp(a, b){
     if (b == 1)
         return a;
     else if (~~(b % 2) == 0)
@@ -341,8 +321,7 @@ function bigint_exp(a, b) {
         return mul_bigint(a, bigint_exp(a, b - 1));
 }
 
-
-function bigint_exp_10chiffres(a, b) {
+function bigint_exp_10chiffres(a, b){
     a = bigint_premiers_chiffres(a, 10);
     if (b == 1)
         return a;
@@ -352,8 +331,7 @@ function bigint_exp_10chiffres(a, b) {
         return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
 }
 
-
-function euler48() {
+function euler48(){
     var sum = bigint_of_int(0);
     for (var i = 1; i <= 100; i += 1)
     {
@@ -368,16 +346,14 @@ function euler48() {
     util.print("\n");
 }
 
-
-function euler16() {
+function euler16(){
     var a = bigint_of_int(2);
     a = bigint_exp(a, 100);
     /* 1000 normalement */
     return sum_chiffres_bigint(a);
 }
 
-
-function euler25() {
+function euler25(){
     var i = 2;
     var a = bigint_of_int(1);
     var b = bigint_of_int(1);
@@ -392,8 +368,7 @@ function euler25() {
     return i;
 }
 
-
-function euler29() {
+function euler29(){
     var maxA = 5;
     var maxB = 5;
     var a_bigint = new Array(maxA + 1);

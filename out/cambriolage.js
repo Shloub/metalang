@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function nbPassePartout(n, passepartout, m, serrures) {
+function nbPassePartout(n, passepartout, m, serrures){
     var max_ancient = 0;
     var max_recent = 0;
     for (var i = 0; i < m; i += 1)

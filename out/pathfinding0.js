@@ -33,7 +33,7 @@ function read_int_(){
   }
 }
 
-function pathfind_aux(cache, tab, x, y, posX, posY) {
+function pathfind_aux(cache, tab, x, y, posX, posY){
     if (posX == x - 1 && posY == y - 1)
         return 0;
     else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
@@ -55,8 +55,7 @@ function pathfind_aux(cache, tab, x, y, posX, posY) {
     }
 }
 
-
-function pathfind(tab, x, y) {
+function pathfind(tab, x, y){
     var cache = new Array(y);
     for (var i = 0; i < y; i += 1)
     {

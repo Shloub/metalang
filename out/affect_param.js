@@ -1,6 +1,5 @@
 var util = require("util");
-
-function foo(a) {
+function foo(a){
     a = 4;
 }
 

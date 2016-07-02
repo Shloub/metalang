@@ -1,5 +1,4 @@
 <?php
-
 function chiffre_sort($a) {
     if ($a < 10)
         return $a;
@@ -15,7 +14,6 @@ function chiffre_sort($a) {
             return $d + chiffre_sort($c + $e * 10) * 10;
     }
 }
-
 
 function same_numbers($a, $b, $c, $d, $e, $f) {
     $ca = chiffre_sort($a);

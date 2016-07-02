@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -18,7 +17,8 @@ function nextChar(){
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
   return $out;
-}$i = 1;
+}
+$i = 1;
 $last = array();
 for ($j = 0; $j < 5; $j += 1)
 {

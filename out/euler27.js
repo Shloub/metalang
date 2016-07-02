@@ -1,6 +1,5 @@
 var util = require("util");
-
-function eratostene(t, max0) {
+function eratostene(t, max0){
     var n = 0;
     for (var i = 2; i < max0; i += 1)
         if (t[i] == i)
@@ -16,8 +15,7 @@ function eratostene(t, max0) {
     return n;
 }
 
-
-function isPrime(n, primes, len) {
+function isPrime(n, primes, len){
     var i = 0;
     if (n < 0)
         n = -n;
@@ -30,8 +28,7 @@ function isPrime(n, primes, len) {
     return true;
 }
 
-
-function test(a, b, primes, len) {
+function test(a, b, primes, len){
     for (var n = 0; n <= 200; n += 1)
     {
         var j = n * n + a * n + b;

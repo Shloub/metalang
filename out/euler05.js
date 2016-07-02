@@ -1,6 +1,5 @@
 var util = require("util");
-
-function primesfactors(n) {
+function primesfactors(n){
     var tab = new Array(n + 1);
     for (var i = 0; i <= n; i += 1)
         tab[i] = 0;

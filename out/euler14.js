@@ -1,14 +1,12 @@
 var util = require("util");
-
-function next0(n) {
+function next0(n){
     if (~~(n % 2) == 0)
         return ~~(n / 2);
     else
         return 3 * n + 1;
 }
 
-
-function find(n, m) {
+function find(n, m){
     if (n == 1)
         return 1;
     else if (n >= 1000000)

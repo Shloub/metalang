@@ -1,12 +1,10 @@
 <?php
-
 function fact($n) {
     $prod = 1;
     for ($i = 2; $i <= $n; $i += 1)
         $prod *= $i;
     return $prod;
 }
-
 
 function show($lim, $nth) {
     $t = array();

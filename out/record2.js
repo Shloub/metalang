@@ -27,8 +27,7 @@ function read_int_(){
   }
 }
 
-
-function mktoto(v1) {
+function mktoto(v1){
     var t = {
         "foo":v1,
         "bar":0,
@@ -36,8 +35,7 @@ function mktoto(v1) {
     return t;
 }
 
-
-function result(t) {
+function result(t){
     t["blah"] += 1;
     return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
 }

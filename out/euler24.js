@@ -1,14 +1,12 @@
 var util = require("util");
-
-function fact(n) {
+function fact(n){
     var prod = 1;
     for (var i = 2; i <= n; i += 1)
         prod *= i;
     return prod;
 }
 
-
-function show(lim, nth) {
+function show(lim, nth){
     var t = new Array(lim);
     for (var i = 0; i < lim; i += 1)
         t[i] = i;

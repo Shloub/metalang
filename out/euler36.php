@@ -1,5 +1,4 @@
 <?php
-
 function palindrome2(&$pow2, $n) {
     $t = array();
     for ($i = 0; $i < 20; $i += 1)

@@ -1,12 +1,10 @@
 <?php
-
 function exp0($a, $e) {
     $o = 1;
     for ($i = 1; $i <= $e; $i += 1)
         $o *= $a;
     return $o;
 }
-
 
 function e(&$t, $n) {
     for ($i = 1; $i <= 8; $i += 1)

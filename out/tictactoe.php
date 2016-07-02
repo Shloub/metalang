@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -19,7 +18,8 @@ function scantrim(){
     if ($stdin != '' || feof(STDIN)) break;
     stdin_();
   }
-}/*
+}
+/*
 Tictactoe : un tictactoe avec une IA
 */
 /* La structure de donnée */
@@ -27,7 +27,6 @@ Tictactoe : un tictactoe avec une IA
 /* Un Mouvement */
 
 /* On affiche l'état */
-
 function print_state(&$g) {
     echo "\n|";
     for ($y = 0; $y <= 2; $y += 1)
@@ -49,7 +48,6 @@ function print_state(&$g) {
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-
 function eval0(&$g) {
     $win = 0;
     $freecase = 0;
@@ -94,7 +92,6 @@ function eval0(&$g) {
 }
 
 /* On applique un mouvement */
-
 function apply_move_xy($x, $y, &$g) {
     $player = 2;
     if ($g["firstToPlay"])
@@ -103,11 +100,9 @@ function apply_move_xy($x, $y, &$g) {
     $g["firstToPlay"] = !$g["firstToPlay"];
 }
 
-
 function apply_move(&$m, &$g) {
     apply_move_xy($m["x"], $m["y"], $g);
 }
-
 
 function cancel_move_xy($x, $y, &$g) {
     $g["cases"][$x][$y] = 0;
@@ -115,16 +110,13 @@ function cancel_move_xy($x, $y, &$g) {
     $g["ended"] = false;
 }
 
-
 function cancel_move(&$m, &$g) {
     cancel_move_xy($m["x"], $m["y"], $g);
 }
 
-
 function can_move_xy($x, $y, &$g) {
     return $g["cases"][$x][$y] == 0;
 }
-
 
 function can_move(&$m, &$g) {
     return can_move_xy($m["x"], $m["y"], $g);
@@ -133,7 +125,6 @@ function can_move(&$m, &$g) {
 /*
 Un minimax classique, renvoie la note du plateau
 */
-
 function minmax(&$g) {
     eval0($g);
     if ($g["ended"])
@@ -158,7 +149,6 @@ function minmax(&$g) {
 /*
 Renvoie le coup de l'IA
 */
-
 function &play(&$g) {
     $minMove = array(
         "x" => 0,
@@ -183,7 +173,6 @@ function &play(&$g) {
     return $minMove;
 }
 
-
 function &init0() {
     $cases = array();
     for ($i = 0; $i < 3; $i += 1)
@@ -198,7 +187,6 @@ function &init0() {
         "ended" => false);
     return $a;
 }
-
 
 function &read_move() {
     list($x) = scan("%d");

@@ -22,21 +22,18 @@ function read_int_(){
   }
 }
 
-
-function cons(list, i) {
+function cons(list, i){
     var out0 = {
         "head":i,
         "tail":list};
     return out0;
 }
 
-
-function is_empty(foo) {
+function is_empty(foo){
     return true;
 }
 
-
-function rev2(acc, torev) {
+function rev2(acc, torev){
     if (is_empty(torev))
         return acc;
     else
@@ -48,13 +45,11 @@ function rev2(acc, torev) {
     }
 }
 
-
-function rev(empty, torev) {
+function rev(empty, torev){
     return rev2(empty, torev);
 }
 
-
-function test(empty) {
+function test(empty){
     var list = empty;
     var i = -1;
     while (i != 0)

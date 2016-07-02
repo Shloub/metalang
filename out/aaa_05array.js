@@ -1,11 +1,9 @@
 var util = require("util");
-
-function id(b) {
+function id(b){
     return b;
 }
 
-
-function g(t, index) {
+function g(t, index){
     t[index] = false;
 }
 

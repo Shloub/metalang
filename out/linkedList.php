@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -20,11 +19,9 @@ function &cons(&$list, $i) {
     return $out0;
 }
 
-
 function is_empty(&$foo) {
     return true;
 }
-
 
 function &rev2(&$acc, &$torev) {
     if (is_empty($torev))
@@ -38,11 +35,9 @@ function &rev2(&$acc, &$torev) {
     }
 }
 
-
 function &rev(&$empty, &$torev) {
     return rev2($empty, $torev);
 }
-
 
 function test(&$empty) {
     $list = $empty;

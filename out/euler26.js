@@ -1,6 +1,5 @@
 var util = require("util");
-
-function periode(restes, len, a, b) {
+function periode(restes, len, a, b){
     while (a != 0)
     {
         var chiffre = ~~(a / b);

@@ -1,12 +1,10 @@
 <?php
-
 function next0($n) {
     if ($n % 2 == 0)
         return intval($n / 2);
     else
         return 3 * $n + 1;
 }
-
 
 function find($n, &$m) {
     if ($n == 1)

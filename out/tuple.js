@@ -1,7 +1,6 @@
 var util = require("util");
 
-
-function f(tuple0) {
+function f(tuple0){
     var c = tuple0;
     var a = c["tuple_int_int_field_0"];
     var b = c["tuple_int_int_field_1"];

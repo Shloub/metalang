@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function find(n, m, x, y, dx, dy) {
+function find(n, m, x, y, dx, dy){
     if (x < 0 || x == 20 || y < 0 || y == 20)
         return -1;
     else if (n == 0)

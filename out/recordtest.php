@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -20,6 +19,7 @@ function scantrim(){
     stdin_();
   }
 }
+
 $param = array(
     "foo" => 0,
     "bar" => 0);

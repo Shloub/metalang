@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function programme_candidat(tableau, taille) {
+function programme_candidat(tableau, taille){
     var out0 = 0;
     for (var i = 0; i < taille; i += 1)
         out0 += tableau[i];

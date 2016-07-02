@@ -27,8 +27,7 @@ function read_int_(){
   }
 }
 /* lit un sudoku sur l'entrée standard */
-
-function read_sudoku() {
+function read_sudoku(){
     var out0 = new Array(9 * 9);
     for (var i = 0; i < 9 * 9; i += 1)
     {
@@ -40,8 +39,7 @@ function read_sudoku() {
 }
 
 /* affiche un sudoku */
-
-function print_sudoku(sudoku0) {
+function print_sudoku(sudoku0){
     for (var y = 0; y <= 8; y += 1)
     {
         for (var x = 0; x <= 8; x += 1)
@@ -60,8 +58,7 @@ function print_sudoku(sudoku0) {
 /* dit si les variables sont toutes différentes */
 /* dit si les variables sont toutes différentes */
 /* dit si le sudoku est terminé de remplir */
-
-function sudoku_done(s) {
+function sudoku_done(s){
     for (var i = 0; i <= 80; i += 1)
         if (s[i] == 0)
             return false;
@@ -69,8 +66,7 @@ function sudoku_done(s) {
 }
 
 /* dit si il y a une erreur dans le sudoku */
-
-function sudoku_error(s) {
+function sudoku_error(s){
     var out1 = false;
     for (var x = 0; x <= 8; x += 1)
         out1 = out1 || s[x] != 0 && s[x] == s[x + 9] || s[x] != 0 && s[x] == s[x + 9 * 2] || s[x + 9] != 0 && s[x + 9] == s[x + 9 * 2] || s[x] != 0 && s[x] == s[x + 9 * 3] || s[x + 9] != 0 && s[x + 9] == s[x + 9 * 3] || s[x + 9 * 2] != 0 && s[x + 9 * 2] == s[x + 9 * 3] || s[x] != 0 && s[x] == s[x + 9 * 4] || s[x + 9] != 0 && s[x + 9] == s[x + 9 * 4] || s[x + 9 * 2] != 0 && s[x + 9 * 2] == s[x + 9 * 4] || s[x + 9 * 3] != 0 && s[x + 9 * 3] == s[x + 9 * 4] || s[x] != 0 && s[x] == s[x + 9 * 5] || s[x + 9] != 0 && s[x + 9] == s[x + 9 * 5] || s[x + 9 * 2] != 0 && s[x + 9 * 2] == s[x + 9 * 5] || s[x + 9 * 3] != 0 && s[x + 9 * 3] == s[x + 9 * 5] || s[x + 9 * 4] != 0 && s[x + 9 * 4] == s[x + 9 * 5] || s[x] != 0 && s[x] == s[x + 9 * 6] || s[x + 9] != 0 && s[x + 9] == s[x + 9 * 6] || s[x + 9 * 2] != 0 && s[x + 9 * 2] == s[x + 9 * 6] || s[x + 9 * 3] != 0 && s[x + 9 * 3] == s[x + 9 * 6] || s[x + 9 * 4] != 0 && s[x + 9 * 4] == s[x + 9 * 6] || s[x + 9 * 5] != 0 && s[x + 9 * 5] == s[x + 9 * 6] || s[x] != 0 && s[x] == s[x + 9 * 7] || s[x + 9] != 0 && s[x + 9] == s[x + 9 * 7] || s[x + 9 * 2] != 0 && s[x + 9 * 2] == s[x + 9 * 7] || s[x + 9 * 3] != 0 && s[x + 9 * 3] == s[x + 9 * 7] || s[x + 9 * 4] != 0 && s[x + 9 * 4] == s[x + 9 * 7] || s[x + 9 * 5] != 0 && s[x + 9 * 5] == s[x + 9 * 7] || s[x + 9 * 6] != 0 && s[x + 9 * 6] == s[x + 9 * 7] || s[x] != 0 && s[x] == s[x + 9 * 8] || s[x + 9] != 0 && s[x + 9] == s[x + 9 * 8] || s[x + 9 * 2] != 0 && s[x + 9 * 2] == s[x + 9 * 8] || s[x + 9 * 3] != 0 && s[x + 9 * 3] == s[x + 9 * 8] || s[x + 9 * 4] != 0 && s[x + 9 * 4] == s[x + 9 * 8] || s[x + 9 * 5] != 0 && s[x + 9 * 5] == s[x + 9 * 8] || s[x + 9 * 6] != 0 && s[x + 9 * 6] == s[x + 9 * 8] || s[x + 9 * 7] != 0 && s[x + 9 * 7] == s[x + 9 * 8];
@@ -84,8 +80,7 @@ function sudoku_error(s) {
 }
 
 /* résout le sudoku*/
-
-function solve(sudoku0) {
+function solve(sudoku0){
     if (sudoku_error(sudoku0))
         return false;
     if (sudoku_done(sudoku0))
