@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -19,8 +18,8 @@ function scantrim(){
     if ($stdin != '' || feof(STDIN)) break;
     stdin_();
   }
-}/* lit un sudoku sur l'entrée standard */
-
+}
+/* lit un sudoku sur l'entrée standard */
 function &read_sudoku() {
     $out0 = array();
     for ($i = 0; $i < 9 * 9; $i += 1)
@@ -33,7 +32,6 @@ function &read_sudoku() {
 }
 
 /* affiche un sudoku */
-
 function print_sudoku(&$sudoku0) {
     for ($y = 0; $y <= 8; $y += 1)
     {
@@ -53,7 +51,6 @@ function print_sudoku(&$sudoku0) {
 /* dit si les variables sont toutes différentes */
 /* dit si les variables sont toutes différentes */
 /* dit si le sudoku est terminé de remplir */
-
 function sudoku_done(&$s) {
     for ($i = 0; $i <= 80; $i += 1)
         if ($s[$i] == 0)
@@ -62,7 +59,6 @@ function sudoku_done(&$s) {
 }
 
 /* dit si il y a une erreur dans le sudoku */
-
 function sudoku_error(&$s) {
     $out1 = false;
     for ($x = 0; $x <= 8; $x += 1)
@@ -77,7 +73,6 @@ function sudoku_error(&$s) {
 }
 
 /* résout le sudoku*/
-
 function solve(&$sudoku0) {
     if (sudoku_error($sudoku0))
         return false;

@@ -1,6 +1,5 @@
 var util = require("util");
-
-function eratostene(t, max0) {
+function eratostene(t, max0){
     var n = 0;
     for (var i = 2; i < max0; i += 1)
         if (t[i] == i)
@@ -16,8 +15,7 @@ function eratostene(t, max0) {
     return n;
 }
 
-
-function fillPrimesFactors(t, n, primes, nprimes) {
+function fillPrimesFactors(t, n, primes, nprimes){
     for (var i = 0; i < nprimes; i += 1)
     {
         var d = primes[i];
@@ -32,15 +30,13 @@ function fillPrimesFactors(t, n, primes, nprimes) {
     return n;
 }
 
-
-function sumdivaux2(t, n, i) {
+function sumdivaux2(t, n, i){
     while (i < n && t[i] == 0)
         i += 1;
     return i;
 }
 
-
-function sumdivaux(t, n, i) {
+function sumdivaux(t, n, i){
     if (i > n)
         return 1;
     else if (t[i] == 0)
@@ -59,8 +55,7 @@ function sumdivaux(t, n, i) {
     }
 }
 
-
-function sumdiv(nprimes, primes, n) {
+function sumdiv(nprimes, primes, n){
     var t = new Array(n + 1);
     for (var i = 0; i <= n; i += 1)
         t[i] = 0;

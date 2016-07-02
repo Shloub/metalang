@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;

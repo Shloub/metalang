@@ -31,8 +31,7 @@ function read_int_(){
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-
-function find0(len, tab, cache, x, y) {
+function find0(len, tab, cache, x, y){
     /*
 	Cette fonction est récursive
 	*/
@@ -53,8 +52,7 @@ function find0(len, tab, cache, x, y) {
     return result;
 }
 
-
-function find(len, tab) {
+function find(len, tab){
     var tab2 = new Array(len);
     for (var i = 0; i < len; i += 1)
     {

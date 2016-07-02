@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function montagnes0(tab, len) {
+function montagnes0(tab, len){
     var max0 = 1;
     var j = 1;
     var i = len - 2;

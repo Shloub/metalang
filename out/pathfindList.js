@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function pathfind_aux(cache, tab, len, pos) {
+function pathfind_aux(cache, tab, len, pos){
     if (pos >= len - 1)
         return 0;
     else if (cache[pos] != -1)
@@ -47,8 +47,7 @@ function pathfind_aux(cache, tab, len, pos) {
     }
 }
 
-
-function pathfind(tab, len) {
+function pathfind(tab, len){
     var cache = new Array(len);
     for (var i = 0; i < len; i += 1)
         cache[i] = -1;

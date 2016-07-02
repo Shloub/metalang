@@ -1,6 +1,5 @@
 var util = require("util");
-
-function f(i) {
+function f(i){
     if (i == 0)
         return true;
     return false;

@@ -33,7 +33,7 @@ function read_int_(){
   }
 }
 
-function position_alphabet(c) {
+function position_alphabet(c){
     var i = c.charCodeAt(0);
     if (i <= 'Z'.charCodeAt(0) && i >= 'A'.charCodeAt(0))
         return i - 'A'.charCodeAt(0);
@@ -43,13 +43,11 @@ function position_alphabet(c) {
         return -1;
 }
 
-
-function of_position_alphabet(c) {
+function of_position_alphabet(c){
     return String.fromCharCode(c + 'a'.charCodeAt(0));
 }
 
-
-function crypte(taille_cle, cle, taille, message) {
+function crypte(taille_cle, cle, taille, message){
     for (var i = 0; i < taille; i += 1)
     {
         var lettre = position_alphabet(message[i]);

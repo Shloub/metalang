@@ -30,8 +30,7 @@ function read_int_(){
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
 
-
-function mktoto(v1) {
+function mktoto(v1){
     var t = {
         "foo":v1,
         "bar":v1,
@@ -39,8 +38,7 @@ function mktoto(v1) {
     return t;
 }
 
-
-function mktoto2(v1) {
+function mktoto2(v1){
     var t = {
         "foo":v1 + 3,
         "bar":v1 + 2,
@@ -48,8 +46,7 @@ function mktoto2(v1) {
     return t;
 }
 
-
-function result(t_, t2_) {
+function result(t_, t2_){
     var t = t_;
     var t2 = t2_;
     var t3 = {

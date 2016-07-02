@@ -33,7 +33,7 @@ function read_int_(){
   }
 }
 
-function is_triangular(n) {
+function is_triangular(n){
     /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
@@ -42,8 +42,7 @@ function is_triangular(n) {
     return a * (a + 1) == n * 2;
 }
 
-
-function score() {
+function score(){
     stdinsep();
     var len = read_int_();
     stdinsep();

@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -26,7 +25,8 @@ function nextChar(){
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
   return $out;
-}/*
+}
+/*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */

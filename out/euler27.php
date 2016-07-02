@@ -1,5 +1,4 @@
 <?php
-
 function eratostene(&$t, $max0) {
     $n = 0;
     for ($i = 2; $i < $max0; $i += 1)
@@ -16,7 +15,6 @@ function eratostene(&$t, $max0) {
     return $n;
 }
 
-
 function isPrime($n, &$primes, $len) {
     $i = 0;
     if ($n < 0)
@@ -29,7 +27,6 @@ function isPrime($n, &$primes, $len) {
     }
     return true;
 }
-
 
 function test($a, $b, &$primes, $len) {
     for ($n = 0; $n <= 200; $n += 1)

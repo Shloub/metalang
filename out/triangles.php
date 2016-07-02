@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -19,12 +18,12 @@ function scantrim(){
     if ($stdin != '' || feof(STDIN)) break;
     stdin_();
   }
-}/* Ce code a été généré par metalang
+}
+/* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-
 function find0($len, &$tab, &$cache, $x, $y) {
     /*
 	Cette fonction est récursive
@@ -45,7 +44,6 @@ function find0($len, &$tab, &$cache, $x, $y) {
     $cache[$y][$x] = $result;
     return $result;
 }
-
 
 function find($len, &$tab) {
     $tab2 = array();

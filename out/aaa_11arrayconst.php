@@ -1,5 +1,4 @@
 <?php
-
 function test(&$tab, $len) {
     for ($i = 0; $i < $len; $i += 1)
         echo $tab[$i], " ";

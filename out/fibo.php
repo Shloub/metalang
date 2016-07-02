@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -19,10 +18,10 @@ function scantrim(){
     if ($stdin != '' || feof(STDIN)) break;
     stdin_();
   }
-}/*
+}
+/*
 La suite de fibonaci
 */
-
 function fibo0($a, $b, $i) {
     $out0 = 0;
     $a2 = $a;

@@ -27,8 +27,7 @@ function read_int_(){
   }
 }
 
-
-function mktoto(v1) {
+function mktoto(v1){
     var t = {
         "foo":v1,
         "bar":0,
@@ -36,8 +35,7 @@ function mktoto(v1) {
     return t;
 }
 
-
-function result(t, len) {
+function result(t, len){
     var out0 = 0;
     for (var j = 0; j < len; j += 1)
     {

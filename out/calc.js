@@ -2,8 +2,7 @@ var util = require("util");
 /*
 La suite de fibonaci
 */
-
-function fibo(a, b, i) {
+function fibo(a, b, i){
     var out_ = 0;
     var a2 = a;
     var b2 = b;

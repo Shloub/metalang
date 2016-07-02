@@ -1,5 +1,4 @@
 <?php
-
 function &primesfactors($n) {
     $tab = array_fill(0, $n + 1, 0);
     $d = 2;

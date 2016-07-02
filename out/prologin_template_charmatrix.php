@@ -1,5 +1,4 @@
 <?php
-
 function programme_candidat(&$tableau, $taille_x, $taille_y) {
     $out0 = 0;
     for ($i = 0; $i < $taille_y; $i += 1)

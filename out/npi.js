@@ -33,15 +33,14 @@ function read_int_(){
   }
 }
 
-function is_number(c) {
+function is_number(c){
     return c.charCodeAt(0) <= '9'.charCodeAt(0) && c.charCodeAt(0) >= '0'.charCodeAt(0);
 }
 
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-
-function npi0(str, len) {
+function npi0(str, len){
     var stack = new Array(len);
     for (var i = 0; i < len; i += 1)
         stack[i] = 0;

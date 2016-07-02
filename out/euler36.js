@@ -1,6 +1,5 @@
 var util = require("util");
-
-function palindrome2(pow2, n) {
+function palindrome2(pow2, n){
     var t = new Array(20);
     for (var i = 0; i < 20; i += 1)
         t[i] = ~~(~~(n / pow2[i]) % 2) == 1;

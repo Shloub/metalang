@@ -1,5 +1,4 @@
 <?php
-
 function eratostene(&$t, $max0) {
     $n = 0;
     for ($i = 2; $i < $max0; $i += 1)
@@ -16,7 +15,6 @@ function eratostene(&$t, $max0) {
     return $n;
 }
 
-
 function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     for ($i = 0; $i < $nprimes; $i += 1)
     {
@@ -31,7 +29,6 @@ function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     }
     return $n;
 }
-
 
 function find($ndiv2) {
     $maximumprimes = 110;

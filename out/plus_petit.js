@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function go0(tab, a, b) {
+function go0(tab, a, b){
     var m = ~~((a + b) / 2);
     if (a == m)
         if (tab[a] == m)
@@ -54,8 +54,7 @@ function go0(tab, a, b) {
         return go0(tab, m, b);
 }
 
-
-function plus_petit0(tab, len) {
+function plus_petit0(tab, len){
     return go0(tab, 0, len);
 }
 

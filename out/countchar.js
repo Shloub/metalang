@@ -33,7 +33,7 @@ function read_int_(){
   }
 }
 
-function nth(tab, tofind, len) {
+function nth(tab, tofind, len){
     var out0 = 0;
     for (var i = 0; i < len; i += 1)
         if (tab[i] == tofind)

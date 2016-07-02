@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function programme_candidat(tableau, x, y) {
+function programme_candidat(tableau, x, y){
     var out0 = 0;
     for (var i = 0; i < y; i += 1)
         for (var j = 0; j < x; j += 1)

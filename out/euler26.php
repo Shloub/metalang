@@ -1,5 +1,4 @@
 <?php
-
 function periode(&$restes, $len, $a, $b) {
     while ($a != 0)
     {

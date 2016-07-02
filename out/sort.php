@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -27,7 +26,6 @@ function &copytab(&$tab, $len) {
     return $o;
 }
 
-
 function bubblesort(&$tab, $len) {
     for ($i = 0; $i < $len; $i += 1)
         for ($j = $i + 1; $j < $len; $j += 1)
@@ -38,7 +36,6 @@ function bubblesort(&$tab, $len) {
                 $tab[$j] = $tmp;
             }
 }
-
 
 function qsort0(&$tab, $len, $i, $j) {
     if ($i < $j)

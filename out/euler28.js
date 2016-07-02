@@ -14,8 +14,7 @@ var util = require("util");
 
 
 */
-
-function sumdiag(n) {
+function sumdiag(n){
     var nterms = n * 2 - 1;
     var un = 1;
     var sum = 1;

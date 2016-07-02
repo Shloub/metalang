@@ -1,6 +1,5 @@
 var util = require("util");
-
-function is_pair(i) {
+function is_pair(i){
     var j = 1;
     if (i < 10)
     {

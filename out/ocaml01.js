@@ -1,6 +1,5 @@
 var util = require("util");
-
-function foo() {
+function foo(){
     for (var i = 0; i <= 10; i += 1)
     {
         
@@ -8,8 +7,7 @@ function foo() {
     return 0;
 }
 
-
-function bar() {
+function bar(){
     for (var i = 0; i <= 10; i += 1)
         var a = 0;
     return 0;

@@ -1,6 +1,5 @@
 var util = require("util");
-
-function result(sum, t, maxIndex, cache) {
+function result(sum, t, maxIndex, cache){
     if (cache[sum][maxIndex] != 0)
         return cache[sum][maxIndex];
     else if (sum == 0 || maxIndex == 0)

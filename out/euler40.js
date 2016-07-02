@@ -1,14 +1,12 @@
 var util = require("util");
-
-function exp0(a, e) {
+function exp0(a, e){
     var o = 1;
     for (var i = 1; i <= e; i += 1)
         o *= a;
     return o;
 }
 
-
-function e(t, n) {
+function e(t, n){
     for (var i = 1; i <= 8; i += 1)
         if (n >= t[i] * i)
             n -= t[i] * i;

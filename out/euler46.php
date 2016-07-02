@@ -1,5 +1,4 @@
 <?php
-
 function eratostene(&$t, $max0) {
     $n = 0;
     for ($i = 2; $i < $max0; $i += 1)

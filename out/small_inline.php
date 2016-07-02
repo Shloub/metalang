@@ -1,5 +1,4 @@
 <?php
-
 $stdin='';
 function stdin_(){
   global $stdin;
@@ -19,7 +18,8 @@ function scantrim(){
     if ($stdin != '' || feof(STDIN)) break;
     stdin_();
   }
-}$t = array();
+}
+$t = array();
 for ($d = 0; $d < 2; $d += 1)
 {
     list($t[$d]) = scan("%d");

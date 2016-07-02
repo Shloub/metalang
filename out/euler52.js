@@ -1,6 +1,5 @@
 var util = require("util");
-
-function chiffre_sort(a) {
+function chiffre_sort(a){
     if (a < 10)
         return a;
     else
@@ -16,8 +15,7 @@ function chiffre_sort(a) {
     }
 }
 
-
-function same_numbers(a, b, c, d, e, f) {
+function same_numbers(a, b, c, d, e, f){
     var ca = chiffre_sort(a);
     return ca == chiffre_sort(b) && ca == chiffre_sort(c) && ca == chiffre_sort(d) && ca == chiffre_sort(e) && ca == chiffre_sort(f);
 }

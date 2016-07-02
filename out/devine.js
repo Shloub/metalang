@@ -27,7 +27,7 @@ function read_int_(){
   }
 }
 
-function devine0(nombre, tab, len) {
+function devine0(nombre, tab, len){
     var min0 = tab[0];
     var max0 = tab[1];
     for (var i = 2; i < len; i += 1)

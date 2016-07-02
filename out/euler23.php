@@ -1,5 +1,4 @@
 <?php
-
 function eratostene(&$t, $max0) {
     $n = 0;
     for ($i = 2; $i < $max0; $i += 1)
@@ -16,7 +15,6 @@ function eratostene(&$t, $max0) {
     return $n;
 }
 
-
 function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     for ($i = 0; $i < $nprimes; $i += 1)
     {
@@ -32,13 +30,11 @@ function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     return $n;
 }
 
-
 function sumdivaux2(&$t, $n, $i) {
     while ($i < $n && $t[$i] == 0)
         $i += 1;
     return $i;
 }
-
 
 function sumdivaux(&$t, $n, $i) {
     if ($i > $n)
@@ -58,7 +54,6 @@ function sumdivaux(&$t, $n, $i) {
         return ($out0 + 1) * $o;
     }
 }
-
 
 function sumdiv($nprimes, &$primes, $n) {
     $t = array_fill(0, $n + 1, 0);

@@ -1,5 +1,4 @@
 <?php
-
 function f($i) {
     if ($i == 0)
         return true;

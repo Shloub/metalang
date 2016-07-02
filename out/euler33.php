@@ -1,5 +1,4 @@
 <?php
-
 function pgcd($a, $b) {
     $c = min($a, $b);
     $d = max($a, $b);

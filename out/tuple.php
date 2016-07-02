@@ -1,5 +1,4 @@
 <?php
-
 function f($tuple0) {
     list($a, $b) = $tuple0;
     return array($a + 1, $b + 1);

@@ -1,5 +1,4 @@
 <?php
-
 function is_pair($i) {
     $j = 1;
     if ($i < 10)

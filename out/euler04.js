@@ -17,8 +17,7 @@ a * d +
 c * f * 10000
 
 */
-
-function chiffre(c, m) {
+function chiffre(c, m){
     if (c == 0)
         return ~~(m % 10);
     else
