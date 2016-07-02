@@ -200,7 +200,7 @@ let print_instr tyenv c i =
  }
 
 class pyPrinter = object(self)
-  inherit CPrinter.cPrinter as super
+  inherit Printer.printer as super
 
   method main f main = self#instructions f main
       

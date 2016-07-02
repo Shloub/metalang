@@ -194,11 +194,7 @@ let print_instr macros i =
   in fun f -> i.p f i.default
 
 class perlPrinter = object(self)
-  inherit CPrinter.cPrinter as baseprinter
-
-  method multi_read f li = self#base_multi_read f li
-
-  method lang () = "pl"
+  inherit Printer.printer as baseprinter
 
   method binding f i = Format.fprintf f "$%a" baseprinter#binding i
 
@@ -207,7 +203,7 @@ class perlPrinter = object(self)
   method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
+        try List.assoc "pl" li
         with Not_found -> List.assoc "" li) macros
    in (print_instr macros t) f
 

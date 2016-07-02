@@ -133,25 +133,23 @@ let print_instr macros i =
   in fun f -> i.p f i.default
 
 class jsPrinter = object(self)
-  inherit CPrinter.cPrinter as super
-
-  method declare_for s f li = ()
-  method lang () = "js"
+  inherit Printer.printer as super
 
   method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
+        try List.assoc "js" li
         with Not_found -> List.assoc "" li) macros
    in (print_instr macros t) f
 
   method decl_type f name t = ()
 
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "function %a(%a)"
+  method print_fun f funname t li instrs =
+    Format.fprintf f "@[<v 4>@[<hov>function %a(%a){@]@\n%a@]@\n}@\n"
       self#funname funname
       (print_list self#binding sep_c) (List.map fst li)
-
+      self#instructions instrs
+      
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
