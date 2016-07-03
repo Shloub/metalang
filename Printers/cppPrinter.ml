@@ -38,10 +38,9 @@ let print_lief prio f = function
   | Expr.Char c -> unicode f c
   | x -> print_lief prio f x
 
-let print_expr macros e f p =
-  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
-      (print_mut0 "%a%a" "->at(%a)" "%a->%s" conf) m f prio in
-  let config = {
+let print_mut conf prio f m = Mutable.Fixed.Deep.fold
+      (print_mut0 "%a%a" "->at(%a)" "%a->%s" conf) m f prio 
+let config macros = {
     prio_binop;
     prio_unop;
     print_varname;
@@ -50,16 +49,133 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
+}
+    
+let print_expr config e f p = Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
+let rec ptype tyenv f t =
+  let open Ast.Type in
+  let open Format in match unfix t with
+    | Integer -> fprintf f "int"
+    | String -> fprintf f "std::string"
+    | Array a -> fprintf f "std::vector<%a> *" (ptype tyenv) a
+    | Void ->  fprintf f "void"
+    | Bool -> fprintf f "bool"
+    | Char -> fprintf f "char"
+    | Named n -> begin match Typer.expand tyenv t
+        default_location |> unfix with
+        | Struct _ -> fprintf f "%s *" n
+        | Enum _ -> fprintf f "%s" n
+        | _ -> assert false
+    end 
+    | Enum _ -> fprintf f "an enum"
+    | Struct li -> fprintf f "a struct"
+    | Auto | Lexems | Tuple _ -> assert false
+    
+let rec ptypename f t =
+  let open Ast.Type in match unfix t with
+    | Named n -> Format.fprintf f "%s" n
+    | _ -> assert false
+          
+let print_instr tyenv c i =
+  let ptype = ptype tyenv in
+  let open Ast.Instr in
+  let open Format in
+  let p f pend = match i with
+  | Declare (var, ty, e, _) -> fprintf f "%a %a = %a%a"
+        ptype ty c.print_varname var e nop pend ()
+  | AllocArray (name, t, e, None, opt) -> fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a )%a@]"
+        ptype t c.print_varname name ptype t e nop
+        pend ()
+    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+    | AllocArrayConst (name, ty, len, lief, opt) ->
+        fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a);@]"
+          ptype ty
+          c.print_varname name
+          ptype ty
+          len nop
+          c.print_varname name
+          c.print_varname name
+          (c.print_lief nop) lief
+        
+    | AllocRecord (name, ty, list, opt) ->
+        fprintf f "@[<v 4>%a %a = new %a()%a@\n%a%a@]"
+          ptype ty c.print_varname name ptypename ty pend ()
+          (print_list (fun f (field, x) -> fprintf f "%a->%s = %a%a"
+              c.print_varname name field x nop pend ()) sep_nl) list
+          pend ()
+    | Print li->
+        fprintf f "std::cout << %a%a"
+          (print_list
+             (fun f -> function
+               | StringConst s -> c.print_lief nop f (Ast.Expr.String s)
+               | PrintExpr (_, e) -> e f nop) (sep "%a << %a")) li
+          pend ()
+    | Read li ->
+        let skipfirst, variables =
+      List.fold_left (fun (skipfirst, variables) i -> match i with
+      | Instr.ReadExpr (t, mutable_) -> skipfirst, (t, mutable_, false)::variables
+      | Instr.DeclRead (t, var, _) ->
+        let mutable_ = Mutable.var var in
+        skipfirst, (t, mutable_, false)::variables
+      | Instr.Separation -> begin match variables with
+        | (t, m, s)::tl -> skipfirst, (t, m, true)::tl
+        | [] -> true, []
+      end
+      ) (false, []) li
+    in
+    let lastSkip = ref true in
+    Format.fprintf f "std::cin%a%a;"
+      (fun f b -> if b then
+        Format.fprintf f " >> std::skipws"
+      ) skipfirst
+      (print_list (fun f (t, x, b) ->
+        if !lastSkip = b then
+          Format.fprintf f " >> %a" (c.print_mut c nop) x
+        else
+          Format.fprintf f " >> %a >> std::%sskipws" (c.print_mut c nop) x
+            (if b then "" else "no");
+        lastSkip := b;
+       ) nosep )
+      (List.rev variables)
+    | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
+    | Unquote e -> assert false
+    | _ -> clike_print_instr c i f pend
+  in
+  let is_multi_instr = match i with
+  | Read (hd::tl) -> true
+  | _ -> false in
+  {
+   is_multi_instr=is_multi_instr;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
+   p=p;
+   default = seppt;
+   print_lief = c.print_lief;
+ }
+
+let print_instr tyenv macros i =
+  let open Ast.Instr.Fixed.Deep in
+  let c = config macros in
+  let i = (fold (print_instr tyenv c) (mapg (print_expr c) i))
+  in fun f -> i.p f i.default
+    
 class cppPrinter = object(self)
   inherit CPrinter.cPrinter as cprinter
 
+ method instr f t =
+   let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc "cpp" li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr (cprinter#getTyperEnv ()) macros t) f
+
   method expr f e = print_expr
-      (StringMap.map (fun (ty, params, li) ->
+      (config (StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
+        with Not_found -> List.assoc "" li) macros)) e f nop
 
   method lang () = "cpp"
 
