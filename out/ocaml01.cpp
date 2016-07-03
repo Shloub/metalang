@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+
+int foo() {
+    for (int i = 0; i <= 10; i += 1)
+    {
+        
+    }
+    return 0;
+}
+
+
+int bar() {
+    for (int i = 0; i <= 10; i += 1)
+        int a = 0;
+    return 0;
+}
+
+
+int main(void) {
+    
+    return 0;
+}
+
