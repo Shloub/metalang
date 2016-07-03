@@ -312,4 +312,11 @@ class proloCppPrinter = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
+  method main f main =
+    let li_fori, li_forc = self#collect_for main in
+    Format.fprintf f "@[<v 4>int main() {@\n%a%a%a@]@\n}"
+      (self#declare_for "int") li_fori
+      (self#declare_for "char") li_forc
+      self#instructions main
+
 end

@@ -38,6 +38,8 @@ open Ast
 type acc0 = unit
 type 'a acc = unit
 let init_acc () = ()
+let apply op i1 i2 = (match op with Expr.Add -> (+) | Expr.Sub -> (-)) i1 i2
+  
 let rewrite_expr0 annot e = match e with
   | Expr.BinOp ( (_, e1), Expr.LowerEq,
   (_, Expr.Fixed.F (_, Expr.BinOp (e2, Expr.Sub,
@@ -48,18 +50,41 @@ let rewrite_expr0 annot e = match e with
   (_, Expr.Fixed.F (_, Expr.BinOp (e2, Expr.Sub,
   Expr.Fixed.F (_, Expr.Lief (Expr.Integer i))
   )))) ->
-  true, Expr.binop Expr.Lower e1 (Expr.binop Expr.Sub e2 (Expr.integer (i - 1)))
+    true, Expr.binop Expr.Lower e1 (Expr.binop Expr.Sub e2 (Expr.integer (i - 1)))
+  | Expr.BinOp ( (_, e1), Expr.LowerEq, (_, Expr.Fixed.F (_, Expr.Lief (Expr.Integer i)))) ->
+      true, Expr.binop Expr.Lower e1 (Expr.integer (i + 1))
   | Expr.BinOp ((_, e1), Expr.Lower,
   (_, Expr.Fixed.F (_, Expr.BinOp (e2, Expr.Add,
   Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1))
   )))) ->
-  true, Expr.binop Expr.LowerEq e1 e2
-  | Expr.BinOp ( (_, e1), Expr.Add, (_, Expr.Fixed.F (_, Expr.BinOp (e2, Expr.Sub, e3)))) ->
-  true, Expr.binop Expr.LowerEq e1 e2
-  | e ->
-      let b, e = Expr.Fixed.Surface.foldmap (fun (b, e) acc -> acc || b, e) e false in
-      b, Expr.Fixed.fixa annot e
-        
+    true, Expr.binop Expr.LowerEq e1 e2
+  | Expr.BinOp ( (_, Expr.Fixed.F (_, Expr.Lief Expr.Integer i1)), ((Expr.Add | Expr.Sub) as op), (_, Expr.Fixed.F (_, Expr.Lief Expr.Integer i2 )))
+    when i1 = 1 || i2 = 1
+    ->
+      let e = apply op i1 i2 in
+      let e = Expr.Lief (Expr.Integer e) in
+      true, Expr.Fixed.fixa annot e
+
+ | Expr.BinOp ( (_, e1), Expr.Sub, (_, Expr.Fixed.F (_, Expr.Lief Expr.Integer i2 )))
+    when i2 < 0 ->
+      let e2 = Expr.lief (Expr.Integer (-i2)) in
+      let e = Expr.BinOp (e1, Expr.Add, e2) in
+      true, Expr.Fixed.fixa annot e
+ | Expr.BinOp ( (_, Expr.Fixed.F (_, Expr.BinOp( e1, ((Expr.Add | Expr.Sub) as op1), Expr.Fixed.F (_, Expr.Lief Expr.Integer i2)))), ((Expr.Add | Expr.Sub) as op2), (_, Expr.Fixed.F (_, Expr.Lief Expr.Integer i3 ))) ->
+     let i2 = match op1 with | Expr.Sub -> -i2 | _ -> i2 in
+     let i = apply op2 i2 i3 in
+     let e =
+       if i = 0 then Expr.unfix e1 else if i < 0 then
+         let e2 = Expr.lief (Expr.Integer (-i)) in
+         Expr.BinOp (e1, Expr.Sub, e2)
+       else
+         let e2 = Expr.lief (Expr.Integer i) in
+         Expr.BinOp (e1, Expr.Add, e2) in
+     true, Expr.Fixed.fixa annot e
+ | e ->
+     let b, e = Expr.Fixed.Surface.foldmap (fun (b, e) acc -> acc || b, e) e false in
+     b, Expr.Fixed.fixa annot e
+
 let rec rewrite_expr e =
   let changed, e = Expr.Fixed.Deep.folda rewrite_expr0 e in
   if changed then rewrite_expr e

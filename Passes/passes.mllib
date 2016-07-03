@@ -1,26 +1,2 @@
-DetectRecursion
-Passes
-PassesUtils
-RemoveUselessFunctions
-RemoveUselessTypes
-IfMerge
-CheckReturn
-CheckUseVoid
-ReadAnalysis
-NoPend
-RemoveTags
-AllocArrayExpend
-ExpandPrint
-CollectCalls
-CollectTypes
-CountNoPosition
-CheckNaming
-Typer
-Rename
-InternalTags
-UnTuple
-RecordExprToInstr
-DeclareTuples
-InlineFuncs
-InlineVars
-RemoveInternal
+  Passes
+  ReadAnalysis

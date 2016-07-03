@@ -127,7 +127,7 @@ let print_instr tyenv c i =
     | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a" (c.print_mut c nop) mut c.print_op op e nop
     | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
     | ClikeLoop (init, cond, incr, li) -> assert false
-    | Loop (var, e1, e2, li) -> fprintf f "@[<v 4>@[<h>for %a in range(%a, 1 + %a):@]%a@]"
+    | Loop (var, e1, e2, li) -> fprintf f "@[<v 4>@[<h>for %a in range(%a, %a):@]%a@]"
           c.print_varname var e1 nop e2 nop
           block li
     | While (e, li) -> fprintf f "@[<v 4>while @[<h>%a@]:%a@]" e nop block li
