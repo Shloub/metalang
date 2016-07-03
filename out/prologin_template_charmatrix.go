@@ -15,8 +15,8 @@ func skip() {
 }
 func programme_candidat(tableau [][]byte, taille_x int, taille_y int) int{
   out0 := 0
-  for i := 0; i < taille_y; i += 1 {
-      for j := 0; j < taille_x; j += 1 {
+  for i := 0; i < taille_y; i++ {
+      for j := 0; j < taille_x; j++ {
           out0 += (int)(tableau[i][j]) * (i + j * 2)
           fmt.Printf("%c", tableau[i][j])
       }
@@ -34,9 +34,9 @@ func main() {
   fmt.Fscanf(reader, "%d", &taille_y)
   skip()
   var a [][]byte = make([][]byte, taille_y)
-  for b := 0; b < taille_y; b += 1 {
+  for b := 0; b < taille_y; b++ {
       var c []byte = make([]byte, taille_x)
-      for d := 0; d < taille_x; d += 1 {
+      for d := 0; d < taille_x; d++ {
           fmt.Fscanf(reader, "%c", &c[d])
       }
       skip()

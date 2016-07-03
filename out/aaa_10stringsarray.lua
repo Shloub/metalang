@@ -13,7 +13,7 @@ end
 
 
 local tab = {}
-for i = 0,2 - 1 do
+for i = 0,1 do
   tab[i + 1] = idstring("chaine de test");
 end
 for j = 0,1 do

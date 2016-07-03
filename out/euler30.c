@@ -12,7 +12,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 */
     int *p = calloc( 10 , sizeof(int));
-    for (i = 0; i < 10; i++)
+    for (i = 0; i <= 9; i++)
       p[i] = i * i * i * i * i;
     int sum = 0;
     for (a = 0; a <= 9; a++)

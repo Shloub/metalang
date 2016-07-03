@@ -15,7 +15,7 @@ public class aaa_07triplet
   
   public static void main(String args[])
   {
-    for (int i = 1; i <= 3; i += 1)
+    for (int i = 1; i < 4; i++)
     {
         int[] d = read_int_line();
         int a = d[0];
@@ -24,7 +24,7 @@ public class aaa_07triplet
         System.out.printf("a = %d b = %dc =%d\n", a, b, c);
     }
     int[] l = read_int_line();
-    for (int j = 0; j <= 9; j += 1)
+    for (int j = 0; j < 10; j++)
         System.out.printf("%d\n", l[j]);
   }
   

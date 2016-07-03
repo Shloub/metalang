@@ -4,7 +4,7 @@
 int main(void) {
     int i, a;
     char *str = calloc( 12 , sizeof(char));
-    for (a = 0; a < 12; a++)
+    for (a = 0; a <= 11; a++)
     {
         scanf("%c", &str[a]);
     }

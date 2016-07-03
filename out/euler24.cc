@@ -3,7 +3,7 @@
 
 int fact(int n) {
     int prod = 1;
-    for (int i = 2; i <= n; i += 1)
+    for (int i = 2; i <= n; i++)
         prod *= i;
     return prod;
 }
@@ -11,16 +11,16 @@ int fact(int n) {
 
 void show(int lim, int nth) {
     std::vector<int> *t = new std::vector<int>( lim );
-    for (int i = 0; i < lim; i += 1)
+    for (int i = 0; i < lim; i++)
         t->at(i) = i;
     std::vector<bool> *pris = new std::vector<bool>( lim );
     std::fill(pris->begin(), pris->end(), false);
-    for (int k = 1; k < lim; k += 1)
+    for (int k = 1; k < lim; k++)
     {
         int n = fact(lim - k);
         int nchiffre = nth / n;
         nth = nth % n;
-        for (int l = 0; l < lim; l += 1)
+        for (int l = 0; l < lim; l++)
             if (!pris->at(l))
             {
                 if (nchiffre == 0)
@@ -28,10 +28,10 @@ void show(int lim, int nth) {
                     std::cout << l;
                     pris->at(l) = true;
                 }
-                nchiffre -= 1;
+                nchiffre--;
             }
     }
-    for (int m = 0; m < lim; m += 1)
+    for (int m = 0; m < lim; m++)
         if (!pris->at(m))
             std::cout << m;
     std::cout << "\n";

@@ -18,7 +18,7 @@ std::vector<int> primesfactors(int n) {
 }
 
 
-int main(void) {
+int main() {
     int lim = 20;
     std::vector<int> o( lim + 1, 0 );
     for (int i = 1; i <= lim; i += 1)
@@ -32,6 +32,5 @@ int main(void) {
         for (int l = 1; l <= o[k]; l += 1)
             product *= k;
     std::cout << product << "\n";
-    return 0;
 }
 

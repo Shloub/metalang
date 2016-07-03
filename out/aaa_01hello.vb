@@ -7,13 +7,13 @@ Module aaa_01hello
     Console.Write("Hello World")
     Dim a As Integer = 5
     Console.Write(((4 + 6) * 2) & " " & Chr(10) & a & "foo")
-    If 1 + (1 + 1) * 2 * (3 + 8) \ 4 - (1 - 2) - 3 = 12 AndAlso true Then
+    If 1 + 2 * 2 * (3 + 8) \ 4 - 2 = 12 AndAlso true Then
         Console.Write("True")
     Else 
         Console.Write("False")
     End If
     Console.Write(Chr(10))
-    If (3 * (4 + 5 + 6) * 2 = 45) = false Then
+    If (3 * (4 + 11) * 2 = 45) = false Then
         Console.Write("True")
     Else 
         Console.Write("False")
@@ -24,7 +24,7 @@ Module aaa_01hello
     Else 
         Console.Write("False")
     End If
-    Console.Write(" " & ((4 + 1) \ 3 \ (2 + 1)) & (4 * 1 \ 3 \ 2 * 1))
+    Console.Write(" " & (5 \ 3 \ 3) & (4 * 1 \ 3 \ 2 * 1))
     If Not (Not (a = 0) AndAlso Not (a = 4)) Then
         Console.Write("True")
     Else 

@@ -3,9 +3,9 @@
 
 int nth(std::vector<char> * tab, char tofind, int len) {
     int out0 = 0;
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         if (tab->at(i) == tofind)
-            out0 += 1;
+            out0++;
     return out0;
 }
 
@@ -16,7 +16,7 @@ int main() {
     char tofind = '\u0000';
     std::cin >> tofind;
     std::vector<char> *tab = new std::vector<char>( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         char tmp = '\u0000';
         std::cin >> tmp >> std::noskipws;

@@ -78,7 +78,7 @@ sub sumdivaux{
 sub sumdiv{
   my($nprimes, $primes, $n) = @_;
   my $t = [];
-  foreach my $i (0 .. $n + 1 - 1)
+  foreach my $i (0 .. $n)
   {
       $t->[$i] = 0;
   }
@@ -111,12 +111,12 @@ my $n = 100;
 # 28124 ça prend trop de temps mais on arrive a passer le test 
 
 my $abondant = [];
-foreach my $p (0 .. $n + 1 - 1)
+foreach my $p (0 .. $n)
 {
     $abondant->[$p] = ();
 }
 my $summable = [];
-foreach my $q (0 .. $n + 1 - 1)
+foreach my $q (0 .. $n)
 {
     $summable->[$q] = ();
 }

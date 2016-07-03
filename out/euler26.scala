@@ -22,7 +22,7 @@ object euler26
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](1000);
-    for (j <- 0 to 1000 - 1)
+    for (j <- 0 to 999)
         t(j) = 0;
     var m: Int = 0;
     var mi: Int = 0;

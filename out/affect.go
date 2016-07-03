@@ -49,14 +49,14 @@ func result(t_ * toto, t2_ * toto) int{
   t3 = t2
   t = t2
   t2 = t3
-  (*t).blah += 1
+  (*t).blah++
   len := 1
   var cache0 []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       cache0[i] = -i
   }
   var cache1 []int = make([]int, len)
-  for j := 0; j < len; j += 1 {
+  for j := 0; j < len; j++ {
       cache1[j] = j
   }
   var cache2 []int = cache0

@@ -6,10 +6,10 @@ public class euler50
   static int eratostene(int[] t, int max0)
   {
     int n = 0;
-    for (int i = 2; i < max0; i += 1)
+    for (int i = 2; i < max0; i++)
         if (t[i] == i)
         {
-            n += 1;
+            n++;
             if (max0 / i > i)
             {
                 int j = i * i;
@@ -28,22 +28,22 @@ public class euler50
   {
     int maximumprimes = 1000001;
     int[] era = new int[maximumprimes];
-    for (int j = 0; j < maximumprimes; j += 1)
+    for (int j = 0; j < maximumprimes; j++)
         era[j] = j;
     int nprimes = eratostene(era, maximumprimes);
     int[] primes = new int[nprimes];
-    for (int o = 0; o < nprimes; o += 1)
+    for (int o = 0; o < nprimes; o++)
         primes[o] = 0;
     int l = 0;
-    for (int k = 2; k < maximumprimes; k += 1)
+    for (int k = 2; k < maximumprimes; k++)
         if (era[k] == k)
         {
             primes[l] = k;
-            l += 1;
+            l++;
         }
     System.out.printf("%d == %d\n", l, nprimes);
     int[] sum = new int[nprimes];
-    for (int i_ = 0; i_ < nprimes; i_ += 1)
+    for (int i_ = 0; i_ < nprimes; i_++)
         sum[i_] = primes[i_];
     int maxl = 0;
     boolean process = true;
@@ -53,7 +53,7 @@ public class euler50
     while (process)
     {
         process = false;
-        for (int i = 0; i <= stop; i += 1)
+        for (int i = 0; i <= stop; i++)
             if (i + len < nprimes)
             {
                 sum[i] += primes[i + len];
@@ -69,7 +69,7 @@ public class euler50
                 else
                     stop = Math.min(stop, i);
             }
-        len += 1;
+        len++;
     }
     System.out.printf("%d\n%d\n", resp, maxl);
   }

@@ -64,7 +64,7 @@ def skip() {
     for (i <- 0 to n - 1)
     {
         var out0 :Array[Int] = new Array[Int](2);
-        for (j <- 0 to 2 - 1)
+        for (j <- 0 to 1)
         {
             var out01 = read_int();
             skip();
@@ -78,7 +78,7 @@ def skip() {
     for (k <- 0 to m - 1)
     {
         var out1 :Array[Int] = new Array[Int](2);
-        for (l <- 0 to 2 - 1)
+        for (l <- 0 to 1)
         {
             var out_0 = read_int();
             skip();

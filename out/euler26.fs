@@ -21,7 +21,7 @@
 
 : main
   HERE 1000 cells allot { t }
-  1000 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+  999 0 BEGIN 2dup >= WHILE DUP { j }
     0 t  j cells +  !
    1 + REPEAT 2DROP
   0 { m }

@@ -36,9 +36,9 @@ Tictactoe : un tictactoe avec une IA
 /* On affiche l'état */
 function print_state(g){
     util.print("\n|");
-    for (var y = 0; y <= 2; y += 1)
+    for (var y = 0; y < 3; y++)
     {
-        for (var x = 0; x <= 2; x += 1)
+        for (var x = 0; x < 3; x++)
         {
             if (g["cases"][x][y] == 0)
                 util.print(" ");
@@ -58,14 +58,14 @@ function print_state(g){
 function eval0(g){
     var win = 0;
     var freecase = 0;
-    for (var y = 0; y <= 2; y += 1)
+    for (var y = 0; y < 3; y++)
     {
         var col = -1;
         var lin = -1;
-        for (var x = 0; x <= 2; x += 1)
+        for (var x = 0; x < 3; x++)
         {
             if (g["cases"][x][y] == 0)
-                freecase += 1;
+                freecase++;
             var colv = g["cases"][x][y];
             var linv = g["cases"][y][x];
             if (col == -1 && colv != 0)
@@ -82,7 +82,7 @@ function eval0(g){
         else if (lin >= 0)
             win = lin;
     }
-    for (var x = 1; x <= 2; x += 1)
+    for (var x = 1; x < 3; x++)
     {
         if (g["cases"][0][0] == x && g["cases"][1][1] == x && g["cases"][2][2] == x)
             win = x;
@@ -139,8 +139,8 @@ function minmax(g){
     var maxNote = -10000;
     if (!g["firstToPlay"])
         maxNote = 10000;
-    for (var x = 0; x <= 2; x += 1)
-        for (var y = 0; y <= 2; y += 1)
+    for (var x = 0; x < 3; x++)
+        for (var y = 0; y < 3; y++)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -161,8 +161,8 @@ function play(g){
         "x":0,
         "y":0};
     var minNote = 10000;
-    for (var x = 0; x <= 2; x += 1)
-        for (var y = 0; y <= 2; y += 1)
+    for (var x = 0; x < 3; x++)
+        for (var y = 0; y < 3; y++)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -182,10 +182,10 @@ function play(g){
 
 function init0(){
     var cases = new Array(3);
-    for (var i = 0; i < 3; i += 1)
+    for (var i = 0; i < 3; i++)
     {
         var tab = new Array(3);
-        for (var j = 0; j < 3; j += 1)
+        for (var j = 0; j < 3; j++)
             tab[j] = 0;
         cases[i] = tab;
     }
@@ -208,7 +208,7 @@ function read_move(){
     return b;
 }
 
-for (var i = 0; i <= 1; i += 1)
+for (var i = 0; i < 2; i++)
 {
     var state = init0();
     var c = {

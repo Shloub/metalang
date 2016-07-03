@@ -70,7 +70,7 @@ static int readInt(){
   static int pathfind(int[] tab, int len)
   {
     int[] cache = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         cache[i] = -1;
     return pathfind_aux(cache, tab, len, 0);
   }
@@ -82,7 +82,7 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = 0;
         tmp = readInt();

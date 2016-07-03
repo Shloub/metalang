@@ -54,7 +54,7 @@ end;
   n : Integer;
 begin
   t := new c (0..9);
-  for i in integer range 0..9 - 1 loop
+  for i in integer range 0..8 loop
     t(i) := exp0(10, i) - exp0(10, i - 1);
   end loop;
   for i2 in integer range 1..8 loop

@@ -13,7 +13,7 @@ Module brainfuck_compiler
     Dim input As Char = Chr(32)
     Dim current_pos As Integer = 500
     Dim mem(1000) As Integer
-    For i As Integer = 0 To 1000 - 1
+    For i As Integer = 0 To 999
         mem(i) = 0
     Next
     mem(current_pos) = mem(current_pos) + 1

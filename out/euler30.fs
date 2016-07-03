@@ -9,7 +9,7 @@
   \ 
   
   HERE 10 cells allot { p }
-  10 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  9 0 BEGIN 2dup >= WHILE DUP { i }
     i i * i * i * i * p  i cells +  !
    1 + REPEAT 2DROP
   0 { sum }

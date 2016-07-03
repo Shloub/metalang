@@ -17,7 +17,7 @@ while ($a != 1)
             $sqrtia = intval(sqrt($a));
             $found = true;
         }
-        $b += 1;
+        $b++;
     }
     if (!$found)
     {

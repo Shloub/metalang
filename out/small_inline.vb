@@ -53,7 +53,7 @@ End Function
   
   Sub Main()
     Dim t(2) As Integer
-    For d As Integer = 0 To 2 - 1
+    For d As Integer = 0 To 1
         t(d) = readInt
         stdin_sep
     Next

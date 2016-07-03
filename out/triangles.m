@@ -36,7 +36,7 @@ int find(int len, int** tab) {
     for (i = 0; i < len; i++)
     {
         int *tab3 = calloc( i + 1 , sizeof(int));
-        for (j = 0; j < i + 1; j++)
+        for (j = 0; j <= i; j++)
           tab3[j] = 0;
         tab2[i] = tab3;
     }
@@ -52,7 +52,7 @@ int main(void){
   for (i = 0; i < len; i++)
   {
       int *tab2 = calloc( i + 1 , sizeof(int));
-      for (j = 0; j < i + 1; j++)
+      for (j = 0; j <= i; j++)
       {
           int tmp = 0;
           scanf("%d ", &tmp);

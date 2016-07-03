@@ -52,7 +52,7 @@ begin
   --
   
   allowed := new a (0..10);
-  for i in integer range 0..10 - 1 loop
+  for i in integer range 0..9 loop
     allowed(i) := TRUE;
   end loop;
   for i6 in integer range 0..1 loop

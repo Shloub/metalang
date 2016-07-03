@@ -52,7 +52,7 @@ var
   v : Longint;
 begin
   SetLength(t, 9);
-  for i := 0 to  9 - 1 do
+  for i := 0 to  8 do
   begin
     t[i] := exp0(10, i) - exp0(10, i - 1);
   end;

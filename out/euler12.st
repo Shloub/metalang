@@ -42,9 +42,9 @@ Object subclass: euler12 [
       ].].
     (1 to: 10000) do: [:n|
       primesFactors := Array new: (n + 2).
-      (0 to: (n + 2 - 1)) do: [:m| primesFactors at: (m + 1) put: 0.].
+      (0 to: (n + 1)) do: [:m| primesFactors at: (m + 1) put: 0.].
       max0 := (((self fillPrimesFactors: primesFactors c: n primes: primes nprimes: nprimes)) max: ((self fillPrimesFactors: primesFactors c: (n + 1) primes: primes nprimes: nprimes))).
-      primesFactors at: (2 + 1) put: ((primesFactors at: (2 + 1)) - 1).
+      primesFactors at: 3 put: ((primesFactors at: 3) - 1).
       ndivs := 1.
       (0 to: max0) do: [:i| ((primesFactors at: (i + 1)) ~= 0)
         ifTrue:[ndivs := ndivs * (1 + (primesFactors at: (i + 1))).].].

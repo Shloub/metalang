@@ -11,7 +11,7 @@ object aaa_readints
         printf("%d=>%d\n", i, tab1(i));
     len = readInt().toInt;
     var tab2 :Array[Array[Int]] = new Array[Array[Int]](len - 1);
-    for (a <- 0 to len - 1 - 1)
+    for (a <- 0 to len - 2)
         tab2(a) = readLine().split(" ").map(_.toInt);
     for (i <- 0 to len - 2)
     {

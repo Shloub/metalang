@@ -46,7 +46,7 @@ int main(void){
   for (i = 0; i < n; i++)
   {
       int *out0 = calloc( 2 , sizeof(int));
-      for (j = 0; j < 2; j++)
+      for (j = 0; j <= 1; j++)
       {
           scanf("%d ", &out01);
           out0[j] = out01;
@@ -58,7 +58,7 @@ int main(void){
   for (k = 0; k < m; k++)
   {
       int *out1 = calloc( 2 , sizeof(int));
-      for (l = 0; l < 2; l++)
+      for (l = 0; l <= 1; l++)
       {
           scanf("%d ", &out_);
           out1[l] = out_;

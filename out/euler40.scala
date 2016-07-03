@@ -26,7 +26,7 @@ object euler40
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](9);
-    for (i <- 0 to 9 - 1)
+    for (i <- 0 to 8)
         t(i) = exp0(10, i) - exp0(10, i - 1);
     for (i2 <- 1 to 8)
         printf("%d => %d\n", i2, t(i2));

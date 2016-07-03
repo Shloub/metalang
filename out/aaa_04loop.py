@@ -16,7 +16,7 @@ def h(i):
     return False
 
 j = 0
-for k in range(0, 1 + 10):
+for k in range(0, 11):
     j += k
     print("%d\n" % j, end='')
 i = 4

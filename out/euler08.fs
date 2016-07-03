@@ -21,7 +21,7 @@ create bufferc 128 allot
 : main
   1 { i }
   HERE 5 cells allot { last }
-  5 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+  4 0 BEGIN 2dup >= WHILE DUP { j }
     read-char { c }
     c [char] 0 - { d }
     i d * TO i

@@ -24,7 +24,7 @@ int find(int n, std::vector<int>& m) {
 }
 
 
-int main(void) {
+int main() {
     std::vector<int> m( 1000000, 0 );
     int max0 = 0;
     int maxi = 0;
@@ -39,6 +39,5 @@ int main(void) {
         }
     }
     std::cout << max0 << "\n" << maxi << "\n";
-    return 0;
 }
 

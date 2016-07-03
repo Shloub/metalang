@@ -29,14 +29,14 @@ int nbPassePartout(int n, std::vector<std::vector<int>>& passepartout, int m, st
 }
 
 
-int main(void) {
+int main() {
     int out_, m, out01, n;
     std::cin >> n;
     std::vector<std::vector<int>> passepartout( n );
     for (int i = 0; i < n; i += 1)
     {
         std::vector<int> out0( 2 );
-        for (int j = 0; j < 2; j += 1)
+        for (int j = 0; j <= 1; j += 1)
         {
             std::cin >> out01;
             out0[j] = out01;
@@ -48,7 +48,7 @@ int main(void) {
     for (int k = 0; k < m; k += 1)
     {
         std::vector<int> out1( 2 );
-        for (int l = 0; l < 2; l += 1)
+        for (int l = 0; l <= 1; l += 1)
         {
             std::cin >> out_;
             out1[l] = out_;
@@ -56,6 +56,5 @@ int main(void) {
         serrures[k] = out1;
     }
     std::cout << nbPassePartout(n, passepartout, m, serrures);
-    return 0;
 }
 

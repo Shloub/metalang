@@ -1,8 +1,8 @@
 
 def programme_candidat(tableau, x, y):
     out0 = 0
-    for i in range(0, 1 + y - 1):
-        for j in range(0, 1 + x - 1):
+    for i in range(0, y):
+        for j in range(0, x):
             out0 += tableau[i][j] * (i * 2 + j)
     return out0
 

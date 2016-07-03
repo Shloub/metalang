@@ -15,19 +15,19 @@ Object subclass: euler31 [
   
   main [
     |t o cache|t := Array new: 8.
-    (0 to: (8 - 1)) do: [:i| t at: (i + 1) put: 0.].
-    t at: (0 + 1) put: 1.
-    t at: (1 + 1) put: 2.
-    t at: (2 + 1) put: 5.
-    t at: (3 + 1) put: 10.
-    t at: (4 + 1) put: 20.
-    t at: (5 + 1) put: 50.
-    t at: (6 + 1) put: 100.
-    t at: (7 + 1) put: 200.
+    (0 to: 7) do: [:i| t at: (i + 1) put: 0.].
+    t at: 1 put: 1.
+    t at: 2 put: 2.
+    t at: 3 put: 5.
+    t at: 4 put: 10.
+    t at: 5 put: 20.
+    t at: 6 put: 50.
+    t at: 7 put: 100.
+    t at: 8 put: 200.
     cache := Array new: 201.
-    (0 to: (201 - 1)) do: [:j|
+    (0 to: 200) do: [:j|
       o := Array new: 8.
-      (0 to: (8 - 1)) do: [:k| o at: (k + 1) put: 0.].
+      (0 to: 7) do: [:k| o at: (k + 1) put: 0.].
       cache at: (j + 1) put: o.
     ].
     (self result: 200 t: t maxIndex: 7 cache: cache) display.

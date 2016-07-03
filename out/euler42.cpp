@@ -30,7 +30,7 @@ int score() {
 }
 
 
-int main(void) {
+int main() {
     int n;
     for (int i = 1; i <= 55; i += 1)
         if (is_triangular(i))
@@ -41,6 +41,5 @@ int main(void) {
     for (int i = 1; i <= n; i += 1)
         sum += score();
     std::cout << sum << "\n";
-    return 0;
 }
 

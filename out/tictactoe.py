@@ -45,8 +45,8 @@ def readint():
 """On affiche l'état"""
 def print_state(g):
     print("\n|", end='')
-    for y in range(0, 1 + 2):
-        for x in range(0, 1 + 2):
+    for y in range(0, 3):
+        for x in range(0, 3):
             if g["cases"][x][y] == 0:
                 print(" ", end='')
             elif g["cases"][x][y] == 1:
@@ -62,10 +62,10 @@ def print_state(g):
 def eval0(g):
     win = 0
     freecase = 0
-    for y in range(0, 1 + 2):
+    for y in range(0, 3):
         col = -1
         lin = -1
-        for x in range(0, 1 + 2):
+        for x in range(0, 3):
             if g["cases"][x][y] == 0:
                 freecase += 1
             colv = g["cases"][x][y]
@@ -82,7 +82,7 @@ def eval0(g):
             win = col
         elif lin >= 0:
             win = lin
-    for x in range(1, 1 + 2):
+    for x in range(1, 3):
         if g["cases"][0][0] == x and g["cases"][1][1] == x and g["cases"][2][2] == x:
             win = x
         if g["cases"][0][2] == x and g["cases"][1][1] == x and g["cases"][2][0] == x:
@@ -128,8 +128,8 @@ def minmax(g):
     maxNote = -10000
     if not g["firstToPlay"]:
         maxNote = 10000
-    for x in range(0, 1 + 2):
-        for y in range(0, 1 + 2):
+    for x in range(0, 3):
+        for y in range(0, 3):
             if can_move_xy(x, y, g):
                 apply_move_xy(x, y, g)
                 currentNote = minmax(g)
@@ -144,8 +144,8 @@ def minmax(g):
 def play(g):
     minMove = {"x":0, "y":0}
     minNote = 10000
-    for x in range(0, 1 + 2):
-        for y in range(0, 1 + 2):
+    for x in range(0, 3):
+        for y in range(0, 3):
             if can_move_xy(x, y, g):
                 apply_move_xy(x, y, g)
                 currentNote = minmax(g)
@@ -160,7 +160,7 @@ def play(g):
 
 def init0():
     cases = [None] * 3
-    for i in range(0, 1 + 3 - 1):
+    for i in range(0, 3):
         tab = [0] * 3
         cases[i] = tab
     return {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
@@ -172,7 +172,7 @@ def read_move():
     stdinsep()
     return {"x":x, "y":y}
 
-for i in range(0, 1 + 1):
+for i in range(0, 2):
     state = init0()
     apply_move({"x":1, "y":1}, state)
     apply_move({"x":0, "y":0}, state)

@@ -13,7 +13,7 @@ int max2_(int a, int b) {
 int* primesfactors(int n) {
     int i;
     int *tab = calloc( n + 1 , sizeof(int));
-    for (i = 0; i < n + 1; i++)
+    for (i = 0; i <= n; i++)
       tab[i] = 0;
     int d = 2;
     while (n != 1 && d * d <= n)
@@ -32,7 +32,7 @@ int main(void) {
     int k, l, i, j, m;
     int lim = 20;
     int *o = calloc( lim + 1 , sizeof(int));
-    for (m = 0; m < lim + 1; m++)
+    for (m = 0; m <= lim; m++)
       o[m] = 0;
     for (i = 1; i <= lim; i++)
     {

@@ -10,7 +10,7 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     return matrix;
 }
 
-int main(void) {
+int main() {
     int y, x;
     std::cin >> x >> y;
     std::vector<std::vector<int>> tab = read_matrix<int>(y, x);
@@ -24,6 +24,5 @@ int main(void) {
             std::cout << tab[jy][jx] << " ";
         std::cout << "\n";
     }
-    return 0;
 }
 

@@ -45,7 +45,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     tab2 := Array new: len.
     (0 to: (len - 1)) do: [:i|
       tab3 := Array new: (i + 1).
-      (0 to: (i + 1 - 1)) do: [:j| tab3 at: (j + 1) put: 0.].
+      (0 to: i) do: [:j| tab3 at: (j + 1) put: 0.].
       tab2 at: (i + 1) put: tab3.
     ].
     ^ (self find0: len tab: tab cache: tab2 x: 0 y: 0)
@@ -58,7 +58,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     tab := Array new: len.
     (0 to: (len - 1)) do: [:i|
       tab2 := Array new: (i + 1).
-      (0 to: (i + 1 - 1)) do: [:j|
+      (0 to: i) do: [:j|
         tmp := 0.
         tmp := self read_int.
         self skip.

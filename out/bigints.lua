@@ -384,22 +384,22 @@ function euler29(  )
   local maxA = 5
   local maxB = 5
   local a_bigint = {}
-  for j = 0,maxA + 1 - 1 do
+  for j = 0,maxA do
     a_bigint[j + 1] = bigint_of_int(j * j);
   end
   local a0_bigint = {}
-  for j2 = 0,maxA + 1 - 1 do
+  for j2 = 0,maxA do
     a0_bigint[j2 + 1] = bigint_of_int(j2);
   end
   local b = {}
-  for k = 0,maxA + 1 - 1 do
+  for k = 0,maxA do
     b[k + 1] = 2;
   end
   local n = 0
   local found = true
   while found
   do
-  local min0 = a0_bigint[0 + 1]
+  local min0 = a0_bigint[1]
   found = false;
   for i = 2,maxA do
     if b[i + 1] <= maxB

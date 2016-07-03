@@ -372,13 +372,13 @@ Modulo
     var maxA: Int = 5;
     var maxB: Int = 5;
     var a_bigint :Array[Bigint] = new Array[Bigint](maxA + 1);
-    for (j <- 0 to maxA + 1 - 1)
+    for (j <- 0 to maxA)
         a_bigint(j) = bigint_of_int(j * j);
     var a0_bigint :Array[Bigint] = new Array[Bigint](maxA + 1);
-    for (j2 <- 0 to maxA + 1 - 1)
+    for (j2 <- 0 to maxA)
         a0_bigint(j2) = bigint_of_int(j2);
     var b :Array[Int] = new Array[Int](maxA + 1);
-    for (k <- 0 to maxA + 1 - 1)
+    for (k <- 0 to maxA)
         b(k) = 2;
     var n: Int = 0;
     var found: Boolean = true;

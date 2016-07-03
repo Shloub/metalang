@@ -55,14 +55,14 @@ len *= 2
 print("len*2=%d\n" % len, end='')
 len = math.trunc(len / 2)
 tab = [None] * len
-for i in range(0, 1 + len - 1):
+for i in range(0, len):
     tmpi1 = readint()
     stdinsep()
     print("%d=>%d " % (i, tmpi1), end='')
     tab[i] = tmpi1
 print("\n", end='')
 tab2 = [None] * len
-for i_ in range(0, 1 + len - 1):
+for i_ in range(0, len):
     tmpi2 = readint()
     stdinsep()
     print("%d==>%d " % (i_, tmpi2), end='')
@@ -71,13 +71,13 @@ strlen = readint()
 stdinsep()
 print("%d=strlen\n" % strlen, end='')
 tab4 = [None] * strlen
-for toto in range(0, 1 + strlen - 1):
+for toto in range(0, strlen):
     tmpc = readchar()
     c = ord(tmpc)
     print("%c:%d " % (tmpc, c), end='')
     if tmpc != ' ':
         c = mod(c - ord('a') + 13, 26) + ord('a')
     tab4[toto] = c
-for j in range(0, 1 + strlen - 1):
+for j in range(0, strlen):
     print("%c" % tab4[j], end='')
 

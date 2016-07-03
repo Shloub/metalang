@@ -27,7 +27,7 @@ end
 
 
 local m = {}
-for j = 0,1000000 - 1 do
+for j = 0,999999 do
   m[j + 1] = 0;
 end
 local max0 = 0

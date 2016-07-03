@@ -4,7 +4,7 @@ function trunc(x)
 end
 function palindrome2( pow2, n )
   local t = {}
-  for i = 0,20 - 1 do
+  for i = 0,19 do
     t[i + 1] = math.mod(trunc(n / pow2[i + 1]), 2) == 1;
   end
   local nnum = 0
@@ -26,7 +26,7 @@ end
 
 local p = 1
 local pow2 = {}
-for i = 0,20 - 1 do
+for i = 0,19 do
   p = p * 2;
   pow2[i + 1] = trunc(p / 2);
 end

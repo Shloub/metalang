@@ -11,12 +11,12 @@ struct bigint {
 bigint * read_bigint(int len) {
     char c;
     std::vector<int> *chiffres = new std::vector<int>( len );
-    for (int j = 0; j < len; j += 1)
+    for (int j = 0; j < len; j++)
     {
         std::cin >> c >> std::noskipws;
         chiffres->at(j) = (int)(c);
     }
-    for (int i = 0; i <= (len - 1) / 2; i += 1)
+    for (int i = 0; i <= (len - 1) / 2; i++)
     {
         int tmp = chiffres->at(i);
         chiffres->at(i) = chiffres->at(len - 1 - i);
@@ -33,7 +33,7 @@ bigint * read_bigint(int len) {
 void print_bigint(bigint * a) {
     if (!a->bigint_sign)
         std::cout << '-';
-    for (int i = 0; i < a->bigint_len; i += 1)
+    for (int i = 0; i < a->bigint_len; i++)
         std::cout << a->bigint_chiffres->at(a->bigint_len - 1 - i);
 }
 
@@ -46,7 +46,7 @@ bool bigint_eq(bigint * a, bigint * b) {
         return false;
     else
     {
-        for (int i = 0; i < a->bigint_len; i += 1)
+        for (int i = 0; i < a->bigint_len; i++)
             if (a->bigint_chiffres->at(i) != b->bigint_chiffres->at(i))
                 return false;
         return true;
@@ -67,7 +67,7 @@ bool bigint_gt(bigint * a, bigint * b) {
         else if (a->bigint_len < b->bigint_len)
             return !a->bigint_sign;
         else
-            for (int i = 0; i < a->bigint_len; i += 1)
+            for (int i = 0; i < a->bigint_len; i++)
             {
                 int j = a->bigint_len - 1 - i;
                 if (a->bigint_chiffres->at(j) > b->bigint_chiffres->at(j))
@@ -90,7 +90,7 @@ bigint * add_bigint_positif(bigint * a, bigint * b) {
     int len = std::max(a->bigint_len, b->bigint_len) + 1;
     int retenue = 0;
     std::vector<int> *chiffres = new std::vector<int>( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = retenue;
         if (i < a->bigint_len)
@@ -101,7 +101,7 @@ bigint * add_bigint_positif(bigint * a, bigint * b) {
         chiffres->at(i) = tmp % 10;
     }
     while (len > 0 && chiffres->at(len - 1) == 0)
-        len -= 1;
+        len--;
     bigint * f = new bigint();
         f->bigint_sign = true;
         f->bigint_len = len;
@@ -117,7 +117,7 @@ Pré-requis : a > b
     int len = a->bigint_len;
     int retenue = 0;
     std::vector<int> *chiffres = new std::vector<int>( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = retenue + a->bigint_chiffres->at(i);
         if (i < b->bigint_len)
@@ -132,7 +132,7 @@ Pré-requis : a > b
         chiffres->at(i) = tmp;
     }
     while (len > 0 && chiffres->at(len - 1) == 0)
-        len -= 1;
+        len--;
     bigint * g = new bigint();
         g->bigint_sign = true;
         g->bigint_len = len;
@@ -185,10 +185,10 @@ D'ou le nom de la fonction. */
     int len = a->bigint_len + b->bigint_len + 1;
     std::vector<int> *chiffres = new std::vector<int>( len );
     std::fill(chiffres->begin(), chiffres->end(), 0);
-    for (int i = 0; i < a->bigint_len; i += 1)
+    for (int i = 0; i < a->bigint_len; i++)
     {
         int retenue = 0;
-        for (int j = 0; j < b->bigint_len; j += 1)
+        for (int j = 0; j < b->bigint_len; j++)
         {
             chiffres->at(i + j) += retenue + b->bigint_chiffres->at(j) * a->bigint_chiffres->at(i);
             retenue = chiffres->at(i + j) / 10;
@@ -198,9 +198,9 @@ D'ou le nom de la fonction. */
     }
     chiffres->at(a->bigint_len + b->bigint_len) = chiffres->at(a->bigint_len + b->bigint_len - 1) / 10;
     chiffres->at(a->bigint_len + b->bigint_len - 1) = chiffres->at(a->bigint_len + b->bigint_len - 1) % 10;
-    for (int l = 0; l <= 2; l += 1)
+    for (int l = 0; l < 3; l++)
         if (len != 0 && chiffres->at(len - 1) == 0)
-            len -= 1;
+            len--;
     bigint * m = new bigint();
         m->bigint_sign = a->bigint_sign == b->bigint_sign;
         m->bigint_len = len;
@@ -212,7 +212,7 @@ D'ou le nom de la fonction. */
 bigint * bigint_premiers_chiffres(bigint * a, int i) {
     int len = std::min(i, a->bigint_len);
     while (len != 0 && a->bigint_chiffres->at(len - 1) == 0)
-        len -= 1;
+        len--;
     bigint * o = new bigint();
         o->bigint_sign = a->bigint_sign;
         o->bigint_len = len;
@@ -223,7 +223,7 @@ bigint * bigint_premiers_chiffres(bigint * a, int i) {
 
 bigint * bigint_shift(bigint * a, int i) {
     std::vector<int> *chiffres = new std::vector<int>( a->bigint_len + i );
-    for (int k = 0; k < a->bigint_len + i; k += 1)
+    for (int k = 0; k < a->bigint_len + i; k++)
         if (k >= i)
             chiffres->at(k) = a->bigint_chiffres->at(k - i);
         else
@@ -269,7 +269,7 @@ int log10(int a) {
     while (a >= 10)
     {
         a /= 10;
-        out0 += 1;
+        out0++;
     }
     return out0;
 }
@@ -281,7 +281,7 @@ bigint * bigint_of_int(int i) {
         size = 0;
     std::vector<int> *t = new std::vector<int>( size );
     std::fill(t->begin(), t->end(), 0);
-    for (int k = 0; k < size; k += 1)
+    for (int k = 0; k < size; k++)
     {
         t->at(k) = i % 10;
         i /= 10;
@@ -308,7 +308,7 @@ bigint * fact_bigint(bigint * a) {
 
 int sum_chiffres_bigint(bigint * a) {
     int out0 = 0;
-    for (int i = 0; i < a->bigint_len; i += 1)
+    for (int i = 0; i < a->bigint_len; i++)
         out0 += a->bigint_chiffres->at(i);
     return out0;
 }
@@ -346,7 +346,7 @@ bigint * bigint_exp_10chiffres(bigint * a, int b) {
 
 void euler48() {
     bigint * sum = bigint_of_int(0);
-    for (int i = 1; i <= 100; i += 1)
+    for (int i = 1; i < 101; i++)
     {
         /* 1000 normalement */
         bigint * ib = bigint_of_int(i);
@@ -378,7 +378,7 @@ int euler25() {
         bigint * c = add_bigint(a, b);
         a = b;
         b = c;
-        i += 1;
+        i++;
     }
     return i;
 }
@@ -388,10 +388,10 @@ int euler29() {
     int maxA = 5;
     int maxB = 5;
     std::vector<bigint *> *a_bigint = new std::vector<bigint *>( maxA + 1 );
-    for (int j = 0; j <= maxA; j += 1)
+    for (int j = 0; j <= maxA; j++)
         a_bigint->at(j) = bigint_of_int(j * j);
     std::vector<bigint *> *a0_bigint = new std::vector<bigint *>( maxA + 1 );
-    for (int j2 = 0; j2 <= maxA; j2 += 1)
+    for (int j2 = 0; j2 <= maxA; j2++)
         a0_bigint->at(j2) = bigint_of_int(j2);
     std::vector<int> *b = new std::vector<int>( maxA + 1 );
     std::fill(b->begin(), b->end(), 2);
@@ -401,7 +401,7 @@ int euler29() {
     {
         bigint * min0 = a0_bigint->at(0);
         found = false;
-        for (int i = 2; i <= maxA; i += 1)
+        for (int i = 2; i <= maxA; i++)
             if (b->at(i) <= maxB)
                 if (found)
                 {
@@ -415,11 +415,11 @@ int euler29() {
                 }
         if (found)
         {
-            n += 1;
-            for (int l = 2; l <= maxA; l += 1)
+            n++;
+            for (int l = 2; l <= maxA; l++)
                 if (bigint_eq(a_bigint->at(l), min0) && b->at(l) <= maxB)
                 {
-                    b->at(l) += 1;
+                    b->at(l)++;
                     a_bigint->at(l) = mul_bigint(a_bigint->at(l), a0_bigint->at(l));
                 }
         }
@@ -431,7 +431,7 @@ int euler29() {
 int main() {
     std::cout << euler29() << "\n";
     bigint * sum = read_bigint(50);
-    for (int i = 2; i <= 100; i += 1)
+    for (int i = 2; i < 101; i++)
     {
         std::cin >> std::skipws;
         bigint * tmp = read_bigint(50);

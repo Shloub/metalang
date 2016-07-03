@@ -6,10 +6,10 @@ public class euler27
   static int eratostene(int[] t, int max0)
   {
     int n = 0;
-    for (int i = 2; i < max0; i += 1)
+    for (int i = 2; i < max0; i++)
         if (t[i] == i)
         {
-            n += 1;
+            n++;
             int j = i * i;
             while (j < max0 && j > 0)
             {
@@ -29,14 +29,14 @@ public class euler27
     {
         if (n % primes[i] == 0)
             return false;
-        i += 1;
+        i++;
     }
     return true;
   }
   
   static int test(int a, int b, int[] primes, int len)
   {
-    for (int n = 0; n <= 200; n += 1)
+    for (int n = 0; n < 201; n++)
     {
         int j = n * n + a * n + b;
         if (!isPrime(j, primes, len))
@@ -50,27 +50,27 @@ public class euler27
   {
     int maximumprimes = 1000;
     int[] era = new int[maximumprimes];
-    for (int j = 0; j < maximumprimes; j += 1)
+    for (int j = 0; j < maximumprimes; j++)
         era[j] = j;
     int result = 0;
     int max0 = 0;
     int nprimes = eratostene(era, maximumprimes);
     int[] primes = new int[nprimes];
-    for (int o = 0; o < nprimes; o += 1)
+    for (int o = 0; o < nprimes; o++)
         primes[o] = 0;
     int l = 0;
-    for (int k = 2; k < maximumprimes; k += 1)
+    for (int k = 2; k < maximumprimes; k++)
         if (era[k] == k)
         {
             primes[l] = k;
-            l += 1;
+            l++;
         }
     System.out.printf("%d == %d\n", l, nprimes);
     int ma = 0;
     int mb = 0;
-    for (int b = 3; b <= 999; b += 1)
+    for (int b = 3; b < 1000; b++)
         if (era[b] == b)
-            for (int a = -999; a <= 999; a += 1)
+            for (int a = -999; a < 1000; a++)
             {
                 int n1 = test(a, b, primes, nprimes);
                 int n2 = test(a, -b, primes, nprimes);

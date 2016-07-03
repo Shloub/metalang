@@ -1,22 +1,22 @@
 <?php
 function fact($n) {
     $prod = 1;
-    for ($i = 2; $i <= $n; $i += 1)
+    for ($i = 2; $i <= $n; $i++)
         $prod *= $i;
     return $prod;
 }
 
 function show($lim, $nth) {
     $t = array();
-    for ($i = 0; $i < $lim; $i += 1)
+    for ($i = 0; $i < $lim; $i++)
         $t[$i] = $i;
     $pris = array_fill(0, $lim, false);
-    for ($k = 1; $k < $lim; $k += 1)
+    for ($k = 1; $k < $lim; $k++)
     {
         $n = fact($lim - $k);
         $nchiffre = intval($nth / $n);
         $nth = $nth % $n;
-        for ($l = 0; $l < $lim; $l += 1)
+        for ($l = 0; $l < $lim; $l++)
             if (!$pris[$l])
             {
                 if ($nchiffre == 0)
@@ -24,10 +24,10 @@ function show($lim, $nth) {
                     echo $l;
                     $pris[$l] = true;
                 }
-                $nchiffre -= 1;
+                $nchiffre--;
             }
     }
-    for ($m = 0; $m < $lim; $m += 1)
+    for ($m = 0; $m < $lim; $m++)
         if (!$pris[$m])
             echo $m;
     echo "\n";

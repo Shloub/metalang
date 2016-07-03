@@ -28,7 +28,7 @@ int chiffre(int c, int m) {
 }
 
 
-int main(void) {
+int main() {
     int m = 1;
     for (int a = 0; a <= 9; a += 1)
         for (int f = 1; f <= 9; f += 1)
@@ -42,6 +42,5 @@ int main(void) {
                                 m = std::max(mul, m);
                         }
     std::cout << m << "\n";
-    return 0;
 }
 

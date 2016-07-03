@@ -29,7 +29,7 @@ func score() int{
   fmt.Fscanf(reader, "%d", &len)
   skip()
   sum := 0
-  for i := 1; i <= len; i += 1 {
+  for i := 1; i <= len; i++ {
       var c byte
       fmt.Fscanf(reader, "%c", &c)
       sum += (int)(c) - (int)('A') + 1
@@ -44,7 +44,7 @@ func score() int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  for i := 1; i <= 55; i += 1 {
+  for i := 1; i < 56; i++ {
       if is_triangular(i) {
           fmt.Printf("%d ", i)
       }
@@ -53,7 +53,7 @@ func main() {
   sum := 0
   var n int
   fmt.Fscanf(reader, "%d", &n)
-  for i := 1; i <= n; i += 1 {
+  for i := 1; i <= n; i++ {
       sum += score()
   }
   fmt.Printf("%d\n", sum)

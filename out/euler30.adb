@@ -32,7 +32,7 @@ begin
   --
   
   p := new g (0..10);
-  for i in integer range 0..10 - 1 loop
+  for i in integer range 0..9 loop
     p(i) := i * i * i * i * i;
   end loop;
   sum := 0;

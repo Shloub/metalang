@@ -24,7 +24,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 }
   SetLength(p, 10);
-  for i := 0 to  10 - 1 do
+  for i := 0 to  9 do
   begin
     p[i] := i * i * i * i * i;
   end;

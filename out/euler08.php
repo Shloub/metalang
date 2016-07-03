@@ -20,7 +20,7 @@ function nextChar(){
 }
 $i = 1;
 $last = array();
-for ($j = 0; $j < 5; $j += 1)
+for ($j = 0; $j < 5; $j++)
 {
     $c = nextChar();
     $d = ord($c) - ord("0");
@@ -30,7 +30,7 @@ for ($j = 0; $j < 5; $j += 1)
 $max0 = $i;
 $index = 0;
 $nskipdiv = 0;
-for ($k = 1; $k <= 995; $k += 1)
+for ($k = 1; $k < 996; $k++)
 {
     $e = nextChar();
     $f = ord($e) - ord("0");
@@ -44,7 +44,7 @@ for ($k = 1; $k <= 995; $k += 1)
         $i *= $f;
         if ($nskipdiv < 0)
             $i = intval($i / $last[$index]);
-        $nskipdiv -= 1;
+        $nskipdiv--;
     }
     $last[$index] = $f;
     $index = ($index + 1) % 5;

@@ -23,9 +23,9 @@ int e(std::vector<int>& t, int n) {
 }
 
 
-int main(void) {
+int main() {
     std::vector<int> t( 9 );
-    for (int i = 0; i < 9; i += 1)
+    for (int i = 0; i <= 8; i += 1)
         t[i] = exp0(10, i) - exp0(10, i - 1);
     for (int i2 = 1; i2 <= 8; i2 += 1)
         std::cout << i2 << " => " << t[i2] << "\n";
@@ -50,6 +50,5 @@ int main(void) {
         std::cout << "10^" << l << "=" << puiss << " v=" << v << "\n";
     }
     std::cout << out0 << "\n";
-    return 0;
 }
 

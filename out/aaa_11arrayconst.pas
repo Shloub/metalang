@@ -19,7 +19,7 @@ var
   t : a;
 begin
   SetLength(t, 5);
-  for i := 0 to  5 - 1 do
+  for i := 0 to  4 do
   begin
     t[i] := 1;
   end;

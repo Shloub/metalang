@@ -18,7 +18,7 @@ function sumdiag($n) {
     $nterms = $n * 2 - 1;
     $un = 1;
     $sum = 1;
-    for ($i = 0; $i < $nterms - 1; $i += 1)
+    for ($i = 0; $i < $nterms - 1; $i++)
     {
         $d = 2 * (1 + intval($i / 4));
         $un += $d;

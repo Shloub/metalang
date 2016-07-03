@@ -29,7 +29,7 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 --]]
 local allowed = {}
-for i = 0,10 - 1 do
+for i = 0,9 do
   allowed[i + 1] = true;
 end
 for i6 = 0,1 do

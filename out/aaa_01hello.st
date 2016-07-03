@@ -7,12 +7,12 @@ Object subclass: aaa_01hello [
 ' display.
     a display.
     'foo' display.
-    ((1 + ((1 + 1 * 2 * (3 + 8)) quo: 4) - (1 - 2) - 3 = 12) and: [true])
+    ((1 + ((2 * 2 * (3 + 8)) quo: 4) - 2 = 12) and: [true])
     ifTrue:['True' display.]
     ifFalse:['False' display.].
     '
 ' display.
-    (3 * (4 + 5 + 6) * 2 = 45 = false)
+    (3 * (4 + 11) * 2 = 45 = false)
     ifTrue:['True' display.]
     ifFalse:['False' display.].
     ' ' display.
@@ -20,7 +20,7 @@ Object subclass: aaa_01hello [
     ifTrue:['True' display.]
     ifFalse:['False' display.].
     ' ' display.
-    (((4 + 1) quo: 3) quo: (2 + 1)) display.
+    ((5 quo: 3) quo: 3) display.
     (((4 * 1) quo: 3) quo: (2 * 1)) display.
     ((((a = 0) not) and: [(a = 4) not]) not)
     ifTrue:['True' display.]

@@ -2,7 +2,7 @@
 #include <vector>
 #include<cmath>
 
-int main(void) {
+int main() {
     std::vector<int> t( 1001, 0 );
     for (int a = 1; a <= 1000; a += 1)
         for (int b = 1; b <= 1000; b += 1)
@@ -21,6 +21,5 @@ int main(void) {
         if (t[k] > t[j])
             j = k;
     std::cout << j;
-    return 0;
 }
 

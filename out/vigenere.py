@@ -59,7 +59,7 @@ def of_position_alphabet(c):
     return c + ord('a')
 
 def crypte(taille_cle, cle, taille, message):
-    for i in range(0, 1 + taille - 1):
+    for i in range(0, taille):
         lettre = position_alphabet(message[i])
         if lettre != -1:
             addon = position_alphabet(cle[mod(i, taille_cle)])
@@ -69,18 +69,18 @@ def crypte(taille_cle, cle, taille, message):
 taille_cle = readint()
 stdinsep()
 cle = [None] * taille_cle
-for index in range(0, 1 + taille_cle - 1):
+for index in range(0, taille_cle):
     out0 = readchar()
     cle[index] = out0
 stdinsep()
 taille = readint()
 stdinsep()
 message = [None] * taille
-for index2 in range(0, 1 + taille - 1):
+for index2 in range(0, taille):
     out2 = readchar()
     message[index2] = out2
 crypte(taille_cle, cle, taille, message)
-for i in range(0, 1 + taille - 1):
+for i in range(0, taille):
     print("%c" % message[i], end='')
 print("\n", end='')
 

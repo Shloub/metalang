@@ -8,7 +8,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 --]]
 local p = {}
-for i = 0,10 - 1 do
+for i = 0,9 do
   p[i + 1] = i * i * i * i * i;
 end
 local sum = 0

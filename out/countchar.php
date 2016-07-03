@@ -28,9 +28,9 @@ function nextChar(){
 }
 function nth(&$tab, $tofind, $len) {
     $out0 = 0;
-    for ($i = 0; $i < $len; $i += 1)
+    for ($i = 0; $i < $len; $i++)
         if ($tab[$i] == $tofind)
-            $out0 += 1;
+            $out0++;
     return $out0;
 }
 
@@ -41,7 +41,7 @@ $tofind = "\x00";
 $tofind = nextChar();
 scantrim();
 $tab = array();
-for ($i = 0; $i < $len; $i += 1)
+for ($i = 0; $i < $len; $i++)
 {
     $tmp = "\x00";
     $tmp = nextChar();

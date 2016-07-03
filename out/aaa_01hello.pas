@@ -10,7 +10,7 @@ begin
   Write(' '#10'');
   Write(a);
   Write('foo');
-  if (1 + (1 + 1) * 2 * (3 + 8) Div 4 - (1 - 2) - 3 = 12) and true
+  if (1 + 2 * 2 * (3 + 8) Div 4 - 2 = 12) and true
   then
     begin
       Write('True');
@@ -20,7 +20,7 @@ begin
       Write('False');
     end;
   Write(''#10'');
-  if (3 * (4 + 5 + 6) * 2 = 45) = false
+  if (3 * (4 + 11) * 2 = 45) = false
   then
     begin
       Write('True');
@@ -40,7 +40,7 @@ begin
       Write('False');
     end;
   Write(' ');
-  Write((4 + 1) Div 3 Div (2 + 1));
+  Write(5 Div 3 Div 3);
   Write(4 * 1 Div 3 Div 2 * 1);
   if not(not(a = 0) and not(a = 4))
   then

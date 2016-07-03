@@ -244,9 +244,9 @@ end-struct move%
 
 : init0 {  }
   HERE 3 cells allot { cases }
-  3 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  2 0 BEGIN 2dup >= WHILE DUP { i }
     HERE 3 cells allot { tab }
-    3 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+    2 0 BEGIN 2dup >= WHILE DUP { j }
       0 tab  j cells +  !
      1 + REPEAT 2DROP
     tab cases  i cells +  !

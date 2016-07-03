@@ -24,7 +24,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int j, k, i;
   int *t = calloc( 8 , sizeof(int));
-  for (i = 0; i < 8; i++)
+  for (i = 0; i <= 7; i++)
     t[i] = 0;
   t[0] = 1;
   t[1] = 2;
@@ -35,10 +35,10 @@ int main(void){
   t[6] = 100;
   t[7] = 200;
   int* *cache = calloc( 201 , sizeof(int*));
-  for (j = 0; j < 201; j++)
+  for (j = 0; j <= 200; j++)
   {
       int *o = calloc( 8 , sizeof(int));
-      for (k = 0; k < 8; k++)
+      for (k = 0; k <= 7; k++)
         o[k] = 0;
       cache[j] = o;
   }

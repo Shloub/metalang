@@ -32,23 +32,23 @@ stdinsep();
 var y = read_int_();
 stdinsep();
 var tab = new Array(y);
-for (var d = 0; d < y; d += 1)
+for (var d = 0; d < y; d++)
 {
     var e = new Array(x);
-    for (var f = 0; f < x; f += 1)
+    for (var f = 0; f < x; f++)
     {
         e[f] = read_int_();
         stdinsep();
     }
     tab[d] = e;
 }
-for (var ix = 1; ix < x; ix += 1)
-    for (var iy = 1; iy < y; iy += 1)
+for (var ix = 1; ix < x; ix++)
+    for (var iy = 1; iy < y; iy++)
         if (tab[iy][ix] == 1)
             tab[iy][ix] = Math.min(tab[iy][ix - 1], tab[iy - 1][ix], tab[iy - 1][ix - 1]) + 1;
-for (var jy = 0; jy < y; jy += 1)
+for (var jy = 0; jy < y; jy++)
 {
-    for (var jx = 0; jx < x; jx += 1)
+    for (var jx = 0; jx < x; jx++)
         util.print(tab[jy][jx], " ");
     util.print("\n");
 }

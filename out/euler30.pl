@@ -10,7 +10,7 @@
 #
 
 my $p = [];
-foreach my $i (0 .. 10 - 1)
+foreach my $i (0 .. 9)
 {
     $p->[$i] = $i * $i * $i * $i * $i;
 }

@@ -17,7 +17,7 @@ tuple_int_int f(tuple_int_int& tuple0) {
 }
 
 
-int main(void) {
+int main() {
     tuple_int_int e;
         e.tuple_int_int_field_0 = 0;
         e.tuple_int_int_field_1 = 1;;
@@ -26,6 +26,5 @@ int main(void) {
     int a = g.tuple_int_int_field_0;
     int b = g.tuple_int_int_field_1;
     std::cout << a << " -- " << b << "--\n";
-    return 0;
 }
 

@@ -45,13 +45,13 @@ Object subclass: record3 [
   
   main [
     |titi t|t := Array new: 4.
-    (0 to: (4 - 1)) do: [:i| t at: (i + 1) put: (self mktoto: i).].
-    (t at: (0 + 1)) bar: self read_int.
+    (0 to: 3) do: [:i| t at: (i + 1) put: (self mktoto: i).].
+    (t at: 1) bar: self read_int.
     self skip.
-    (t at: (1 + 1)) blah: self read_int.
+    (t at: 2) blah: self read_int.
     titi := (self result: t len: 4).
     titi display.
-    (t at: (2 + 1)) blah display.
+    (t at: 3) blah display.
     ]
 ]
 Eval [ (record3 new) main. ]

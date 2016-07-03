@@ -28,11 +28,11 @@ end
 
 
 local t = {}
-for i = 0,4 - 1 do
+for i = 0,3 do
   t[i + 1] = mktoto(i);
 end
-t[0 + 1].bar = readint()
+t[1].bar = readint()
 stdinsep()
-t[1 + 1].blah = readint()
+t[2].blah = readint()
 local titi = result(t, 4)
-io.write(string.format("%d%d", titi, t[2 + 1].blah))
+io.write(string.format("%d%d", titi, t[3].blah))

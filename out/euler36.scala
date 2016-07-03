@@ -3,7 +3,7 @@ object euler36
   
   def palindrome2(pow2 : Array[Int], n : Int): Boolean = {
     var t :Array[Boolean] = new Array[Boolean](20);
-    for (i <- 0 to 20 - 1)
+    for (i <- 0 to 19)
         t(i) = n / pow2(i) % 2 == 1;
     var nnum: Int = 0;
     for (j <- 1 to 19)
@@ -20,7 +20,7 @@ object euler36
   {
     var p: Int = 1;
     var pow2 :Array[Int] = new Array[Int](20);
-    for (i <- 0 to 20 - 1)
+    for (i <- 0 to 19)
     {
         p = p * 2;
         pow2(i) = p / 2;

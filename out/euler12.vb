@@ -51,7 +51,7 @@ Module euler12
     Next
     For n As Integer = 1 To 10000
         Dim primesFactors(n + 2) As Integer
-        For m As Integer = 0 To n + 2 - 1
+        For m As Integer = 0 To n + 1
             primesFactors(m) = 0
         Next
         Dim max0 As Integer = Math.Max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))

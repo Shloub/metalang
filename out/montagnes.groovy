@@ -10,12 +10,12 @@ int montagnes0(int[] tab, int len)
   {
       int x = tab[i]
       while (j >= 0 && x > tab[len - j])
-          j -= 1
-      j += 1
+          j--
+      j++
       tab[len - j] = x
       if (j > max0)
           max0 = j
-      i -= 1
+      i--
   }
   return max0
 }
@@ -31,7 +31,7 @@ if (scanner.hasNext("^-")) {
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 int[] tab = new int[len]
-for (int i = 0; i < len; i += 1)
+for (int i = 0; i < len; i++)
 {
     int x = 0
     if (scanner.hasNext("^-")) {

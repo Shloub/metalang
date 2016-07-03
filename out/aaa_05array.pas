@@ -19,7 +19,7 @@ var
 begin
   j := 0;
   SetLength(a, 5);
-  for i := 0 to  5 - 1 do
+  for i := 0 to  4 do
   begin
     Write(i);
     j := j + i;

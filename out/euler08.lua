@@ -12,7 +12,7 @@ end
 
 local i = 1
 local last = {}
-for j = 0,5 - 1 do
+for j = 0,4 do
   local c = readchar()
   local d = c - 48
   i = i * d;

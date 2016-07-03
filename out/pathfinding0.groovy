@@ -27,10 +27,10 @@ int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
 int pathfind(char[][] tab, int x, int y)
 {
   int[][] cache = new int[y][]
-  for (int i = 0; i < y; i += 1)
+  for (int i = 0; i < y; i++)
   {
       int[] tmp = new int[x]
-      for (int j = 0; j < x; j += 1)
+      for (int j = 0; j < x; j++)
       {
           print(tab[i][j])
           tmp[j] = -1
@@ -47,7 +47,7 @@ int x = Integer.parseInt(scanner.nextLine())
 int y = Integer.parseInt(scanner.nextLine())
 System.out.printf("%d %d\n", x, y)
 char[][] e = new char[y][]
-for (int f = 0; f < y; f += 1)
+for (int f = 0; f < y; f++)
     e[f] = scanner.nextLine().toCharArray()
 char[][] tab = e
 int result = pathfind(tab, x, y)

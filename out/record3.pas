@@ -102,7 +102,7 @@ var
   titi : Longint;
 begin
   SetLength(t, 4);
-  for i := 0 to  4 - 1 do
+  for i := 0 to  3 do
   begin
     t[i] := mktoto(i);
   end;

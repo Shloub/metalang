@@ -10,9 +10,9 @@ func min2_(a int, b int) int{
 
 func eratostene(t []int, max0 int) int{
   n := 0
-  for i := 2; i < max0; i += 1 {
+  for i := 2; i < max0; i++ {
       if t[i] == i {
-          n += 1
+          n++
           if max0 / i > i {
               j := i * i
               for j < max0 && j > 0 {
@@ -28,24 +28,24 @@ func eratostene(t []int, max0 int) int{
 func main() {
   maximumprimes := 1000001
   var era []int = make([]int, maximumprimes)
-  for j := 0; j < maximumprimes; j += 1 {
+  for j := 0; j < maximumprimes; j++ {
       era[j] = j
   }
   nprimes := eratostene(era, maximumprimes)
   var primes []int = make([]int, nprimes)
-  for o := 0; o < nprimes; o += 1 {
+  for o := 0; o < nprimes; o++ {
       primes[o] = 0
   }
   l := 0
-  for k := 2; k < maximumprimes; k += 1 {
+  for k := 2; k < maximumprimes; k++ {
       if era[k] == k {
           primes[l] = k
-          l += 1
+          l++
       }
   }
   fmt.Printf("%d == %d\n", l, nprimes)
   var sum []int = make([]int, nprimes)
-  for i_ := 0; i_ < nprimes; i_ += 1 {
+  for i_ := 0; i_ < nprimes; i_++ {
       sum[i_] = primes[i_]
   }
   maxl := 0
@@ -55,7 +55,7 @@ func main() {
   resp := 1
   for process {
       process = false
-      for i := 0; i <= stop; i += 1 {
+      for i := 0; i <= stop; i++ {
           if i + len < nprimes {
               sum[i] += primes[i + len]
               if maximumprimes > sum[i] {
@@ -69,7 +69,7 @@ func main() {
               }
           }
       }
-      len += 1
+      len++
   }
   fmt.Printf("%d\n%d\n", resp, maxl)
 }

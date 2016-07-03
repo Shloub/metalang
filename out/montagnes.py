@@ -56,7 +56,7 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, 1 + len - 1):
+for i in range(0, len):
     x = 0
     x = readint()
     stdinsep()

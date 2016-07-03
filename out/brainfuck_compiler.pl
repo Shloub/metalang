@@ -9,7 +9,7 @@
 my $input = " ";
 my $current_pos = 500;
 my $mem = [];
-foreach my $i (0 .. 1000 - 1)
+foreach my $i (0 .. 999)
 {
     $mem->[$i] = 0;
 }

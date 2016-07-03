@@ -429,13 +429,13 @@ int euler29() {
     int maxA = 5;
     int maxB = 5;
     bigint * *a_bigint = calloc( maxA + 1 , sizeof(bigint *));
-    for (j = 0; j < maxA + 1; j++)
+    for (j = 0; j <= maxA; j++)
       a_bigint[j] = bigint_of_int(j * j);
     bigint * *a0_bigint = calloc( maxA + 1 , sizeof(bigint *));
-    for (j2 = 0; j2 < maxA + 1; j2++)
+    for (j2 = 0; j2 <= maxA; j2++)
       a0_bigint[j2] = bigint_of_int(j2);
     int *b = calloc( maxA + 1 , sizeof(int));
-    for (k = 0; k < maxA + 1; k++)
+    for (k = 0; k <= maxA; k++)
       b[k] = 2;
     int n = 0;
     int found = 1;

@@ -49,15 +49,15 @@ static int readInt(){
   static int[] copytab(int[] tab, int len)
   {
     int[] o = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         o[i] = tab[i];
     return o;
   }
   
   static void bubblesort(int[] tab, int len)
   {
-    for (int i = 0; i < len; i += 1)
-        for (int j = i + 1; j < len; j += 1)
+    for (int i = 0; i < len; i++)
+        for (int j = i + 1; j < len; j++)
             if (tab[i] > tab[j])
             {
                 int tmp = tab[i];
@@ -81,7 +81,7 @@ static int readInt(){
                     int tmp = tab[i];
                     tab[i] = tab[j];
                     tab[j] = tmp;
-                    i += 1;
+                    i++;
                 }
                 else
                 {
@@ -90,10 +90,10 @@ static int readInt(){
                     tab[i] = tab[j];
                     tab[j] = tab[i + 1];
                     tab[i + 1] = tmp;
-                    i += 1;
+                    i++;
                 }
             else
-                j -= 1;
+                j--;
         qsort0(tab, len, i0, i - 1);
         qsort0(tab, len, i + 1, j0);
     }
@@ -106,7 +106,7 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i_ = 0; i_ < len; i_ += 1)
+    for (int i_ = 0; i_ < len; i_++)
     {
         int tmp = 0;
         tmp = readInt();
@@ -115,12 +115,12 @@ static int readInt(){
     }
     int[] tab2 = copytab(tab, len);
     bubblesort(tab2, len);
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         Console.Write(tab2[i] + " ");
     Console.Write("\n");
     int[] tab3 = copytab(tab, len);
     qsort0(tab3, len, 0, len - 1);
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         Console.Write(tab3[i] + " ");
     Console.Write("\n");
   }

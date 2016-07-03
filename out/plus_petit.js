@@ -40,10 +40,10 @@ function go0(tab, a, b){
     {
         var e = tab[i];
         if (e < m)
-            i += 1;
+            i++;
         else
         {
-            j -= 1;
+            j--;
             tab[i] = tab[j];
             tab[j] = e;
         }
@@ -62,7 +62,7 @@ var len = 0;
 len = read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0; i < len; i += 1)
+for (var i = 0; i < len; i++)
 {
     var tmp = 0;
     tmp = read_int_();

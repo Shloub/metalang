@@ -11,7 +11,7 @@ int main(void){
       printf("a = %d b = %dc =%d\n", a, b, c);
   }
   int *l = calloc( 10 , sizeof(int));
-  for (d = 0; d < 10; d++)
+  for (d = 0; d <= 9; d++)
   {
       scanf("%d ", &l[d]);
   }

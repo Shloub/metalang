@@ -6,14 +6,14 @@
   S\"  \n" TYPE
   a s>d 0 d.r
   S" foo" TYPE
-  1 1 1 + 2 * 3 8 + * 4 // + 1 2 - - 3 - 12 = true AND
+  1 2 2 * 3 8 + * 4 // + 2 - 12 = true AND
   IF
     S" True" TYPE
   ELSE
     S" False" TYPE
   THEN
   S\" \n" TYPE
-  3 4 5 + 6 + * 2 * 45 = false =
+  3 4 11 + * 2 * 45 = false =
   IF
     S" True" TYPE
   ELSE
@@ -27,7 +27,7 @@
     S" False" TYPE
   THEN
   S"  " TYPE
-  4 1 + 3 // 2 1 + // s>d 0 d.r
+  5 3 // 3 // s>d 0 d.r
   4 1 * 3 // 2 1 * // s>d 0 d.r
   a 0 = INVERT a 4 = INVERT AND INVERT
   IF

@@ -4,10 +4,10 @@
 
 int eratostene(std::vector<int> * t, int max0) {
     int n = 0;
-    for (int i = 2; i < max0; i += 1)
+    for (int i = 2; i < max0; i++)
         if (t->at(i) == i)
         {
-            n += 1;
+            n++;
             if (max0 / i > i)
             {
                 int j = i * i;
@@ -25,21 +25,21 @@ int eratostene(std::vector<int> * t, int max0) {
 int main() {
     int maximumprimes = 1000001;
     std::vector<int> *era = new std::vector<int>( maximumprimes );
-    for (int j = 0; j < maximumprimes; j += 1)
+    for (int j = 0; j < maximumprimes; j++)
         era->at(j) = j;
     int nprimes = eratostene(era, maximumprimes);
     std::vector<int> *primes = new std::vector<int>( nprimes );
     std::fill(primes->begin(), primes->end(), 0);
     int l = 0;
-    for (int k = 2; k < maximumprimes; k += 1)
+    for (int k = 2; k < maximumprimes; k++)
         if (era->at(k) == k)
         {
             primes->at(l) = k;
-            l += 1;
+            l++;
         }
     std::cout << l << " == " << nprimes << "\n";
     std::vector<int> *sum = new std::vector<int>( nprimes );
-    for (int i_ = 0; i_ < nprimes; i_ += 1)
+    for (int i_ = 0; i_ < nprimes; i_++)
         sum->at(i_) = primes->at(i_);
     int maxl = 0;
     bool process = true;
@@ -49,7 +49,7 @@ int main() {
     while (process)
     {
         process = false;
-        for (int i = 0; i <= stop; i += 1)
+        for (int i = 0; i <= stop; i++)
             if (i + len < nprimes)
             {
                 sum->at(i) += primes->at(i + len);
@@ -65,7 +65,7 @@ int main() {
                 else
                     stop = std::min(stop, i);
             }
-        len += 1;
+        len++;
     }
     std::cout << resp << "\n" << maxl << "\n";
 }

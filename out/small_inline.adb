@@ -31,7 +31,7 @@ type a_PTR is access a;
   t : a_PTR;
 begin
   t := new a (0..2);
-  for d in integer range 0..2 - 1 loop
+  for d in integer range 0..1 loop
     Get(t(d));
     SkipSpaces;
   end loop;

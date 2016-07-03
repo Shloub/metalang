@@ -21,7 +21,7 @@
 
 : main
   HERE 8 cells allot { t }
-  8 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  7 0 BEGIN 2dup >= WHILE DUP { i }
     0 t  i cells +  !
    1 + REPEAT 2DROP
   1 t  0 cells +  !
@@ -33,9 +33,9 @@
   100 t  6 cells +  !
   200 t  7 cells +  !
   HERE 201 cells allot { cache }
-  201 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+  200 0 BEGIN 2dup >= WHILE DUP { j }
     HERE 8 cells allot { o }
-    8 1 - 0 BEGIN 2dup >= WHILE DUP { k }
+    7 0 BEGIN 2dup >= WHILE DUP { k }
       0 o  k cells +  !
      1 + REPEAT 2DROP
     o cache  j cells +  !

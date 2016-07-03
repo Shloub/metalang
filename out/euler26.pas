@@ -36,7 +36,7 @@ var
   t : c;
 begin
   SetLength(t, 1000);
-  for j := 0 to  1000 - 1 do
+  for j := 0 to  999 do
   begin
     t[j] := 0;
   end;

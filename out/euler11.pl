@@ -18,7 +18,7 @@ sub find{
 }
 
 my $directions = [];
-foreach my $i (0 .. 8 - 1)
+foreach my $i (0 .. 7)
 {
     if ($i eq 0)
     {
@@ -55,7 +55,7 @@ foreach my $i (0 .. 8 - 1)
 }
 my $max0 = 0;
 my $m = [];
-foreach my $c (0 .. 20 - 1)
+foreach my $c (0 .. 19)
 {
     $m->[$c] = [ map { int($_) } split(/\s+/, <STDIN>) ];
 }

@@ -95,7 +95,7 @@ begin
   end loop;
   for n in integer range 1..10000 loop
     primesFactors := new c (0..n + 2);
-    for m in integer range 0..n + 2 - 1 loop
+    for m in integer range 0..n + 1 loop
       primesFactors(m) := 0;
     end loop;
     max0 := max2_0(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));

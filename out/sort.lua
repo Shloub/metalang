@@ -52,8 +52,8 @@ function qsort0( tab, len, i, j )
         --[[ on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] --]]
         local tmp = tab[i + 1]
         tab[i + 1] = tab[j + 1];
-        tab[j + 1] = tab[i + 1 + 1];
-        tab[i + 1 + 1] = tmp;
+        tab[j + 1] = tab[i + 2];
+        tab[i + 2] = tmp;
         i = i + 1;
       end
     else

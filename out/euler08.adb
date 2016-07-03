@@ -40,7 +40,7 @@ type g_PTR is access g;
 begin
   i := 1;
   last := new g (0..5);
-  for j in integer range 0..5 - 1 loop
+  for j in integer range 0..4 loop
     Get(c);
     d := Character'Pos(c) - Character'Pos('0');
     i := i * d;

@@ -4,7 +4,7 @@ Module euler05
 
   Function primesfactors(ByVal n as Integer) As Integer()
     Dim tab(n + 1) As Integer
-    For i As Integer = 0 To n + 1 - 1
+    For i As Integer = 0 To n
         tab(i) = 0
     Next
     Dim d As Integer = 2
@@ -24,7 +24,7 @@ Module euler05
     Sub Main()
       Dim lim As Integer = 20
       Dim o(lim + 1) As Integer
-      For m As Integer = 0 To lim + 1 - 1
+      For m As Integer = 0 To lim
           o(m) = 0
       Next
       For i As Integer = 1 To lim

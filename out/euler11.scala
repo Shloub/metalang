@@ -22,7 +22,7 @@ object euler11
   def main(args : Array[String])
   {
     var directions :Array[(Int, Int)] = new Array[(Int, Int)](8);
-    for (i <- 0 to 8 - 1)
+    for (i <- 0 to 7)
         if (i == 0)
             directions(i) = (0, 1);
         else
@@ -47,7 +47,7 @@ object euler11
                                     directions(i) = (-1, -1);
     var max0: Int = 0;
     var m :Array[Array[Int]] = new Array[Array[Int]](20);
-    for (c <- 0 to 20 - 1)
+    for (c <- 0 to 19)
         m(c) = readLine().split(" ").map(_.toInt);
     for (j <- 0 to 7)
     {

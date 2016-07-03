@@ -9,7 +9,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 "
     p := Array new: 10.
-    (0 to: (10 - 1)) do: [:i| p at: (i + 1) put: (i * i * i * i * i).].
+    (0 to: 9) do: [:i| p at: (i + 1) put: (i * i * i * i * i).].
     sum := 0.
     (0 to: 9) do: [:a| (0 to: 9) do: [:b| (0 to: 9) do: [:c| (0 to: 9) do: [:d| (0 to: 9) do: [:e| (0 to: 9) do: [:f|
                                                                                                      s := (p at: (a + 1)) + (p at: (b + 1)) + (p at: (c + 1)) + (p at: (d + 1)) + (p at: (e + 1)) + (p at: (f + 1)).

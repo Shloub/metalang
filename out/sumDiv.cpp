@@ -43,12 +43,11 @@ int sumdiv(int n) {
 }
 
 
-int main(void) {
+int main() {
     /* Programme principal */
     int n = 0;
     std::cin >> n >> std::noskipws;
     /* Lecture de l'entier */
     std::cout << sumdiv(n);
-    return 0;
 }
 

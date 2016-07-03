@@ -13,9 +13,9 @@ function print_toto(&$t) {
 }
 
 $tab = array();
-for ($i = 0; $i < 2; $i += 1)
+for ($i = 0; $i < 2; $i++)
     $tab[$i] = idstring("chaine de test");
-for ($j = 0; $j <= 1; $j += 1)
+for ($j = 0; $j < 2; $j++)
     printstring(idstring($tab[$j]));
 $a = array(
     "s" => "one",

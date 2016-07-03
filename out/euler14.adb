@@ -55,7 +55,7 @@ end;
   m : a_PTR;
 begin
   m := new a (0..1000000);
-  for j in integer range 0..1000000 - 1 loop
+  for j in integer range 0..999999 loop
     m(j) := 0;
   end loop;
   max0 := 0;

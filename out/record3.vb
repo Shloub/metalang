@@ -75,7 +75,7 @@ End Function
   
   Sub Main()
     Dim t(4) As toto
-    For i As Integer = 0 To 4 - 1
+    For i As Integer = 0 To 3
         t(i) = mktoto(i)
     Next
     t(0).bar = readInt

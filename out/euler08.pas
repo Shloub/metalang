@@ -44,7 +44,7 @@ var
 begin
   i := 1;
   SetLength(last, 5);
-  for j := 0 to  5 - 1 do
+  for j := 0 to  4 do
   begin
     c := read_char_();
     d := ord(c) - ord(#48);

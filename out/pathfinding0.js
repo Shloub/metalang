@@ -57,10 +57,10 @@ function pathfind_aux(cache, tab, x, y, posX, posY){
 
 function pathfind(tab, x, y){
     var cache = new Array(y);
-    for (var i = 0; i < y; i += 1)
+    for (var i = 0; i < y; i++)
     {
         var tmp = new Array(x);
-        for (var j = 0; j < x; j += 1)
+        for (var j = 0; j < x; j++)
         {
             util.print(tab[i][j]);
             tmp[j] = -1;
@@ -77,10 +77,10 @@ var y = read_int_();
 stdinsep();
 util.print(x, " ", y, "\n");
 var e = new Array(y);
-for (var f = 0; f < y; f += 1)
+for (var f = 0; f < y; f++)
 {
     var g = new Array(x);
-    for (var h = 0; h < x; h += 1)
+    for (var h = 0; h < x; h++)
     {
         g[h] = read_char_();
     }

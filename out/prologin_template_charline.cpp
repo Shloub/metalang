@@ -25,11 +25,10 @@ int programme_candidat(std::vector<char>& tableau, int taille) {
 }
 
 
-int main(void) {
+int main() {
     int taille;
     std::cin >> taille;
     std::vector<char> tableau = getline();
     std::cout << programme_candidat(tableau, taille) << "\n";
-    return 0;
 }
 

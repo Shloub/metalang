@@ -10,7 +10,7 @@ La suite de fibonaci
     int out_ = 0;
     int a2 = a;
     int b2 = b;
-    for (int j = 0; j <= i + 1; j += 1)
+    for (int j = 0; j <= i + 1; j++)
     {
         Console.Write(j);
         out_ += a2;

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 my $t = [];
-foreach my $i (0 .. 1001 - 1)
+foreach my $i (0 .. 1000)
 {
     $t->[$i] = 0;
 }
@@ -14,7 +14,7 @@ foreach my $a (1 .. 1000)
         if ($c * $c eq $c2)
         {
             my $p = $a + $b + $c;
-            if ($p <= 1000)
+            if ($p < 1001)
             {
                 $t->[$p] = $t->[$p] + 1;
             }

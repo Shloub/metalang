@@ -16,13 +16,12 @@ int score() {
 }
 
 
-int main(void) {
+int main() {
     int n;
     int sum = 0;
     std::cin >> n >> std::noskipws;
     for (int i = 1; i <= n; i += 1)
         sum += i * score();
     std::cout << sum << "\n";
-    return 0;
 }
 

@@ -20,7 +20,7 @@ Object subclass: euler14 [
   
   main [
     |n2 maxi max0 m|m := Array new: 1000000.
-    (0 to: (1000000 - 1)) do: [:j| m at: (j + 1) put: 0.].
+    (0 to: 999999) do: [:j| m at: (j + 1) put: 0.].
     max0 := 0.
     maxi := 0.
     (1 to: 999) do: [:i|

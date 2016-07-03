@@ -26,7 +26,7 @@ End Function
   Sub Main()
     Dim i As Integer = 1
     Dim last(5) As Integer
-    For j As Integer = 0 To 5 - 1
+    For j As Integer = 0 To 4
         Dim c As Char = readChar
         Dim d As Integer = Asc(c) - Asc("0"C)
         i = i * d

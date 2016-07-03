@@ -4,7 +4,7 @@
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
 
-int main(void) {
+int main() {
     int strlen;
     char tmpc;
     std::cin >> strlen;
@@ -19,6 +19,5 @@ int main(void) {
     }
     for (int j = 0; j < strlen; j += 1)
         std::cout << tab4[j];
-    return 0;
 }
 

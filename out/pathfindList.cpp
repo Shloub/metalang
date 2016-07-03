@@ -30,7 +30,7 @@ int pathfind(std::vector<int>& tab, int len) {
 }
 
 
-int main(void) {
+int main() {
     int len = 0;
     std::cin >> len;
     std::vector<int> tab( len );
@@ -42,6 +42,5 @@ int main(void) {
     }
     int result = pathfind(tab, len);
     std::cout << result;
-    return 0;
 }
 

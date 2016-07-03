@@ -14,10 +14,10 @@ int go0(std::vector<int> * tab, int a, int b) {
     {
         int e = tab->at(i);
         if (e < m)
-            i += 1;
+            i++;
         else
         {
-            j -= 1;
+            j--;
             tab->at(i) = tab->at(j);
             tab->at(j) = e;
         }
@@ -38,7 +38,7 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<int> *tab = new std::vector<int>( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = 0;
         std::cin >> tmp;

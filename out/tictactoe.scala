@@ -191,10 +191,10 @@ Renvoie le coup de l'IA
   
   def init0(): Gamestate = {
     var cases :Array[Array[Int]] = new Array[Array[Int]](3);
-    for (i <- 0 to 3 - 1)
+    for (i <- 0 to 2)
     {
         var tab :Array[Int] = new Array[Int](3);
-        for (j <- 0 to 3 - 1)
+        for (j <- 0 to 2)
             tab(j) = 0;
         cases(i) = tab;
     }

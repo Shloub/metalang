@@ -24,12 +24,12 @@ def chiffre(c, m):
         return chiffre(c - 1, math.trunc(m / 10))
 
 m = 1
-for a in range(0, 1 + 9):
-    for f in range(1, 1 + 9):
-        for d in range(0, 1 + 9):
-            for c in range(1, 1 + 9):
-                for b in range(0, 1 + 9):
-                    for e in range(0, 1 + 9):
+for a in range(0, 10):
+    for f in range(1, 10):
+        for d in range(0, 10):
+            for c in range(1, 10):
+                for b in range(0, 10):
+                    for e in range(0, 10):
                         mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
                         if chiffre(0, mul) == chiffre(5, mul) and chiffre(1, mul) == chiffre(4, mul) and chiffre(2, mul) == chiffre(3, mul):
                             m = max(mul, m)

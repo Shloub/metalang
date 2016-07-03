@@ -47,7 +47,7 @@ function find0($len, &$tab, &$cache, $x, $y) {
 
 function find($len, &$tab) {
     $tab2 = array();
-    for ($i = 0; $i < $len; $i += 1)
+    for ($i = 0; $i < $len; $i++)
     {
         $tab3 = array_fill(0, $i + 1, 0);
         $tab2[$i] = $tab3;
@@ -59,10 +59,10 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0; $i < $len; $i += 1)
+for ($i = 0; $i < $len; $i++)
 {
     $tab2 = array();
-    for ($j = 0; $j <= $i; $j += 1)
+    for ($j = 0; $j <= $i; $j++)
     {
         $tmp = 0;
         list($tmp) = scan("%d");
@@ -72,9 +72,9 @@ for ($i = 0; $i < $len; $i += 1)
     $tab[$i] = $tab2;
 }
 echo find($len, $tab), "\n";
-for ($k = 0; $k < $len; $k += 1)
+for ($k = 0; $k < $len; $k++)
 {
-    for ($l = 0; $l <= $k; $l += 1)
+    for ($l = 0; $l <= $k; $l++)
         echo $tab[$k][$l], " ";
     echo "\n";
 }

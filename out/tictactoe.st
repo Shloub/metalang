@@ -90,9 +90,9 @@ Tictactoe : un tictactoe avec une IA
         ifTrue:[win := lin.].].
     ].
     (1 to: 2) do: [:x|
-      (((((g cases at: (0 + 1)) at: (0 + 1)) = x) and: [((g cases at: (1 + 1)) at: (1 + 1)) = x]) and: [((g cases at: (2 + 1)) at: (2 + 1)) = x])
+      (((((g cases at: 1) at: 1) = x) and: [((g cases at: 2) at: 2) = x]) and: [((g cases at: 3) at: 3) = x])
       ifTrue:[win := x.].
-      (((((g cases at: (0 + 1)) at: (2 + 1)) = x) and: [((g cases at: (1 + 1)) at: (1 + 1)) = x]) and: [((g cases at: (2 + 1)) at: (0 + 1)) = x])
+      (((((g cases at: 1) at: 3) = x) and: [((g cases at: 2) at: 2) = x]) and: [((g cases at: 3) at: 1) = x])
       ifTrue:[win := x.].
     ].
     g ended: ((win ~= 0) or: [freecase = 0]).
@@ -192,9 +192,9 @@ Renvoie le coup de l'IA
   
   init0 [|tab cases a|
     cases := Array new: 3.
-    (0 to: (3 - 1)) do: [:i|
+    (0 to: 2) do: [:i|
       tab := Array new: 3.
-      (0 to: (3 - 1)) do: [:j| tab at: (j + 1) put: 0.].
+      (0 to: 2) do: [:j| tab at: (j + 1) put: 0.].
       cases at: (i + 1) put: tab.
     ].
     a := gamestate new.

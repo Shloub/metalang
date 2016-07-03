@@ -1,10 +1,10 @@
 <?php
 function eratostene(&$t, $max0) {
     $n = 0;
-    for ($i = 2; $i < $max0; $i += 1)
+    for ($i = 2; $i < $max0; $i++)
         if ($t[$i] == $i)
         {
-            $n += 1;
+            $n++;
             $j = $i * $i;
             while ($j < $max0 && $j > 0)
             {
@@ -23,13 +23,13 @@ function isPrime($n, &$primes, $len) {
     {
         if ($n % $primes[$i] == 0)
             return false;
-        $i += 1;
+        $i++;
     }
     return true;
 }
 
 function test($a, $b, &$primes, $len) {
-    for ($n = 0; $n <= 200; $n += 1)
+    for ($n = 0; $n < 201; $n++)
     {
         $j = $n * $n + $a * $n + $b;
         if (!isPrime($j, $primes, $len))
@@ -40,25 +40,25 @@ function test($a, $b, &$primes, $len) {
 
 $maximumprimes = 1000;
 $era = array();
-for ($j = 0; $j < $maximumprimes; $j += 1)
+for ($j = 0; $j < $maximumprimes; $j++)
     $era[$j] = $j;
 $result = 0;
 $max0 = 0;
 $nprimes = eratostene($era, $maximumprimes);
 $primes = array_fill(0, $nprimes, 0);
 $l = 0;
-for ($k = 2; $k < $maximumprimes; $k += 1)
+for ($k = 2; $k < $maximumprimes; $k++)
     if ($era[$k] == $k)
     {
         $primes[$l] = $k;
-        $l += 1;
+        $l++;
     }
 echo $l, " == ", $nprimes, "\n";
 $ma = 0;
 $mb = 0;
-for ($b = 3; $b <= 999; $b += 1)
+for ($b = 3; $b < 1000; $b++)
     if ($era[$b] == $b)
-        for ($a = -999; $a <= 999; $a += 1)
+        for ($a = -999; $a < 1000; $a++)
         {
             $n1 = test($a, $b, $primes, $nprimes);
             $n2 = test($a, -$b, $primes, $nprimes);

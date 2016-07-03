@@ -68,7 +68,7 @@ int sumdivaux(int* t, int n, int i) {
 int sumdiv(int nprimes, int* primes, int n) {
     int i;
     int *t = calloc( n + 1 , sizeof(int));
-    for (i = 0; i < n + 1; i++)
+    for (i = 0; i <= n; i++)
       t[i] = 0;
     int max0 = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
@@ -94,10 +94,10 @@ int main(void) {
     int n = 100;
     /* 28124 ça prend trop de temps mais on arrive a passer le test */
     int *abondant = calloc( n + 1 , sizeof(int));
-    for (p = 0; p < n + 1; p++)
+    for (p = 0; p <= n; p++)
       abondant[p] = 0;
     int *summable = calloc( n + 1 , sizeof(int));
-    for (q = 0; q < n + 1; q++)
+    for (q = 0; q <= n; q++)
       summable[q] = 0;
     int sum = 0;
     for (r = 2; r <= n; r++)

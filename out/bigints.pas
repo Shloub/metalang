@@ -647,17 +647,17 @@ begin
   maxA := 5;
   maxB := 5;
   SetLength(a_bigint, maxA + 1);
-  for j := 0 to  maxA + 1 - 1 do
+  for j := 0 to  maxA do
   begin
     a_bigint[j] := bigint_of_int(j * j);
   end;
   SetLength(a0_bigint, maxA + 1);
-  for j2 := 0 to  maxA + 1 - 1 do
+  for j2 := 0 to  maxA do
   begin
     a0_bigint[j2] := bigint_of_int(j2);
   end;
   SetLength(b, maxA + 1);
-  for k := 0 to  maxA + 1 - 1 do
+  for k := 0 to  maxA do
   begin
     b[k] := 2;
   end;

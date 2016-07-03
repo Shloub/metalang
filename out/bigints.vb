@@ -423,15 +423,15 @@ End Sub
                 Dim maxA As Integer = 5
                 Dim maxB As Integer = 5
                 Dim a_bigint(maxA + 1) As bigint
-                For j As Integer = 0 To maxA + 1 - 1
+                For j As Integer = 0 To maxA
                     a_bigint(j) = bigint_of_int(j * j)
                 Next
                 Dim a0_bigint(maxA + 1) As bigint
-                For j2 As Integer = 0 To maxA + 1 - 1
+                For j2 As Integer = 0 To maxA
                     a0_bigint(j2) = bigint_of_int(j2)
                 Next
                 Dim b(maxA + 1) As Integer
-                For k As Integer = 0 To maxA + 1 - 1
+                For k As Integer = 0 To maxA
                     b(k) = 2
                 Next
                 Dim n As Integer = 0

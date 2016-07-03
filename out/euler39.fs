@@ -1,6 +1,6 @@
 : main
   HERE 1001 cells allot { t }
-  1001 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  1000 0 BEGIN 2dup >= WHILE DUP { i }
     0 t  i cells +  !
    1 + REPEAT 2DROP
   1000 1 BEGIN 2dup >= WHILE DUP { a }
@@ -10,7 +10,7 @@
       c c * c2 =
       IF
         a b + c + { p }
-        p 1000 <=
+        p 1001 <
         IF
           t  p cells +  @ 1 + t  p cells +  !
         THEN

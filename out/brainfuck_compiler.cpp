@@ -6,7 +6,7 @@ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compila
 et qui produit les macros metalang correspondante
 */
 
-int main(void) {
+int main() {
     char input = ' ';
     int current_pos = 500;
     std::vector<int> mem( 1000, 0 );
@@ -76,6 +76,5 @@ int main(void) {
         std::cout << (char)(mem[current_pos]);
         current_pos += 1;
     }
-    return 0;
 }
 

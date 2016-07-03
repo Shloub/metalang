@@ -9,7 +9,7 @@ foreach my $i (0 .. $len - 1)
 }
 $len = int( <STDIN> );
 my $tab2 = [];
-foreach my $a (0 .. $len - 1 - 1)
+foreach my $a (0 .. $len - 2)
 {
     $tab2->[$a] = [ map { int($_) } split(/\s+/, <STDIN>) ];
 }

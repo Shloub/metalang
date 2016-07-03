@@ -35,12 +35,12 @@ function montagnes0(tab, len){
     {
         var x = tab[i];
         while (j >= 0 && x > tab[len - j])
-            j -= 1;
-        j += 1;
+            j--;
+        j++;
         tab[len - j] = x;
         if (j > max0)
             max0 = j;
-        i -= 1;
+        i--;
     }
     return max0;
 }
@@ -49,7 +49,7 @@ var len = 0;
 len = read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0; i < len; i += 1)
+for (var i = 0; i < len; i++)
 {
     var x = 0;
     x = read_int_();

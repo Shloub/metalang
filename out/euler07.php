@@ -1,6 +1,6 @@
 <?php
 function divisible($n, &$t, $size) {
-    for ($i = 0; $i < $size; $i += 1)
+    for ($i = 0; $i < $size; $i++)
         if ($n % $t[$i] == 0)
             return true;
     return false;
@@ -9,12 +9,12 @@ function divisible($n, &$t, $size) {
 function find($n, &$t, $used, $nth) {
     while ($used != $nth)
         if (divisible($n, $t, $used))
-            $n += 1;
+            $n++;
         else
         {
             $t[$used] = $n;
-            $n += 1;
-            $used += 1;
+            $n++;
+            $used++;
         }
     return $t[$used - 1];
 }

@@ -85,7 +85,7 @@ End Function
     Dim passepartout(n)() As Integer
     For i As Integer = 0 To n - 1
         Dim out0(2) As Integer
-        For j As Integer = 0 To 2 - 1
+        For j As Integer = 0 To 1
             Dim out01 As Integer = readInt
             stdin_sep
             out0(j) = out01
@@ -97,7 +97,7 @@ End Function
         Dim serrures(m)() As Integer
         For k As Integer = 0 To m - 1
             Dim out1(2) As Integer
-            For l As Integer = 0 To 2 - 1
+            For l As Integer = 0 To 1
                 Dim out_ As Integer = readInt
                 stdin_sep
                 out1(l) = out_

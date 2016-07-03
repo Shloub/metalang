@@ -69,7 +69,7 @@ static int readInt(){
   
   static void crypte(int taille_cle, char[] cle, int taille, char[] message)
   {
-    for (int i = 0; i < taille; i += 1)
+    for (int i = 0; i < taille; i++)
     {
         int lettre = position_alphabet(message[i]);
         if (lettre != -1)
@@ -87,7 +87,7 @@ static int readInt(){
     int taille_cle = readInt();
     stdin_sep();
     char[] cle = new char[taille_cle];
-    for (int index = 0; index < taille_cle; index += 1)
+    for (int index = 0; index < taille_cle; index++)
     {
         char out0 = readChar();
         cle[index] = out0;
@@ -96,13 +96,13 @@ static int readInt(){
     int taille = readInt();
     stdin_sep();
     char[] message = new char[taille];
-    for (int index2 = 0; index2 < taille; index2 += 1)
+    for (int index2 = 0; index2 < taille; index2++)
     {
         char out2 = readChar();
         message[index2] = out2;
     }
     crypte(taille_cle, cle, taille, message);
-    for (int i = 0; i < taille; i += 1)
+    for (int i = 0; i < taille; i++)
         Console.Write(message[i]);
     Console.Write("\n");
   }

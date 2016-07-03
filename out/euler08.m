@@ -16,7 +16,7 @@ int main(void){
   char e, c;
   int i = 1;
   int *last = calloc( 5 , sizeof(int));
-  for (j = 0; j < 5; j++)
+  for (j = 0; j <= 4; j++)
   {
       scanf("%c", &c);
       int d = (int)(c) - (int)('0');

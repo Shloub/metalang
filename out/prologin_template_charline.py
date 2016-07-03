@@ -1,7 +1,7 @@
 
 def programme_candidat(tableau, taille):
     out0 = 0
-    for i in range(0, 1 + taille - 1):
+    for i in range(0, taille):
         out0 += ord(tableau[i]) * i
         print("%c" % tableau[i], end='')
     print("--\n", end='')

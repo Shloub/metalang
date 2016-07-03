@@ -10,7 +10,7 @@ int nth(std::vector<char>& tab, char tofind, int len) {
 }
 
 
-int main(void) {
+int main() {
     int len = 0;
     std::cin >> len;
     char tofind = '\u0000';
@@ -24,6 +24,5 @@ int main(void) {
     }
     int result = nth(tab, tofind, len);
     std::cout << result;
-    return 0;
 }
 

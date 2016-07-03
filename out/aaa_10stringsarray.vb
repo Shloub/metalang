@@ -21,7 +21,7 @@ Module aaa_10stringsarray
   
   Sub Main()
     Dim tab(2) As String
-    For i As Integer = 0 To 2 - 1
+    For i As Integer = 0 To 1
         tab(i) = idstring("chaine de test")
     Next
     For j As Integer = 0 To 1

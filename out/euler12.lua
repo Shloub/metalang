@@ -56,11 +56,11 @@ function find( ndiv2 )
   end
   for n = 1,10000 do
     local primesFactors = {}
-    for m = 0,n + 2 - 1 do
+    for m = 0,n + 1 do
       primesFactors[m + 1] = 0;
     end
     local max0 = math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
-    primesFactors[2 + 1] = primesFactors[2 + 1] - 1;
+    primesFactors[3] = primesFactors[3] - 1;
     local ndivs = 1
     for i = 0,max0 do
       if primesFactors[i + 1] ~= 0

@@ -26,7 +26,7 @@ function fibo0($a, $b, $i) {
     $out0 = 0;
     $a2 = $a;
     $b2 = $b;
-    for ($j = 0; $j <= $i + 1; $j += 1)
+    for ($j = 0; $j <= $i + 1; $j++)
     {
         $out0 += $a2;
         $tmp = $b2;

@@ -12,7 +12,7 @@ Module aaa_11arrayconst
   
   Sub Main()
     Dim t(5) As Integer
-    For i As Integer = 0 To 5 - 1
+    For i As Integer = 0 To 4
         t(i) = 1
     Next
     test(t, 5)

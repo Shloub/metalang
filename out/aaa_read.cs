@@ -65,7 +65,7 @@ read int, read char et skip
     Console.Write("len*2=" + len + "\n");
     len /= 2;
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmpi1 = readInt();
         stdin_sep();
@@ -74,7 +74,7 @@ read int, read char et skip
     }
     Console.Write("\n");
     int[] tab2 = new int[len];
-    for (int i_ = 0; i_ < len; i_ += 1)
+    for (int i_ = 0; i_ < len; i_++)
     {
         int tmpi2 = readInt();
         stdin_sep();
@@ -85,7 +85,7 @@ read int, read char et skip
     stdin_sep();
     Console.Write(strlen + "=strlen\n");
     char[] tab4 = new char[strlen];
-    for (int toto = 0; toto < strlen; toto += 1)
+    for (int toto = 0; toto < strlen; toto++)
     {
         char tmpc = readChar();
         int c = (int)(tmpc);
@@ -94,7 +94,7 @@ read int, read char et skip
             c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4[toto] = (char)(c);
     }
-    for (int j = 0; j < strlen; j += 1)
+    for (int j = 0; j < strlen; j++)
         Console.Write(tab4[j]);
   }
   

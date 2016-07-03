@@ -46,15 +46,15 @@ boolean okdigits(boolean[] ok, int n)
 
 int count = 0
 boolean[] allowed = new boolean[10]
-for (int i = 0; i < 10; i += 1)
+for (int i = 0; i < 10; i++)
     allowed[i] = i != 0
 boolean[] counted = new boolean[100000]
-for (int j = 0; j < 100000; j += 1)
+for (int j = 0; j < 100000; j++)
     counted[j] = false
-for (int e = 1; e <= 9; e += 1)
+for (int e = 1; e < 10; e++)
 {
     allowed[e] = false
-    for (int b = 1; b <= 9; b += 1)
+    for (int b = 1; b < 10; b++)
         if (allowed[b])
         {
             allowed[b] = false
@@ -62,15 +62,15 @@ for (int e = 1; e <= 9; e += 1)
             if (allowed[be])
             {
                 allowed[be] = false
-                for (int a = 1; a <= 9; a += 1)
+                for (int a = 1; a < 10; a++)
                     if (allowed[a])
                     {
                         allowed[a] = false
-                        for (int c = 1; c <= 9; c += 1)
+                        for (int c = 1; c < 10; c++)
                             if (allowed[c])
                             {
                                 allowed[c] = false
-                                for (int d = 1; d <= 9; d += 1)
+                                for (int d = 1; d < 10; d++)
                                     if (allowed[d])
                                     {
                                         allowed[d] = false

@@ -54,7 +54,7 @@ def sumdiv(n):
     out0 = 0
     # On déclare un entier qui contiendra la somme 
     
-    for i in range(1, 1 + n):
+    for i in range(1, n + 1):
         # La boucle : i est le diviseur potentiel
         
         if mod(n, i) == 0:

@@ -67,7 +67,7 @@
 
 : sumdiv { nprimes primes n }
   HERE n 1 + cells allot { t }
-  n 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  n 0 BEGIN 2dup >= WHILE DUP { i }
     0 t  i cells +  !
    1 + REPEAT 2DROP
   t n primes nprimes fillPrimesFactors { max0 }

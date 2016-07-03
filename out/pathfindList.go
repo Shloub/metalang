@@ -35,7 +35,7 @@ func pathfind_aux(cache []int, tab []int, len int, pos int) int{
 
 func pathfind(tab []int, len int) int{
   var cache []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       cache[i] = -1
   }
   return pathfind_aux(cache, tab, len, 0)
@@ -47,7 +47,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       tmp := 0
       fmt.Fscanf(reader, "%d", &tmp)
       skip()

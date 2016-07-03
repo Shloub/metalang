@@ -4,7 +4,7 @@ def mod(x, y):
 
 
 sum = 0
-for i in range(0, 1 + 999):
+for i in range(0, 1000):
     if mod(i, 3) == 0 or mod(i, 5) == 0:
         sum += i
 print("%d\n" % sum, end='')

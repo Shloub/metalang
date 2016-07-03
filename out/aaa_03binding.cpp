@@ -14,7 +14,7 @@ void h(int i) {
 }
 
 
-int main(void) {
+int main() {
     h(14);
     int a = 4;
     int b = 5;
@@ -24,6 +24,5 @@ int main(void) {
     a = 2;
     b = 1;
     std::cout << a + b;
-    return 0;
 }
 

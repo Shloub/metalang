@@ -45,11 +45,11 @@
 : main
   0 { count }
   HERE 10 cells allot { allowed }
-  10 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  9 0 BEGIN 2dup >= WHILE DUP { i }
     i 0 <> allowed  i cells +  !
    1 + REPEAT 2DROP
   HERE 100000 cells allot { counted }
-  100000 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+  99999 0 BEGIN 2dup >= WHILE DUP { j }
     false counted  j cells +  !
    1 + REPEAT 2DROP
   9 1 BEGIN 2dup >= WHILE DUP { e }

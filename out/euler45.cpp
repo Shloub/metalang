@@ -50,13 +50,12 @@ bool findHexa2(int n, int a, int b) {
 }
 
 
-int main(void) {
+int main() {
     for (int n = 285; n <= 55385; n += 1)
     {
         int t = triangle(n);
         if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))
             std::cout << n << "\n" << t << "\n";
     }
-    return 0;
 }
 

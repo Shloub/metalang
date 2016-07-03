@@ -42,7 +42,7 @@ def findHexa2(n, a, b):
     else:
         return findHexa2(n, a, c)
 
-for n in range(285, 1 + 55385):
+for n in range(285, 55386):
     t = triangle(n)
     if findPenta2(t, math.trunc(n / 5), n) and findHexa2(t, math.trunc(n / 5), math.trunc(n / 2) + 10):
         print("%d\n%d\n" % (n, t), end='')

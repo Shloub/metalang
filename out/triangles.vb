@@ -84,7 +84,7 @@ End Function
     Dim tab2(len)() As Integer
     For i As Integer = 0 To len - 1
         Dim tab3(i + 1) As Integer
-        For j As Integer = 0 To i + 1 - 1
+        For j As Integer = 0 To i
             tab3(j) = 0
         Next
         tab2(i) = tab3
@@ -100,7 +100,7 @@ End Function
       Dim tab(len)() As Integer
       For i As Integer = 0 To len - 1
           Dim tab2(i + 1) As Integer
-          For j As Integer = 0 To i + 1 - 1
+          For j As Integer = 0 To i
               Dim tmp As Integer = 0
               tmp = readInt
               stdin_sep

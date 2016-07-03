@@ -49,10 +49,10 @@ int main(void){
   int e, b, a, c, d, j, i;
   int count = 0;
   int *allowed = calloc( 10 , sizeof(int));
-  for (i = 0; i < 10; i++)
+  for (i = 0; i <= 9; i++)
     allowed[i] = i != 0;
   int *counted = calloc( 100000 , sizeof(int));
-  for (j = 0; j < 100000; j++)
+  for (j = 0; j <= 99999; j++)
     counted[j] = 0;
   for (e = 1; e <= 9; e++)
   {

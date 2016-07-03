@@ -133,7 +133,7 @@ begin
   for i := 0 to  n - 1 do
   begin
     SetLength(out0, 2);
-    for j := 0 to  2 - 1 do
+    for j := 0 to  1 do
     begin
       out01 := read_int_();
       skip();
@@ -147,7 +147,7 @@ begin
   for k := 0 to  m - 1 do
   begin
     SetLength(out1, 2);
-    for l := 0 to  2 - 1 do
+    for l := 0 to  1 do
     begin
       out_ := read_int_();
       skip();

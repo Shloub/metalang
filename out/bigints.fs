@@ -468,15 +468,15 @@ end-struct bigint%
   5 { maxA }
   5 { maxB }
   HERE maxA 1 + cells allot { a_bigint }
-  maxA 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+  maxA 0 BEGIN 2dup >= WHILE DUP { j }
     j j * bigint_of_int a_bigint  j cells +  !
    1 + REPEAT 2DROP
   HERE maxA 1 + cells allot { a0_bigint }
-  maxA 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { j2 }
+  maxA 0 BEGIN 2dup >= WHILE DUP { j2 }
     j2 bigint_of_int a0_bigint  j2 cells +  !
    1 + REPEAT 2DROP
   HERE maxA 1 + cells allot { b }
-  maxA 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { k }
+  maxA 0 BEGIN 2dup >= WHILE DUP { k }
     2 b  k cells +  !
    1 + REPEAT 2DROP
   0 { n }

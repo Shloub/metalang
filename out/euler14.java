@@ -30,11 +30,11 @@ public class euler14
   public static void main(String args[])
   {
     int[] m = new int[1000000];
-    for (int j = 0; j < 1000000; j += 1)
+    for (int j = 0; j < 1000000; j++)
         m[j] = 0;
     int max0 = 0;
     int maxi = 0;
-    for (int i = 1; i <= 999; i += 1)
+    for (int i = 1; i < 1000; i++)
     {
         /* normalement on met 999999 mais ça dépasse les int32... */
         int n2 = find(i, m);

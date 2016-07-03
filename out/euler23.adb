@@ -94,7 +94,7 @@ function sumdiv(nprimes : in Integer; primes : in a_PTR; n : in Integer) return 
   max0 : Integer;
 begin
   t := new a (0..n + 1);
-  for i in integer range 0..n + 1 - 1 loop
+  for i in integer range 0..n loop
     t(i) := 0;
   end loop;
   max0 := fillPrimesFactors(t, n, primes, nprimes);
@@ -137,11 +137,11 @@ begin
   -- 28124 ça prend trop de temps mais on arrive a passer le test 
   
   abondant := new e (0..n + 1);
-  for p in integer range 0..n + 1 - 1 loop
+  for p in integer range 0..n loop
     abondant(p) := FALSE;
   end loop;
   summable := new e (0..n + 1);
-  for q in integer range 0..n + 1 - 1 loop
+  for q in integer range 0..n loop
     summable(q) := FALSE;
   end loop;
   sum := 0;

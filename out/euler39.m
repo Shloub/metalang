@@ -7,7 +7,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int k, a, b, i;
   int *t = calloc( 1001 , sizeof(int));
-  for (i = 0; i < 1001; i++)
+  for (i = 0; i <= 1000; i++)
     t[i] = 0;
   for (a = 1; a <= 1000; a++)
     for (b = 1; b <= 1000; b++)
@@ -17,7 +17,7 @@ int main(void){
         if (c * c == c2)
         {
             int p = a + b + c;
-            if (p <= 1000)
+            if (p < 1001)
               t[p]++;
         }
   }

@@ -35,9 +35,9 @@ function read_int_(){
 
 function nth(tab, tofind, len){
     var out0 = 0;
-    for (var i = 0; i < len; i += 1)
+    for (var i = 0; i < len; i++)
         if (tab[i] == tofind)
-            out0 += 1;
+            out0++;
     return out0;
 }
 
@@ -48,7 +48,7 @@ var tofind = '\x00';
 tofind = read_char_();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0; i < len; i += 1)
+for (var i = 0; i < len; i++)
 {
     var tmp = '\x00';
     tmp = read_char_();

@@ -2,7 +2,7 @@ import math
 
 def eratostene(t, max0):
     n = 0
-    for i in range(2, 1 + max0 - 1):
+    for i in range(2, max0):
         if t[i] == i:
             n += 1
             if math.trunc(max0 / i) > i:
@@ -14,18 +14,18 @@ def eratostene(t, max0):
 
 maximumprimes = 1000001
 era = [None] * maximumprimes
-for j in range(0, 1 + maximumprimes - 1):
+for j in range(0, maximumprimes):
     era[j] = j
 nprimes = eratostene(era, maximumprimes)
 primes = [0] * nprimes
 l = 0
-for k in range(2, 1 + maximumprimes - 1):
+for k in range(2, maximumprimes):
     if era[k] == k:
         primes[l] = k
         l += 1
 print("%d == %d\n" % (l, nprimes), end='')
 sum = [None] * nprimes
-for i_ in range(0, 1 + nprimes - 1):
+for i_ in range(0, nprimes):
     sum[i_] = primes[i_]
 maxl = 0
 process = True
@@ -34,7 +34,7 @@ len = 1
 resp = 1
 while process:
     process = False
-    for i in range(0, 1 + stop):
+    for i in range(0, stop + 1):
         if i + len < nprimes:
             sum[i] += primes[i + len]
             if maximumprimes > sum[i]:

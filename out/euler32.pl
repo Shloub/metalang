@@ -54,12 +54,12 @@ sub okdigits{
 
 my $count = 0;
 my $allowed = [];
-foreach my $i (0 .. 10 - 1)
+foreach my $i (0 .. 9)
 {
     $allowed->[$i] = $i ne 0;
 }
 my $counted = [];
-foreach my $j (0 .. 100000 - 1)
+foreach my $j (0 .. 99999)
 {
     $counted->[$j] = ();
 }

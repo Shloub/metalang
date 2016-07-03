@@ -43,7 +43,7 @@ end-struct tuple_int_int%
 
 : main
   HERE 8 cells allot { directions }
-  8 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  7 0 BEGIN 2dup >= WHILE DUP { i }
     i 0 =
     IF
       tuple_int_int% %allot { c }
@@ -107,9 +107,9 @@ end-struct tuple_int_int%
    1 + REPEAT 2DROP
   0 { max0 }
   HERE 20 cells allot { m }
-  20 1 - 0 BEGIN 2dup >= WHILE DUP { o }
+  19 0 BEGIN 2dup >= WHILE DUP { o }
     HERE 20 cells allot { p }
-    20 1 - 0 BEGIN 2dup >= WHILE DUP { q }
+    19 0 BEGIN 2dup >= WHILE DUP { q }
       read-int p  q cells +  !
       skipspaces
      1 + REPEAT 2DROP

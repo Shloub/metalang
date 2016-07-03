@@ -7,7 +7,7 @@ end
 
 
 local t = {}
-for i = 0,5 - 1 do
+for i = 0,4 do
   t[i + 1] = 1;
 end
 test(t, 5);

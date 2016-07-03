@@ -32,10 +32,10 @@ function go0(&$tab, $a, $b) {
     {
         $e = $tab[$i];
         if ($e < $m)
-            $i += 1;
+            $i++;
         else
         {
-            $j -= 1;
+            $j--;
             $tab[$i] = $tab[$j];
             $tab[$j] = $e;
         }
@@ -54,7 +54,7 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0; $i < $len; $i += 1)
+for ($i = 0; $i < $len; $i++)
 {
     $tmp = 0;
     list($tmp) = scan("%d");

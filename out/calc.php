@@ -6,7 +6,7 @@ function fibo($a, $b, $i) {
     $out_ = 0;
     $a2 = $a;
     $b2 = $b;
-    for ($j = 0; $j <= $i + 1; $j += 1)
+    for ($j = 0; $j <= $i + 1; $j++)
     {
         echo $j;
         $out_ += $a2;

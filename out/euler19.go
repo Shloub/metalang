@@ -46,13 +46,13 @@ func main() {
   for year != 2001 {
       ndays := ndayinmonth(month, year)
       dayofweek = (dayofweek + ndays) % 7
-      month += 1
+      month++
       if month == 12 {
           month = 0
-          year += 1
+          year++
       }
       if dayofweek % 7 == 6 {
-          count += 1
+          count++
       }
   }
   fmt.Printf("%d\n", count)

@@ -346,10 +346,10 @@ var
   tab : e;
 begin
   SetLength(cases, 3);
-  for i := 0 to  3 - 1 do
+  for i := 0 to  2 do
   begin
     SetLength(tab, 3);
-    for j := 0 to  3 - 1 do
+    for j := 0 to  2 do
     begin
       tab[j] := 0;
     end;

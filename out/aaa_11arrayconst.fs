@@ -8,7 +8,7 @@
 
 : main
   HERE 5 cells allot { t }
-  5 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  4 0 BEGIN 2dup >= WHILE DUP { i }
     1 t  i cells +  !
    1 + REPEAT 2DROP
   t 5 test

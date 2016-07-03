@@ -2,7 +2,7 @@
 #include <vector>
 
 void test(std::vector<int> * tab, int len) {
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         std::cout << tab->at(i) << " ";
     std::cout << "\n";
 }

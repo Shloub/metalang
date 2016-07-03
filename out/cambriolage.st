@@ -20,19 +20,19 @@ Object subclass: cambriolage [
     max_ancient := 0.
     max_recent := 0.
     (0 to: (m - 1)) do: [:i|
-      ((((serrures at: (i + 1)) at: (0 + 1)) = (0 - 1)) and: [((serrures at: (i + 1)) at: (1 + 1)) > max_ancient])
-      ifTrue:[max_ancient := (serrures at: (i + 1)) at: (1 + 1).].
-      ((((serrures at: (i + 1)) at: (0 + 1)) = 1) and: [((serrures at: (i + 1)) at: (1 + 1)) > max_recent])
-      ifTrue:[max_recent := (serrures at: (i + 1)) at: (1 + 1).].
+      ((((serrures at: (i + 1)) at: 1) = (0 - 1)) and: [((serrures at: (i + 1)) at: 2) > max_ancient])
+      ifTrue:[max_ancient := (serrures at: (i + 1)) at: 2.].
+      ((((serrures at: (i + 1)) at: 1) = 1) and: [((serrures at: (i + 1)) at: 2) > max_recent])
+      ifTrue:[max_recent := (serrures at: (i + 1)) at: 2.].
     ].
     max_ancient_pp := 0.
     max_recent_pp := 0.
     (0 to: (n - 1)) do: [:i|
       pp := passepartout at: (i + 1).
-      (((pp at: (0 + 1)) >= max_ancient) and: [(pp at: (1 + 1)) >= max_recent])
+      (((pp at: 1) >= max_ancient) and: [(pp at: 2) >= max_recent])
       ifTrue:[^ 1].
-      max_ancient_pp := ((max_ancient_pp) max: (pp at: (0 + 1))).
-      max_recent_pp := ((max_recent_pp) max: (pp at: (1 + 1))).
+      max_ancient_pp := ((max_ancient_pp) max: (pp at: 1)).
+      max_recent_pp := ((max_recent_pp) max: (pp at: 2)).
     ].
     ((max_ancient_pp >= max_ancient) and: [max_recent_pp >= max_recent])
     ifTrue:[^ 2]
@@ -45,7 +45,7 @@ Object subclass: cambriolage [
     passepartout := Array new: n.
     (0 to: (n - 1)) do: [:i|
       out0 := Array new: 2.
-      (0 to: (2 - 1)) do: [:j|
+      (0 to: 1) do: [:j|
         out01 := self read_int.
         self skip.
         out0 at: (j + 1) put: out01.
@@ -57,7 +57,7 @@ Object subclass: cambriolage [
     serrures := Array new: m.
     (0 to: (m - 1)) do: [:k|
       out1 := Array new: 2.
-      (0 to: (2 - 1)) do: [:l|
+      (0 to: 1) do: [:l|
         out_ := self read_int.
         self skip.
         out1 at: (l + 1) put: out_.

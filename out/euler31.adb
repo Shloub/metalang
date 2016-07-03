@@ -43,7 +43,7 @@ end;
   cache : b_PTR;
 begin
   t := new a (0..8);
-  for i in integer range 0..8 - 1 loop
+  for i in integer range 0..7 loop
     t(i) := 0;
   end loop;
   t(0) := 1;
@@ -55,9 +55,9 @@ begin
   t(6) := 100;
   t(7) := 200;
   cache := new b (0..201);
-  for j in integer range 0..201 - 1 loop
+  for j in integer range 0..200 loop
     o := new a (0..8);
-    for k in integer range 0..8 - 1 loop
+    for k in integer range 0..7 loop
       o(k) := 0;
     end loop;
     cache(j) := o;

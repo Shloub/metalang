@@ -16,7 +16,7 @@ int main(void){
     printf("%d=>%d\n", i, tab1[i]);
   scanf("%d ", &len);
   int* *tab2 = calloc( len - 1 , sizeof(int*));
-  for (b = 0; b < len - 1; b++)
+  for (b = 0; b <= len - 2; b++)
   {
       int *c = calloc( len , sizeof(int));
       for (d = 0; d < len; d++)

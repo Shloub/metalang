@@ -90,7 +90,7 @@ begin
   for n := 1 to  10000 do
   begin
     SetLength(primesFactors, n + 2);
-    for m := 0 to  n + 2 - 1 do
+    for m := 0 to  n + 1 do
     begin
       primesFactors[m] := 0;
     end;

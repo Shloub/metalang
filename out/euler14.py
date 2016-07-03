@@ -23,7 +23,7 @@ def find(n, m):
 m = [0] * 1000000
 max0 = 0
 maxi = 0
-for i in range(1, 1 + 999):
+for i in range(1, 1000):
     # normalement on met 999999 mais ça dépasse les int32... 
     
     n2 = find(i, m)

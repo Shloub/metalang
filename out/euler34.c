@@ -4,7 +4,7 @@
 int main(void) {
     int a, b, c, d, e, g, i, j;
     int *f = calloc( 10 , sizeof(int));
-    for (j = 0; j < 10; j++)
+    for (j = 0; j <= 9; j++)
       f[j] = 1;
     for (i = 1; i <= 9; i++)
     {

@@ -75,13 +75,11 @@ function eval0( g )
     end
   end
   for x = 1,2 do
-    if
-    g.cases[0 + 1][0 + 1] == x and g.cases[1 + 1][1 + 1] == x and g.cases[2 + 1][2 + 1] == x
+    if g.cases[1][1] == x and g.cases[2][2] == x and g.cases[3][3] == x
     then
       win = x;
     end
-    if
-    g.cases[0 + 1][2 + 1] == x and g.cases[1 + 1][1 + 1] == x and g.cases[2 + 1][0 + 1] == x
+    if g.cases[1][3] == x and g.cases[2][2] == x and g.cases[3][1] == x
     then
       win = x;
     end
@@ -191,9 +189,9 @@ end
 
 function init0(  )
   local cases = {}
-  for i = 0,3 - 1 do
+  for i = 0,2 do
     local tab = {}
-    for j = 0,3 - 1 do
+    for j = 0,2 do
       tab[j + 1] = 0;
     end
     cases[i + 1] = tab;

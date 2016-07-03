@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main(void) {
+int main() {
     int a = 1;
     int b = 2;
     int sum = 0;
@@ -14,6 +14,5 @@ int main(void) {
         b += c;
     }
     std::cout << sum << "\n";
-    return 0;
 }
 

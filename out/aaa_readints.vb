@@ -13,7 +13,7 @@ Module aaa_readints
     Next
     len = Integer.Parse(Console.ReadLine())
     Dim tab2(len - 1)() As Integer
-    For a As Integer = 0 To len - 1 - 1
+    For a As Integer = 0 To len - 2
         tab2(a) = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
     Next
     For i As Integer = 0 To len - 2

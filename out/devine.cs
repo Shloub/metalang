@@ -50,7 +50,7 @@ static int readInt(){
   {
     int min0 = tab[0];
     int max0 = tab[1];
-    for (int i = 2; i < len; i += 1)
+    for (int i = 2; i < len; i++)
     {
         if (tab[i] > max0 || tab[i] < min0)
             return false;
@@ -72,7 +72,7 @@ static int readInt(){
     int len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = readInt();
         stdin_sep();

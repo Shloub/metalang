@@ -25,9 +25,9 @@ typedef struct tuple_int_int {
 } tuple_int_int;
 
 
-int main(void) {
+int main() {
     std::vector<tuple_int_int> directions( 8 );
-    for (int i = 0; i < 8; i += 1)
+    for (int i = 0; i <= 7; i += 1)
         if (i == 0)
         {
             tuple_int_int c;
@@ -96,6 +96,5 @@ int main(void) {
                 max0 = std::max(max0, find(4, m, x, y, dx, dy));
     }
     std::cout << max0 << "\n";
-    return 0;
 }
 

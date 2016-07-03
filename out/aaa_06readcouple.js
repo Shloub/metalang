@@ -26,7 +26,7 @@ function read_int_(){
     }
   }
 }
-for (var i = 1; i <= 3; i += 1)
+for (var i = 1; i < 4; i++)
 {
     var a = read_int_();
     stdinsep();
@@ -35,11 +35,11 @@ for (var i = 1; i <= 3; i += 1)
     util.print("a = ", a, " b = ", b, "\n");
 }
 var l = new Array(10);
-for (var c = 0; c < 10; c += 1)
+for (var c = 0; c < 10; c++)
 {
     l[c] = read_int_();
     stdinsep();
 }
-for (var j = 0; j <= 9; j += 1)
+for (var j = 0; j < 10; j++)
     util.print(l[j], "\n");
 

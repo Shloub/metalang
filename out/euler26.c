@@ -21,7 +21,7 @@ int periode(int* restes, int len, int a, int b) {
 int main(void) {
     int i, j;
     int *t = calloc( 1000 , sizeof(int));
-    for (j = 0; j < 1000; j++)
+    for (j = 0; j <= 999; j++)
       t[j] = 0;
     int m = 0;
     int mi = 0;

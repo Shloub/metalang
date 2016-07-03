@@ -47,7 +47,7 @@ end-struct toto%
 
 : main
   HERE 4 cells allot { t }
-  4 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  3 0 BEGIN 2dup >= WHILE DUP { i }
     i mktoto t  i cells +  !
    1 + REPEAT 2DROP
   read-int t  0 cells +  @ ->bar !

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main(void) {
+int main() {
     int i = 0;
     i -= 1;
     std::cout << i << "\n";
@@ -21,6 +21,5 @@ int main(void) {
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
 */
     std::cout << 117 / 17 << "\n" << 117 / -17 << "\n" << -117 / 17 << "\n" << -117 / -17 << "\n" << 117 % 17 << "\n" << 117 % -17 << "\n" << -117 % 17 << "\n" << -117 % -17 << "\n";
-    return 0;
 }
 

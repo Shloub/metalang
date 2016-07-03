@@ -42,28 +42,28 @@ func okdigits(ok []bool, n int) bool{
 func main() {
   count := 0
   var allowed []bool = make([]bool, 10)
-  for i := 0; i < 10; i += 1 {
+  for i := 0; i < 10; i++ {
       allowed[i] = i != 0
   }
   var counted []bool = make([]bool, 100000)
-  for j := 0; j < 100000; j += 1 {
+  for j := 0; j < 100000; j++ {
       counted[j] = false
   }
-  for e := 1; e <= 9; e += 1 {
+  for e := 1; e < 10; e++ {
       allowed[e] = false
-      for b := 1; b <= 9; b += 1 {
+      for b := 1; b < 10; b++ {
           if allowed[b] {
               allowed[b] = false
               be := b * e % 10
               if allowed[be] {
                   allowed[be] = false
-                  for a := 1; a <= 9; a += 1 {
+                  for a := 1; a < 10; a++ {
                       if allowed[a] {
                           allowed[a] = false
-                          for c := 1; c <= 9; c += 1 {
+                          for c := 1; c < 10; c++ {
                               if allowed[c] {
                                   allowed[c] = false
-                                  for d := 1; d <= 9; d += 1 {
+                                  for d := 1; d < 10; d++ {
                                       if allowed[d] {
                                           allowed[d] = false
                                           /* 2 * 3 digits */

@@ -14,7 +14,7 @@ def sumdiag(n):
     nterms = n * 2 - 1
     un = 1
     sum = 1
-    for i in range(0, 1 + nterms - 2):
+    for i in range(0, nterms - 1):
         d = 2 * (1 + math.trunc(i / 4))
         un += d
         # print int d print "=>" print un print " " 

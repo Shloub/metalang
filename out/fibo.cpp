@@ -19,12 +19,11 @@ int fibo0(int a, int b, int i) {
 }
 
 
-int main(void) {
+int main() {
     int a = 0;
     int b = 0;
     int i = 0;
     std::cin >> a >> b >> i >> std::noskipws;
     std::cout << fibo0(a, b, i);
-    return 0;
 }
 

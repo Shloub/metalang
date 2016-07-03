@@ -33,10 +33,10 @@ def mod(x, y):
 
 def read_bigint(len):
     chiffres = [None] * len
-    for j in range(0, 1 + len - 1):
+    for j in range(0, len):
         c = readchar()
         chiffres[j] = ord(c)
-    for i in range(0, 1 + math.trunc((len - 1) / 2)):
+    for i in range(0, math.trunc((len - 1) / 2) + 1):
         tmp = chiffres[i]
         chiffres[i] = chiffres[len - 1 - i]
         chiffres[len - 1 - i] = tmp
@@ -45,7 +45,7 @@ def read_bigint(len):
 def print_bigint(a):
     if not a["bigint_sign"]:
         print("%c" % '-', end='')
-    for i in range(0, 1 + a["bigint_len"] - 1):
+    for i in range(0, a["bigint_len"]):
         print("%d" % a["bigint_chiffres"][a["bigint_len"] - 1 - i], end='')
 
 def bigint_eq(a, b):
@@ -56,7 +56,7 @@ def bigint_eq(a, b):
     elif a["bigint_len"] != b["bigint_len"]:
         return False
     else:
-        for i in range(0, 1 + a["bigint_len"] - 1):
+        for i in range(0, a["bigint_len"]):
             if a["bigint_chiffres"][i] != b["bigint_chiffres"][i]:
                 return False
         return True
@@ -74,7 +74,7 @@ def bigint_gt(a, b):
         elif a["bigint_len"] < b["bigint_len"]:
             return not a["bigint_sign"]
         else:
-            for i in range(0, 1 + a["bigint_len"] - 1):
+            for i in range(0, a["bigint_len"]):
                 j = a["bigint_len"] - 1 - i
                 if a["bigint_chiffres"][j] > b["bigint_chiffres"][j]:
                     return a["bigint_sign"]
@@ -91,7 +91,7 @@ def add_bigint_positif(a, b):
     len = max(a["bigint_len"], b["bigint_len"]) + 1
     retenue = 0
     chiffres = [None] * len
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
         tmp = retenue
         if i < a["bigint_len"]:
             tmp += a["bigint_chiffres"][i]
@@ -111,7 +111,7 @@ def sub_bigint_positif(a, b):
     len = a["bigint_len"]
     retenue = 0
     chiffres = [None] * len
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
         tmp = retenue + a["bigint_chiffres"][i]
         if i < b["bigint_len"]:
             tmp -= b["bigint_chiffres"][i]
@@ -159,16 +159,16 @@ def mul_bigint_cp(a, b):
     
     len = a["bigint_len"] + b["bigint_len"] + 1
     chiffres = [0] * len
-    for i in range(0, 1 + a["bigint_len"] - 1):
+    for i in range(0, a["bigint_len"]):
         retenue = 0
-        for j in range(0, 1 + b["bigint_len"] - 1):
+        for j in range(0, b["bigint_len"]):
             chiffres[i + j] += retenue + b["bigint_chiffres"][j] * a["bigint_chiffres"][i]
             retenue = math.trunc(chiffres[i + j] / 10)
             chiffres[i + j] = mod(chiffres[i + j], 10)
         chiffres[i + b["bigint_len"]] += retenue
     chiffres[a["bigint_len"] + b["bigint_len"]] = math.trunc(chiffres[a["bigint_len"] + b["bigint_len"] - 1] / 10)
     chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10)
-    for l in range(0, 1 + 2):
+    for l in range(0, 3):
         if len != 0 and chiffres[len - 1] == 0:
             len -= 1
     return {"bigint_sign":a["bigint_sign"] == b["bigint_sign"], "bigint_len":len, "bigint_chiffres":chiffres}
@@ -181,7 +181,7 @@ def bigint_premiers_chiffres(a, i):
 
 def bigint_shift(a, i):
     chiffres = [None] * (a["bigint_len"] + i)
-    for k in range(0, 1 + a["bigint_len"] + i - 1):
+    for k in range(0, a["bigint_len"] + i):
         if k >= i:
             chiffres[k] = a["bigint_chiffres"][k - i]
         else:
@@ -226,7 +226,7 @@ def bigint_of_int(i):
     if i == 0:
         size = 0
     t = [0] * size
-    for k in range(0, 1 + size - 1):
+    for k in range(0, size):
         t[k] = mod(i, 10)
         i = math.trunc(i / 10)
     return {"bigint_sign":True, "bigint_len":size, "bigint_chiffres":t}
@@ -241,7 +241,7 @@ def fact_bigint(a):
 
 def sum_chiffres_bigint(a):
     out0 = 0
-    for i in range(0, 1 + a["bigint_len"] - 1):
+    for i in range(0, a["bigint_len"]):
         out0 += a["bigint_chiffres"][i]
     return out0
 
@@ -272,7 +272,7 @@ def bigint_exp_10chiffres(a, b):
 
 def euler48():
     sum = bigint_of_int(0)
-    for i in range(1, 1 + 100):
+    for i in range(1, 101):
         # 1000 normalement 
         
         ib = bigint_of_int(i)
@@ -307,10 +307,10 @@ def euler29():
     maxA = 5
     maxB = 5
     a_bigint = [None] * (maxA + 1)
-    for j in range(0, 1 + maxA + 1 - 1):
+    for j in range(0, maxA + 1):
         a_bigint[j] = bigint_of_int(j * j)
     a0_bigint = [None] * (maxA + 1)
-    for j2 in range(0, 1 + maxA + 1 - 1):
+    for j2 in range(0, maxA + 1):
         a0_bigint[j2] = bigint_of_int(j2)
     b = [2] * (maxA + 1)
     n = 0
@@ -318,7 +318,7 @@ def euler29():
     while found:
         min0 = a0_bigint[0]
         found = False
-        for i in range(2, 1 + maxA):
+        for i in range(2, maxA + 1):
             if b[i] <= maxB:
                 if found:
                     if bigint_lt(a_bigint[i], min0):
@@ -328,7 +328,7 @@ def euler29():
                     found = True
         if found:
             n += 1
-            for l in range(2, 1 + maxA):
+            for l in range(2, maxA + 1):
                 if bigint_eq(a_bigint[l], min0) and b[l] <= maxB:
                     b[l] += 1
                     a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l])
@@ -336,7 +336,7 @@ def euler29():
 
 print("%d\n" % euler29(), end='')
 sum = read_bigint(50)
-for i in range(2, 1 + 100):
+for i in range(2, 101):
     stdinsep()
     tmp = read_bigint(50)
     sum = add_bigint(sum, tmp)

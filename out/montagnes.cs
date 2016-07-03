@@ -55,12 +55,12 @@ static int readInt(){
     {
         int x = tab[i];
         while (j >= 0 && x > tab[len - j])
-            j -= 1;
-        j += 1;
+            j--;
+        j++;
         tab[len - j] = x;
         if (j > max0)
             max0 = j;
-        i -= 1;
+        i--;
     }
     return max0;
   }
@@ -72,7 +72,7 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int x = 0;
         x = readInt();

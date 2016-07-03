@@ -41,9 +41,9 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   main [
     |product2 product counted count be allowed|count := 0.
     allowed := Array new: 10.
-    (0 to: (10 - 1)) do: [:i| allowed at: (i + 1) put: (i ~= 0).].
+    (0 to: 9) do: [:i| allowed at: (i + 1) put: (i ~= 0).].
     counted := Array new: 100000.
-    (0 to: (100000 - 1)) do: [:j| counted at: (j + 1) put: false.].
+    (0 to: 99999) do: [:j| counted at: (j + 1) put: false.].
     (1 to: 9) do: [:e|
       allowed at: (e + 1) put: false.
       (1 to: 9) do: [:b| (allowed at: (b + 1))

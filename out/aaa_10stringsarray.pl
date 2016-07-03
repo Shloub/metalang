@@ -17,7 +17,7 @@ sub print_toto{
 }
 
 my $tab = [];
-foreach my $i (0 .. 2 - 1)
+foreach my $i (0 .. 1)
 {
     $tab->[$i] = idstring("chaine de test");
 }

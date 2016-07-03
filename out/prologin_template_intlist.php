@@ -1,7 +1,7 @@
 <?php
 function programme_candidat(&$tableau, $taille) {
     $out0 = 0;
-    for ($i = 0; $i < $taille; $i += 1)
+    for ($i = 0; $i < $taille; $i++)
         $out0 += $tableau[$i];
     return $out0;
 }

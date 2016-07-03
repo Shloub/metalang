@@ -19,7 +19,7 @@ Object subclass: euler40 [
   
   main [
     |v t puiss out0|t := Array new: 9.
-    (0 to: (9 - 1)) do: [:i| t at: (i + 1) put: ((self exp0: 10 e: i) - (self exp0: 10 e: (i - 1))).].
+    (0 to: 8) do: [:i| t at: (i + 1) put: ((self exp0: 10 e: i) - (self exp0: 10 e: (i - 1))).].
     (1 to: 8) do: [:i2| i2 display.
       ' => ' display.
       (t at: (i2 + 1)) display.

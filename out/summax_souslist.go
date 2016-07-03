@@ -16,7 +16,7 @@ func skip() {
 func summax(lst []int, len int) int{
   current := 0
   max0 := 0
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       current += lst[i]
       if current < 0 {
           current = 0
@@ -34,7 +34,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       tmp := 0
       fmt.Fscanf(reader, "%d", &tmp)
       skip()

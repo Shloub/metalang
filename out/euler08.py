@@ -24,7 +24,7 @@ def mod(x, y):
 
 i = 1
 last = [None] * 5
-for j in range(0, 1 + 5 - 1):
+for j in range(0, 5):
     c = readchar()
     d = ord(c) - ord('0')
     i *= d
@@ -32,7 +32,7 @@ for j in range(0, 1 + 5 - 1):
 max0 = i
 index = 0
 nskipdiv = 0
-for k in range(1, 1 + 995):
+for k in range(1, 996):
     e = readchar()
     f = ord(e) - ord('0')
     if f == 0:

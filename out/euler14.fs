@@ -31,7 +31,7 @@
 
 : main
   HERE 1000000 cells allot { m }
-  1000000 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+  999999 0 BEGIN 2dup >= WHILE DUP { j }
     0 m  j cells +  !
    1 + REPEAT 2DROP
   0 { max0 }

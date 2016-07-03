@@ -4,7 +4,7 @@ func main() {
   i := 4
   /*while i < 10 do */
   fmt.Printf("%d", i)
-  i += 1
+  i++
   /*  end */
   fmt.Printf("%d", i)
 }

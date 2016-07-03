@@ -20,8 +20,7 @@ int fibo(int a, int b, int i) {
 }
 
 
-int main(void) {
+int main() {
     std::cout << fibo(1, 2, 4);
-    return 0;
 }
 

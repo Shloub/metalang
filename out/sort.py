@@ -39,13 +39,13 @@ def readint():
 
 def copytab(tab, len):
     o = [None] * len
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
         o[i] = tab[i]
     return o
 
 def bubblesort(tab, len):
-    for i in range(0, 1 + len - 1):
-        for j in range(i + 1, 1 + len - 1):
+    for i in range(0, len):
+        for j in range(i + 1, len):
             if tab[i] > tab[j]:
                 tmp = tab[i]
                 tab[i] = tab[j]
@@ -83,19 +83,19 @@ len = 2
 len = readint()
 stdinsep()
 tab = [None] * len
-for i_ in range(0, 1 + len - 1):
+for i_ in range(0, len):
     tmp = 0
     tmp = readint()
     stdinsep()
     tab[i_] = tmp
 tab2 = copytab(tab, len)
 bubblesort(tab2, len)
-for i in range(0, 1 + len - 1):
+for i in range(0, len):
     print("%d " % tab2[i], end='')
 print("\n", end='')
 tab3 = copytab(tab, len)
 qsort0(tab3, len, 0, len - 1)
-for i in range(0, 1 + len - 1):
+for i in range(0, len):
     print("%d " % tab3[i], end='')
 print("\n", end='')
 

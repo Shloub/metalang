@@ -25,7 +25,7 @@ public class euler42
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int sum = 0;
-    for (int i = 1; i <= len; i += 1)
+    for (int i = 1; i <= len; i++)
     {
         char c = scanner.findWithinHorizon(".", 1).charAt(0);
         sum += (int)(c) - (int)('A') + 1;
@@ -40,7 +40,7 @@ public class euler42
   
   public static void main(String args[])
   {
-    for (int i = 1; i <= 55; i += 1)
+    for (int i = 1; i < 56; i++)
         if (is_triangular(i))
             System.out.printf("%d ", i);
     System.out.print("\n");
@@ -52,7 +52,7 @@ public class euler42
     } else {
       n = scanner.nextInt();
     }
-    for (int i = 1; i <= n; i += 1)
+    for (int i = 1; i <= n; i++)
         sum += score();
     System.out.printf("%d\n", sum);
   }

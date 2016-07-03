@@ -22,7 +22,7 @@ function scantrim(){
 function devine0($nombre, &$tab, $len) {
     $min0 = $tab[0];
     $max0 = $tab[1];
-    for ($i = 2; $i < $len; $i += 1)
+    for ($i = 2; $i < $len; $i++)
     {
         if ($tab[$i] > $max0 || $tab[$i] < $min0)
             return false;
@@ -41,7 +41,7 @@ scantrim();
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0; $i < $len; $i += 1)
+for ($i = 0; $i < $len; $i++)
 {
     list($tmp) = scan("%d");
     scantrim();

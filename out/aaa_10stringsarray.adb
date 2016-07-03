@@ -48,7 +48,7 @@ type b_PTR is access b;
   a : toto_PTR;
 begin
   tab := new b (0..2);
-  for i in integer range 0..2 - 1 loop
+  for i in integer range 0..1 loop
     tab(i) := idstring(new char_array'( To_C("chaine de test")));
   end loop;
   for j in integer range 0..1 loop

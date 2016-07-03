@@ -8,13 +8,13 @@ function h($i) {
     {
         if ($i % $j == 5)
             return true;
-        $j += 1;
+        $j++;
     }
     return false;
 }
 
 $j = 0;
-for ($k = 0; $k <= 10; $k += 1)
+for ($k = 0; $k < 11; $k++)
 {
     $j += $k;
     echo $j, "\n";
@@ -23,7 +23,7 @@ $i = 4;
 while ($i < 10)
 {
     echo $i;
-    $i += 1;
+    $i++;
     $j += $i;
 }
 echo $j, $i, "FIN TEST\n";

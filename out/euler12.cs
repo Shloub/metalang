@@ -5,11 +5,11 @@ public class euler12
   static int eratostene(int[] t, int max0)
   {
     int n = 0;
-    for (int i = 2; i < max0; i += 1)
+    for (int i = 2; i < max0; i++)
         if (t[i] == i)
         {
             int j = i * i;
-            n += 1;
+            n++;
             while (j < max0 && j > 0)
             {
                 t[j] = 0;
@@ -21,12 +21,12 @@ public class euler12
   
   static int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
   {
-    for (int i = 0; i < nprimes; i += 1)
+    for (int i = 0; i < nprimes; i++)
     {
         int d = primes[i];
         while (n % d == 0)
         {
-            t[d] += 1;
+            t[d]++;
             n /= d;
         }
         if (n == 1)
@@ -39,28 +39,28 @@ public class euler12
   {
     int maximumprimes = 110;
     int[] era = new int[maximumprimes];
-    for (int j = 0; j < maximumprimes; j += 1)
+    for (int j = 0; j < maximumprimes; j++)
         era[j] = j;
     int nprimes = eratostene(era, maximumprimes);
     int[] primes = new int[nprimes];
-    for (int o = 0; o < nprimes; o += 1)
+    for (int o = 0; o < nprimes; o++)
         primes[o] = 0;
     int l = 0;
-    for (int k = 2; k < maximumprimes; k += 1)
+    for (int k = 2; k < maximumprimes; k++)
         if (era[k] == k)
         {
             primes[l] = k;
-            l += 1;
+            l++;
         }
-    for (int n = 1; n <= 10000; n += 1)
+    for (int n = 1; n < 10001; n++)
     {
         int[] primesFactors = new int[n + 2];
-        for (int m = 0; m < n + 2; m += 1)
+        for (int m = 0; m <= n + 1; m++)
             primesFactors[m] = 0;
         int max0 = Math.Max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
-        primesFactors[2] -= 1;
+        primesFactors[2]--;
         int ndivs = 1;
-        for (int i = 0; i <= max0; i += 1)
+        for (int i = 0; i <= max0; i++)
             if (primesFactors[i] != 0)
                 ndivs *= 1 + primesFactors[i];
         if (ndivs > ndiv2)

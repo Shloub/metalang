@@ -38,12 +38,12 @@ type bigint struct {
 
 func read_bigint(len int) * bigint{
   var chiffres []int = make([]int, len)
-  for j := 0; j < len; j += 1 {
+  for j := 0; j < len; j++ {
       var c byte
       fmt.Fscanf(reader, "%c", &c)
       chiffres[j] = (int)(c)
   }
-  for i := 0; i <= (len - 1) / 2; i += 1 {
+  for i := 0; i <= (len - 1) / 2; i++ {
       tmp := chiffres[i]
       chiffres[i] = chiffres[len - 1 - i]
       chiffres[len - 1 - i] = tmp
@@ -59,7 +59,7 @@ func print_bigint(a * bigint) {
   if !(*a).bigint_sign {
       fmt.Printf("%c", '-')
   }
-  for i := 0; i < (*a).bigint_len; i += 1 {
+  for i := 0; i < (*a).bigint_len; i++ {
       fmt.Printf("%d", (*a).bigint_chiffres[(*a).bigint_len - 1 - i])
   }
 }
@@ -71,7 +71,7 @@ func bigint_eq(a * bigint, b * bigint) bool{
   } else if (*a).bigint_len != (*b).bigint_len {
       return false
   } else {
-      for i := 0; i < (*a).bigint_len; i += 1 {
+      for i := 0; i < (*a).bigint_len; i++ {
           if (*a).bigint_chiffres[i] != (*b).bigint_chiffres[i] {
               return false
           }
@@ -92,7 +92,7 @@ func bigint_gt(a * bigint, b * bigint) bool{
       } else if (*a).bigint_len < (*b).bigint_len {
           return !(*a).bigint_sign
       } else {
-          for i := 0; i < (*a).bigint_len; i += 1 {
+          for i := 0; i < (*a).bigint_len; i++ {
               j := (*a).bigint_len - 1 - i
               if (*a).bigint_chiffres[j] > (*b).bigint_chiffres[j] {
                   return (*a).bigint_sign
@@ -114,7 +114,7 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
   len := max2_((*a).bigint_len, (*b).bigint_len) + 1
   retenue := 0
   var chiffres []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       tmp := retenue
       if i < (*a).bigint_len {
           tmp += (*a).bigint_chiffres[i]
@@ -126,7 +126,7 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
       chiffres[i] = tmp % 10
   }
   for len > 0 && chiffres[len - 1] == 0 {
-      len -= 1
+      len--
   }
   var f * bigint = new (bigint)
       (*f).bigint_sign=true
@@ -142,7 +142,7 @@ Pré-requis : a > b
   len := (*a).bigint_len
   retenue := 0
   var chiffres []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       tmp := retenue + (*a).bigint_chiffres[i]
       if i < (*b).bigint_len {
           tmp -= (*b).bigint_chiffres[i]
@@ -156,7 +156,7 @@ Pré-requis : a > b
       chiffres[i] = tmp
   }
   for len > 0 && chiffres[len - 1] == 0 {
-      len -= 1
+      len--
   }
   var g * bigint = new (bigint)
       (*g).bigint_sign=true
@@ -207,12 +207,12 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   len := (*a).bigint_len + (*b).bigint_len + 1
   var chiffres []int = make([]int, len)
-  for k := 0; k < len; k += 1 {
+  for k := 0; k < len; k++ {
       chiffres[k] = 0
   }
-  for i := 0; i < (*a).bigint_len; i += 1 {
+  for i := 0; i < (*a).bigint_len; i++ {
       retenue := 0
-      for j := 0; j < (*b).bigint_len; j += 1 {
+      for j := 0; j < (*b).bigint_len; j++ {
           chiffres[i + j] += retenue + (*b).bigint_chiffres[j] * (*a).bigint_chiffres[i]
           retenue = chiffres[i + j] / 10
           chiffres[i + j] = chiffres[i + j] % 10
@@ -221,9 +221,9 @@ D'ou le nom de la fonction. */
   }
   chiffres[(*a).bigint_len + (*b).bigint_len] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] / 10
   chiffres[(*a).bigint_len + (*b).bigint_len - 1] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] % 10
-  for l := 0; l <= 2; l += 1 {
+  for l := 0; l < 3; l++ {
       if len != 0 && chiffres[len - 1] == 0 {
-          len -= 1
+          len--
       }
   }
   var m * bigint = new (bigint)
@@ -236,7 +236,7 @@ D'ou le nom de la fonction. */
 func bigint_premiers_chiffres(a * bigint, i int) * bigint{
   len := min2_(i, (*a).bigint_len)
   for len != 0 && (*a).bigint_chiffres[len - 1] == 0 {
-      len -= 1
+      len--
   }
   var o * bigint = new (bigint)
       (*o).bigint_sign=(*a).bigint_sign
@@ -247,7 +247,7 @@ func bigint_premiers_chiffres(a * bigint, i int) * bigint{
 
 func bigint_shift(a * bigint, i int) * bigint{
   var chiffres []int = make([]int, (*a).bigint_len + i)
-  for k := 0; k < (*a).bigint_len + i; k += 1 {
+  for k := 0; k < (*a).bigint_len + i; k++ {
       if k >= i {
           chiffres[k] = (*a).bigint_chiffres[k - i]
       } else {
@@ -293,7 +293,7 @@ func log10(a int) int{
   out0 := 1
   for a >= 10 {
       a /= 10
-      out0 += 1
+      out0++
   }
   return out0
 }
@@ -304,10 +304,10 @@ func bigint_of_int(i int) * bigint{
       size = 0
   }
   var t []int = make([]int, size)
-  for j := 0; j < size; j += 1 {
+  for j := 0; j < size; j++ {
       t[j] = 0
   }
-  for k := 0; k < size; k += 1 {
+  for k := 0; k < size; k++ {
       t[k] = i % 10
       i /= 10
   }
@@ -330,7 +330,7 @@ func fact_bigint(a * bigint) * bigint{
 
 func sum_chiffres_bigint(a * bigint) int{
   out0 := 0
-  for i := 0; i < (*a).bigint_len; i += 1 {
+  for i := 0; i < (*a).bigint_len; i++ {
       out0 += (*a).bigint_chiffres[i]
   }
   return out0
@@ -367,7 +367,7 @@ func bigint_exp_10chiffres(a * bigint, b int) * bigint{
 
 func euler48() {
   var sum * bigint = bigint_of_int(0)
-  for i := 1; i <= 100; i += 1 {
+  for i := 1; i < 101; i++ {
       /* 1000 normalement */
       var ib * bigint = bigint_of_int(i)
       var ibeib * bigint = bigint_exp_10chiffres(ib, i)
@@ -395,7 +395,7 @@ func euler25() int{
       var c * bigint = add_bigint(a, b)
       a = b
       b = c
-      i += 1
+      i++
   }
   return i
 }
@@ -404,15 +404,15 @@ func euler29() int{
   maxA := 5
   maxB := 5
   var a_bigint []* bigint = make([]* bigint, maxA + 1)
-  for j := 0; j <= maxA; j += 1 {
+  for j := 0; j <= maxA; j++ {
       a_bigint[j] = bigint_of_int(j * j)
   }
   var a0_bigint []* bigint = make([]* bigint, maxA + 1)
-  for j2 := 0; j2 <= maxA; j2 += 1 {
+  for j2 := 0; j2 <= maxA; j2++ {
       a0_bigint[j2] = bigint_of_int(j2)
   }
   var b []int = make([]int, maxA + 1)
-  for k := 0; k <= maxA; k += 1 {
+  for k := 0; k <= maxA; k++ {
       b[k] = 2
   }
   n := 0
@@ -420,7 +420,7 @@ func euler29() int{
   for found {
       var min0 * bigint = a0_bigint[0]
       found = false
-      for i := 2; i <= maxA; i += 1 {
+      for i := 2; i <= maxA; i++ {
           if b[i] <= maxB {
               if found {
                   if bigint_lt(a_bigint[i], min0) {
@@ -433,10 +433,10 @@ func euler29() int{
           }
       }
       if found {
-          n += 1
-          for l := 2; l <= maxA; l += 1 {
+          n++
+          for l := 2; l <= maxA; l++ {
               if bigint_eq(a_bigint[l], min0) && b[l] <= maxB {
-                  b[l] += 1
+                  b[l]++
                   a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l])
               }
           }
@@ -449,7 +449,7 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   fmt.Printf("%d\n", euler29())
   var sum * bigint = read_bigint(50)
-  for i := 2; i <= 100; i += 1 {
+  for i := 2; i < 101; i++ {
       skip()
       var tmp * bigint = read_bigint(50)
       sum = add_bigint(sum, tmp)

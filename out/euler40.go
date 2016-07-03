@@ -2,14 +2,14 @@ package main
 import "fmt"
 func exp0(a int, e int) int{
   o := 1
-  for i := 1; i <= e; i += 1 {
+  for i := 1; i <= e; i++ {
       o *= a
   }
   return o
 }
 
 func e(t []int, n int) int{
-  for i := 1; i <= 8; i += 1 {
+  for i := 1; i < 9; i++ {
       if n >= t[i] * i {
           n -= t[i] * i
       } else {
@@ -23,30 +23,30 @@ func e(t []int, n int) int{
 
 func main() {
   var t []int = make([]int, 9)
-  for i := 0; i < 9; i += 1 {
+  for i := 0; i < 9; i++ {
       t[i] = exp0(10, i) - exp0(10, i - 1)
   }
-  for i2 := 1; i2 <= 8; i2 += 1 {
+  for i2 := 1; i2 < 9; i2++ {
       fmt.Printf("%d => %d\n", i2, t[i2])
   }
-  for j := 0; j <= 80; j += 1 {
+  for j := 0; j < 81; j++ {
       fmt.Printf("%d", e(t, j))
   }
   fmt.Printf("\n")
-  for k := 1; k <= 50; k += 1 {
+  for k := 1; k < 51; k++ {
       fmt.Printf("%d", k)
   }
   fmt.Printf("\n")
-  for j2 := 169; j2 <= 220; j2 += 1 {
+  for j2 := 169; j2 < 221; j2++ {
       fmt.Printf("%d", e(t, j2))
   }
   fmt.Printf("\n")
-  for k2 := 90; k2 <= 110; k2 += 1 {
+  for k2 := 90; k2 < 111; k2++ {
       fmt.Printf("%d", k2)
   }
   fmt.Printf("\n")
   out0 := 1
-  for l := 0; l <= 6; l += 1 {
+  for l := 0; l < 7; l++ {
       puiss := exp0(10, l)
       v := e(t, puiss - 1)
       out0 *= v

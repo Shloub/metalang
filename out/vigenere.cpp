@@ -31,7 +31,7 @@ void crypte(int taille_cle, std::vector<char>& cle, int taille, std::vector<char
 }
 
 
-int main(void) {
+int main() {
     int taille, taille_cle;
     char out2, out0;
     std::cin >> taille_cle;
@@ -52,6 +52,5 @@ int main(void) {
     for (int i = 0; i < taille; i += 1)
         std::cout << message[i];
     std::cout << "\n";
-    return 0;
 }
 

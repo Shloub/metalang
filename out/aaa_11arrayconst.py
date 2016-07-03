@@ -1,6 +1,6 @@
 
 def test(tab, len):
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
         print("%d " % tab[i], end='')
     print("\n", end='')
 

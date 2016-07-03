@@ -51,7 +51,7 @@ func findHexa2(n int, a int, b int) bool{
 }
 
 func main() {
-  for n := 285; n <= 55385; n += 1 {
+  for n := 285; n < 55386; n++ {
       t := triangle(n)
       if findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10) {
           fmt.Printf("%d\n%d\n", n, t)

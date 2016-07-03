@@ -7,7 +7,7 @@ public class aaa_read1
   public static void main(String args[])
   {
     char[] str = scanner.nextLine().toCharArray();
-    for (int i = 0; i <= 11; i += 1)
+    for (int i = 0; i < 12; i++)
         System.out.print(str[i]);
   }
   

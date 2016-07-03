@@ -5,7 +5,7 @@ Module euler39
   
   Sub Main()
     Dim t(1001) As Integer
-    For i As Integer = 0 To 1001 - 1
+    For i As Integer = 0 To 1000
         t(i) = 0
     Next
     For a As Integer = 1 To 1000
@@ -14,7 +14,7 @@ Module euler39
             Dim c As Integer = Int(Math.Sqrt(c2))
             If c * c = c2 Then
                 Dim p As Integer = a + b + c
-                If p <= 1000 Then
+                If p < 1001 Then
                     t(p) = t(p) + 1
                 End If
             End If

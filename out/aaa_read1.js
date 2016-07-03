@@ -15,11 +15,11 @@ function stdinsep(){
     while (current_char.match(/[\n\t\s]/g))
         current_char = read_char0();
 }var str = new Array(12);
-for (var a = 0; a < 12; a += 1)
+for (var a = 0; a < 12; a++)
 {
     str[a] = read_char_();
 }
 stdinsep();
-for (var i = 0; i <= 11; i += 1)
+for (var i = 0; i < 12; i++)
     util.print(str[i]);
 

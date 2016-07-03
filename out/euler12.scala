@@ -59,7 +59,7 @@ object euler12
     for (n <- 1 to 10000)
     {
         var primesFactors :Array[Int] = new Array[Int](n + 2);
-        for (m <- 0 to n + 2 - 1)
+        for (m <- 0 to n + 1)
             primesFactors(m) = 0;
         var max0: Int = max2_0(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
         primesFactors(2) = primesFactors(2) - 1;

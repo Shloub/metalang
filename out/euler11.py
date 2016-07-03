@@ -8,7 +8,7 @@ def find(n, m, x, y, dx, dy):
         return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy)
 
 directions = [None] * 8
-for i in range(0, 1 + 8 - 1):
+for i in range(0, 8):
     if i == 0:
         directions[i] = [0, 1]
     elif i == 1:
@@ -27,10 +27,10 @@ for i in range(0, 1 + 8 - 1):
         directions[i] = [-1, -1]
 max0 = 0
 m = [list(map(int, input().split())) for i in range(20)]
-for j in range(0, 1 + 7):
+for j in range(0, 8):
     (dx, dy) = directions[j]
-    for x in range(0, 1 + 19):
-        for y in range(0, 1 + 19):
+    for x in range(0, 20):
+        for y in range(0, 20):
             max0 = max(max0, find(4, m, x, y, dx, dy))
 print("%d\n" % max0, end='')
 

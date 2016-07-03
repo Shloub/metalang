@@ -60,10 +60,10 @@ static int readInt(){
     {
         int e = tab[i];
         if (e < m)
-            i += 1;
+            i++;
         else
         {
-            j -= 1;
+            j--;
             tab[i] = tab[j];
             tab[j] = e;
         }
@@ -86,7 +86,7 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = 0;
         tmp = readInt();

@@ -9,7 +9,7 @@ int programme_candidat(std::vector<int>& tableau, int taille) {
 }
 
 
-int main(void) {
+int main() {
     int taille;
     std::cin >> taille;
     std::vector<int> tableau( taille );
@@ -18,6 +18,5 @@ int main(void) {
         std::cin >> tableau[a];
     }
     std::cout << programme_candidat(tableau, taille) << "\n";
-    return 0;
 }
 

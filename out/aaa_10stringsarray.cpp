@@ -21,9 +21,9 @@ void print_toto(toto& t) {
 }
 
 
-int main(void) {
+int main() {
     std::vector<std::string> tab( 2 );
-    for (int i = 0; i < 2; i += 1)
+    for (int i = 0; i <= 1; i += 1)
         tab[i] = idstring("chaine de test");
     for (int j = 0; j <= 1; j += 1)
         printstring(idstring(tab[j]));
@@ -31,6 +31,5 @@ int main(void) {
         a.s = "one";
         a.v = 1;;
     print_toto(a);
-    return 0;
 }
 

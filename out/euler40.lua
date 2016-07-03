@@ -26,7 +26,7 @@ end
 
 
 local t = {}
-for i = 0,9 - 1 do
+for i = 0,8 do
   t[i + 1] = exp0(10, i) - exp0(10, i - 1);
 end
 for i2 = 1,8 do

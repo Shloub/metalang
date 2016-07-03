@@ -22,9 +22,9 @@ void print_toto(Toto t)
 
 
 String[] tab = new String[2]
-for (int i = 0; i < 2; i += 1)
+for (int i = 0; i < 2; i++)
     tab[i] = idstring("chaine de test")
-for (int j = 0; j <= 1; j += 1)
+for (int j = 0; j < 2; j++)
     printstring(idstring(tab[j]))
 Toto a = new Toto()
 a.s = "one"

@@ -29,7 +29,7 @@ func of_position_alphabet(c int) byte{
 }
 
 func crypte(taille_cle int, cle []byte, taille int, message []byte) {
-  for i := 0; i < taille; i += 1 {
+  for i := 0; i < taille; i++ {
       lettre := position_alphabet(message[i])
       if lettre != -1 {
           addon := position_alphabet(cle[i % taille_cle])
@@ -45,7 +45,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &taille_cle)
   skip()
   var cle []byte = make([]byte, taille_cle)
-  for index := 0; index < taille_cle; index += 1 {
+  for index := 0; index < taille_cle; index++ {
       var out0 byte
       fmt.Fscanf(reader, "%c", &out0)
       cle[index] = out0
@@ -55,13 +55,13 @@ func main() {
   fmt.Fscanf(reader, "%d", &taille)
   skip()
   var message []byte = make([]byte, taille)
-  for index2 := 0; index2 < taille; index2 += 1 {
+  for index2 := 0; index2 < taille; index2++ {
       var out2 byte
       fmt.Fscanf(reader, "%c", &out2)
       message[index2] = out2
   }
   crypte(taille_cle, cle, taille, message)
-  for i := 0; i < taille; i += 1 {
+  for i := 0; i < taille; i++ {
       fmt.Printf("%c", message[i])
   }
   fmt.Printf("\n")

@@ -37,7 +37,7 @@ int npi0(std::vector<char>& str, int len) {
 }
 
 
-int main(void) {
+int main() {
     int len = 0;
     std::cin >> len;
     std::vector<char> tab( len );
@@ -49,6 +49,5 @@ int main(void) {
     }
     int result = npi0(tab, len);
     std::cout << result;
-    return 0;
 }
 

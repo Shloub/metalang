@@ -47,10 +47,10 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   {
     var count: Int = 0;
     var allowed :Array[Boolean] = new Array[Boolean](10);
-    for (i <- 0 to 10 - 1)
+    for (i <- 0 to 9)
         allowed(i) = i != 0;
     var counted :Array[Boolean] = new Array[Boolean](100000);
-    for (j <- 0 to 100000 - 1)
+    for (j <- 0 to 99999)
         counted(j) = false;
     for (e <- 1 to 9)
     {

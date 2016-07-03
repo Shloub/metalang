@@ -23,7 +23,7 @@ read int, read char et skip
     System.out.printf("len*2=%d\n", len);
     len /= 2;
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmpi1;
         if (scanner.hasNext("^-")) {
@@ -38,7 +38,7 @@ read int, read char et skip
     }
     System.out.print("\n");
     int[] tab2 = new int[len];
-    for (int i_ = 0; i_ < len; i_ += 1)
+    for (int i_ = 0; i_ < len; i_++)
     {
         int tmpi2;
         if (scanner.hasNext("^-")) {
@@ -61,7 +61,7 @@ read int, read char et skip
     scanner.findWithinHorizon("[\n\r ]*", 1);
     System.out.printf("%d=strlen\n", strlen);
     char[] tab4 = new char[strlen];
-    for (int toto = 0; toto < strlen; toto += 1)
+    for (int toto = 0; toto < strlen; toto++)
     {
         char tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
         int c = (int)(tmpc);
@@ -70,7 +70,7 @@ read int, read char et skip
             c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4[toto] = (char)(c);
     }
-    for (int j = 0; j < strlen; j += 1)
+    for (int j = 0; j < strlen; j++)
         System.out.print(tab4[j]);
   }
   

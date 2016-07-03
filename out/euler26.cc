@@ -6,11 +6,11 @@ int periode(std::vector<int> * restes, int len, int a, int b) {
     {
         int chiffre = a / b;
         int reste = a % b;
-        for (int i = 0; i < len; i += 1)
+        for (int i = 0; i < len; i++)
             if (restes->at(i) == reste)
                 return len - i;
         restes->at(len) = reste;
-        len += 1;
+        len++;
         a = reste * 10;
     }
     return 0;
@@ -22,7 +22,7 @@ int main() {
     std::fill(t->begin(), t->end(), 0);
     int m = 0;
     int mi = 0;
-    for (int i = 1; i <= 1000; i += 1)
+    for (int i = 1; i < 1001; i++)
     {
         int p = periode(t, 0, 1, i);
         if (p > m)

@@ -21,9 +21,9 @@ struct move {
 
 void print_state(gamestate * g) {
     std::cout << "\n|";
-    for (int y = 0; y <= 2; y += 1)
+    for (int y = 0; y < 3; y++)
     {
-        for (int x = 0; x <= 2; x += 1)
+        for (int x = 0; x < 3; x++)
         {
             if (g->cases->at(x)->at(y) == 0)
                 std::cout << " ";
@@ -44,14 +44,14 @@ void print_state(gamestate * g) {
 void eval0(gamestate * g) {
     int win = 0;
     int freecase = 0;
-    for (int y = 0; y <= 2; y += 1)
+    for (int y = 0; y < 3; y++)
     {
         int col = -1;
         int lin = -1;
-        for (int x = 0; x <= 2; x += 1)
+        for (int x = 0; x < 3; x++)
         {
             if (g->cases->at(x)->at(y) == 0)
-                freecase += 1;
+                freecase++;
             int colv = g->cases->at(x)->at(y);
             int linv = g->cases->at(y)->at(x);
             if (col == -1 && colv != 0)
@@ -68,7 +68,7 @@ void eval0(gamestate * g) {
         else if (lin >= 0)
             win = lin;
     }
-    for (int x = 1; x <= 2; x += 1)
+    for (int x = 1; x < 3; x++)
     {
         if (g->cases->at(0)->at(0) == x && g->cases->at(1)->at(1) == x && g->cases->at(2)->at(2) == x)
             win = x;
@@ -132,8 +132,8 @@ int minmax(gamestate * g) {
     int maxNote = -10000;
     if (!g->firstToPlay)
         maxNote = 10000;
-    for (int x = 0; x <= 2; x += 1)
-        for (int y = 0; y <= 2; y += 1)
+    for (int x = 0; x < 3; x++)
+        for (int y = 0; y < 3; y++)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -155,8 +155,8 @@ move * play(gamestate * g) {
         minMove->x = 0;
         minMove->y = 0;;
     int minNote = 10000;
-    for (int x = 0; x <= 2; x += 1)
-        for (int y = 0; y <= 2; y += 1)
+    for (int x = 0; x < 3; x++)
+        for (int y = 0; y < 3; y++)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -177,7 +177,7 @@ move * play(gamestate * g) {
 
 gamestate * init0() {
     std::vector<std::vector<int> *> *cases = new std::vector<std::vector<int> *>( 3 );
-    for (int i = 0; i < 3; i += 1)
+    for (int i = 0; i < 3; i++)
     {
         std::vector<int> *tab = new std::vector<int>( 3 );
         std::fill(tab->begin(), tab->end(), 0);
@@ -203,7 +203,7 @@ move * read_move() {
 
 
 int main() {
-    for (int i = 0; i <= 1; i += 1)
+    for (int i = 0; i < 2; i++)
     {
         gamestate * state = init0();
         move * c = new move();

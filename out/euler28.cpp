@@ -31,8 +31,7 @@ int sumdiag(int n) {
 }
 
 
-int main(void) {
+int main() {
     std::cout << sumdiag(1001);
-    return 0;
 }
 

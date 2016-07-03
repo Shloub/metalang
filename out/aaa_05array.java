@@ -18,7 +18,7 @@ public class aaa_05array
   {
     int j = 0;
     boolean[] a = new boolean[5];
-    for (int i = 0; i < 5; i += 1)
+    for (int i = 0; i < 5; i++)
     {
         System.out.print(i);
         j += i;

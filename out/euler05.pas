@@ -9,7 +9,7 @@ var
   tab : c;
 begin
   SetLength(tab, n + 1);
-  for i := 0 to  n + 1 - 1 do
+  for i := 0 to  n do
   begin
     tab[i] := 0;
   end;
@@ -45,7 +45,7 @@ var
 begin
   lim := 20;
   SetLength(o, lim + 1);
-  for m := 0 to  lim + 1 - 1 do
+  for m := 0 to  lim do
   begin
     o[m] := 0;
   end;

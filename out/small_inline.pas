@@ -68,7 +68,7 @@ var
   t : a;
 begin
   SetLength(t, 2);
-  for d := 0 to  2 - 1 do
+  for d := 0 to  1 do
   begin
     t[d] := read_int_();
     skip();

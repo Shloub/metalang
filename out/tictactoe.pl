@@ -238,10 +238,10 @@ sub play{
 
 sub init0{
   my $cases = [];
-  foreach my $i (0 .. 3 - 1)
+  foreach my $i (0 .. 2)
   {
       my $tab = [];
-      foreach my $j (0 .. 3 - 1)
+      foreach my $j (0 .. 2)
       {
           $tab->[$j] = 0;
       }

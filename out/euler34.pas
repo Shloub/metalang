@@ -17,7 +17,7 @@ var
   sum : Longint;
 begin
   SetLength(f, 10);
-  for j := 0 to  10 - 1 do
+  for j := 0 to  9 do
   begin
     f[j] := 1;
   end;

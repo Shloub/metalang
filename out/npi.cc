@@ -16,23 +16,23 @@ int npi0(std::vector<char> * str, int len) {
     int ptrStr = 0;
     while (ptrStr < len)
         if (str->at(ptrStr) == ' ')
-            ptrStr += 1;
+            ptrStr++;
         else if (is_number(str->at(ptrStr)))
         {
             int num = 0;
             while (str->at(ptrStr) != ' ')
             {
                 num = num * 10 + (int)(str->at(ptrStr)) - (int)('0');
-                ptrStr += 1;
+                ptrStr++;
             }
             stack->at(ptrStack) = num;
-            ptrStack += 1;
+            ptrStack++;
         }
         else if (str->at(ptrStr) == '+')
         {
             stack->at(ptrStack - 2) += stack->at(ptrStack - 1);
-            ptrStack -= 1;
-            ptrStr += 1;
+            ptrStack--;
+            ptrStr++;
         }
     return stack->at(0);
 }
@@ -42,7 +42,7 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<char> *tab = new std::vector<char>( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         char tmp = '\u0000';
         std::cin >> tmp >> std::noskipws;

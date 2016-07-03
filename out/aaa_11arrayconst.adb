@@ -29,7 +29,7 @@ end;
   t : a_PTR;
 begin
   t := new a (0..5);
-  for i in integer range 0..5 - 1 loop
+  for i in integer range 0..4 loop
     t(i) := 1;
   end loop;
   test(t, 5);

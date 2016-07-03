@@ -2,9 +2,9 @@ package main
 import "fmt"
 func eratostene(t []int, max0 int) int{
   n := 0
-  for i := 2; i < max0; i += 1 {
+  for i := 2; i < max0; i++ {
       if t[i] == i {
-          n += 1
+          n++
           j := i * i
           for j < max0 && j > 0 {
               t[j] = 0
@@ -24,13 +24,13 @@ func isPrime(n int, primes []int, len int) bool{
       if n % primes[i] == 0 {
           return false
       }
-      i += 1
+      i++
   }
   return true
 }
 
 func test(a int, b int, primes []int, len int) int{
-  for n := 0; n <= 200; n += 1 {
+  for n := 0; n < 201; n++ {
       j := n * n + a * n + b
       if !isPrime(j, primes, len) {
           return n
@@ -42,29 +42,29 @@ func test(a int, b int, primes []int, len int) int{
 func main() {
   maximumprimes := 1000
   var era []int = make([]int, maximumprimes)
-  for j := 0; j < maximumprimes; j += 1 {
+  for j := 0; j < maximumprimes; j++ {
       era[j] = j
   }
   result := 0
   max0 := 0
   nprimes := eratostene(era, maximumprimes)
   var primes []int = make([]int, nprimes)
-  for o := 0; o < nprimes; o += 1 {
+  for o := 0; o < nprimes; o++ {
       primes[o] = 0
   }
   l := 0
-  for k := 2; k < maximumprimes; k += 1 {
+  for k := 2; k < maximumprimes; k++ {
       if era[k] == k {
           primes[l] = k
-          l += 1
+          l++
       }
   }
   fmt.Printf("%d == %d\n", l, nprimes)
   ma := 0
   mb := 0
-  for b := 3; b <= 999; b += 1 {
+  for b := 3; b < 1000; b++ {
       if era[b] == b {
-          for a := -999; a <= 999; a += 1 {
+          for a := -999; a < 1000; a++ {
               n1 := test(a, b, primes, nprimes)
               n2 := test(a, -b, primes, nprimes)
               if n1 > max0 {

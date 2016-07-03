@@ -10,7 +10,7 @@ int result(int sum, std::vector<int> * t, int maxIndex, std::vector<std::vector<
     {
         int out0 = 0;
         int div = sum / t->at(maxIndex);
-        for (int i = 0; i <= div; i += 1)
+        for (int i = 0; i <= div; i++)
             out0 += result(sum - i * t->at(maxIndex), t, maxIndex - 1, cache);
         cache->at(sum)->at(maxIndex) = out0;
         return out0;
@@ -30,7 +30,7 @@ int main() {
     t->at(6) = 100;
     t->at(7) = 200;
     std::vector<std::vector<int> *> *cache = new std::vector<std::vector<int> *>( 201 );
-    for (int j = 0; j < 201; j += 1)
+    for (int j = 0; j < 201; j++)
     {
         std::vector<int> *o = new std::vector<int>( 8 );
         std::fill(o->begin(), o->end(), 0);

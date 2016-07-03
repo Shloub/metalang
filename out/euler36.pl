@@ -8,7 +8,7 @@ sub remainder {
 sub palindrome2{
   my($pow2, $n) = @_;
   my $t = [];
-  foreach my $i (0 .. 20 - 1)
+  foreach my $i (0 .. 19)
   {
       $t->[$i] = remainder(int($n / $pow2->[$i]), 2) eq 1;
   }
@@ -32,7 +32,7 @@ sub palindrome2{
 
 my $p = 1;
 my $pow2 = [];
-foreach my $i (0 .. 20 - 1)
+foreach my $i (0 .. 19)
 {
     $p = $p * 2;
     $pow2->[$i] = int($p / 2);

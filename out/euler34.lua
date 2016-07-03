@@ -1,6 +1,6 @@
 
 local f = {}
-for j = 0,10 - 1 do
+for j = 0,9 do
   f[j + 1] = 1;
 end
 for i = 1,9 do

@@ -26,7 +26,7 @@ def skip() {
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](2);
-    for (d <- 0 to 2 - 1)
+    for (d <- 0 to 1)
     {
         t(d) = read_int();
         skip();

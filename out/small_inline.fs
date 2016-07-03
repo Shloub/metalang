@@ -24,7 +24,7 @@ create bufferc 128 allot
   WHILE 10 * current-char [char] 0 - + next-char REPEAT * ;
 : main
   HERE 2 cells allot { t }
-  2 1 - 0 BEGIN 2dup >= WHILE DUP { d }
+  1 0 BEGIN 2dup >= WHILE DUP { d }
     read-int t  d cells +  !
     skipspaces
    1 + REPEAT 2DROP

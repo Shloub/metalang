@@ -27,13 +27,13 @@ end;
   one_to_fifty : Integer;
   one_to_eighty : Integer;
 begin
-  PInt(3 + 3 + 5 + 4 + 4);
+  PInt(3 + 16);
   PString(new char_array'( To_C("" & Character'Val(10))));
-  one_to_nine := 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4;
+  one_to_nine := 3 + 33;
   PInt(one_to_nine);
   PString(new char_array'( To_C("" & Character'Val(10))));
   one_to_ten := one_to_nine + 3;
-  one_to_twenty := one_to_ten + 6 + 6 + 8 + 8 + 7 + 7 + 9 + 8 + 8 + 6;
+  one_to_twenty := one_to_ten + 73;
   one_to_thirty := one_to_twenty + 6 * 9 + one_to_nine + 6;
   one_to_forty := one_to_thirty + 6 * 9 + one_to_nine + 5;
   one_to_fifty := one_to_forty + 5 * 9 + one_to_nine + 5;
@@ -44,6 +44,6 @@ begin
   one_to_ninety_nine := one_to_ninety + 6 * 9 + one_to_nine;
   PInt(one_to_ninety_nine);
   PString(new char_array'( To_C("" & Character'Val(10))));
-  PInt(100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 3 + 8);
+  PInt(100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 11);
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;

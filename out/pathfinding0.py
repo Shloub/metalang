@@ -20,9 +20,9 @@ def pathfind_aux(cache, tab, x, y, posX, posY):
 
 def pathfind(tab, x, y):
     cache = [None] * y
-    for i in range(0, 1 + y - 1):
+    for i in range(0, y):
         tmp = [None] * x
-        for j in range(0, 1 + x - 1):
+        for j in range(0, x):
             print("%c" % tab[i][j], end='')
             tmp[j] = -1
         print("\n", end='')
@@ -33,7 +33,7 @@ x = int(input())
 y = int(input())
 print("%d %d\n" % (x, y), end='')
 e = [None] * y
-for f in range(0, 1 + y - 1):
+for f in range(0, y):
     e[f] = list(input())
 tab = e
 result = pathfind(tab, x, y)

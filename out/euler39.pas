@@ -15,7 +15,7 @@ var
   t : d;
 begin
   SetLength(t, 1001);
-  for i := 0 to  1001 - 1 do
+  for i := 0 to  1000 do
   begin
     t[i] := 0;
   end;
@@ -29,7 +29,7 @@ begin
       then
         begin
           p := a + b + c;
-          if p <= 1000
+          if p < 1001
           then
             begin
               t[p] := t[p] + 1;

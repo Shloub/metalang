@@ -27,10 +27,10 @@ int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
 int pathfind(char[][] tab, int x, int y)
 {
   int[][] cache = new int[y][]
-  for (int i = 0; i < y; i += 1)
+  for (int i = 0; i < y; i++)
   {
       int[] tmp = new int[x]
-      for (int j = 0; j < x; j += 1)
+      for (int j = 0; j < x; j++)
           tmp[j] = -1
       cache[i] = tmp
   }
@@ -56,10 +56,10 @@ if (scanner.hasNext("^-")) {
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 char[][] tab = new char[y][]
-for (int i = 0; i < y; i += 1)
+for (int i = 0; i < y; i++)
 {
     char[] tab2 = new char[x]
-    for (int j = 0; j < x; j += 1)
+    for (int j = 0; j < x; j++)
     {
         char tmp = (char)0
         tmp = scanner.findWithinHorizon(".", 1).charAt(0)
