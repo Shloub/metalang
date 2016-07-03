@@ -171,12 +171,6 @@ class cppPrinter = object(self)
         with Not_found -> List.assoc "" li) macros
    in (print_instr (cprinter#getTyperEnv ()) macros t) f
 
-  method expr f e = print_expr
-      (config (StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros)) e f nop
-
   method lang () = "cpp"
 
   method collect_for instrs =
@@ -241,84 +235,12 @@ class cppPrinter = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a );@]"
-      self#ptype type_
-      self#binding binding
-      self#ptype type_
-      self#expr len
-
-  method allocarrayconst f binding type_ len e opt =
-    Format.fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a);@]"
-      self#ptype type_
-      self#binding binding
-      self#ptype type_
-      self#expr len
-      self#binding binding
-      self#binding binding
-      (print_lief nop) e
-
   method main f main =
     let li_fori, li_forc = self#collect_for main in
     Format.fprintf f "@[<v 4>int main() {@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
-
-  method allocrecord f name t el =
-    match Type.unfix t with
-    | Type.Named typename ->
-      Format.fprintf f "%a %a = new %s();@\n%a"
-        self#ptype t
-        self#binding name
-        typename
-        (self#def_fields name) el
-    | _ -> assert false
-
-  method m_field f m field =
-      Format.fprintf f "%a->%s"
-        self#mutable_get m
-        field
-
-  method m_array f m indexes =
-      Format.fprintf f "@[<h>%a->at(%a)@]"
-        self#mutable_get m
-        (print_list
-           self#expr
-           (sep "%a)->at(%a")) indexes
-
-  method forloop f varname expr1 expr2 li =
-    let default () =
-      Format.fprintf f "@[<h>for@ (int %a@ =@ %a;@ %a@ <=@ %a;@ %a@ ++)@\n@]%a"
-        self#binding varname
-        self#expr expr1
-        self#binding varname
-        self#expr expr2
-        self#binding varname
-        self#bloc li
-    in match Expr.unfix expr2 with
-    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1)))
-      ->
-      Format.fprintf f "@[<h>for@ (int %a@ =@ %a;@ %a@ <@ %a;@ %a++)@\n@]%a"
-        self#binding varname
-        self#expr expr1
-        self#binding varname
-        self#expr expr3
-        self#binding varname
-        self#bloc li
-    | _ -> default ()
-
-  method c_multi_print = cprinter#multi_print
-
-  method combine_formats () = false
-  method multi_print f li =
-    let p = self#extract_multi_printers li in
-    Format.fprintf f "@[<h>std::cout << %a;@]"
-      (print_list (fun f g -> g f ()) (sep "%a@ <<@ %a")) p
-
-  method print f t expr =
-    Format.fprintf f "@[std::cout << %a;@]"
-      self#expr expr
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -343,49 +265,6 @@ class cppPrinter = object(self)
       Format.fprintf f "typedef %a %a;"
         self#ptype t
         self#typename name
-
-  method stdin_sep f = Format.fprintf f "@[std::cin >> std::skipws;@]"
-
-  method read f t m =
-    match Type.unfix t with
-    | Type.Char -> Format.fprintf f "@[std::cin.get(%a);@]" self#mutable_get m
-    | Type.Integer -> Format.fprintf f "@[std::cin >> %a;@]" self#mutable_get m
-    | _ -> assert false
-
-  method read_decl f t v = match Type.unfix t with
-  | Type.Char -> Format.fprintf f "@[std::cin.get(%a);@]" self#binding v
-  | Type.Integer -> Format.fprintf f "@[std::cin >> %a;@]" self#binding v
-  | _ -> assert false
-
-
-  method multi_read f li =
-    let skipfirst, variables =
-      List.fold_left (fun (skipfirst, variables) i -> match i with
-      | Instr.ReadExpr (t, mutable_) -> skipfirst, (t, mutable_, false)::variables
-      | Instr.DeclRead (t, var, _) ->
-        let mutable_ = Mutable.var var in
-        skipfirst, (t, mutable_, false)::variables
-      | Instr.Separation -> begin match variables with
-        | (t, m, s)::tl -> skipfirst, (t, m, true)::tl
-        | [] -> true, []
-      end
-      ) (false, []) li
-    in
-    let lastSkip = ref true in
-    Format.fprintf f "std::cin%a%a;"
-      (fun f b -> if b then
-        Format.fprintf f " >> std::skipws"
-      ) skipfirst
-      (print_list (fun f (t, x, b) ->
-        if !lastSkip = b then
-          Format.fprintf f " >> %a" self#mutable_get x
-        else
-          Format.fprintf f " >> %a >> std::%sskipws" self#mutable_get x
-            (if b then "" else "no");
-        lastSkip := b;
-       ) nosep )
-      (List.rev variables)
-
 end
 
 let print_expr_stack macros e f p =
