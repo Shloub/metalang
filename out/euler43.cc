@@ -33,72 +33,72 @@ d6 = 5 ou d6 = 0
 */
     std::vector<bool> *allowed = new std::vector<bool>( 10 );
     std::fill(allowed->begin(), allowed->end(), true);
-    for (int i6 = 0; i6 <= 1; i6 ++)
+    for (int i6 = 0; i6 <= 1; i6 += 1)
     {
         int d6 = i6 * 5;
         if (allowed->at(d6))
         {
             allowed->at(d6) = false;
-            for (int d7 = 0; d7 <= 9; d7 ++)
-              if (allowed->at(d7))
-            {
-                allowed->at(d7) = false;
-                for (int d8 = 0; d8 <= 9; d8 ++)
-                  if (allowed->at(d8))
+            for (int d7 = 0; d7 <= 9; d7 += 1)
+                if (allowed->at(d7))
                 {
-                    allowed->at(d8) = false;
-                    for (int d9 = 0; d9 <= 9; d9 ++)
-                      if (allowed->at(d9))
-                    {
-                        allowed->at(d9) = false;
-                        for (int d10 = 1; d10 <= 9; d10 ++)
-                          if (allowed->at(d10) && (d6 * 100 + d7 * 10 + d8) % 11 == 0 && (d7 * 100 + d8 * 10 + d9) % 13 == 0 && (d8 * 100 + d9 * 10 + d10) % 17 == 0)
+                    allowed->at(d7) = false;
+                    for (int d8 = 0; d8 <= 9; d8 += 1)
+                        if (allowed->at(d8))
                         {
-                            allowed->at(d10) = false;
-                            for (int d5 = 0; d5 <= 9; d5 ++)
-                              if (allowed->at(d5))
-                            {
-                                allowed->at(d5) = false;
-                                if ((d5 * 100 + d6 * 10 + d7) % 7 == 0)
-                                  for (int i4 = 0; i4 <= 4; i4 ++)
-                                  {
-                                      int d4 = i4 * 2;
-                                      if (allowed->at(d4))
-                                      {
-                                          allowed->at(d4) = false;
-                                          for (int d3 = 0; d3 <= 9; d3 ++)
-                                            if (allowed->at(d3))
-                                          {
-                                              allowed->at(d3) = false;
-                                              if ((d3 + d4 + d5) % 3 == 0)
-                                                for (int d2 = 0; d2 <= 9; d2 ++)
-                                                  if (allowed->at(d2))
-                                              {
-                                                  allowed->at(d2) = false;
-                                                  for (int d1 = 0; d1 <= 9; d1 ++)
-                                                    if (allowed->at(d1))
-                                                  {
-                                                      allowed->at(d1) = false;
-                                                      std::cout << d1 << d2 << d3 << d4 << d5 << d6 << d7 << d8 << d9 << d10 << " + ";
-                                                      allowed->at(d1) = true;
-                                                  }
-                                                  allowed->at(d2) = true;
-                                              }
-                                              allowed->at(d3) = true;
-                                          }
-                                          allowed->at(d4) = true;
-                                      }
+                            allowed->at(d8) = false;
+                            for (int d9 = 0; d9 <= 9; d9 += 1)
+                                if (allowed->at(d9))
+                                {
+                                    allowed->at(d9) = false;
+                                    for (int d10 = 1; d10 <= 9; d10 += 1)
+                                        if (allowed->at(d10) && (d6 * 100 + d7 * 10 + d8) % 11 == 0 && (d7 * 100 + d8 * 10 + d9) % 13 == 0 && (d8 * 100 + d9 * 10 + d10) % 17 == 0)
+                                        {
+                                            allowed->at(d10) = false;
+                                            for (int d5 = 0; d5 <= 9; d5 += 1)
+                                                if (allowed->at(d5))
+                                                {
+                                                    allowed->at(d5) = false;
+                                                    if ((d5 * 100 + d6 * 10 + d7) % 7 == 0)
+                                                        for (int i4 = 0; i4 <= 4; i4 += 1)
+                                                        {
+                                                            int d4 = i4 * 2;
+                                                            if (allowed->at(d4))
+                                                            {
+                                                                allowed->at(d4) = false;
+                                                                for (int d3 = 0; d3 <= 9; d3 += 1)
+                                                                    if (allowed->at(d3))
+                                                                    {
+                                                                        allowed->at(d3) = false;
+                                                                        if ((d3 + d4 + d5) % 3 == 0)
+                                                                            for (int d2 = 0; d2 <= 9; d2 += 1)
+                                                                                if (allowed->at(d2))
+                                                                                {
+                                                                                allowed->at(d2) = false;
+                                                                                for (int d1 = 0; d1 <= 9; d1 += 1)
+                                                                                    if (allowed->at(d1))
+                                                                                {
+                                                                                allowed->at(d1) = false;
+                                                                                std::cout << d1 << d2 << d3 << d4 << d5 << d6 << d7 << d8 << d9 << d10 << " + ";
+                                                                                allowed->at(d1) = true;
+                                                                                }
+                                                                                allowed->at(d2) = true;
+                                                                                }
+                                                                        allowed->at(d3) = true;
+                                                                    }
+                                                                allowed->at(d4) = true;
+                                                            }
+                                                        }
+                                                    allowed->at(d5) = true;
+                                                }
+                                            allowed->at(d10) = true;
+                                        }
+                                    allowed->at(d9) = true;
                                 }
-                                allowed->at(d5) = true;
-                            }
-                            allowed->at(d10) = true;
+                            allowed->at(d8) = true;
                         }
-                        allowed->at(d9) = true;
-                    }
-                    allowed->at(d8) = true;
+                    allowed->at(d7) = true;
                 }
-                allowed->at(d7) = true;
-            }
             allowed->at(d6) = true;
         }
     }

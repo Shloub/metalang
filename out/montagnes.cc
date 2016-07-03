@@ -9,12 +9,12 @@ int montagnes0(std::vector<int> * tab, int len) {
     {
         int x = tab->at(i);
         while (j >= 0 && x > tab->at(len - j))
-          j --;
-        j++;
+            j -= 1;
+        j += 1;
         tab->at(len - j) = x;
         if (j > max0)
-          max0 = j;
-        i --;
+            max0 = j;
+        i -= 1;
     }
     return max0;
 }
@@ -24,7 +24,7 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<int> *tab = new std::vector<int>( len );
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int x = 0;
         std::cin >> x;

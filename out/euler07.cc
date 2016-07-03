@@ -2,23 +2,23 @@
 #include <vector>
 
 bool divisible(int n, std::vector<int> * t, int size) {
-    for (int i = 0; i < size; i++)
-      if (n % t->at(i) == 0)
-      return true;
+    for (int i = 0; i < size; i += 1)
+        if (n % t->at(i) == 0)
+            return true;
     return false;
 }
 
 
 int find(int n, std::vector<int> * t, int used, int nth) {
     while (used != nth)
-      if (divisible(n, t, used))
-      n++;
-    else
-    {
-        t->at(used) = n;
-        n++;
-        used++;
-    }
+        if (divisible(n, t, used))
+            n += 1;
+        else
+        {
+            t->at(used) = n;
+            n += 1;
+            used += 1;
+        }
     return t->at(used - 1);
 }
 

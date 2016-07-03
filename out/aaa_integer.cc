@@ -3,7 +3,7 @@
 
 int main() {
     int i = 0;
-    i --;
+    i -= 1;
     std::cout << i << "\n";
     i += 55;
     std::cout << i << "\n";
@@ -11,11 +11,11 @@ int main() {
     std::cout << i << "\n";
     i /= 2;
     std::cout << i << "\n";
-    i++;
+    i += 1;
     std::cout << i << "\n";
     i /= 3;
     std::cout << i << "\n";
-    i --;
+    i -= 1;
     std::cout << i << "\n";
     /*
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo

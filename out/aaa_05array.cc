@@ -14,7 +14,7 @@ void g(std::vector<bool> * t, int index) {
 int main() {
     int j = 0;
     std::vector<bool> *a = new std::vector<bool>( 5 );
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i += 1)
     {
         std::cout << i;
         j += i;
@@ -22,15 +22,15 @@ int main() {
     }
     std::cout << j << " ";
     if (a->at(0))
-      std::cout << "True";
+        std::cout << "True";
     else
-      std::cout << "False";
+        std::cout << "False";
     std::cout << "\n";
     g(id(a), 0);
     if (a->at(0))
-      std::cout << "True";
+        std::cout << "True";
     else
-      std::cout << "False";
+        std::cout << "False";
     std::cout << "\n";
 }
 

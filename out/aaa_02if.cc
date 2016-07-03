@@ -3,16 +3,16 @@
 
 bool f(int i) {
     if (i == 0)
-      return true;
+        return true;
     return false;
 }
 
 
 int main() {
     if (f(4))
-      std::cout << "true <-\n ->\n";
+        std::cout << "true <-\n ->\n";
     else
-      std::cout << "false <-\n ->\n";
+        std::cout << "false <-\n ->\n";
     std::cout << "small test end\n";
 }
 

@@ -22,33 +22,33 @@ int main() {
     std::cin >> len;
     std::cout << len << "=len\n";
     std::vector<int> *tab = new std::vector<int>( len );
-    for (int a = 0; a < len; a++)
+    for (int a = 0; a < len; a += 1)
     {
         std::cin >> tab->at(a);
     }
-    for (int i = 0; i < len; i++)
-      std::cout << i << "=>" << tab->at(i) << " ";
+    for (int i = 0; i < len; i += 1)
+        std::cout << i << "=>" << tab->at(i) << " ";
     std::cout << "\n";
     std::vector<int> *tab2 = new std::vector<int>( len );
-    for (int b = 0; b < len; b++)
+    for (int b = 0; b < len; b += 1)
     {
         std::cin >> tab2->at(b);
     }
-    for (int i_ = 0; i_ < len; i_++)
-      std::cout << i_ << "==>" << tab2->at(i_) << " ";
+    for (int i_ = 0; i_ < len; i_ += 1)
+        std::cout << i_ << "==>" << tab2->at(i_) << " ";
     std::cin >> strlen;
     std::cout << strlen << "=strlen\n";
     std::vector<char> * tab4 = getline();
-    for (int i3 = 0; i3 < strlen; i3++)
+    for (int i3 = 0; i3 < strlen; i3 += 1)
     {
         char tmpc = tab4->at(i3);
         int c = (int)(tmpc);
         std::cout << tmpc << ":" << c << " ";
         if (tmpc != ' ')
-          c = (c - (int)('a') + 13) % 26 + (int)('a');
+            c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4->at(i3) = (char)(c);
     }
-    for (int j = 0; j < strlen; j++)
-      std::cout << tab4->at(j);
+    for (int j = 0; j < strlen; j += 1)
+        std::cout << tab4->at(j);
 }
 

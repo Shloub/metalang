@@ -21,7 +21,7 @@ int main() {
                 sqrtia = (int)sqrt(a);
                 found = true;
             }
-            b++;
+            b += 1;
         }
         if (!found)
         {

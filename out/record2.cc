@@ -9,15 +9,15 @@ struct toto {
 
 toto * mktoto(int v1) {
     toto * t = new toto();
-    t->foo=v1;
-    t->bar=0;
-    t->blah=0;
+        t->foo = v1;
+        t->bar = 0;
+        t->blah = 0;;
     return t;
 }
 
 
 int result(toto * t) {
-    t->blah++;
+    t->blah += 1;
     return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
 
