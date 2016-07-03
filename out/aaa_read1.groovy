@@ -4,6 +4,6 @@ import java.util.*
 
 @Field Scanner scanner = new Scanner(System.in)
 char[] str = scanner.nextLine().toCharArray()
-for (int i = 0; i <= 11; i += 1)
+for (int i = 0; i < 12; i += 1)
     print(str[i])
 

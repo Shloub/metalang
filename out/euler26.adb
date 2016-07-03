@@ -49,7 +49,7 @@ end;
   a : Integer;
 begin
   t := new e (0..1000);
-  for j in integer range 0..1000 - 1 loop
+  for j in integer range 0..999 loop
     t(j) := 0;
   end loop;
   m := 0;

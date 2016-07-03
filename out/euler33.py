@@ -14,9 +14,9 @@ def pgcd(a, b):
 
 top = 1
 bottom = 1
-for i in range(1, 1 + 9):
-    for j in range(1, 1 + 9):
-        for k in range(1, 1 + 9):
+for i in range(1, 10):
+    for j in range(1, 10):
+        for k in range(1, 10):
             if i != j and j != k:
                 a = i * 10 + j
                 b = j * 10 + k

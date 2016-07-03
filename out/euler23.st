@@ -52,7 +52,7 @@ Object subclass: euler23 [
   
    sumdiv: nprimes primes: primes n: n [|t max0|
     t := Array new: (n + 1).
-    (0 to: (n + 1 - 1)) do: [:i| t at: (i + 1) put: 0.].
+    (0 to: n) do: [:i| t at: (i + 1) put: 0.].
     max0 := (self fillPrimesFactors: t a: n primes: primes nprimes: nprimes).
     ^ (self sumdivaux: t n: max0 i: 0)
   ]
@@ -73,9 +73,9 @@ Object subclass: euler23 [
     n := 100.
     " 28124 ça prend trop de temps mais on arrive a passer le test "
     abondant := Array new: (n + 1).
-    (0 to: (n + 1 - 1)) do: [:p| abondant at: (p + 1) put: false.].
+    (0 to: n) do: [:p| abondant at: (p + 1) put: false.].
     summable := Array new: (n + 1).
-    (0 to: (n + 1 - 1)) do: [:q| summable at: (q + 1) put: false.].
+    (0 to: n) do: [:q| summable at: (q + 1) put: false.].
     sum := 0.
     (2 to: n) do: [:r|
       other := (self sumdiv: nprimes primes: primes n: r) - r.

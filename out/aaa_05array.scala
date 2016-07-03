@@ -14,7 +14,7 @@ object aaa_05array
   {
     var j: Int = 0;
     var a :Array[Boolean] = new Array[Boolean](5);
-    for (i <- 0 to 5 - 1)
+    for (i <- 0 to 4)
     {
         printf("%d", i);
         j = j + i;

@@ -26,7 +26,7 @@ Module euler40
   
   Sub Main()
     Dim t(9) As Integer
-    For i As Integer = 0 To 9 - 1
+    For i As Integer = 0 To 8
         t(i) = exp0(10, i) - exp0(10, i - 1)
     Next
     For i2 As Integer = 1 To 8

@@ -56,7 +56,7 @@ def pathfind_aux(cache, tab, len, pos):
 
 def pathfind(tab, len):
     cache = [None] * len
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
         cache[i] = -1
     return pathfind_aux(cache, tab, len, 0)
 
@@ -64,7 +64,7 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, 1 + len - 1):
+for i in range(0, len):
     tmp = 0
     tmp = readint()
     stdinsep()

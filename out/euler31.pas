@@ -40,7 +40,7 @@ var
   t : a;
 begin
   SetLength(t, 8);
-  for i := 0 to  8 - 1 do
+  for i := 0 to  7 do
   begin
     t[i] := 0;
   end;
@@ -53,10 +53,10 @@ begin
   t[6] := 100;
   t[7] := 200;
   SetLength(cache, 201);
-  for j := 0 to  201 - 1 do
+  for j := 0 to  200 do
   begin
     SetLength(o, 8);
-    for k := 0 to  8 - 1 do
+    for k := 0 to  7 do
     begin
       o[k] := 0;
     end;

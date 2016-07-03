@@ -17,7 +17,7 @@ Ce test permet de vérifier si les différents backends pour les langages implé
 read int, read char et skip
 */
 
-int main(void) {
+int main() {
     int strlen, len;
     std::cin >> len;
     std::cout << len << "=len\n";
@@ -50,6 +50,5 @@ int main(void) {
     }
     for (int j = 0; j < strlen; j += 1)
         std::cout << tab4[j];
-    return 0;
 }
 

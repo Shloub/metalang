@@ -4,7 +4,7 @@ function trunc(x)
 end
 function primesfactors( n )
   local tab = {}
-  for i = 0,n + 1 - 1 do
+  for i = 0,n do
     tab[i + 1] = 0;
   end
   local d = 2
@@ -25,7 +25,7 @@ end
 
 local lim = 20
 local o = {}
-for m = 0,lim + 1 - 1 do
+for m = 0,lim do
   o[m + 1] = 0;
 end
 for i = 1,lim do

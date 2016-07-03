@@ -3,8 +3,8 @@
 #	a + b + c = 1000 && a * a + b * b = c * c
 #	
 
-for a in range(1, 1 + 1000):
-    for b in range(a + 1, 1 + 1000):
+for a in range(1, 1001):
+    for b in range(a + 1, 1001):
         c = 1000 - a - b
         a2b2 = a * a + b * b
         cc = c * c

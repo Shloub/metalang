@@ -26,7 +26,7 @@
               (progn
                 (let ((p (+ a b c)))
                   (if
-                    (<= p 1000)
+                    (< p 1001)
                     (setf (aref t0 p) (+ (aref t0 p) 1)))
                 )))
           )))))

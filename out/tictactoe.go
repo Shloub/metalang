@@ -35,8 +35,8 @@ type move struct {
 /* On affiche l'état */
 func print_state(g * gamestate) {
   fmt.Printf("\n|")
-  for y := 0; y <= 2; y += 1 {
-      for x := 0; x <= 2; x += 1 {
+  for y := 0; y < 3; y += 1 {
+      for x := 0; x < 3; x += 1 {
           if (*g).cases[x][y] == 0 {
               fmt.Printf(" ")
           } else if (*g).cases[x][y] == 1 {
@@ -57,10 +57,10 @@ func print_state(g * gamestate) {
 func eval0(g * gamestate) {
   win := 0
   freecase := 0
-  for y := 0; y <= 2; y += 1 {
+  for y := 0; y < 3; y += 1 {
       col := -1
       lin := -1
-      for x := 0; x <= 2; x += 1 {
+      for x := 0; x < 3; x += 1 {
           if (*g).cases[x][y] == 0 {
               freecase += 1
           }
@@ -83,7 +83,7 @@ func eval0(g * gamestate) {
           win = lin
       }
   }
-  for x := 1; x <= 2; x += 1 {
+  for x := 1; x < 3; x += 1 {
       if (*g).cases[0][0] == x && (*g).cases[1][1] == x && (*g).cases[2][2] == x {
           win = x
       }
@@ -145,8 +145,8 @@ func minmax(g * gamestate) int{
   if !(*g).firstToPlay {
       maxNote = 10000
   }
-  for x := 0; x <= 2; x += 1 {
-      for y := 0; y <= 2; y += 1 {
+  for x := 0; x < 3; x += 1 {
+      for y := 0; y < 3; y += 1 {
           if can_move_xy(x, y, g) {
               apply_move_xy(x, y, g)
               currentNote := minmax(g)
@@ -169,8 +169,8 @@ func play(g * gamestate) * move{
       (*minMove).x=0
       (*minMove).y=0
   minNote := 10000
-  for x := 0; x <= 2; x += 1 {
-      for y := 0; y <= 2; y += 1 {
+  for x := 0; x < 3; x += 1 {
+      for y := 0; y < 3; y += 1 {
           if can_move_xy(x, y, g) {
               apply_move_xy(x, y, g)
               currentNote := minmax(g)
@@ -220,7 +220,7 @@ func read_move() * move{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  for i := 0; i <= 1; i += 1 {
+  for i := 0; i < 2; i += 1 {
       var state * gamestate = init0()
       var c * move = new (move)
           (*c).x=1

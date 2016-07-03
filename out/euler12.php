@@ -44,7 +44,7 @@ function find($ndiv2) {
             $primes[$l] = $k;
             $l += 1;
         }
-    for ($n = 1; $n <= 10000; $n += 1)
+    for ($n = 1; $n < 10001; $n += 1)
     {
         $primesFactors = array_fill(0, $n + 2, 0);
         $max0 = max(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));

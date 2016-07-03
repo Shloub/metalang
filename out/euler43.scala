@@ -34,7 +34,7 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 */
     var allowed :Array[Boolean] = new Array[Boolean](10);
-    for (i <- 0 to 10 - 1)
+    for (i <- 0 to 9)
         allowed(i) = true;
     for (i6 <- 0 to 1)
     {

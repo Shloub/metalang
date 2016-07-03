@@ -27,7 +27,7 @@ public class euler26
         t[j] = 0;
     int m = 0;
     int mi = 0;
-    for (int i = 1; i <= 1000; i += 1)
+    for (int i = 1; i < 1001; i += 1)
     {
         int p = periode(t, 0, 1, i);
         if (p > m)

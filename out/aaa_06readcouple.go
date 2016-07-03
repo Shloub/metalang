@@ -15,7 +15,7 @@ func skip() {
 }
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  for i := 1; i <= 3; i += 1 {
+  for i := 1; i < 4; i += 1 {
       var b int
       var a int
       fmt.Fscanf(reader, "%d", &a)
@@ -29,7 +29,7 @@ func main() {
       fmt.Fscanf(reader, "%d", &l[c])
       skip()
   }
-  for j := 0; j <= 9; j += 1 {
+  for j := 0; j < 10; j += 1 {
       fmt.Printf("%d\n", l[j])
   }
 }

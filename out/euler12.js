@@ -46,10 +46,10 @@ function find(ndiv2){
             primes[l] = k;
             l += 1;
         }
-    for (var n = 1; n <= 10000; n += 1)
+    for (var n = 1; n < 10001; n += 1)
     {
         var primesFactors = new Array(n + 2);
-        for (var m = 0; m < n + 2; m += 1)
+        for (var m = 0; m <= n + 1; m += 1)
             primesFactors[m] = 0;
         var max0 = Math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
         primesFactors[2] -= 1;

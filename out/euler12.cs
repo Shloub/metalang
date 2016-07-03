@@ -52,10 +52,10 @@ public class euler12
             primes[l] = k;
             l += 1;
         }
-    for (int n = 1; n <= 10000; n += 1)
+    for (int n = 1; n < 10001; n += 1)
     {
         int[] primesFactors = new int[n + 2];
-        for (int m = 0; m < n + 2; m += 1)
+        for (int m = 0; m <= n + 1; m += 1)
             primesFactors[m] = 0;
         int max0 = Math.Max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
         primesFactors[2] -= 1;

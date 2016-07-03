@@ -95,7 +95,7 @@ begin
   len := read_int_();
   skip();
   SetLength(tab2, len - 1);
-  for b := 0 to  len - 1 - 1 do
+  for b := 0 to  len - 2 do
   begin
     SetLength(c, len);
     for d := 0 to  len - 1 do

@@ -9,7 +9,7 @@ int main(void) {
         printf("a = %d b = %d\n", a, b);
     }
     int *l = calloc( 10 , sizeof(int));
-    for (c = 0; c < 10; c++)
+    for (c = 0; c <= 9; c++)
     {
         scanf("%d ", &l[c]);
     }

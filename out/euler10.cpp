@@ -21,7 +21,7 @@ int eratostene(std::vector<int>& t, int max0) {
 }
 
 
-int main(void) {
+int main() {
     int n = 100000;
     /* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages */
     std::vector<int> t( n );
@@ -29,6 +29,5 @@ int main(void) {
         t[i] = i;
     t[1] = 0;
     std::cout << eratostene(t, n) << "\n";
-    return 0;
 }
 

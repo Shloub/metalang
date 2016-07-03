@@ -14,7 +14,7 @@ function h(i){
 }
 
 var j = 0;
-for (var k = 0; k <= 10; k += 1)
+for (var k = 0; k < 11; k += 1)
 {
     j += k;
     util.print(j, "\n");

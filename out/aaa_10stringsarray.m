@@ -30,7 +30,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int j, i;
   char* *tab = calloc( 2 , sizeof(char*));
-  for (i = 0; i < 2; i++)
+  for (i = 0; i <= 1; i++)
     tab[i] = idstring("chaine de test");
   for (j = 0; j <= 1; j++)
     printstring(idstring(tab[j]));

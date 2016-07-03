@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main(void) {
+int main() {
     std::vector<int> f( 10, 1 );
     for (int i = 1; i <= 9; i += 1)
     {
@@ -40,6 +40,5 @@ int main(void) {
                             }
                         }
     std::cout << "\n" << out0 << "\n";
-    return 0;
 }
 

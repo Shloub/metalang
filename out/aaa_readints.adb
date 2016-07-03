@@ -53,7 +53,7 @@ begin
   Get(len);
   SkipSpaces;
   tab2 := new f (0..len - 1);
-  for b in integer range 0..len - 1 - 1 loop
+  for b in integer range 0..len - 2 loop
     c := new e (0..len);
     for d in integer range 0..len - 1 loop
       Get(c(d));

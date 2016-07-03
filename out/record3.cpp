@@ -27,13 +27,12 @@ int result(std::vector<toto>& t, int len) {
 }
 
 
-int main(void) {
+int main() {
     std::vector<toto> t( 4 );
-    for (int i = 0; i < 4; i += 1)
+    for (int i = 0; i <= 3; i += 1)
         t[i] = mktoto(i);
     std::cin >> t[0].bar >> t[1].blah >> std::noskipws;
     int titi = result(t, 4);
     std::cout << titi << t[2].blah;
-    return 0;
 }
 

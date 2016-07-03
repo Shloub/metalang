@@ -21,7 +21,7 @@ Module euler26
   
   Sub Main()
     Dim t(1000) As Integer
-    For j As Integer = 0 To 1000 - 1
+    For j As Integer = 0 To 999
         t(j) = 0
     Next
     Dim m As Integer = 0

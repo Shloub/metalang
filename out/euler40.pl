@@ -34,7 +34,7 @@ sub e{
 }
 
 my $t = [];
-foreach my $i (0 .. 9 - 1)
+foreach my $i (0 .. 8)
 {
     $t->[$i] = exp0(10, $i) - exp0(10, $i - 1);
 }

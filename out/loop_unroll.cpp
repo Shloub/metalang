@@ -5,7 +5,7 @@ Ce test permet de vérifier le comportement des macros
 Il effectue du loop unrolling
 */
 
-int main(void) {
+int main() {
     int j = 0;
     j = 0;
     std::cout << j << "\n";
@@ -17,6 +17,5 @@ int main(void) {
     std::cout << j << "\n";
     j = 4;
     std::cout << j << "\n";
-    return 0;
 }
 

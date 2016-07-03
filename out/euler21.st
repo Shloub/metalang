@@ -52,7 +52,7 @@ Object subclass: euler21 [
   
    sumdiv: nprimes primes: primes n: n [|t max0|
     t := Array new: (n + 1).
-    (0 to: (n + 1 - 1)) do: [:i| t at: (i + 1) put: 0.].
+    (0 to: n) do: [:i| t at: (i + 1) put: 0.].
     max0 := (self fillPrimesFactors: t a: n primes: primes nprimes: nprimes).
     ^ (self sumdivaux: t n: max0 i: 0)
   ]

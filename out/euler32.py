@@ -39,24 +39,24 @@ def okdigits(ok, n):
 
 count = 0
 allowed = [None] * 10
-for i in range(0, 1 + 10 - 1):
+for i in range(0, 10):
     allowed[i] = i != 0
 counted = [False] * 100000
-for e in range(1, 1 + 9):
+for e in range(1, 10):
     allowed[e] = False
-    for b in range(1, 1 + 9):
+    for b in range(1, 10):
         if allowed[b]:
             allowed[b] = False
             be = mod(b * e, 10)
             if allowed[be]:
                 allowed[be] = False
-                for a in range(1, 1 + 9):
+                for a in range(1, 10):
                     if allowed[a]:
                         allowed[a] = False
-                        for c in range(1, 1 + 9):
+                        for c in range(1, 10):
                             if allowed[c]:
                                 allowed[c] = False
-                                for d in range(1, 1 + 9):
+                                for d in range(1, 10):
                                     if allowed[d]:
                                         allowed[d] = False
                                         # 2 * 3 digits 

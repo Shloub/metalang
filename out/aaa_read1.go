@@ -20,7 +20,7 @@ func main() {
       fmt.Fscanf(reader, "%c", &str[a])
   }
   skip()
-  for i := 0; i <= 11; i += 1 {
+  for i := 0; i < 12; i += 1 {
       fmt.Printf("%c", str[i])
   }
 }

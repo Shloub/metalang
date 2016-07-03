@@ -9,7 +9,7 @@ sub remainder {
 sub primesfactors{
   my($n) = @_;
   my $tab = [];
-  foreach my $i (0 .. $n + 1 - 1)
+  foreach my $i (0 .. $n)
   {
       $tab->[$i] = 0;
   }
@@ -32,7 +32,7 @@ sub primesfactors{
 
 my $lim = 20;
 my $o = [];
-foreach my $m (0 .. $lim + 1 - 1)
+foreach my $m (0 .. $lim)
 {
     $o->[$m] = 0;
 }

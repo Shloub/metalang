@@ -205,7 +205,7 @@ D'ou le nom de la fonction. */
     }
     $chiffres[$a["bigint_len"] + $b["bigint_len"]] = intval($chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] / 10);
     $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] = $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] % 10;
-    for ($l = 0; $l <= 2; $l += 1)
+    for ($l = 0; $l < 3; $l += 1)
         if ($len != 0 && $chiffres[$len - 1] == 0)
             $len -= 1;
     $m = array(
@@ -341,7 +341,7 @@ function &bigint_exp_10chiffres(&$a, $b) {
 
 function euler48() {
     $sum = bigint_of_int(0);
-    for ($i = 1; $i <= 100; $i += 1)
+    for ($i = 1; $i < 101; $i += 1)
     {
         /* 1000 normalement */
         $ib = bigint_of_int($i);
@@ -420,7 +420,7 @@ function euler29() {
 
 echo euler29(), "\n";
 $sum = read_bigint(50);
-for ($i = 2; $i <= 100; $i += 1)
+for ($i = 2; $i < 101; $i += 1)
 {
     scantrim();
     $tmp = read_bigint(50);

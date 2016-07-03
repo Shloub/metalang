@@ -66,8 +66,7 @@ int find(int ndiv2) {
 }
 
 
-int main(void) {
+int main() {
     std::cout << find(500) << "\n";
-    return 0;
 }
 

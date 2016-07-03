@@ -43,7 +43,7 @@ function findHexa2(n, a, b){
         return findHexa2(n, a, c);
 }
 
-for (var n = 285; n <= 55385; n += 1)
+for (var n = 285; n < 55386; n += 1)
 {
     var t = triangle(n);
     if (findPenta2(t, ~~(n / 5), n) && findHexa2(t, ~~(n / 5), ~~(n / 2) + 10))

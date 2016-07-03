@@ -2,11 +2,11 @@
 #include <vector>
 #include <algorithm>
 
-int main(void) {
+int main() {
     char e, c;
     int i = 1;
     std::vector<int> last( 5 );
-    for (int j = 0; j < 5; j += 1)
+    for (int j = 0; j <= 4; j += 1)
     {
         std::cin >> c >> std::noskipws;
         int d = (int)(c) - (int)('0');
@@ -37,6 +37,5 @@ int main(void) {
         max0 = std::max(max0, i);
     }
     std::cout << max0 << "\n";
-    return 0;
 }
 

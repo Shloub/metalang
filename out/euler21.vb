@@ -57,7 +57,7 @@ Module euler21
   
   Function sumdiv(ByVal nprimes as Integer, ByRef primes as Integer(), ByVal n as Integer) As Integer
     Dim t(n + 1) As Integer
-    For i As Integer = 0 To n + 1 - 1
+    For i As Integer = 0 To n
         t(i) = 0
     Next
     Dim max0 As Integer = fillPrimesFactors(t, n, primes, nprimes)

@@ -26,7 +26,7 @@ begin
   input := ' ';
   current_pos := 500;
   mem := new a (0..1000);
-  for i in integer range 0..1000 - 1 loop
+  for i in integer range 0..999 loop
     mem(i) := 0;
   end loop;
   mem(current_pos) := mem(current_pos) + 1;

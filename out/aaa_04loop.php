@@ -14,7 +14,7 @@ function h($i) {
 }
 
 $j = 0;
-for ($k = 0; $k <= 10; $k += 1)
+for ($k = 0; $k < 11; $k += 1)
 {
     $j += $k;
     echo $j, "\n";

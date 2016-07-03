@@ -17,8 +17,8 @@ Object subclass: devine [
     ]
   ]
    devine0: nombre tab: tab len: len [|min0 max0|
-    min0 := tab at: (0 + 1).
-    max0 := tab at: (1 + 1).
+    min0 := tab at: 1.
+    max0 := tab at: 2.
     (2 to: (len - 1)) do: [:i|
       (((tab at: (i + 1)) > max0) or: [(tab at: (i + 1)) < min0])
       ifTrue:[^ false].

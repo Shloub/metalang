@@ -62,7 +62,7 @@ object euler23
   
   def sumdiv(nprimes : Int, primes : Array[Int], n : Int): Int = {
     var t :Array[Int] = new Array[Int](n + 1);
-    for (i <- 0 to n + 1 - 1)
+    for (i <- 0 to n)
         t(i) = 0;
     var max0: Int = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
@@ -89,10 +89,10 @@ object euler23
     var n: Int = 100;
     /* 28124 ça prend trop de temps mais on arrive a passer le test */
     var abondant :Array[Boolean] = new Array[Boolean](n + 1);
-    for (p <- 0 to n + 1 - 1)
+    for (p <- 0 to n)
         abondant(p) = false;
     var summable :Array[Boolean] = new Array[Boolean](n + 1);
-    for (q <- 0 to n + 1 - 1)
+    for (q <- 0 to n)
         summable(q) = false;
     var sum: Int = 0;
     for (r <- 2 to n)

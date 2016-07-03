@@ -6,7 +6,7 @@ bool palindrome2(std::vector<int> * pow2, int n) {
     for (int i = 0; i < 20; i += 1)
         t->at(i) = n / pow2->at(i) % 2 == 1;
     int nnum = 0;
-    for (int j = 1; j <= 19; j += 1)
+    for (int j = 1; j < 20; j += 1)
         if (t->at(j))
             nnum = j;
     for (int k = 0; k <= nnum / 2; k += 1)
@@ -25,7 +25,7 @@ int main() {
         pow2->at(i) = p / 2;
     }
     int sum = 0;
-    for (int d = 1; d <= 9; d += 1)
+    for (int d = 1; d < 10; d += 1)
     {
         if (palindrome2(pow2, d))
         {
@@ -38,12 +38,12 @@ int main() {
             sum += d * 10 + d;
         }
     }
-    for (int a0 = 0; a0 <= 4; a0 += 1)
+    for (int a0 = 0; a0 < 5; a0 += 1)
     {
         int a = a0 * 2 + 1;
-        for (int b = 0; b <= 9; b += 1)
+        for (int b = 0; b < 10; b += 1)
         {
-            for (int c = 0; c <= 9; c += 1)
+            for (int c = 0; c < 10; c += 1)
             {
                 int num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a;
                 if (palindrome2(pow2, num0))

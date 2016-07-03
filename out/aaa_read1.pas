@@ -50,7 +50,7 @@ var
   str : b;
 begin
   SetLength(str, 12);
-  for a := 0 to  12 - 1 do
+  for a := 0 to  11 do
   begin
     str[a] := read_char_();
   end;

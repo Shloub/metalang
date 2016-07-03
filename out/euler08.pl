@@ -15,7 +15,7 @@ sub remainder {
 
 my $i = 1;
 my $last = [];
-foreach my $j (0 .. 5 - 1)
+foreach my $j (0 .. 4)
 {
     my $c = readchar();
     my $d = ord($c) - ord("0");

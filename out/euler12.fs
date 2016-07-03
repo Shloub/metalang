@@ -56,7 +56,7 @@
    1 + REPEAT 2DROP
   10000 1 BEGIN 2dup >= WHILE DUP { n }
     HERE n 2 + cells allot { primesFactors }
-    n 2 + 1 - 0 BEGIN 2dup >= WHILE DUP { m }
+    n 1 + 0 BEGIN 2dup >= WHILE DUP { m }
       0 primesFactors  m cells +  !
      1 + REPEAT 2DROP
     primesFactors n primes nprimes fillPrimesFactors primesFactors n 1 + primes nprimes fillPrimesFactors max

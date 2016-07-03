@@ -5,7 +5,7 @@ Module euler34
   
   Sub Main()
     Dim f(10) As Integer
-    For j As Integer = 0 To 10 - 1
+    For j As Integer = 0 To 9
         f(j) = 1
     Next
     For i As Integer = 1 To 9

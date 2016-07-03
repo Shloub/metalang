@@ -6,7 +6,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int d;
   int *t = calloc( 2 , sizeof(int));
-  for (d = 0; d < 2; d++)
+  for (d = 0; d <= 1; d++)
   {
       scanf("%d ", &t[d]);
   }

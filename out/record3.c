@@ -32,7 +32,7 @@ int result(struct toto ** t, int len) {
 int main(void) {
     int i;
     struct toto * *t = calloc( 4 , sizeof(struct toto *));
-    for (i = 0; i < 4; i++)
+    for (i = 0; i <= 3; i++)
       t[i] = mktoto(i);
     scanf("%d %d", &t[0]->bar, &t[1]->blah);
     int titi = result(t, 4);

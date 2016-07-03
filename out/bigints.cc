@@ -198,7 +198,7 @@ D'ou le nom de la fonction. */
     }
     chiffres->at(a->bigint_len + b->bigint_len) = chiffres->at(a->bigint_len + b->bigint_len - 1) / 10;
     chiffres->at(a->bigint_len + b->bigint_len - 1) = chiffres->at(a->bigint_len + b->bigint_len - 1) % 10;
-    for (int l = 0; l <= 2; l += 1)
+    for (int l = 0; l < 3; l += 1)
         if (len != 0 && chiffres->at(len - 1) == 0)
             len -= 1;
     bigint * m = new bigint();
@@ -346,7 +346,7 @@ bigint * bigint_exp_10chiffres(bigint * a, int b) {
 
 void euler48() {
     bigint * sum = bigint_of_int(0);
-    for (int i = 1; i <= 100; i += 1)
+    for (int i = 1; i < 101; i += 1)
     {
         /* 1000 normalement */
         bigint * ib = bigint_of_int(i);
@@ -431,7 +431,7 @@ int euler29() {
 int main() {
     std::cout << euler29() << "\n";
     bigint * sum = read_bigint(50);
-    for (int i = 2; i <= 100; i += 1)
+    for (int i = 2; i < 101; i += 1)
     {
         std::cin >> std::skipws;
         bigint * tmp = read_bigint(50);

@@ -50,10 +50,10 @@ int main() {
         allowed->at(i) = i != 0;
     std::vector<bool> *counted = new std::vector<bool>( 100000 );
     std::fill(counted->begin(), counted->end(), false);
-    for (int e = 1; e <= 9; e += 1)
+    for (int e = 1; e < 10; e += 1)
     {
         allowed->at(e) = false;
-        for (int b = 1; b <= 9; b += 1)
+        for (int b = 1; b < 10; b += 1)
             if (allowed->at(b))
             {
                 allowed->at(b) = false;
@@ -61,15 +61,15 @@ int main() {
                 if (allowed->at(be))
                 {
                     allowed->at(be) = false;
-                    for (int a = 1; a <= 9; a += 1)
+                    for (int a = 1; a < 10; a += 1)
                         if (allowed->at(a))
                         {
                             allowed->at(a) = false;
-                            for (int c = 1; c <= 9; c += 1)
+                            for (int c = 1; c < 10; c += 1)
                                 if (allowed->at(c))
                                 {
                                     allowed->at(c) = false;
-                                    for (int d = 1; d <= 9; d += 1)
+                                    for (int d = 1; d < 10; d += 1)
                                         if (allowed->at(d))
                                         {
                                             allowed->at(d) = false;

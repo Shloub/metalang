@@ -92,7 +92,7 @@ public class euler21
         }
     System.out.printf("%d == %d\n", l, nprimes);
     int sum = 0;
-    for (int n = 2; n <= 1000; n += 1)
+    for (int n = 2; n < 1001; n += 1)
     {
         int other = sumdiv(nprimes, primes, n) - n;
         if (other > n)

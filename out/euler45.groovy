@@ -51,7 +51,7 @@ boolean findHexa2(int n, int a, int b)
 
 
 
-for (int n = 285; n <= 55385; n += 1)
+for (int n = 285; n < 55386; n += 1)
 {
     int t = triangle(n)
     if (findPenta2(t, n.intdiv(5), n) && findHexa2(t, n.intdiv(5), n.intdiv(2) + 10))

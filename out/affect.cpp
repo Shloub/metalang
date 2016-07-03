@@ -53,11 +53,10 @@ int result(toto& t_, toto& t2_) {
 }
 
 
-int main(void) {
+int main() {
     toto t = mktoto(4);
     toto t2 = mktoto(5);
     std::cin >> t.bar >> t.blah >> t2.bar >> t2.blah >> std::noskipws;
     std::cout << result(t, t2) << t.blah;
-    return 0;
 }
 

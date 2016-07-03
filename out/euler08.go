@@ -25,7 +25,7 @@ func main() {
   max0 := i
   index := 0
   nskipdiv := 0
-  for k := 1; k <= 995; k += 1 {
+  for k := 1; k < 996; k += 1 {
       var e byte
       fmt.Fscanf(reader, "%c", &e)
       f := (int)(e) - (int)('0')

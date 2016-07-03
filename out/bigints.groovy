@@ -197,7 +197,7 @@ D'ou le nom de la fonction. */
   }
   chiffres[a.bigint_len + b.bigint_len] = chiffres[a.bigint_len + b.bigint_len - 1].intdiv(10)
   chiffres[a.bigint_len + b.bigint_len - 1] = chiffres[a.bigint_len + b.bigint_len - 1] % 10
-  for (int l = 0; l <= 2; l += 1)
+  for (int l = 0; l < 3; l += 1)
       if (len != 0 && chiffres[len - 1] == 0)
           len -= 1
   Bigint m = new Bigint()
@@ -346,7 +346,7 @@ Bigint bigint_exp_10chiffres(Bigint a, int b)
 void euler48()
 {
   Bigint sum = bigint_of_int(0)
-  for (int i = 1; i <= 100; i += 1)
+  for (int i = 1; i < 101; i += 1)
   {
       /* 1000 normalement */
       Bigint ib = bigint_of_int(i)
@@ -432,7 +432,7 @@ int euler29()
 @Field Scanner scanner = new Scanner(System.in)
 System.out.printf("%d\n", euler29())
 Bigint sum = read_bigint(50)
-for (int i = 2; i <= 100; i += 1)
+for (int i = 2; i < 101; i += 1)
 {
     scanner.findWithinHorizon("[\n\r ]*", 1)
     Bigint tmp = read_bigint(50)

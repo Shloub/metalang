@@ -30,7 +30,7 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 "
     allowed := Array new: 10.
-    (0 to: (10 - 1)) do: [:i| allowed at: (i + 1) put: true.].
+    (0 to: 9) do: [:i| allowed at: (i + 1) put: true.].
     (0 to: 1) do: [:i6|
       d6 := i6 * 5.
       (allowed at: (d6 + 1))

@@ -44,7 +44,7 @@ func score() int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  for i := 1; i <= 55; i += 1 {
+  for i := 1; i < 56; i += 1 {
       if is_triangular(i) {
           fmt.Printf("%d ", i)
       }

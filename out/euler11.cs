@@ -82,13 +82,13 @@ public class euler11
     int[][] m = new int[20][];
     for (int o = 0; o < 20; o += 1)
         m[o] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
-    for (int j = 0; j <= 7; j += 1)
+    for (int j = 0; j < 8; j += 1)
     {
         tuple_int_int p = directions[j];
         int dx = p.tuple_int_int_field_0;
         int dy = p.tuple_int_int_field_1;
-        for (int x = 0; x <= 19; x += 1)
-            for (int y = 0; y <= 19; y += 1)
+        for (int x = 0; x < 20; x += 1)
+            for (int y = 0; y < 20; y += 1)
                 max0 = Math.Max(max0, find(4, m, x, y, dx, dy));
     }
     Console.Write(max0 + "\n");

@@ -26,7 +26,7 @@ sub periode{
 }
 
 my $t = [];
-foreach my $j (0 .. 1000 - 1)
+foreach my $j (0 .. 999)
 {
     $t->[$j] = 0;
 }

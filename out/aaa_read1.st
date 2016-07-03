@@ -16,7 +16,7 @@ Object subclass: aaa_read1 [
   ]
   main [
     |str|str := Array new: 12.
-    (0 to: (12 - 1)) do: [:a| str at: (a + 1) put: self read_char.].
+    (0 to: 11) do: [:a| str at: (a + 1) put: self read_char.].
     self skip.
     (0 to: 11) do: [:i| (str at: (i + 1)) display.].
     ]

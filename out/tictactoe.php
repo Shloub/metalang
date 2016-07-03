@@ -29,9 +29,9 @@ Tictactoe : un tictactoe avec une IA
 /* On affiche l'état */
 function print_state(&$g) {
     echo "\n|";
-    for ($y = 0; $y <= 2; $y += 1)
+    for ($y = 0; $y < 3; $y += 1)
     {
-        for ($x = 0; $x <= 2; $x += 1)
+        for ($x = 0; $x < 3; $x += 1)
         {
             if ($g["cases"][$x][$y] == 0)
                 echo " ";
@@ -51,11 +51,11 @@ function print_state(&$g) {
 function eval0(&$g) {
     $win = 0;
     $freecase = 0;
-    for ($y = 0; $y <= 2; $y += 1)
+    for ($y = 0; $y < 3; $y += 1)
     {
         $col = -1;
         $lin = -1;
-        for ($x = 0; $x <= 2; $x += 1)
+        for ($x = 0; $x < 3; $x += 1)
         {
             if ($g["cases"][$x][$y] == 0)
                 $freecase += 1;
@@ -75,7 +75,7 @@ function eval0(&$g) {
         else if ($lin >= 0)
             $win = $lin;
     }
-    for ($x = 1; $x <= 2; $x += 1)
+    for ($x = 1; $x < 3; $x += 1)
     {
         if ($g["cases"][0][0] == $x && $g["cases"][1][1] == $x && $g["cases"][2][2] == $x)
             $win = $x;
@@ -132,8 +132,8 @@ function minmax(&$g) {
     $maxNote = -10000;
     if (!$g["firstToPlay"])
         $maxNote = 10000;
-    for ($x = 0; $x <= 2; $x += 1)
-        for ($y = 0; $y <= 2; $y += 1)
+    for ($x = 0; $x < 3; $x += 1)
+        for ($y = 0; $y < 3; $y += 1)
             if (can_move_xy($x, $y, $g))
             {
                 apply_move_xy($x, $y, $g);
@@ -154,8 +154,8 @@ function &play(&$g) {
         "x" => 0,
         "y" => 0);
     $minNote = 10000;
-    for ($x = 0; $x <= 2; $x += 1)
-        for ($y = 0; $y <= 2; $y += 1)
+    for ($x = 0; $x < 3; $x += 1)
+        for ($y = 0; $y < 3; $y += 1)
             if (can_move_xy($x, $y, $g))
             {
                 apply_move_xy($x, $y, $g);
@@ -199,7 +199,7 @@ function &read_move() {
     return $b;
 }
 
-for ($i = 0; $i <= 1; $i += 1)
+for ($i = 0; $i < 2; $i += 1)
 {
     $state = init0();
     $c = array(

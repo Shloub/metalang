@@ -11,7 +11,7 @@ var
   t : f;
 begin
   SetLength(t, 20);
-  for i := 0 to  20 - 1 do
+  for i := 0 to  19 do
   begin
     t[i] := n Div pow2[i] Mod 2 = 1;
   end;
@@ -53,7 +53,7 @@ var
 begin
   p := 1;
   SetLength(pow2, 20);
-  for i := 0 to  20 - 1 do
+  for i := 0 to  19 do
   begin
     p := p * 2;
     pow2[i] := p Div 2;

@@ -17,7 +17,7 @@ sub g{
 
 my $j = 0;
 my $a = [];
-foreach my $i (0 .. 5 - 1)
+foreach my $i (0 .. 4)
 {
     print $i;
     $j = $j + $i;

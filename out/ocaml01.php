@@ -1,6 +1,6 @@
 <?php
 function foo() {
-    for ($i = 0; $i <= 10; $i += 1)
+    for ($i = 0; $i < 11; $i += 1)
     {
         
     }
@@ -8,7 +8,7 @@ function foo() {
 }
 
 function bar() {
-    for ($i = 0; $i <= 10; $i += 1)
+    for ($i = 0; $i < 11; $i += 1)
         $a = 0;
     return 0;
 }

@@ -21,7 +21,7 @@ for (var j = 0; j < 5; j += 1)
 var max0 = i;
 var index = 0;
 var nskipdiv = 0;
-for (var k = 1; k <= 995; k += 1)
+for (var k = 1; k < 996; k += 1)
 {
     var e = read_char_();
     var f = e.charCodeAt(0) - '0'.charCodeAt(0);

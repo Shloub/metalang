@@ -57,10 +57,10 @@ def result(t_, t2_):
     t["blah"] += 1
     len = 1
     cache0 = [None] * len
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
         cache0[i] = -i
     cache1 = [None] * len
-    for j in range(0, 1 + len - 1):
+    for j in range(0, len):
         cache1[j] = j
     cache2 = cache0
     cache0 = cache1

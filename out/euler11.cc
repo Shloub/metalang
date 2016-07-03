@@ -87,13 +87,13 @@ int main() {
         }
         m->at(o) = p;
     }
-    for (int j = 0; j <= 7; j += 1)
+    for (int j = 0; j < 8; j += 1)
     {
         tuple_int_int * r = directions->at(j);
         int dx = r->tuple_int_int_field_0;
         int dy = r->tuple_int_int_field_1;
-        for (int x = 0; x <= 19; x += 1)
-            for (int y = 0; y <= 19; y += 1)
+        for (int x = 0; x < 20; x += 1)
+            for (int y = 0; y < 20; y += 1)
                 max0 = std::max(max0, find(4, m, x, y, dx, dy));
     }
     std::cout << max0 << "\n";

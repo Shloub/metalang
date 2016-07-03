@@ -58,7 +58,7 @@ end;
   t : a_PTR;
 begin
   t := new a (0..4);
-  for i in integer range 0..4 - 1 loop
+  for i in integer range 0..3 loop
     t(i) := mktoto(i);
   end loop;
   Get(t(0).bar);

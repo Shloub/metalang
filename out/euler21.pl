@@ -78,7 +78,7 @@ sub sumdivaux{
 sub sumdiv{
   my($nprimes, $primes, $n) = @_;
   my $t = [];
-  foreach my $i (0 .. $n + 1 - 1)
+  foreach my $i (0 .. $n)
   {
       $t->[$i] = 0;
   }

@@ -24,7 +24,7 @@ sub result{
 }
 
 my $t = [];
-foreach my $i (0 .. 8 - 1)
+foreach my $i (0 .. 7)
 {
     $t->[$i] = 0;
 }
@@ -37,10 +37,10 @@ $t->[5] = 50;
 $t->[6] = 100;
 $t->[7] = 200;
 my $cache = [];
-foreach my $j (0 .. 201 - 1)
+foreach my $j (0 .. 200)
 {
     my $o = [];
-    foreach my $k (0 .. 8 - 1)
+    foreach my $k (0 .. 7)
     {
         $o->[$k] = 0;
     }

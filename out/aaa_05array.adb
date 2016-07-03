@@ -32,7 +32,7 @@ end;
 begin
   j := 0;
   a := new c (0..5);
-  for i in integer range 0..5 - 1 loop
+  for i in integer range 0..4 loop
     PInt(i);
     j := j + i;
     a(i) := i rem 2 = 0;

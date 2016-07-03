@@ -18,11 +18,11 @@ Object subclass: small_inline [
   ]
   main [
     |t|t := Array new: 2.
-    (0 to: (2 - 1)) do: [:d| t at: (d + 1) put: self read_int.
+    (0 to: 1) do: [:d| t at: (d + 1) put: self read_int.
       self skip.].
-    (t at: (0 + 1)) display.
+    (t at: 1) display.
     ' - ' display.
-    (t at: (1 + 1)) display.
+    (t at: 2) display.
     '
 ' display.
     ]

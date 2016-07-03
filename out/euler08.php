@@ -30,7 +30,7 @@ for ($j = 0; $j < 5; $j += 1)
 $max0 = $i;
 $index = 0;
 $nskipdiv = 0;
-for ($k = 1; $k <= 995; $k += 1)
+for ($k = 1; $k < 996; $k += 1)
 {
     $e = nextChar();
     $f = ord($e) - ord("0");

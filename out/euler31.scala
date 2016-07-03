@@ -22,7 +22,7 @@ object euler31
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](8);
-    for (i <- 0 to 8 - 1)
+    for (i <- 0 to 7)
         t(i) = 0;
     t(0) = 1;
     t(1) = 2;
@@ -33,10 +33,10 @@ object euler31
     t(6) = 100;
     t(7) = 200;
     var cache :Array[Array[Int]] = new Array[Array[Int]](201);
-    for (j <- 0 to 201 - 1)
+    for (j <- 0 to 200)
     {
         var o :Array[Int] = new Array[Int](8);
-        for (k <- 0 to 8 - 1)
+        for (k <- 0 to 7)
             o(k) = 0;
         cache(j) = o;
     }

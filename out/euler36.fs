@@ -2,7 +2,7 @@
 : % { a b } a b MOD a 0 < b 0 < XOR IF b - THEN ;
 : palindrome2 { pow2 n }
   HERE 20 cells allot { t }
-  20 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  19 0 BEGIN 2dup >= WHILE DUP { i }
     n pow2  i cells +  @ // 2 % 1 = t  i cells +  !
    1 + REPEAT 2DROP
   0 { nnum }
@@ -24,7 +24,7 @@
 : main
   1 { p }
   HERE 20 cells allot { pow2 }
-  20 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  19 0 BEGIN 2dup >= WHILE DUP { i }
     p 2 * TO p
     p 2 // pow2  i cells +  !
    1 + REPEAT 2DROP

@@ -27,7 +27,7 @@ typedef struct tuple_int_int {
 int main(void) {
     int j, x, y, o, q, i;
     struct tuple_int_int * *directions = calloc( 8 , sizeof(struct tuple_int_int *));
-    for (i = 0; i < 8; i++)
+    for (i = 0; i <= 7; i++)
       if (i == 0)
     {
         struct tuple_int_int * c = malloc (sizeof(c) );
@@ -86,10 +86,10 @@ int main(void) {
     }
     int max0 = 0;
     int* *m = calloc( 20 , sizeof(int*));
-    for (o = 0; o < 20; o++)
+    for (o = 0; o <= 19; o++)
     {
         int *p = calloc( 20 , sizeof(int));
-        for (q = 0; q < 20; q++)
+        for (q = 0; q <= 19; q++)
         {
             scanf("%d ", &p[q]);
         }

@@ -29,7 +29,7 @@ function isPrime(n, primes, len){
 }
 
 function test(a, b, primes, len){
-    for (var n = 0; n <= 200; n += 1)
+    for (var n = 0; n < 201; n += 1)
     {
         var j = n * n + a * n + b;
         if (!isPrime(j, primes, len))
@@ -58,9 +58,9 @@ for (var k = 2; k < maximumprimes; k += 1)
 util.print(l, " == ", nprimes, "\n");
 var ma = 0;
 var mb = 0;
-for (var b = 3; b <= 999; b += 1)
+for (var b = 3; b < 1000; b += 1)
     if (era[b] == b)
-        for (var a = -999; a <= 999; a += 1)
+        for (var a = -999; a < 1000; a += 1)
         {
             var n1 = test(a, b, primes, nprimes);
             var n2 = test(a, -b, primes, nprimes);

@@ -28,7 +28,7 @@ object euler14
   def main(args : Array[String])
   {
     var m :Array[Int] = new Array[Int](1000000);
-    for (j <- 0 to 1000000 - 1)
+    for (j <- 0 to 999999)
         m(j) = 0;
     var max0: Int = 0;
     var maxi: Int = 0;

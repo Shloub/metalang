@@ -21,7 +21,7 @@ def read_char() : Char = {
   {
     var i: Int = 1;
     var last :Array[Int] = new Array[Int](5);
-    for (j <- 0 to 5 - 1)
+    for (j <- 0 to 4)
     {
         var c = read_char();
         var d: Int = (c).toInt - ('0').toInt;

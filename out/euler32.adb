@@ -71,11 +71,11 @@ end;
 begin
   count := 0;
   allowed := new f (0..10);
-  for i in integer range 0..10 - 1 loop
+  for i in integer range 0..9 loop
     allowed(i) := i /= 0;
   end loop;
   counted := new f (0..100000);
-  for j in integer range 0..100000 - 1 loop
+  for j in integer range 0..99999 loop
     counted(j) := FALSE;
   end loop;
   for e in integer range 1..9 loop

@@ -3,7 +3,7 @@
 
 int main() {
     int b, a;
-    for (int i = 1; i <= 3; i += 1)
+    for (int i = 1; i < 4; i += 1)
     {
         std::cin >> a >> b;
         std::cout << "a = " << a << " b = " << b << "\n";
@@ -13,7 +13,7 @@ int main() {
     {
         std::cin >> l->at(c);
     }
-    for (int j = 0; j <= 9; j += 1)
+    for (int j = 0; j < 10; j += 1)
         std::cout << l->at(j) << "\n";
 }
 

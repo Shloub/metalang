@@ -26,7 +26,7 @@ Module euler14
   
   Sub Main()
     Dim m(1000000) As Integer
-    For j As Integer = 0 To 1000000 - 1
+    For j As Integer = 0 To 999999
         m(j) = 0
     Next
     Dim max0 As Integer = 0

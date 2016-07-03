@@ -5,7 +5,7 @@ def mod(x, y):
 
 def eratostene(t, max0):
     n = 0
-    for i in range(2, 1 + max0 - 1):
+    for i in range(2, max0):
         if t[i] == i:
             n += 1
             j = i * i
@@ -15,7 +15,7 @@ def eratostene(t, max0):
     return n
 
 def fillPrimesFactors(t, n, primes, nprimes):
-    for i in range(0, 1 + nprimes - 1):
+    for i in range(0, nprimes):
         d = primes[i]
         while mod(n, d) == 0:
             t[d] += 1
@@ -38,7 +38,7 @@ def sumdivaux(t, n, i):
         o = sumdivaux(t, n, sumdivaux2(t, n, i + 1))
         out0 = 0
         p = i
-        for j in range(1, 1 + t[i]):
+        for j in range(1, t[i] + 1):
             out0 += p
             p *= i
         return (out0 + 1) * o
@@ -50,12 +50,12 @@ def sumdiv(nprimes, primes, n):
 
 maximumprimes = 30001
 era = [None] * maximumprimes
-for s in range(0, 1 + maximumprimes - 1):
+for s in range(0, maximumprimes):
     era[s] = s
 nprimes = eratostene(era, maximumprimes)
 primes = [0] * nprimes
 l = 0
-for k in range(2, 1 + maximumprimes - 1):
+for k in range(2, maximumprimes):
     if era[k] == k:
         primes[l] = k
         l += 1
@@ -65,15 +65,15 @@ n = 100
 abondant = [False] * (n + 1)
 summable = [False] * (n + 1)
 sum = 0
-for r in range(2, 1 + n):
+for r in range(2, n + 1):
     other = sumdiv(nprimes, primes, r) - r
     if other > r:
         abondant[r] = True
-for i in range(1, 1 + n):
-    for j in range(1, 1 + n):
+for i in range(1, n + 1):
+    for j in range(1, n + 1):
         if abondant[i] and abondant[j] and i + j <= n:
             summable[i + j] = True
-for o in range(1, 1 + n):
+for o in range(1, n + 1):
     if not summable[o]:
         sum += o
 print("\n%d\n" % sum, end='')

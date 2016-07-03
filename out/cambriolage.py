@@ -40,14 +40,14 @@ def readint():
 def nbPassePartout(n, passepartout, m, serrures):
     max_ancient = 0
     max_recent = 0
-    for i in range(0, 1 + m - 1):
+    for i in range(0, m):
         if serrures[i][0] == -1 and serrures[i][1] > max_ancient:
             max_ancient = serrures[i][1]
         if serrures[i][0] == 1 and serrures[i][1] > max_recent:
             max_recent = serrures[i][1]
     max_ancient_pp = 0
     max_recent_pp = 0
-    for i in range(0, 1 + n - 1):
+    for i in range(0, n):
         pp = passepartout[i]
         if pp[0] >= max_ancient and pp[1] >= max_recent:
             return 1
@@ -61,9 +61,9 @@ def nbPassePartout(n, passepartout, m, serrures):
 n = readint()
 stdinsep()
 passepartout = [None] * n
-for i in range(0, 1 + n - 1):
+for i in range(0, n):
     out0 = [None] * 2
-    for j in range(0, 1 + 2 - 1):
+    for j in range(0, 2):
         out01 = readint()
         stdinsep()
         out0[j] = out01
@@ -71,9 +71,9 @@ for i in range(0, 1 + n - 1):
 m = readint()
 stdinsep()
 serrures = [None] * m
-for k in range(0, 1 + m - 1):
+for k in range(0, m):
     out1 = [None] * 2
-    for l in range(0, 1 + 2 - 1):
+    for l in range(0, 2):
         out_ = readint()
         stdinsep()
         out1[l] = out_

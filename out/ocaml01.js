@@ -1,6 +1,6 @@
 var util = require("util");
 function foo(){
-    for (var i = 0; i <= 10; i += 1)
+    for (var i = 0; i < 11; i += 1)
     {
         
     }
@@ -8,7 +8,7 @@ function foo(){
 }
 
 function bar(){
-    for (var i = 0; i <= 10; i += 1)
+    for (var i = 0; i < 11; i += 1)
         var a = 0;
     return 0;
 }

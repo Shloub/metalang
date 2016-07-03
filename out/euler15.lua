@@ -18,7 +18,7 @@ for o = 2,n do
   local r = n - o
   for p = 2,n do
     local q = n - p
-    tab[r + 1][q + 1] = tab[r + 1 + 1][q + 1] + tab[r + 1][q + 1 + 1];
+    tab[r + 1][q + 1] = tab[r + 2][q + 1] + tab[r + 1][q + 2];
   end
 end
 for m = 0,n - 1 do
@@ -27,4 +27,4 @@ for m = 0,n - 1 do
   end
   io.write("\n")
 end
-io.write(string.format("%d\n", tab[0 + 1][0 + 1]))
+io.write(string.format("%d\n", tab[1][1]))

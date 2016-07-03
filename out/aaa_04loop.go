@@ -16,7 +16,7 @@ func h(i int) bool{
 
 func main() {
   j := 0
-  for k := 0; k <= 10; k += 1 {
+  for k := 0; k < 11; k += 1 {
       j += k
       fmt.Printf("%d\n", j)
   }

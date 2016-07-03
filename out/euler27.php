@@ -29,7 +29,7 @@ function isPrime($n, &$primes, $len) {
 }
 
 function test($a, $b, &$primes, $len) {
-    for ($n = 0; $n <= 200; $n += 1)
+    for ($n = 0; $n < 201; $n += 1)
     {
         $j = $n * $n + $a * $n + $b;
         if (!isPrime($j, $primes, $len))
@@ -56,9 +56,9 @@ for ($k = 2; $k < $maximumprimes; $k += 1)
 echo $l, " == ", $nprimes, "\n";
 $ma = 0;
 $mb = 0;
-for ($b = 3; $b <= 999; $b += 1)
+for ($b = 3; $b < 1000; $b += 1)
     if ($era[$b] == $b)
-        for ($a = -999; $a <= 999; $a += 1)
+        for ($a = -999; $a < 1000; $a += 1)
         {
             $n1 = test($a, $b, $primes, $nprimes);
             $n2 = test($a, -$b, $primes, $nprimes);

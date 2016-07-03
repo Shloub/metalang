@@ -47,7 +47,7 @@ def skip() {
   def main(args : Array[String])
   {
     var t :Array[Toto] = new Array[Toto](4);
-    for (i <- 0 to 4 - 1)
+    for (i <- 0 to 3)
         t(i) = mktoto(i);
     t(0).bar = read_int();
     skip();

@@ -2,7 +2,7 @@
 #include <vector>
 #include<cmath>
 
-int main(void) {
+int main() {
     int maximum = 1;
     int b0 = 2;
     int a = 408464633;
@@ -29,6 +29,5 @@ int main(void) {
             a = 1;
         }
     }
-    return 0;
 }
 

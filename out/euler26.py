@@ -7,7 +7,7 @@ def periode(restes, len, a, b):
     while a != 0:
         chiffre = math.trunc(a / b)
         reste = mod(a, b)
-        for i in range(0, 1 + len - 1):
+        for i in range(0, len):
             if restes[i] == reste:
                 return len - i
         restes[len] = reste
@@ -18,7 +18,7 @@ def periode(restes, len, a, b):
 t = [0] * 1000
 m = 0
 mi = 0
-for i in range(1, 1 + 1000):
+for i in range(1, 1001):
     p = periode(t, 0, 1, i)
     if p > m:
         mi = i

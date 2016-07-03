@@ -5,34 +5,34 @@ def mod(x, y):
 
 def palindrome2(pow2, n):
     t = [None] * 20
-    for i in range(0, 1 + 20 - 1):
+    for i in range(0, 20):
         t[i] = mod(math.trunc(n / pow2[i]), 2) == 1
     nnum = 0
-    for j in range(1, 1 + 19):
+    for j in range(1, 20):
         if t[j]:
             nnum = j
-    for k in range(0, 1 + math.trunc(nnum / 2)):
+    for k in range(0, math.trunc(nnum / 2) + 1):
         if t[k] != t[nnum - k]:
             return False
     return True
 
 p = 1
 pow2 = [None] * 20
-for i in range(0, 1 + 20 - 1):
+for i in range(0, 20):
     p *= 2
     pow2[i] = math.trunc(p / 2)
 sum = 0
-for d in range(1, 1 + 9):
+for d in range(1, 10):
     if palindrome2(pow2, d):
         print("%d\n" % d, end='')
         sum += d
     if palindrome2(pow2, d * 10 + d):
         print("%d\n" % (d * 10 + d), end='')
         sum += d * 10 + d
-for a0 in range(0, 1 + 4):
+for a0 in range(0, 5):
     a = a0 * 2 + 1
-    for b in range(0, 1 + 9):
-        for c in range(0, 1 + 9):
+    for b in range(0, 10):
+        for c in range(0, 10):
             num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a
             if palindrome2(pow2, num0):
                 print("%d\n" % num0, end='')

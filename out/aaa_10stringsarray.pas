@@ -35,7 +35,7 @@ var
   tab : b;
 begin
   SetLength(tab, 2);
-  for i := 0 to  2 - 1 do
+  for i := 0 to  1 do
   begin
     tab[i] := idstring('chaine de test');
   end;

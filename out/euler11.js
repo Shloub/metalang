@@ -107,13 +107,13 @@ for (var o = 0; o < 20; o += 1)
     }
     m[o] = p;
 }
-for (var j = 0; j <= 7; j += 1)
+for (var j = 0; j < 8; j += 1)
 {
     var r = directions[j];
     var dx = r["tuple_int_int_field_0"];
     var dy = r["tuple_int_int_field_1"];
-    for (var x = 0; x <= 19; x += 1)
-        for (var y = 0; y <= 19; y += 1)
+    for (var x = 0; x < 20; x += 1)
+        for (var y = 0; y < 20; y += 1)
             max0 = Math.max(max0, find(4, m, x, y, dx, dy));
 }
 util.print(max0, "\n");

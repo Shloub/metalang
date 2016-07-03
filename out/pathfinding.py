@@ -63,9 +63,9 @@ def pathfind_aux(cache, tab, x, y, posX, posY):
 
 def pathfind(tab, x, y):
     cache = [None] * y
-    for i in range(0, 1 + y - 1):
+    for i in range(0, y):
         tmp = [None] * x
-        for j in range(0, 1 + x - 1):
+        for j in range(0, x):
             tmp[j] = -1
         cache[i] = tmp
     return pathfind_aux(cache, tab, x, y, 0, 0)
@@ -77,9 +77,9 @@ stdinsep()
 y = readint()
 stdinsep()
 tab = [None] * y
-for i in range(0, 1 + y - 1):
+for i in range(0, y):
     tab2 = [None] * x
-    for j in range(0, 1 + x - 1):
+    for j in range(0, x):
         tmp = '\u0000'
         tmp = readchar()
         tab2[j] = tmp

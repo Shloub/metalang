@@ -34,7 +34,7 @@ int plus_petit0(std::vector<int>& tab, int len) {
 }
 
 
-int main(void) {
+int main() {
     int len = 0;
     std::cin >> len;
     std::vector<int> tab( len );
@@ -45,6 +45,5 @@ int main(void) {
         tab[i] = tmp;
     }
     std::cout << plus_petit0(tab, len);
-    return 0;
 }
 

@@ -24,7 +24,7 @@
 
 : main
   HERE 9 cells allot { t }
-  9 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  8 0 BEGIN 2dup >= WHILE DUP { i }
     10 i exp0 10 i 1 - exp0 - t  i cells +  !
    1 + REPEAT 2DROP
   8 1 BEGIN 2dup >= WHILE DUP { i2 }

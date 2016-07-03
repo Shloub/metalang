@@ -93,7 +93,7 @@ var
   t : a;
 begin
   SetLength(t, n + 1);
-  for i := 0 to  n + 1 - 1 do
+  for i := 0 to  n do
   begin
     t[i] := 0;
   end;
@@ -149,12 +149,12 @@ begin
   n := 100;
   { 28124 ça prend trop de temps mais on arrive a passer le test }
   SetLength(abondant, n + 1);
-  for p := 0 to  n + 1 - 1 do
+  for p := 0 to  n do
   begin
     abondant[p] := false;
   end;
   SetLength(summable, n + 1);
-  for q := 0 to  n + 1 - 1 do
+  for q := 0 to  n do
   begin
     summable[q] := false;
   end;

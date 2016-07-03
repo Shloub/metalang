@@ -55,7 +55,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     for (i <- 0 to len - 1)
     {
         var tab3 :Array[Int] = new Array[Int](i + 1);
-        for (j <- 0 to i + 1 - 1)
+        for (j <- 0 to i)
             tab3(j) = 0;
         tab2(i) = tab3;
     }
@@ -72,7 +72,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     for (i <- 0 to len - 1)
     {
         var tab2 :Array[Int] = new Array[Int](i + 1);
-        for (j <- 0 to i + 1 - 1)
+        for (j <- 0 to i)
         {
             var tmp: Int = 0;
             tmp = read_int();

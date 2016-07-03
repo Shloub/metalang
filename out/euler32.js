@@ -47,10 +47,10 @@ for (var i = 0; i < 10; i += 1)
 var counted = new Array(100000);
 for (var j = 0; j < 100000; j += 1)
     counted[j] = false;
-for (var e = 1; e <= 9; e += 1)
+for (var e = 1; e < 10; e += 1)
 {
     allowed[e] = false;
-    for (var b = 1; b <= 9; b += 1)
+    for (var b = 1; b < 10; b += 1)
         if (allowed[b])
         {
             allowed[b] = false;
@@ -58,15 +58,15 @@ for (var e = 1; e <= 9; e += 1)
             if (allowed[be])
             {
                 allowed[be] = false;
-                for (var a = 1; a <= 9; a += 1)
+                for (var a = 1; a < 10; a += 1)
                     if (allowed[a])
                     {
                         allowed[a] = false;
-                        for (var c = 1; c <= 9; c += 1)
+                        for (var c = 1; c < 10; c += 1)
                             if (allowed[c])
                             {
                                 allowed[c] = false;
-                                for (var d = 1; d <= 9; d += 1)
+                                for (var d = 1; d < 10; d += 1)
                                     if (allowed[d])
                                     {
                                         allowed[d] = false;

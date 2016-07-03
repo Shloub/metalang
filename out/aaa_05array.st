@@ -10,20 +10,20 @@ Object subclass: aaa_05array [
   main [
     |j a|j := 0.
     a := Array new: 5.
-    (0 to: (5 - 1)) do: [:i|
+    (0 to: 4) do: [:i|
       i display.
       j := j + i.
       a at: (i + 1) put: ((i rem: 2) = 0).
     ].
     j display.
     ' ' display.
-    (a at: (0 + 1))
+    (a at: 1)
     ifTrue:['True' display.]
     ifFalse:['False' display.].
     '
 ' display.
     (self g:(self id: a) index:0).
-    (a at: (0 + 1))
+    (a at: 1)
     ifTrue:['True' display.]
     ifFalse:['False' display.].
     '

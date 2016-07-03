@@ -36,7 +36,7 @@ sub result{
 }
 
 my $t = [];
-foreach my $i (0 .. 4 - 1)
+foreach my $i (0 .. 3)
 {
     $t->[$i] = mktoto($i);
 }

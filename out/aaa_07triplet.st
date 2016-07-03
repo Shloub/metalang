@@ -34,7 +34,7 @@ Object subclass: aaa_07triplet [
 ' display.
     ].
     l := Array new: 10.
-    (0 to: (10 - 1)) do: [:d| l at: (d + 1) put: self read_int.
+    (0 to: 9) do: [:d| l at: (d + 1) put: self read_int.
       self skip.].
     (0 to: 9) do: [:j| (l at: (j + 1)) display.
       '

@@ -583,15 +583,15 @@ begin
   maxA := 5;
   maxB := 5;
   a_bigint := new x (0..maxA + 1);
-  for j in integer range 0..maxA + 1 - 1 loop
+  for j in integer range 0..maxA loop
     a_bigint(j) := bigint_of_int(j * j);
   end loop;
   a0_bigint := new x (0..maxA + 1);
-  for j2 in integer range 0..maxA + 1 - 1 loop
+  for j2 in integer range 0..maxA loop
     a0_bigint(j2) := bigint_of_int(j2);
   end loop;
   b := new r (0..maxA + 1);
-  for k in integer range 0..maxA + 1 - 1 loop
+  for k in integer range 0..maxA loop
     b(k) := 2;
   end loop;
   n := 0;

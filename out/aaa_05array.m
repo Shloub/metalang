@@ -17,7 +17,7 @@ int main(void){
   int i;
   int j = 0;
   int *a = calloc( 5 , sizeof(int));
-  for (i = 0; i < 5; i++)
+  for (i = 0; i <= 4; i++)
   {
       printf("%d", i);
       j += i;

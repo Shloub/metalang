@@ -48,7 +48,7 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 }
   SetLength(allowed, 10);
-  for i := 0 to  10 - 1 do
+  for i := 0 to  9 do
   begin
     allowed[i] := true;
   end;

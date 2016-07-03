@@ -59,7 +59,7 @@ function score(){
         return 0;
 }
 
-for (var i = 1; i <= 55; i += 1)
+for (var i = 1; i < 56; i += 1)
     if (is_triangular(i))
         util.print(i, " ");
 util.print("\n");

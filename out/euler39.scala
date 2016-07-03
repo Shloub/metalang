@@ -5,7 +5,7 @@ object euler39
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](1001);
-    for (i <- 0 to 1001 - 1)
+    for (i <- 0 to 1000)
         t(i) = 0;
     for (a <- 1 to 1000)
         for (b <- 1 to 1000)
@@ -15,7 +15,7 @@ object euler39
             if (c * c == c2)
             {
                 var p: Int = a + b + c;
-                if (p <= 1000)
+                if (p < 1001)
                     t(p) = t(p) + 1;
             }
         }

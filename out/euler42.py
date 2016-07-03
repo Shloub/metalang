@@ -57,7 +57,7 @@ def score():
     len = readint()
     stdinsep()
     sum = 0
-    for i in range(1, 1 + len):
+    for i in range(1, len + 1):
         c = readchar()
         sum += ord(c) - ord('A') + 1
         #		print c print " " print sum print " " 
@@ -67,13 +67,13 @@ def score():
     else:
         return 0
 
-for i in range(1, 1 + 55):
+for i in range(1, 56):
     if is_triangular(i):
         print("%d " % i, end='')
 print("\n", end='')
 sum = 0
 n = readint()
-for i in range(1, 1 + n):
+for i in range(1, n + 1):
     sum += score()
 print("%d\n" % sum, end='')
 

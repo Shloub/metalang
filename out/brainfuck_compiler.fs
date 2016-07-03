@@ -8,7 +8,7 @@
   32 { input }
   500 { current_pos }
   HERE 1000 cells allot { mem }
-  1000 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  999 0 BEGIN 2dup >= WHILE DUP { i }
     0 mem  i cells +  !
    1 + REPEAT 2DROP
   mem  current_pos cells +  @ 1 + mem  current_pos cells +  !

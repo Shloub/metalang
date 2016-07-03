@@ -1,7 +1,7 @@
 Object subclass: euler36 [
    palindrome2: pow2 n: n [|t nnum|
     t := Array new: 20.
-    (0 to: (20 - 1)) do: [:i| t at: (i + 1) put: (((n quo: (pow2 at: (i + 1))) rem: 2) = 1).].
+    (0 to: 19) do: [:i| t at: (i + 1) put: (((n quo: (pow2 at: (i + 1))) rem: 2) = 1).].
     nnum := 0.
     (1 to: 19) do: [:j| (t at: (j + 1))
       ifTrue:[nnum := j.].].
@@ -13,7 +13,7 @@ Object subclass: euler36 [
   main [
     |sum pow2 p num3 num2 num1 num0 a|p := 1.
     pow2 := Array new: 20.
-    (0 to: (20 - 1)) do: [:i|
+    (0 to: 19) do: [:i|
       p := p * 2.
       pow2 at: (i + 1) put: (p quo: 2).
     ].

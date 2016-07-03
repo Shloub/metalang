@@ -5,13 +5,13 @@
                                          (let ((a 5))
                                            (format t "~D ~%~Dfoo" (* (+ 4 6) 2) a)
                                            (if
-                                             (and (= (- (- (+ 1 (quotient (* (+ 1 1) 2 (+ 3 8)) 4)) (- 1 2)) 3) 12) t)
+                                             (and (= (- (+ 1 (quotient (* 2 2 (+ 3 8)) 4)) 2) 12) t)
                                              (princ "True")
                                              (princ "False"))
                                            (princ "
 ")
                                            (if
-                                             (eq (= (* 3 (+ 4 5 6) 2) 45) nil)
+                                             (eq (= (* 3 (+ 4 11) 2) 45) nil)
                                              (princ "True")
                                              (princ "False"))
                                            (princ " ")
@@ -19,7 +19,7 @@
                                              (eq (= 2 1) nil)
                                              (princ "True")
                                              (princ "False"))
-                                           (format t " ~D~D" (quotient (quotient (+ 4 1) 3) (+ 2 1)) (quotient (quotient (* 4 1) 3) (* 2 1)))
+                                           (format t " ~D~D" (quotient (quotient 5 3) 3) (quotient (quotient (* 4 1) 3) (* 2 1)))
                                            (if
                                              (not (and (not (= a 0)) (not (= a 4))))
                                              (princ "True")

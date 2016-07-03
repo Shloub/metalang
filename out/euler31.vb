@@ -21,7 +21,7 @@ Module euler31
   
   Sub Main()
     Dim t(8) As Integer
-    For i As Integer = 0 To 8 - 1
+    For i As Integer = 0 To 7
         t(i) = 0
     Next
     t(0) = 1
@@ -33,9 +33,9 @@ Module euler31
     t(6) = 100
     t(7) = 200
     Dim cache(201)() As Integer
-    For j As Integer = 0 To 201 - 1
+    For j As Integer = 0 To 200
         Dim o(8) As Integer
-        For k As Integer = 0 To 8 - 1
+        For k As Integer = 0 To 7
             o(k) = 0
         Next
         cache(j) = o

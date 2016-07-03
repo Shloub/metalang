@@ -50,12 +50,12 @@ def mod(x, y):
 strlen = readint()
 stdinsep()
 tab4 = [None] * strlen
-for toto in range(0, 1 + strlen - 1):
+for toto in range(0, strlen):
     tmpc = readchar()
     c = ord(tmpc)
     if tmpc != ' ':
         c = mod(c - ord('a') + 13, 26) + ord('a')
     tab4[toto] = c
-for j in range(0, 1 + strlen - 1):
+for j in range(0, strlen):
     print("%c" % tab4[j], end='')
 

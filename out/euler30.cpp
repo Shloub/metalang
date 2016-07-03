@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main(void) {
+int main() {
     /*
 a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   a ^ 5 +
@@ -11,7 +11,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 */
     std::vector<int> p( 10 );
-    for (int i = 0; i < 10; i += 1)
+    for (int i = 0; i <= 9; i += 1)
         p[i] = i * i * i * i * i;
     int sum = 0;
     for (int a = 0; a <= 9; a += 1)
@@ -30,6 +30,5 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
                             }
                         }
     std::cout << sum;
-    return 0;
 }
 

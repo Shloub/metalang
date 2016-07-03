@@ -65,7 +65,7 @@ int find(int ndiv2) {
     for (n = 1; n <= 10000; n++)
     {
         int *primesFactors = calloc( n + 2 , sizeof(int));
-        for (m = 0; m < n + 2; m++)
+        for (m = 0; m <= n + 1; m++)
           primesFactors[m] = 0;
         int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
         primesFactors[2] --;

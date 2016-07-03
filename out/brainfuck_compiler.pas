@@ -16,7 +16,7 @@ begin
   input := #32;
   current_pos := 500;
   SetLength(mem, 1000);
-  for i := 0 to  1000 - 1 do
+  for i := 0 to  999 do
   begin
     mem[i] := 0;
   end;

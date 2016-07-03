@@ -44,7 +44,7 @@ function find( len, tab )
   local tab2 = {}
   for i = 0,len - 1 do
     local tab3 = {}
-    for j = 0,i + 1 - 1 do
+    for j = 0,i do
       tab3[j + 1] = 0;
     end
     tab2[i + 1] = tab3;
@@ -59,7 +59,7 @@ stdinsep()
 local tab = {}
 for i = 0,len - 1 do
   local tab2 = {}
-  for j = 0,i + 1 - 1 do
+  for j = 0,i do
     local tmp = 0
     tmp = readint()
     stdinsep()

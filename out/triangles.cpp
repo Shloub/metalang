@@ -39,7 +39,7 @@ int find(int len, std::vector<std::vector<int>>& tab) {
 }
 
 
-int main(void) {
+int main() {
     int len = 0;
     std::cin >> len;
     std::vector<std::vector<int>> tab( len );
@@ -61,6 +61,5 @@ int main(void) {
             std::cout << tab[k][l] << " ";
         std::cout << "\n";
     }
-    return 0;
 }
 

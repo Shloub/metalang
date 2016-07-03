@@ -42,7 +42,7 @@ def fibo0(a, b, i):
     out0 = 0
     a2 = a
     b2 = b
-    for j in range(0, 1 + i + 1):
+    for j in range(0, i + 2):
         out0 += a2
         tmp = b2
         b2 += a2

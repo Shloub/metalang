@@ -13,7 +13,7 @@ int pgcd(int a, int b) {
 }
 
 
-int main(void) {
+int main() {
     int top = 1;
     int bottom = 1;
     for (int i = 1; i <= 9; i += 1)
@@ -33,6 +33,5 @@ int main(void) {
     std::cout << top << "/" << bottom << "\n";
     int p = pgcd(top, bottom);
     std::cout << "pgcd=" << p << "\n" << bottom / p << "\n";
-    return 0;
 }
 

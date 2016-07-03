@@ -23,14 +23,14 @@ begin
   PString(new char_array'( To_C(" " & Character'Val(10))));
   PInt(a);
   PString(new char_array'( To_C("foo")));
-  if 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 = 12 and then TRUE
+  if 1 + 2 * 2 * (3 + 8) / 4 - 2 = 12 and then TRUE
   then
     PString(new char_array'( To_C("True")));
   else
     PString(new char_array'( To_C("False")));
   end if;
   PString(new char_array'( To_C("" & Character'Val(10))));
-  if (3 * (4 + 5 + 6) * 2 = 45) = FALSE
+  if (3 * (4 + 11) * 2 = 45) = FALSE
   then
     PString(new char_array'( To_C("True")));
   else
@@ -44,7 +44,7 @@ begin
     PString(new char_array'( To_C("False")));
   end if;
   PString(new char_array'( To_C(" ")));
-  PInt((4 + 1) / 3 / (2 + 1));
+  PInt(5 / 3 / 3);
   PInt(4 * 1 / 3 / 2 * 1);
   if not (not (a = 0) and then not (a = 4))
   then

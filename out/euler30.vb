@@ -14,7 +14,7 @@ Module euler30
     '
     
     Dim p(10) As Integer
-    For i As Integer = 0 To 10 - 1
+    For i As Integer = 0 To 9
         p(i) = i * i * i * i * i
     Next
     Dim sum As Integer = 0

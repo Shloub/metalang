@@ -80,13 +80,12 @@ bool solve(std::vector<int>& sudoku0) {
 }
 
 
-int main(void) {
+int main() {
     std::vector<int> sudoku0 = read_sudoku();
     print_sudoku(sudoku0);
     if (solve(sudoku0))
         print_sudoku(sudoku0);
     else
         std::cout << "no solution\n";
-    return 0;
 }
 

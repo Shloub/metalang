@@ -1,6 +1,6 @@
 
 local t = {}
-for i = 0,1001 - 1 do
+for i = 0,1000 do
   t[i + 1] = 0;
 end
 for a = 1,1000 do
@@ -10,7 +10,7 @@ for a = 1,1000 do
     if c * c == c2
     then
       local p = a + b + c
-      if p <= 1000
+      if p < 1001
       then
         t[p + 1] = t[p + 1] + 1;
       end

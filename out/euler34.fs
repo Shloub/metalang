@@ -1,6 +1,6 @@
 : main
   HERE 10 cells allot { f }
-  10 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+  9 0 BEGIN 2dup >= WHILE DUP { j }
     1 f  j cells +  !
    1 + REPEAT 2DROP
   9 1 BEGIN 2dup >= WHILE DUP { i }

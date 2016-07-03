@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 my $f = [];
-foreach my $j (0 .. 10 - 1)
+foreach my $j (0 .. 9)
 {
     $f->[$j] = 1;
 }

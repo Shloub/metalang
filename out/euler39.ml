@@ -8,7 +8,7 @@ begin
       if c * c = c2 then
         begin
           let p = a + b + c in
-          if p <= 1000 then
+          if p < 1001 then
             t.(p) <- t.(p) + 1
         end
     done

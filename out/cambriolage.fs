@@ -60,7 +60,7 @@ create bufferc 128 allot
   HERE n cells allot { passepartout }
   n 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     HERE 2 cells allot { out0 }
-    2 1 - 0 BEGIN 2dup >= WHILE DUP { j }
+    1 0 BEGIN 2dup >= WHILE DUP { j }
       read-int { out01 }
       skipspaces
       out01 out0  j cells +  !
@@ -72,7 +72,7 @@ create bufferc 128 allot
   HERE m cells allot { serrures }
   m 1 - 0 BEGIN 2dup >= WHILE DUP { k }
     HERE 2 cells allot { out1 }
-    2 1 - 0 BEGIN 2dup >= WHILE DUP { l }
+    1 0 BEGIN 2dup >= WHILE DUP { l }
       read-int { out_ }
       skipspaces
       out_ out1  l cells +  !

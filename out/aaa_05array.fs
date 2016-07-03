@@ -10,7 +10,7 @@
 : main
   0 { j }
   HERE 5 cells allot { a }
-  5 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  4 0 BEGIN 2dup >= WHILE DUP { i }
     i s>d 0 d.r
     j i + TO j
     i 2 % 0 = a  i cells +  !

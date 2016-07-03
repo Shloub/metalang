@@ -15,7 +15,7 @@ for i = 0,len - 1 do
 end
 len = tonumber(io.read('*l'));
 local tab2 = {}
-for a = 0,len - 1 - 1 do
+for a = 0,len - 2 do
   tab2[a + 1] = readintline();
 end
 for i = 0,len - 2 do

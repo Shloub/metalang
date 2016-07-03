@@ -36,9 +36,9 @@ Tictactoe : un tictactoe avec une IA
 /* On affiche l'état */
 function print_state(g){
     util.print("\n|");
-    for (var y = 0; y <= 2; y += 1)
+    for (var y = 0; y < 3; y += 1)
     {
-        for (var x = 0; x <= 2; x += 1)
+        for (var x = 0; x < 3; x += 1)
         {
             if (g["cases"][x][y] == 0)
                 util.print(" ");
@@ -58,11 +58,11 @@ function print_state(g){
 function eval0(g){
     var win = 0;
     var freecase = 0;
-    for (var y = 0; y <= 2; y += 1)
+    for (var y = 0; y < 3; y += 1)
     {
         var col = -1;
         var lin = -1;
-        for (var x = 0; x <= 2; x += 1)
+        for (var x = 0; x < 3; x += 1)
         {
             if (g["cases"][x][y] == 0)
                 freecase += 1;
@@ -82,7 +82,7 @@ function eval0(g){
         else if (lin >= 0)
             win = lin;
     }
-    for (var x = 1; x <= 2; x += 1)
+    for (var x = 1; x < 3; x += 1)
     {
         if (g["cases"][0][0] == x && g["cases"][1][1] == x && g["cases"][2][2] == x)
             win = x;
@@ -139,8 +139,8 @@ function minmax(g){
     var maxNote = -10000;
     if (!g["firstToPlay"])
         maxNote = 10000;
-    for (var x = 0; x <= 2; x += 1)
-        for (var y = 0; y <= 2; y += 1)
+    for (var x = 0; x < 3; x += 1)
+        for (var y = 0; y < 3; y += 1)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -161,8 +161,8 @@ function play(g){
         "x":0,
         "y":0};
     var minNote = 10000;
-    for (var x = 0; x <= 2; x += 1)
-        for (var y = 0; y <= 2; y += 1)
+    for (var x = 0; x < 3; x += 1)
+        for (var y = 0; y < 3; y += 1)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -208,7 +208,7 @@ function read_move(){
     return b;
 }
 
-for (var i = 0; i <= 1; i += 1)
+for (var i = 0; i < 2; i += 1)
 {
     var state = init0();
     var c = {

@@ -82,7 +82,7 @@ static int readInt(){
   
   public static void Main(String[] args)
   {
-    for (int i = 1; i <= 55; i += 1)
+    for (int i = 1; i < 56; i += 1)
         if (is_triangular(i))
             Console.Write(i + " ");
     Console.Write("\n");

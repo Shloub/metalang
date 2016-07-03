@@ -5,7 +5,7 @@ def mod(x, y):
 
 def eratostene(t, max0):
     n = 0
-    for i in range(2, 1 + max0 - 1):
+    for i in range(2, max0):
         if t[i] == i:
             n += 1
             j = i * i
@@ -15,7 +15,7 @@ def eratostene(t, max0):
     return n
 
 def fillPrimesFactors(t, n, primes, nprimes):
-    for i in range(0, 1 + nprimes - 1):
+    for i in range(0, nprimes):
         d = primes[i]
         while mod(n, d) == 0:
             t[d] += 1
@@ -38,7 +38,7 @@ def sumdivaux(t, n, i):
         o = sumdivaux(t, n, sumdivaux2(t, n, i + 1))
         out0 = 0
         p = i
-        for j in range(1, 1 + t[i]):
+        for j in range(1, t[i] + 1):
             out0 += p
             p *= i
         return (out0 + 1) * o
@@ -50,18 +50,18 @@ def sumdiv(nprimes, primes, n):
 
 maximumprimes = 1001
 era = [None] * maximumprimes
-for j in range(0, 1 + maximumprimes - 1):
+for j in range(0, maximumprimes):
     era[j] = j
 nprimes = eratostene(era, maximumprimes)
 primes = [0] * nprimes
 l = 0
-for k in range(2, 1 + maximumprimes - 1):
+for k in range(2, maximumprimes):
     if era[k] == k:
         primes[l] = k
         l += 1
 print("%d == %d\n" % (l, nprimes), end='')
 sum = 0
-for n in range(2, 1 + 1000):
+for n in range(2, 1001):
     other = sumdiv(nprimes, primes, n) - n
     if other > n:
         othersum = sumdiv(nprimes, primes, other) - other

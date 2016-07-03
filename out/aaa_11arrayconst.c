@@ -12,7 +12,7 @@ void test(int* tab, int len) {
 int main(void) {
     int i;
     int *t = calloc( 5 , sizeof(int));
-    for (i = 0; i < 5; i++)
+    for (i = 0; i <= 4; i++)
       t[i] = 1;
     test(t, 5);
     return 0;

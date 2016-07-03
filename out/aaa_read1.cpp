@@ -13,10 +13,9 @@ std::vector<char> getline() {
     return c;
 }
 
-int main(void) {
+int main() {
     std::vector<char> str = getline();
     for (int i = 0; i <= 11; i += 1)
         std::cout << str[i];
-    return 0;
 }
 

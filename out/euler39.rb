@@ -9,7 +9,7 @@ for a in (1 ..  1000) do
         c = Math.sqrt(c2).to_i
         if c * c == c2 then
             p = a + b + c
-            if p <= 1000 then
+            if p < 1001 then
                 t[p] += 1
             end
         end

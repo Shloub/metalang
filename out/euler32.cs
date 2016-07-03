@@ -54,10 +54,10 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
     bool[] counted = new bool[100000];
     for (int j = 0; j < 100000; j += 1)
         counted[j] = false;
-    for (int e = 1; e <= 9; e += 1)
+    for (int e = 1; e < 10; e += 1)
     {
         allowed[e] = false;
-        for (int b = 1; b <= 9; b += 1)
+        for (int b = 1; b < 10; b += 1)
             if (allowed[b])
             {
                 allowed[b] = false;
@@ -65,15 +65,15 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                 if (allowed[be])
                 {
                     allowed[be] = false;
-                    for (int a = 1; a <= 9; a += 1)
+                    for (int a = 1; a < 10; a += 1)
                         if (allowed[a])
                         {
                             allowed[a] = false;
-                            for (int c = 1; c <= 9; c += 1)
+                            for (int c = 1; c < 10; c += 1)
                                 if (allowed[c])
                                 {
                                     allowed[c] = false;
-                                    for (int d = 1; d <= 9; d += 1)
+                                    for (int d = 1; d < 10; d += 1)
                                         if (allowed[d])
                                         {
                                             allowed[d] = false;

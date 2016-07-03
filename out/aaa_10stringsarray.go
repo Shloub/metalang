@@ -23,7 +23,7 @@ func main() {
   for i := 0; i < 2; i += 1 {
       tab[i] = idstring("chaine de test")
   }
-  for j := 0; j <= 1; j += 1 {
+  for j := 0; j < 2; j += 1 {
       printstring(idstring(tab[j]))
   }
   var a * toto = new (toto)

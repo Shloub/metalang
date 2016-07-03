@@ -17,7 +17,7 @@ Object subclass: euler15 [
       r := n - o.
       (2 to: n) do: [:p|
         q := n - p.
-        (tab at: (r + 1)) at: (q + 1) put: (((tab at: (r + 1 + 1)) at: (q + 1)) + ((tab at: (r + 1)) at: (q + 1 + 1))).
+        (tab at: (r + 1)) at: (q + 1) put: (((tab at: (r + 2)) at: (q + 1)) + ((tab at: (r + 1)) at: (q + 2))).
       ].
     ].
     (0 to: (n - 1)) do: [:m|
@@ -26,7 +26,7 @@ Object subclass: euler15 [
       '
 ' display.
     ].
-    ((tab at: (0 + 1)) at: (0 + 1)) display.
+    ((tab at: 1) at: 1) display.
     '
 ' display.
     ]

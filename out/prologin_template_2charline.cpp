@@ -31,13 +31,12 @@ int programme_candidat(std::vector<char>& tableau1, int taille1, std::vector<cha
 }
 
 
-int main(void) {
+int main() {
     int taille2, taille1;
     std::cin >> taille1;
     std::vector<char> tableau1 = getline();
     std::cin >> taille2;
     std::vector<char> tableau2 = getline();
     std::cout << programme_candidat(tableau1, taille1, tableau2, taille2) << "\n";
-    return 0;
 }
 

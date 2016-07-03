@@ -36,7 +36,7 @@ sub remainder {
 #
 
 my $allowed = [];
-foreach my $i (0 .. 10 - 1)
+foreach my $i (0 .. 9)
 {
     $allowed->[$i] = 1;
 }

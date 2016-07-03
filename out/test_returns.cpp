@@ -30,8 +30,7 @@ bool is_pair(int i) {
 }
 
 
-int main(void) {
+int main() {
     
-    return 0;
 }
 

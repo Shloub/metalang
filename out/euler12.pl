@@ -69,7 +69,7 @@ sub find{
   foreach my $n (1 .. 10000)
   {
       my $primesFactors = [];
-      foreach my $m (0 .. $n + 2 - 1)
+      foreach my $m (0 .. $n + 1)
       {
           $primesFactors->[$m] = 0;
       }

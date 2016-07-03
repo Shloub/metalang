@@ -82,7 +82,7 @@ func main() {
   }
   fmt.Printf("%d == %d\n", l, nprimes)
   sum := 0
-  for n := 2; n <= 1000; n += 1 {
+  for n := 2; n < 1001; n += 1 {
       other := sumdiv(nprimes, primes, n) - n
       if other > n {
           othersum := sumdiv(nprimes, primes, other) - other

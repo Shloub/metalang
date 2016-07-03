@@ -10,7 +10,7 @@ sub test{
 }
 
 my $t = [];
-foreach my $i (0 .. 5 - 1)
+foreach my $i (0 .. 4)
 {
     $t->[$i] = 1;
 }

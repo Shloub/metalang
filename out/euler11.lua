@@ -19,7 +19,7 @@ end
 
 
 local directions = {}
-for i = 0,8 - 1 do
+for i = 0,7 do
   if i == 0 then
     directions[i + 1] = {0, 1};
   elseif i == 1 then
@@ -41,7 +41,7 @@ for i = 0,8 - 1 do
 end
 local max0 = 0
 local m = {}
-for c = 0,20 - 1 do
+for c = 0,19 do
   m[c + 1] = readintline();
 end
 for j = 0,7 do

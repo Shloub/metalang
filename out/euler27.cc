@@ -33,7 +33,7 @@ bool isPrime(int n, std::vector<int> * primes, int len) {
 
 
 int test(int a, int b, std::vector<int> * primes, int len) {
-    for (int n = 0; n <= 200; n += 1)
+    for (int n = 0; n < 201; n += 1)
     {
         int j = n * n + a * n + b;
         if (!isPrime(j, primes, len))
@@ -63,9 +63,9 @@ int main() {
     std::cout << l << " == " << nprimes << "\n";
     int ma = 0;
     int mb = 0;
-    for (int b = 3; b <= 999; b += 1)
+    for (int b = 3; b < 1000; b += 1)
         if (era->at(b) == b)
-            for (int a = -999; a <= 999; a += 1)
+            for (int a = -999; a < 1000; a += 1)
             {
                 int n1 = test(a, b, primes, nprimes);
                 int n2 = test(a, -b, primes, nprimes);

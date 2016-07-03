@@ -6,10 +6,9 @@ void foo(int a) {
 }
 
 
-int main(void) {
+int main() {
     int a = 0;
     foo(a);
     std::cout << a << "\n";
-    return 0;
 }
 

@@ -21,7 +21,7 @@ int eratostene(std::vector<int>& t, int max0) {
 }
 
 
-int main(void) {
+int main() {
     int maximumprimes = 6000;
     std::vector<int> era( maximumprimes );
     for (int j_ = 0; j_ < maximumprimes; j_ += 1)
@@ -50,6 +50,5 @@ int main(void) {
         if (m2 < maximumprimes && !canbe[m2])
             std::cout << m2 << "\n";
     }
-    return 0;
 }
 

@@ -54,7 +54,7 @@ void qsort0(std::vector<int>& tab, int len, int i, int j) {
 }
 
 
-int main(void) {
+int main() {
     int len = 2;
     std::cin >> len;
     std::vector<int> tab( len );
@@ -74,6 +74,5 @@ int main(void) {
     for (int i = 0; i < len; i += 1)
         std::cout << tab3[i] << " ";
     std::cout << "\n";
-    return 0;
 }
 

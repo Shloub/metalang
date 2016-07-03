@@ -21,7 +21,7 @@ Object subclass: euler10 [
     " normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages "
     t := Array new: n.
     (0 to: (n - 1)) do: [:i| t at: (i + 1) put: i.].
-    t at: (1 + 1) put: 0.
+    t at: 2 put: 0.
     (self eratostene: t max0: n) display.
     '
 ' display.

@@ -67,7 +67,7 @@
 
 : sumdiv { nprimes primes n }
   HERE n 1 + cells allot { t }
-  n 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  n 0 BEGIN 2dup >= WHILE DUP { i }
     0 t  i cells +  !
    1 + REPEAT 2DROP
   t n primes nprimes fillPrimesFactors { max0 }
@@ -97,11 +97,11 @@
   \  28124 ça prend trop de temps mais on arrive a passer le test 
   
   HERE n 1 + cells allot { abondant }
-  n 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { p }
+  n 0 BEGIN 2dup >= WHILE DUP { p }
     false abondant  p cells +  !
    1 + REPEAT 2DROP
   HERE n 1 + cells allot { summable }
-  n 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { q }
+  n 0 BEGIN 2dup >= WHILE DUP { q }
     false summable  q cells +  !
    1 + REPEAT 2DROP
   0 { sum }

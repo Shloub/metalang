@@ -2,7 +2,7 @@
 : % { a b } a b MOD a 0 < b 0 < XOR IF b - THEN ;
 : primesfactors { n }
   HERE n 1 + cells allot { tab }
-  n 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { i }
+  n 0 BEGIN 2dup >= WHILE DUP { i }
     0 tab  i cells +  !
    1 + REPEAT 2DROP
   2 { d }
@@ -24,7 +24,7 @@
 : main
   20 { lim }
   HERE lim 1 + cells allot { o }
-  lim 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { m }
+  lim 0 BEGIN 2dup >= WHILE DUP { m }
     0 o  m cells +  !
    1 + REPEAT 2DROP
   lim 1 BEGIN 2dup >= WHILE DUP { i }

@@ -17,13 +17,13 @@ def primesfactors(n):
 
 lim = 20
 o = [0] * (lim + 1)
-for i in range(1, 1 + lim):
+for i in range(1, lim + 1):
     t = primesfactors(i)
-    for j in range(1, 1 + i):
+    for j in range(1, i + 1):
         o[j] = max(o[j], t[j])
 product = 1
-for k in range(1, 1 + lim):
-    for l in range(1, 1 + o[k]):
+for k in range(1, lim + 1):
+    for l in range(1, o[k] + 1):
         product *= k
 print("%d\n" % product, end='')
 

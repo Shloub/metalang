@@ -43,10 +43,10 @@ bool okdigits(std::vector<bool>& ok, int n) {
 }
 
 
-int main(void) {
+int main() {
     int count = 0;
     std::vector<bool> allowed( 10 );
-    for (int i = 0; i < 10; i += 1)
+    for (int i = 0; i <= 9; i += 1)
         allowed[i] = i != 0;
     std::vector<bool> counted( 100000, false );
     for (int e = 1; e <= 9; e += 1)
@@ -101,6 +101,5 @@ int main(void) {
         allowed[e] = true;
     }
     std::cout << count << "\n";
-    return 0;
 }
 

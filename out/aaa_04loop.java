@@ -22,7 +22,7 @@ public class aaa_04loop
   public static void main(String args[])
   {
     int j = 0;
-    for (int k = 0; k <= 10; k += 1)
+    for (int k = 0; k < 11; k += 1)
     {
         j += k;
         System.out.printf("%d\n", j);

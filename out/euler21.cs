@@ -91,7 +91,7 @@ public class euler21
         }
     Console.Write(l + " == " + nprimes + "\n");
     int sum = 0;
-    for (int n = 2; n <= 1000; n += 1)
+    for (int n = 2; n < 1001; n += 1)
     {
         int other = sumdiv(nprimes, primes, n) - n;
         if (other > n)

@@ -5,7 +5,7 @@ def mod(x, y):
 
 def eratostene(t, max0):
     n = 0
-    for i in range(2, 1 + max0 - 1):
+    for i in range(2, max0):
         if t[i] == i:
             n += 1
             j = i * i
@@ -25,7 +25,7 @@ def isPrime(n, primes, len):
     return True
 
 def test(a, b, primes, len):
-    for n in range(0, 1 + 200):
+    for n in range(0, 201):
         j = n * n + a * n + b
         if not isPrime(j, primes, len):
             return n
@@ -33,23 +33,23 @@ def test(a, b, primes, len):
 
 maximumprimes = 1000
 era = [None] * maximumprimes
-for j in range(0, 1 + maximumprimes - 1):
+for j in range(0, maximumprimes):
     era[j] = j
 result = 0
 max0 = 0
 nprimes = eratostene(era, maximumprimes)
 primes = [0] * nprimes
 l = 0
-for k in range(2, 1 + maximumprimes - 1):
+for k in range(2, maximumprimes):
     if era[k] == k:
         primes[l] = k
         l += 1
 print("%d == %d\n" % (l, nprimes), end='')
 ma = 0
 mb = 0
-for b in range(3, 1 + 999):
+for b in range(3, 1000):
     if era[b] == b:
-        for a in range(-999, 1 + 999):
+        for a in range(-999, 1000):
             n1 = test(a, b, primes, nprimes)
             n2 = test(a, -b, primes, nprimes)
             if n1 > max0:

@@ -32,7 +32,7 @@ int score() {
 
 int main() {
     int n;
-    for (int i = 1; i <= 55; i += 1)
+    for (int i = 1; i < 56; i += 1)
         if (is_triangular(i))
             std::cout << i << " ";
     std::cout << "\n";

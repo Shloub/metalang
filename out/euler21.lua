@@ -63,7 +63,7 @@ end
 
 function sumdiv( nprimes, primes, n )
   local t = {}
-  for i = 0,n + 1 - 1 do
+  for i = 0,n do
     t[i + 1] = 0;
   end
   local max0 = fillPrimesFactors(t, n, primes, nprimes)

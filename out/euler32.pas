@@ -70,12 +70,12 @@ var
 begin
   count := 0;
   SetLength(allowed, 10);
-  for i := 0 to  10 - 1 do
+  for i := 0 to  9 do
   begin
     allowed[i] := i <> 0;
   end;
   SetLength(counted, 100000);
-  for j := 0 to  100000 - 1 do
+  for j := 0 to  99999 do
   begin
     counted[j] := false;
   end;

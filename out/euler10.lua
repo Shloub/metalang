@@ -29,5 +29,5 @@ local t = {}
 for i = 0,n - 1 do
   t[i + 1] = i;
 end
-t[1 + 1] = 0;
+t[2] = 0;
 io.write(string.format("%d\n", eratostene(t, n)))

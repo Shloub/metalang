@@ -9,7 +9,7 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     return matrix;
 }
 
-int main(void) {
+int main() {
     int len;
     std::cin >> len;
     std::cout << len << "=len\n";
@@ -28,6 +28,5 @@ int main(void) {
             std::cout << tab2[i][j] << " ";
         std::cout << "\n";
     }
-    return 0;
 }
 

@@ -355,15 +355,15 @@ Modulo
     maxA := 5.
     maxB := 5.
     a_bigint := Array new: (maxA + 1).
-    (0 to: (maxA + 1 - 1)) do: [:j| a_bigint at: (j + 1) put: (self bigint_of_int: (j * j)).].
+    (0 to: maxA) do: [:j| a_bigint at: (j + 1) put: (self bigint_of_int: (j * j)).].
     a0_bigint := Array new: (maxA + 1).
-    (0 to: (maxA + 1 - 1)) do: [:j2| a0_bigint at: (j2 + 1) put: (self bigint_of_int: j2).].
+    (0 to: maxA) do: [:j2| a0_bigint at: (j2 + 1) put: (self bigint_of_int: j2).].
     b := Array new: (maxA + 1).
-    (0 to: (maxA + 1 - 1)) do: [:k| b at: (k + 1) put: 2.].
+    (0 to: maxA) do: [:k| b at: (k + 1) put: 2.].
     n := 0.
     found := true.
     [found] whileTrue:[
-      min0 := a0_bigint at: (0 + 1).
+      min0 := a0_bigint at: 1.
       found := false.
       (2 to: maxA) do: [:i| ((b at: (i + 1)) <= maxB)
         ifTrue:[found

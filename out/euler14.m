@@ -29,7 +29,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i, j;
   int *m = calloc( 1000000 , sizeof(int));
-  for (j = 0; j < 1000000; j++)
+  for (j = 0; j <= 999999; j++)
     m[j] = 0;
   int max0 = 0;
   int maxi = 0;

@@ -183,10 +183,10 @@ struct move * play(struct gamestate * g) {
 struct gamestate * init0() {
     int i, j;
     int* *cases = calloc( 3 , sizeof(int*));
-    for (i = 0; i < 3; i++)
+    for (i = 0; i <= 2; i++)
     {
         int *tab = calloc( 3 , sizeof(int));
-        for (j = 0; j < 3; j++)
+        for (j = 0; j <= 2; j++)
           tab[j] = 0;
         cases[i] = tab;
     }

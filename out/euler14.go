@@ -28,7 +28,7 @@ func main() {
   }
   max0 := 0
   maxi := 0
-  for i := 1; i <= 999; i += 1 {
+  for i := 1; i < 1000; i += 1 {
       /* normalement on met 999999 mais ça dépasse les int32... */
       n2 := find(i, m)
       if n2 > max0 {

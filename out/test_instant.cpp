@@ -6,8 +6,7 @@ int foo(int a, int b) {
 }
 
 
-int main(void) {
+int main() {
     std::cout << 10;
-    return 0;
 }
 

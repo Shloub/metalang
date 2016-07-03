@@ -5,7 +5,7 @@ object euler34
   def main(args : Array[String])
   {
     var f :Array[Int] = new Array[Int](10);
-    for (j <- 0 to 10 - 1)
+    for (j <- 0 to 9)
         f(j) = 1;
     for (i <- 1 to 9)
     {

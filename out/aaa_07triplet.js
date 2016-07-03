@@ -26,7 +26,7 @@ function read_int_(){
     }
   }
 }
-for (var i = 1; i <= 3; i += 1)
+for (var i = 1; i < 4; i += 1)
 {
     var a = read_int_();
     stdinsep();
@@ -42,6 +42,6 @@ for (var d = 0; d < 10; d += 1)
     l[d] = read_int_();
     stdinsep();
 }
-for (var j = 0; j <= 9; j += 1)
+for (var j = 0; j < 10; j += 1)
     util.print(l[j], "\n");
 

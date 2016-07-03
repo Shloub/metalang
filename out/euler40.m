@@ -30,7 +30,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int l, k2, j2, k, j, i2, i;
   int *t = calloc( 9 , sizeof(int));
-  for (i = 0; i < 9; i++)
+  for (i = 0; i <= 8; i++)
     t[i] = exp0(10, i) - exp0(10, i - 1);
   for (i2 = 1; i2 <= 8; i2++)
     printf("%d => %d\n", i2, t[i2]);

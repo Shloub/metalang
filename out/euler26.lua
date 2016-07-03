@@ -22,7 +22,7 @@ end
 
 
 local t = {}
-for j = 0,1000 - 1 do
+for j = 0,999 do
   t[j + 1] = 0;
 end
 local m = 0

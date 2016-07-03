@@ -89,7 +89,7 @@ begin
     Write(''#10'');
   end;
   SetLength(l, 10);
-  for d := 0 to  10 - 1 do
+  for d := 0 to  9 do
   begin
     l[d] := read_int_();
     skip();

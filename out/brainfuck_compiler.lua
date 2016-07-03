@@ -7,7 +7,7 @@ et qui produit les macros metalang correspondante
 local input = 32
 local current_pos = 500
 local mem = {}
-for i = 0,1000 - 1 do
+for i = 0,999 do
   mem[i + 1] = 0;
 end
 mem[current_pos + 1] = mem[current_pos + 1] + 1;

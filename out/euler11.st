@@ -34,7 +34,7 @@ Object subclass: euler11 [
   
   main [
     |r p max0 m l k h g f e dy dx directions d c|directions := Array new: 8.
-    (0 to: (8 - 1)) do: [:i| (i = 0)
+    (0 to: 7) do: [:i| (i = 0)
       ifTrue:[
         c := tuple_int_int new.
         c tuple_int_int_field_0: 0.
@@ -91,9 +91,9 @@ Object subclass: euler11 [
                   ].].].].].].].].
     max0 := 0.
     m := Array new: 20.
-    (0 to: (20 - 1)) do: [:o|
+    (0 to: 19) do: [:o|
       p := Array new: 20.
-      (0 to: (20 - 1)) do: [:q| p at: (q + 1) put: self read_int.
+      (0 to: 19) do: [:q| p at: (q + 1) put: self read_int.
         self skip.].
       m at: (o + 1) put: p.
     ].

@@ -20,7 +20,7 @@ type d_PTR is access d;
   c : Integer;
 begin
   t := new d (0..1001);
-  for i in integer range 0..1001 - 1 loop
+  for i in integer range 0..1000 loop
     t(i) := 0;
   end loop;
   for a in integer range 1..1000 loop
@@ -30,7 +30,7 @@ begin
       if c * c = c2
       then
         p := a + b + c;
-        if p <= 1000
+        if p < 1001
         then
           t(p) := t(p) + 1;
         end if;

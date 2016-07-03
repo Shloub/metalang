@@ -37,7 +37,7 @@ static char readChar(){
     int max0 = i;
     int index = 0;
     int nskipdiv = 0;
-    for (int k = 1; k <= 995; k += 1)
+    for (int k = 1; k < 996; k += 1)
     {
         char e = readChar();
         int f = (int)(e) - (int)('0');

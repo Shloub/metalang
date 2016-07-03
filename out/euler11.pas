@@ -114,7 +114,7 @@ var
   y : Longint;
 begin
   SetLength(directions, 8);
-  for i := 0 to  8 - 1 do
+  for i := 0 to  7 do
   begin
     if i = 0 then
       begin
@@ -176,10 +176,10 @@ begin
   end;
   max0 := 0;
   SetLength(m, 20);
-  for o := 0 to  20 - 1 do
+  for o := 0 to  19 do
   begin
     SetLength(p, 20);
-    for q := 0 to  20 - 1 do
+    for q := 0 to  19 do
     begin
       p[q] := read_int_();
       skip();

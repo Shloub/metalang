@@ -88,7 +88,7 @@ begin
   passepartout := new d (0..n);
   for i in integer range 0..n - 1 loop
     out0 := new c (0..2);
-    for j in integer range 0..2 - 1 loop
+    for j in integer range 0..1 loop
       Get(out01);
       SkipSpaces;
       out0(j) := out01;
@@ -100,7 +100,7 @@ begin
   serrures := new d (0..m);
   for k in integer range 0..m - 1 loop
     out1 := new c (0..2);
-    for l in integer range 0..2 - 1 loop
+    for l in integer range 0..1 loop
       Get(out_0);
       SkipSpaces;
       out1(l) := out_0;

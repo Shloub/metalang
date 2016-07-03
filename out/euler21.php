@@ -76,7 +76,7 @@ for ($k = 2; $k < $maximumprimes; $k += 1)
     }
 echo $l, " == ", $nprimes, "\n";
 $sum = 0;
-for ($n = 2; $n <= 1000; $n += 1)
+for ($n = 2; $n < 1001; $n += 1)
 {
     $other = sumdiv($nprimes, $primes, $n) - $n;
     if ($other > $n)

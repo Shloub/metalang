@@ -25,7 +25,7 @@ for (var j = 0; j < 1000000; j += 1)
     m[j] = 0;
 var max0 = 0;
 var maxi = 0;
-for (var i = 1; i <= 999; i += 1)
+for (var i = 1; i < 1000; i += 1)
 {
     /* normalement on met 999999 mais ça dépasse les int32... */
     var n2 = find(i, m);

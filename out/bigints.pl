@@ -469,17 +469,17 @@ sub euler29{
   my $maxA = 5;
   my $maxB = 5;
   my $a_bigint = [];
-  foreach my $j (0 .. $maxA + 1 - 1)
+  foreach my $j (0 .. $maxA)
   {
       $a_bigint->[$j] = bigint_of_int($j * $j);
   }
   my $a0_bigint = [];
-  foreach my $j2 (0 .. $maxA + 1 - 1)
+  foreach my $j2 (0 .. $maxA)
   {
       $a0_bigint->[$j2] = bigint_of_int($j2);
   }
   my $b = [];
-  foreach my $k (0 .. $maxA + 1 - 1)
+  foreach my $k (0 .. $maxA)
   {
       $b->[$k] = 2;
   }

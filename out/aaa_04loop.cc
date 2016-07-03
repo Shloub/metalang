@@ -18,7 +18,7 @@ bool h(int i) {
 
 int main() {
     int j = 0;
-    for (int k = 0; k <= 10; k += 1)
+    for (int k = 0; k < 11; k += 1)
     {
         j += k;
         std::cout << j << "\n";

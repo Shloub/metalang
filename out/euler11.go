@@ -93,12 +93,12 @@ func main() {
       }
       m[o] = p
   }
-  for j := 0; j <= 7; j += 1 {
+  for j := 0; j < 8; j += 1 {
       var r * tuple_int_int = directions[j]
       dx := (*r).tuple_int_int_field_0
       dy := (*r).tuple_int_int_field_1
-      for x := 0; x <= 19; x += 1 {
-          for y := 0; y <= 19; y += 1 {
+      for x := 0; x < 20; x += 1 {
+          for y := 0; y < 20; y += 1 {
               max0 = max2_(max0, find(4, m, x, y, dx, dy))
           }
       }

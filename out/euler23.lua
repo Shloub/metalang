@@ -63,7 +63,7 @@ end
 
 function sumdiv( nprimes, primes, n )
   local t = {}
-  for i = 0,n + 1 - 1 do
+  for i = 0,n do
     t[i + 1] = 0;
   end
   local max0 = fillPrimesFactors(t, n, primes, nprimes)
@@ -92,11 +92,11 @@ end
 local n = 100
 --[[ 28124 ça prend trop de temps mais on arrive a passer le test --]]
 local abondant = {}
-for p = 0,n + 1 - 1 do
+for p = 0,n do
   abondant[p + 1] = false;
 end
 local summable = {}
-for q = 0,n + 1 - 1 do
+for q = 0,n do
   summable[q + 1] = false;
 end
 local sum = 0

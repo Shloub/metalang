@@ -14,11 +14,10 @@ int exp0(int a, int b) {
 }
 
 
-int main(void) {
+int main() {
     int a = 0;
     int b = 0;
     std::cin >> a >> b >> std::noskipws;
     std::cout << exp0(a, b);
-    return 0;
 }
 

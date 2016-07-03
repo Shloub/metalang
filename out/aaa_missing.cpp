@@ -19,7 +19,7 @@ int result(int len, std::vector<int>& tab) {
 }
 
 
-int main(void) {
+int main() {
     int len;
     std::cin >> len;
     std::cout << len << "\n";
@@ -29,6 +29,5 @@ int main(void) {
         std::cin >> tab[a];
     }
     std::cout << result(len, tab) << "\n";
-    return 0;
 }
 

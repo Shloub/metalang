@@ -46,11 +46,11 @@ end
 
 local count = 0
 local allowed = {}
-for i = 0,10 - 1 do
+for i = 0,9 do
   allowed[i + 1] = i ~= 0;
 end
 local counted = {}
-for j = 0,100000 - 1 do
+for j = 0,99999 do
   counted[j + 1] = false;
 end
 for e = 1,9 do

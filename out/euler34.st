@@ -1,7 +1,7 @@
 Object subclass: euler34 [
   main [
     |sum out0 num f|f := Array new: 10.
-    (0 to: (10 - 1)) do: [:j| f at: (j + 1) put: 1.].
+    (0 to: 9) do: [:j| f at: (j + 1) put: 1.].
     (1 to: 9) do: [:i|
       f at: (i + 1) put: ((f at: (i + 1)) * (i * (f at: i))).
       (f at: (i + 1)) display.

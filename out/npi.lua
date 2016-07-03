@@ -45,12 +45,12 @@ function npi0( str, len )
     ptrStack = ptrStack + 1;
   elseif str[ptrStr + 1] == 43
   then
-    stack[ptrStack - 2 + 1] = stack[ptrStack - 2 + 1] + stack[ptrStack];
+    stack[ptrStack - 1] = stack[ptrStack - 1] + stack[ptrStack];
     ptrStack = ptrStack - 1;
     ptrStr = ptrStr + 1;
   end
   end
-  return stack[0 + 1]
+  return stack[1]
 end
 
 

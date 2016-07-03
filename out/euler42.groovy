@@ -37,7 +37,7 @@ int score()
 
 
 @Field Scanner scanner = new Scanner(System.in)
-for (int i = 1; i <= 55; i += 1)
+for (int i = 1; i < 56; i += 1)
     if (is_triangular(i))
         System.out.printf("%d ", i)
 print("\n")

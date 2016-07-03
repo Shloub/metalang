@@ -16,7 +16,7 @@ bool h(int i) {
 }
 
 
-int main(void) {
+int main() {
     int j = 0;
     for (int k = 0; k <= 10; k += 1)
     {
@@ -31,6 +31,5 @@ int main(void) {
         j += i;
     }
     std::cout << j << i << "FIN TEST\n";
-    return 0;
 }
 

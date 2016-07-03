@@ -93,7 +93,7 @@ var
   t : a;
 begin
   SetLength(t, n + 1);
-  for i := 0 to  n + 1 - 1 do
+  for i := 0 to  n do
   begin
     t[i] := 0;
   end;

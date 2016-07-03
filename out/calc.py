@@ -4,7 +4,7 @@ def fibo(a, b, i):
     out_ = 0
     a2 = a
     b2 = b
-    for j in range(0, 1 + i + 1):
+    for j in range(0, i + 2):
         print("%d" % j, end='')
         out_ += a2
         tmp = b2

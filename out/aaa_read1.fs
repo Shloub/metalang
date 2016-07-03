@@ -21,7 +21,7 @@ create bufferc 128 allot
 : read-char current-char next-char ;
 : main
   HERE 12 cells allot { str }
-  12 1 - 0 BEGIN 2dup >= WHILE DUP { a }
+  11 0 BEGIN 2dup >= WHILE DUP { a }
     read-char str  a cells +  !
    1 + REPEAT 2DROP
   skipspaces

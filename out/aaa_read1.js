@@ -20,6 +20,6 @@ for (var a = 0; a < 12; a += 1)
     str[a] = read_char_();
 }
 stdinsep();
-for (var i = 0; i <= 11; i += 1)
+for (var i = 0; i < 12; i += 1)
     util.print(str[i]);
 

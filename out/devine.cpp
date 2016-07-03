@@ -19,7 +19,7 @@ bool devine0(int nombre, std::vector<int>& tab, int len) {
 }
 
 
-int main(void) {
+int main() {
     int tmp, len, nombre;
     std::cin >> nombre >> len;
     std::vector<int> tab( len );
@@ -32,6 +32,5 @@ int main(void) {
         std::cout << "True";
     else
         std::cout << "False";
-    return 0;
 }
 

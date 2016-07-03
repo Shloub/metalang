@@ -33,7 +33,7 @@ public class euler14
         m[j] = 0;
     int max0 = 0;
     int maxi = 0;
-    for (int i = 1; i <= 999; i += 1)
+    for (int i = 1; i < 1000; i += 1)
     {
         /* normalement on met 999999 mais ça dépasse les int32... */
         int n2 = find(i, m);

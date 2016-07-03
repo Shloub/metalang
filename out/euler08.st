@@ -11,7 +11,7 @@ Object subclass: euler08 [
   main [
     |nskipdiv max0 last index i f e d c|i := 1.
     last := Array new: 5.
-    (0 to: (5 - 1)) do: [:j|
+    (0 to: 4) do: [:j|
       c := self read_char.
       d := ((c) asciiValue) - (($0) asciiValue).
       i := i * d.

@@ -11,8 +11,8 @@ function stdinsep()
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
 function devine0( nombre, tab, len )
-  local min0 = tab[0 + 1]
-  local max0 = tab[1 + 1]
+  local min0 = tab[1]
+  local max0 = tab[2]
   for i = 2,len - 1 do
     if tab[i + 1] > max0 or tab[i + 1] < min0
     then

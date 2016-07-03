@@ -5,12 +5,12 @@ def mod(x, y):
 
 def exp0(a, e):
     o = 1
-    for i in range(1, 1 + e):
+    for i in range(1, e + 1):
         o *= a
     return o
 
 def e(t, n):
-    for i in range(1, 1 + 8):
+    for i in range(1, 9):
         if n >= t[i] * i:
             n -= t[i] * i
         else:
@@ -20,24 +20,24 @@ def e(t, n):
     return -1
 
 t = [None] * 9
-for i in range(0, 1 + 9 - 1):
+for i in range(0, 9):
     t[i] = exp0(10, i) - exp0(10, i - 1)
-for i2 in range(1, 1 + 8):
+for i2 in range(1, 9):
     print("%d => %d\n" % (i2, t[i2]), end='')
-for j in range(0, 1 + 80):
+for j in range(0, 81):
     print("%d" % e(t, j), end='')
 print("\n", end='')
-for k in range(1, 1 + 50):
+for k in range(1, 51):
     print("%d" % k, end='')
 print("\n", end='')
-for j2 in range(169, 1 + 220):
+for j2 in range(169, 221):
     print("%d" % e(t, j2), end='')
 print("\n", end='')
-for k2 in range(90, 1 + 110):
+for k2 in range(90, 111):
     print("%d" % k2, end='')
 print("\n", end='')
 out0 = 1
-for l in range(0, 1 + 6):
+for l in range(0, 7):
     puiss = exp0(10, l)
     v = e(t, puiss - 1)
     out0 *= v

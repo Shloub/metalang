@@ -57,7 +57,7 @@ Module euler23
   
   Function sumdiv(ByVal nprimes as Integer, ByRef primes as Integer(), ByVal n as Integer) As Integer
     Dim t(n + 1) As Integer
-    For i As Integer = 0 To n + 1 - 1
+    For i As Integer = 0 To n
         t(i) = 0
     Next
     Dim max0 As Integer = fillPrimesFactors(t, n, primes, nprimes)
@@ -87,11 +87,11 @@ Module euler23
       ' 28124 ça prend trop de temps mais on arrive a passer le test 
       
       Dim abondant(n + 1) As Boolean
-      For p As Integer = 0 To n + 1 - 1
+      For p As Integer = 0 To n
           abondant(p) = false
       Next
       Dim summable(n + 1) As Boolean
-      For q As Integer = 0 To n + 1 - 1
+      For q As Integer = 0 To n
           summable(q) = false
       Next
       Dim sum As Integer = 0

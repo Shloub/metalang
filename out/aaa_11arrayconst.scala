@@ -11,7 +11,7 @@ object aaa_11arrayconst
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](5);
-    for (i <- 0 to 5 - 1)
+    for (i <- 0 to 4)
         t(i) = 1;
     test(t, 5);
   }

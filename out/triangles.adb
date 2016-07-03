@@ -78,7 +78,7 @@ begin
   tab2 := new b (0..len);
   for i in integer range 0..len - 1 loop
     tab3 := new a (0..i + 1);
-    for j in integer range 0..i + 1 - 1 loop
+    for j in integer range 0..i loop
       tab3(j) := 0;
     end loop;
     tab2(i) := tab3;
@@ -98,7 +98,7 @@ begin
   tab := new b (0..len);
   for i in integer range 0..len - 1 loop
     tab2 := new a (0..i + 1);
-    for j in integer range 0..i + 1 - 1 loop
+    for j in integer range 0..i loop
       tmp := 0;
       Get(tmp);
       SkipSpaces;

@@ -117,7 +117,7 @@ begin
   for i := 0 to  len - 1 do
   begin
     SetLength(tab3, i + 1);
-    for j := 0 to  i + 1 - 1 do
+    for j := 0 to  i do
     begin
       tab3[j] := 0;
     end;
@@ -144,7 +144,7 @@ begin
   for i := 0 to  len - 1 do
   begin
     SetLength(tab2, i + 1);
-    for j := 0 to  i + 1 - 1 do
+    for j := 0 to  i do
     begin
       tmp := 0;
       tmp := read_int_();

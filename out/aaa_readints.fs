@@ -41,7 +41,7 @@ create bufferc 128 allot
   read-int TO len
   skipspaces
   HERE len 1 - cells allot { tab2 }
-  len 1 - 1 - 0 BEGIN 2dup >= WHILE DUP { b }
+  len 2 - 0 BEGIN 2dup >= WHILE DUP { b }
     HERE len cells allot { c }
     len 1 - 0 BEGIN 2dup >= WHILE DUP { d }
       read-int c  d cells +  !

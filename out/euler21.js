@@ -80,7 +80,7 @@ for (var k = 2; k < maximumprimes; k += 1)
     }
 util.print(l, " == ", nprimes, "\n");
 var sum = 0;
-for (var n = 2; n <= 1000; n += 1)
+for (var n = 2; n < 1001; n += 1)
 {
     var other = sumdiv(nprimes, primes, n) - n;
     if (other > n)

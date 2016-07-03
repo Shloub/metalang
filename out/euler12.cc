@@ -50,7 +50,7 @@ int find(int ndiv2) {
             primes->at(l) = k;
             l += 1;
         }
-    for (int n = 1; n <= 10000; n += 1)
+    for (int n = 1; n < 10001; n += 1)
     {
         std::vector<int> *primesFactors = new std::vector<int>( n + 2 );
         std::fill(primesFactors->begin(), primesFactors->end(), 0);

@@ -70,7 +70,7 @@ len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
-for i in range(0, 1 + len - 1):
+for i in range(0, len):
     tmp = '\u0000'
     tmp = readchar()
     tab[i] = tmp

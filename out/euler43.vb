@@ -35,7 +35,7 @@ Module euler43
     '
     
     Dim allowed(10) As Boolean
-    For i As Integer = 0 To 10 - 1
+    For i As Integer = 0 To 9
         allowed(i) = true
     Next
     For i6 As Integer = 0 To 1

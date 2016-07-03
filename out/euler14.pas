@@ -46,7 +46,7 @@ var
   n2 : Longint;
 begin
   SetLength(m, 1000000);
-  for j := 0 to  1000000 - 1 do
+  for j := 0 to  999999 do
   begin
     m[j] := 0;
   end;

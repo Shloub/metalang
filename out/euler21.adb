@@ -94,7 +94,7 @@ function sumdiv(nprimes : in Integer; primes : in a_PTR; n : in Integer) return 
   max0 : Integer;
 begin
   t := new a (0..n + 1);
-  for i in integer range 0..n + 1 - 1 loop
+  for i in integer range 0..n loop
     t(i) := 0;
   end loop;
   max0 := fillPrimesFactors(t, n, primes, nprimes);

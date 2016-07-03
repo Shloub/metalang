@@ -39,7 +39,7 @@ sub find{
 }
 
 my $m = [];
-foreach my $j (0 .. 1000000 - 1)
+foreach my $j (0 .. 999999)
 {
     $m->[$j] = 0;
 }

@@ -45,10 +45,10 @@ $allowed = array();
 for ($i = 0; $i < 10; $i += 1)
     $allowed[$i] = $i != 0;
 $counted = array_fill(0, 100000, false);
-for ($e = 1; $e <= 9; $e += 1)
+for ($e = 1; $e < 10; $e += 1)
 {
     $allowed[$e] = false;
-    for ($b = 1; $b <= 9; $b += 1)
+    for ($b = 1; $b < 10; $b += 1)
         if ($allowed[$b])
         {
             $allowed[$b] = false;
@@ -56,15 +56,15 @@ for ($e = 1; $e <= 9; $e += 1)
             if ($allowed[$be])
             {
                 $allowed[$be] = false;
-                for ($a = 1; $a <= 9; $a += 1)
+                for ($a = 1; $a < 10; $a += 1)
                     if ($allowed[$a])
                     {
                         $allowed[$a] = false;
-                        for ($c = 1; $c <= 9; $c += 1)
+                        for ($c = 1; $c < 10; $c += 1)
                             if ($allowed[$c])
                             {
                                 $allowed[$c] = false;
-                                for ($d = 1; $d <= 9; $d += 1)
+                                for ($d = 1; $d < 10; $d += 1)
                                     if ($allowed[$d])
                                     {
                                         $allowed[$d] = false;

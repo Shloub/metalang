@@ -14,25 +14,25 @@ function nbPassePartout( n, passepartout, m, serrures )
   local max_ancient = 0
   local max_recent = 0
   for i = 0,m - 1 do
-    if serrures[i + 1][0 + 1] == -1 and serrures[i + 1][1 + 1] > max_ancient
+    if serrures[i + 1][1] == -1 and serrures[i + 1][2] > max_ancient
     then
-      max_ancient = serrures[i + 1][1 + 1];
+      max_ancient = serrures[i + 1][2];
     end
-    if serrures[i + 1][0 + 1] == 1 and serrures[i + 1][1 + 1] > max_recent
+    if serrures[i + 1][1] == 1 and serrures[i + 1][2] > max_recent
     then
-      max_recent = serrures[i + 1][1 + 1];
+      max_recent = serrures[i + 1][2];
     end
   end
   local max_ancient_pp = 0
   local max_recent_pp = 0
   for i = 0,n - 1 do
     local pp = passepartout[i + 1]
-    if pp[0 + 1] >= max_ancient and pp[1 + 1] >= max_recent
+    if pp[1] >= max_ancient and pp[2] >= max_recent
     then
       return 1
     end
-    max_ancient_pp = math.max(max_ancient_pp, pp[0 + 1]);
-    max_recent_pp = math.max(max_recent_pp, pp[1 + 1]);
+    max_ancient_pp = math.max(max_ancient_pp, pp[1]);
+    max_recent_pp = math.max(max_recent_pp, pp[2]);
   end
   if max_ancient_pp >= max_ancient and max_recent_pp >= max_recent
   then
@@ -48,7 +48,7 @@ stdinsep()
 local passepartout = {}
 for i = 0,n - 1 do
   local out0 = {}
-  for j = 0,2 - 1 do
+  for j = 0,1 do
     local out01 = readint()
     stdinsep()
     out0[j + 1] = out01;
@@ -60,7 +60,7 @@ stdinsep()
 local serrures = {}
 for k = 0,m - 1 do
   local out1 = {}
-  for l = 0,2 - 1 do
+  for l = 0,1 do
     local out_ = readint()
     stdinsep()
     out1[l + 1] = out_;

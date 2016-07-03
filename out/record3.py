@@ -44,13 +44,13 @@ def mktoto(v1):
 
 def result(t, len):
     out0 = 0
-    for j in range(0, 1 + len - 1):
+    for j in range(0, len):
         t[j]["blah"] += 1
         out0 = out0 + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"]
     return out0
 
 t = [None] * 4
-for i in range(0, 1 + 4 - 1):
+for i in range(0, 4):
     t[i] = mktoto(i)
 t[0]["bar"] = readint()
 stdinsep()

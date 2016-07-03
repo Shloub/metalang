@@ -28,7 +28,7 @@ public class aaa_10stringsarray
     String[] tab = new String[2];
     for (int i = 0; i < 2; i += 1)
         tab[i] = idstring("chaine de test");
-    for (int j = 0; j <= 1; j += 1)
+    for (int j = 0; j < 2; j += 1)
         printstring(idstring(tab[j]));
     toto a = new toto();
     a.s = "one";

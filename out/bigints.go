@@ -221,7 +221,7 @@ D'ou le nom de la fonction. */
   }
   chiffres[(*a).bigint_len + (*b).bigint_len] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] / 10
   chiffres[(*a).bigint_len + (*b).bigint_len - 1] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] % 10
-  for l := 0; l <= 2; l += 1 {
+  for l := 0; l < 3; l += 1 {
       if len != 0 && chiffres[len - 1] == 0 {
           len -= 1
       }
@@ -367,7 +367,7 @@ func bigint_exp_10chiffres(a * bigint, b int) * bigint{
 
 func euler48() {
   var sum * bigint = bigint_of_int(0)
-  for i := 1; i <= 100; i += 1 {
+  for i := 1; i < 101; i += 1 {
       /* 1000 normalement */
       var ib * bigint = bigint_of_int(i)
       var ibeib * bigint = bigint_exp_10chiffres(ib, i)
@@ -449,7 +449,7 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   fmt.Printf("%d\n", euler29())
   var sum * bigint = read_bigint(50)
-  for i := 2; i <= 100; i += 1 {
+  for i := 2; i < 101; i += 1 {
       skip()
       var tmp * bigint = read_bigint(50)
       sum = add_bigint(sum, tmp)

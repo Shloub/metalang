@@ -21,7 +21,7 @@ public class aaa_04loop
   public static void Main(String[] args)
   {
     int j = 0;
-    for (int k = 0; k <= 10; k += 1)
+    for (int k = 0; k < 11; k += 1)
     {
         j += k;
         Console.Write(j + "\n");
