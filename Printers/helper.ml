@@ -377,6 +377,8 @@ let clike_print_instr c i =
   let open Ast.Instr in
   let open Format in
   let p f pend = match i with
+  | Incr mut -> fprintf f "%a++%a" (c.print_mut c nop) mut pend ()
+  | Decr mut -> fprintf f "%a--%a" (c.print_mut c nop) mut pend ()
   | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
   | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
   | If (e, listif, []) ->

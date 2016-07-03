@@ -103,6 +103,8 @@ let print_instr tyenv used_variables c i =
   else
       fprintf f "var %a %a = %a@\n_  = %a" c.print_varname var ptype ty e nop
         c.print_varname var
+  | Incr mut -> fprintf f "%a++" (c.print_mut c nop) mut
+  | Decr mut -> fprintf f "%a--" (c.print_mut c nop) mut
     | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a" (c.print_mut c nop) mut c.print_op op e nop
     | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
     | Loop (var, e1, e2, li) -> assert false

@@ -83,8 +83,10 @@ let print_instr tyenv c i =
   let block_lambda = block true in
   let p f (inelseif, inlambda) =
     let block = block inlambda in match i with
+    | Incr _
+    | Decr _ -> assert false
     | Declare (var, ty, e, _) -> fprintf f "%a = %a" c.print_varname var e nop
-  | SelfAffect (mut, Ast.Expr.Div, e) -> fprintf f "%a = (%a.to_f / %a).to_i"
+    | SelfAffect (mut, Ast.Expr.Div, e) -> fprintf f "%a = (%a.to_f / %a).to_i"
         (c.print_mut c nop) mut (c.print_mut c nop) mut e nop
     | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a" (c.print_mut c nop) mut c.print_op op e nop
     | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop

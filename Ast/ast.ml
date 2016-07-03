@@ -607,6 +607,8 @@ module Instr = struct
     Declare of varname * Type.t * 'expr * declaration_option
   | Affect of 'expr Mutable.t * 'expr
   | SelfAffect of 'expr Mutable.t * Expr.binop * 'expr
+  | Incr of 'expr Mutable.t
+  | Decr of 'expr Mutable.t        
   | Loop of varname * 'expr * 'expr * 'a list
   | ClikeLoop of 'a list * 'expr * 'a list * 'a list
   | While of 'expr * 'a list
@@ -635,6 +637,12 @@ module Instr = struct
   | SelfAffect (mut, op, e) ->
       let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
       fprintf f "I.SelfAffect(%a, %a, %a)" mut () Expr.pdebug_binop op e ()
+  | Incr mut ->
+      let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
+      fprintf f "I.Incr(%a)" mut ()
+  | Decr mut ->
+      let mut = Mutable.Fixed.Deep.fold (fun m f () -> Mutable.pdebug f m) mut in
+      fprintf f "I.Decr(%a)" mut ()
   | Loop (var, e1, e2, li) ->
       fprintf f "I.Loop(%a, %a, %a, %a)"
         debug_varname var e1 () e2 () punitlist li
@@ -693,6 +701,8 @@ module Instr = struct
       | Declare (a, b, c, d) -> ret (fun c -> Declare (a, b, c, d)) <*> g c 
       | Affect (m, e) -> ret (fun m e -> Affect (m, e)) <*> Mut.map g m <*> g e
       | SelfAffect (m, op, e) -> ret (fun m e -> SelfAffect (m, op, e)) <*> Mut.map g m <*> g e
+      | Incr (m) -> ret (fun m -> Incr (m)) <*> Mut.map g m
+      | Decr (m) -> ret (fun m -> Decr (m)) <*> Mut.map g m
       | Comment s -> ret (Comment s)
       | Loop (var, e1, e2, li) -> ret (fun e1 e2 li -> Loop (var, e1, e2, li)) <*> g e1 <*> g e2 <*> f li
       | ClikeLoop (i1, e, i2, i3) -> ret (fun i1 e i2 li3 -> ClikeLoop(i1, e, i2, li3)) <*> f i1 <*> g e <*> f i2 <*> f i3
@@ -744,6 +754,7 @@ module Instr = struct
         | AllocArray (n, _, e, None, _)
         | AllocArrayConst (n, _, e, _, _) ->  e @* BindingSet.add n
         | Affect (m, e) | SelfAffect (m, _, e) -> e @* mut m
+        | Incr m | Decr m -> mut m
         | Loop (v, e, f, li) -> e @* f @* BindingSet.add v @* fli li
         | ClikeLoop (init, cond, incr, li) -> cond @* fli init @* fli incr @* fli li
         | While (e, li) -> e @* fli li
