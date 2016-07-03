@@ -87,22 +87,6 @@ let conf_rename lang prog =
   List.iter Rename.add (keywords lang);
   List.iter Fresh.add (keywords lang)
 
-(** {2 debug printers definition } *)
-
-let debug_printer = new PosPrinter.posPrinter
-let debug_print prog = debug_printer#prog Format.std_formatter prog
-let pass_debug_print (a, prog) =
-  debug_printer#setTyperEnv a;
-  debug_print prog;
-  (a, prog)
-
-let base_printer = new Printer.printer
-let base_print prog = base_printer#prog Format.std_formatter prog
-let pass_base_print (a, prog) =
-  base_printer#setTyperEnv a;
-  base_print prog;
-  (a, prog)
-
 (** return unit : the default accumulator for a lot of passes *)
 let funit a = ()
 
@@ -180,6 +164,7 @@ let clike_passes
     ~arrayindex1
     ~opselfaffect
     ?(clikeloop=false)
+    ?(decrlooplimit=0)
     prog =
   let rec_, ty, p = default_passes prog in
   let ty, p = if tuple then
@@ -203,6 +188,7 @@ let clike_passes
   let p = Passes.WalkRemoveInternal.apply () p in
   let p = if clikeloop then Passes.WalkMakeCLikeLoops.apply () p else p in
   let p = Passes.WalkMakeSelfAffect.apply opselfaffect p in
+  let p = if decrlooplimit <> 0 then Passes.WalkDecrLoopLimit.apply decrlooplimit p else p in
   let p = Passes.WalkSimplifyExpressions.apply () p in
   let () = check_reads p in
    (rec_, ty, p)
@@ -255,29 +241,29 @@ let languages, printers =
   in let t = true and f = false
   in
   let ls = [
-    "c",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f) => new CPrinter.cPrinter ;
-    "fs",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f) => new ForthPrinter.forthPrinter ;
-    "m",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f) => new ObjCPrinter.objCPrinter ;
-    "pas",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new PasPrinter.pasPrinter ;
-    "adb",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new AdaPrinter.adaPrinter ;
-    "cc",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect               ~clikeloop:t) => new CppPrinter.cppPrinter ;
-    "cpp",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect               ~clikeloop:t) => new CppPrinter.proloCppPrinter ;
-    "cs",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t) => new CsharpPrinter.csharpPrinter ;
-    "vb",      (f, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new VbDotNetPrinter.vbDotNetPrinter ;
-    "java",    (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t) => new JavaPrinter.javaPrinter ;
-    "groovy",  (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t) => new GroovyPrinter.groovyPrinter ;
-    "js",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:opselfaffecti ~clikeloop:t) => new JsPrinter.jsPrinter ;
-    "st",      (f, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:t ~opselfaffect:[]            ~clikeloop:f) => new SmalltalkPrinter.smalltalkPrinter ;
-    "go",      (f, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t) => new GoPrinter.goPrinter ;
-    "cl",      (t, clike_passes ~tuple:t ~record:t ~array:f ~mergeif:t ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new CommonLispPrinter.commonLispPrinter ;
-    "php",     (t, clike_passes ~tuple:f ~record:t ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect:opselfaffecti ~clikeloop:t) => new PhpPrinter.phpPrinter ;
-    "scala",   (f, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new ScalaPrinter.scalaPrinter ;
-    "lua",     (t, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:t ~opselfaffect               ~clikeloop:f) => new LuaPrinter.luaPrinter ;
-    "py",      (f, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect               ~clikeloop:f) => new PyPrinter.pyPrinter ;
-    "pl",      (t, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new PerlPrinter.perlPrinter ;
-    "ml",      (t, clike_passes ~tuple:f ~record:f ~array:f ~mergeif:t ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new OcamlPrinter.camlPrinter ;
-    "fsscript",(t, clike_passes ~tuple:f ~record:f ~array:f ~mergeif:t ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f) => new FSharpPrinter.fsharpPrinter ;
-    "rb",      (f, clike_passes ~tuple:f ~record:f ~array:f ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f) => new RbPrinter.rbPrinter ;
+    "c",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f ~decrlooplimit:0) => new CPrinter.cPrinter ;
+    "fs",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f ~decrlooplimit:0) => new ForthPrinter.forthPrinter ;
+    "m",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f ~decrlooplimit:0) => new ObjCPrinter.objCPrinter ;
+    "pas",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new PasPrinter.pasPrinter ;
+    "adb",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new AdaPrinter.adaPrinter ;
+    "cc",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new CppPrinter.cppPrinter ;
+    "cpp",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new CppPrinter.proloCppPrinter ;
+    "cs",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new CsharpPrinter.csharpPrinter ;
+    "vb",      (f, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new VbDotNetPrinter.vbDotNetPrinter ;
+    "java",    (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new JavaPrinter.javaPrinter ;
+    "groovy",  (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new GroovyPrinter.groovyPrinter ;
+    "js",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:opselfaffecti ~clikeloop:t ~decrlooplimit:0) => new JsPrinter.jsPrinter ;
+    "st",      (f, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:t ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new SmalltalkPrinter.smalltalkPrinter ;
+    "go",      (f, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new GoPrinter.goPrinter ;
+    "cl",      (t, clike_passes ~tuple:t ~record:t ~array:f ~mergeif:t ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new CommonLispPrinter.commonLispPrinter ;
+    "php",     (t, clike_passes ~tuple:f ~record:t ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect:opselfaffecti ~clikeloop:t ~decrlooplimit:0) => new PhpPrinter.phpPrinter ;
+    "scala",   (f, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new ScalaPrinter.scalaPrinter ;
+    "lua",     (t, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:t ~opselfaffect               ~clikeloop:f ~decrlooplimit:0) => new LuaPrinter.luaPrinter ;
+    "py",      (f, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect               ~clikeloop:f ~decrlooplimit:(-1)) => new PyPrinter.pyPrinter ;
+    "pl",      (t, clike_passes ~tuple:f ~record:f ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new PerlPrinter.perlPrinter ;
+    "ml",      (t, clike_passes ~tuple:f ~record:f ~array:f ~mergeif:t ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new OcamlPrinter.camlPrinter ;
+    "fsscript",(t, clike_passes ~tuple:f ~record:f ~array:f ~mergeif:t ~arrayconst:f ~arrayindex1:f ~opselfaffect:[]            ~clikeloop:f ~decrlooplimit:0) => new FSharpPrinter.fsharpPrinter ;
+    "rb",      (f, clike_passes ~tuple:f ~record:f ~array:f ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:f ~decrlooplimit:0) => new RbPrinter.rbPrinter ;
     "fun.ml",  (t, fun_passes ~rename:f ~fun_inline:f ~detect_effects:f ~curry:t  ~macrotize:t) => new OcamlFunPrinter.camlFunPrinter ;
     "rkt",     (t, fun_passes ~rename:f ~fun_inline:f ~detect_effects:f ~curry:f ~macrotize:t ) => new RacketPrinter.racketPrinter ;
     "hs",      (f, fun_passes ~rename:t  ~fun_inline:t  ~detect_effects:t  ~curry:t  ~macrotize:t) => new HaskellPrinter.haskellPrinter ;

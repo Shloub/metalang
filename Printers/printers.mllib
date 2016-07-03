@@ -17,7 +17,6 @@ OcamlFunPrinter
 PasPrinter
 PerlPrinter
 PhpPrinter
-PosPrinter
 Printer
 PyPrinter
 RacketPrinter
