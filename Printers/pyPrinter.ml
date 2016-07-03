@@ -120,6 +120,7 @@ let print_instr tyenv c i =
   let p f (inelseif, inlambda) =
     let block = block inlambda in match i with
     | Declare (var, ty, e, _) -> fprintf f "%a = %a" c.print_varname var e nop
+    | Incr _ | Decr _ -> assert false
     | SelfAffect (mut, Ast.Expr.Div, e) -> fprintf f "%a = math.trunc(%a / %a)"
           (c.print_mut c nop) mut (c.print_mut c nop) mut e nop
     | SelfAffect (mut, Ast.Expr.Mod, e) -> fprintf f "%a = mod(%a, %a)"
