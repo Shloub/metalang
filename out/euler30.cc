@@ -11,24 +11,24 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 */
     std::vector<int> *p = new std::vector<int>( 10 );
-    for (int i = 0; i < 10; i++)
-      p->at(i) = i * i * i * i * i;
+    for (int i = 0; i < 10; i += 1)
+        p->at(i) = i * i * i * i * i;
     int sum = 0;
-    for (int a = 0; a <= 9; a ++)
-      for (int b = 0; b <= 9; b ++)
-        for (int c = 0; c <= 9; c ++)
-          for (int d = 0; d <= 9; d ++)
-            for (int e = 0; e <= 9; e ++)
-              for (int f = 0; f <= 9; f ++)
-              {
-                  int s = p->at(a) + p->at(b) + p->at(c) + p->at(d) + p->at(e) + p->at(f);
-                  int r = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000;
-                  if (s == r && r != 1)
-                  {
-                      std::cout << f << e << d << c << b << a << " " << r << "\n";
-                      sum += r;
-                  }
-    }
+    for (int a = 0; a <= 9; a += 1)
+        for (int b = 0; b <= 9; b += 1)
+            for (int c = 0; c <= 9; c += 1)
+                for (int d = 0; d <= 9; d += 1)
+                    for (int e = 0; e <= 9; e += 1)
+                        for (int f = 0; f <= 9; f += 1)
+                        {
+                            int s = p->at(a) + p->at(b) + p->at(c) + p->at(d) + p->at(e) + p->at(f);
+                            int r = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000;
+                            if (s == r && r != 1)
+                            {
+                                std::cout << f << e << d << c << b << a << " " << r << "\n";
+                                sum += r;
+                            }
+                        }
     std::cout << sum;
 }
 

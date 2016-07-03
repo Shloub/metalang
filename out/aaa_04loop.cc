@@ -9,8 +9,8 @@ bool h(int i) {
     while (j <= i + 2)
     {
         if (i % j == 5)
-          return true;
-        j++;
+            return true;
+        j += 1;
     }
     return false;
 }
@@ -18,7 +18,7 @@ bool h(int i) {
 
 int main() {
     int j = 0;
-    for (int k = 0; k <= 10; k ++)
+    for (int k = 0; k <= 10; k += 1)
     {
         j += k;
         std::cout << j << "\n";
@@ -27,7 +27,7 @@ int main() {
     while (i < 10)
     {
         std::cout << i;
-        i++;
+        i += 1;
         j += i;
     }
     std::cout << j << i << "FIN TEST\n";

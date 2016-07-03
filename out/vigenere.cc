@@ -4,11 +4,11 @@
 int position_alphabet(char c) {
     int i = (int)(c);
     if (i <= (int)('Z') && i >= (int)('A'))
-      return i - (int)('A');
+        return i - (int)('A');
     else if (i <= (int)('z') && i >= (int)('a'))
-      return i - (int)('a');
+        return i - (int)('a');
     else
-      return -1;
+        return -1;
 }
 
 
@@ -18,7 +18,7 @@ char of_position_alphabet(int c) {
 
 
 void crypte(int taille_cle, std::vector<char> * cle, int taille, std::vector<char> * message) {
-    for (int i = 0; i < taille; i++)
+    for (int i = 0; i < taille; i += 1)
     {
         int lettre = position_alphabet(message->at(i));
         if (lettre != -1)
@@ -36,21 +36,21 @@ int main() {
     char out2, out0;
     std::cin >> taille_cle;
     std::vector<char> *cle = new std::vector<char>( taille_cle );
-    for (int index = 0; index < taille_cle; index++)
+    for (int index = 0; index < taille_cle; index += 1)
     {
         std::cin >> out0 >> std::noskipws;
         cle->at(index) = out0;
     }
     std::cin >> std::skipws >> taille;
     std::vector<char> *message = new std::vector<char>( taille );
-    for (int index2 = 0; index2 < taille; index2++)
+    for (int index2 = 0; index2 < taille; index2 += 1)
     {
         std::cin >> out2 >> std::noskipws;
         message->at(index2) = out2;
     }
     crypte(taille_cle, cle, taille, message);
-    for (int i = 0; i < taille; i++)
-      std::cout << message->at(i);
+    for (int i = 0; i < taille; i += 1)
+        std::cout << message->at(i);
     std::cout << "\n";
 }
 

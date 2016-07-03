@@ -9,15 +9,15 @@ int main() {
     char tmpc;
     std::cin >> strlen;
     std::vector<char> *tab4 = new std::vector<char>( strlen );
-    for (int toto = 0; toto < strlen; toto++)
+    for (int toto = 0; toto < strlen; toto += 1)
     {
         std::cin >> tmpc >> std::noskipws;
         int c = (int)(tmpc);
         if (tmpc != ' ')
-          c = (c - (int)('a') + 13) % 26 + (int)('a');
+            c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4->at(toto) = (char)(c);
     }
-    for (int j = 0; j < strlen; j++)
-      std::cout << tab4->at(j);
+    for (int j = 0; j < strlen; j += 1)
+        std::cout << tab4->at(j);
 }
 

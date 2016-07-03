@@ -8,8 +8,8 @@ struct intlist {
 
 intlist * cons(intlist * list, int i) {
     intlist * out0 = new intlist();
-    out0->head=i;
-    out0->tail=list;
+        out0->head = i;
+        out0->tail = list;;
     return out0;
 }
 
@@ -21,12 +21,12 @@ bool is_empty(intlist * foo) {
 
 intlist * rev2(intlist * acc, intlist * torev) {
     if (is_empty(torev))
-      return acc;
+        return acc;
     else
     {
         intlist * acc2 = new intlist();
-        acc2->head=torev->head;
-        acc2->tail=acc;
+            acc2->head = torev->head;
+            acc2->tail = acc;;
         return rev2(acc, torev->tail);
     }
 }
@@ -44,7 +44,7 @@ void test(intlist * empty) {
     {
         std::cin >> i >> std::noskipws;
         if (i != 0)
-          list = cons(list, i);
+            list = cons(list, i);
     }
 }
 

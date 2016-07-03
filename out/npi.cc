@@ -15,25 +15,25 @@ int npi0(std::vector<char> * str, int len) {
     int ptrStack = 0;
     int ptrStr = 0;
     while (ptrStr < len)
-      if (str->at(ptrStr) == ' ')
-      ptrStr++;
-    else if (is_number(str->at(ptrStr)))
-    {
-        int num = 0;
-        while (str->at(ptrStr) != ' ')
+        if (str->at(ptrStr) == ' ')
+            ptrStr += 1;
+        else if (is_number(str->at(ptrStr)))
         {
-            num = num * 10 + (int)(str->at(ptrStr)) - (int)('0');
-            ptrStr++;
+            int num = 0;
+            while (str->at(ptrStr) != ' ')
+            {
+                num = num * 10 + (int)(str->at(ptrStr)) - (int)('0');
+                ptrStr += 1;
+            }
+            stack->at(ptrStack) = num;
+            ptrStack += 1;
         }
-        stack->at(ptrStack) = num;
-        ptrStack++;
-    }
-    else if (str->at(ptrStr) == '+')
-    {
-        stack->at(ptrStack - 2) += stack->at(ptrStack - 1);
-        ptrStack --;
-        ptrStr++;
-    }
+        else if (str->at(ptrStr) == '+')
+        {
+            stack->at(ptrStack - 2) += stack->at(ptrStack - 1);
+            ptrStack -= 1;
+            ptrStr += 1;
+        }
     return stack->at(0);
 }
 
@@ -42,7 +42,7 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<char> *tab = new std::vector<char>( len );
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         char tmp = '\u0000';
         std::cin >> tmp >> std::noskipws;

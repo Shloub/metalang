@@ -6,7 +6,7 @@ int main() {
     char e, c;
     int i = 1;
     std::vector<int> *last = new std::vector<int>( 5 );
-    for (int j = 0; j < 5; j++)
+    for (int j = 0; j < 5; j += 1)
     {
         std::cin >> c >> std::noskipws;
         int d = (int)(c) - (int)('0');
@@ -16,7 +16,7 @@ int main() {
     int max0 = i;
     int index = 0;
     int nskipdiv = 0;
-    for (int k = 1; k <= 995; k ++)
+    for (int k = 1; k <= 995; k += 1)
     {
         std::cin >> e >> std::noskipws;
         int f = (int)(e) - (int)('0');
@@ -29,8 +29,8 @@ int main() {
         {
             i *= f;
             if (nskipdiv < 0)
-              i /= last->at(index);
-            nskipdiv --;
+                i /= last->at(index);
+            nskipdiv -= 1;
         }
         last->at(index) = f;
         index = (index + 1) % 5;

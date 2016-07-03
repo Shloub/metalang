@@ -2,7 +2,7 @@
 #include <vector>
 
 int foo() {
-    for (int i = 0; i <= 10; i ++)
+    for (int i = 0; i <= 10; i += 1)
     {
         
     }
@@ -11,10 +11,8 @@ int foo() {
 
 
 int bar() {
-    for (int i = 0; i <= 10; i ++)
-    {
+    for (int i = 0; i <= 10; i += 1)
         int a = 0;
-    }
     return 0;
 }
 

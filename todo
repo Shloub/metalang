@@ -31,7 +31,8 @@ tests :
 supprimer les objets dans cette hiérarchie :
 
 Printer -> PasPrinter[OK]-> AdaPrinter[OK]
-        -> CPrinter      -> cppPrinter
+        -> CPrinter      -> ccPrinter[OK]
+                         -> cppPrinter
                          -> ObjCPrinter
         -> CommonLispPrinter
         -> FSharpPrinter

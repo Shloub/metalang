@@ -4,30 +4,28 @@
 int go0(std::vector<int> * tab, int a, int b) {
     int m = (a + b) / 2;
     if (a == m)
-    {
         if (tab->at(a) == m)
-          return b;
+            return b;
         else
-          return a;
-    }
+            return a;
     int i = a;
     int j = b;
     while (i < j)
     {
         int e = tab->at(i);
         if (e < m)
-          i++;
+            i += 1;
         else
         {
-            j --;
+            j -= 1;
             tab->at(i) = tab->at(j);
             tab->at(j) = e;
         }
     }
     if (i < m)
-      return go0(tab, a, m);
+        return go0(tab, a, m);
     else
-      return go0(tab, m, b);
+        return go0(tab, m, b);
 }
 
 
@@ -40,7 +38,7 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<int> *tab = new std::vector<int>( len );
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         int tmp = 0;
         std::cin >> tmp;

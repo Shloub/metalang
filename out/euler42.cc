@@ -17,29 +17,29 @@ int score() {
     char c;
     std::cin >> std::skipws >> len;
     int sum = 0;
-    for (int i = 1; i <= len; i ++)
+    for (int i = 1; i <= len; i += 1)
     {
         std::cin >> c >> std::noskipws;
         sum += (int)(c) - (int)('A') + 1;
         /*		print c print " " print sum print " " */
     }
     if (is_triangular(sum))
-      return 1;
+        return 1;
     else
-      return 0;
+        return 0;
 }
 
 
 int main() {
     int n;
-    for (int i = 1; i <= 55; i ++)
-      if (is_triangular(i))
-      std::cout << i << " ";
+    for (int i = 1; i <= 55; i += 1)
+        if (is_triangular(i))
+            std::cout << i << " ";
     std::cout << "\n";
     int sum = 0;
     std::cin >> n >> std::noskipws;
-    for (int i = 1; i <= n; i ++)
-      sum += score();
+    for (int i = 1; i <= n; i += 1)
+        sum += score();
     std::cout << sum << "\n";
 }
 

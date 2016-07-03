@@ -11,18 +11,18 @@ int find0(int len, std::vector<std::vector<int> *> * tab, std::vector<std::vecto
 	Cette fonction est récursive
 	*/
     if (y == len - 1)
-      return tab->at(y)->at(x);
+        return tab->at(y)->at(x);
     else if (x > y)
-      return -10000;
+        return -10000;
     else if (cache->at(y)->at(x) != 0)
-      return cache->at(y)->at(x);
+        return cache->at(y)->at(x);
     int result = 0;
     int out0 = find0(len, tab, cache, x, y + 1);
     int out1 = find0(len, tab, cache, x + 1, y + 1);
     if (out0 > out1)
-      result = out0 + tab->at(y)->at(x);
+        result = out0 + tab->at(y)->at(x);
     else
-      result = out1 + tab->at(y)->at(x);
+        result = out1 + tab->at(y)->at(x);
     cache->at(y)->at(x) = result;
     return result;
 }
@@ -30,7 +30,7 @@ int find0(int len, std::vector<std::vector<int> *> * tab, std::vector<std::vecto
 
 int find(int len, std::vector<std::vector<int> *> * tab) {
     std::vector<std::vector<int> *> *tab2 = new std::vector<std::vector<int> *>( len );
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         std::vector<int> *tab3 = new std::vector<int>( i + 1 );
         std::fill(tab3->begin(), tab3->end(), 0);
@@ -44,10 +44,10 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<std::vector<int> *> *tab = new std::vector<std::vector<int> *>( len );
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i += 1)
     {
         std::vector<int> *tab2 = new std::vector<int>( i + 1 );
-        for (int j = 0; j < i + 1; j++)
+        for (int j = 0; j <= i; j += 1)
         {
             int tmp = 0;
             std::cin >> tmp;
@@ -56,10 +56,10 @@ int main() {
         tab->at(i) = tab2;
     }
     std::cout << find(len, tab) << "\n";
-    for (int k = 0; k < len; k++)
+    for (int k = 0; k < len; k += 1)
     {
-        for (int l = 0; l <= k; l ++)
-          std::cout << tab->at(k)->at(l) << " ";
+        for (int l = 0; l <= k; l += 1)
+            std::cout << tab->at(k)->at(l) << " ";
         std::cout << "\n";
     }
 }
