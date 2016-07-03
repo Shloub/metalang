@@ -38,9 +38,7 @@ let print_lief prio f = function
   | Expr.Char c -> unicode f c
   | x -> print_lief prio f x
 
-let print_mut conf prio f m = Mutable.Fixed.Deep.fold
-      (print_mut0 "%a%a" "->at(%a)" "%a->%s" conf) m f prio 
-let config macros = {
+let config print_mut macros = {
     prio_binop;
     prio_unop;
     print_varname;
@@ -53,21 +51,21 @@ let config macros = {
     
 let print_expr config e f p = Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
-let rec ptype tyenv f t =
+let rec ptype star tyenv f t =
   let open Ast.Type in
   let open Format in match unfix t with
     | Integer -> fprintf f "int"
     | String -> fprintf f "std::string"
-    | Array a -> fprintf f "std::vector<%a> *" (ptype tyenv) a
+    | Array a -> fprintf f (if star then "std::vector<%a> *" else "std::vector<%a>") (ptype star tyenv) a
     | Void ->  fprintf f "void"
     | Bool -> fprintf f "bool"
     | Char -> fprintf f "char"
-    | Named n -> begin match Typer.expand tyenv t
-        default_location |> unfix with
-        | Struct _ -> fprintf f "%s *" n
-        | Enum _ -> fprintf f "%s" n
-        | _ -> assert false
-    end 
+    | Named n -> if star then match Typer.expand tyenv t
+          default_location |> unfix with
+      | Struct _ -> fprintf f "%s *" n
+      | Enum _ -> fprintf f "%s" n
+      | _ -> assert false
+    else fprintf f "%s" n
     | Enum _ -> fprintf f "an enum"
     | Struct li -> fprintf f "a struct"
     | Auto | Lexems | Tuple _ -> assert false
@@ -77,31 +75,35 @@ let rec ptypename f t =
     | Named n -> Format.fprintf f "%s" n
     | _ -> assert false
           
-let print_instr tyenv c i =
-  let ptype = ptype tyenv in
+let print_instr cc tyenv c i =
+  let ptype = ptype cc tyenv in
   let open Ast.Instr in
   let open Format in
   let p f pend = match i with
   | Declare (var, ty, e, _) -> fprintf f "%a %a = %a%a"
         ptype ty c.print_varname var e nop pend ()
-  | AllocArray (name, t, e, None, opt) -> fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a )%a@]"
-        ptype t c.print_varname name ptype t e nop
-        pend ()
+  | AllocArray (name, t, e, None, opt) ->
+      if cc then fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a )%a@]" ptype t c.print_varname name ptype t e nop pend ()
+      else fprintf f "@[<h>std::vector<%a> %a( %a )%a@]" ptype t c.print_varname name e nop pend ()
     | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
     | AllocArrayConst (name, ty, len, lief, opt) ->
-        fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a);@]"
+        if cc then fprintf f "@[<h>std::vector<%a> *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a)%a@]"
           ptype ty
           c.print_varname name
           ptype ty
           len nop
           c.print_varname name
           c.print_varname name
-          (c.print_lief nop) lief
-        
+          (c.print_lief nop) lief pend ()
+        else fprintf f "@[<h>std::vector<%a> %a( %a, %a )%a@]" ptype ty
+          c.print_varname name
+          len nop
+          (c.print_lief nop) lief pend ()
     | AllocRecord (name, ty, list, opt) ->
-        fprintf f "@[<v 4>%a %a = new %a()%a@\n%a%a@]"
-          ptype ty c.print_varname name ptypename ty pend ()
-          (print_list (fun f (field, x) -> fprintf f "%a->%s = %a%a"
+        fprintf f "@[<v 4>%a %a%a%a@\n%a%a@]"
+          ptype ty c.print_varname name
+          (fun f () -> if cc then fprintf f " = new %a()" ptypename ty) () pend ()
+          (print_list (fun f (field, x) -> fprintf f (if cc then "%a->%s = %a%a" else "%a.%s = %a%a")
               c.print_varname name field x nop pend ()) sep_nl) list
           pend ()
     | Print li->
@@ -155,21 +157,24 @@ let print_instr tyenv c i =
    print_lief = c.print_lief;
  }
 
-let print_instr tyenv macros i =
+let print_instr cc print_mut tyenv macros i =
   let open Ast.Instr.Fixed.Deep in
-  let c = config macros in
-  let i = (fold (print_instr tyenv c) (mapg (print_expr c) i))
+  let c = config print_mut macros in
+  let i = (fold (print_instr cc tyenv c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
     
+let cc_print_mut conf prio f m = Mutable.Fixed.Deep.fold
+    (print_mut0 "%a%a" "->at(%a)" "%a->%s" conf) m f prio
+    
 class cppPrinter = object(self)
-  inherit CPrinter.cPrinter as cprinter
+  inherit CPrinter.cPrinter as super
 
  method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "cpp" li
         with Not_found -> List.assoc "" li) macros
-   in (print_instr (cprinter#getTyperEnv ()) macros t) f
+   in (print_instr true cc_print_mut (super#getTyperEnv ()) macros t) f
 
   method lang () = "cpp"
 
@@ -189,25 +194,7 @@ class cppPrinter = object(self)
     in
     List.fold_left collect ([], []) instrs
 
-  method ptype f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "int"
-    | Type.String -> Format.fprintf f "std::string"
-    | Type.Array a -> Format.fprintf f "std::vector<%a> *" self#ptype a
-    | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "bool"
-    | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> begin match Typer.expand (cprinter#getTyperEnv ()) t
-        default_location |> Type.unfix with
-        | Type.Struct _ ->
-          Format.fprintf f "%s *" n
-        | Type.Enum _ ->
-          Format.fprintf f "%s" n
-        | _ -> assert false
-    end
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Auto | Type.Lexems | Type.Tuple _ -> assert false
+  method ptype f t = ptype true (super#getTyperEnv ()) f t
 
   method prog f prog =
     Format.fprintf f
@@ -267,60 +254,31 @@ class cppPrinter = object(self)
         self#typename name
 end
 
-let print_expr_stack macros e f p =
-  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
-      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
-  let config = {
-    prio_binop;
-    prio_unop;
-    print_varname;
-    print_lief;
-    print_op;
-    print_unop;
-    print_mut;
-    macros
-  } in Expr.Fixed.Deep.fold (print_expr0 config) e f p
-
+let cpp_print_mut conf prio f m = Mutable.Fixed.Deep.fold
+    (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio
+    
 class proloCppPrinter = object(self)
-  inherit cppPrinter as cppprinter
+  inherit CPrinter.cPrinter as super
 
-  method expr f e = print_expr_stack
-      (StringMap.map (fun (ty, params, li) ->
+ method instr f t =
+   let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
+        try List.assoc "cpp" li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr false cpp_print_mut (super#getTyperEnv ()) macros t) f
 
-  method ptype f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "int"
-    | Type.String -> Format.fprintf f "std::string"
-    | Type.Array a -> Format.fprintf f "std::vector<%a>" self#ptype a
-    | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "bool"
-    | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> begin match Typer.expand (cppprinter#getTyperEnv ()) t
-        default_location |> Type.unfix with
-        | Type.Struct _ ->
-          Format.fprintf f "%s" n
-        | Type.Enum _ ->
-          Format.fprintf f "%s" n
-        | _ -> assert false
-    end
-    | Type.Enum _ -> Format.fprintf f "an enum"
-    | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Auto | Type.Lexems | Type.Tuple _ -> assert false
-
+  method ptype f t = ptype false (super#getTyperEnv ()) f t
   method prototype f t =
     match Type.unfix t with
     | Type.Array a -> Format.fprintf f "%a&" self#ptype t
-    | Type.Named n -> begin match Typer.expand (cppprinter#getTyperEnv ()) t
+    | Type.Named n -> begin match Typer.expand (super#getTyperEnv ()) t
         default_location |> Type.unfix with
-        | Type.Struct _ ->
-          Format.fprintf f "%a&" self#ptype t
+        | Type.Struct _ -> Format.fprintf f "%a&" self#ptype t
         | _ -> self#ptype f t
     end
     | _ -> self#ptype f t
 
+  
   method prog f prog =
     Format.fprintf f
       "#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
@@ -351,54 +309,7 @@ class proloCppPrinter = object(self)
     return matrix;
 }@\n"
       ) ()
-
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>std::vector<%a> %a(%a);@]"
-      self#ptype type_
-      self#binding binding
-      self#expr len
-
-  method allocarrayconst f binding type_ len e opt =
-    Format.fprintf f "@[<h>std::vector<%a> %a(%a, %a);@]"
-      self#ptype type_
-      self#binding binding
-      self#expr len
-      (print_lief nop) e
-
-  method allocrecord f name t el =
-    match Type.unfix t with
-    | Type.Named typename ->
-      Format.fprintf f "%s %a;@\n%a"
-        typename
-        self#binding name
-        (self#def_fields name) el
-    | _ -> assert false
-
-  method def_fields name f li =
-    Format.fprintf f "@[<h>%a@]"
-      (print_list
-         (fun f (fieldname, expr) ->
-           Format.fprintf f "%a.%a = %a%a"
-             self#binding name
-             self#field fieldname
-             self#expr expr
-             self#separator ()
-         ) sep_nl
-      )
-      li
-
-  method m_field f m field =
-      Format.fprintf f "%a.%s"
-        self#mutable_get m
-        field
-
-  method m_array f m indexes =
-      Format.fprintf f "@[<h>%a[%a]@]"
-        self#mutable_get m
-        (print_list
-           self#expr
-           (sep "%a[%a]")) indexes
 end

@@ -32,7 +32,7 @@ supprimer les objets dans cette hiérarchie :
 
 Printer -> PasPrinter[OK]-> AdaPrinter[OK]
         -> CPrinter      -> ccPrinter[OK]
-                         -> cppPrinter
+                         -> cppPrinter[OK]
                          -> ObjCPrinter
         -> CommonLispPrinter
         -> FSharpPrinter
