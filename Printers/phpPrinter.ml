@@ -142,11 +142,9 @@ class phpPrinter = object(self)
  method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
+        try List.assoc "php" li
         with Not_found -> List.assoc "" li) macros
    in (print_instr macros t) f
-
-  method lang () = "php"
 
   method prototype f t =
     match Type.unfix t with
