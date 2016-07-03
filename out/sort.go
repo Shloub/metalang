@@ -15,15 +15,15 @@ func skip() {
 }
 func copytab(tab []int, len int) []int{
   var o []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       o[i] = tab[i]
   }
   return o
 }
 
 func bubblesort(tab []int, len int) {
-  for i := 0; i < len; i += 1 {
-      for j := i + 1; j < len; j += 1 {
+  for i := 0; i < len; i++ {
+      for j := i + 1; j < len; j++ {
           if tab[i] > tab[j] {
               tmp := tab[i]
               tab[i] = tab[j]
@@ -45,17 +45,17 @@ func qsort0(tab []int, len int, i int, j int) {
                   tmp := tab[i]
                   tab[i] = tab[j]
                   tab[j] = tmp
-                  i += 1
+                  i++
               } else {
                   /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
                   tmp := tab[i]
                   tab[i] = tab[j]
                   tab[j] = tab[i + 1]
                   tab[i + 1] = tmp
-                  i += 1
+                  i++
               }
           } else {
-              j -= 1
+              j--
           }
       }
       qsort0(tab, len, i0, i - 1)
@@ -69,7 +69,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i_ := 0; i_ < len; i_ += 1 {
+  for i_ := 0; i_ < len; i_++ {
       tmp := 0
       fmt.Fscanf(reader, "%d", &tmp)
       skip()
@@ -77,13 +77,13 @@ func main() {
   }
   var tab2 []int = copytab(tab, len)
   bubblesort(tab2, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       fmt.Printf("%d ", tab2[i])
   }
   fmt.Printf("\n")
   var tab3 []int = copytab(tab, len)
   qsort0(tab3, len, 0, len - 1)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       fmt.Printf("%d ", tab3[i])
   }
   fmt.Printf("\n")

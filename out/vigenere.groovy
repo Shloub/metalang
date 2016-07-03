@@ -19,7 +19,7 @@ char of_position_alphabet(int c)
 
 void crypte(int taille_cle, char[] cle, int taille, char[] message)
 {
-  for (int i = 0; i < taille; i += 1)
+  for (int i = 0; i < taille; i++)
   {
       int lettre = position_alphabet(message[i])
       if (lettre != -1)
@@ -42,7 +42,7 @@ if (scanner.hasNext("^-")) {
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 char[] cle = new char[taille_cle]
-for (int index = 0; index < taille_cle; index += 1)
+for (int index = 0; index < taille_cle; index++)
 {
     char out0 = scanner.findWithinHorizon(".", 1).charAt(0)
     cle[index] = out0
@@ -57,13 +57,13 @@ if (scanner.hasNext("^-")) {
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 char[] message = new char[taille]
-for (int index2 = 0; index2 < taille; index2 += 1)
+for (int index2 = 0; index2 < taille; index2++)
 {
     char out2 = scanner.findWithinHorizon(".", 1).charAt(0)
     message[index2] = out2
 }
 crypte(taille_cle, cle, taille, message)
-for (int i = 0; i < taille; i += 1)
+for (int i = 0; i < taille; i++)
     print(message[i])
 print("\n")
 

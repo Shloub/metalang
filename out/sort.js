@@ -29,14 +29,14 @@ function read_int_(){
 
 function copytab(tab, len){
     var o = new Array(len);
-    for (var i = 0; i < len; i += 1)
+    for (var i = 0; i < len; i++)
         o[i] = tab[i];
     return o;
 }
 
 function bubblesort(tab, len){
-    for (var i = 0; i < len; i += 1)
-        for (var j = i + 1; j < len; j += 1)
+    for (var i = 0; i < len; i++)
+        for (var j = i + 1; j < len; j++)
             if (tab[i] > tab[j])
             {
                 var tmp = tab[i];
@@ -59,7 +59,7 @@ function qsort0(tab, len, i, j){
                     var tmp = tab[i];
                     tab[i] = tab[j];
                     tab[j] = tmp;
-                    i += 1;
+                    i++;
                 }
                 else
                 {
@@ -68,10 +68,10 @@ function qsort0(tab, len, i, j){
                     tab[i] = tab[j];
                     tab[j] = tab[i + 1];
                     tab[i + 1] = tmp;
-                    i += 1;
+                    i++;
                 }
             else
-                j -= 1;
+                j--;
         qsort0(tab, len, i0, i - 1);
         qsort0(tab, len, i + 1, j0);
     }
@@ -81,7 +81,7 @@ var len = 2;
 len = read_int_();
 stdinsep();
 var tab = new Array(len);
-for (var i_ = 0; i_ < len; i_ += 1)
+for (var i_ = 0; i_ < len; i_++)
 {
     var tmp = 0;
     tmp = read_int_();
@@ -90,12 +90,12 @@ for (var i_ = 0; i_ < len; i_ += 1)
 }
 var tab2 = copytab(tab, len);
 bubblesort(tab2, len);
-for (var i = 0; i < len; i += 1)
+for (var i = 0; i < len; i++)
     util.print(tab2[i], " ");
 util.print("\n");
 var tab3 = copytab(tab, len);
 qsort0(tab3, len, 0, len - 1);
-for (var i = 0; i < len; i += 1)
+for (var i = 0; i < len; i++)
     util.print(tab3[i], " ");
 util.print("\n");
 

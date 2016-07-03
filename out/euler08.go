@@ -15,7 +15,7 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   i := 1
   var last []int = make([]int, 5)
-  for j := 0; j < 5; j += 1 {
+  for j := 0; j < 5; j++ {
       var c byte
       fmt.Fscanf(reader, "%c", &c)
       d := (int)(c) - (int)('0')
@@ -25,7 +25,7 @@ func main() {
   max0 := i
   index := 0
   nskipdiv := 0
-  for k := 1; k < 996; k += 1 {
+  for k := 1; k < 996; k++ {
       var e byte
       fmt.Fscanf(reader, "%c", &e)
       f := (int)(e) - (int)('0')
@@ -37,7 +37,7 @@ func main() {
           if nskipdiv < 0 {
               i /= last[index]
           }
-          nskipdiv -= 1
+          nskipdiv--
       }
       last[index] = f
       index = (index + 1) % 5

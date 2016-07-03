@@ -8,13 +8,13 @@ function h(i){
     {
         if (~~(i % j) == 5)
             return true;
-        j += 1;
+        j++;
     }
     return false;
 }
 
 var j = 0;
-for (var k = 0; k < 11; k += 1)
+for (var k = 0; k < 11; k++)
 {
     j += k;
     util.print(j, "\n");
@@ -23,7 +23,7 @@ var i = 4;
 while (i < 10)
 {
     util.print(i);
-    i += 1;
+    i++;
     j += i;
 }
 util.print(j, i, "FIN TEST\n");

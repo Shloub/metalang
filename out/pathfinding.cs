@@ -77,10 +77,10 @@ static int readInt(){
   static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
-    for (int i = 0; i < y; i += 1)
+    for (int i = 0; i < y; i++)
     {
         int[] tmp = new int[x];
-        for (int j = 0; j < x; j += 1)
+        for (int j = 0; j < x; j++)
             tmp[j] = -1;
         cache[i] = tmp;
     }
@@ -97,10 +97,10 @@ static int readInt(){
     y = readInt();
     stdin_sep();
     char[][] tab = new char[y][];
-    for (int i = 0; i < y; i += 1)
+    for (int i = 0; i < y; i++)
     {
         char[] tab2 = new char[x];
-        for (int j = 0; j < x; j += 1)
+        for (int j = 0; j < x; j++)
         {
             char tmp = (char)0;
             tmp = readChar();

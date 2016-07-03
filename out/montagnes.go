@@ -20,14 +20,14 @@ func montagnes0(tab []int, len int) int{
   for i >= 0 {
       x := tab[i]
       for j >= 0 && x > tab[len - j] {
-          j -= 1
+          j--
       }
-      j += 1
+      j++
       tab[len - j] = x
       if j > max0 {
           max0 = j
       }
-      i -= 1
+      i--
   }
   return max0
 }
@@ -38,7 +38,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       x := 0
       fmt.Fscanf(reader, "%d", &x)
       skip()

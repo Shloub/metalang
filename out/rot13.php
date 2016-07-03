@@ -32,7 +32,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 list($strlen) = scan("%d");
 scantrim();
 $tab4 = array();
-for ($toto = 0; $toto < $strlen; $toto += 1)
+for ($toto = 0; $toto < $strlen; $toto++)
 {
     $tmpc = nextChar();
     $c = ord($tmpc);
@@ -40,6 +40,6 @@ for ($toto = 0; $toto < $strlen; $toto += 1)
         $c = ($c - ord("a") + 13) % 26 + ord("a");
     $tab4[$toto] = chr($c);
 }
-for ($j = 0; $j < $strlen; $j += 1)
+for ($j = 0; $j < $strlen; $j++)
     echo $tab4[$j];
 

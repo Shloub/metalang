@@ -15,10 +15,10 @@ int go0(int[] tab, int a, int b)
   {
       int e = tab[i]
       if (e < m)
-          i += 1
+          i++
       else
       {
-          j -= 1
+          j--
           tab[i] = tab[j]
           tab[j] = e
       }
@@ -45,7 +45,7 @@ if (scanner.hasNext("^-")) {
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 int[] tab = new int[len]
-for (int i = 0; i < len; i += 1)
+for (int i = 0; i < len; i++)
 {
     int tmp = 0
     if (scanner.hasNext("^-")) {

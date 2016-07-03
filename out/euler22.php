@@ -31,7 +31,7 @@ function score() {
     list($len) = scan("%d");
     scantrim();
     $sum = 0;
-    for ($i = 1; $i <= $len; $i += 1)
+    for ($i = 1; $i <= $len; $i++)
     {
         $c = nextChar();
         $sum += ord($c) - ord("A") + 1;
@@ -42,7 +42,7 @@ function score() {
 
 $sum = 0;
 list($n) = scan("%d");
-for ($i = 1; $i <= $n; $i += 1)
+for ($i = 1; $i <= $n; $i++)
     $sum += $i * score();
 echo $sum, "\n";
 

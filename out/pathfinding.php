@@ -50,10 +50,10 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY) {
 
 function pathfind(&$tab, $x, $y) {
     $cache = array();
-    for ($i = 0; $i < $y; $i += 1)
+    for ($i = 0; $i < $y; $i++)
     {
         $tmp = array();
-        for ($j = 0; $j < $x; $j += 1)
+        for ($j = 0; $j < $x; $j++)
             $tmp[$j] = -1;
         $cache[$i] = $tmp;
     }
@@ -67,10 +67,10 @@ scantrim();
 list($y) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0; $i < $y; $i += 1)
+for ($i = 0; $i < $y; $i++)
 {
     $tab2 = array();
-    for ($j = 0; $j < $x; $j += 1)
+    for ($j = 0; $j < $x; $j++)
     {
         $tmp = "\x00";
         $tmp = nextChar();

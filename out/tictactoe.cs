@@ -65,9 +65,9 @@ Tictactoe : un tictactoe avec une IA
   static void print_state(gamestate g)
   {
     Console.Write("\n|");
-    for (int y = 0; y < 3; y += 1)
+    for (int y = 0; y < 3; y++)
     {
-        for (int x = 0; x < 3; x += 1)
+        for (int x = 0; x < 3; x++)
         {
             if (g.cases[x][y] == 0)
                 Console.Write(" ");
@@ -88,14 +88,14 @@ Tictactoe : un tictactoe avec une IA
   {
     int win = 0;
     int freecase = 0;
-    for (int y = 0; y < 3; y += 1)
+    for (int y = 0; y < 3; y++)
     {
         int col = -1;
         int lin = -1;
-        for (int x = 0; x < 3; x += 1)
+        for (int x = 0; x < 3; x++)
         {
             if (g.cases[x][y] == 0)
-                freecase += 1;
+                freecase++;
             int colv = g.cases[x][y];
             int linv = g.cases[y][x];
             if (col == -1 && colv != 0)
@@ -112,7 +112,7 @@ Tictactoe : un tictactoe avec une IA
         else if (lin >= 0)
             win = lin;
     }
-    for (int x = 1; x < 3; x += 1)
+    for (int x = 1; x < 3; x++)
     {
         if (g.cases[0][0] == x && g.cases[1][1] == x && g.cases[2][2] == x)
             win = x;
@@ -176,8 +176,8 @@ Un minimax classique, renvoie la note du plateau
     int maxNote = -10000;
     if (!g.firstToPlay)
         maxNote = 10000;
-    for (int x = 0; x < 3; x += 1)
-        for (int y = 0; y < 3; y += 1)
+    for (int x = 0; x < 3; x++)
+        for (int y = 0; y < 3; y++)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -199,8 +199,8 @@ Renvoie le coup de l'IA
     minMove.x = 0;
     minMove.y = 0;
     int minNote = 10000;
-    for (int x = 0; x < 3; x += 1)
-        for (int y = 0; y < 3; y += 1)
+    for (int x = 0; x < 3; x++)
+        for (int y = 0; y < 3; y++)
             if (can_move_xy(x, y, g))
             {
                 apply_move_xy(x, y, g);
@@ -221,10 +221,10 @@ Renvoie le coup de l'IA
   static gamestate init0()
   {
     int[][] cases = new int[3][];
-    for (int i = 0; i < 3; i += 1)
+    for (int i = 0; i < 3; i++)
     {
         int[] tab = new int[3];
-        for (int j = 0; j < 3; j += 1)
+        for (int j = 0; j < 3; j++)
             tab[j] = 0;
         cases[i] = tab;
     }
@@ -251,7 +251,7 @@ Renvoie le coup de l'IA
   
   public static void Main(String[] args)
   {
-    for (int i = 0; i < 2; i += 1)
+    for (int i = 0; i < 2; i++)
     {
         gamestate state = init0();
         move c = new move();

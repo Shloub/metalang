@@ -17,10 +17,10 @@ public class plus_petit
     {
         int e = tab[i];
         if (e < m)
-            i += 1;
+            i++;
         else
         {
-            j -= 1;
+            j--;
             tab[i] = tab[j];
             tab[j] = e;
         }
@@ -48,7 +48,7 @@ public class plus_petit
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = 0;
         if (scanner.hasNext("^-")) {

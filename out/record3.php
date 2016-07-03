@@ -30,16 +30,16 @@ function &mktoto($v1) {
 
 function result(&$t, $len) {
     $out0 = 0;
-    for ($j = 0; $j < $len; $j += 1)
+    for ($j = 0; $j < $len; $j++)
     {
-        $t[$j]["blah"] += 1;
+        $t[$j]["blah"]++;
         $out0 = $out0 + $t[$j]["foo"] + $t[$j]["blah"] * $t[$j]["bar"] + $t[$j]["bar"] * $t[$j]["foo"];
     }
     return $out0;
 }
 
 $t = array();
-for ($i = 0; $i < 4; $i += 1)
+for ($i = 0; $i < 4; $i++)
     $t[$i] = mktoto($i);
 list($t[0]["bar"]) = scan("%d");
 scantrim();

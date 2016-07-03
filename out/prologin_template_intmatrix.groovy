@@ -13,8 +13,8 @@ import java.util.*
 int programme_candidat(int[][] tableau, int x, int y)
 {
   int out0 = 0
-  for (int i = 0; i < y; i += 1)
-      for (int j = 0; j < x; j += 1)
+  for (int i = 0; i < y; i++)
+      for (int j = 0; j < x; j++)
           out0 += tableau[i][j] * (i * 2 + j)
   return out0
 }
@@ -24,7 +24,7 @@ int programme_candidat(int[][] tableau, int x, int y)
 int taille_x = Integer.parseInt(scanner.nextLine())
 int taille_y = Integer.parseInt(scanner.nextLine())
 int[][] tableau = new int[taille_y][]
-for (int a = 0; a < taille_y; a += 1)
+for (int a = 0; a < taille_y; a++)
     tableau[a] = read_int_line()
 System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y))
 

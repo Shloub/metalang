@@ -9,21 +9,21 @@ func h(i int) bool{
       if i % j == 5 {
           return true
       }
-      j += 1
+      j++
   }
   return false
 }
 
 func main() {
   j := 0
-  for k := 0; k < 11; k += 1 {
+  for k := 0; k < 11; k++ {
       j += k
       fmt.Printf("%d\n", j)
   }
   i := 4
   for i < 10 {
       fmt.Printf("%d", i)
-      i += 1
+      i++
       j += i
   }
   fmt.Printf("%d%dFIN TEST\n", j, i)

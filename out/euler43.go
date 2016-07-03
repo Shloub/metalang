@@ -31,41 +31,41 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 */
   var allowed []bool = make([]bool, 10)
-  for i := 0; i < 10; i += 1 {
+  for i := 0; i < 10; i++ {
       allowed[i] = true
   }
-  for i6 := 0; i6 < 2; i6 += 1 {
+  for i6 := 0; i6 < 2; i6++ {
       d6 := i6 * 5
       if allowed[d6] {
           allowed[d6] = false
-          for d7 := 0; d7 < 10; d7 += 1 {
+          for d7 := 0; d7 < 10; d7++ {
               if allowed[d7] {
                   allowed[d7] = false
-                  for d8 := 0; d8 < 10; d8 += 1 {
+                  for d8 := 0; d8 < 10; d8++ {
                       if allowed[d8] {
                           allowed[d8] = false
-                          for d9 := 0; d9 < 10; d9 += 1 {
+                          for d9 := 0; d9 < 10; d9++ {
                               if allowed[d9] {
                                   allowed[d9] = false
-                                  for d10 := 1; d10 < 10; d10 += 1 {
+                                  for d10 := 1; d10 < 10; d10++ {
                                       if allowed[d10] && (d6 * 100 + d7 * 10 + d8) % 11 == 0 && (d7 * 100 + d8 * 10 + d9) % 13 == 0 && (d8 * 100 + d9 * 10 + d10) % 17 == 0 {
                                           allowed[d10] = false
-                                          for d5 := 0; d5 < 10; d5 += 1 {
+                                          for d5 := 0; d5 < 10; d5++ {
                                               if allowed[d5] {
                                                   allowed[d5] = false
                                                   if (d5 * 100 + d6 * 10 + d7) % 7 == 0 {
-                                                      for i4 := 0; i4 < 5; i4 += 1 {
+                                                      for i4 := 0; i4 < 5; i4++ {
                                                           d4 := i4 * 2
                                                           if allowed[d4] {
                                                               allowed[d4] = false
-                                                              for d3 := 0; d3 < 10; d3 += 1 {
+                                                              for d3 := 0; d3 < 10; d3++ {
                                                                   if allowed[d3] {
                                                                       allowed[d3] = false
                                                                       if (d3 + d4 + d5) % 3 == 0 {
-                                                                          for d2 := 0; d2 < 10; d2 += 1 {
+                                                                          for d2 := 0; d2 < 10; d2++ {
                                                                               if allowed[d2] {
                                                                                   allowed[d2] = false
-                                                                                  for d1 := 0; d1 < 10; d1 += 1 {
+                                                                                  for d1 := 0; d1 < 10; d1++ {
                                                                                       if allowed[d1] {
                                                                                           allowed[d1] = false
                                                                                           fmt.Printf("%d%d%d%d%d%d%d%d%d%d + ", d1, d2, d3, d4, d5, d6, d7, d8, d9, d10)

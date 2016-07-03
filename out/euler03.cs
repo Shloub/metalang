@@ -23,7 +23,7 @@ public class euler03
                 sqrtia = (int)Math.Sqrt(a);
                 found = true;
             }
-            b += 1;
+            b++;
         }
         if (!found)
         {

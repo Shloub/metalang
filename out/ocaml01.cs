@@ -4,7 +4,7 @@ public class ocaml01
 {
   static int foo()
   {
-    for (int i = 0; i < 11; i += 1)
+    for (int i = 0; i < 11; i++)
     {
         
     }
@@ -13,7 +13,7 @@ public class ocaml01
   
   static int bar()
   {
-    for (int i = 0; i < 11; i += 1)
+    for (int i = 0; i < 11; i++)
     {
         int a = 0;
     }

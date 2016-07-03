@@ -10,7 +10,7 @@ boolean h(int i)
   {
       if (i % j == 5)
           return true
-      j += 1
+      j++
   }
   return false
 }
@@ -18,7 +18,7 @@ boolean h(int i)
 
 
 int j = 0
-for (int k = 0; k < 11; k += 1)
+for (int k = 0; k < 11; k++)
 {
     j += k
     System.out.printf("%d\n", j)
@@ -27,7 +27,7 @@ int i = 4
 while (i < 10)
 {
     print(i)
-    i += 1
+    i++
     j += i
 }
 System.out.printf("%d%dFIN TEST\n", j, i)

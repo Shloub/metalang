@@ -27,9 +27,9 @@ func go0(tab []int, a int, b int) int{
   for i < j {
       e := tab[i]
       if e < m {
-          i += 1
+          i++
       } else {
-          j -= 1
+          j--
           tab[i] = tab[j]
           tab[j] = e
       }
@@ -51,7 +51,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
-  for i := 0; i < len; i += 1 {
+  for i := 0; i < len; i++ {
       tmp := 0
       fmt.Fscanf(reader, "%d", &tmp)
       skip()

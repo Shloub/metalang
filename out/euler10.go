@@ -2,7 +2,7 @@ package main
 import "fmt"
 func eratostene(t []int, max0 int) int{
   sum := 0
-  for i := 2; i < max0; i += 1 {
+  for i := 2; i < max0; i++ {
       if t[i] == i {
           sum += i
           if max0 / i > i {
@@ -21,7 +21,7 @@ func main() {
   n := 100000
   /* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages */
   var t []int = make([]int, n)
-  for i := 0; i < n; i += 1 {
+  for i := 0; i < n; i++ {
       t[i] = i
   }
   t[1] = 0

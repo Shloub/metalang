@@ -50,7 +50,7 @@ static int readInt(){
   {
     int max_ancient = 0;
     int max_recent = 0;
-    for (int i = 0; i < m; i += 1)
+    for (int i = 0; i < m; i++)
     {
         if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
             max_ancient = serrures[i][1];
@@ -59,7 +59,7 @@ static int readInt(){
     }
     int max_ancient_pp = 0;
     int max_recent_pp = 0;
-    for (int i = 0; i < n; i += 1)
+    for (int i = 0; i < n; i++)
     {
         int[] pp = passepartout[i];
         if (pp[0] >= max_ancient && pp[1] >= max_recent)
@@ -79,10 +79,10 @@ static int readInt(){
     int n = readInt();
     stdin_sep();
     int[][] passepartout = new int[n][];
-    for (int i = 0; i < n; i += 1)
+    for (int i = 0; i < n; i++)
     {
         int[] out0 = new int[2];
-        for (int j = 0; j < 2; j += 1)
+        for (int j = 0; j < 2; j++)
         {
             int out01 = readInt();
             stdin_sep();
@@ -93,10 +93,10 @@ static int readInt(){
     int m = readInt();
     stdin_sep();
     int[][] serrures = new int[m][];
-    for (int k = 0; k < m; k += 1)
+    for (int k = 0; k < m; k++)
     {
         int[] out1 = new int[2];
-        for (int l = 0; l < 2; l += 1)
+        for (int l = 0; l < 2; l++)
         {
             int out_ = readInt();
             stdin_sep();

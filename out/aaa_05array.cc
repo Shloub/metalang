@@ -14,7 +14,7 @@ void g(std::vector<bool> * t, int index) {
 int main() {
     int j = 0;
     std::vector<bool> *a = new std::vector<bool>( 5 );
-    for (int i = 0; i < 5; i += 1)
+    for (int i = 0; i < 5; i++)
     {
         std::cout << i;
         j += i;

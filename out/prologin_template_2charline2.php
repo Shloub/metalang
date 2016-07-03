@@ -1,13 +1,13 @@
 <?php
 function programme_candidat(&$tableau1, $taille1, &$tableau2, $taille2) {
     $out0 = 0;
-    for ($i = 0; $i < $taille1; $i += 1)
+    for ($i = 0; $i < $taille1; $i++)
     {
         $out0 += ord($tableau1[$i]) * $i;
         echo $tableau1[$i];
     }
     echo "--\n";
-    for ($j = 0; $j < $taille2; $j += 1)
+    for ($j = 0; $j < $taille2; $j++)
     {
         $out0 += ord($tableau2[$j]) * $j * 100;
         echo $tableau2[$j];

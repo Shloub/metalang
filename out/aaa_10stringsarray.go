@@ -20,10 +20,10 @@ func print_toto(t * toto) {
 
 func main() {
   var tab []string = make([]string, 2)
-  for i := 0; i < 2; i += 1 {
+  for i := 0; i < 2; i++ {
       tab[i] = idstring("chaine de test")
   }
-  for j := 0; j < 2; j += 1 {
+  for j := 0; j < 2; j++ {
       printstring(idstring(tab[j]))
   }
   var a * toto = new (toto)

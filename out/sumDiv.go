@@ -7,7 +7,7 @@ func foo() {
   a := 0
   _ = a
   /* test */
-  a += 1
+  a++
   /* test 2 */
 }
 
@@ -25,7 +25,7 @@ func sumdiv(n int) int{
   /* On désire renvoyer la somme des diviseurs */
   out0 := 0
   /* On déclare un entier qui contiendra la somme */
-  for i := 1; i <= n; i += 1 {
+  for i := 1; i <= n; i++ {
       /* La boucle : i est le diviseur potentiel*/
       if n % i == 0 {
           /* Si i divise */

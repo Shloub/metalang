@@ -29,9 +29,9 @@ Tictactoe : un tictactoe avec une IA
 /* On affiche l'état */
 function print_state(&$g) {
     echo "\n|";
-    for ($y = 0; $y < 3; $y += 1)
+    for ($y = 0; $y < 3; $y++)
     {
-        for ($x = 0; $x < 3; $x += 1)
+        for ($x = 0; $x < 3; $x++)
         {
             if ($g["cases"][$x][$y] == 0)
                 echo " ";
@@ -51,14 +51,14 @@ function print_state(&$g) {
 function eval0(&$g) {
     $win = 0;
     $freecase = 0;
-    for ($y = 0; $y < 3; $y += 1)
+    for ($y = 0; $y < 3; $y++)
     {
         $col = -1;
         $lin = -1;
-        for ($x = 0; $x < 3; $x += 1)
+        for ($x = 0; $x < 3; $x++)
         {
             if ($g["cases"][$x][$y] == 0)
-                $freecase += 1;
+                $freecase++;
             $colv = $g["cases"][$x][$y];
             $linv = $g["cases"][$y][$x];
             if ($col == -1 && $colv != 0)
@@ -75,7 +75,7 @@ function eval0(&$g) {
         else if ($lin >= 0)
             $win = $lin;
     }
-    for ($x = 1; $x < 3; $x += 1)
+    for ($x = 1; $x < 3; $x++)
     {
         if ($g["cases"][0][0] == $x && $g["cases"][1][1] == $x && $g["cases"][2][2] == $x)
             $win = $x;
@@ -132,8 +132,8 @@ function minmax(&$g) {
     $maxNote = -10000;
     if (!$g["firstToPlay"])
         $maxNote = 10000;
-    for ($x = 0; $x < 3; $x += 1)
-        for ($y = 0; $y < 3; $y += 1)
+    for ($x = 0; $x < 3; $x++)
+        for ($y = 0; $y < 3; $y++)
             if (can_move_xy($x, $y, $g))
             {
                 apply_move_xy($x, $y, $g);
@@ -154,8 +154,8 @@ function &play(&$g) {
         "x" => 0,
         "y" => 0);
     $minNote = 10000;
-    for ($x = 0; $x < 3; $x += 1)
-        for ($y = 0; $y < 3; $y += 1)
+    for ($x = 0; $x < 3; $x++)
+        for ($y = 0; $y < 3; $y++)
             if (can_move_xy($x, $y, $g))
             {
                 apply_move_xy($x, $y, $g);
@@ -175,7 +175,7 @@ function &play(&$g) {
 
 function &init0() {
     $cases = array();
-    for ($i = 0; $i < 3; $i += 1)
+    for ($i = 0; $i < 3; $i++)
     {
         $tab = array_fill(0, 3, 0);
         $cases[$i] = $tab;
@@ -199,7 +199,7 @@ function &read_move() {
     return $b;
 }
 
-for ($i = 0; $i < 2; $i += 1)
+for ($i = 0; $i < 2; $i++)
 {
     $state = init0();
     $c = array(

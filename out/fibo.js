@@ -33,7 +33,7 @@ function fibo0(a, b, i){
     var out0 = 0;
     var a2 = a;
     var b2 = b;
-    for (var j = 0; j <= i + 1; j += 1)
+    for (var j = 0; j <= i + 1; j++)
     {
         out0 += a2;
         var tmp = b2;

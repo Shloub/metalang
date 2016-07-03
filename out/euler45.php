@@ -43,7 +43,7 @@ function findHexa2($n, $a, $b) {
         return findHexa2($n, $a, $c);
 }
 
-for ($n = 285; $n < 55386; $n += 1)
+for ($n = 285; $n < 55386; $n++)
 {
     $t = triangle($n);
     if (findPenta2($t, intval($n / 5), $n) && findHexa2($t, intval($n / 5), intval($n / 2) + 10))

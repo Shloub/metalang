@@ -23,10 +23,10 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY) {
 
 function pathfind(&$tab, $x, $y) {
     $cache = array();
-    for ($i = 0; $i < $y; $i += 1)
+    for ($i = 0; $i < $y; $i++)
     {
         $tmp = array();
-        for ($j = 0; $j < $x; $j += 1)
+        for ($j = 0; $j < $x; $j++)
         {
             echo $tab[$i][$j];
             $tmp[$j] = -1;
@@ -41,7 +41,7 @@ $x = intval(trim(fgets(STDIN)));
 $y = intval(trim(fgets(STDIN)));
 echo $x, " ", $y, "\n";
 $e = array();
-for ($f = 0; $f < $y; $f += 1)
+for ($f = 0; $f < $y; $f++)
     $e[$f] = fgets(STDIN);
 $tab = $e;
 $result = pathfind($tab, $x, $y);

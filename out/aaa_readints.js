@@ -31,29 +31,29 @@ var len = read_int_();
 stdinsep();
 util.print(len, "=len\n");
 var tab1 = new Array(len);
-for (var a = 0; a < len; a += 1)
+for (var a = 0; a < len; a++)
 {
     tab1[a] = read_int_();
     stdinsep();
 }
-for (var i = 0; i < len; i += 1)
+for (var i = 0; i < len; i++)
     util.print(i, "=>", tab1[i], "\n");
 len = read_int_();
 stdinsep();
 var tab2 = new Array(len - 1);
-for (var b = 0; b < len - 1; b += 1)
+for (var b = 0; b < len - 1; b++)
 {
     var c = new Array(len);
-    for (var d = 0; d < len; d += 1)
+    for (var d = 0; d < len; d++)
     {
         c[d] = read_int_();
         stdinsep();
     }
     tab2[b] = c;
 }
-for (var i = 0; i < len - 1; i += 1)
+for (var i = 0; i < len - 1; i++)
 {
-    for (var j = 0; j < len; j += 1)
+    for (var j = 0; j < len; j++)
         util.print(tab2[i][j], " ");
     util.print("\n");
 }

@@ -38,7 +38,7 @@ function find(n, m, x, y, dx, dy){
 
 
 var directions = new Array(8);
-for (var i = 0; i < 8; i += 1)
+for (var i = 0; i < 8; i++)
     if (i == 0)
     {
         var c = {
@@ -97,23 +97,23 @@ for (var i = 0; i < 8; i += 1)
     }
 var max0 = 0;
 var m = new Array(20);
-for (var o = 0; o < 20; o += 1)
+for (var o = 0; o < 20; o++)
 {
     var p = new Array(20);
-    for (var q = 0; q < 20; q += 1)
+    for (var q = 0; q < 20; q++)
     {
         p[q] = read_int_();
         stdinsep();
     }
     m[o] = p;
 }
-for (var j = 0; j < 8; j += 1)
+for (var j = 0; j < 8; j++)
 {
     var r = directions[j];
     var dx = r["tuple_int_int_field_0"];
     var dy = r["tuple_int_int_field_1"];
-    for (var x = 0; x < 20; x += 1)
-        for (var y = 0; y < 20; y += 1)
+    for (var x = 0; x < 20; x++)
+        for (var y = 0; y < 20; y++)
             max0 = Math.max(max0, find(4, m, x, y, dx, dy));
 }
 util.print(max0, "\n");

@@ -20,7 +20,7 @@ func fibo0(a int, b int, i int) int{
   out0 := 0
   a2 := a
   b2 := b
-  for j := 0; j <= i + 1; j += 1 {
+  for j := 0; j <= i + 1; j++ {
       out0 += a2
       tmp := b2
       b2 += a2

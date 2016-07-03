@@ -1,10 +1,10 @@
 <?php
 function eratostene(&$t, $max0) {
     $n = 0;
-    for ($i = 2; $i < $max0; $i += 1)
+    for ($i = 2; $i < $max0; $i++)
         if ($t[$i] == $i)
         {
-            $n += 1;
+            $n++;
             if (intval($max0 / $i) > $i)
             {
                 $j = $i * $i;
@@ -20,20 +20,20 @@ function eratostene(&$t, $max0) {
 
 $maximumprimes = 1000001;
 $era = array();
-for ($j = 0; $j < $maximumprimes; $j += 1)
+for ($j = 0; $j < $maximumprimes; $j++)
     $era[$j] = $j;
 $nprimes = eratostene($era, $maximumprimes);
 $primes = array_fill(0, $nprimes, 0);
 $l = 0;
-for ($k = 2; $k < $maximumprimes; $k += 1)
+for ($k = 2; $k < $maximumprimes; $k++)
     if ($era[$k] == $k)
     {
         $primes[$l] = $k;
-        $l += 1;
+        $l++;
     }
 echo $l, " == ", $nprimes, "\n";
 $sum = array();
-for ($i_ = 0; $i_ < $nprimes; $i_ += 1)
+for ($i_ = 0; $i_ < $nprimes; $i_++)
     $sum[$i_] = $primes[$i_];
 $maxl = 0;
 $process = true;
@@ -43,7 +43,7 @@ $resp = 1;
 while ($process)
 {
     $process = false;
-    for ($i = 0; $i <= $stop; $i += 1)
+    for ($i = 0; $i <= $stop; $i++)
         if ($i + $len < $nprimes)
         {
             $sum[$i] += $primes[$i + $len];
@@ -59,7 +59,7 @@ while ($process)
             else
                 $stop = min($stop, $i);
         }
-    $len += 1;
+    $len++;
 }
 echo $resp, "\n", $maxl, "\n";
 

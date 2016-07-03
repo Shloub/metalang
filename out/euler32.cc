@@ -46,14 +46,14 @@ bool okdigits(std::vector<bool> * ok, int n) {
 int main() {
     int count = 0;
     std::vector<bool> *allowed = new std::vector<bool>( 10 );
-    for (int i = 0; i < 10; i += 1)
+    for (int i = 0; i < 10; i++)
         allowed->at(i) = i != 0;
     std::vector<bool> *counted = new std::vector<bool>( 100000 );
     std::fill(counted->begin(), counted->end(), false);
-    for (int e = 1; e < 10; e += 1)
+    for (int e = 1; e < 10; e++)
     {
         allowed->at(e) = false;
-        for (int b = 1; b < 10; b += 1)
+        for (int b = 1; b < 10; b++)
             if (allowed->at(b))
             {
                 allowed->at(b) = false;
@@ -61,15 +61,15 @@ int main() {
                 if (allowed->at(be))
                 {
                     allowed->at(be) = false;
-                    for (int a = 1; a < 10; a += 1)
+                    for (int a = 1; a < 10; a++)
                         if (allowed->at(a))
                         {
                             allowed->at(a) = false;
-                            for (int c = 1; c < 10; c += 1)
+                            for (int c = 1; c < 10; c++)
                                 if (allowed->at(c))
                                 {
                                     allowed->at(c) = false;
-                                    for (int d = 1; d < 10; d += 1)
+                                    for (int d = 1; d < 10; d++)
                                         if (allowed->at(d))
                                         {
                                             allowed->at(d) = false;

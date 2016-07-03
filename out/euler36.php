@@ -1,13 +1,13 @@
 <?php
 function palindrome2(&$pow2, $n) {
     $t = array();
-    for ($i = 0; $i < 20; $i += 1)
+    for ($i = 0; $i < 20; $i++)
         $t[$i] = intval($n / $pow2[$i]) % 2 == 1;
     $nnum = 0;
-    for ($j = 1; $j < 20; $j += 1)
+    for ($j = 1; $j < 20; $j++)
         if ($t[$j])
             $nnum = $j;
-    for ($k = 0; $k <= intval($nnum / 2); $k += 1)
+    for ($k = 0; $k <= intval($nnum / 2); $k++)
         if ($t[$k] != $t[$nnum - $k])
             return false;
     return true;
@@ -15,13 +15,13 @@ function palindrome2(&$pow2, $n) {
 
 $p = 1;
 $pow2 = array();
-for ($i = 0; $i < 20; $i += 1)
+for ($i = 0; $i < 20; $i++)
 {
     $p *= 2;
     $pow2[$i] = intval($p / 2);
 }
 $sum = 0;
-for ($d = 1; $d < 10; $d += 1)
+for ($d = 1; $d < 10; $d++)
 {
     if (palindrome2($pow2, $d))
     {
@@ -34,12 +34,12 @@ for ($d = 1; $d < 10; $d += 1)
         $sum += $d * 10 + $d;
     }
 }
-for ($a0 = 0; $a0 < 5; $a0 += 1)
+for ($a0 = 0; $a0 < 5; $a0++)
 {
     $a = $a0 * 2 + 1;
-    for ($b = 0; $b < 10; $b += 1)
+    for ($b = 0; $b < 10; $b++)
     {
-        for ($c = 0; $c < 10; $c += 1)
+        for ($c = 0; $c < 10; $c++)
         {
             $num0 = $a * 100000 + $b * 10000 + $c * 1000 + $c * 100 + $b * 10 + $a;
             if (palindrome2($pow2, $num0))

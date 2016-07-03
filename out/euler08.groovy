@@ -5,7 +5,7 @@ import java.util.*
 @Field Scanner scanner = new Scanner(System.in)
 int i = 1
 int[] last = new int[5]
-for (int j = 0; j < 5; j += 1)
+for (int j = 0; j < 5; j++)
 {
     char c = scanner.findWithinHorizon(".", 1).charAt(0)
     int d = (0+c) - (0+(char)'0')
@@ -15,7 +15,7 @@ for (int j = 0; j < 5; j += 1)
 int max0 = i
 int index = 0
 int nskipdiv = 0
-for (int k = 1; k < 996; k += 1)
+for (int k = 1; k < 996; k++)
 {
     char e = scanner.findWithinHorizon(".", 1).charAt(0)
     int f = (0+e) - (0+(char)'0')
@@ -29,7 +29,7 @@ for (int k = 1; k < 996; k += 1)
         i *= f
         if (nskipdiv < 0)
             i /= last[index]
-        nskipdiv -= 1
+        nskipdiv--
     }
     last[index] = f
     index = (index + 1) % 5

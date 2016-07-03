@@ -7,7 +7,7 @@ public class sumDiv
   {
     int a = 0;
     /* test */
-    a += 1;
+    a++;
     /* test 2 */
   }
   
@@ -29,7 +29,7 @@ public class sumDiv
     /* On désire renvoyer la somme des diviseurs */
     int out0 = 0;
     /* On déclare un entier qui contiendra la somme */
-    for (int i = 1; i <= n; i += 1)
+    for (int i = 1; i <= n; i++)
         /* La boucle : i est le diviseur potentiel*/
         if (n % i == 0)
         {

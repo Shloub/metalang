@@ -9,7 +9,7 @@ function g(&$t, $index) {
 
 $j = 0;
 $a = array();
-for ($i = 0; $i < 5; $i += 1)
+for ($i = 0; $i < 5; $i++)
 {
     echo $i;
     $j += $i;

@@ -1,13 +1,13 @@
 var util = require("util");
 function palindrome2(pow2, n){
     var t = new Array(20);
-    for (var i = 0; i < 20; i += 1)
+    for (var i = 0; i < 20; i++)
         t[i] = ~~(~~(n / pow2[i]) % 2) == 1;
     var nnum = 0;
-    for (var j = 1; j < 20; j += 1)
+    for (var j = 1; j < 20; j++)
         if (t[j])
             nnum = j;
-    for (var k = 0; k <= ~~(nnum / 2); k += 1)
+    for (var k = 0; k <= ~~(nnum / 2); k++)
         if (t[k] != t[nnum - k])
             return false;
     return true;
@@ -15,13 +15,13 @@ function palindrome2(pow2, n){
 
 var p = 1;
 var pow2 = new Array(20);
-for (var i = 0; i < 20; i += 1)
+for (var i = 0; i < 20; i++)
 {
     p *= 2;
     pow2[i] = ~~(p / 2);
 }
 var sum = 0;
-for (var d = 1; d < 10; d += 1)
+for (var d = 1; d < 10; d++)
 {
     if (palindrome2(pow2, d))
     {
@@ -34,12 +34,12 @@ for (var d = 1; d < 10; d += 1)
         sum += d * 10 + d;
     }
 }
-for (var a0 = 0; a0 < 5; a0 += 1)
+for (var a0 = 0; a0 < 5; a0++)
 {
     var a = a0 * 2 + 1;
-    for (var b = 0; b < 10; b += 1)
+    for (var b = 0; b < 10; b++)
     {
-        for (var c = 0; c < 10; c += 1)
+        for (var c = 0; c < 10; c++)
         {
             var num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a;
             if (palindrome2(pow2, num0))

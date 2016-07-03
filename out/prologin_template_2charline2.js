@@ -35,13 +35,13 @@ function read_int_(){
 
 function programme_candidat(tableau1, taille1, tableau2, taille2){
     var out0 = 0;
-    for (var i = 0; i < taille1; i += 1)
+    for (var i = 0; i < taille1; i++)
     {
         out0 += tableau1[i].charCodeAt(0) * i;
         util.print(tableau1[i]);
     }
     util.print("--\n");
-    for (var j = 0; j < taille2; j += 1)
+    for (var j = 0; j < taille2; j++)
     {
         out0 += tableau2[j].charCodeAt(0) * j * 100;
         util.print(tableau2[j]);
@@ -55,13 +55,13 @@ stdinsep();
 var taille2 = read_int_();
 stdinsep();
 var tableau1 = new Array(taille1);
-for (var a = 0; a < taille1; a += 1)
+for (var a = 0; a < taille1; a++)
 {
     tableau1[a] = read_char_();
 }
 stdinsep();
 var tableau2 = new Array(taille2);
-for (var b = 0; b < taille2; b += 1)
+for (var b = 0; b < taille2; b++)
 {
     tableau2[b] = read_char_();
 }

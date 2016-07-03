@@ -30,7 +30,7 @@ int find0(int len, std::vector<std::vector<int> *> * tab, std::vector<std::vecto
 
 int find(int len, std::vector<std::vector<int> *> * tab) {
     std::vector<std::vector<int> *> *tab2 = new std::vector<std::vector<int> *>( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         std::vector<int> *tab3 = new std::vector<int>( i + 1 );
         std::fill(tab3->begin(), tab3->end(), 0);
@@ -44,10 +44,10 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<std::vector<int> *> *tab = new std::vector<std::vector<int> *>( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         std::vector<int> *tab2 = new std::vector<int>( i + 1 );
-        for (int j = 0; j <= i; j += 1)
+        for (int j = 0; j <= i; j++)
         {
             int tmp = 0;
             std::cin >> tmp;
@@ -56,9 +56,9 @@ int main() {
         tab->at(i) = tab2;
     }
     std::cout << find(len, tab) << "\n";
-    for (int k = 0; k < len; k += 1)
+    for (int k = 0; k < len; k++)
     {
-        for (int l = 0; l <= k; l += 1)
+        for (int l = 0; l <= k; l++)
             std::cout << tab->at(k)->at(l) << " ";
         std::cout << "\n";
     }

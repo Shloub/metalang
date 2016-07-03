@@ -1,5 +1,5 @@
 <?php
 $str = fgets(STDIN);
-for ($i = 0; $i < 12; $i += 1)
+for ($i = 0; $i < 12; $i++)
     echo $str[$i];
 

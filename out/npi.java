@@ -14,29 +14,29 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
   static int npi0(char[] str, int len)
   {
     int[] stack = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         stack[i] = 0;
     int ptrStack = 0;
     int ptrStr = 0;
     while (ptrStr < len)
         if (str[ptrStr] == ' ')
-            ptrStr += 1;
+            ptrStr++;
         else if (is_number(str[ptrStr]))
         {
             int num = 0;
             while (str[ptrStr] != ' ')
             {
                 num = num * 10 + (int)(str[ptrStr]) - (int)('0');
-                ptrStr += 1;
+                ptrStr++;
             }
             stack[ptrStack] = num;
-            ptrStack += 1;
+            ptrStack++;
         }
         else if (str[ptrStr] == '+')
         {
             stack[ptrStack - 2] += stack[ptrStack - 1];
-            ptrStack -= 1;
-            ptrStr += 1;
+            ptrStack--;
+            ptrStr++;
         }
     return stack[0];
   }
@@ -53,7 +53,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab = new char[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         char tmp = '\u0000';
         tmp = scanner.findWithinHorizon(".", 1).charAt(0);

@@ -35,51 +35,51 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 */
     bool[] allowed = new bool[10];
-    for (int i = 0; i < 10; i += 1)
+    for (int i = 0; i < 10; i++)
         allowed[i] = true;
-    for (int i6 = 0; i6 < 2; i6 += 1)
+    for (int i6 = 0; i6 < 2; i6++)
     {
         int d6 = i6 * 5;
         if (allowed[d6])
         {
             allowed[d6] = false;
-            for (int d7 = 0; d7 < 10; d7 += 1)
+            for (int d7 = 0; d7 < 10; d7++)
                 if (allowed[d7])
                 {
                     allowed[d7] = false;
-                    for (int d8 = 0; d8 < 10; d8 += 1)
+                    for (int d8 = 0; d8 < 10; d8++)
                         if (allowed[d8])
                         {
                             allowed[d8] = false;
-                            for (int d9 = 0; d9 < 10; d9 += 1)
+                            for (int d9 = 0; d9 < 10; d9++)
                                 if (allowed[d9])
                                 {
                                     allowed[d9] = false;
-                                    for (int d10 = 1; d10 < 10; d10 += 1)
+                                    for (int d10 = 1; d10 < 10; d10++)
                                         if (allowed[d10] && (d6 * 100 + d7 * 10 + d8) % 11 == 0 && (d7 * 100 + d8 * 10 + d9) % 13 == 0 && (d8 * 100 + d9 * 10 + d10) % 17 == 0)
                                         {
                                             allowed[d10] = false;
-                                            for (int d5 = 0; d5 < 10; d5 += 1)
+                                            for (int d5 = 0; d5 < 10; d5++)
                                                 if (allowed[d5])
                                                 {
                                                     allowed[d5] = false;
                                                     if ((d5 * 100 + d6 * 10 + d7) % 7 == 0)
-                                                        for (int i4 = 0; i4 < 5; i4 += 1)
+                                                        for (int i4 = 0; i4 < 5; i4++)
                                                         {
                                                             int d4 = i4 * 2;
                                                             if (allowed[d4])
                                                             {
                                                                 allowed[d4] = false;
-                                                                for (int d3 = 0; d3 < 10; d3 += 1)
+                                                                for (int d3 = 0; d3 < 10; d3++)
                                                                     if (allowed[d3])
                                                                     {
                                                                         allowed[d3] = false;
                                                                         if ((d3 + d4 + d5) % 3 == 0)
-                                                                            for (int d2 = 0; d2 < 10; d2 += 1)
+                                                                            for (int d2 = 0; d2 < 10; d2++)
                                                                                 if (allowed[d2])
                                                                                 {
                                                                                 allowed[d2] = false;
-                                                                                for (int d1 = 0; d1 < 10; d1 += 1)
+                                                                                for (int d1 = 0; d1 < 10; d1++)
                                                                                     if (allowed[d1])
                                                                                 {
                                                                                 allowed[d1] = false;

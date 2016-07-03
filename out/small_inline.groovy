@@ -4,7 +4,7 @@ import java.util.*
 
 @Field Scanner scanner = new Scanner(System.in)
 int[] t = new int[2]
-for (int d = 0; d < 2; d += 1)
+for (int d = 0; d < 2; d++)
 {
     if (scanner.hasNext("^-")) {
       scanner.next("^-")

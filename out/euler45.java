@@ -55,7 +55,7 @@ public class euler45
   
   public static void main(String args[])
   {
-    for (int n = 285; n < 55386; n += 1)
+    for (int n = 285; n < 55386; n++)
     {
         int t = triangle(n);
         if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))

@@ -31,10 +31,10 @@ int find0(int len, int[][] tab, int[][] cache, int x, int y)
 int find(int len, int[][] tab)
 {
   int[][] tab2 = new int[len][]
-  for (int i = 0; i < len; i += 1)
+  for (int i = 0; i < len; i++)
   {
       int[] tab3 = new int[i + 1]
-      for (int j = 0; j <= i; j += 1)
+      for (int j = 0; j <= i; j++)
           tab3[j] = 0
       tab2[i] = tab3
   }
@@ -52,10 +52,10 @@ if (scanner.hasNext("^-")) {
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 int[][] tab = new int[len][]
-for (int i = 0; i < len; i += 1)
+for (int i = 0; i < len; i++)
 {
     int[] tab2 = new int[i + 1]
-    for (int j = 0; j <= i; j += 1)
+    for (int j = 0; j <= i; j++)
     {
         int tmp = 0
         if (scanner.hasNext("^-")) {
@@ -70,9 +70,9 @@ for (int i = 0; i < len; i += 1)
     tab[i] = tab2
 }
 System.out.printf("%d\n", find(len, tab))
-for (int k = 0; k < len; k += 1)
+for (int k = 0; k < len; k++)
 {
-    for (int l = 0; l <= k; l += 1)
+    for (int l = 0; l <= k; l++)
         System.out.printf("%d ", tab[k][l])
     print("\n")
 }

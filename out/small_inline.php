@@ -20,7 +20,7 @@ function scantrim(){
   }
 }
 $t = array();
-for ($d = 0; $d < 2; $d += 1)
+for ($d = 0; $d < 2; $d++)
 {
     list($t[$d]) = scan("%d");
     scantrim();

@@ -20,9 +20,9 @@ public class record3
   static int result(toto[] t, int len)
   {
     int out0 = 0;
-    for (int j = 0; j < len; j += 1)
+    for (int j = 0; j < len; j++)
     {
-        t[j].blah += 1;
+        t[j].blah++;
         out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
     }
     return out0;
@@ -32,7 +32,7 @@ public class record3
   public static void main(String args[])
   {
     toto[] t = new toto[4];
-    for (int i = 0; i < 4; i += 1)
+    for (int i = 0; i < 4; i++)
         t[i] = mktoto(i);
     if (scanner.hasNext("^-")) {
       scanner.next("^-");

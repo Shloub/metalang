@@ -5,7 +5,7 @@ int main() {
     int i = 4;
     /*while i < 10 do */
     std::cout << i;
-    i += 1;
+    i++;
     /*  end */
     std::cout << i;
 }

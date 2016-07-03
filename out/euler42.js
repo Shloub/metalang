@@ -47,7 +47,7 @@ function score(){
     var len = read_int_();
     stdinsep();
     var sum = 0;
-    for (var i = 1; i <= len; i += 1)
+    for (var i = 1; i <= len; i++)
     {
         var c = read_char_();
         sum += c.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
@@ -59,13 +59,13 @@ function score(){
         return 0;
 }
 
-for (var i = 1; i < 56; i += 1)
+for (var i = 1; i < 56; i++)
     if (is_triangular(i))
         util.print(i, " ");
 util.print("\n");
 var sum = 0;
 var n = read_int_();
-for (var i = 1; i <= n; i += 1)
+for (var i = 1; i <= n; i++)
     sum += score();
 util.print(sum, "\n");
 

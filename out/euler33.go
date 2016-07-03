@@ -30,9 +30,9 @@ func pgcd(a int, b int) int{
 func main() {
   top := 1
   bottom := 1
-  for i := 1; i < 10; i += 1 {
-      for j := 1; j < 10; j += 1 {
-          for k := 1; k < 10; k += 1 {
+  for i := 1; i < 10; i++ {
+      for j := 1; j < 10; j++ {
+          for k := 1; k < 10; k++ {
               if i != j && j != k {
                   a := i * 10 + j
                   b := j * 10 + k

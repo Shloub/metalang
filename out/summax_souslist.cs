@@ -50,7 +50,7 @@ static int readInt(){
   {
     int current = 0;
     int max0 = 0;
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         current += lst[i];
         if (current < 0)
@@ -68,7 +68,7 @@ static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         int tmp = 0;
         tmp = readInt();

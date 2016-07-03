@@ -44,9 +44,9 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
 
 func pathfind(tab [][]byte, x int, y int) int{
   var cache [][]int = make([][]int, y)
-  for i := 0; i < y; i += 1 {
+  for i := 0; i < y; i++ {
       var tmp []int = make([]int, x)
-      for j := 0; j < x; j += 1 {
+      for j := 0; j < x; j++ {
           tmp[j] = -1
       }
       cache[i] = tmp
@@ -63,9 +63,9 @@ func main() {
   fmt.Fscanf(reader, "%d", &y)
   skip()
   var tab [][]byte = make([][]byte, y)
-  for i := 0; i < y; i += 1 {
+  for i := 0; i < y; i++ {
       var tab2 []byte = make([]byte, x)
-      for j := 0; j < x; j += 1 {
+      for j := 0; j < x; j++ {
           var tmp byte = '\x00'
           fmt.Fscanf(reader, "%c", &tmp)
           tab2[j] = tmp

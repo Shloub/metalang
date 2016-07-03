@@ -18,7 +18,7 @@ func main() {
               sqrtia = int(math.Sqrt(float64(a)))
               found = true
           }
-          b += 1
+          b++
       }
       if !found {
           fmt.Printf("%d\n", a)

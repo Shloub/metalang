@@ -6,9 +6,9 @@ public class countchar
   static int nth(char[] tab, char tofind, int len)
   {
     int out0 = 0;
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         if (tab[i] == tofind)
-            out0 += 1;
+            out0++;
     return out0;
   }
   
@@ -27,7 +27,7 @@ public class countchar
     tofind = scanner.findWithinHorizon(".", 1).charAt(0);
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab = new char[len];
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         char tmp = '\u0000';
         tmp = scanner.findWithinHorizon(".", 1).charAt(0);

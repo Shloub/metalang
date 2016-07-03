@@ -3,13 +3,13 @@ import java.util.*
 boolean palindrome2(int[] pow2, int n)
 {
   boolean[] t = new boolean[20]
-  for (int i = 0; i < 20; i += 1)
+  for (int i = 0; i < 20; i++)
       t[i] = n.intdiv(pow2[i]) % 2 == 1
   int nnum = 0
-  for (int j = 1; j < 20; j += 1)
+  for (int j = 1; j < 20; j++)
       if (t[j])
           nnum = j
-  for (int k = 0; k <= nnum.intdiv(2); k += 1)
+  for (int k = 0; k <= nnum.intdiv(2); k++)
       if (t[k] != t[nnum - k])
           return false
   return true
@@ -19,13 +19,13 @@ boolean palindrome2(int[] pow2, int n)
 
 int p = 1
 int[] pow2 = new int[20]
-for (int i = 0; i < 20; i += 1)
+for (int i = 0; i < 20; i++)
 {
     p *= 2
     pow2[i] = p.intdiv(2)
 }
 int sum = 0
-for (int d = 1; d < 10; d += 1)
+for (int d = 1; d < 10; d++)
 {
     if (palindrome2(pow2, d))
     {
@@ -38,12 +38,12 @@ for (int d = 1; d < 10; d += 1)
         sum += d * 10 + d
     }
 }
-for (int a0 = 0; a0 < 5; a0 += 1)
+for (int a0 = 0; a0 < 5; a0++)
 {
     int a = a0 * 2 + 1
-    for (int b = 0; b < 10; b += 1)
+    for (int b = 0; b < 10; b++)
     {
-        for (int c = 0; c < 10; c += 1)
+        for (int c = 0; c < 10; c++)
         {
             int num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a
             if (palindrome2(pow2, num0))

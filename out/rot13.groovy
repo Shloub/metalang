@@ -15,7 +15,7 @@ if (scanner.hasNext("^-")) {
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
 char[] tab4 = new char[strlen]
-for (int toto = 0; toto < strlen; toto += 1)
+for (int toto = 0; toto < strlen; toto++)
 {
     char tmpc = scanner.findWithinHorizon(".", 1).charAt(0)
     int c = (0+tmpc)
@@ -23,6 +23,6 @@ for (int toto = 0; toto < strlen; toto += 1)
         c = (c - (0+(char)'a') + 13) % 26 + (0+(char)'a')
     tab4[toto] = (char)(c)
 }
-for (int j = 0; j < strlen; j += 1)
+for (int j = 0; j < strlen; j++)
     print(tab4[j])
 

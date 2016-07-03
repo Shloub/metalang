@@ -4,9 +4,9 @@ import java.util.*
 int nth(char[] tab, char tofind, int len)
 {
   int out0 = 0
-  for (int i = 0; i < len; i += 1)
+  for (int i = 0; i < len; i++)
       if (tab[i] == tofind)
-          out0 += 1
+          out0++
   return out0
 }
 
@@ -24,7 +24,7 @@ char tofind = (char)0
 tofind = scanner.findWithinHorizon(".", 1).charAt(0)
 scanner.findWithinHorizon("[\n\r ]*", 1)
 char[] tab = new char[len]
-for (int i = 0; i < len; i += 1)
+for (int i = 0; i < len; i++)
 {
     char tmp = (char)0
     tmp = scanner.findWithinHorizon(".", 1).charAt(0)

@@ -1,13 +1,13 @@
 <?php
 function exp0($a, $e) {
     $o = 1;
-    for ($i = 1; $i <= $e; $i += 1)
+    for ($i = 1; $i <= $e; $i++)
         $o *= $a;
     return $o;
 }
 
 function e(&$t, $n) {
-    for ($i = 1; $i < 9; $i += 1)
+    for ($i = 1; $i < 9; $i++)
         if ($n >= $t[$i] * $i)
             $n -= $t[$i] * $i;
         else
@@ -20,24 +20,24 @@ function e(&$t, $n) {
 }
 
 $t = array();
-for ($i = 0; $i < 9; $i += 1)
+for ($i = 0; $i < 9; $i++)
     $t[$i] = exp0(10, $i) - exp0(10, $i - 1);
-for ($i2 = 1; $i2 < 9; $i2 += 1)
+for ($i2 = 1; $i2 < 9; $i2++)
     echo $i2, " => ", $t[$i2], "\n";
-for ($j = 0; $j < 81; $j += 1)
+for ($j = 0; $j < 81; $j++)
     echo e($t, $j);
 echo "\n";
-for ($k = 1; $k < 51; $k += 1)
+for ($k = 1; $k < 51; $k++)
     echo $k;
 echo "\n";
-for ($j2 = 169; $j2 < 221; $j2 += 1)
+for ($j2 = 169; $j2 < 221; $j2++)
     echo e($t, $j2);
 echo "\n";
-for ($k2 = 90; $k2 < 111; $k2 += 1)
+for ($k2 = 90; $k2 < 111; $k2++)
     echo $k2;
 echo "\n";
 $out0 = 1;
-for ($l = 0; $l < 7; $l += 1)
+for ($l = 0; $l < 7; $l++)
 {
     $puiss = exp0(10, $l);
     $v = e($t, $puiss - 1);

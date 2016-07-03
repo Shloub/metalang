@@ -13,7 +13,7 @@ public class aaa_04loop
     {
         if (i % j == 5)
             return true;
-        j += 1;
+        j++;
     }
     return false;
   }
@@ -22,7 +22,7 @@ public class aaa_04loop
   public static void main(String args[])
   {
     int j = 0;
-    for (int k = 0; k < 11; k += 1)
+    for (int k = 0; k < 11; k++)
     {
         j += k;
         System.out.printf("%d\n", j);
@@ -31,7 +31,7 @@ public class aaa_04loop
     while (i < 10)
     {
         System.out.print(i);
-        i += 1;
+        i++;
         j += i;
     }
     System.out.printf("%d%dFIN TEST\n", j, i);

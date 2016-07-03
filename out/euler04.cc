@@ -30,12 +30,12 @@ int chiffre(int c, int m) {
 
 int main() {
     int m = 1;
-    for (int a = 0; a < 10; a += 1)
-        for (int f = 1; f < 10; f += 1)
-            for (int d = 0; d < 10; d += 1)
-                for (int c = 1; c < 10; c += 1)
-                    for (int b = 0; b < 10; b += 1)
-                        for (int e = 0; e < 10; e += 1)
+    for (int a = 0; a < 10; a++)
+        for (int f = 1; f < 10; f++)
+            for (int d = 0; d < 10; d++)
+                for (int c = 1; c < 10; c++)
+                    for (int b = 0; b < 10; b++)
+                        for (int e = 0; e < 10; e++)
                         {
                             int mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
                             if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))

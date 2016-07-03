@@ -1,13 +1,13 @@
 package main
 func foo() int{
-  for i := 0; i < 11; i += 1 {
+  for i := 0; i < 11; i++ {
       
   }
   return 0
 }
 
 func bar() int{
-  for i := 0; i < 11; i += 1 {
+  for i := 0; i < 11; i++ {
       a := 0
       _ = a
   }

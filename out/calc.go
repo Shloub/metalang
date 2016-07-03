@@ -7,7 +7,7 @@ func fibo(a int, b int, i int) int{
   out_ := 0
   a2 := a
   b2 := b
-  for j := 0; j <= i + 1; j += 1 {
+  for j := 0; j <= i + 1; j++ {
       fmt.Printf("%d", j)
       out_ += a2
       tmp := b2
