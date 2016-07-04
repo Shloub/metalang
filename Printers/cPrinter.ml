@@ -168,20 +168,11 @@ class cPrinter = object(self)
     let t = Instr.Fixed.Deep.map rewrite t in
   let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc "objc" li
+        try List.assoc "c" li
         with Not_found -> List.assoc "" li) macros
    in (print_instr print_instr0 (ptype (baseprinter#getTyperEnv ())) macros t) f
      
-  method base_multi_print = baseprinter#multi_print
-
   method lang () = lang
-
-  method expr f e =
-    let config = config (StringMap.map (fun (ty, params, li) ->
-      ty, params,
-      try List.assoc (self#lang ()) li
-      with Not_found -> List.assoc "" li) macros) in
-    print_expr config e f nop
 
   method ptype f t = ptype (baseprinter#getTyperEnv ()) f t
 
@@ -192,17 +183,6 @@ class cPrinter = object(self)
       (self#declare_for "char") li_forc
       self#instructions main
       self#separator ()
-
-  method bloc f li = match li with
-  | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
-                             | (Instr.AllocArray _)
-                             | (Instr.Read _)
-                             | (Instr.Declare _)
-                             | (Instr.Comment _)))
-    ] ->
-    Format.fprintf f "@[<v 4>{@\n%a@]@\n}" self#instructions li
-  | [i] -> Format.fprintf f "  %a" self#instr i
-  | _ ->  Format.fprintf f "@[<v 4>{@\n%a@]@\n}" self#instructions li
 
   method prototype f t = self#ptype f t
 
