@@ -5,7 +5,7 @@
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i = 0;
-  i --;
+  i--;
   printf("%d\n", i);
   i += 55;
   printf("%d\n", i);
@@ -17,7 +17,7 @@ int main(void){
   printf("%d\n", i);
   i /= 3;
   printf("%d\n", i);
-  i --;
+  i--;
   printf("%d\n", i);
   /*
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo

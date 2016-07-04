@@ -10,12 +10,12 @@ int montagnes0(int* tab, int len) {
     {
         int x = tab[i];
         while (j >= 0 && x > tab[len - j])
-          j --;
+            j--;
         j++;
         tab[len - j] = x;
         if (j > max0)
-          max0 = j;
-        i --;
+            max0 = j;
+        i--;
     }
     return max0;
 }
@@ -24,7 +24,7 @@ int main(void) {
     int i;
     int len = 0;
     scanf("%d ", &len);
-    int *tab = calloc( len , sizeof(int));
+    int *tab = calloc(len, sizeof(int));
     for (i = 0; i < len; i++)
     {
         int x = 0;

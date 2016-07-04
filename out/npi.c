@@ -12,31 +12,31 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 
 int npi0(char* str, int len) {
     int i;
-    int *stack = calloc( len , sizeof(int));
+    int *stack = calloc(len, sizeof(int));
     for (i = 0; i < len; i++)
-      stack[i] = 0;
+        stack[i] = 0;
     int ptrStack = 0;
     int ptrStr = 0;
     while (ptrStr < len)
-      if (str[ptrStr] == ' ')
-      ptrStr++;
-    else if (is_number(str[ptrStr]))
-    {
-        int num = 0;
-        while (str[ptrStr] != ' ')
+        if (str[ptrStr] == ' ')
+            ptrStr++;
+        else if (is_number(str[ptrStr]))
         {
-            num = num * 10 + (int)(str[ptrStr]) - (int)('0');
+            int num = 0;
+            while (str[ptrStr] != ' ')
+            {
+                num = num * 10 + (int)(str[ptrStr]) - (int)('0');
+                ptrStr++;
+            }
+            stack[ptrStack] = num;
+            ptrStack++;
+        }
+        else if (str[ptrStr] == '+')
+        {
+            stack[ptrStack - 2] += stack[ptrStack - 1];
+            ptrStack--;
             ptrStr++;
         }
-        stack[ptrStack] = num;
-        ptrStack++;
-    }
-    else if (str[ptrStr] == '+')
-    {
-        stack[ptrStack - 2] += stack[ptrStack - 1];
-        ptrStack --;
-        ptrStr++;
-    }
     return stack[0];
 }
 
@@ -44,7 +44,7 @@ int main(void) {
     int i;
     int len = 0;
     scanf("%d ", &len);
-    char *tab = calloc( len , sizeof(char));
+    char *tab = calloc(len, sizeof(char));
     for (i = 0; i < len; i++)
     {
         char tmp = '\x00';

@@ -12,9 +12,9 @@ int main(void){
   int i;
   char input = ' ';
   int current_pos = 500;
-  int *mem = calloc( 1000 , sizeof(int));
-  for (i = 0; i <= 999; i++)
-    mem[i] = 0;
+  int *mem = calloc(1000, sizeof(int));
+  for (i = 0; i < 1000; i++)
+      mem[i] = 0;
   mem[current_pos]++;
   mem[current_pos]++;
   mem[current_pos]++;
@@ -75,8 +75,8 @@ int main(void){
   mem[current_pos]++;
   while (mem[current_pos] != 0)
   {
-      mem[current_pos] --;
-      current_pos --;
+      mem[current_pos]--;
+      current_pos--;
       mem[current_pos]++;
       printf("%c", (char)(mem[current_pos]));
       current_pos++;

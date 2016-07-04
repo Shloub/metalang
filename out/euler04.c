@@ -4,9 +4,9 @@
 
 int max2_(int a, int b) {
     if (a > b)
-      return a;
+        return a;
     else
-      return b;
+        return b;
 }
 
 /*
@@ -30,25 +30,25 @@ c * f * 10000
 
 int chiffre(int c, int m) {
     if (c == 0)
-      return m % 10;
+        return m % 10;
     else
-      return chiffre(c - 1, m / 10);
+        return chiffre(c - 1, m / 10);
 }
 
 int main(void) {
     int a, f, d, c, b, e;
     int m = 1;
-    for (a = 0; a <= 9; a++)
-      for (f = 1; f <= 9; f++)
-        for (d = 0; d <= 9; d++)
-          for (c = 1; c <= 9; c++)
-            for (b = 0; b <= 9; b++)
-              for (e = 0; e <= 9; e++)
-              {
-                  int mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
-                  if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
-                    m = max2_(mul, m);
-    }
+    for (a = 0; a < 10; a++)
+        for (f = 1; f < 10; f++)
+            for (d = 0; d < 10; d++)
+                for (c = 1; c < 10; c++)
+                    for (b = 0; b < 10; b++)
+                        for (e = 0; e < 10; e++)
+                        {
+                            int mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
+                            if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
+                                m = max2_(mul, m);
+                        }
     printf("%d\n", m);
     return 0;
 }

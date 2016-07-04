@@ -7,16 +7,16 @@ int eratostene(int* t, int max0) {
     int i;
     int n = 0;
     for (i = 2; i < max0; i++)
-      if (t[i] == i)
-    {
-        n++;
-        int j = i * i;
-        while (j < max0 && j > 0)
+        if (t[i] == i)
         {
-            t[j] = 0;
-            j += i;
+            n++;
+            int j = i * i;
+            while (j < max0 && j > 0)
+            {
+                t[j] = 0;
+                j += i;
+            }
         }
-    }
     return n;
 }
 
@@ -32,7 +32,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
             n /= d;
         }
         if (n == 1)
-          return primes[i];
+            return primes[i];
     }
     return n;
 }
@@ -40,7 +40,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
 
 int sumdivaux2(int* t, int n, int i) {
     while (i < n && t[i] == 0)
-      i++;
+        i++;
     return i;
 }
 
@@ -48,9 +48,9 @@ int sumdivaux2(int* t, int n, int i) {
 int sumdivaux(int* t, int n, int i) {
     int j;
     if (i > n)
-      return 1;
+        return 1;
     else if (t[i] == 0)
-      return sumdivaux(t, n, sumdivaux2(t, n, i + 1));
+        return sumdivaux(t, n, sumdivaux2(t, n, i + 1));
     else
     {
         int o = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
@@ -68,9 +68,9 @@ int sumdivaux(int* t, int n, int i) {
 
 int sumdiv(int nprimes, int* primes, int n) {
     int i;
-    int *t = calloc( n + 1 , sizeof(int));
+    int *t = calloc(n + 1, sizeof(int));
     for (i = 0; i <= n; i++)
-      t[i] = 0;
+        t[i] = 0;
     int max0 = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
 }
@@ -79,42 +79,42 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int o, i, j, r, q, p, k, t, s;
   int maximumprimes = 30001;
-  int *era = calloc( maximumprimes , sizeof(int));
+  int *era = calloc(maximumprimes, sizeof(int));
   for (s = 0; s < maximumprimes; s++)
-    era[s] = s;
+      era[s] = s;
   int nprimes = eratostene(era, maximumprimes);
-  int *primes = calloc( nprimes , sizeof(int));
+  int *primes = calloc(nprimes, sizeof(int));
   for (t = 0; t < nprimes; t++)
-    primes[t] = 0;
+      primes[t] = 0;
   int l = 0;
   for (k = 2; k < maximumprimes; k++)
-    if (era[k] == k)
-  {
-      primes[l] = k;
-      l++;
-  }
+      if (era[k] == k)
+      {
+          primes[l] = k;
+          l++;
+      }
   int n = 100;
   /* 28124 ça prend trop de temps mais on arrive a passer le test */
-  int *abondant = calloc( n + 1 , sizeof(int));
+  int *abondant = calloc(n + 1, sizeof(int));
   for (p = 0; p <= n; p++)
-    abondant[p] = 0;
-  int *summable = calloc( n + 1 , sizeof(int));
+      abondant[p] = 0;
+  int *summable = calloc(n + 1, sizeof(int));
   for (q = 0; q <= n; q++)
-    summable[q] = 0;
+      summable[q] = 0;
   int sum = 0;
   for (r = 2; r <= n; r++)
   {
       int other = sumdiv(nprimes, primes, r) - r;
       if (other > r)
-        abondant[r] = 1;
+          abondant[r] = 1;
   }
   for (i = 1; i <= n; i++)
-    for (j = 1; j <= n; j++)
-      if (abondant[i] && abondant[j] && i + j <= n)
-    summable[i + j] = 1;
+      for (j = 1; j <= n; j++)
+          if (abondant[i] && abondant[j] && i + j <= n)
+              summable[i + j] = 1;
   for (o = 1; o <= n; o++)
-    if (!summable[o])
-    sum += o;
+      if (!summable[o])
+          sum += o;
   printf("\n%d\n", sum);
   [pool drain];
   return 0;

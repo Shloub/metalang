@@ -4,9 +4,9 @@
 
 int pathfind_aux(int* cache, int* tab, int len, int pos) {
     if (pos >= len - 1)
-      return 0;
+        return 0;
     else if (cache[pos] != -1)
-      return cache[pos];
+        return cache[pos];
     else
     {
         cache[pos] = len * 2;
@@ -14,9 +14,9 @@ int pathfind_aux(int* cache, int* tab, int len, int pos) {
         int oneval = pathfind_aux(cache, tab, len, pos + 1);
         int out0 = 0;
         if (posval < oneval)
-          out0 = 1 + posval;
+            out0 = 1 + posval;
         else
-          out0 = 1 + oneval;
+            out0 = 1 + oneval;
         cache[pos] = out0;
         return out0;
     }
@@ -25,9 +25,9 @@ int pathfind_aux(int* cache, int* tab, int len, int pos) {
 
 int pathfind(int* tab, int len) {
     int i;
-    int *cache = calloc( len , sizeof(int));
+    int *cache = calloc(len, sizeof(int));
     for (i = 0; i < len; i++)
-      cache[i] = -1;
+        cache[i] = -1;
     return pathfind_aux(cache, tab, len, 0);
 }
 
@@ -35,7 +35,7 @@ int main(void) {
     int i;
     int len = 0;
     scanf("%d ", &len);
-    int *tab = calloc( len , sizeof(int));
+    int *tab = calloc(len, sizeof(int));
     for (i = 0; i < len; i++)
     {
         int tmp = 0;

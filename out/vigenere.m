@@ -6,11 +6,11 @@
 int position_alphabet(char c) {
     int i = (int)(c);
     if (i <= (int)('Z') && i >= (int)('A'))
-      return i - (int)('A');
+        return i - (int)('A');
     else if (i <= (int)('z') && i >= (int)('a'))
-      return i - (int)('a');
+        return i - (int)('a');
     else
-      return -1;
+        return -1;
 }
 
 
@@ -38,14 +38,14 @@ int main(void){
   int i, index2, taille, index, taille_cle;
   char out2, out0;
   scanf("%d ", &taille_cle);
-  char *cle = calloc( taille_cle , sizeof(char));
+  char *cle = calloc(taille_cle, sizeof(char));
   for (index = 0; index < taille_cle; index++)
   {
       scanf("%c", &out0);
       cle[index] = out0;
   }
   scanf(" %d ", &taille);
-  char *message = calloc( taille , sizeof(char));
+  char *message = calloc(taille, sizeof(char));
   for (index2 = 0; index2 < taille; index2++)
   {
       scanf("%c", &out2);
@@ -53,7 +53,7 @@ int main(void){
   }
   crypte(taille_cle, cle, taille, message);
   for (i = 0; i < taille; i++)
-    printf("%c", message[i]);
+      printf("%c", message[i]);
   printf("\n");
   [pool drain];
   return 0;

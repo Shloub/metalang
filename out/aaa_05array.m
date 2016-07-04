@@ -16,8 +16,8 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i;
   int j = 0;
-  int *a = calloc( 5 , sizeof(int));
-  for (i = 0; i <= 4; i++)
+  int *a = calloc(5, sizeof(int));
+  for (i = 0; i < 5; i++)
   {
       printf("%d", i);
       j += i;
@@ -25,15 +25,15 @@ int main(void){
   }
   printf("%d ", j);
   if (a[0])
-    printf("True");
+      printf("True");
   else
-    printf("False");
+      printf("False");
   printf("\n");
   g(id0(a), 0);
   if (a[0])
-    printf("True");
+      printf("True");
   else
-    printf("False");
+      printf("False");
   printf("\n");
   [pool drain];
   return 0;
