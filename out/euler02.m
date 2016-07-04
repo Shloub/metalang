@@ -10,7 +10,7 @@ int main(void){
   while (a < 4000000)
   {
       if (a % 2 == 0)
-        sum += a;
+          sum += a;
       int c = a;
       a = b;
       b += c;

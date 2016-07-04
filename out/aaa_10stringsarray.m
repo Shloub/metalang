@@ -29,14 +29,14 @@ void print_toto(toto * t) {
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int j, i;
-  char* *tab = calloc( 2 , sizeof(char*));
-  for (i = 0; i <= 1; i++)
-    tab[i] = idstring("chaine de test");
-  for (j = 0; j <= 1; j++)
-    printstring(idstring(tab[j]));
+  char* *tab = calloc(2, sizeof(char*));
+  for (i = 0; i < 2; i++)
+      tab[i] = idstring("chaine de test");
+  for (j = 0; j < 2; j++)
+      printstring(idstring(tab[j]));
   toto * a = [toto alloc];
-  a->s="one";
-  a->v=1;
+  a->s = "one";
+  a->v = 1;
   print_toto(a);
   [pool drain];
   return 0;

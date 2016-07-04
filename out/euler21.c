@@ -6,16 +6,16 @@ int eratostene(int* t, int max0) {
     int i;
     int n = 0;
     for (i = 2; i < max0; i++)
-      if (t[i] == i)
-    {
-        n++;
-        int j = i * i;
-        while (j < max0 && j > 0)
+        if (t[i] == i)
         {
-            t[j] = 0;
-            j += i;
+            n++;
+            int j = i * i;
+            while (j < max0 && j > 0)
+            {
+                t[j] = 0;
+                j += i;
+            }
         }
-    }
     return n;
 }
 
@@ -31,7 +31,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
             n /= d;
         }
         if (n == 1)
-          return primes[i];
+            return primes[i];
     }
     return n;
 }
@@ -39,7 +39,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
 
 int sumdivaux2(int* t, int n, int i) {
     while (i < n && t[i] == 0)
-      i++;
+        i++;
     return i;
 }
 
@@ -47,9 +47,9 @@ int sumdivaux2(int* t, int n, int i) {
 int sumdivaux(int* t, int n, int i) {
     int j;
     if (i > n)
-      return 1;
+        return 1;
     else if (t[i] == 0)
-      return sumdivaux(t, n, sumdivaux2(t, n, i + 1));
+        return sumdivaux(t, n, sumdivaux2(t, n, i + 1));
     else
     {
         int o = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
@@ -67,9 +67,9 @@ int sumdivaux(int* t, int n, int i) {
 
 int sumdiv(int nprimes, int* primes, int n) {
     int i;
-    int *t = calloc( n + 1 , sizeof(int));
+    int *t = calloc(n + 1, sizeof(int));
     for (i = 0; i <= n; i++)
-      t[i] = 0;
+        t[i] = 0;
     int max0 = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
 }
@@ -77,23 +77,23 @@ int sumdiv(int nprimes, int* primes, int n) {
 int main(void) {
     int n, k, o, j;
     int maximumprimes = 1001;
-    int *era = calloc( maximumprimes , sizeof(int));
+    int *era = calloc(maximumprimes, sizeof(int));
     for (j = 0; j < maximumprimes; j++)
-      era[j] = j;
+        era[j] = j;
     int nprimes = eratostene(era, maximumprimes);
-    int *primes = calloc( nprimes , sizeof(int));
+    int *primes = calloc(nprimes, sizeof(int));
     for (o = 0; o < nprimes; o++)
-      primes[o] = 0;
+        primes[o] = 0;
     int l = 0;
     for (k = 2; k < maximumprimes; k++)
-      if (era[k] == k)
-    {
-        primes[l] = k;
-        l++;
-    }
+        if (era[k] == k)
+        {
+            primes[l] = k;
+            l++;
+        }
     printf("%d == %d\n", l, nprimes);
     int sum = 0;
-    for (n = 2; n <= 1000; n++)
+    for (n = 2; n < 1001; n++)
     {
         int other = sumdiv(nprimes, primes, n) - n;
         if (other > n)

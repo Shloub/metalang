@@ -22,14 +22,12 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int b, d, taille_y, taille_x;
   scanf("%d %d ", &taille_x, &taille_y);
-  char* *a = calloc( taille_y , sizeof(char*));
+  char* *a = calloc(taille_y, sizeof(char*));
   for (b = 0; b < taille_y; b++)
   {
-      char *c = calloc( taille_x , sizeof(char));
+      char *c = calloc(taille_x, sizeof(char));
       for (d = 0; d < taille_x; d++)
-      {
           scanf("%c", &c[d]);
-      }
       scanf(" ");
       a[b] = c;
   }

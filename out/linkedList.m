@@ -14,8 +14,8 @@
 
 intlist * cons(intlist * list, int i) {
     intlist * out0 = [intlist alloc];
-    out0->head=i;
-    out0->tail=list;
+    out0->head = i;
+    out0->tail = list;
     return out0;
 }
 
@@ -27,12 +27,12 @@ int is_empty(intlist * foo) {
 
 intlist * rev2(intlist * acc, intlist * torev) {
     if (is_empty(torev))
-      return acc;
+        return acc;
     else
     {
         intlist * acc2 = [intlist alloc];
-        acc2->head=torev->head;
-        acc2->tail=acc;
+        acc2->head = torev->head;
+        acc2->tail = acc;
         return rev2(acc, torev->tail);
     }
 }
@@ -50,7 +50,7 @@ void test(intlist * empty) {
     {
         scanf("%d", &i);
         if (i != 0)
-          list = cons(list, i);
+            list = cons(list, i);
     }
 }
 

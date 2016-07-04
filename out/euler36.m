@@ -5,16 +5,16 @@
 
 int palindrome2(int* pow2, int n) {
     int k, j, i;
-    int *t = calloc( 20 , sizeof(int));
-    for (i = 0; i <= 19; i++)
-      t[i] = n / pow2[i] % 2 == 1;
+    int *t = calloc(20, sizeof(int));
+    for (i = 0; i < 20; i++)
+        t[i] = n / pow2[i] % 2 == 1;
     int nnum = 0;
-    for (j = 1; j <= 19; j++)
-      if (t[j])
-      nnum = j;
+    for (j = 1; j < 20; j++)
+        if (t[j])
+            nnum = j;
     for (k = 0; k <= nnum / 2; k++)
-      if (t[k] != t[nnum - k])
-      return 0;
+        if (t[k] != t[nnum - k])
+            return 0;
     return 1;
 }
 
@@ -22,14 +22,14 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int a0, b, c, d, i;
   int p = 1;
-  int *pow2 = calloc( 20 , sizeof(int));
-  for (i = 0; i <= 19; i++)
+  int *pow2 = calloc(20, sizeof(int));
+  for (i = 0; i < 20; i++)
   {
       p *= 2;
       pow2[i] = p / 2;
   }
   int sum = 0;
-  for (d = 1; d <= 9; d++)
+  for (d = 1; d < 10; d++)
   {
       if (palindrome2(pow2, d))
       {
@@ -42,12 +42,12 @@ int main(void){
           sum += d * 10 + d;
       }
   }
-  for (a0 = 0; a0 <= 4; a0++)
+  for (a0 = 0; a0 < 5; a0++)
   {
       int a = a0 * 2 + 1;
-      for (b = 0; b <= 9; b++)
+      for (b = 0; b < 10; b++)
       {
-          for (c = 0; c <= 9; c++)
+          for (c = 0; c < 10; c++)
           {
               int num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a;
               if (palindrome2(pow2, num0))

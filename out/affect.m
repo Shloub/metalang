@@ -18,18 +18,18 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 
 toto * mktoto(int v1) {
     toto * t = [toto alloc];
-    t->foo=v1;
-    t->bar=v1;
-    t->blah=v1;
+    t->foo = v1;
+    t->bar = v1;
+    t->blah = v1;
     return t;
 }
 
 
 toto * mktoto2(int v1) {
     toto * t = [toto alloc];
-    t->foo=v1 + 3;
-    t->bar=v1 + 2;
-    t->blah=v1 + 1;
+    t->foo = v1 + 3;
+    t->bar = v1 + 2;
+    t->blah = v1 + 1;
     return t;
 }
 
@@ -39,20 +39,20 @@ int result(toto * t_, toto * t2_) {
     toto * t = t_;
     toto * t2 = t2_;
     toto * t3 = [toto alloc];
-    t3->foo=0;
-    t3->bar=0;
-    t3->blah=0;
+    t3->foo = 0;
+    t3->bar = 0;
+    t3->blah = 0;
     t3 = t2;
     t = t2;
     t2 = t3;
     t->blah++;
     int len = 1;
-    int *cache0 = calloc( len , sizeof(int));
+    int *cache0 = calloc(len, sizeof(int));
     for (i = 0; i < len; i++)
-      cache0[i] = -i;
-    int *cache1 = calloc( len , sizeof(int));
+        cache0[i] = -i;
+    int *cache1 = calloc(len, sizeof(int));
     for (j = 0; j < len; j++)
-      cache1[j] = j;
+        cache1[j] = j;
     int* cache2 = cache0;
     cache0 = cache1;
     cache2 = cache0;

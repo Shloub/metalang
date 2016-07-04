@@ -8,12 +8,12 @@ int main(void){
   int n = 10;
   /* normalement on doit mettre 20 mais là on se tape un overflow */
   n++;
-  int* *tab = calloc( n , sizeof(int*));
+  int* *tab = calloc(n, sizeof(int*));
   for (i = 0; i < n; i++)
   {
-      int *tab2 = calloc( n , sizeof(int));
+      int *tab2 = calloc(n, sizeof(int));
       for (j = 0; j < n; j++)
-        tab2[j] = 0;
+          tab2[j] = 0;
       tab[i] = tab2;
   }
   for (l = 0; l < n; l++)
@@ -33,7 +33,7 @@ int main(void){
   for (m = 0; m < n; m++)
   {
       for (k = 0; k < n; k++)
-        printf("%d ", tab[m][k]);
+          printf("%d ", tab[m][k]);
       printf("\n");
   }
   printf("%d\n", tab[0][0]);

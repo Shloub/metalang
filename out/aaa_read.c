@@ -13,7 +13,7 @@ int main(void) {
     len *= 2;
     printf("len*2=%d\n", len);
     len /= 2;
-    int *tab = calloc( len , sizeof(int));
+    int *tab = calloc(len, sizeof(int));
     for (i = 0; i < len; i++)
     {
         scanf("%d ", &tmpi1);
@@ -21,7 +21,7 @@ int main(void) {
         tab[i] = tmpi1;
     }
     printf("\n");
-    int *tab2 = calloc( len , sizeof(int));
+    int *tab2 = calloc(len, sizeof(int));
     for (i_ = 0; i_ < len; i_++)
     {
         scanf("%d ", &tmpi2);
@@ -30,18 +30,18 @@ int main(void) {
     }
     scanf("%d ", &strlen);
     printf("%d=strlen\n", strlen);
-    char *tab4 = calloc( strlen , sizeof(char));
+    char *tab4 = calloc(strlen, sizeof(char));
     for (toto = 0; toto < strlen; toto++)
     {
         scanf("%c", &tmpc);
         int c = (int)(tmpc);
         printf("%c:%d ", tmpc, c);
         if (tmpc != ' ')
-          c = (c - (int)('a') + 13) % 26 + (int)('a');
+            c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4[toto] = (char)(c);
     }
     for (j = 0; j < strlen; j++)
-      printf("%c", tab4[j]);
+        printf("%c", tab4[j]);
     return 0;
 }
 

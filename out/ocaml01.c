@@ -4,7 +4,7 @@
 
 int foo() {
     int i;
-    for (i = 0; i <= 10; i++)
+    for (i = 0; i < 11; i++)
     {
         
     }
@@ -14,7 +14,7 @@ int foo() {
 
 int bar() {
     int i;
-    for (i = 0; i <= 10; i++)
+    for (i = 0; i < 11; i++)
     {
         int a = 0;
     }

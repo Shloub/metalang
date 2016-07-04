@@ -5,9 +5,9 @@
 
 int max2_(int a, int b) {
     if (a > b)
-      return a;
+        return a;
     else
-      return b;
+        return b;
 }
 
 
@@ -18,9 +18,9 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures) {
     for (i = 0; i < m; i++)
     {
         if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
-          max_ancient = serrures[i][1];
+            max_ancient = serrures[i][1];
         if (serrures[i][0] == 1 && serrures[i][1] > max_recent)
-          max_recent = serrures[i][1];
+            max_recent = serrures[i][1];
     }
     int max_ancient_pp = 0;
     int max_recent_pp = 0;
@@ -28,25 +28,25 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures) {
     {
         int* pp = passepartout[i];
         if (pp[0] >= max_ancient && pp[1] >= max_recent)
-          return 1;
+            return 1;
         max_ancient_pp = max2_(max_ancient_pp, pp[0]);
         max_recent_pp = max2_(max_recent_pp, pp[1]);
     }
     if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
-      return 2;
+        return 2;
     else
-      return 0;
+        return 0;
 }
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int k, l, out_, m, i, j, out01, n;
   scanf("%d ", &n);
-  int* *passepartout = calloc( n , sizeof(int*));
+  int* *passepartout = calloc(n, sizeof(int*));
   for (i = 0; i < n; i++)
   {
-      int *out0 = calloc( 2 , sizeof(int));
-      for (j = 0; j <= 1; j++)
+      int *out0 = calloc(2, sizeof(int));
+      for (j = 0; j < 2; j++)
       {
           scanf("%d ", &out01);
           out0[j] = out01;
@@ -54,11 +54,11 @@ int main(void){
       passepartout[i] = out0;
   }
   scanf("%d ", &m);
-  int* *serrures = calloc( m , sizeof(int*));
+  int* *serrures = calloc(m, sizeof(int*));
   for (k = 0; k < m; k++)
   {
-      int *out1 = calloc( 2 , sizeof(int));
-      for (l = 0; l <= 1; l++)
+      int *out1 = calloc(2, sizeof(int));
+      for (l = 0; l < 2; l++)
       {
           scanf("%d ", &out_);
           out1[l] = out_;

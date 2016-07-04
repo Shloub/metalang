@@ -23,7 +23,7 @@ int main(void){
   int sum = 0;
   scanf("%d", &n);
   for (i = 1; i <= n; i++)
-    sum += i * score();
+      sum += i * score();
   printf("%d\n", sum);
   [pool drain];
   return 0;

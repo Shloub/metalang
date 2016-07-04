@@ -4,17 +4,17 @@
 
 int max2_(int a, int b) {
     if (a > b)
-      return a;
+        return a;
     else
-      return b;
+        return b;
 }
 
 int main(void) {
     int k, j;
     char e, c;
     int i = 1;
-    int *last = calloc( 5 , sizeof(int));
-    for (j = 0; j <= 4; j++)
+    int *last = calloc(5, sizeof(int));
+    for (j = 0; j < 5; j++)
     {
         scanf("%c", &c);
         int d = (int)(c) - (int)('0');
@@ -24,7 +24,7 @@ int main(void) {
     int max0 = i;
     int index = 0;
     int nskipdiv = 0;
-    for (k = 1; k <= 995; k++)
+    for (k = 1; k < 996; k++)
     {
         scanf("%c", &e);
         int f = (int)(e) - (int)('0');
@@ -37,8 +37,8 @@ int main(void) {
         {
             i *= f;
             if (nskipdiv < 0)
-              i /= last[index];
-            nskipdiv --;
+                i /= last[index];
+            nskipdiv--;
         }
         last[index] = f;
         index = (index + 1) % 5;

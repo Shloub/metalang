@@ -6,30 +6,28 @@
 int go0(int* tab, int a, int b) {
     int m = (a + b) / 2;
     if (a == m)
-    {
         if (tab[a] == m)
-          return b;
+            return b;
         else
-          return a;
-    }
+            return a;
     int i = a;
     int j = b;
     while (i < j)
     {
         int e = tab[i];
         if (e < m)
-          i++;
+            i++;
         else
         {
-            j --;
+            j--;
             tab[i] = tab[j];
             tab[j] = e;
         }
     }
     if (i < m)
-      return go0(tab, a, m);
+        return go0(tab, a, m);
     else
-      return go0(tab, m, b);
+        return go0(tab, m, b);
 }
 
 
@@ -42,7 +40,7 @@ int main(void){
   int i;
   int len = 0;
   scanf("%d ", &len);
-  int *tab = calloc( len , sizeof(int));
+  int *tab = calloc(len, sizeof(int));
   for (i = 0; i < len; i++)
   {
       int tmp = 0;

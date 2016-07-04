@@ -11,7 +11,7 @@ int h(int i) {
     while (j <= i + 2)
     {
         if (i % j == 5)
-          return 1;
+            return 1;
         j++;
     }
     return 0;
@@ -21,7 +21,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int k;
   int j = 0;
-  for (k = 0; k <= 10; k++)
+  for (k = 0; k < 11; k++)
   {
       j += k;
       printf("%d\n", j);

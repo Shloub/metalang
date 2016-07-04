@@ -26,22 +26,22 @@ int score() {
         /*		print c print " " print sum print " " */
     }
     if (is_triangular(sum))
-      return 1;
+        return 1;
     else
-      return 0;
+        return 0;
 }
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int n, i;
-  for (i = 1; i <= 55; i++)
-    if (is_triangular(i))
-    printf("%d ", i);
+  for (i = 1; i < 56; i++)
+      if (is_triangular(i))
+          printf("%d ", i);
   printf("\n");
   int sum = 0;
   scanf("%d", &n);
   for (i = 1; i <= n; i++)
-    sum += score();
+      sum += score();
   printf("%d\n", sum);
   [pool drain];
   return 0;

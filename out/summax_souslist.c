@@ -10,9 +10,9 @@ int summax(int* lst, int len) {
     {
         current += lst[i];
         if (current < 0)
-          current = 0;
+            current = 0;
         if (max0 < current)
-          max0 = current;
+            max0 = current;
     }
     return max0;
 }
@@ -21,7 +21,7 @@ int main(void) {
     int i;
     int len = 0;
     scanf("%d ", &len);
-    int *tab = calloc( len , sizeof(int));
+    int *tab = calloc(len, sizeof(int));
     for (i = 0; i < len; i++)
     {
         int tmp = 0;

@@ -15,9 +15,9 @@
 
 toto * mktoto(int v1) {
     toto * t = [toto alloc];
-    t->foo=v1;
-    t->bar=0;
-    t->blah=0;
+    t->foo = v1;
+    t->bar = 0;
+    t->blah = 0;
     return t;
 }
 

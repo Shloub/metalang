@@ -6,7 +6,7 @@
 int g(int i) {
     int j = i * 4;
     if (j % 2 == 1)
-      return 0;
+        return 0;
     return j;
 }
 
