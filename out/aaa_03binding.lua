@@ -1,8 +1,7 @@
 function g( i )
   local j = i * 4
-  if math.mod(j, 2) == 1
-  then
-    return 0
+  if math.mod(j, 2) == 1 then
+      return 0
   end
   return j
 end
@@ -12,12 +11,12 @@ function h( i )
 end
 
 
-h(14);
+h(14)
 local a = 4
 local b = 5
 io.write(a + b)
 --[[ main --]]
-h(15);
-a = 2;
-b = 1;
+h(15)
+a = 2
+b = 1
 io.write(a + b)

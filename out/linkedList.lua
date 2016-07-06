@@ -16,12 +16,11 @@ function is_empty( foo )
 end
 
 function rev2( acc, torev )
-  if is_empty(torev)
-  then
-    return acc
-  else
-    local acc2 = {head=torev.head, tail=acc}
-    return rev2(acc, torev.tail)
+  if is_empty(torev) then
+      return acc
+  else 
+      local acc2 = {head=torev.head, tail=acc}
+      return rev2(acc, torev.tail)
   end
 end
 
@@ -32,13 +31,11 @@ end
 function test( empty )
   local list = empty
   local i = -1
-  while i ~= 0
-  do
-  i = readint()
-  if i ~= 0
-  then
-    list = cons(list, i);
-  end
+  while i ~= 0 do
+      i = readint()
+      if i ~= 0 then
+          list = cons(list, i)
+      end
   end
 end
 

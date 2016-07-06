@@ -21,32 +21,30 @@ c * f * 10000
 
 --]]
 function chiffre( c, m )
-  if c == 0
-  then
-    return math.mod(m, 10)
-  else
-    return chiffre(c - 1, trunc(m / 10))
+  if c == 0 then
+      return math.mod(m, 10)
+  else 
+      return chiffre(c - 1, trunc(m / 10))
   end
 end
 
 
 local m = 1
-for a = 0,9 do
-  for f = 1,9 do
-    for d = 0,9 do
-      for c = 1,9 do
-        for b = 0,9 do
-          for e = 0,9 do
-            local mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
-            if
-            chiffre(0, mul) == chiffre(5, mul) and chiffre(1, mul) == chiffre(4, mul) and chiffre(2, mul) == chiffre(3, mul)
-            then
-              m = math.max(mul, m);
-            end
-          end
-        end
-      end
-    end
-  end
-end
-io.write(string.format("%d\n", m))
+for a = 0, 9 do
+    for f = 1, 9 do
+        for d = 0, 9 do
+            for c = 1, 9 do
+                for b = 0, 9 do
+                    for e = 0, 9 do
+                        local mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
+                        if chiffre(0, mul) == chiffre(5, mul) and chiffre(1, mul) == chiffre(4, mul) and chiffre(2, mul) == chiffre(3, mul) then
+                            m = math.max(mul, m)
+                        end
+                        end
+                        end
+                        end
+                        end
+                        end
+                        end
+                        io.write(string.format("%d\n", m))
+                        

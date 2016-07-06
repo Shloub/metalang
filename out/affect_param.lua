@@ -1,8 +1,8 @@
 function foo( a )
-  a = 4;
+  a = 4
 end
 
 
 local a = 0
-foo(a);
+foo(a)
 io.write(string.format("%d\n", a))

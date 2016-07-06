@@ -17,7 +17,7 @@ function mktoto( v1 )
 end
 
 function result( t )
-  t.blah = t.blah + 1;
+  t.blah = t.blah + 1
   return t.foo + t.blah * t.bar + t.bar * t.foo
 end
 

@@ -15,16 +15,14 @@ function stdinsep()
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
 function exp0( a, b )
-  if b == 0
-  then
-    return 1
+  if b == 0 then
+      return 1
   end
-  if math.mod(b, 2) == 0
-  then
-    local o = exp0(a, trunc(b / 2))
-    return o * o
-  else
-    return a * exp0(a, b - 1)
+  if math.mod(b, 2) == 0 then
+      local o = exp0(a, trunc(b / 2))
+      return o * o
+  else 
+      return a * exp0(a, b - 1)
   end
 end
 

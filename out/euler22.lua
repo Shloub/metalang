@@ -21,18 +21,19 @@ function score(  )
   local len = readint()
   stdinsep()
   local sum = 0
-  for i = 1,len do
-    local c = readchar()
-    sum = sum + c - 65 + 1;
-    --[[		print c print " " print sum print " " --]]
+  for i = 1, len do
+      local c = readchar()
+      sum = sum + c - 65 + 1
+      --[[		print c print " " print sum print " " --]]
+      end
+      return sum
   end
-  return sum
-end
-
-
-local sum = 0
-local n = readint()
-for i = 1,n do
-  sum = sum + i * score();
-end
-io.write(string.format("%d\n", sum))
+  
+  
+  local sum = 0
+  local n = readint()
+  for i = 1, n do
+      sum = sum + i * score()
+      end
+      io.write(string.format("%d\n", sum))
+      

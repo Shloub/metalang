@@ -4,19 +4,19 @@ function trunc(x)
 end
 
 local i = 0
-i = i - 1;
+i = i - 1
 io.write(string.format("%d\n", i))
-i = i + 55;
+i = i + 55
 io.write(string.format("%d\n", i))
-i = i * 13;
+i = i * 13
 io.write(string.format("%d\n", i))
-i = trunc(i / 2);
+i = trunc(i / 2)
 io.write(string.format("%d\n", i))
-i = i + 1;
+i = i + 1
 io.write(string.format("%d\n", i))
-i = trunc(i / 3);
+i = trunc(i / 3)
 io.write(string.format("%d\n", i))
-i = i - 1;
+i = i - 1
 io.write(string.format("%d\n", i))
 --[[
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo

@@ -23,15 +23,15 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 local strlen = readint()
 stdinsep()
 local tab4 = {}
-for toto = 0,strlen - 1 do
-  local tmpc = readchar()
-  local c = tmpc
-  if tmpc ~= 32
-  then
-    c = math.mod(c - 97 + 13, 26) + 97;
-  end
-  tab4[toto + 1] = c;
-end
-for j = 0,strlen - 1 do
-  io.write(string.format("%c", tab4[j + 1]))
-end
+for toto = 0, strlen - 1 do
+    local tmpc = readchar()
+    local c = tmpc
+    if tmpc ~= 32 then
+        c = math.mod(c - 97 + 13, 26) + 97
+    end
+    tab4[toto + 1] = c
+    end
+    for j = 0, strlen - 1 do
+        io.write(string.format("%c", tab4[j + 1]))
+        end
+        

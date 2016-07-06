@@ -9,6 +9,7 @@ function readcharline()
 end
 
 local str = readcharline()
-for i = 0,11 do
-  io.write(string.format("%c", str[i + 1]))
-end
+for i = 0, 11 do
+    io.write(string.format("%c", str[i + 1]))
+    end
+    
