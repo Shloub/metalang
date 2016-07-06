@@ -12,8 +12,9 @@ function stdinsep()
 end
 
 local t = {}
-for d = 0,1 do
-  t[d + 1] = readint()
-  stdinsep()
-end
-io.write(string.format("%d - %d\n", t[1], t[2]))
+for d = 0, 1 do
+    t[d + 1] = readint()
+    stdinsep()
+    end
+    io.write(string.format("%d - %d\n", t[1], t[2]))
+    
