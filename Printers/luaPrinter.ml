@@ -121,6 +121,8 @@ let print_instr c i =
       | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
       | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
     end
+    | Print [PrintExpr ( Ast.Type.Fixed.F(_, Ast.Type.Integer) , expr)] -> fprintf f "io.write(%a)" expr nop
+    | Print [StringConst s] -> fprintf f "io.write(%a)" (print_lief nop) (Expr.String s)
     | Print li->
         let li = List.pack 50 li in
         let li = List.map (fun li f ->
