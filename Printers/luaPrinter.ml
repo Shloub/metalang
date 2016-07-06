@@ -81,12 +81,106 @@ let print_expr config e f p =
   | _ -> print_expr0 config e f prio_parent
   in Fixed.Deep.fold (print_expr0 config) e f p
 
+let print_instr c i =
+  let open Ast.Instr in
+  let open Format in
+  let block value f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f (false, value)) sep_nl) li in
+  let block_lambda = block true in
+  let p f (inelseif, inlambda) =
+    let block = block inlambda in match i with
+    | Incr _
+    | Decr _ -> assert false
+    | Declare (var, ty, e, _) -> fprintf f "local %a = %a" c.print_varname var e nop
+    | SelfAffect (mut, op, e) -> assert false
+    | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
+    | ClikeLoop (init, cond, incr, li) -> assert false
+    | Loop (var, e1, e2, li) -> fprintf f "@[<v 4>@[<h>for %a = %a, %a do@]%a@\nend"
+          c.print_varname var e1 nop e2 nop
+          block li
+    | While (e, li) -> fprintf f "@[<v 4>while @[<h>%a@] do%a@]@\nend" e nop block li
+    | Comment s -> fprintf f "--[[%s--]]" s
+    | Tag s -> assert false
+    | Return e -> fprintf f "return %a" e nop
+    | AllocArray (name, t, e, None, opt) -> fprintf f "@[<h>local %a@ =@ {}@]" c.print_varname name
+    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+    | AllocArrayConst (name, ty, len, lief, opt) -> assert false
+    | AllocRecord (name, ty, list, opt) ->
+        fprintf f "@[<v 4>%a = {%a}@\n@]" c.print_varname name
+          (print_list (fun f (field, x) -> fprintf f "%s:%a" field x nop) sep_nl) list
+    | If (e, listif, []) when inelseif ->
+        fprintf f "if %a then%a@]@\nend" e nop block listif
+    | If (e, listif, [elsecase]) when inelseif && elsecase.is_if ->
+        fprintf f "if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p (true, inlambda)          
+    | If (e, listif, listelse)  when inelseif ->
+        fprintf f "if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
+    | If (e, listif, []) ->
+        fprintf f "@[<v 4>if %a then%a@]@\nend" e nop block listif
+    | If (e, listif, [elsecase]) when elsecase.is_if ->
+        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p (true, inlambda)          
+    | If (e, listif, listelse) ->
+        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
+    | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
+      | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
+      | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
+    end
+    | Print li->
+        let li = List.pack 50 li in
+        let li = List.map (fun li f ->
+          let format, exprs = extract_multi_print clike_noformat format_type li in
+          match exprs with
+          | [] -> fprintf f "io.write(\"%s\")" format
+          | _ -> fprintf f "io.write(string.format(\"%s\", %a))" format
+                (print_list (fun f (t, e) -> e f nop) sep_c) exprs) li
+        in print_list (fun f g -> g f) sep_nl f li
+    | Read li ->
+        let li = List.map (fun i f -> match i with
+          | Separation -> fprintf f "stdinsep()"
+          | DeclRead (ty, name, _) -> fprintf f "local %a = read%a()" c.print_varname name
+                (fun f ty -> match Type.unfix ty with
+                | Type.Integer -> fprintf f "int"
+                | Type.Char -> fprintf f "char"
+                | _ -> assert false) ty
+          | ReadExpr (ty, mut) ->fprintf f "%a = read%a()" (c.print_mut c nop) mut
+                (fun f ty -> match Type.unfix ty with
+                | Type.Integer -> fprintf f "int"
+                | Type.Char -> fprintf f "char"
+                | _ -> assert false) ty) li
+        in
+        fprintf f "%a" (print_list (fun f g -> g f) sep_nl) li
+    | Untuple (li, expr, opt) -> fprintf f "%a = unpack(%a)" (print_list c.print_varname sep_c) (List.map snd li) expr nop
+    | Unquote e -> assert false in
+  let is_multi_instr = match i with
+  | Read (hd::tl) -> true
+  | _ -> false in
+  {
+   is_multi_instr = is_multi_instr;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
+   p=p;
+   default = (false, false);
+   print_lief = c.print_lief;
+ }
+
+let print_instr macros i =
+  let open Ast.Instr.Fixed.Deep in
+  let c = config macros in
+  let i = (fold (print_instr c) (mapg (print_expr c) i))
+  in fun f -> i.p f i.default
+      
 class luaPrinter = object(self)
   inherit Printer.printer as super
 
   method combine_formats () = true
   method limit_nprint () = 255
 
+  method instr f (t:Utils.instr) =
+   let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc "lua" li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr macros t) f
+     
   method expr f e = print_expr
       (config (StringMap.map (fun (ty, params, li) ->
         ty, params,
