@@ -84,10 +84,8 @@ let print_expr config e f p =
 let print_instr c i =
   let open Ast.Instr in
   let open Format in
-  let block value f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f (false, value)) sep_nl) li in
-  let block_lambda = block true in
-  let p f (inelseif, inlambda) =
-    let block = block inlambda in match i with
+  let block f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f false) sep_nl) li in
+  let p f inelseif = match i with
     | Incr _
     | Decr _ -> assert false
     | Declare (var, ty, e, _) -> fprintf f "local %a = %a" c.print_varname var e nop
@@ -110,13 +108,13 @@ let print_instr c i =
     | If (e, listif, []) when inelseif ->
         fprintf f "if %a then%a@]@\nend" e nop block listif
     | If (e, listif, [elsecase]) when inelseif && elsecase.is_if ->
-        fprintf f "if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p (true, inlambda)          
+        fprintf f "if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p true   
     | If (e, listif, listelse)  when inelseif ->
         fprintf f "if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
     | If (e, listif, []) ->
         fprintf f "@[<v 4>if %a then%a@]@\nend" e nop block listif
     | If (e, listif, [elsecase]) when elsecase.is_if ->
-        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p (true, inlambda)          
+        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p true
     | If (e, listif, listelse) ->
         fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
     | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
@@ -158,7 +156,7 @@ let print_instr c i =
    is_if_noelse=is_if_noelse i;
    is_comment=is_comment i;
    p=p;
-   default = (false, false);
+   default = false;
    print_lief = c.print_lief;
  }
 
@@ -171,23 +169,14 @@ let print_instr macros i =
 class luaPrinter = object(self)
   inherit Printer.printer as super
 
-  method combine_formats () = true
-  method limit_nprint () = 255
-
   method instr f (t:Utils.instr) =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "lua" li
         with Not_found -> List.assoc "" li) macros
    in (print_instr macros t) f
-     
-  method expr f e = print_expr
-      (config (StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "lua" li
-        with Not_found -> List.assoc "" li) macros)) e f nop
 
-  method lang () = "lua"
+  method decl_type f name t = ()
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
@@ -239,106 +228,7 @@ end@\n") ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method hasSelfAffect _ = false
-
-  method char f c = Format.fprintf f "%d" (int_of_char c)
-
   method comment f str = Format.fprintf f "--[[%s--]]" str
-
-  method stdin_sep f =
-    Format.fprintf f "@[stdinsep()@]"
-
-  method read f t mutable_ =
-    Format.fprintf f "@[%a = read%a()@]" self#mutable_set mutable_
-      self#ptype t
-
-  method read_decl f t v =
-    Format.fprintf f "@[local %a = read%a()@]"
-      self#binding v
-      self#ptype t
-
-  method decl_type f name t = ()
-
-  method record f li =
-    Format.fprintf f "@[<h>{%a}@]"
-      (self#def_fields (InternalName 0)) li
-
-  method tuple f li =
-    Format.fprintf f "@[<h>{%a}@]"
-      (print_list self#expr sep_c) li
-
-  method untuple f li e =
-    Format.fprintf f "@[<h>%a = unpack(%a)@]"
-      (print_list self#binding sep_c) (List.map snd li)
-      self#expr e
-
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] ->
-      Format.fprintf f "@[<hov>if@ %a@]@\nthen@\n@[<v2>  %a@]@\nend"
-        self#expr e
-        self#instructions ifcase
-    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<hov>if@ %a@] then@\n@[<v 2>  %a@]@\nelse%a"
-        self#expr e
-        self#instructions ifcase
-        self#instr instr
-    | _ ->
-      Format.fprintf f "@[<hov>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]@\nend"
-        self#expr e
-        self#instructions ifcase
-        self#instructions elsecase
-
-  method multi_print f li =
-    let limit = 50 in
-    if List.length li > limit then
-      let lili = List.pack limit li in
-      print_list self#multi_print sep_nl f lili
-    else
-    let format, exprs = self#extract_multi_print li in
-    match exprs with
-    | [] -> Format.fprintf f "@[<h>io.write(\"%s\")@]" format
-    | _ ->
-        Format.fprintf f "@[<h>io.write(string.format(\"%s\", %a))@]" format
-          (print_list
-             (fun f (t, e) -> self#expr f e) sep_c) exprs
-
-  method print f t expr =
-    match Type.unfix t with
-    | Type.Char ->Format.fprintf f "@[<h>io.write(string.format(\"%%c\", %a))@]" self#expr expr
-    | _ -> Format.fprintf f "@[<h>io.write(%a)@]" self#expr expr
-
-  method allocrecord f name t el =
-    Format.fprintf f "@[<h>@[<v2>local %a = {@\n%a@]@\n}@]"
-      self#binding name
-      (self#def_fields name) el
-
-  method def_fields name f li =
-    Format.fprintf f "@[<hov>%a@]"
-      (print_list
-         (fun f (fieldname, expr) ->
-           Format.fprintf f "%a=%a"
-             self#field fieldname
-             self#expr expr
-         )
-         (sep "%a,@\n%a"))
-      li
-
-  method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>local %a@ =@ {}@]"
-      self#binding binding
-
-  method declaration f var t e =
-    Format.fprintf f "@[<h>local %a@ =@ %a@]"
-      self#binding var
-      self#expr e
-
-  method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v2>@[<h>for@ %a@ =@ %a,%a do@]@\n%a@]@\nend"
-      self#binding varname
-      self#expr expr1
-      self#expr expr2
-      self#instructions li
 
   method main f main = self#instructions f main
 
