@@ -38,7 +38,7 @@ Printer -> PasPrinter[OK]-> AdaPrinter[OK]
         -> FSharpPrinter
         -> ForthPrinter
         -> HtmlPrinter
-        -> LuaPrinter
+        -> LuaPrinter[OK]
         -> OcamlPrinter
         -> JSPrinter[OK]
         -> SmalltalkPrinter[OK]
