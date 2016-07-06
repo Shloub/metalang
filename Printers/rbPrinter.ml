@@ -76,7 +76,7 @@ let print_expr config e f p =
   Fixed.Deep.fold (print_expr0 config) e f p
 
 
-let print_instr tyenv c i =
+let print_instr c i =
   let open Ast.Instr in
   let open Format in
   let block value f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f (false, value)) sep_nl) li in
@@ -173,16 +173,15 @@ let print_instr tyenv c i =
    print_lief = c.print_lief;
  }
 
-let print_instr tyenv macros i =
+let print_instr macros i =
   let open Ast.Instr.Fixed.Deep in
   let c = config macros in
-  let i = (fold (print_instr tyenv c) (mapg (print_expr c) i))
+  let i = (fold (print_instr c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
   
 class rbPrinter = object(self)
 
-  val mutable typerEnv : Typer.env = Typer.empty
-  method setTyperEnv t = typerEnv <- t
+  method setTyperEnv (t:Typer.env) = ()
   val mutable macros = StringMap.empty
       
   val mutable recursives_definitions = StringSet.empty
@@ -193,7 +192,7 @@ class rbPrinter = object(self)
         ty, params,
         try List.assoc "ruby" li
         with Not_found -> List.assoc "" li) macros
-   in (print_instr typerEnv macros t) f
+   in (print_instr macros t) f
 
   method instructions f instrs = print_list self#instr sep_nl f instrs
       
