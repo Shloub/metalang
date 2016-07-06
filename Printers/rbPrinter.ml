@@ -183,9 +183,7 @@ class rbPrinter = object(self)
 
   method setTyperEnv (t:Typer.env) = ()
   val mutable macros = StringMap.empty
-      
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
+  method setRecursive (b:StringSet.t) = ()
 
   method instr f (t:Utils.instr) =
    let macros = StringMap.map (fun (ty, params, li) ->
