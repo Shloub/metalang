@@ -32,25 +32,8 @@
 open Stdlib
 open Helper
 open Ast
-
-let print_expr macros e f p =
-  let open Format in
-  let open Ast.Expr in
-  let print_lief prio f = function
-    | Char c -> fprintf f "%d" (int_of_char c)
-    | x -> print_lief prio f x in
-  let print_expr0 config e f prio_parent = match e with
-  | BinOp (a, (Div as op), b) ->
-      let _, priol, prior = prio_binop op in
-      fprintf f "trunc(%a %a %a)" a priol print_op op b prior
-  | BinOp (a, Mod, b) -> fprintf f "math.mod(%a, %a)" a nop b nop
-  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
-  | Tuple li -> fprintf f "{%a}" (print_list (fun f x -> x f nop) sep_c) li
-  | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
-      fprintf f "%s=%a" name x nop) sep_c) li
-  | _ -> print_expr0 config e f prio_parent
-  in
-  let print_op f op = fprintf f (match op with
+let print_op f op = 
+  let open Ast.Expr in Format.fprintf f (match op with
   | Add -> "+"
   | Sub -> "-"
   | Mul -> "*"
@@ -63,10 +46,16 @@ let print_expr macros e f p =
   | Higher -> ">"
   | HigherEq -> ">="
   | Eq -> "=="
-  | Diff -> "~=") in
-  let print_mut conf prio f m = Mutable.Fixed.Deep.fold
-      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio in
-  let config = {
+  | Diff -> "~=")
+    
+let print_lief prio f = function
+  | Ast.Expr.Char c -> Format.fprintf f "%d" (int_of_char c)
+  | x -> print_lief prio f x
+
+let print_mut conf prio f m = Mutable.Fixed.Deep.fold
+    (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio
+  
+let config macros = {
     prio_binop;
     prio_unop;
     print_varname;
@@ -75,7 +64,22 @@ let print_expr macros e f p =
     print_unop;
     print_mut;
     macros
-  } in Fixed.Deep.fold (print_expr0 config) e f p
+}
+
+let print_expr config e f p =
+  let open Format in
+  let open Ast.Expr in
+  let print_expr0 config e f prio_parent = match e with
+  | BinOp (a, (Div as op), b) ->
+      let _, priol, prior = prio_binop op in
+      fprintf f "trunc(%a %a %a)" a priol print_op op b prior
+  | BinOp (a, Mod, b) -> fprintf f "math.mod(%a, %a)" a nop b nop
+  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
+  | Tuple li -> fprintf f "{%a}" (print_list (fun f x -> x f nop) sep_c) li
+  | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
+      fprintf f "%s=%a" name x nop) sep_c) li
+  | _ -> print_expr0 config e f prio_parent
+  in Fixed.Deep.fold (print_expr0 config) e f p
 
 class luaPrinter = object(self)
   inherit Printer.printer as super
@@ -84,10 +88,10 @@ class luaPrinter = object(self)
   method limit_nprint () = 255
 
   method expr f e = print_expr
-      (StringMap.map (fun (ty, params, li) ->
+      (config (StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
+        try List.assoc "lua" li
+        with Not_found -> List.assoc "" li) macros)) e f nop
 
   method lang () = "lua"
   method prog f prog =
