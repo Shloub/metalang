@@ -238,50 +238,13 @@ class forthPrinter = object(self)
      
   method lang () = "fs"
 
-  method field f i = Format.fprintf f "->%s" i
-
   method comment f s =
     let lic = String.split s '\n' in
     print_list (fun f s -> Format.fprintf f "\\ %s@\n" s) nosep f lic
 
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] ->
-      Format.fprintf f "%a@\n@[<v 2>IF@\n%a@]@\nTHEN"
-        self#expr e
-        self#bloc ifcase
-    | _ ->
-      Format.fprintf f "%a@\n@[<v 2>IF@\n%a@]@\n@[<v 2>ELSE@\n%a@]@\nTHEN"
-        self#expr e
-        self#bloc ifcase
-        self#bloc elsecase
-
-  method bloc f li = print_list self#instr sep_nl f li
-
   method main f main =
     Format.fprintf f "@[<v 2>: main@\n%a@\n;@]"
       self#instructions main
-
-  method whileloop f expr li =
-    Format.fprintf f "@[<v 2>BEGIN@\n%a@]@\n@[<v 2>WHILE@\n%a@]@\nREPEAT"
-      self#expr expr
-      self#bloc li
-
-  val mutable ndrop = 0
-  method forloop f varname expr1 expr2 li =
-    ndrop <- ndrop + 2;
-    Format.fprintf f "@[<v 2>@[<h>%a %a BEGIN 2dup >= WHILE DUP { %a }@]@\n%a@]@\n 1 + REPEAT 2DROP"
-      self#expr expr2
-      self#expr expr1
-      self#binding varname
-      self#bloc li;
-    ndrop <- ndrop - 2
-
-  method print f t expr = match Type.unfix t with
-  | Type.Char -> Format.fprintf f "@[%a EMIT@]" self#expr expr
-  | Type.String -> Format.fprintf f "@[%a TYPE@]" self#expr expr
-  | Type.Integer -> Format.fprintf f "@[%a s>d 0 d.r@]" self#expr expr
-  | _ -> assert false
 
   method prog f (prog: Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -331,38 +294,6 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method declaration f var t e =
-    Format.fprintf f "@[<hov>%a@ { %a }@]" self#expr e self#binding var
-
-  method allocarray f binding type_ len useless =
-    match Type.unfix type_ with
-    | Type.String ->
-        Format.fprintf f "@[<h>HERE %a cells 2 * allot { %a }@]"
-          self#expr len
-          self#binding binding
-    | _ ->
-        Format.fprintf f "@[<h>HERE %a cells allot { %a }@]"
-          self#expr len
-          self#binding binding
-
-  method separator f () = Format.fprintf f ""
-  method return f e = Format.fprintf f "@[<hov>%a%a exit@]"
-      (print_ntimes ndrop) "DROP "
-      self#expr e
-
-  method hasSelfAffect op = false
-
-  method apply f var li =
-    match StringMap.find_opt var macros with
-    | Some _ -> super#apply f var li
-    | None ->
-      Format.fprintf
-        f
-        "@[<hov>%a %a%a@]"
-        (print_list self#expr sep_space) li
-        self#funname var
-	        self#separator ()
-
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<hov>: %a%a { %a }@]@\n@[<v 2>  %a@]@\n;@\n"
       self#funname funname
@@ -375,46 +306,6 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
          sep_space) li
       self#instructions instrs
 
-  method mutable0 f m =
-    let macros = self#gmacros () in
-    let tyenv = self#getTyperEnv () in
-    let mut = Ast.Mutable.Fixed.Deep.mapg (print_expr tyenv macros) m in
-    Ast.Mutable.Fixed.Deep.folda (print_mut0 tyenv) mut f false
-
-  method mutable_get f m =
-    match Mutable.unfix m with
-    | Mutable.Var v -> self#mutable0 f m
-    | _ -> match Typer.get_type_a (self#getTyperEnv ()) (Mutable.Fixed.annot m) |> Type.unfix with
-        | Type.String -> Format.fprintf f "%a 2@@" self#mutable0 m
-        | _ -> Format.fprintf f "%a @@" self#mutable0 m
-
-  method mutable_set f mutable_ =
-    match Typer.get_type_a (self#getTyperEnv ()) (Mutable.Fixed.annot mutable_) |> Type.unfix with
-    | Type.String -> begin  match Mutable.unfix mutable_ with
-      | Mutable.Var v -> Format.fprintf f "2TO %a" self#binding v
-      | _ -> Format.fprintf f "%a 2!" self#mutable0 mutable_
-    end
-    | _ -> match Mutable.unfix mutable_ with
-      | Mutable.Var v -> Format.fprintf f "TO %a" self#binding v
-      | _ -> Format.fprintf f "%a !" self#mutable0 mutable_
-
-  method affect f mutable_ (expr : 'lex Expr.t) =
-    Format.fprintf f "%a %a"
-      self#expr expr
-      self#mutable_set mutable_
-
-  method stdin_sep f = Format.fprintf f "skipspaces"
-  method readtype f t = match Type.unfix t with
-  | Type.Integer -> Format.fprintf f "read-int"
-  | Type.Char -> Format.fprintf f "read-char"
-  | _ -> assert false
-
-  method read f t mutable_ =
-        Format.fprintf f "@[%a %a@]" self#readtype t self#mutable_set mutable_
-
-  method read_decl f t v =
-    Format.fprintf f "@[%a { %a }@]" self#readtype t self#binding v
-
   method decl_type f name t =
     match (Type.unfix t) with
     | Type.Struct li ->
@@ -422,8 +313,8 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
         (print_list
            (fun t (name, type_) ->
              match Type.unfix type_ with
-             | Type.String -> Format.fprintf t "double%% field %a" self#field name
-             | _ -> Format.fprintf t "cell%% field %a" self#field name
+             | Type.String -> Format.fprintf t "double%% field ->%s" name
+             | _ -> Format.fprintf t "cell%% field ->%s" name
            ) sep_nl
         ) li
         self#typename name
@@ -437,38 +328,11 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
           f li
     | _ -> ()
 
-  method def_fields name f li =
-    Format.fprintf f "@[<hov>%a@]"
-      (print_list
-         (fun f (fieldname, expr) ->
-           Format.fprintf f (match Typer.get_type (self#getTyperEnv ()) expr |> Type.unfix with
-           | Type.String -> "%a %a %a 2!"
-           | _ -> "%a %a %a !")
-             self#expr expr
-             self#binding name
-             self#field fieldname
-         ) sep_nl)
-      li
-
-  method allocrecord f name t el =
-    Format.fprintf f "%a %%allot { %a }@\n%a"
-      self#ptype t
-      self#binding name
-      (self#def_fields name) el
-
-
   method typename f i = Format.fprintf f "%s%%" i
   method ptype f (t:Type.t) =
     match Type.unfix t with
     | Type.Named n -> self#typename f n
     | _ ->  super#ptype f t
-
-  method gmacros () = StringMap.map (fun (ty, params, li) ->
-    ty, params,
-    try List.assoc (self#lang ()) li
-    with Not_found -> List.assoc "" li) macros
-
-  method expr f e = print_expr (self#getTyperEnv ()) (self#gmacros ()) e f ()
 
 end
 
