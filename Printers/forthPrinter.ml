@@ -66,31 +66,44 @@ let print_mut0 tyenv annot m f access =
         fprintf f "%a ->%s%a" m true field print_access_double access
       else fprintf f "%a ->%s%a" m true field print_access access
 
-let print_expr0 tyenv macros e f prio_parent =
+let print_mut tyenv m f b = Mutable.Fixed.Deep.folda (print_mut0 tyenv) m f b
+
+let mut_set tyenv f mut =
+  match Typer.get_type_a tyenv (Mutable.Fixed.annot mut) |> Type.unfix with
+    | Type.String -> begin match Mutable.unfix mut with
+      | Mutable.Var v -> Format.fprintf f "2TO %a" print_varname v
+      | _ -> Format.fprintf f "%a 2!" (print_mut tyenv mut) false
+    end
+    | _ -> match Mutable.unfix mut with
+      | Mutable.Var v -> Format.fprintf f "TO %a" print_varname v
+      | _ -> Format.fprintf f "%a !"(print_mut tyenv mut) false
+
+
+let print_op f op = let open Expr in Format.fprintf f "%s"
+  (match op with
+  | Add -> "+"
+  | Sub -> "-"
+  | Mul -> "*"
+  | Div -> "//"
+  | Mod -> "%"
+  | Or -> "OR"
+  | And -> "AND"
+  | Lower -> "<"
+  | LowerEq -> "<="
+  | Higher -> ">"
+  | HigherEq -> ">="
+  | Eq -> "="
+  | Diff -> "<>")
+
+let pprint_string f s =
+  let s = " " ^ s in
+  let s = Printf.sprintf "%S" s in
+  Format.fprintf f (if String.exists ((=) '\\') s then "S\\%s" else "S%s") s
+    
+let print_lief f =
   let open Expr in
-  let open Format in
-  let print_op f op = fprintf f
-      "%s"
-      (match op with
-      | Add -> "+"
-      | Sub -> "-"
-      | Mul -> "*"
-      | Div -> "//"
-      | Mod -> "%"
-      | Or -> "OR"
-      | And -> "AND"
-      | Lower -> "<"
-      | LowerEq -> "<="
-      | Higher -> ">"
-      | HigherEq -> ">="
-      | Eq -> "="
-      | Diff -> "<>"
-      ) in
-  let print_lief f = function
-    | String s ->
-        let s = " " ^ s in
-        let s = Printf.sprintf "%S" s in
-        fprintf f (if String.exists ((=) '\\') s then "S\\%s" else "S%s") s
+  let open Format in function
+    | String s -> pprint_string f s
     | Char c -> let ci = int_of_char c in
       if ci >= 48 && ci <= 127 then fprintf f "[char] %c" c
       else fprintf f "%d" ci
@@ -98,14 +111,17 @@ let print_expr0 tyenv macros e f prio_parent =
     | Bool false -> fprintf f "false"
     | Enum e -> fprintf f "%s" e
     | Integer i -> fprintf f "%i" i
-  in
-  let print_mut m f b = Mutable.Fixed.Deep.folda (print_mut0 tyenv) m f b in
+          
+    
+let print_expr0 tyenv macros e f prio_parent =
+  let open Expr in
+  let open Format in
   match e with
   | BinOp (a, op, b) -> fprintf f "%a %a %a" a () b () print_op op
   | UnOp (a, Not) -> fprintf f "%a INVERT" a ()
   | UnOp (a, Neg) -> fprintf f "%a NEGATE" a ()
   | Lief l -> print_lief f l
-  | Access m -> print_mut m f true
+  | Access m -> print_mut tyenv m f true
   | Call (func, li) ->
       begin match StringMap.find_opt func macros with
       | Some ( (t, params, code) ) ->
@@ -118,9 +134,108 @@ let print_expr0 tyenv macros e f prio_parent =
 
 let print_expr tyenv macros e f () = Expr.Fixed.Deep.fold (print_expr0 tyenv macros) e f ()
 
+let ptypename f t = match Type.unfix t with
+  | Type.Named n -> Format.fprintf f "%s%%" n
+  | _ -> assert false
+        
+let print_instr tyenv macros i =
+  let open Ast.Instr in
+  let open Format in
+  let block_ndrop ndrop f li = print_list (fun f i -> i.p f ndrop) sep_nl f li in
+  let readtype f t = match Type.unfix t with
+  | Type.Integer -> fprintf f "read-int"
+  | Type.Char -> fprintf f "read-char"
+  | _ -> assert false in
+  let p f ndrop =
+    let block = block_ndrop ndrop in
+    match i with
+    | Incr _
+    | Decr _ -> assert false
+    | Declare (var, ty, e, _) -> fprintf f "@[<hov>%a@ { %a }@]" e () print_varname var
+    | SelfAffect (mut, op, e) ->  assert false
+    | Affect (mut, e) -> fprintf f "%a %a" e () (mut_set tyenv) mut
+    | ClikeLoop (init, cond, incr, li) -> assert false
+    | Loop (var, e1, e2, li) ->
+        fprintf f "@[<v 2>@[<h>%a %a BEGIN 2dup >= WHILE DUP { %a }@]@\n%a@]@\n 1 + REPEAT 2DROP"
+          e2 () e1 () print_varname var
+          (block_ndrop (ndrop + 2)) li
+    | While (e, li) -> fprintf f "@[<v 2>BEGIN@\n%a@]@\n@[<v 2>WHILE@\n%a@]@\nREPEAT" e () block li
+    | Comment s -> 
+        let lic = String.split s '\n' in
+        print_list (fun f s -> fprintf f "\\ %s@\n" s) nosep f lic
+    | Tag s -> assert false
+    | Return e -> fprintf f "@[<hov>%a%a exit@]" (print_ntimes ndrop) "DROP " e ()
+    | AllocArray (name, t, e, None, opt) ->
+        begin match Type.unfix t with
+        | Type.String -> fprintf f "@[<h>HERE %a cells 2 * allot { %a }@]" e () print_varname name
+        | _ -> fprintf f "@[<h>HERE %a cells allot { %a }@]" e () print_varname name
+        end
+    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+    | AllocArrayConst (name, ty, len, lief, opt) -> assert false
+    | AllocRecord (name, ty, list, opt) -> fprintf f "%a %%allot { %a }@\n%a"
+      ptypename ty
+      print_varname name
+          (print_list
+             (fun t (fieldname, expr) ->
+               fprintf f (match Typer.child_type_of_field tyenv fieldname Ast.default_location |> Type.unfix with
+               | Type.String -> "%a %a ->%s 2!"
+               | _ -> "%a %a ->%s !")
+                 expr () print_varname name fieldname
+             ) sep_nl)
+          list
+    | If (e, listif, []) -> fprintf f "%a@\n@[<v 2>IF@\n%a@]@\nTHEN"
+          e () block listif
+    | If (e, listif, listelse) -> fprintf f "%a@\n@[<v 2>IF@\n%a@]@\n@[<v 2>ELSE@\n%a@]@\nTHEN"
+          e () block listif block listelse
+    | Call (func, li) -> begin match StringMap.find_opt func macros with
+      | Some ( (t, params, code) ) -> pmacros f "%s" t params code li ()
+      | None -> fprintf f "%a %s" (print_list (fun f x -> x f ()) sep_space) li func
+    end
+    | Print li->
+        let li = List.map (fun i f -> match i with
+        | StringConst s -> fprintf f "@[%a TYPE@]" pprint_string s
+        | PrintExpr (ty, expr) -> match Type.unfix ty with
+          | Type.Char -> fprintf f "@[%a EMIT@]" expr ()
+          | Type.String -> fprintf f "@[%a TYPE@]" expr ()
+          | Type.Integer -> fprintf f "@[%a s>d 0 d.r@]" expr ()
+          | _ -> assert false
+                          ) li in
+        print_list (fun f g -> g f) sep_nl f li
+    | Read li ->
+        let li = List.map (fun i f -> match i with
+        | Separation -> fprintf f "skipspaces"
+        | DeclRead (t, name, _) ->fprintf f "@[%a { %a }@]" readtype t print_varname name
+        | ReadExpr (t, mut) -> fprintf f "@[%a %a@]" readtype t (mut_set tyenv) mut) li in
+        print_list (fun f e -> e f) sep_nl f li
+    | Untuple (li, expr, opt) -> assert false
+    | Unquote e -> assert false in
+  let is_multi_instr = true in
+  {
+   is_multi_instr = is_multi_instr;
+   is_if=is_if i;
+   is_if_noelse=is_if_noelse i;
+   is_comment=is_comment i;
+   p=p;
+   default = 0;
+   print_lief = (fun _ -> print_lief);
+ }
+
+let print_instr tyenv macros i =
+  let open Ast.Instr.Fixed.Deep in
+  let i = (fold (print_instr tyenv macros) (mapg (print_expr tyenv macros) i))
+  in fun f -> i.p f i.default
+  
+    
 class forthPrinter = object(self)
   inherit Printer.printer as super
 
+  method instr f (t:Utils.instr) =
+   let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc "fs" li
+        with Not_found -> List.assoc "" li) macros
+   in (print_instr (self#getTyperEnv ()) macros t) f
+     
   method lang () = "fs"
 
   method field f i = Format.fprintf f "->%s" i

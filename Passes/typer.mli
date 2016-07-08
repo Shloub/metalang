@@ -45,6 +45,7 @@ val is_int_a : env -> int -> bool
 val is_bool_a : env -> int -> bool
 
 
+val child_type_of_field : env -> string -> Ast.location -> Ast.Type.t
 val type_of_field : env -> string -> Ast.location -> Ast.Type.t
 val expand : env -> Ast.Type.t -> Ast.location -> Ast.Type.t
 val type_for_enum : string -> env -> Ast.Type.t

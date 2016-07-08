@@ -199,6 +199,16 @@ let expand env ty loc =
          not_found_ty name loc)
     | x -> Type.Fixed.F (Type.Fixed.annot ty, (Type.Fixed.Surface.map f x))
   in f ty
+    
+let child_type_of_field env field loc =
+  try
+    let (_, t, _) = StringMap.find field env.fields in match Type.unfix (expand env t loc) with
+    | Type.Struct li -> List.assoc field li
+    | _ -> raise Not_found
+  with Not_found ->
+    raise ( Error (fun f ->
+      Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
+    ))
 
 (** {2 Unify} *)
 let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
