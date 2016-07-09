@@ -21,7 +21,7 @@ green	= \033[0;32m
 yellow	= \033[0;33m
 
 unit:
-	ocamlbuild Stdlib/unit.byte
+	ocamlbuild -use-ocamlfind Stdlib/unit.byte
 	./unit.byte
 
 lua	?=	lua5.1
@@ -120,8 +120,8 @@ TMPFILES	:=\
 .SECONDARY: $(TMPFILES)
 
 # Compilation de metalang.
-metalang : $(COMPILER_SOURCES) main.byte
-	@cp _build/Main/main.byte metalang
+metalang : main.native
+	cp _build/Main/$^ $@
 
 main.byte : $(COMPILER_SOURCES)
 	@ocamlbuild -tag debug Main/main.byte
@@ -228,7 +228,7 @@ out/%.class.out : out/%.class
 	$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.js.out : out/%.js
-	nodejs $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	node $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.lua.out : out/%.lua
 	$(lua) $< < tests/prog/$(basename $*).in > $@ || exit 1;
