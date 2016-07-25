@@ -177,7 +177,7 @@ class cPrinter = object(self)
   method ptype f t = ptype (baseprinter#getTyperEnv ()) f t
 
   method main f main =
-    let li_fori, li_forc = self#collect_for main in
+    let li_fori, li_forc = self#collect_for main false in
     Format.fprintf f "@[<v 4>int main(void) {@\n%a%a%a@\nreturn 0%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
@@ -237,7 +237,7 @@ class cPrinter = object(self)
         baseprinter#typename name
         self#separator ()
 
-  method collect_for instrs =
+  method collect_for instrs onlyread =
     let collect acc i =
       Instr.Writer.Deep.fold (fun (acci, accc) i -> match Instr.unfix i with
       | Instr.Read li -> List.fold_left (fun (acci, accc) -> function
@@ -248,12 +248,12 @@ class cPrinter = object(self)
               | _ -> assert false
               end
           | _ -> acci, accc ) (acci, accc) li
-      | Instr.ClikeLoop(init, _, _, _) ->
+      | Instr.ClikeLoop(init, _, _, _) when not onlyread ->
           let acci = List.fold_left (fun acci i -> match Instr.unfix i with
           | Instr.Declare (var,_, _, _) -> if List.mem var acci then acci else var::acci (* TODO : checker le type *)
           | _ -> acci
           ) acci init in acci, accc
-      | Instr.Loop (i, _, _, _) -> let acci = if List.mem i acci then acci else i::acci in acci, accc
+      | Instr.Loop (i, _, _, _) when not onlyread -> let acci = if List.mem i acci then acci else i::acci in acci, accc
       | _ -> acci, accc
       ) acc i
     in
@@ -267,7 +267,7 @@ class cPrinter = object(self)
         self#separator ()
 
   method print_fun f funname t li instrs =
-    let li_fori, li_forc = self#collect_for instrs in
+    let li_fori, li_forc = self#collect_for instrs false in
     Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
       (self#declare_for "int") li_fori

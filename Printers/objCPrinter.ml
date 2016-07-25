@@ -93,7 +93,7 @@ class objCPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method main f main =
-    let li_fori, li_forc = self#collect_for main in
+    let li_fori, li_forc = self#collect_for main false in
     Format.fprintf f "@[<v 2>int main(void){@\nNSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];@\n%a%a%a@\n[pool drain];@\nreturn 0;@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc

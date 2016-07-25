@@ -169,6 +169,14 @@ let cc_print_mut conf prio f m = Mutable.Fixed.Deep.fold
 class cppPrinter = object(self)
   inherit CPrinter.cPrinter as super
 
+  method print_fun f funname t li instrs =
+    let li_fori, li_forc = self#collect_for instrs true in
+    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
+      self#print_proto (funname, t, li)
+      (self#declare_for "int") li_fori
+      (self#declare_for "char") li_forc
+      self#instructions instrs
+
  method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
@@ -177,22 +185,6 @@ class cppPrinter = object(self)
    in (print_instr true cc_print_mut (super#getTyperEnv ()) macros t) f
 
   method lang () = "cpp"
-
-  method collect_for instrs =
-    let collect acc i =
-      Instr.Writer.Deep.fold (fun (acci, accc) i -> match Instr.unfix i with
-      | Instr.Read li -> List.fold_left (fun (acci, accc) -> function
-          | Instr.DeclRead (ty, i, _) ->
-              begin match Type.unfix ty with
-              | Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
-              | Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
-              | _ -> assert false
-              end
-          | _ -> acci, accc) (acci, accc) li
-      | _ -> (acci, accc)
-      ) acc i
-    in
-    List.fold_left collect ([], []) instrs
 
   method ptype f t = ptype true (super#getTyperEnv ()) f t
 
@@ -223,7 +215,7 @@ class cppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method main f main =
-    let li_fori, li_forc = self#collect_for main in
+    let li_fori, li_forc = self#collect_for main true in
     Format.fprintf f "@[<v 4>int main() {@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
@@ -259,6 +251,14 @@ let cpp_print_mut conf prio f m = Mutable.Fixed.Deep.fold
     
 class proloCppPrinter = object(self)
   inherit CPrinter.cPrinter as super
+
+  method print_fun f funname t li instrs =
+    let li_fori, li_forc = self#collect_for instrs true in
+    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
+      self#print_proto (funname, t, li)
+      (self#declare_for "int") li_fori
+      (self#declare_for "char") li_forc
+      self#instructions instrs
 
  method instr f t =
    let macros = StringMap.map (fun (ty, params, li) ->
@@ -313,7 +313,7 @@ class proloCppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method main f main =
-    let li_fori, li_forc = self#collect_for main in
+    let li_fori, li_forc = self#collect_for main true in
     Format.fprintf f "@[<v 4>int main() {@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
