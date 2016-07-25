@@ -27,10 +27,10 @@ int pathfind_aux(std::vector<std::vector<int>>& cache, std::vector<std::vector<c
 
 int pathfind(std::vector<std::vector<char>>& tab, int x, int y) {
     std::vector<std::vector<int>> cache( y );
-    for (int i = 0; i < y; i += 1)
+    for (int i = 0; i < y; i++)
     {
         std::vector<int> tmp( x );
-        for (int j = 0; j < x; j += 1)
+        for (int j = 0; j < x; j++)
             tmp[j] = -1;
         cache[i] = tmp;
     }
@@ -43,10 +43,10 @@ int main() {
     int y = 0;
     std::cin >> x >> y;
     std::vector<std::vector<char>> tab( y );
-    for (int i = 0; i < y; i += 1)
+    for (int i = 0; i < y; i++)
     {
         std::vector<char> tab2( x );
-        for (int j = 0; j < x; j += 1)
+        for (int j = 0; j < x; j++)
         {
             char tmp = '\u0000';
             std::cin >> tmp >> std::noskipws;

@@ -14,13 +14,13 @@ int main() {
     int y, x;
     std::cin >> x >> y;
     std::vector<std::vector<int>> tab = read_matrix<int>(y, x);
-    for (int ix = 1; ix < x; ix += 1)
-        for (int iy = 1; iy < y; iy += 1)
+    for (int ix = 1; ix < x; ix++)
+        for (int iy = 1; iy < y; iy++)
             if (tab[iy][ix] == 1)
                 tab[iy][ix] = std::min({tab[iy][ix - 1], tab[iy - 1][ix], tab[iy - 1][ix - 1]}) + 1;
-    for (int jy = 0; jy < y; jy += 1)
+    for (int jy = 0; jy < y; jy++)
     {
-        for (int jx = 0; jx < x; jx += 1)
+        for (int jx = 0; jx < x; jx++)
             std::cout << tab[jy][jx] << " ";
         std::cout << "\n";
     }

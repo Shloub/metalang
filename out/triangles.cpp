@@ -30,7 +30,7 @@ int find0(int len, std::vector<std::vector<int>>& tab, std::vector<std::vector<i
 
 int find(int len, std::vector<std::vector<int>>& tab) {
     std::vector<std::vector<int>> tab2( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         std::vector<int> tab3( i + 1, 0 );
         tab2[i] = tab3;
@@ -43,10 +43,10 @@ int main() {
     int len = 0;
     std::cin >> len;
     std::vector<std::vector<int>> tab( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
     {
         std::vector<int> tab2( i + 1 );
-        for (int j = 0; j <= i; j += 1)
+        for (int j = 0; j <= i; j++)
         {
             int tmp = 0;
             std::cin >> tmp;
@@ -55,9 +55,9 @@ int main() {
         tab[i] = tab2;
     }
     std::cout << find(len, tab) << "\n";
-    for (int k = 0; k < len; k += 1)
+    for (int k = 0; k < len; k++)
     {
-        for (int l = 0; l <= k; l += 1)
+        for (int l = 0; l <= k; l++)
             std::cout << tab[k][l] << " ";
         std::cout << "\n";
     }

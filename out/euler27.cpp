@@ -3,10 +3,10 @@
 
 int eratostene(std::vector<int>& t, int max0) {
     int n = 0;
-    for (int i = 2; i < max0; i += 1)
+    for (int i = 2; i < max0; i++)
         if (t[i] == i)
         {
-            n += 1;
+            n++;
             int j = i * i;
             while (j < max0 && j > 0)
             {
@@ -26,14 +26,14 @@ bool isPrime(int n, std::vector<int>& primes, int len) {
     {
         if (n % primes[i] == 0)
             return false;
-        i += 1;
+        i++;
     }
     return true;
 }
 
 
 int test(int a, int b, std::vector<int>& primes, int len) {
-    for (int n = 0; n <= 200; n += 1)
+    for (int n = 0; n < 201; n++)
     {
         int j = n * n + a * n + b;
         if (!isPrime(j, primes, len))
@@ -46,25 +46,25 @@ int test(int a, int b, std::vector<int>& primes, int len) {
 int main() {
     int maximumprimes = 1000;
     std::vector<int> era( maximumprimes );
-    for (int j = 0; j < maximumprimes; j += 1)
+    for (int j = 0; j < maximumprimes; j++)
         era[j] = j;
     int result = 0;
     int max0 = 0;
     int nprimes = eratostene(era, maximumprimes);
     std::vector<int> primes( nprimes, 0 );
     int l = 0;
-    for (int k = 2; k < maximumprimes; k += 1)
+    for (int k = 2; k < maximumprimes; k++)
         if (era[k] == k)
         {
             primes[l] = k;
-            l += 1;
+            l++;
         }
     std::cout << l << " == " << nprimes << "\n";
     int ma = 0;
     int mb = 0;
-    for (int b = 3; b <= 999; b += 1)
+    for (int b = 3; b < 1000; b++)
         if (era[b] == b)
-            for (int a = -999; a <= 999; a += 1)
+            for (int a = -999; a < 1000; a++)
             {
                 int n1 = test(a, b, primes, nprimes);
                 int n2 = test(a, -b, primes, nprimes);

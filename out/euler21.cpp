@@ -3,10 +3,10 @@
 
 int eratostene(std::vector<int>& t, int max0) {
     int n = 0;
-    for (int i = 2; i < max0; i += 1)
+    for (int i = 2; i < max0; i++)
         if (t[i] == i)
         {
-            n += 1;
+            n++;
             int j = i * i;
             while (j < max0 && j > 0)
             {
@@ -19,12 +19,12 @@ int eratostene(std::vector<int>& t, int max0) {
 
 
 int fillPrimesFactors(std::vector<int>& t, int n, std::vector<int>& primes, int nprimes) {
-    for (int i = 0; i < nprimes; i += 1)
+    for (int i = 0; i < nprimes; i++)
     {
         int d = primes[i];
         while (n % d == 0)
         {
-            t[d] += 1;
+            t[d]++;
             n /= d;
         }
         if (n == 1)
@@ -36,7 +36,7 @@ int fillPrimesFactors(std::vector<int>& t, int n, std::vector<int>& primes, int 
 
 int sumdivaux2(std::vector<int>& t, int n, int i) {
     while (i < n && t[i] == 0)
-        i += 1;
+        i++;
     return i;
 }
 
@@ -51,7 +51,7 @@ int sumdivaux(std::vector<int>& t, int n, int i) {
         int o = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
         int out0 = 0;
         int p = i;
-        for (int j = 1; j <= t[i]; j += 1)
+        for (int j = 1; j <= t[i]; j++)
         {
             out0 += p;
             p *= i;
@@ -71,20 +71,20 @@ int sumdiv(int nprimes, std::vector<int>& primes, int n) {
 int main() {
     int maximumprimes = 1001;
     std::vector<int> era( maximumprimes );
-    for (int j = 0; j < maximumprimes; j += 1)
+    for (int j = 0; j < maximumprimes; j++)
         era[j] = j;
     int nprimes = eratostene(era, maximumprimes);
     std::vector<int> primes( nprimes, 0 );
     int l = 0;
-    for (int k = 2; k < maximumprimes; k += 1)
+    for (int k = 2; k < maximumprimes; k++)
         if (era[k] == k)
         {
             primes[l] = k;
-            l += 1;
+            l++;
         }
     std::cout << l << " == " << nprimes << "\n";
     int sum = 0;
-    for (int n = 2; n <= 1000; n += 1)
+    for (int n = 2; n < 1001; n++)
     {
         int other = sumdiv(nprimes, primes, n) - n;
         if (other > n)

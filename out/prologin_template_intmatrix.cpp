@@ -11,8 +11,8 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
 
 int programme_candidat(std::vector<std::vector<int>>& tableau, int x, int y) {
     int out0 = 0;
-    for (int i = 0; i < y; i += 1)
-        for (int j = 0; j < x; j += 1)
+    for (int i = 0; i < y; i++)
+        for (int j = 0; j < x; j++)
             out0 += tableau[i][j] * (i * 2 + j);
     return out0;
 }

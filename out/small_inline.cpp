@@ -3,7 +3,7 @@
 
 int main() {
     std::vector<int> t( 2 );
-    for (int d = 0; d <= 1; d += 1)
+    for (int d = 0; d < 2; d++)
     {
         std::cin >> t[d];
     }

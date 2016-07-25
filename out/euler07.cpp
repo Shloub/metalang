@@ -2,7 +2,7 @@
 #include <vector>
 
 bool divisible(int n, std::vector<int>& t, int size) {
-    for (int i = 0; i < size; i += 1)
+    for (int i = 0; i < size; i++)
         if (n % t[i] == 0)
             return true;
     return false;
@@ -12,12 +12,12 @@ bool divisible(int n, std::vector<int>& t, int size) {
 int find(int n, std::vector<int>& t, int used, int nth) {
     while (used != nth)
         if (divisible(n, t, used))
-            n += 1;
+            n++;
         else
         {
             t[used] = n;
-            n += 1;
-            used += 1;
+            n++;
+            used++;
         }
     return t[used - 1];
 }
