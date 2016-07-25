@@ -18,9 +18,9 @@ toto mktoto(int v1) {
 
 int result(std::vector<toto>& t, int len) {
     int out0 = 0;
-    for (int j = 0; j < len; j += 1)
+    for (int j = 0; j < len; j++)
     {
-        t[j].blah += 1;
+        t[j].blah++;
         out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
     }
     return out0;
@@ -29,7 +29,7 @@ int result(std::vector<toto>& t, int len) {
 
 int main() {
     std::vector<toto> t( 4 );
-    for (int i = 0; i <= 3; i += 1)
+    for (int i = 0; i < 4; i++)
         t[i] = mktoto(i);
     std::cin >> t[0].bar >> t[1].blah >> std::noskipws;
     int titi = result(t, 4);

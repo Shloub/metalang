@@ -17,7 +17,7 @@ toto mktoto(int v1) {
 
 
 int result(toto& t) {
-    t.blah += 1;
+    t.blah++;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
 }
 

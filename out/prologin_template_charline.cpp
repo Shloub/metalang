@@ -15,7 +15,7 @@ std::vector<char> getline() {
 
 int programme_candidat(std::vector<char>& tableau, int taille) {
     int out0 = 0;
-    for (int i = 0; i < taille; i += 1)
+    for (int i = 0; i < taille; i++)
     {
         out0 += (int)(tableau[i]) * i;
         std::cout << tableau[i];

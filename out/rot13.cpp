@@ -9,7 +9,7 @@ int main() {
     char tmpc;
     std::cin >> strlen;
     std::vector<char> tab4( strlen );
-    for (int toto = 0; toto < strlen; toto += 1)
+    for (int toto = 0; toto < strlen; toto++)
     {
         std::cin >> tmpc >> std::noskipws;
         int c = (int)(tmpc);
@@ -17,7 +17,7 @@ int main() {
             c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4[toto] = (char)(c);
     }
-    for (int j = 0; j < strlen; j += 1)
+    for (int j = 0; j < strlen; j++)
         std::cout << tab4[j];
 }
 

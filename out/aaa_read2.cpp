@@ -22,24 +22,24 @@ int main() {
     std::cin >> len;
     std::cout << len << "=len\n";
     std::vector<int> tab( len );
-    for (int a = 0; a < len; a += 1)
+    for (int a = 0; a < len; a++)
     {
         std::cin >> tab[a];
     }
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         std::cout << i << "=>" << tab[i] << " ";
     std::cout << "\n";
     std::vector<int> tab2( len );
-    for (int b = 0; b < len; b += 1)
+    for (int b = 0; b < len; b++)
     {
         std::cin >> tab2[b];
     }
-    for (int i_ = 0; i_ < len; i_ += 1)
+    for (int i_ = 0; i_ < len; i_++)
         std::cout << i_ << "==>" << tab2[i_] << " ";
     std::cin >> strlen;
     std::cout << strlen << "=strlen\n";
     std::vector<char> tab4 = getline();
-    for (int i3 = 0; i3 < strlen; i3 += 1)
+    for (int i3 = 0; i3 < strlen; i3++)
     {
         char tmpc = tab4[i3];
         int c = (int)(tmpc);
@@ -48,7 +48,7 @@ int main() {
             c = (c - (int)('a') + 13) % 26 + (int)('a');
         tab4[i3] = (char)(c);
     }
-    for (int j = 0; j < strlen; j += 1)
+    for (int j = 0; j < strlen; j++)
         std::cout << tab4[j];
 }
 

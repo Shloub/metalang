@@ -10,7 +10,7 @@ int result(int sum, std::vector<int>& t, int maxIndex, std::vector<std::vector<i
     {
         int out0 = 0;
         int div = sum / t[maxIndex];
-        for (int i = 0; i <= div; i += 1)
+        for (int i = 0; i <= div; i++)
             out0 += result(sum - i * t[maxIndex], t, maxIndex - 1, cache);
         cache[sum][maxIndex] = out0;
         return out0;
@@ -29,7 +29,7 @@ int main() {
     t[6] = 100;
     t[7] = 200;
     std::vector<std::vector<int>> cache( 201 );
-    for (int j = 0; j <= 200; j += 1)
+    for (int j = 0; j < 201; j++)
     {
         std::vector<int> o( 8, 0 );
         cache[j] = o;

@@ -51,7 +51,7 @@ bool findHexa2(int n, int a, int b) {
 
 
 int main() {
-    for (int n = 285; n <= 55385; n += 1)
+    for (int n = 285; n < 55386; n++)
     {
         int t = triangle(n);
         if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))

@@ -38,13 +38,13 @@ int result(toto& t_, toto& t2_) {
     t3 = t2;
     t = t2;
     t2 = t3;
-    t.blah += 1;
+    t.blah++;
     int len = 1;
     std::vector<int> cache0( len );
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         cache0[i] = -i;
     std::vector<int> cache1( len );
-    for (int j = 0; j < len; j += 1)
+    for (int j = 0; j < len; j++)
         cache1[j] = j;
     std::vector<int> cache2 = cache0;
     cache0 = cache1;

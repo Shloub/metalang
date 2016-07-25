@@ -14,17 +14,17 @@ int main() {
     std::cin >> len;
     std::cout << len << "=len\n";
     std::vector<int> tab1( len );
-    for (int a = 0; a < len; a += 1)
+    for (int a = 0; a < len; a++)
     {
         std::cin >> tab1[a];
     }
-    for (int i = 0; i < len; i += 1)
+    for (int i = 0; i < len; i++)
         std::cout << i << "=>" << tab1[i] << "\n";
     std::cin >> len;
     std::vector<std::vector<int>> tab2 = read_matrix<int>(len - 1, len);
-    for (int i = 0; i < len - 1; i += 1)
+    for (int i = 0; i < len - 1; i++)
     {
-        for (int j = 0; j < len; j += 1)
+        for (int j = 0; j < len; j++)
             std::cout << tab2[i][j] << " ";
         std::cout << "\n";
     }

@@ -27,7 +27,7 @@ typedef struct tuple_int_int {
 
 int main() {
     std::vector<tuple_int_int> directions( 8 );
-    for (int i = 0; i <= 7; i += 1)
+    for (int i = 0; i < 8; i++)
         if (i == 0)
         {
             tuple_int_int c;
@@ -86,13 +86,13 @@ int main() {
         }
     int max0 = 0;
     std::vector<std::vector<int>> m = read_matrix<int>(20, 20);
-    for (int j = 0; j <= 7; j += 1)
+    for (int j = 0; j < 8; j++)
     {
         tuple_int_int o = directions[j];
         int dx = o.tuple_int_int_field_0;
         int dy = o.tuple_int_int_field_1;
-        for (int x = 0; x <= 19; x += 1)
-            for (int y = 0; y <= 19; y += 1)
+        for (int x = 0; x < 20; x++)
+            for (int y = 0; y < 20; y++)
                 max0 = std::max(max0, find(4, m, x, y, dx, dy));
     }
     std::cout << max0 << "\n";

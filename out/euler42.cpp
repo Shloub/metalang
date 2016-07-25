@@ -17,7 +17,7 @@ int score() {
     char c;
     std::cin >> std::skipws >> len;
     int sum = 0;
-    for (int i = 1; i <= len; i += 1)
+    for (int i = 1; i <= len; i++)
     {
         std::cin >> c >> std::noskipws;
         sum += (int)(c) - (int)('A') + 1;
@@ -32,13 +32,13 @@ int score() {
 
 int main() {
     int n;
-    for (int i = 1; i <= 55; i += 1)
+    for (int i = 1; i < 56; i++)
         if (is_triangular(i))
             std::cout << i << " ";
     std::cout << "\n";
     int sum = 0;
     std::cin >> n >> std::noskipws;
-    for (int i = 1; i <= n; i += 1)
+    for (int i = 1; i <= n; i++)
         sum += score();
     std::cout << sum << "\n";
 }
