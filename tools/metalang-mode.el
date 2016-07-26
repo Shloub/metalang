@@ -5,29 +5,54 @@
 
 ; mode inspire de : http://www.emacswiki.org/cgi-bin/wiki/ModeTutorial
 (defvar metalang-mode-hook nil)
-(defvar metalang-font-lock-keywords
+
+(defconst metalang-font-lock-keywords-li
+  '("def" "inline" "enum" "record" "def" "while" "with" "for" "to" "if" "then" "else" "elsif" "do" "end" "return" "main" "print" "read" "skip")
+  "metalang keywords list")
+
+(defconst metalang-font-lock-keywords-0
+  (list
+   (cons (concat "\\<\\(" (regexp-opt metalang-font-lock-keywords-li t) "\\)\\>") '( 0 font-lock-keyword-face))
+   )
+  "metalang keywords"
+  )
+
+(defconst metalang-font-lock-constants-0
+  (list
+   (cons (concat  "\\<\\(" (regexp-opt '("true" "false") t)  "\\)\\>") '( 0 font-lock-constant-face))
+   '("\\s-\\([0-9]+\\)\\s-" . font-lock-constant-face)
+   '("\\('[^']+'\\)" . font-lock-constant-face)
+   )
+  "metalang constants"
+  )
+
+(defconst metalang-font-lock-types-0
+  (list
+   '("\\(array<[-a-zA-Z0-9_.<>]+>\\)" . font-lock-type-face)
+   (cons (concat  "\\<\\(" (regexp-opt '("int" "string" "bool" "void") t) "\\)\\>") '( 0 font-lock-type-face))
+   '("\\(@[-a-zA-Z0-9_.]+\\)" . font-lock-type-face)
+   )
+  "metalang constants"
+  )
+
+(defconst metalang-font-lock-syntax-0
    '(
-
-     ("\\(\\#.*\\)" (1 font-lock-comment-face))
-
-     ("\\('[^']+'\\)" (1 font-lock-constant-face)) ; char regexp
-     ("\\([-a-zA-Z0-9_]+\\)\\s-*(" (1 font-lock-function-name-face))
-                                        ; function regexp
-     ("\\s-\\(def\\s-inline\\|enum\\|record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
-      (1 font-lock-keyword-face))
-     ("^\\(def\\s-inline\\|enum\\|record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
-      (1 font-lock-keyword-face))
-     ("\\(array<[-a-zA-Z0-9_.<>]+>\\)" (1 font-lock-type-face))
-     ("\\(@[-a-zA-Z0-9_.]+\\)" (1 font-lock-type-face))
-     ("\\(int\\|string\\|bool\\|void\\)" (1 font-lock-type-face))
-     ("\\(true\\|false\\)" (1 font-lock-constant-face t t))
-
-     ("\\(\\.[-a-zA-Z0-9_.]+\\)"
-      (1 font-lock-reference-face))
-     ("\\([-a-zA-Z0-9_.]+\\)\\s-:"
-      (1 font-lock-reference-face))
+     ("\\(\\#.*\\)" . font-lock-comment-face)
+     ("\\([-a-zA-Z0-9_]+\\)\\s-*(" ( 0 font-lock-function-name-face))
+     ("\\(\\.[-a-zA-Z0-9_.]+\\)" . font-lock-reference-face)
+     ("\\([-a-zA-Z0-9_.]+\\)\\s-:" . font-lock-reference-face)
      )
-   "Keyword highlighting specification for `metalang-mode'.")
+   "variable syntax")
+
+(defvar metalang-font-lock-keywords
+  (append 
+   metalang-font-lock-constants-0
+   metalang-font-lock-types-0
+   metalang-font-lock-keywords-0
+   metalang-font-lock-syntax-0
+   )
+  "Keyword highlighting specification for metalang.")
+
 (defvar metalang-mode-map
   (let ((map (make-keymap)))
     (define-key map "\C-j" 'newline-and-indent)
@@ -60,39 +85,40 @@
       (indent-line-to 0)
     (let ((not-indented t) cur-indent)
       (if (metalang-isend)
-					(progn
-						(save-excursion
-							(forward-line -1)
-							(setq cur-indent (- (current-indentation) default-tab-width)))
-						(if (< cur-indent 0)
-								(setq cur-indent 0)))
+	  (progn
+	    (save-excursion
+	      (forward-line -1)
+	      (setq cur-indent (- (current-indentation) default-tab-width)))
+	    (if (< cur-indent 0)
+		(setq cur-indent 0)))
         (save-excursion
           (while not-indented
             (forward-line -1)
-						(if
-								(metalang-isbegin)
-								(progn
-									(setq cur-indent (+ (current-indentation) default-tab-width))
-									(setq not-indented nil))
-							(if (metalang-isend)
-									(progn
-										(setq cur-indent (current-indentation))
-										(setq not-indented nil))
+	    (if
+		(metalang-isbegin)
+		(progn
+		  (setq cur-indent (+ (current-indentation) default-tab-width))
+		  (setq not-indented nil))
+	      (if (metalang-isend)
+		  (progn
+		    (setq cur-indent (current-indentation))
+		    (setq not-indented nil))
                 (if (bobp) (setq not-indented nil))
-								)
-							)
-						)))
+		)
+	      )
+	    )))
       (if cur-indent
           (indent-line-to cur-indent)
         (indent-line-to 0) ; If we didn't see an indentation hint, then allow no indentation
-				)
-			)))
+	)
+      )))
 
 
 (defvar metalang-mode-syntax-table
   (let ((st (make-syntax-table)))
     (modify-syntax-entry ?/ ". 14" st)
     (modify-syntax-entry ?* ". 23" st)
+    (modify-syntax-entry ?_ "w" st)
     st )
   "syntax table" )
 
@@ -100,7 +126,7 @@
   "Metalang major mode"
   (interactive)
 ;  (pop-to-buffer "*Metalang*" nil)
-;  (kill-all-local-variables)
+  (kill-all-local-variables)
   (set (make-local-variable 'font-lock-defaults)
        '(metalang-font-lock-keywords))
   (setq default-tab-width 2)
