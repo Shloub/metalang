@@ -4,7 +4,6 @@ Langage & Compilateur :
   smalltalk macros
   forth macros & return intelligent
   structures as couples pour les langages qui le supportent
-  tableau constant lors d'une initialisation
   types abstract & types alias (pour ouvrir un fichier ou pour les bigints par exemple)
   type option
   une lib standard avec des listes et des arbres
