@@ -32,6 +32,10 @@ open Stdlib
 open Helper
 open Ast
 
+
+let ptype f (t : Ast.Type.t ) = OcamlFunPrinter.ptype f t
+       
+
 let print_lief f l =
   let open Ast.Expr in let open Format in match l with
   | Char c -> fprintf f "%C" c
@@ -45,10 +49,8 @@ let prio_arg = -105
 let prio_tuple = -103
 let prio_apply = -101
 
-let print_expr refbindings macros e f p =
-  let open Format in
-  let open Ast.Expr in
-  let print_op f op = fprintf f "%s" (match op with
+let print_op f op = 
+  let open Ast.Expr in Format.fprintf f "%s" (match op with
   | Add -> "+"
   | Sub -> "-"
   | Mul -> "*"
@@ -61,17 +63,34 @@ let print_expr refbindings macros e f p =
   | Higher -> ">"
   | HigherEq -> ">="
   | Eq -> "="
-  | Diff -> "<>") in
-  let print_mut0 m f () =
-    let open Mutable in match m with
-    | Var v ->
-        if BindingSet.mem v refbindings
-        then fprintf f "(!%a)" print_varname v
-        else print_varname f v
-    | Array (m, fi) -> fprintf f "%a%a" m ()
-          (print_list (fun f a -> fprintf f ".[%a]" a nop) (sep "%a%a")) fi
-    | Dot (m, field) -> fprintf f "%a.%s" m () field in
-  let print_mut f m = Mutable.Fixed.Deep.fold print_mut0 m f in
+  | Diff -> "<>")
+
+let print_mut0 refbindings m f () =
+  let open Format in
+  let open Ast.Expr in
+  let open Mutable in
+  match m with
+  | Var v ->
+     if BindingSet.mem v refbindings
+     then fprintf f "(!%a)" print_varname v
+     else print_varname f v
+  | Array (m, fi) -> fprintf f "%a%a" m ()
+                             (print_list (fun f a -> fprintf f ".[%a]" a nop) (sep "%a%a")) fi
+  | Dot (m, field) -> fprintf f "%a.%s" m () field
+
+let print_mut refbindings f m = Mutable.Fixed.Deep.fold (print_mut0 refbindings) m f ()
+
+let pcall macros f prio_parent func li =
+  match StringMap.find_opt func macros with
+  | Some ( (t, params, code) ) ->
+     pmacros f "(%s)" t params code li nop
+  | None ->
+     if li = [] then parens prio_parent prio_apply f "%s ()" func
+     else parens prio_parent prio_apply f "%s %a" func (print_list (fun f x -> x f prio_arg) sep_space) li
+
+let print_expr refbindings macros e f p =
+  let open Format in
+  let open Ast.Expr in
   let print_expr0 e f prio_parent = match e with
   | BinOp (a, op, b) ->
       let prio, priol, prior = prio_binop op in
@@ -80,22 +99,20 @@ let print_expr refbindings macros e f p =
       parens prio_arg prio_apply f "%s %a" (OcamlFunPrinter.unopstr op) a prio_arg
 
   | Lief l -> print_lief f l
-  | Access m -> print_mut f m ()
-  | Call (func, li) ->
-      begin match StringMap.find_opt func macros with
-      | Some ( (t, params, code) ) ->
-          pmacros f "%s" t params code li nop
-      | None ->
-          if li = [] then parens prio_parent prio_apply f "%s ()" func
-          else parens prio_parent prio_apply f "%s %a" func (print_list (fun f x -> x f prio_arg) sep_space) li
-      end
+  | Access m -> print_mut refbindings f m
+  | Call (func, li) -> pcall macros f prio_parent func li
   | Lexems li -> assert false
   | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f nop) sep_c) li
   | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
       fprintf f "%s=%a" name x nop) (sep "%a;@\n%a")) li
-
   in Fixed.Deep.fold print_expr0 e f p
 
+type pinstr_acc = { p: Format.formatter -> bool -> Ast.Type.t -> unit;
+                    need_unit : bool;
+                    is_comment : bool;
+                    is_return : bool;
+                    is_sad_return : bool;
+                  }
 
 let collect_return acc li =
   let f f acc i = match Instr.unfix i with
@@ -142,9 +159,7 @@ let rec collect_sad_return acc instrs =
   | [] -> acc
 
 let collect_sad_return instrs = collect_sad_return IntSet.empty instrs
-
 let contains_sad_return instrs = IntSet.empty <> collect_sad_return instrs
-
 let collect_sad_returns ty instrs =
   let add acc l type_ =
     if contains_sad_return l then TypeSet.add type_ acc
@@ -158,64 +173,186 @@ let collect_sad_returns ty instrs =
   (add TypeSet.empty instrs ty)
   instrs
 
+                  
+let instructions sad_returns current_etype f li =
+  let li, _, united, _ = List.fold_left (fun (acc, returned, united, askunit) i ->
+                  if i.is_comment then
+                    (fun f -> i.p f sad_returns current_etype)::acc, returned, united, askunit
+                  else (fun f -> i.p f returned current_etype)::acc,
+                       true, (if askunit then not i.need_unit else united), false
+                ) ([], sad_returns, false, true) (List.rev li) in
+  Format.fprintf f (if united then "%a" else "%a@\n()") (print_list (fun f i -> i f) sep_nl) li
+
+let print_instr printed_exn refbindings macros i =
+  let open Ast.Instr in
+  let open Format in
+  let print_exnName f (t : unit Type.Fixed.t) =
+    try
+      Format.fprintf f "%s" (TypeMap.find t printed_exn)
+    with Not_found ->
+      Format.fprintf f "NOT_FOUND_%a" ptype t
+  in
+  let print_mut f m = print_mut refbindings f m in
+  let print_mut_set f m = match Mutable.Fixed.unfix m with
+       | Mutable.Var var ->
+          if BindingSet.mem var refbindings
+          then fprintf f "@[<h>%a@ :=@]" print_varname var
+          else fprintf f "@[<h>let %a@ =@]" print_varname var
+      | _ ->
+         Format.fprintf f "@[<h>%a@ <-@]"
+                        print_mut m
+  in
+  let read_ty f t =
+    match Type.unfix t with
+    | Type.Integer -> Format.fprintf f "readInt()"
+    | Type.Char -> Format.fprintf f "readChar()"
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t))) in
+
+  let is_list_return li =
+    match List.filter (fun i -> not i.is_comment) li |> List.rev with
+    | i::_ -> i.is_return
+    | [] -> false in
+  let sad_returns_list li =
+    match List.filter (fun i -> not i.is_comment) li |> List.rev with
+    | i::tl -> i.is_return && not i.is_sad_return && List.for_all (fun e -> not i.is_return && not i.is_sad_return) tl
+    | [] -> false in
+    
+  let p f sad_returns current_etype =
+    match i with
+    | Declare (var, ty, e, _) ->
+       fprintf f (if BindingSet.mem var refbindings then "@[<h>let %a@ =@ ref(@ %a )@]"
+                  else "@[<h>let %a@ =@ %a@]")
+               print_varname var e nop
+               
+    | AllocArray (name, t, e, None, opt) -> assert false
+    | AllocArray (name, t, len, Some (var, lambda), opt) ->
+       let b = BindingSet.mem name refbindings in
+       Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@]"
+                      print_varname name
+                      (fun t () ->
+                        if b then
+                          Format.fprintf t "ref(@ "
+                      ) ()
+                      len prio_arg
+                      print_varname var
+                      (fun f () ->
+                        if sad_returns_list lambda then Format.fprintf f "@ try@\n"
+                      ) ()
+                      (instructions false t) lambda
+                      (fun f () ->
+                        if sad_returns_list lambda then Format.fprintf f "@\nwith %a@ out -> out@\n"
+                                                                           print_exnName t
+                      ) ()
+                      (fun t () ->
+                        if b then
+                          Format.fprintf t ")"
+                      ) ()
+       | AllocArrayConst (name, ty, len, lief, opt) -> assert false (*TODO *)
+       | AllocRecord (name, ty, list, opt) ->
+          let b = BindingSet.mem name refbindings in
+          Format.fprintf f (if b then "let %a = ref {@\n@[<v 2>  %a@]@\n}"
+                            else "let %a = {@\n@[<v 2>  %a@]@\n}")
+      print_varname name
+      (print_list
+      (fun f (fieldname, expr) -> fprintf f "@[<h>%s=%a;@]" fieldname expr nop) sep_nl) list
+       | Print li->
+          let lili = List.pack 50 li |>
+                       List.map (fun li f ->
+                           let format, exprs = extract_multi_print clike_noformat format_type li in
+                            match exprs with
+                           | [] -> fprintf f "Printf.printf \"%s\"" format
+                           | _ -> fprintf f "Printf.printf \"%s\" %a" format
+                                          (print_list (fun f (t, e) -> e f prio_arg) sep_space) exprs
+                         )
+          in print_list (fun f i -> i f) sep_nl f lili
+    | Return e -> if sad_returns then
+                    fprintf f "@[<h>raise (%a(%a))@]" print_exnName current_etype e nop
+                  else e f nop
+    | Read li ->
+       print_list
+          (fun f -> function
+            | Separation -> fprintf f "@[stdin_sep()@]"
+            | DeclRead (ty, v, opt) ->
+               if BindingSet.mem v refbindings
+               then fprintf f "@[let %a = ref (%a)@]" print_varname v read_ty ty
+               else fprintf f "@[let %a = %a@]" print_varname v read_ty ty
+            | ReadExpr (ty, m) -> fprintf f "@[%a %a@]" print_mut_set m read_ty ty
+          ) sep_nl f li
+    | Affect (m, e) ->fprintf f "@[<h>%a@ %a@]" print_mut_set m e nop
+      | Untuple (li, expr, opt) -> fprintf f "@[<h>let (%a) = %a@]"
+                                           (print_list print_varname sep_c) (List.map snd li)
+                                           expr nop
+      | If (e, iftrue, []) ->
+         fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]" e nop (instructions true current_etype) iftrue
+      | If (e, iftrue, iffalse) ->
+         let sad_returns = sad_returns || xor (is_list_return iftrue) (is_list_return iffalse) in
+         fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]"
+                 e nop (instructions sad_returns current_etype) iftrue (instructions sad_returns current_etype) iffalse
+      | Loop (var, begin_, end_, li) ->
+         fprintf f "@[<v 2>@[<h>for@ %a@ =@ %a@ to@ %a@ do@]@\n%a@]"
+                 print_varname var
+                 begin_ nop end_ nop
+                 (instructions true current_etype) li
+      | Comment str -> fprintf f "(*%s*)" str
+      | While (e, li) -> fprintf f "@[<v 2>@[<h>while %a do@]@\n%a@]@\n" e nop (instructions true current_etype) li
+      | Call (func, li) -> pcall macros f nop func li
+      | ClikeLoop _ | Unquote _ | SelfAffect _ | Decr _ | Tag _
+        | Incr _ -> assert false in
+  let is_return = match i with
+    | Return _ -> false
+    | If (_, iftrue, iffalse) -> List.for_all is_list_return [iftrue; iffalse]
+    | _ -> false in
+  let is_sad_return = match i with
+    | ClikeLoop (_, _, _, li) | While (_, li) ->
+       List.for_all (fun i -> not i.is_return && not i.is_sad_return) li
+    | If (_, iftrue, iffalse) -> xor (is_list_return iftrue) (is_list_return iffalse)
+    | _ -> false              
+  in
+  {
+    is_comment=is_comment i;
+    is_return = is_return;
+    p=p;
+    is_sad_return = is_sad_return;
+    need_unit = match i with
+                | Untuple  _ -> true
+                | Declare _ -> true
+                | Affect (m, _) -> begin match Mutable.Fixed.unfix m with
+                                     | Mutable.Var var -> not (BindingSet.mem var refbindings) (* c'est compilé comme un let *)
+                                     | _ -> false end
+                | _ -> false;
+ }
+
+let print_instr printed_exn refbindings macros i =
+  let open Ast.Instr.Fixed.Deep in
+  fold (print_instr printed_exn refbindings macros)
+       (mapg (print_expr refbindings macros) i)
+
+                 
 (** the main class : the ocaml printer *)
 class fsharpPrinter = object(self)
-  inherit Printer.printer as super
 
+  method setTyperEnv (t:Typer.env) = ()
+  val mutable macros = StringMap.empty
+  (** used variables *)
+  val mutable used_variables = BindingSet.empty
+  method calc_used_variables (instrs : Utils.instr list ) =
+    used_variables <- calc_used_variables false instrs
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  method is_rec funname = StringSet.mem funname recursives_definitions
+                                        
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
   (** sad return in the current function *)
   val mutable sad_returns = IntSet.empty
   val mutable printed_exn = TypeMap.empty
   (** true if we are processing an expression *)
-  val mutable in_expr = false
+  val mutable current_etype = Ast.Type.void
   val mutable exn_count = 0
-
-  method expr f e = print_expr refbindings (StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
-
-  method lang () = "fsharp"
-
-  method untuple f li e =
-    Format.fprintf f "@[<h>let (%a) = %a@]"
-      (print_list self#binding sep_c) (List.map snd li)
-      self#expr e
-
-  method record f li =
-    Format.fprintf f "{@\n  @[<v>%a@]@\n}"
-      (self#def_fields (InternalName 0)) li
-
-  (** show a type *)
-  method ptype f (t : Ast.Type.t ) = OcamlFunPrinter.ptype f t
-
-  (** read spaces from stdin *)
-  method stdin_sep f = Format.fprintf f "@[stdin_sep()%a@]" self#separator ()
-
-  (** show a binary operator *)
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-      | Expr.Add -> "+"
-      | Expr.Sub -> "-"
-      | Expr.Mul -> "*"
-      | Expr.Div -> "/"
-      | Expr.Mod -> "mod"
-      | Expr.Or -> "||"
-      | Expr.And -> "&&"
-      | Expr.Lower -> "<"
-      | Expr.LowerEq -> "<="
-      | Expr.Higher -> ">"
-      | Expr.HigherEq -> ">="
-      | Expr.Eq -> "="
-      | Expr.Diff -> "<>"
-      )
-
 
   (** show the main *)
   method main f main =
+    current_etype <- Ast.Type.void;
     sad_returns <- collect_sad_return main;
     self#calc_refs main;
     self#calc_used_variables main;
@@ -290,158 +427,43 @@ let readInt () =
   method rec_ f b =
     if b then Format.fprintf f "rec@ "
 
-  (** show the prototype of a recursive function *)
-  method print_rec_proto f triplet = self#print_proto_aux f true triplet
-
-  (** show the prototype of a function*)
-  method print_proto f triplet = self#print_proto_aux f false triplet
-
-
   (** util method to print a function prototype*)
   method print_proto_aux f rec_ ((funname:string), (t:Ast.Type.t), li) =
     let otype f ty =
       match Type.unfix ty with
       | Type.Void
       | Type.Integer -> ()
-      | _ -> Format.fprintf f ": %a " self#ptype ty
+      | _ -> Format.fprintf f ": %a " ptype ty
     in
     match li with
-    | [] -> Format.fprintf f "let@ %a%a@ () %a="
-      self#rec_ rec_
-      self#funname funname
+    | [] -> Format.fprintf f "let@ %a%s@ () %a="
+      self#rec_ rec_ funname
           otype t
     | _ ->
-      Format.fprintf f "let@ %a%a@ %a %a="
-        self#rec_ rec_
-        self#funname funname
+      Format.fprintf f "let@ %a%s@ %a %a="
+        self#rec_ rec_ funname
         (print_list (fun f (name, ty) ->
           match Type.unfix ty with
           | Type.Integer -> self#binding f name
-          | _ -> Format.fprintf f "(%a:%a)" self#binding name self#ptype ty
+          | _ -> Format.fprintf f "(%a:%a)" self#binding name ptype ty
                     ) sep_space) li
           otype t
 
-  (** show an if then else *)
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] ->
-      Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]"
-        self#expr e
-        self#bloc ifcase
-    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse %a"
-        self#expr e
-        self#bloc ifcase
-        self#instr instr
-    | _ ->
-      Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]"
-        self#expr e
-        self#bloc ifcase
-        self#bloc elsecase
-
   (** show an instruction *)
   method instructions f instrs =
-    Format.fprintf f "%a%a"
-      (print_list self#instr (sep "%a@\n%a")) instrs
-      (fun f () -> Format.fprintf f (if self#need_unit instrs then "@\n()" else "")) ()
-
-  (** returns true if the function need to returns unit *)
-  method need_unit instrs =
-    let instrs = nocomment instrs in
-    if instrs = [] then true
-    else match List.map Instr.unfix instrs |> List.rev with
-    | (Instr.AllocArray _ | Instr.Declare _ | Instr.Untuple _) :: _ -> true
-    | Instr.Read li :: _ ->
-        begin match List.rev li with
-        | Instr.DeclRead _ :: _ -> true
-        | _ -> false
-        end
-    | (Instr.Affect ( Mutable.Fixed.F (_, Mutable.Var v), _)) :: _
-      when not( BindingSet.mem v refbindings) -> true
-    | _ -> false
-
-  (** show a bloc of instructions *)
-  method bloc f b =
-    if List.forall
-      (function
-      | Instr.Fixed.F (_, (Instr.Comment _
-                              | (Instr.If (_, _, _) )) (* sans begin end, on a un conflit sur le else *)) -> true
-      | _ -> false
-      )
-      b
-    then
-      Format.fprintf f "@[<v 2>  %a@]" self#instructions b
-    else
-      match b with
-      | [i] ->
-        Format.fprintf f "%a@\n%s" self#instr i
-          (if self#need_unit b then " ()" else "")
-      | _ ->
-        Format.fprintf f "@[<v 2>  %a@]" self#instructions b
+    let macros = StringMap.map (fun (ty, params, li) ->
+                     ty, params,
+                     try List.assoc "fsharp" li
+                     with Not_found -> List.assoc "" li) macros in
+    let instrs = List.map (print_instr printed_exn refbindings macros) instrs in
+    instructions false current_etype f instrs
 
   (** show a binding *)
   method binding f i =
     if BindingSet.mem i used_variables then
-      Format.fprintf f "%a" super#binding i
+      Format.fprintf f "%a" print_varname i
     else
-      Format.fprintf f "_%a" super#binding i
-
-  method hasSelfAffect op = false
-
-  (** show an affectation *)
-  method affect f m expr =
-    match Mutable.Fixed.unfix m with
-      | Mutable.Var var ->
-          if BindingSet.mem var refbindings
-          then Format.fprintf f "@[<h>%a@ := %a@]"
-              self#mutable_set m 
-              self#expr expr
-          else
-              Format.fprintf f "@[<h>let %a@ = %a@]"
-              self#mutable_set m 
-              self#expr expr
-      | _ ->
-          Format.fprintf f "@[<h>%a@ <- %a@]"
-            self#mutable_set m 
-            self#expr expr
-
-  (** show a declaration *)
-  method declaration f var t e =
-    if BindingSet.mem var refbindings then
-      Format.fprintf f "@[<h>let %a@ =@ ref(@ %a )@]"
-        self#binding var
-        self#expr e
-    else
-      Format.fprintf f "@[<h>let %a@ =@ %a@]"
-        self#binding var
-        self#expr e
-
-  (** read a value from stdin into a mutable *)
-  method read f t m =
-    Format.fprintf f "@[%a %s %a@]"
-      self#mutable_set m
-      (match m |> Mutable.Fixed.unfix with
-      | Mutable.Var _ -> ":="
-      | Mutable.Array _ -> "<-"
-      | Mutable.Dot _ -> "<-"
-      ) self#read_ty t
-
-  method read_ty f t =
-    match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "readInt()"
-    | Type.Char -> Format.fprintf f "readChar()"
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
-
-  (** declare a variable and read his value from stdin *)
-  method read_decl f t v =
-    if BindingSet.mem v refbindings then
-      Format.fprintf f "@[let %a = ref (%a)@]"
-        self#binding v
-        self#read_ty t
-    else
-      Format.fprintf f "@[let %a = %a@]"
-        self#binding v
-        self#read_ty t
+      Format.fprintf f "_%a" print_varname i
 
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
@@ -471,34 +493,19 @@ let readInt () =
     | _ -> tra acc i
     in refbindings <- List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs
 
-  method m_variable f binding = if in_expr && BindingSet.mem binding refbindings
-  then Format.fprintf f "(!%a)" self#binding binding
-  else self#binding f binding
-
-  method m_array f m indexes = Format.fprintf f "@[<h>%a.[%a]@]"
-      self#mutable_get m
-      (print_list self#expr (sep "%a].[%a")) indexes
-
-  method print_exnName f (t : unit Type.Fixed.t) =
-    try
-      Format.fprintf f "%s" (TypeMap.find t printed_exn)
-    with Not_found ->
-      Format.fprintf f "NOT_FOUND_%a" self#ptype t
-
   method print_exns f exns =
     TypeMap.iter (fun ty str ->
       Format.fprintf f "exception %s of %a@\n"
         str
-        self#ptype ty
+        ptype ty
     ) exns
 
-  method used_affect () = true
-
   method print_fun f funname (t : unit Type.Fixed.t) li instrs =
+    current_etype <- t;
     self#calc_refs instrs;
     self#calc_used_variables instrs;
     let is_rec = self#is_rec funname in
-    let proto = if is_rec then self#print_rec_proto else self#print_proto in
+    let proto f = self#print_proto_aux f is_rec in
     let sad_types = collect_sad_returns t instrs in
     let () = sad_returns <- collect_sad_return instrs in
     match t with
@@ -532,7 +539,11 @@ let readInt () =
           self#ref_alias li
           self#instructions instrs
           self#print_exnName t
-
+  method print_exnName f (t : unit Type.Fixed.t) =
+    try
+      Format.fprintf f "%s" (TypeMap.find t printed_exn)
+    with Not_found ->
+      Format.fprintf f "NOT_FOUND_%a" ptype t
   method ref_alias f li = match li with
   | [] -> ()
   | (name, _) :: tl ->
@@ -545,161 +556,8 @@ let readInt () =
     else
       self#ref_alias f tl
 
-  method combine_formats () = true
-
-  method print f t expr =
-    match Expr.unfix expr with
-    | Expr.Lief (Expr.String s) -> Format.fprintf f "@[Printf.printf %s@]" ( self#noformat s)
-    | _ ->
-      Format.fprintf f "@[Printf.printf \"%a\" %a@]"
-        self#format_type t
-        (if self#nop (Expr.unfix expr) then
-            self#expr
-         else self#printp) expr
-
   method comment f str =
     Format.fprintf f "(*%s*)" str
-
-  method return f e =
-    if IntSet.mem (Expr.Fixed.annot e) sad_returns then
-      Format.fprintf f "@[<h>raise (%a(%a))@]"
-        self#print_exnName (Typer.get_type (self#getTyperEnv ())  e)
-        self#expr e
-    else
-      Format.fprintf f "@[<h>%a@]" self#expr e
-
-  method allocarray_lambda f binding type_ len binding2 lambda _ =
-    let b = BindingSet.mem binding refbindings in
-    match List.map (Instr.unfix) lambda with
-    | [Instr.Return ( Expr.Fixed.F(_, Expr.Lief lief))] ->
-        Format.fprintf f "@[<h>let %a@ =@ %aArray.create@ %a %a@]"
-          self#binding binding
-          (fun t () ->
-            if b then
-              Format.fprintf t "ref(@ "
-          ) ()
-          (fun f e ->
-            if self#nop (Expr.unfix e) then self#expr f e
-            else Format.fprintf f "(%a)" self#expr e
-          ) len
-          print_lief lief
-    | _ ->
-    let next_sad_return =sad_returns in
-    sad_returns <- collect_sad_return lambda;
-   Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@]"
-(*  Format.fprintf f "@[<h>let %a@ =@ %a[| for %a in 1 .. %a ->@]@[<v>%a@\n@[<v 2>  %a%a@]|]@]%a@]" *)
-      self#binding binding
-      (fun t () ->
-        if b then
-          Format.fprintf t "ref(@ "
-      ) ()
-      (fun f len ->
-        if self#nop (Expr.unfix len) then
-          self#expr f len
-        else Format.fprintf f "(%a)" self#expr len) len
-self#binding binding2
-      (fun f () ->
-        if sad_returns <> IntSet.empty then Format.fprintf f "@ try@\n"
-      ) ()
-      self#instructions lambda
-      (fun f () ->
-        if sad_returns <> IntSet.empty then Format.fprintf f "@\nwith %a@ out -> out@\n"
-          self#print_exnName type_
-      ) ()
-      (fun t () ->
-        if b then
-          Format.fprintf t ")"
-      ) ();
-    sad_returns <- next_sad_return;
-    ()
-
-  method allocarray f binding type_ len _ =
-    let b = BindingSet.mem binding refbindings in
-    Format.fprintf f "@[<h>let@ %a@ %a=@ Array.make@ %a@ (Obj.magic@ 0)%a@]"
-      self#binding binding
-      (fun t () ->
-        if b then
-          Format.fprintf t "ref(@ "
-      ) ()
-      self#expr len
-      (fun t () ->
-        if b then
-          Format.fprintf t ")"
-      ) ()
-
-  method affectarray f binding indexes e2 =
-    Format.fprintf f "@[<h>%a.(%a)@ <-@ %a@]"
-      self#binding binding
-      (print_list self#expr (sep "%a).(%a")) indexes
-      self#expr e2
-
-
-  method nop = function
-  | Expr.Lief _ -> true
-  | Expr.Access _ -> true
-  | Expr.Call (_, _) -> false
-  | Expr.Record _ -> true
-  | _ -> false
-
-  (* Todo virer les parentheses quand on peut*)
-  method apply f var li =
-    match StringMap.find_opt var macros with
-    | Some _ -> super#apply f var li
-    | None ->
-      match li with
-      | [] ->
-        Format.fprintf f "@[<h>(%a ())@]"
-          self#funname var
-      | _ ->
-        Format.fprintf
-          f
-          "@[<h>%a %a@]"
-          self#funname var
-          (print_list
-             (fun t e ->
-               if self#nop (Expr.unfix e) then self#expr f e
-               else Format.fprintf f "(%a)" self#expr e
-             )
-             sep_space
-          ) li
-
-  method call f var li =
-    self#apply f var li
-
-  method whileloop f expr li =
-    Format.fprintf f "@[<v 2>@[<h>while %a do@]@\n%a@]@\n"
-      self#expr expr
-      self#instructions li
-
-  method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v 2>@[<h>for@ %a@ =@ %a@ to@ %a@ do@]@\n%a@]"
-      self#binding varname
-      self#expr expr1
-      self#expr expr2
-      self#instructions li
-
-  method def_fields name f li =
-    print_list
-      (fun f (fieldname, expr) ->
-        Format.fprintf f "@[<h>%a=%a;@]"
-          self#field fieldname
-          self#expr expr
-      )
-      sep_nl f li
-
-  method allocrecord f name t el =
-    let b = BindingSet.mem name refbindings in
-    Format.fprintf f "let %a = %a{@\n@[<v 2>  %a@]@\n}%a"
-      self#binding name
-      (fun t () ->
-        if b then
-          Format.fprintf t "ref(@ "
-      ) ()
-      (self#def_fields name) el
-      (fun t () ->
-        if b then
-          Format.fprintf t ")"
-      ) ()
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -710,33 +568,32 @@ self#binding binding2
              (fun t (name, type_) ->
                Format.fprintf t "@[<h>mutable %s : %a;@]"
                  name
-                 self#ptype type_
+                 ptype type_
              ) sep_nl
           ) li
     | Type.Enum li ->
       Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
         name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
     | _ ->
-      Format.fprintf f "type %a = %a;;"
-        super#typename name
-        super#ptype t
+      Format.fprintf f "type %s = %a;;" name ptype t
 
-  method printf f () = Format.fprintf f "Printf.printf"
-  method multi_print f li =
-    let limit = 50 in
-    if List.length li > limit then
-      let lili = List.pack limit li in
-      print_list self#multi_print sep_nl f lili
-    else
-      let format, exprs = self#extract_multi_print li in
-      if exprs = [] then
-        Format.fprintf f "@[<h>%a \"%s\"@]" self#printf () format
-      else
-        Format.fprintf f "@[<h>%a \"%s\" %a@]" self#printf ()  format
-          (print_list
-             (fun f (t, expr) ->
-               (if self#nop (Expr.unfix expr) then
-                 self#expr
-               else self#printp) f expr) sep_space ) exprs
+  method proglist f funs =
+    Format.fprintf f "%a" (print_list self#prog_item nosep) funs
+  method prog_item (f:Format.formatter) t =
+    match t with
+    | Prog.Comment s -> self#comment f s;
+      Format.fprintf f "@\n"
+    | Prog.DeclarFun (var, t, li, instrs, _opt) ->
+      self#print_fun f var t li instrs;
+      Format.fprintf f "@\n"
+    | Prog.Macro (name, t, params, code) ->
+      macros <- StringMap.add
+        name (t, params, code)
+        macros;
+      ()
+    | Prog.Unquote _ -> assert false
+    | Prog.DeclareType (name, t) ->
+      self#decl_type f name t;
+      Format.fprintf f "@\n"
 
 end

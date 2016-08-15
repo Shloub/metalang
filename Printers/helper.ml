@@ -420,3 +420,32 @@ let rec jlike_suffix_type f t =
   | Array t2 ->
       fprintf f "[]%a" jlike_suffix_type t2
   | _ -> fprintf f ""
+
+let calc_used_variables used_affect instrs =
+  let rec fold_expr acc e =
+      match Ast.Expr.unfix e with
+      | Ast.Expr.Access m -> Ast.Mutable.Writer.Deep.fold fold_mut acc m
+      | _ -> acc
+    and fold_mut acc m = match Ast.Mutable.unfix m with
+      | Ast.Mutable.Var varname -> Ast.BindingSet.add varname acc
+      | Ast.Mutable.Array (_, lie) -> List.fold_left
+        dfold_expr acc lie
+      | _ -> acc
+    and dfold_expr acc e =
+      Ast.Expr.Writer.Deep.fold fold_expr
+        (fold_expr acc e) e
+    in
+    let fold_instr acc i =
+      let acc = Ast.Instr.Fixed.Deep.foldg (fun e acc -> dfold_expr acc e) i acc in
+      Ast.Instr.Writer.Deep.fold (fun acc i -> match Ast.Instr.unfix i with
+      | Ast.Instr.Affect (m, e) ->
+        begin match Ast.Mutable.unfix m with
+        | Ast.Mutable.Var var ->
+          if used_affect then Ast.BindingSet.add var acc
+          else acc
+        | _ -> Ast.Mutable.Writer.Deep.fold fold_mut acc m
+        end
+      | _ -> acc) acc i
+    in
+      List.fold_left fold_instr Ast.BindingSet.empty
+      instrs
