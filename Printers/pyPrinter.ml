@@ -39,49 +39,49 @@ let print_lief prio f l =
   let open Format in
   let open Expr in
   match l with
-    | Char c -> unicode f c
-    | Enum e -> fprintf f "%S" e
-    | Bool true -> fprintf f "True"
-    | Bool false -> fprintf f "False"
-    | x -> print_lief prio f x
+  | Char c -> unicode f c
+  | Enum e -> fprintf f "%S" e
+  | Bool true -> fprintf f "True"
+  | Bool false -> fprintf f "False"
+  | x -> print_lief prio f x
 
 let config macros =
   let open Format in
   let open Expr in
   let prio_binop op = match op with
-  | Mul -> assoc 5
-  | Div
-  | Mod -> nonassocr 7
-  | Add -> assoc 9
-  | Sub -> nonassocr 9
-  | Lower
-  | LowerEq
-  | Higher
-  | HigherEq
-  | Eq
-  | Diff -> nonassocl 13
-  | And -> assoc 15
-  | Or -> assoc 15 in
+    | Mul -> assoc 5
+    | Div
+    | Mod -> nonassocr 7
+    | Add -> assoc 9
+    | Sub -> nonassocr 9
+    | Lower
+    | LowerEq
+    | Higher
+    | HigherEq
+    | Eq
+    | Diff -> nonassocl 13
+    | And -> assoc 15
+    | Or -> assoc 15 in
   let print_op f op =
     fprintf f (match op with
-    | Add -> "+"
-    | Sub -> "-"
-    | Mul -> "*"
-    | Div -> "/"
-    | Mod -> "%%"
-    | Or -> "or"
-    | And -> "and"
-    | Lower -> "<"
-    | LowerEq -> "<="
-    | Higher -> ">"
-    | HigherEq -> ">="
-    | Eq -> "=="
-    | Diff -> "!=") in
+        | Add -> "+"
+        | Sub -> "-"
+        | Mul -> "*"
+        | Div -> "/"
+        | Mod -> "%%"
+        | Or -> "or"
+        | And -> "and"
+        | Lower -> "<"
+        | LowerEq -> "<="
+        | Higher -> ">"
+        | HigherEq -> ">="
+        | Eq -> "=="
+        | Diff -> "!=") in
   let print_unop f op =
     let open Ast.Expr in
     Format.fprintf f (match op with
-    | Neg -> "-"
-    | Not -> "not ") in
+        | Neg -> "-"
+        | Not -> "not ") in
   {
     prio_binop;
     prio_unop;
@@ -97,12 +97,12 @@ let print_expr config e f p =
   let open Format in
   let open Expr in
   let print_expr0 config e f prio_parent = match e with
-  | BinOp (a, (Div as op), b) ->
+    | BinOp (a, (Div as op), b) ->
       let _, priol, prior = prio_binop op in
       fprintf f "math.trunc(%a %a %a)" a priol print_op op b prior
-  | BinOp (a, Mod, b) -> fprintf f "mod(%a, %a)" a nop b nop
-  | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
-  | _ -> print_expr0 config e f prio_parent
+    | BinOp (a, Mod, b) -> fprintf f "mod(%a, %a)" a nop b nop
+    | Tuple li -> fprintf f "[%a]" (print_list (fun f x -> x f nop) sep_c) li
+    | _ -> print_expr0 config e f prio_parent
   in Fixed.Deep.fold (print_expr0 config) e f p
 
 let print_instr tyenv c i =
@@ -122,102 +122,102 @@ let print_instr tyenv c i =
     | Declare (var, ty, e, _) -> fprintf f "%a = %a" c.print_varname var e nop
     | Incr _ | Decr _ -> assert false
     | SelfAffect (mut, Ast.Expr.Div, e) -> fprintf f "%a = math.trunc(%a / %a)"
-          (c.print_mut c nop) mut (c.print_mut c nop) mut e nop
+                                             (c.print_mut c nop) mut (c.print_mut c nop) mut e nop
     | SelfAffect (mut, Ast.Expr.Mod, e) -> fprintf f "%a = mod(%a, %a)"
-          (c.print_mut c nop) mut (c.print_mut c nop) mut e nop
+                                             (c.print_mut c nop) mut (c.print_mut c nop) mut e nop
     | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a" (c.print_mut c nop) mut c.print_op op e nop
     | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
     | ClikeLoop (init, cond, incr, li) -> assert false
     | Loop (var, e1, e2, li) -> fprintf f "@[<v 4>@[<h>for %a in range(%a, %a):@]%a@]"
-          c.print_varname var e1 nop e2 nop
-          block li
+                                  c.print_varname var e1 nop e2 nop
+                                  block li
     | While (e, li) -> fprintf f "@[<v 4>while @[<h>%a@]:%a@]" e nop block li
     | Comment s -> let lic = String.split s '\n' in
-        print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
+      print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
     | Tag s -> fprintf f "/*%S*/" s
     | Return e -> if inlambda then fprintf f "next %a" e nop else fprintf f "return %a" e nop
     | AllocArray (name, t, e, None, opt) ->
-        fprintf f "@[<h>%a@ =@ [None] * %a@]"
-          c.print_varname name
-          (fun f a -> a f (prio_right (prio_binop Ast.Expr.Mul))) e
+      fprintf f "@[<h>%a@ =@ [None] * %a@]"
+        c.print_varname name
+        (fun f a -> a f (prio_right (prio_binop Ast.Expr.Mul))) e
     | AllocArray (name, t, e, Some (var, lambda), opt) ->
-        fprintf f "@[<v 2>%a = [*0..@[<h>%a-1@]].map { |%a|@\n%a@\n}@]"
-          c.print_varname name
-          e nop
-          c.print_varname var
-          block_lambda lambda
+      fprintf f "@[<v 2>%a = [*0..@[<h>%a-1@]].map { |%a|@\n%a@\n}@]"
+        c.print_varname name
+        e nop
+        c.print_varname var
+        block_lambda lambda
     | AllocArrayConst (name, ty, len, lief, opt) ->
-        fprintf f "@[<h>%a@ = [%a] * %a@]"
-          c.print_varname name
-          (c.print_lief nop) lief
-          len (prio_right (prio_binop Ast.Expr.Mul))
+      fprintf f "@[<h>%a@ = [%a] * %a@]"
+        c.print_varname name
+        (c.print_lief nop) lief
+        len (prio_right (prio_binop Ast.Expr.Mul))
     | AllocRecord (name, ty, list, opt) ->
-        fprintf f "@[<v 4>%a = {%a}@\n@]" c.print_varname name
-          (print_list (fun f (field, x) -> fprintf f "%S:%a" field x nop) sep_nl) list
+      fprintf f "@[<v 4>%a = {%a}@\n@]" c.print_varname name
+        (print_list (fun f (field, x) -> fprintf f "%S:%a" field x nop) sep_nl) list
     | If (e, listif, []) when inelseif ->
-        fprintf f "if %a:%a@]" e nop block listif
+      fprintf f "if %a:%a@]" e nop block listif
     | If (e, listif, [elsecase]) when inelseif && elsecase.is_if ->
-        fprintf f "if %a:%a@]@\n@[<v 4>el%a" e nop block listif elsecase.p (true, inlambda)          
+      fprintf f "if %a:%a@]@\n@[<v 4>el%a" e nop block listif elsecase.p (true, inlambda)          
     | If (e, listif, listelse)  when inelseif ->
-        fprintf f "if %a:%a@]@\n@[<v 4>else:%a@]" e nop block listif block listelse
+      fprintf f "if %a:%a@]@\n@[<v 4>else:%a@]" e nop block listif block listelse
     | If (e, listif, []) ->
-        fprintf f "@[<v 4>if %a:%a@]" e nop block listif
+      fprintf f "@[<v 4>if %a:%a@]" e nop block listif
     | If (e, listif, [elsecase]) when elsecase.is_if ->
-        fprintf f "@[<v 4>if %a:%a@]@\n@[<v 4>el%a" e nop block listif elsecase.p (true, inlambda)          
+      fprintf f "@[<v 4>if %a:%a@]@\n@[<v 4>el%a" e nop block listif elsecase.p (true, inlambda)          
     | If (e, listif, listelse) ->
-        fprintf f "@[<v 4>if %a:%a@]@\n@[<v 4>else:%a@]" e nop block listif block listelse
+      fprintf f "@[<v 4>if %a:%a@]@\n@[<v 4>else:%a@]" e nop block listif block listelse
     | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
-      | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
-      | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
-    end
+        | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
+        | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
+      end
     | Print li->
-        let format, exprs = extract_multi_print clike_noformat format_type li in
-        (* TODO match end of format *)
-        begin match exprs with
+      let format, exprs = extract_multi_print clike_noformat format_type li in
+      (* TODO match end of format *)
+      begin match exprs with
         | [] -> fprintf f "print(\"%s\", end='')" format
         | [_ty, e] -> fprintf f "print(\"%s\" %% %a, end='')" format e prio_percent_percent
         | _ -> fprintf f "print(\"%s\" %% (%a), end='')" format
-              (print_list (fun f (t, e) -> e f nop) sep_c) exprs
-        end
+                 (print_list (fun f (t, e) -> e f nop) sep_c) exprs
+      end
     | Read li ->
-        let li = List.map (function
+      let li = List.map (function
           | Separation -> fun f -> fprintf f "@[<hov>stdinsep()@]"
           | DeclRead (t, var, _option) -> read t (fun f () -> print_varname f var)
           | ReadExpr (t, m) -> read t (fun f () -> c.print_mut c nop f m)) li
-        in print_list (fun f e -> e f) sep_nl f li
+      in print_list (fun f e -> e f) sep_nl f li
     | Untuple (li, expr, opt) -> fprintf f "(%a) = %a" (print_list c.print_varname sep_c) (List.map snd li) expr nop
     | Unquote e -> assert false in
   let is_multi_instr = match i with
-  | Read (hd::tl) -> true
-  | _ -> false in
+    | Read (hd::tl) -> true
+    | _ -> false in
   {
-   is_multi_instr = is_multi_instr;
-   is_if=is_if i;
-   is_if_noelse=is_if_noelse i;
-   is_comment=is_comment i;
-   p=p;
-   default = (false, false);
-   print_lief = c.print_lief;
- }
+    is_multi_instr = is_multi_instr;
+    is_if=is_if i;
+    is_if_noelse=is_if_noelse i;
+    is_comment=is_comment i;
+    p=p;
+    default = (false, false);
+    print_lief = c.print_lief;
+  }
 
 class pyPrinter = object(self)
   inherit Printer.printer as super
 
   method main f main = self#instructions f main
-      
+
   method instructions f li =
-  let open Ast.Instr.Fixed.Deep in
-   let macros = StringMap.map (fun (ty, params, li) ->
+    let open Ast.Instr.Fixed.Deep in
+    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "py" li
         with Not_found -> List.assoc "" li) macros in
-   let c = config macros in
-   let li = List.map (fun i -> (fold (print_instr (super#getTyperEnv ()) c) (mapg (print_expr c) i))) li in
-   let p f () = print_list (fun f i -> i.p f i.default) sep_nl f li in
-   if List.for_all (fun i -> i.is_comment) li then
-     Format.fprintf f "@[<h>pass@]"
-   else p f ()
-        
+    let c = config macros in
+    let li = List.map (fun i -> (fold (print_instr (super#getTyperEnv ()) c) (mapg (print_expr c) i))) li in
+    let p f () = print_list (fun f i -> i.p f i.default) sep_nl f li in
+    if List.for_all (fun i -> i.is_comment) li then
+      Format.fprintf f "@[<h>pass@]"
+    else p f ()
+
   method header f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
@@ -228,7 +228,7 @@ class pyPrinter = object(self)
           Tags.is_taged "__internal__mod" ||
           Tags.is_taged "use_math"
        then
-          "import math
+         "import math
 " else "")
       (if need then "import sys
 char_ = None
@@ -246,14 +246,14 @@ def skipchar():
 
 " else "" )
       (if need_readchar then
-          "def readchar():
+         "def readchar():
     out = readchar_()
     skipchar()
     return out
 
 " else "")
       (if need_stdinsep then
-          "def stdinsep():
+         "def stdinsep():
     while True:
         c = readchar_()
         if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
@@ -263,7 +263,7 @@ def skipchar():
 
 " else "")
       (if need_readint then
-          "def readint():
+         "def readint():
     c = readchar_()
     if c == '-':
         sign = -1
@@ -281,7 +281,7 @@ def skipchar():
 
 " else "")
       (if Tags.is_taged "__internal__mod" then
-          "def mod(x, y):
+         "def mod(x, y):
     return x - y * math.trunc(x / y)
 
 "
@@ -295,12 +295,12 @@ def skipchar():
 
   method comment f str =
     let trimmed = String.trim str in
-      if not (String.starts_with trimmed "\"" || String.ends_with trimmed "\"") then
-        Format.fprintf f "\"\"\"%s\"\"\"" trimmed
-      else if not (String.starts_with trimmed "'" || String.ends_with trimmed "'") then
-        Format.fprintf f "'''%s'''" trimmed
-      else
-        Format.fprintf f "\"\"\"@\n%s@\n\"\"\"" trimmed
+    if not (String.starts_with trimmed "\"" || String.ends_with trimmed "\"") then
+      Format.fprintf f "\"\"\"%s\"\"\"" trimmed
+    else if not (String.starts_with trimmed "'" || String.ends_with trimmed "'") then
+      Format.fprintf f "'''%s'''" trimmed
+    else
+      Format.fprintf f "\"\"\"@\n%s@\n\"\"\"" trimmed
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<v 4>@[<h>def %a(%a):@]@\n%a@]@\n"

@@ -38,8 +38,8 @@ let  check ty loc =
   if Type.Fixed.Deep.exists (fun ty -> Type.unfix ty = Type.Void) ty
   then
     raise (Warner.Error (fun f ->
-      Format.fprintf f "Forbiden use of void type %a@\n"
-        Warner.ploc loc))
+        Format.fprintf f "Forbiden use of void type %a@\n"
+          Warner.ploc loc))
 
 let collectDefReturn env li =
   let f () i =
@@ -52,16 +52,16 @@ let collectDefReturn env li =
     | _ -> () in
   List.iter
     (fun i ->
-      Instr.Writer.Deep.fold f
-        (f () i) i)
+       Instr.Writer.Deep.fold f
+         (f () i) i)
     li
 
 let collectDefReturn_fun env = function
   | Prog.DeclarFun (_, _, params, li, opt) ->
     collectDefReturn env li;
     List.iter (fun (_, ty) ->
-      check ty (Ast.PosMap.get (Type.Fixed.annot ty))
-    ) params
+        check ty (Ast.PosMap.get (Type.Fixed.annot ty))
+      ) params
   | _ -> ()
 
 let apply (env, prog) =

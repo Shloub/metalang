@@ -37,44 +37,44 @@ open PassesUtils
 let hasSkip li =
   List.exists (Instr.Fixed.Deep.exists
                  (fun i -> match Instr.unfix i with Instr.Read li ->
-                   List.exists (function
-                     | Instr.Separation -> true
-                     | _ -> false) li | _ -> false)) li
+                     List.exists (function
+                         | Instr.Separation -> true
+                         | _ -> false) li | _ -> false)) li
 
 let hasSkip_progitem li =
   List.fold_right
     (fun f b -> match f with
-    | Prog.DeclarFun (_, _, _, li, _) ->
-      b || (hasSkip li)
-    | _ -> b
+       | Prog.DeclarFun (_, _, _, li, _) ->
+         b || (hasSkip li)
+       | _ -> b
     ) li false
 
 let collectReads acc li =
   let f acc i =
     match Instr.unfix i with
     | Instr.Read li ->
-        List.fold_left (fun acc -> function
+      List.fold_left (fun acc -> function
           | Instr.Separation -> acc
           | Instr.DeclRead (ty, _, _) ->
-              TypeMap.add ty
-                (Ast.PosMap.get (Instr.Fixed.annot i))
-                acc
+            TypeMap.add ty
+              (Ast.PosMap.get (Instr.Fixed.annot i))
+              acc
           | Instr.ReadExpr (ty, _) ->
-              TypeMap.add ty
-                (Ast.PosMap.get (Instr.Fixed.annot i))
-                acc ) acc li
+            TypeMap.add ty
+              (Ast.PosMap.get (Instr.Fixed.annot i))
+              acc ) acc li
     | _ -> acc in
   List.fold_left
     (fun acc i ->
-      Instr.Writer.Deep.fold f
-        (f acc i) i)
+       Instr.Writer.Deep.fold f
+         (f acc i) i)
     acc li
 
 let collectReads_progitem li =
   List.fold_right
     (fun f acc -> match f with
-    | Prog.DeclarFun (_, _, _, li, _) -> collectReads acc li
-    | _ -> acc
+       | Prog.DeclarFun (_, _, _, li, _) -> collectReads acc li
+       | _ -> acc
     ) li TypeMap.empty
 
 let apply prog =
@@ -83,17 +83,17 @@ let apply prog =
     in Option.map_default acc (collectReads acc) prog.Prog.main
   in
   let () = TypeMap.iter
-    (fun ty loc ->
-      match Type.unfix ty with
-      | Type.Char | Type.Integer -> ()
-      | _ -> raise (Warner.Error (fun f ->
-        Format.fprintf f "Cannot read %s %a@\n"
-          (Type.type_t_to_string ty) Warner.ploc loc
-      ))
-    )
-    reads_types_map in
+      (fun ty loc ->
+         match Type.unfix ty with
+         | Type.Char | Type.Integer -> ()
+         | _ -> raise (Warner.Error (fun f ->
+             Format.fprintf f "Cannot read %s %a@\n"
+               (Type.type_t_to_string ty) Warner.ploc loc
+           ))
+      )
+      reads_types_map in
   let reads_types = TypeMap.fold (fun a b c -> TypeSet.add a c)
-    reads_types_map TypeSet.empty in
+      reads_types_map TypeSet.empty in
   { prog with
     Prog.hasSkip =
       begin

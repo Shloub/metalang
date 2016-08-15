@@ -115,21 +115,21 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
   | Instr.Tag _ -> infos
   | Instr.Call (_, lie) -> List.fold_left (getinfos_expr hd dad) infos lie
   | Instr.Print li ->
-      List.fold_left (fun infos -> function
+    List.fold_left (fun infos -> function
         | Instr.StringConst _ -> infos
         | Instr.PrintExpr (_t, e) -> getinfos_expr hd dad infos e) infos li
   | Instr.Return e -> getinfos_expr hd dad infos e
   | Instr.Untuple (li, e, opt) ->
     let infos = getinfos_expr hd dad infos e in
     let infos = List.fold_left (fun infos (_, name) ->
-      addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
-    ) infos li in
+        addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
+      ) infos li in
     infos
   | Instr.AllocArray (name, ty, e, None, opt) ->
     let infos = getinfos_expr hd dad infos e in
     addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
   | Instr.AllocArrayConst (name, ty, len, e, opt) ->
-      addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
+    addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
   | Instr.AllocArray (name, ty, e, Some (var, li), opt) ->
     let infos = getinfos_expr hd dad infos e in
     let infos = addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad} in
@@ -145,15 +145,15 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
     let infos = getinfos infos (Some hd) li2 in
     infos
   | Instr.Read li ->
-      List.fold_left (fun infos -> function
+    List.fold_left (fun infos -> function
         | Instr.DeclRead (_, name, _) ->
-            addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
+          addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
         | Instr.Separation -> infos
         | Instr.ReadExpr (_, mut) ->
-            let infos = getinfos_mut hd dad infos mut in
-            let name = name_of_mut mut in
-            let infos = addinfos infos name {instruction=hd; expression=None; affected=true; declaration=false; dad=dad} in
-            infos) infos li
+          let infos = getinfos_mut hd dad infos mut in
+          let name = name_of_mut mut in
+          let infos = addinfos infos name {instruction=hd; expression=None; affected=true; declaration=false; dad=dad} in
+          infos) infos li
   | Instr.Unquote e -> assert false
 and getinfos infos dad li = List.fold_left (getinfo_i dad ) infos li
 
@@ -163,19 +163,19 @@ let getinfos instrs =
 
 let replace_name name e li =
   List.map (fun i -> Instr.Fixed.Deep.mapg (fun e2 -> Expr.Writer.Deep.map
-    (fun e2 -> match Expr.unfix e2 with
-    | Expr.Access m ->
-      begin match Mutable.unfix m with
-      | Mutable.Var v -> if v = name then e else e2
-      | _ -> if name_of_mut m = name then
-          begin match Expr.unfix e with
-          | Expr.Access m2 -> Expr.access (encapsule_mut m m2)
-          | _ -> assert false
-          end
-        else e2
-      end
-    | _ -> e2
-    ) e2 ) i ) li
+                                               (fun e2 -> match Expr.unfix e2 with
+                                                  | Expr.Access m ->
+                                                    begin match Mutable.unfix m with
+                                                      | Mutable.Var v -> if v = name then e else e2
+                                                      | _ -> if name_of_mut m = name then
+                                                          begin match Expr.unfix e with
+                                                            | Expr.Access m2 -> Expr.access (encapsule_mut m m2)
+                                                            | _ -> assert false
+                                                          end
+                                                        else e2
+                                                    end
+                                                  | _ -> e2
+                                               ) e2 ) i ) li
 
 let rec can_map_mut_mut name m e =
   match Mutable.unfix m with
@@ -183,8 +183,8 @@ let rec can_map_mut_mut name m e =
   | Mutable.Array (m, _)
   | Mutable.Dot (m, _) ->
     begin match Expr.unfix e with
-    | Expr.Access _ -> can_map_mut_mut name m e
-    | _ -> false
+      | Expr.Access _ -> can_map_mut_mut name m e
+      | _ -> false
     end
 
 and can_map_mut name e2 e =
@@ -194,17 +194,17 @@ and can_map_mut name e2 e =
 
 let rec all_variables_mut acc m =
   Mutable.Writer.Deep.fold (fun acc m ->
-    match Mutable.unfix m with
-    | Mutable.Var i -> if List.mem i acc then acc else i::acc
-    | Mutable.Array (m, li) -> List.fold_left all_variables_expr acc li
-    | _ -> acc
-  ) acc m
+      match Mutable.unfix m with
+      | Mutable.Var i -> if List.mem i acc then acc else i::acc
+      | Mutable.Array (m, li) -> List.fold_left all_variables_expr acc li
+      | _ -> acc
+    ) acc m
 and all_variables_expr acc e =
   Expr.Writer.Deep.fold (fun acc e ->
-    match Expr.unfix e with
-    | Expr.Access m -> all_variables_mut acc m
-    | _ -> acc
-  ) acc e
+      match Expr.unfix e with
+      | Expr.Access m -> all_variables_mut acc m
+      | _ -> acc
+    ) acc e
 
 let all_variables e = all_variables_expr [] e
 
@@ -213,19 +213,19 @@ let rec no_affectation li ilimit name =
   | [] -> true
   | hd::tl -> if hd = ilimit then true else
       (no_affectation tl ilimit name) &&
-        (match Instr.unfix hd with
-        | Instr.Affect (m, _) ->
-                  let m = name_of_mut m in
-                  m <> name
-        | Instr.Read li ->
-            List.exists (function
-              | Instr.Separation -> false
-              | Instr.DeclRead _ -> false
-              | Instr.ReadExpr(_, m) ->
-                  let m = name_of_mut m in
-                  m <> name) li
-        | _ -> true
-        )
+      (match Instr.unfix hd with
+       | Instr.Affect (m, _) ->
+         let m = name_of_mut m in
+         m <> name
+       | Instr.Read li ->
+         List.exists (function
+             | Instr.Separation -> false
+             | Instr.DeclRead _ -> false
+             | Instr.ReadExpr(_, m) ->
+               let m = name_of_mut m in
+               m <> name) li
+       | _ -> true
+      )
 (*
 let is_readvar i = match Instr.unfix i with
   | Instr.Read li -> begin match Mutable.unfix m with
@@ -236,32 +236,32 @@ let is_readvar i = match Instr.unfix i with
 *)
 let is_decl_copyvar i name = match Instr.unfix i with
   | Instr.Declare (_, _, e, _) -> begin match Expr.unfix e with
-    | Expr.Access m -> begin match Mutable.unfix m with
-      | Mutable.Var v -> v = name
+      | Expr.Access m -> begin match Mutable.unfix m with
+          | Mutable.Var v -> v = name
+          | _ -> false
+        end
       | _ -> false
     end
-    | _ -> false
-  end
   | _ -> false
 
 let is_affect_copyvar i name = match Instr.unfix i with
   | Instr.Affect (_, e) -> begin match Expr.unfix e with
-    | Expr.Access m -> begin match Mutable.unfix m with
-      | Mutable.Var v -> v = name
+      | Expr.Access m -> begin match Mutable.unfix m with
+          | Mutable.Var v -> v = name
+          | _ -> false
+        end
       | _ -> false
     end
-    | _ -> false
-  end
   | _ -> false
 
 let is_declare_copyvar i name = match Instr.unfix i with
   | Instr.Declare (_, _, e, _) -> begin match Expr.unfix e with
-    | Expr.Access m -> begin match Mutable.unfix m with
-      | Mutable.Var v -> v = name
+      | Expr.Access m -> begin match Mutable.unfix m with
+          | Mutable.Var v -> v = name
+          | _ -> false
+        end
       | _ -> false
     end
-    | _ -> false
-  end
   | _ -> false
 
 let affected_mutable i = match Instr.unfix i with
@@ -273,7 +273,7 @@ let name_declared i = match Instr.unfix i with
   | _ -> assert false
 
 let remove_instruction li i =
-List.filter ((<>) i) li
+  List.filter ((<>) i) li
 
 let printer = new Printer.printer
 
@@ -283,97 +283,97 @@ let rec map_instrs (infos:infos) = function
     | Instr.Untuple (li1, (Expr.Fixed.F (_, Expr.Tuple li2)), opt ) -> (* on inline forcément untuple de tuples et on propage l'option *)
       let l = List.zip li1 li2 in
       let l = List.map (fun ((t, name), expr) ->
-        Instr.declare name t expr opt
-      ) l in
+          Instr.declare name t expr opt
+        ) l in
       true, List.append l tl
     | Instr.AllocArray (name, ty, length, optli, { Instr.useless = true } ) ->
       begin match BindingMap.find_opt name infos.infos with
-      | Some [
-        {instruction= (Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
-        )) as i2 ; expression=_; affected=false; declaration=false; dad=dad2};
-        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}
-      ]  when is_declare_copyvar i2 name ->
-        let tl = remove_instruction tl i2 in
-      (*  Format.printf "on inline un allocArray@\n"; *)
-        true, (Instr.alloc_array_lambda_opt name2 ty length optli useless2)::tl
-      | Some li -> (* Format.printf "%d info pour l'inline de la déclaration@\n%a@\n" (List.length li) printer#instr hd; *)
-        let b, tl = map_instrs infos tl in b, hd :: tl
-      | None ->
-        (* Format.printf "Aucune info pour l'inline de la déclaration@\n%a@\n" printer#instr hd; *)
-        let b, tl = map_instrs infos tl in b, hd :: tl
+        | Some [
+            {instruction= (Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
+                                         )) as i2 ; expression=_; affected=false; declaration=false; dad=dad2};
+            {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}
+          ]  when is_declare_copyvar i2 name ->
+          let tl = remove_instruction tl i2 in
+          (*  Format.printf "on inline un allocArray@\n"; *)
+          true, (Instr.alloc_array_lambda_opt name2 ty length optli useless2)::tl
+        | Some li -> (* Format.printf "%d info pour l'inline de la déclaration@\n%a@\n" (List.length li) printer#instr hd; *)
+          let b, tl = map_instrs infos tl in b, hd :: tl
+        | None ->
+          (* Format.printf "Aucune info pour l'inline de la déclaration@\n%a@\n" printer#instr hd; *)
+          let b, tl = map_instrs infos tl in b, hd :: tl
       end
     | Instr.Read li -> map_reads infos li tl
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
       begin match BindingMap.find_opt name infos.infos with
-      | Some li ->
-        let items1, items2 = List.partition (fun x -> x.declaration) li in
-        begin match items1 with
-        | [{instruction=i1; expression=None; affected=false; declaration=true; dad=dad1}] ->
-          if List.for_all (function
-        {instruction=i2; expression=Some e2; affected=false; declaration=false; dad=dad2} ->
-          List.forall (no_affectation tl i2) (all_variables e) && can_map_mut name e2 e
-          | _ -> false
-          ) items2 then true, replace_name name e tl
-          else begin
-            (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n" printer#instr hd (List.length li) ; *)
-            let b, tl = map_instrs infos tl in b, hd :: tl
+        | Some li ->
+          let items1, items2 = List.partition (fun x -> x.declaration) li in
+          begin match items1 with
+            | [{instruction=i1; expression=None; affected=false; declaration=true; dad=dad1}] ->
+              if List.for_all (function
+                    {instruction=i2; expression=Some e2; affected=false; declaration=false; dad=dad2} ->
+                    List.forall (no_affectation tl i2) (all_variables e) && can_map_mut name e2 e
+                  | _ -> false
+                ) items2 then true, replace_name name e tl
+              else begin
+                (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n" printer#instr hd (List.length li) ; *)
+                let b, tl = map_instrs infos tl in b, hd :: tl
+              end
+            | _ -> assert false
           end
-        | _ -> assert false
-        end
-      | None ->
-        (* Format.printf "Aucune info pour l'inline de la déclaration %a@\n" printer#instr hd; *)
-        let b, tl = map_instrs infos tl in b, hd :: tl
+        | None ->
+          (* Format.printf "Aucune info pour l'inline de la déclaration %a@\n" printer#instr hd; *)
+          let b, tl = map_instrs infos tl in b, hd :: tl
       end
     | _ ->
       let b, tl = map_instrs infos tl in b, hd :: tl
 and map_reads infos li tl =
   let (b, tl), li = List.fold_left_map (fun (b, tl) -> function
-    | Instr.DeclRead (ty, name, { Instr.useless = true } ) as orig ->
+      | Instr.DeclRead (ty, name, { Instr.useless = true } ) as orig ->
         begin match BindingMap.find_opt name infos.infos with
-        | Some [
-          {instruction=i2; expression=_; affected=false; declaration=false; dad=dad2};
-          {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
-          when is_affect_copyvar i2 name
-          ->
-(*        Format.printf "on inline un readDecl@\n"; *)
+          | Some [
+              {instruction=i2; expression=_; affected=false; declaration=false; dad=dad2};
+              {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
+            when is_affect_copyvar i2 name
+            ->
+            (*        Format.printf "on inline un readDecl@\n"; *)
             let tl = remove_instruction tl i2 in
             (true, tl), Instr.ReadExpr (ty, affected_mutable i2)
-        | Some [
-          {instruction=(Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
-                                      )) as i2; expression=_; affected=false; declaration=false; dad=dad2};
-                                                          {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
-          when is_declare_copyvar i2 name
-          ->
+          | Some [
+              {instruction=(Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
+                                          )) as i2; expression=_; affected=false; declaration=false; dad=dad2};
+              {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
+            when is_declare_copyvar i2 name
+            ->
             let tl = remove_instruction tl i2 in
             (true, tl), Instr.DeclRead (ty, name2, useless2)
-        | Some _li -> (b, tl), orig
-        | None -> (b, tl), orig
-	      end
-    | orig -> (b, tl), orig) (false, tl) li
+          | Some _li -> (b, tl), orig
+          | None -> (b, tl), orig
+        end
+      | orig -> (b, tl), orig) (false, tl) li
   in let b, tl = if b then b, tl else map_instrs infos tl
   in b, match li with
-  | [] -> tl
-  | _ -> (Instr.Read li |> Instr.fix) :: tl
+    | [] -> tl
+    | _ -> (Instr.Read li |> Instr.fix) :: tl
 
 
 let getlines instrs =
   fst @$ List.fold_left (fun acc i ->
-    Instr.Writer.Deep.fold (fun (acc, n) i ->
-      let acc = IntMap.add (Instr.Fixed.annot i) n acc in
-      acc, n+1
-    ) acc i
-  ) (IntMap.empty, 0) instrs
+      Instr.Writer.Deep.fold (fun (acc, n) i ->
+          let acc = IntMap.add (Instr.Fixed.annot i) n acc in
+          acc, n+1
+        ) acc i
+    ) (IntMap.empty, 0) instrs
 
 
 let rec deep_map_instrs (infos:infos) instrs =
   let b, instrs = map_instrs infos instrs in
   let b, instrs = List.fold_left_map (fun b i ->
-    let a = Instr.Fixed.annot i in
-    let b, i = Instr.fold_map_bloc (fun b instrs ->
-      let b2, i = deep_map_instrs infos instrs
-      in b || b2, i) b @$ Instr.unfix i in
-    b, Instr.fixa a i
-  ) b instrs in
+      let a = Instr.Fixed.annot i in
+      let b, i = Instr.fold_map_bloc (fun b instrs ->
+          let b2, i = deep_map_instrs infos instrs
+          in b || b2, i) b @$ Instr.unfix i in
+      b, Instr.fixa a i
+    ) b instrs in
   b, instrs
 
 let map_instrs instrs =

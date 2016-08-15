@@ -45,21 +45,21 @@ let init_acc () = ()
 
 let rec iter li =
   List.iter (fun i ->
-    Instr.Writer.Deep.iter (fun i ->
-      begin match Instr.unfix i with
-      | Instr.AllocArray _ -> tag "__internal__allocArray"
-      | _ -> ()
-      end;
-    ) i;
-    Instr.Fixed.Deep.foldg (fun e acc ->
-      Expr.Writer.Deep.iter (fun e ->
-        match Expr.unfix e with
-        | Expr.BinOp(_, Expr.Div, _) -> tag "__internal__div"
-        | Expr.BinOp(_, Expr.Mod, _) -> tag "__internal__mod"
-        | _ -> ()
-      ) e
-    ) i ()
-  ) li
+      Instr.Writer.Deep.iter (fun i ->
+          begin match Instr.unfix i with
+            | Instr.AllocArray _ -> tag "__internal__allocArray"
+            | _ -> ()
+          end;
+        ) i;
+      Instr.Fixed.Deep.foldg (fun e acc ->
+          Expr.Writer.Deep.iter (fun e ->
+              match Expr.unfix e with
+              | Expr.BinOp(_, Expr.Div, _) -> tag "__internal__div"
+              | Expr.BinOp(_, Expr.Mod, _) -> tag "__internal__mod"
+              | _ -> ()
+            ) e
+        ) i ()
+    ) li
 
 let process acc p =
   match p with

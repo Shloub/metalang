@@ -48,8 +48,8 @@ let rec collect_type acc t =
         let acc = TypeSet.add orig acc in
         collect_type (tyenv, acc) (Typer.expand tyenv orig loc)
       | _ ->
-          let acc =TypeSet.add orig acc in
-          Type.Fixed.Surface.fold (fun acc f -> f acc) (tyenv, acc) t
+        let acc =TypeSet.add orig acc in
+        Type.Fixed.Surface.fold (fun acc f -> f acc) (tyenv, acc) t
   in Type.Fixed.Deep.foldorig f t acc
 
 let collect_instr acc i =
@@ -61,7 +61,7 @@ let collect_instr acc i =
     | Instr.AllocArrayConst (_, ty, _, _, _)
       -> collect_type acc ty
     | Instr.Read li ->
-        List.fold_left (fun acc -> function
+      List.fold_left (fun acc -> function
           | Instr.DeclRead (ty, _, _) -> collect_type acc ty
           | _ -> acc ) acc li
     | _ -> acc
@@ -74,7 +74,7 @@ let process acc p =
     | Prog.DeclarFun (_funname, t, params, instrs, _) ->
       let acc = collect_type acc t in
       let acc = List.fold_left (fun acc (_, t) -> collect_type acc t)
-        acc params in
+          acc params in
       List.fold_left collect_instr acc instrs
     | _ -> acc
   in acc, p

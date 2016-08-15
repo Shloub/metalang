@@ -42,31 +42,31 @@ let rec tr annot e =
   let default acc = Expr.Fixed.Surface.map (fun (_, e) -> e acc) e |> fix in
   match e with
   | Expr.Lief (Expr.Binding b) -> true, (fun acc -> begin match BindingMap.find_opt b acc with
-    | None -> default acc
-    | Some n -> fix n
-  end)
+      | None -> default acc
+      | Some n -> fix n
+    end)
   | Expr.Lief _ -> true, default
   | Expr.LetIn (name, (true, l), (inlinein, in_)) -> inlinein, (fun acc ->
-     in_ $ BindingMap.add name (Expr.unfix (l acc)) acc)
+      in_ $ BindingMap.add name (Expr.unfix (l acc)) acc)
   | Expr.LetIn (name, (_, expr), (_, in_)) -> false, (fun acc ->
-     let acc2 = BindingMap.remove name acc in
-     fix $ Expr.LetIn (name, expr acc, in_ acc2))
+      let acc2 = BindingMap.remove name acc in
+      fix $ Expr.LetIn (name, expr acc, in_ acc2))
   | Expr.LetRecIn (name, names, (_, e1), (_, e2)) -> false, (fun acc ->
-     let acc = BindingMap.remove name acc in
-     let acc2 = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
-     fix $ Expr.LetRecIn (name, names, e1 acc2, e2 acc))
+      let acc = BindingMap.remove name acc in
+      let acc2 = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
+      fix $ Expr.LetRecIn (name, names, e1 acc2, e2 acc))
   | Expr.Fun (names, (_, in_)) -> false, (fun acc ->
-     let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
-     fix $ Expr.Fun (names, in_ acc))
+      let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
+      fix $ Expr.Fun (names, in_ acc))
   | Expr.FunTuple (names, (_, in_)) -> false, (fun acc ->
-     let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
-     fix $ Expr.FunTuple (names, in_ acc))
+      let acc = List.fold_left (fun acc n -> BindingMap.remove n acc) acc names in
+      fix $ Expr.FunTuple (names, in_ acc))
   | _ -> false, default
 
 let apply p =
   let declarations = List.map (function
-  | Declaration (name, e) -> Declaration (name, (snd (Expr.Fixed.Deep.folda tr e)) BindingMap.empty)
-  | x -> x
-  ) p.declarations
+      | Declaration (name, e) -> Declaration (name, (snd (Expr.Fixed.Deep.folda tr e)) BindingMap.empty)
+      | x -> x
+    ) p.declarations
   in {p with declarations = declarations }
 

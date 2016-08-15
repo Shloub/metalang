@@ -25,9 +25,9 @@
 
 
 (** Transforment les indexes des tableaux pour les langages qui comptent à partir de 1
-   @see <http://prologin.org> Prologin
-   @author Prologin (info\@prologin.org)
-   @author Maxime Audouin (coucou747\@gmail.com)
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -42,25 +42,25 @@ let init_acc () = ()
 let map_mut m =
   Mutable.Fixed.Deep.map (* ne traverse pas les expressions puisque les expressions sont dans 'a. *)
     (fun m ->
-      let m0 = match Mutable.unfix m with
-      | Mutable.Array (m, li) ->
-          Mutable.Array(m, List.map (fun e -> Expr.saddi e 1) li)
-      | m -> m
-      in Mutable.Fixed.fixa (Mutable.Fixed.annot m) m0
+       let m0 = match Mutable.unfix m with
+         | Mutable.Array (m, li) ->
+           Mutable.Array(m, List.map (fun e -> Expr.saddi e 1) li)
+         | m -> m
+       in Mutable.Fixed.fixa (Mutable.Fixed.annot m) m0
     ) m
 
 let process () is =
   (), List.map (fun i ->
-    Instr.Fixed.Deep.map2
-      (function
-        | Instr.Affect (m, e) -> Instr.Affect (map_mut m, e)
-        | Instr.Read li -> Instr.Read (List.map (function
-            | Instr.Separation -> Instr.Separation
-            | Instr.ReadExpr (t, mut) -> Instr.ReadExpr (t, map_mut mut)
-            | (Instr.DeclRead _) as o -> o
-                                                ) li)
-        | i -> i)
-      (Expr.Fixed.Deep.map (fun e -> match Expr.unfix e with
-        | Expr.Access m -> Expr.Fixed.fixa (Expr.Fixed.annot e) $ Expr.Access (map_mut m)
-        | _ -> e))
-      i) is
+      Instr.Fixed.Deep.map2
+        (function
+          | Instr.Affect (m, e) -> Instr.Affect (map_mut m, e)
+          | Instr.Read li -> Instr.Read (List.map (function
+              | Instr.Separation -> Instr.Separation
+              | Instr.ReadExpr (t, mut) -> Instr.ReadExpr (t, map_mut mut)
+              | (Instr.DeclRead _) as o -> o
+            ) li)
+          | i -> i)
+        (Expr.Fixed.Deep.map (fun e -> match Expr.unfix e with
+             | Expr.Access m -> Expr.Fixed.fixa (Expr.Fixed.annot e) $ Expr.Access (map_mut m)
+             | _ -> e))
+        i) is

@@ -55,12 +55,12 @@ let process () i =
   let inner_map t0 : 'lex Instr.t list =
     match Instr.unfix t0 with
     | Instr.AllocArray(
-      _, _,
-      Expr.Fixed.F (_,
-		    (
-		      Expr.Lief _ | Expr.Access (
-			Mutable.Fixed.F
-			  (_, Mutable.Var _)))), _, _) ->
+        _, _,
+        Expr.Fixed.F (_,
+                      (
+                        Expr.Lief _ | Expr.Access (
+                          Mutable.Fixed.F
+                            (_, Mutable.Var _)))), _, _) ->
       [t0]
 (*
     | Instr.Print(_, Expr.Fixed.F
@@ -96,10 +96,10 @@ let process () i =
       ]
     | _ -> [t0]
   in let fixed_map (t:'lex Instr.t) =
-    Instr.deep_map_bloc
-      (List.flatten @* (List.map inner_map))
-      (Instr.unfix t)
-      |> Instr.fixa (Instr.Fixed.annot t)
+       Instr.deep_map_bloc
+         (List.flatten @* (List.map inner_map))
+         (Instr.unfix t)
+       |> Instr.fixa (Instr.Fixed.annot t)
   in
   let i = List.flatten (List.map (inner_map @* fixed_map) i) in
   (), i

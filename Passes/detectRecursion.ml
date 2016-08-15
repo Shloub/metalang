@@ -40,23 +40,23 @@ type 'lex acc = StringSet.t
 let init_acc () = StringSet.empty
 
 let is_rec funname instrs =
-    let is_rec i =
-      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
-      | Instr.Call (name, _) -> acc || name = funname
-      | _ -> acc
+  let is_rec i =
+    Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
+        | Instr.Call (name, _) -> acc || name = funname
+        | _ -> acc
       ) false i ||
-        Instr.Fixed.Deep.foldg (fun e acc ->
-          Expr.Writer.Deep.fold (fun acc e -> match Expr.unfix e with
-          | Expr.Call (name, _) -> acc || name = funname
-          | _ -> acc
+    Instr.Fixed.Deep.foldg (fun e acc ->
+        Expr.Writer.Deep.fold (fun acc e -> match Expr.unfix e with
+            | Expr.Call (name, _) -> acc || name = funname
+            | _ -> acc
           ) acc e
-        ) i false
-    in List.fold_left (fun acc i -> acc || is_rec i) false instrs
+      ) i false
+  in List.fold_left (fun acc i -> acc || is_rec i) false instrs
 
 let process_main acc instrs = acc, instrs
 
 let process acc i = match i with
-| Prog.DeclarFun (name, _, _, instrs, _ ) ->
+  | Prog.DeclarFun (name, _, _, instrs, _ ) ->
     let acc = if is_rec name instrs then StringSet.add name acc else acc in
     acc, i
-| _ -> acc, i
+  | _ -> acc, i

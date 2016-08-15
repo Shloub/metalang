@@ -38,10 +38,10 @@ open Fresh
 open PassesUtils
 
 type 'a function_t =
-{ content : Utils.instr list;
-  params : (varname * Type.t) list;
-  retype : Type.t
-}
+  { content : Utils.instr list;
+    params : (varname * Type.t) list;
+    retype : Type.t
+  }
 
 type acc0 = unit
 type 'lex acc = 'lex function_t StringMap.t
@@ -58,7 +58,7 @@ let map_return t name instrs =
     | Instr.AllocArray _ -> i
     | _ -> g i
   in List.map (fun i ->
-    f (Instr.Writer.Traverse.map f) i) instrs
+      f (Instr.Writer.Traverse.map f) i) instrs
 
 (* renomme les variables de mut, suivant la map acc *)
 let rec rename_mut acc mut =
@@ -66,8 +66,8 @@ let rec rename_mut acc mut =
   match Mutable.unfix mut with
   | Mutable.Var varname ->
     begin match BindingMap.find_opt varname acc with
-    | None -> mut
-    | Some s -> Mutable.Var s |> Mutable.Fixed.fixa annot
+      | None -> mut
+      | Some s -> Mutable.Var s |> Mutable.Fixed.fixa annot
     end
   | Mutable.Array (m, li) ->
     let m = rename_mut acc m in
@@ -148,26 +148,26 @@ let rec rename_instr acc (instr:Utils.instr) =
     let l2 = rename_instrs acc l2 in
     acc, Instr.If (e, l1, l2) |> Instr.fixa annot
   | Instr.Print li ->
-      let li = List.map (function
+    let li = List.map (function
         | Instr.StringConst str -> Instr.StringConst str
         | Instr.PrintExpr (t, e) -> Instr.PrintExpr (t, rename_e acc e)) li
-      in
-      acc, Instr.Print li |> Instr.fixa annot
+    in
+    acc, Instr.Print li |> Instr.fixa annot
   | Instr.Read li ->
-      let acc, li = List.fold_left_map (fun acc -> function
+    let acc, li = List.fold_left_map (fun acc -> function
         | Instr.DeclRead (t, name, opt) ->
-            let newname = Fresh.fresh_internal () in
-            let acc = BindingMap.add name newname acc in
-            acc, (Instr.DeclRead (t, newname, opt))
+          let newname = Fresh.fresh_internal () in
+          let acc = BindingMap.add name newname acc in
+          acc, (Instr.DeclRead (t, newname, opt))
         | Instr.Separation -> acc, Instr.Separation
         | Instr.ReadExpr (t, mut) -> acc, Instr.ReadExpr (t, rename_mut acc mut)) acc li in
-      acc, Instr.Read li |> Instr.fixa annot
+    acc, Instr.Read li |> Instr.fixa annot
   | Instr.Untuple (li, e, opt) ->
     let e = rename_e acc e in
     let acc, li = List.fold_left_map (fun acc (ty, name) ->
-      let newname = Fresh.fresh_internal () in
-      let acc = BindingMap.add name newname acc in
-      acc, (ty, newname) ) acc li
+        let newname = Fresh.fresh_internal () in
+        let acc = BindingMap.add name newname acc in
+        acc, (ty, newname) ) acc li
     in
     acc, Instr.Untuple (li, e, opt) |> Instr.fixa annot
   | Instr.Unquote e -> acc, instr (* normalement, ça n'arrive pas... l'evaluation des macros devrait déjà avoir eu lieu. *)
@@ -192,25 +192,25 @@ let rec map_e acc e =
   | Expr.Call (name, li) ->
     let addon, li = List.fold_left_map (fun addon0 e -> let addon, e = map_e acc e in List.append addon0 addon, e ) [] li in
     begin match StringMap.find_opt name acc with
-    | Some {content=content; params=params; retype=retype} ->
-      let out = Fresh.fresh_internal () in
-      let mout = Mutable.var out in
-      let li = insert content retype params li (Some out) in
-      let addon = List.append addon li in
-      addon, Expr.Access mout |> Expr.Fixed.fixa annot
-    | None -> addon, Expr.Call (name, li) |> Expr.Fixed.fixa annot
+      | Some {content=content; params=params; retype=retype} ->
+        let out = Fresh.fresh_internal () in
+        let mout = Mutable.var out in
+        let li = insert content retype params li (Some out) in
+        let addon = List.append addon li in
+        addon, Expr.Access mout |> Expr.Fixed.fixa annot
+      | None -> addon, Expr.Call (name, li) |> Expr.Fixed.fixa annot
     end
   | Expr.Tuple li ->
     let addon, li =
       List.fold_left_map (fun addon e ->
-        let addon0, e = map_e acc e in
-        List.append addon addon0, e) [] li
+          let addon0, e = map_e acc e in
+          List.append addon addon0, e) [] li
     in addon, Expr.Tuple li |> Expr.Fixed.fixa annot
   | Expr.Record li ->
     let addon, li =
       List.fold_left_map (fun addon (name, e) ->
-        let addon0, e = map_e acc e in
-        List.append addon addon0, (name, e)) [] li
+          let addon0, e = map_e acc e in
+          List.append addon addon0, (name, e)) [] li
     in addon, Expr.Record li |> Expr.Fixed.fixa annot
   | Expr.Lexems _ -> assert false
 
@@ -221,9 +221,9 @@ and map_mut acc mut =
   | Mutable.Array (m, li) ->
     let addon, m = map_mut acc m in
     let addon, li = List.fold_left_map (fun addon e ->
-      let addon0, e = map_e acc e in
-      List.append addon addon0, e
-    ) addon li in
+        let addon0, e = map_e acc e in
+        List.append addon addon0, e
+      ) addon li in
     addon, Mutable.Array(m, li) |> Mutable.Fixed.fixa annot
   | Mutable.Dot (m, n) ->
     let addon, m = map_mut acc m in
@@ -232,14 +232,14 @@ and map_mut acc mut =
 and insert content retype params values optionreturn =
   let paramscouples = List.zip params values in
   let acc0, declares = List.fold_left_map (fun acc ((name, type_), expr) ->
-    match Expr.unfix expr with
-    | Expr.Access (Mutable.Fixed.F (_, Mutable.Var newname)) -> (* on évite un déclare quand c'est possible *)
-      BindingMap.add name newname acc, None
-    | _ ->
-      let newname = Fresh.fresh_internal () in
-      let declare = Some (Instr.declare newname type_ expr Instr.useless_declaration_option) in
-      BindingMap.add name newname acc, declare
-  ) BindingMap.empty paramscouples in
+      match Expr.unfix expr with
+      | Expr.Access (Mutable.Fixed.F (_, Mutable.Var newname)) -> (* on évite un déclare quand c'est possible *)
+        BindingMap.add name newname acc, None
+      | _ ->
+        let newname = Fresh.fresh_internal () in
+        let declare = Some (Instr.declare newname type_ expr Instr.useless_declaration_option) in
+        BindingMap.add name newname acc, declare
+    ) BindingMap.empty paramscouples in
   let declares = List.filter_map (fun x -> x) declares in
   let content = rename_instrs acc0 content in
   let content = match optionreturn with
@@ -254,14 +254,14 @@ and map_instr acc instr =
   match Instr.unfix instr with
   | Instr.Call (name, li) ->
     let addon, li = List.fold_left_map (fun addon0 e ->
-      let addon, e = map_e acc e in
-      (List.append addon0 addon), e
-    ) [] li in
+        let addon, e = map_e acc e in
+        (List.append addon0 addon), e
+      ) [] li in
     begin match StringMap.find_opt name acc with
-    | Some {content=content; params=params; retype=retype} ->
-      let li = insert content retype params li None in
-      List.append addon li
-    | None -> List.append addon [Instr.Call (name, li) |> Instr.fixa annot]
+      | Some {content=content; params=params; retype=retype} ->
+        let li = insert content retype params li None in
+        List.append addon li
+      | None -> List.append addon [Instr.Call (name, li) |> Instr.fixa annot]
     end
   | Instr.Declare (var, t, e, opt) ->
     let addon, e = map_e acc e in
@@ -300,9 +300,9 @@ and map_instr acc instr =
     List.append addon [Instr.AllocArray (name, t, e, Some (name2, li), opt) |> Instr.fixa annot]
   | Instr.AllocRecord (name, t, fields, opt) ->
     let addon, fields = List.fold_left_map (fun addon0 (name, e) ->
-      let addon, e = map_e acc e in
-      (List.append addon0 addon), (name, e)
-    ) [] fields in
+        let addon, e = map_e acc e in
+        (List.append addon0 addon), (name, e)
+      ) [] fields in
     List.append addon [Instr.AllocRecord (name, t, fields, opt) |> Instr.fixa annot]
   | Instr.If (e, l1, l2) ->
     let addon, e = map_e acc e in
@@ -310,19 +310,19 @@ and map_instr acc instr =
     let l2 = map_instrs acc l2 in
     List.append addon [Instr.If (e, l1, l2) |> Instr.fixa annot]
   | Instr.Print li ->
-      let addon, li = List.fold_left_map (fun addon -> function
+    let addon, li = List.fold_left_map (fun addon -> function
         | Instr.StringConst str -> addon, Instr.StringConst str
         | Instr.PrintExpr (t, e) -> let addon, e = map_e acc e in
           addon, Instr.PrintExpr (t, e)) [] li
-      in
-      List.append addon [Instr.Print li |> Instr.fixa annot]
+    in
+    List.append addon [Instr.Print li |> Instr.fixa annot]
   | Instr.Read li ->
-      let addon, li = List.fold_left_map (fun addon -> function
+    let addon, li = List.fold_left_map (fun addon -> function
         | Instr.Separation -> addon, Instr.Separation
         | Instr.DeclRead (t, name, opt) -> addon, Instr.DeclRead (t, name, opt) 
         | Instr.ReadExpr (t, mut) -> let addon, mut = map_mut acc mut in
           addon, Instr.ReadExpr(t, mut)) [] li in
-      List.append addon [Instr.Read li |> Instr.fixa annot]
+    List.append addon [Instr.Read li |> Instr.fixa annot]
   | Instr.Untuple (li, e, opt) ->
     let addon, e = map_e acc e in
     List.append addon [Instr.Untuple(li, e, opt) |> Instr.fixa annot]
@@ -334,7 +334,7 @@ let process (acc: 'a acc) (i:Utils.t_fun) = match i with
     let acc = begin match opt with
       | {Ast.Prog.useless=true} ->
         StringMap.add name
-        {content=instrs; params=params; retype=ty} acc
+          {content=instrs; params=params; retype=ty} acc
       | _ -> acc
     end
     in acc, Prog.DeclarFun (name, ty, params, instrs, opt)

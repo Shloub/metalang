@@ -53,8 +53,8 @@ module WalkInlineFuncs = struct
   let apply () p =
     let p = WalkInlineFuncs0.apply () p in
     {p with Prog.funs = List.filter (function
-    | Prog.DeclarFun (name, t, params, instrs, {Prog.useless=true}) -> false
-    | _ -> true) p.Prog.funs}
+         | Prog.DeclarFun (name, t, params, instrs, {Prog.useless=true}) -> false
+         | _ -> true) p.Prog.funs}
 end
 module WalkInlineVars = WalkTop(InlineVars)
 
@@ -72,7 +72,7 @@ module WalkSimplifyExpressions = Walk(SimplifyExpressions)
 let no_macro = function
   | Prog.DeclarFun (_, ty, li, instrs, opt) ->
     begin match Type.unfix ty with
-    | Type.Lexems -> false
-    | _ -> true
+      | Type.Lexems -> false
+      | _ -> true
     end
   | _ -> true

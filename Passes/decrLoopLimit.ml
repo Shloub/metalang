@@ -31,7 +31,7 @@
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)
- *)
+*)
 
 open Stdlib
 open Ast
@@ -42,9 +42,9 @@ let init_acc n = n
 
 let process n li =
   n, List.map (fun i ->
-    Instr.Writer.Deep.map (fun i -> match Instr.unfix i with
-    | Instr.Loop (varname, startvalue, endvalue, li) ->
-        let endvalue = Expr.sub endvalue (Expr.integer n) in
-        let i' = Instr.Loop(varname, startvalue, endvalue, li)
-        in Instr.fixa (Instr.Fixed.annot i) i'
-    | _ -> i ) i ) li
+      Instr.Writer.Deep.map (fun i -> match Instr.unfix i with
+          | Instr.Loop (varname, startvalue, endvalue, li) ->
+            let endvalue = Expr.sub endvalue (Expr.integer n) in
+            let i' = Instr.Loop(varname, startvalue, endvalue, li)
+            in Instr.fixa (Instr.Fixed.annot i) i'
+          | _ -> i ) i ) li

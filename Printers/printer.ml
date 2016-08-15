@@ -37,7 +37,7 @@ open Helper
 let lang = "abstract"
 
 type oppart =
-| Left | Right
+  | Left | Right
 
 class printer = object(self)
 
@@ -65,9 +65,9 @@ class printer = object(self)
       { prio_binop; prio_unop; print_varname; print_lief; print_op;
         print_unop;
         macros=(StringMap.map (fun (ty, params, li) ->
-          ty, params,
-          try List.assoc (self#lang ()) li
-          with Not_found -> List.assoc "" li) macros);
+            ty, params,
+            try List.assoc (self#lang ()) li
+            with Not_found -> List.assoc "" li) macros);
         print_mut} e f nop
 
   method binding f b = print_varname f b
@@ -87,7 +87,7 @@ class printer = object(self)
     Format.fprintf f "@[<hov>%a@ =@ %a%a@]" self#mutable_set mutable_ self#expr expr self#separator ()
 
   method bloc f li = Format.fprintf f "@[<v>do@\n%a@]@\nend"
-    (print_list self#instr sep_nl) li
+      (print_list self#instr sep_nl) li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<hov>for@ %a=%a@ to@ %a@\n@]%a"
@@ -111,27 +111,27 @@ class printer = object(self)
     let open Type in
     let open Format in
     let ptype ty f () = match ty with
-    | Tuple li -> fprintf f "@[<hov>(%a)@]" (print_list (fun f p -> p f ()) sep_c) li
-    | Auto -> ()
-    | Integer -> fprintf f "int"
-    | String -> fprintf f "string"
-    | Array a -> fprintf f "array<%a>" a ()
-    | Void ->  fprintf f "void"
-    | Bool -> fprintf f "bool"
-    | Char -> fprintf f "char"
-    | Named n -> fprintf f "@@%s" n
-    | Lexems -> fprintf f "lexems"
-    | Struct li ->
-      fprintf f "record@\n @[<hov>%a@]@\nend"
-        (print_list
-           (fun t (name, type_) -> fprintf t "%a : %a;" self#field name type_ ()) nosep
-        ) li
-    | Enum li -> fprintf f "enum{%a}" (print_list self#enumfield sep_space) li
+      | Tuple li -> fprintf f "@[<hov>(%a)@]" (print_list (fun f p -> p f ()) sep_c) li
+      | Auto -> ()
+      | Integer -> fprintf f "int"
+      | String -> fprintf f "string"
+      | Array a -> fprintf f "array<%a>" a ()
+      | Void ->  fprintf f "void"
+      | Bool -> fprintf f "bool"
+      | Char -> fprintf f "char"
+      | Named n -> fprintf f "@@%s" n
+      | Lexems -> fprintf f "lexems"
+      | Struct li ->
+        fprintf f "record@\n @[<hov>%a@]@\nend"
+          (print_list
+             (fun t (name, type_) -> fprintf t "%a : %a;" self#field name type_ ()) nosep
+          ) li
+      | Enum li -> fprintf f "enum{%a}" (print_list self#enumfield sep_space) li
     in Fixed.Deep.fold ptype t f ()
 
   method p_option f = function
-  | { Ast.Instr.useless = true } -> Format.fprintf f "useless "
-  | { Ast.Instr.useless = false } -> ()
+    | { Ast.Instr.useless = true } -> Format.fprintf f "useless "
+    | { Ast.Instr.useless = false } -> ()
 
   method allocarray f binding type_ len useless =
     Format.fprintf f "@[<hov>def %aarray<%a> %a[%a]"
@@ -184,10 +184,10 @@ class printer = object(self)
   method apply f var li =
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
-        let li = List.map (fun e f () -> self#expr f e) li in
-        let code = try List.assoc (self#lang ()) code
+      let li = List.map (fun e f () -> self#expr f e) li in
+      let code = try List.assoc (self#lang ()) code
         with Not_found -> List.assoc "" code in
-        pmacros f "%s" t params code li ()
+      pmacros f "%s" t params code li ()
     | None ->
       Format.fprintf
         f
@@ -202,9 +202,9 @@ class printer = object(self)
     Format.fprintf f "@[<hov>%a@]"
       (print_list
          (fun f (fieldname, expr) ->
-           Format.fprintf f "%a = %a"
-             self#field fieldname
-             self#expr expr
+            Format.fprintf f "%a = %a"
+              self#field fieldname
+              self#expr expr
          ) sep_nl)
       li
 
@@ -215,28 +215,28 @@ class printer = object(self)
       (self#def_fields name) el
 
   method selfAssoc f m e2 = function
-  | Expr.Add -> begin match Expr.unfix e2 with
-    | Expr.Lief (Expr.Integer 1) ->
-      Format.fprintf f "@[<hov>%a++;@]" self#mutable_set m
-    | _ ->
-      Format.fprintf f "@[<hov>%a += %a;@]" self#mutable_set m
-        self#expr e2
-  end
-  | Expr.Sub ->
-    begin match Expr.unfix e2 with
-    | Expr.Lief (Expr.Integer 1) ->
-      Format.fprintf f "@[<hov>%a --;@]" self#mutable_set m
-    | _ ->
-      Format.fprintf f "@[<hov>%a -= %a;@]" self#mutable_set m
-        self#expr e2
-    end
-  | Expr.Mul ->
-    Format.fprintf f "@[<hov>%a *= %a;@]" self#mutable_set m self#expr e2
-  | Expr.Div ->
-    Format.fprintf f "@[<hov>%a /= %a;@]" self#mutable_set m self#expr e2
-  | Expr.Mod ->
-    Format.fprintf f "@[<hov>%a %%= %a;@]" self#mutable_set m self#expr e2
-  | _ -> assert false
+    | Expr.Add -> begin match Expr.unfix e2 with
+        | Expr.Lief (Expr.Integer 1) ->
+          Format.fprintf f "@[<hov>%a++;@]" self#mutable_set m
+        | _ ->
+          Format.fprintf f "@[<hov>%a += %a;@]" self#mutable_set m
+            self#expr e2
+      end
+    | Expr.Sub ->
+      begin match Expr.unfix e2 with
+        | Expr.Lief (Expr.Integer 1) ->
+          Format.fprintf f "@[<hov>%a --;@]" self#mutable_set m
+        | _ ->
+          Format.fprintf f "@[<hov>%a -= %a;@]" self#mutable_set m
+            self#expr e2
+      end
+    | Expr.Mul ->
+      Format.fprintf f "@[<hov>%a *= %a;@]" self#mutable_set m self#expr e2
+    | Expr.Div ->
+      Format.fprintf f "@[<hov>%a /= %a;@]" self#mutable_set m self#expr e2
+    | Expr.Mod ->
+      Format.fprintf f "@[<hov>%a %%= %a;@]" self#mutable_set m self#expr e2
+    | _ -> assert false
 
   method hasSelfAffect op = true
 
@@ -246,45 +246,45 @@ class printer = object(self)
     | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
     | Instr.Declare (varname, type_, expr, _option) -> self#declaration f varname type_ expr
     | Instr.Incr mutable_ ->
-        let op = Expr.Add in
-        let expr = Expr.integer 1 in
-        if self#hasSelfAffect op then
-          self#selfAssoc f mutable_ expr op
-        else self#affect f mutable_ (Expr.binop op (Expr.access mutable_) expr)
+      let op = Expr.Add in
+      let expr = Expr.integer 1 in
+      if self#hasSelfAffect op then
+        self#selfAssoc f mutable_ expr op
+      else self#affect f mutable_ (Expr.binop op (Expr.access mutable_) expr)
     | Instr.Decr mutable_ ->
-        let op = Expr.Sub in
-        let expr = Expr.integer 1 in
-        if self#hasSelfAffect op then
-          self#selfAssoc f mutable_ expr op
-        else self#affect f mutable_ (Expr.binop op (Expr.access mutable_) expr)
+      let op = Expr.Sub in
+      let expr = Expr.integer 1 in
+      if self#hasSelfAffect op then
+        self#selfAssoc f mutable_ expr op
+      else self#affect f mutable_ (Expr.binop op (Expr.access mutable_) expr)
     | Instr.SelfAffect (mutable_, op, expr) ->
-        if self#hasSelfAffect op then
-          self#selfAssoc f mutable_ expr op
-        else self#affect f mutable_ (Expr.binop op (Expr.access mutable_) expr)
+      if self#hasSelfAffect op then
+        self#selfAssoc f mutable_ expr op
+      else self#affect f mutable_ (Expr.binop op (Expr.access mutable_) expr)
     | Instr.Affect (mutable_, expr) ->
       begin match Expr.unfix expr with
-      | Expr.BinOp (e1, op, e2) ->
-        let fallback () =
-          if op = Expr.Add || op = Expr.Mul then
-            begin match Expr.unfix e2 with
-            | Expr.Access m ->
-              if Mutable.equals (=) m mutable_ then
-                self#selfAssoc f m e1 op
-              else self#affect f mutable_ expr
-            | _ -> self#affect f mutable_ expr
+        | Expr.BinOp (e1, op, e2) ->
+          let fallback () =
+            if op = Expr.Add || op = Expr.Mul then
+              begin match Expr.unfix e2 with
+                | Expr.Access m ->
+                  if Mutable.equals (=) m mutable_ then
+                    self#selfAssoc f m e1 op
+                  else self#affect f mutable_ expr
+                | _ -> self#affect f mutable_ expr
+              end
+            else self#affect f mutable_ expr
+          in
+          if self#hasSelfAffect op then
+            begin match Expr.unfix e1 with
+              | Expr.Access m ->
+                if Mutable.equals (=) m mutable_ then
+                  self#selfAssoc f m e2 op
+                else fallback ()
+              | _ -> fallback ()
             end
           else self#affect f mutable_ expr
-        in
-        if self#hasSelfAffect op then
-          begin match Expr.unfix e1 with
-          | Expr.Access m ->
-            if Mutable.equals (=) m mutable_ then
-              self#selfAssoc f m e2 op
-            else fallback ()
-          | _ -> fallback ()
-          end
-        else self#affect f mutable_ expr
-      | _ -> self#affect f mutable_ expr
+        | _ -> self#affect f mutable_ expr
       end
     | Instr.Loop (varname, expr1, expr2, li) ->
       self#forloop f varname expr1 expr2 li
@@ -299,7 +299,7 @@ class printer = object(self)
     | Instr.AllocArray (binding, type_, len, Some ( (b, l) ), u) ->
       self#allocarray_lambda f binding type_ len b l u
     | Instr.AllocArrayConst (b, t, len, e, opt) ->
-        self#allocarrayconst f b t len e opt
+      self#allocarrayconst f b t len e opt
     | Instr.If (e, ifcase, elsecase) ->
       self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li
@@ -319,7 +319,7 @@ class printer = object(self)
 
 
   method noformat s = let s = Format.sprintf "%S" s
-                      in String.replace "%" "%%" s
+    in String.replace "%" "%%" s
 
   method format_type f (t:Type.t) = Format.fprintf f "%s" (self#formater_type t)
 
@@ -362,9 +362,9 @@ class printer = object(self)
       self#funname funname
       (print_list
          (fun f (n, t) ->
-           Format.fprintf f "%a@ %a"
-             self#ptype t
-             self#binding n) sep_c) li
+            Format.fprintf f "%a@ %a"
+              self#ptype t
+              self#binding n) sep_c) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<hov>%a@]@\n@[<v 2>  %a@]@\nend@\n"
@@ -380,8 +380,8 @@ class printer = object(self)
       Format.fprintf f "@\n"
     | Prog.Macro (name, t, params, code) ->
       macros <- StringMap.add
-        name (t, params, code)
-        macros;
+          name (t, params, code)
+          macros;
       ()
     | Prog.Unquote _ -> assert false
     | Prog.DeclareType (name, t) ->
@@ -395,7 +395,7 @@ class printer = object(self)
         self#typename name
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a %a;@\n" self#ptype type_ self#field name
+              Format.fprintf t "%a %a;@\n" self#ptype type_ self#field name
            ) nosep
         ) li
     | Type.Enum li ->
@@ -403,7 +403,7 @@ class printer = object(self)
         self#typename name
         (print_list
            (fun t name ->
-             self#enumfield t name
+              self#enumfield t name
            ) sep_nl
         ) li
     | _ ->
@@ -416,15 +416,15 @@ class printer = object(self)
 
   method multi_read f li =
     let li = List.map (function
-      | Instr.Separation -> fun f () -> self#stdin_sep f
-      | Instr.DeclRead (t, var, _option) -> fun f () -> self#read_decl f t var
-      | Instr.ReadExpr (t, mutable_) -> fun f () -> self#read f t mutable_ ) li
+        | Instr.Separation -> fun f () -> self#stdin_sep f
+        | Instr.DeclRead (t, var, _option) -> fun f () -> self#read_decl f t var
+        | Instr.ReadExpr (t, mutable_) -> fun f () -> self#read f t mutable_ ) li
     in print_list (fun f e -> e f ()) sep_nl f li
 
   method multi_print f li =
     let li = List.map (function
-      | Instr.StringConst str -> fun f () -> self#print_const f str
-      | Instr.PrintExpr (t, expr) -> fun f () ->self#print f t expr ) li
+        | Instr.StringConst str -> fun f () -> self#print_const f str
+        | Instr.PrintExpr (t, expr) -> fun f () ->self#print f t expr ) li
     in print_list (fun f e -> e f ()) sep_nl f li
 
   method formater_type t = format_type t
@@ -442,16 +442,16 @@ class printer = object(self)
 
   method extract_multi_print (li:Utils.expr Instr.printable list) =
     let s, e = List.fold_left (fun (format, exprs) -> function
-      | Instr.StringConst str ->
+        | Instr.StringConst str ->
           let s = self#noformat str in
           format ^ (String.sub s 1 (String.length s - 2)), exprs
-      | Instr.PrintExpr (t, expr) -> format ^ (self#formater_type t), (t, expr)::exprs) ("",  []) li
+        | Instr.PrintExpr (t, expr) -> format ^ (self#formater_type t), (t, expr)::exprs) ("",  []) li
     in s, List.rev e
 
   method extract_multi_printers (li:Utils.expr Instr.printable list) =
     List.fold_left (fun acc -> function
-      | Instr.StringConst str -> (fun f () -> self#expr f (Expr.string str)) :: acc
-      | Instr.PrintExpr (t, expr) -> (fun f () -> self#expr f expr) :: acc) [] li |> List.rev
+        | Instr.StringConst str -> (fun f () -> self#expr f (Expr.string str)) :: acc
+        | Instr.PrintExpr (t, expr) -> (fun f () -> self#expr f expr) :: acc) [] li |> List.rev
 
   method main f (main : Utils.instr list) =
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"

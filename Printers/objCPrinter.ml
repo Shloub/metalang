@@ -36,31 +36,31 @@ open Stdlib
 let rec ptype tyenv f t =
   let open Ast.Type in
   let open Format in match unfix t with
-    | Integer -> fprintf f "int"
-    | String -> fprintf f "char*"
-    | Array a -> fprintf f "%a*" (ptype tyenv) a
-    | Void ->  fprintf f "void"
-    | Bool -> fprintf f "int"
-    | Char -> fprintf f "char"
-    | Named n -> begin match Typer.expand tyenv t
-        default_location |> Type.unfix with
-        | Type.Struct _ -> Format.fprintf f "%s *" n
-        | Type.Enum _ -> Format.fprintf f "%s" n
-        | _ -> assert false
+  | Integer -> fprintf f "int"
+  | String -> fprintf f "char*"
+  | Array a -> fprintf f "%a*" (ptype tyenv) a
+  | Void ->  fprintf f "void"
+  | Bool -> fprintf f "int"
+  | Char -> fprintf f "char"
+  | Named n -> begin match Typer.expand tyenv t
+                             default_location |> Type.unfix with
+    | Type.Struct _ -> Format.fprintf f "%s *" n
+    | Type.Enum _ -> Format.fprintf f "%s" n
+    | _ -> assert false
     end
-    | Enum _ | Struct _ | Auto | Lexems | Tuple _ -> assert false
+  | Enum _ | Struct _ | Auto | Lexems | Tuple _ -> assert false
 
 let print_instr0 ptype c i f pend =
   let open Ast.Instr in
   let open Format in
   match i with
   | AllocRecord (name, ty, list, opt) -> fprintf f "%a %a = [%s alloc]%a@\n%a"
-        ptype ty
-        c.print_varname name
-        (match Type.unfix ty with | Type.Named n -> n | _ -> assert false) pend ()
-        (CPrinter.def_fields c name) list
+                                           ptype ty
+                                           c.print_varname name
+                                           (match Type.unfix ty with | Type.Named n -> n | _ -> assert false) pend ()
+                                           (CPrinter.def_fields c name) list
   | _ -> CPrinter.print_instr0 ptype c i f pend
-      
+
 class objCPrinter = object(self)
   inherit CPrinter.cPrinter as baseprinter
   method lang () = "objc"
@@ -68,26 +68,26 @@ class objCPrinter = object(self)
   method instr f t =
     let rewrite i = match Instr.unfix i with
       | Instr.ClikeLoop (init, cond, incr, li) ->
-          let init = List.map (fun i -> match Instr.unfix i with
-          | Instr.Declare (var, ty, e, _) ->
+        let init = List.map (fun i -> match Instr.unfix i with
+            | Instr.Declare (var, ty, e, _) ->
               let mut = Mutable.var var in
               Instr.affect mut e
-          | _ -> i) init
-          in Instr.ClikeLoop (init, cond, incr, li) |> Instr.fix
+            | _ -> i) init
+        in Instr.ClikeLoop (init, cond, incr, li) |> Instr.fix
       | _ -> i
     in
     let t = Instr.Fixed.Deep.map rewrite t in
-  let macros = StringMap.map (fun (ty, params, li) ->
+    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "objc" li
         with Not_found -> List.assoc "" li) macros
-   in (CPrinter.print_instr print_instr0 (ptype (baseprinter#getTyperEnv ())) macros t) f
-     
+    in (CPrinter.print_instr print_instr0 (ptype (baseprinter#getTyperEnv ())) macros t) f
+
   method prog f prog =
     Format.fprintf f "#import <Foundation/Foundation.h>@\n#include<stdio.h>@\n#include<stdlib.h>@\n%a@\n%a%a@\n@\n"
       (fun f () ->
-        if Tags.is_taged "use_math"
-        then Format.fprintf f "#include<math.h>@\n"
+         if Tags.is_taged "use_math"
+         then Format.fprintf f "#include<math.h>@\n"
       ) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -104,14 +104,14 @@ class objCPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        Format.fprintf f "@@interface %a : NSObject@\n{@\n@[<v 2>  %a@]@\n}@\n@@end@\n@@implementation %a @\n@@end@\n"
-          self#typename name
-          (print_list
-             (fun t (name, type_) ->
-               Format.fprintf t "@@public %a %a;" self#ptype type_ self#field name
-             ) sep_nl
-          ) li
-          self#typename name
+      Format.fprintf f "@@interface %a : NSObject@\n{@\n@[<v 2>  %a@]@\n}@\n@@end@\n@@implementation %a @\n@@end@\n"
+        self#typename name
+        (print_list
+           (fun t (name, type_) ->
+              Format.fprintf t "@@public %a %a;" self#ptype type_ self#field name
+           ) sep_nl
+        ) li
+        self#typename name
     | Type.Enum li ->
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
         self#typename name

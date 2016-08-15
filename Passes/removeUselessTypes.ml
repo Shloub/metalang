@@ -45,6 +45,6 @@ let apply prog funs tyenv =
       then (f::li, used)
       else (li, used)
   in let _, used = Passes.WalkCollectTypes.fold tyenv {prog with Prog.funs = funs } in
-     let funs, _ = List.fold_right go prog.Prog.funs ([], used) in
-     let prog = { prog with Prog.funs = funs} in
-     prog
+  let funs, _ = List.fold_right go prog.Prog.funs ([], used) in
+  let prog = { prog with Prog.funs = funs} in
+  prog

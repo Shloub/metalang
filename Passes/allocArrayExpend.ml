@@ -42,8 +42,8 @@ open PassesUtils
 
 type acc0 = bool
 type 'lex acc = {
-    make_arrayconst : bool
-  }
+  make_arrayconst : bool
+}
 let init_acc b = {
   make_arrayconst = b;
 }
@@ -61,31 +61,31 @@ let locati loc instr =
 let mapret tab index instructions =
   let f tra i = match Instr.unfix i with
     | Instr.Return e -> Instr.affect
-      (Mutable.array
-         (Mutable.var tab
-             |> locatm (PosMap.get (Expr.Fixed.annot e))
-         ) [Expr.access (Mutable.var index
-                            |> locatm (PosMap.get (Expr.Fixed.annot e))
-         )
-           |> locate (PosMap.get (Expr.Fixed.annot e))
-           ]) e
+                          (Mutable.array
+                             (Mutable.var tab
+                              |> locatm (PosMap.get (Expr.Fixed.annot e))
+                             ) [Expr.access (Mutable.var index
+                                             |> locatm (PosMap.get (Expr.Fixed.annot e))
+                                            )
+                                |> locate (PosMap.get (Expr.Fixed.annot e))
+                               ]) e
     | Instr.AllocArray _ -> i
     | _ -> tra i
   in let instructions = List.map
-       (f (Instr.Writer.Traverse.map f)) instructions in
-     instructions
+         (f (Instr.Writer.Traverse.map f)) instructions in
+  instructions
 
 let get_const_expr e = match Expr.unfix e with
-| Expr.Lief l -> Some l
-| _ -> None
+  | Expr.Lief l -> Some l
+  | _ -> None
 
 let get_const_return li =
   let li = List.filter (fun i -> match Instr.unfix i with
-  | Instr.Comment _ -> false
-  | _ -> true) li
+      | Instr.Comment _ -> false
+      | _ -> true) li
   in match List.map Instr.unfix li with
   | [ Instr.Return e ] ->
-      get_const_expr e
+    get_const_expr e
   | _ ->  None
 
 let is_const_return li = None <> get_const_return li
@@ -93,22 +93,22 @@ let is_const_return li = None <> get_const_return li
 let expand acc i = match Instr.unfix i with
   | Instr.AllocArray (b,t, len, Some (b2, instrs), opt)
     when acc.make_arrayconst &&
-      is_const_return instrs ->
-      let e = Option.extract (get_const_return instrs)
-      and annot = Instr.Fixed.annot i
-      in
-      [ Instr.fixa annot (Instr.AllocArrayConst (b, t, len, e, opt)) ]
+         is_const_return instrs ->
+    let e = Option.extract (get_const_return instrs)
+    and annot = Instr.Fixed.annot i
+    in
+    [ Instr.fixa annot (Instr.AllocArrayConst (b, t, len, e, opt)) ]
   | Instr.AllocArray (b,t, len, Some (b2, instrs), opt) ->
     let annot = Instr.Fixed.annot i in
     [ Instr.fixa annot (Instr.AllocArray (b, t, len, None, opt) )
-    |> locati (PosMap.get (Instr.Fixed.annot i))
-    ;
+      |> locati (PosMap.get (Instr.Fixed.annot i))
+      ;
       Instr.loop b2 (Expr.integer 0)
         (Expr.binop Expr.Sub len (Expr.integer 1)
-            |> locate (PosMap.get (Expr.Fixed.annot len))
+         |> locate (PosMap.get (Expr.Fixed.annot len))
         )
         (mapret b b2 instrs)
-    |> locati (PosMap.get (Instr.Fixed.annot i))
+      |> locati (PosMap.get (Instr.Fixed.annot i))
     ]
   | _ -> [i]
 

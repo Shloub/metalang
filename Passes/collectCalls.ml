@@ -40,15 +40,15 @@ let init_acc () = StringSet.empty
 
 let process_expr e acc =
   Expr.Fixed.Deep.fold (fun e acc -> match e with
-  | Expr.Call (funname, exprs) -> List.fold_left (fun acc e -> e acc) (StringSet.add funname acc) exprs
-  | e -> Expr.Fixed.Surface.fold (fun acc e -> e acc) acc e
-) e acc
+      | Expr.Call (funname, exprs) -> List.fold_left (fun acc e -> e acc) (StringSet.add funname acc) exprs
+      | e -> Expr.Fixed.Surface.fold (fun acc e -> e acc) acc e
+    ) e acc
 
 let collect_instr acc i =
   let acc = Instr.Fixed.Deep.fold (fun i acc -> 
-    match i with
-    | Instr.Call (name, _) -> StringSet.add name acc
-    | e -> Instr.Fixed.Surface.fold (fun acc e -> e acc) acc e) i acc
+      match i with
+      | Instr.Call (name, _) -> StringSet.add name acc
+      | e -> Instr.Fixed.Surface.fold (fun acc e -> e acc) acc e) i acc
   in Instr.Fixed.Deep.foldg process_expr i acc
 
 let process_main acc m = (List.fold_left collect_instr acc m), m

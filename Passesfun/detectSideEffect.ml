@@ -40,52 +40,52 @@ let (||) a b = match a, b with
   | _, EEffect -> EEffect
   | _ -> EPure
 
-  type acc = effect IntMap.t -> effect IntMap.t
+type acc = effect IntMap.t -> effect IntMap.t
 module A = Expr.Fixed.Apply(Applicatives.Accumule(struct
-  type t = effect IntMap.t -> effect IntMap.t
-  let zero acc = acc
-  let merge acc1 acc2 map = acc1 (acc2 map)
-end))
+                              type t = effect IntMap.t -> effect IntMap.t
+                              let zero acc = acc
+                              let merge acc1 acc2 map = acc1 (acc2 map)
+                            end))
 
 let add i v acc a = IntMap.add i v (acc a)
 
 let side_effects : int -> (acc * effect Expr.tofix) -> (acc * effect) = fun i (acc, e) ->
   let v = match e with
-  | Expr.ApplyMacro _ -> assert false
-  | Expr.Fun _ -> EPure
-  | Expr.FunTuple _ -> EPure
-  | Expr.Lief (Expr.Binding (Ast.UserName a)) when Tags.is_taged ("macro_" ^ a ^ "_pure") -> EMacro
-  | Expr.Lief _ -> EPure
-  | Expr.Apply (EMacro, _)
-  | Expr.LetRecIn _
-  | Expr.UnOp _
-  | Expr.BinOp _
-  | Expr.Tuple _
-  | Expr.Comment _
-  | Expr.LetIn _
-  | Expr.If _
-  | Expr.Block _ -> Expr.Fixed.Surface.fold  (||) EPure e
-  | Expr.Skip
-  | Expr.Apply _
-  | Expr.MultiPrint _
-  | Expr.RecordAffect _
-  | Expr.RecordAccess _
-  | Expr.ArrayInit _
-  | Expr.ArrayMake _
-  | Expr.ArrayAccess _
-  | Expr.ArrayAffect _
-  | Expr.Print _
-  | Expr.ReadIn _
-  | Expr.Record _ ->
-    EEffect
+    | Expr.ApplyMacro _ -> assert false
+    | Expr.Fun _ -> EPure
+    | Expr.FunTuple _ -> EPure
+    | Expr.Lief (Expr.Binding (Ast.UserName a)) when Tags.is_taged ("macro_" ^ a ^ "_pure") -> EMacro
+    | Expr.Lief _ -> EPure
+    | Expr.Apply (EMacro, _)
+    | Expr.LetRecIn _
+    | Expr.UnOp _
+    | Expr.BinOp _
+    | Expr.Tuple _
+    | Expr.Comment _
+    | Expr.LetIn _
+    | Expr.If _
+    | Expr.Block _ -> Expr.Fixed.Surface.fold  (||) EPure e
+    | Expr.Skip
+    | Expr.Apply _
+    | Expr.MultiPrint _
+    | Expr.RecordAffect _
+    | Expr.RecordAccess _
+    | Expr.ArrayInit _
+    | Expr.ArrayMake _
+    | Expr.ArrayAccess _
+    | Expr.ArrayAffect _
+    | Expr.Print _
+    | Expr.ReadIn _
+    | Expr.Record _ ->
+      EEffect
   in add i v acc, v
 
 let tr e = fst (A.fm2i side_effects (fun x y -> assert false) e)
 
 let apply p =
   let side_effects = List.fold_left (fun acc e -> match e with
-  | Declaration (name, e) -> tr e acc
-  | _ -> acc
-  ) IntMap.empty p.declarations
+      | Declaration (name, e) -> tr e acc
+      | _ -> acc
+    ) IntMap.empty p.declarations
   in {p with side_effects = side_effects }
 

@@ -43,19 +43,19 @@ let insert_reads instructions reads =
   match reads with
   | [] -> instructions
   | reads ->
-      (Instr.Read (List.rev reads) |> Instr.fix)::instructions
-        
+    (Instr.Read (List.rev reads) |> Instr.fix)::instructions
+
 let processli is =
   let li, reads =
     List.fold_left (fun (instructions, reads) i ->
-      match Instr.unfix i with
-      | Instr.Read li -> instructions, List.rev_append li reads
-      | _ -> i :: insert_reads instructions reads, []) ([], []) is
+        match Instr.unfix i with
+        | Instr.Read li -> instructions, List.rev_append li reads
+        | _ -> i :: insert_reads instructions reads, []) ([], []) is
   in List.rev (insert_reads li reads)
 
 let process () (li:Utils.instr list) =
   (),
   let li = processli li in
   List.map (fun i ->
-    let i0 = Instr.deep_map_bloc processli (Instr.unfix i)
-    in Instr.fixa (Instr.Fixed.annot i) i0) li
+      let i0 = Instr.deep_map_bloc processli (Instr.unfix i)
+      in Instr.fixa (Instr.Fixed.annot i) i0) li

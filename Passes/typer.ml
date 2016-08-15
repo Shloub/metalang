@@ -36,9 +36,9 @@ open Warner
 
 (** {2 Types} *)
 type typeContrainte =
-| Unknown of Ast.location
-| PreTyped of typeContrainte ref Type.tofix * Ast.location
-| Typed of Type.t * Ast.location
+  | Unknown of Ast.location
+  | PreTyped of typeContrainte ref Type.tofix * Ast.location
+  | Typed of Type.t * Ast.location
 
 type varType = typeContrainte ref
 
@@ -79,16 +79,16 @@ let type_of_field env field loc =
     let (_, t, _) = StringMap.find field env.fields in t
   with Not_found ->
     raise ( Error (fun f ->
-      Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
-    ))
+        Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
+      ))
 let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
-    : (env * typeContrainte ref) =
+  : (env * typeContrainte ref) =
 
   let fold env t = match Type.Fixed.unfix t with
     | Type.Auto ->
       let out = ref (Unknown loc) in
       let env = {env with automap = IntMap.add (Type.Fixed.annot t)
-          out env.automap }
+                              out env.automap }
       in env
     | _ -> env
   in
@@ -104,42 +104,42 @@ let rec contr2str t =
   match t with
   | Unknown _ -> "*"
   | PreTyped (ty, _) -> "P_"^
-    (Type.type2String (Type.Fixed.Surface.map (fun t -> contr2str !t) ty))
+                        (Type.type2String (Type.Fixed.Surface.map (fun t -> contr2str !t) ty))
   | Typed (ty, _) -> "T_" ^ (Type.type_t_to_string ty)
 
 (** {2 Error reporters} *)
 
 let error_no_auto_type map annot ty =
   raise ( Error (fun f ->
-    Format.fprintf f
-      "Cannot find type of auto in %s (%d)\n%!"
-      (Type.type_t_to_string ty) annot;
-    IntMap.iter (fun k v ->
-      Format.fprintf f "annot %d : %s@\n" k
-        (contr2str !v)
-    ) map
-  ))
+      Format.fprintf f
+        "Cannot find type of auto in %s (%d)\n%!"
+        (Type.type_t_to_string ty) annot;
+      IntMap.iter (fun k v ->
+          Format.fprintf f "annot %d : %s@\n" k
+            (contr2str !v)
+        ) map
+    ))
 
 let error_no_contraintes li =
   raise ( Error (fun f ->
-    List.iter
-      (fun (a, b) ->
-        Format.fprintf f "No contrainte to unify %s and %s\n%!"
-          (contr2str !a) (contr2str !b)
-      ) li
-  ))
+      List.iter
+        (fun (a, b) ->
+           Format.fprintf f "No contrainte to unify %s and %s\n%!"
+             (contr2str !a) (contr2str !b)
+        ) li
+    ))
 
 let error_field_not_found loc name t =
   raise ( Error (fun f ->
-    Format.fprintf f "Field %s is not found in %s %a\n%!"
-      name
-      (Type.type_t_to_string t)
-      ploc loc))
+      Format.fprintf f "Field %s is not found in %s %a\n%!"
+        name
+        (Type.type_t_to_string t)
+        ploc loc))
 
 let error_function_not_found loc name =
   raise (Error (fun f -> Format.fprintf f "Function %s is not found in %a\n%!"
-    name
-    ploc loc))
+                   name
+                   ploc loc))
 
 let rec plistring f li =
   match li with
@@ -149,43 +149,43 @@ let rec plistring f li =
 
 let error_record_types lval lt loc =
   raise (Error (fun f -> Format.fprintf f "Fields does not match in %a\n%aagainst\n%a%!"
-    (* TODO show lists & diff *)
-    ploc loc
-    plistring lval
-    plistring lt))
+                   (* TODO show lists & diff *)
+                   ploc loc
+                   plistring lval
+                   plistring lt))
 
 let error_arrity funname l1 l2 loc =
   raise (Error (fun f ->
-    Format.fprintf f "The function %s expects %d arguments, %d given %a.\n%!"
-      funname l1 l2
-      ploc loc))
+      Format.fprintf f "The function %s expects %d arguments, %d given %a.\n%!"
+        funname l1 l2
+        ploc loc))
 
 let error_ty t1 t2 loc1 loc2 =
   raise (Error (fun f  -> Format.fprintf f "Cannot unify %s %a and %s %a\n%!"
-    (Type.type_t_to_string t1)
-    ploc loc1
-    (Type.type_t_to_string t2)
-    ploc loc2))
+                   (Type.type_t_to_string t1)
+                   ploc loc1
+                   (Type.type_t_to_string t2)
+                   ploc loc2))
 
 let not_found name loc =
   raise (Error (fun f -> Format.fprintf f "Cannot find variable %a %a \n%!"
-    (fun f -> function
-    | UserName u -> Format.fprintf f "%s" u
-    | InternalName i -> Format.fprintf f "internal(%d)" i
-    ) name
-    ploc loc))
+                   (fun f -> function
+                      | UserName u -> Format.fprintf f "%s" u
+                      | InternalName i -> Format.fprintf f "internal(%d)" i
+                   ) name
+                   ploc loc))
 
 let not_found_ty name loc =
   raise (Error (fun f -> Format.fprintf f "Cannot find type %s %a \n%!"
-    name
-    ploc loc))
+                   name
+                   ploc loc))
 
 let error_cty t1 t2 loc1 loc2 =
   raise (Error (fun f -> Format.fprintf f "Cannot unify %s %a and %s %a\n%!"
-    (contr2str t1)
-    ploc loc1
-    (contr2str t2)
-    ploc loc2))
+                   (contr2str t1)
+                   ploc loc1
+                   (contr2str t2)
+                   ploc loc2))
 
 (** {2 Types anti alias-ing}*)
 (* TODO passer loc en premier ou second parametre*)
@@ -199,7 +199,7 @@ let expand env ty loc =
          not_found_ty name loc)
     | x -> Type.Fixed.F (Type.Fixed.annot ty, (Type.Fixed.Surface.map f x))
   in f ty
-    
+
 let child_type_of_field env field loc =
   try
     let (_, t, _) = StringMap.find field env.fields in match Type.unfix (expand env t loc) with
@@ -207,8 +207,8 @@ let child_type_of_field env field loc =
     | _ -> raise Not_found
   with Not_found ->
     raise ( Error (fun f ->
-      Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
-    ))
+        Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
+      ))
 
 (** {2 Unify} *)
 let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
@@ -241,22 +241,22 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
   | Type.Struct li, Type.Struct li2 ->
     List.iter
       (fun (name, ty) ->
-        let (_, ty2) =
-          try
-            List.find ((String.equals name) @* fst) li2
-          with Not_found ->
-            error_field_not_found loc1 name t2
-        in
-        check_types env ty ty2 loc1 loc2
+         let (_, ty2) =
+           try
+             List.find ((String.equals name) @* fst) li2
+           with Not_found ->
+             error_field_not_found loc1 name t2
+         in
+         check_types env ty ty2 loc1 loc2
       ) li
   | Type.Enum li, Type.Enum li2 ->
     List.iter
       (fun name ->
-        (try
-           let _ = List.find (String.equals name) li2 in ()
-         with Not_found ->
-           error_field_not_found loc1 name t2
-        ); ()
+         (try
+            let _ = List.find (String.equals name) li2 in ()
+          with Not_found ->
+            error_field_not_found loc1 name t2
+         ); ()
       ) li
   | _ -> error_ty t1 t2 loc1 loc2
 
@@ -301,23 +301,23 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
     let len2 = List.length li2 in
     if len1 = len2 then
       List.fold_left (fun acc (t1, t2_) ->
-        let t2 = ref (Typed (t2_, loc2)) in
-        unify env t1 t2 || acc
-      ) false (List.combine li1 li2)
+          let t2 = ref (Typed (t2_, loc2)) in
+          unify env t1 t2 || acc
+        ) false (List.combine li1 li2)
     else  error_cty !t1 !t2 loc1 loc2
   | PreTyped (Type.Tuple li1, loc1), PreTyped (Type.Tuple li2, loc2) ->
     let len1 = List.length li1 in
     let len2 = List.length li2 in
     if len1 = len2 then
       List.fold_left (fun acc (t1, t2) ->
-        unify env t1 t2 || acc
-      ) false (List.combine li1 li2)
+          unify env t1 t2 || acc
+        ) false (List.combine li1 li2)
     else  error_cty !t1 !t2 loc1 loc2
   | PreTyped (Type.Array a1, loc1), PreTyped (Type.Array a2, loc2) ->
     begin match !a1, !a2 with
-    | Typed (t, loc), _ -> begin t1 := Typed ((Type.Fixed.fix (Type.Array t)) , loc); true end
-    | _, Typed (t, loc) -> begin t2 := Typed ((Type.Fixed.fix (Type.Array t)) , loc); true end
-    | _ -> unify env a1 a2
+      | Typed (t, loc), _ -> begin t1 := Typed ((Type.Fixed.fix (Type.Array t)) , loc); true end
+      | _, Typed (t, loc) -> begin t2 := Typed ((Type.Fixed.fix (Type.Array t)) , loc); true end
+      | _ -> unify env a1 a2
     end
   | PreTyped (Type.Array _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2 loc1 loc2
   | PreTyped (Type.Array r1, loc1), Typed (Type.Fixed.F (_, Type.Array ty), loc2) ->
@@ -329,38 +329,38 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
   | PreTyped ((Type.Array r1), loc1), Typed (_, loc2) -> error_cty !t1 !t2 loc1 loc2
   | PreTyped (Type.Struct li, loc1), Typed (Type.Fixed.F (_, Type.Struct li2), loc2) ->
     let all = List.fold_left
-      (fun all (name, t) ->
-        let self_typed = match !t with
-          | Typed _ -> true
-          | _ -> false
-        in all && self_typed) true li
+        (fun all (name, t) ->
+           let self_typed = match !t with
+             | Typed _ -> true
+             | _ -> false
+           in all && self_typed) true li
     in if all then
-        begin t1 := Typed (extract_typed t1, loc1); true end
-      else
-        let one = List.fold_left
+      begin t1 := Typed (extract_typed t1, loc1); true end
+    else
+      let one = List.fold_left
           (fun one (name, t) ->
-            let (_, t2) = List.find ((String.equals name) @* fst) li2 in
-            let next = unify env t (ref (Typed (t2, loc2))) in one || next
+             let (_, t2) = List.find ((String.equals name) @* fst) li2 in
+             let next = unify env t (ref (Typed (t2, loc2))) in one || next
           ) false li
-        in one
+      in one
   | PreTyped (Type.Struct li, loc1),
-        PreTyped (Type.Struct li2, loc2) ->
+    PreTyped (Type.Struct li2, loc2) ->
     let one, all = List.fold_left
-      (fun (one, all) (name, t) ->
-        let (_, t2) = List.find
-          ((String.equals name) @* fst)
-          li2 in
-        let next = unify env t t2 in
-        let self_typed = match !t with
-          | Typed _ -> true
-          | _ -> false
-        in
-        (one || next, all && self_typed)
-      ) (false, true) li
+        (fun (one, all) (name, t) ->
+           let (_, t2) = List.find
+               ((String.equals name) @* fst)
+               li2 in
+           let next = unify env t t2 in
+           let self_typed = match !t with
+             | Typed _ -> true
+             | _ -> false
+           in
+           (one || next, all && self_typed)
+        ) (false, true) li
     in if all then
-        begin
-          t1 := Typed (extract_typed t1, loc1)
-        end; one
+      begin
+        t1 := Typed (extract_typed t1, loc1)
+      end; one
 
   |  PreTyped (Type.Struct _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2 loc1 loc2
   | _, Typed (((Type.Fixed.F (_, Type.Named _)) as t), loc) -> begin t2 := Typed ((expand env t loc), loc); true end
@@ -374,7 +374,7 @@ let get_type_a env a =
   match !(IntMap.find a env.contrainteMap) with
   | Typed (t, _) -> t
   | c -> raise (Error (fun f -> Format.fprintf f "@\nNo type : %s@\n%!"
-    (contr2str c)))
+                          (contr2str c)))
 
 let is_int_a env a = Type.Integer = Type.unfix (get_type_a env a)
 let is_bool_a env a = Type.Bool = Type.unfix (get_type_a env a)
@@ -402,330 +402,330 @@ let add_contrainte env c1 c2 =
 
 let contrainte_of_lief loc env = function
   | Expr.Char _ ->
-      ref (Typed (Type.char, loc))
+    ref (Typed (Type.char, loc))
   | Expr.String _ ->
-      ref (Typed (Type.string, loc))
+    ref (Typed (Type.string, loc))
   | Expr.Integer _ ->
-      ref (Typed (Type.integer, loc))
+    ref (Typed (Type.integer, loc))
   | Expr.Bool _ ->
-      ref (Typed (Type.bool, loc))
+    ref (Typed (Type.bool, loc))
   | Expr.Enum en ->
-      let (t, _) = StringMap.find en env.enum in (* TODO not found*)
-      ref (Typed (t, loc) )
+    let (t, _) = StringMap.find en env.enum in (* TODO not found*)
+    ref (Typed (t, loc) )
 
 
 
 let collect_contraintes_mutable mapg mut =
   Mutable.Fixed.Deep.foldmap2i_topdown
     (fun i mut env ->
-      let tloc = Ast.PosMap.get i in
-      match mut with
-      | Mutable.Var name ->
-          let ty = try
-            BindingMap.find name env.locales
-          with Not_found ->
-            not_found name tloc
-          in let env = { env with
-                         contrainteMap = IntMap.add i ty env.contrainteMap
-                       } in
-          env, ty
-  | Mutable.Array (contrainte_mut, eli) ->
-    let env = List.fold_left (fun env contrainte_expr ->
-      let integer_contrainte = ref (Typed (Type.integer, tloc)) in
-      add_contrainte env integer_contrainte contrainte_expr
-    ) env eli in
-    let contrainte = ref (Unknown tloc) in
-    let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, tloc) ) in
-    let env = { env with contraintes =
-                (contrainte_mut, contrainte_mut2) :: env.contraintes;
-                contrainteMap = IntMap.add i contrainte env.contrainteMap
-              } in
-    env, contrainte
-  | Mutable.Dot (contrainte, name) ->
-    let (ty_dot, ty_mut, _) =
-      try StringMap.find name env.fields
-      with Not_found ->
-        raise ( Error (fun f ->
-          Format.fprintf f "Field %s is undefined %a\n%!" name ploc tloc
-        ))
-    in
-    let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
-    let env, ty_dot = ty2typeContrainte env ty_dot tloc in
-    let env = {env with
-      contraintes = (contrainte, contrainte2) :: env.contraintes;
-               contrainteMap = IntMap.add i ty_dot env.contrainteMap} in
-    env, ty_dot
+       let tloc = Ast.PosMap.get i in
+       match mut with
+       | Mutable.Var name ->
+         let ty = try
+             BindingMap.find name env.locales
+           with Not_found ->
+             not_found name tloc
+         in let env = { env with
+                        contrainteMap = IntMap.add i ty env.contrainteMap
+                      } in
+         env, ty
+       | Mutable.Array (contrainte_mut, eli) ->
+         let env = List.fold_left (fun env contrainte_expr ->
+             let integer_contrainte = ref (Typed (Type.integer, tloc)) in
+             add_contrainte env integer_contrainte contrainte_expr
+           ) env eli in
+         let contrainte = ref (Unknown tloc) in
+         let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, tloc) ) in
+         let env = { env with contraintes =
+                                (contrainte_mut, contrainte_mut2) :: env.contraintes;
+                              contrainteMap = IntMap.add i contrainte env.contrainteMap
+                   } in
+         env, contrainte
+       | Mutable.Dot (contrainte, name) ->
+         let (ty_dot, ty_mut, _) =
+           try StringMap.find name env.fields
+           with Not_found ->
+             raise ( Error (fun f ->
+                 Format.fprintf f "Field %s is undefined %a\n%!" name ploc tloc
+               ))
+         in
+         let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
+         let env, ty_dot = ty2typeContrainte env ty_dot tloc in
+         let env = {env with
+                    contraintes = (contrainte, contrainte2) :: env.contraintes;
+                    contrainteMap = IntMap.add i ty_dot env.contrainteMap} in
+         env, ty_dot
     ) mapg mut
 
 
 (** {2 Collect contraintes functions} *)
 let collect_contraintes_expr e env =
   Expr.Fixed.Deep.folda (fun i e env ->
-    let loc = Ast.PosMap.get i in
-    let env, e = Expr.Fixed.Surface.foldmap (fun e env -> e env) e env in
-    let env, contrainte = match e with
-    | Expr.BinOp (acontrainte, Expr.Mod, bcontrainte) ->
-      let env = add_contrainte env acontrainte
-        (ref (Typed (Type.integer, loc))) in
-      let env = add_contrainte env bcontrainte
-        (ref (Typed (Type.integer, loc))) in
-      env, ref (Typed (Type.integer, loc))
+      let loc = Ast.PosMap.get i in
+      let env, e = Expr.Fixed.Surface.foldmap (fun e env -> e env) e env in
+      let env, contrainte = match e with
+        | Expr.BinOp (acontrainte, Expr.Mod, bcontrainte) ->
+          let env = add_contrainte env acontrainte
+              (ref (Typed (Type.integer, loc))) in
+          let env = add_contrainte env bcontrainte
+              (ref (Typed (Type.integer, loc))) in
+          env, ref (Typed (Type.integer, loc))
 
-    | Expr.BinOp (acontrainte, (Expr.Or | Expr.And), bcontrainte) ->
-      let env = add_contrainte env acontrainte
-        (ref (Typed (Type.bool, loc))) in
-      let env = add_contrainte env bcontrainte
-        (ref (Typed (Type.bool, loc))) in
-      env, ref (Typed (Type.bool, loc))
-    | Expr.BinOp (acontrainte, (Expr.Lower | Expr.LowerEq | Expr.Higher | Expr.HigherEq
-                         | Expr.Eq | Expr.Diff), bcontrainte) ->
-      let contrainte = ref (Typed (Type.bool, loc)) in
-      let env = add_contrainte env acontrainte bcontrainte in
-      env, contrainte
+        | Expr.BinOp (acontrainte, (Expr.Or | Expr.And), bcontrainte) ->
+          let env = add_contrainte env acontrainte
+              (ref (Typed (Type.bool, loc))) in
+          let env = add_contrainte env bcontrainte
+              (ref (Typed (Type.bool, loc))) in
+          env, ref (Typed (Type.bool, loc))
+        | Expr.BinOp (acontrainte, (Expr.Lower | Expr.LowerEq | Expr.Higher | Expr.HigherEq
+                                   | Expr.Eq | Expr.Diff), bcontrainte) ->
+          let contrainte = ref (Typed (Type.bool, loc)) in
+          let env = add_contrainte env acontrainte bcontrainte in
+          env, contrainte
 
-    (* Pour les autres cas, on suppose 'a -> 'a -> 'a*)
-    | Expr.BinOp (acontrainte,_, bcontrainte) ->
-      let contrainte = ref (Unknown (loc)) in
-      let env = add_contrainte env acontrainte contrainte in
-      let env = add_contrainte env bcontrainte contrainte in
-      env, contrainte
+        (* Pour les autres cas, on suppose 'a -> 'a -> 'a*)
+        | Expr.BinOp (acontrainte,_, bcontrainte) ->
+          let contrainte = ref (Unknown (loc)) in
+          let env = add_contrainte env acontrainte contrainte in
+          let env = add_contrainte env bcontrainte contrainte in
+          env, contrainte
 
-    | Expr.UnOp (acontrainte, Expr.Neg) ->
-      let contrainte = (ref (Typed (Type.integer, loc))) in
-      let env = add_contrainte env acontrainte contrainte in
-      env, contrainte
-    | Expr.UnOp (acontrainte, Expr.Not) ->
-      let contrainte = (ref (Typed (Type.bool, loc))) in
-      let env = add_contrainte env acontrainte contrainte in
-      env, contrainte
-    | Expr.Lief l -> let c = contrainte_of_lief loc env l in  env, c
-    | Expr.Lexems li -> (* TODO typer les insertions *)
-      env, ref (Typed (Type.lexems, loc))
-    | Expr.Access mut -> collect_contraintes_mutable (fun e acc -> acc, e) mut env
-    | Expr.Call ("instant", [param]) -> env, param
-    | Expr.Call (name, li) ->
-      let (args_ty, out_ty) =
-        try
-          StringMap.find name env.functions
-        with Not_found ->
-          error_function_not_found loc name
+        | Expr.UnOp (acontrainte, Expr.Neg) ->
+          let contrainte = (ref (Typed (Type.integer, loc))) in
+          let env = add_contrainte env acontrainte contrainte in
+          env, contrainte
+        | Expr.UnOp (acontrainte, Expr.Not) ->
+          let contrainte = (ref (Typed (Type.bool, loc))) in
+          let env = add_contrainte env acontrainte contrainte in
+          env, contrainte
+        | Expr.Lief l -> let c = contrainte_of_lief loc env l in  env, c
+        | Expr.Lexems li -> (* TODO typer les insertions *)
+          env, ref (Typed (Type.lexems, loc))
+        | Expr.Access mut -> collect_contraintes_mutable (fun e acc -> acc, e) mut env
+        | Expr.Call ("instant", [param]) -> env, param
+        | Expr.Call (name, li) ->
+          let (args_ty, out_ty) =
+            try
+              StringMap.find name env.functions
+            with Not_found ->
+              error_function_not_found loc name
+          in
+          let len1 = List.length args_ty in
+          let len2 = List.length li in
+          let () = if len1 != len2
+            then error_arrity name len1 len2 loc
+          in
+          let env = List.fold_left
+              (fun env (ty1, contrainte) ->
+                 let env, contrainte2 = ty2typeContrainte env ty1 loc in
+                 let env = {env with contraintes = (contrainte, contrainte2) ::
+                                                   env.contraintes} in env
+              ) env (List.zip args_ty li) in
+          env, out_ty
+        | Expr.Tuple contraintes ->
+          let tuple_contrainte = ref (PreTyped (Type.Tuple contraintes, loc)) in
+          env, tuple_contrainte
+        | Expr.Record contraintes ->
+          let tuple_contrainte = ref (PreTyped (Type.Struct (contraintes), loc)) in
+          env, tuple_contrainte
       in
-      let len1 = List.length args_ty in
-      let len2 = List.length li in
-      let () = if len1 != len2
-        then error_arrity name len1 len2 loc
-      in
-      let env = List.fold_left
-        (fun env (ty1, contrainte) ->
-          let env, contrainte2 = ty2typeContrainte env ty1 loc in
-          let env = {env with contraintes = (contrainte, contrainte2) ::
-              env.contraintes} in env
-        ) env (List.zip args_ty li) in
-      env, out_ty
-    | Expr.Tuple contraintes ->
-      let tuple_contrainte = ref (PreTyped (Type.Tuple contraintes, loc)) in
-      env, tuple_contrainte
-    | Expr.Record contraintes ->
-      let tuple_contrainte = ref (PreTyped (Type.Struct (contraintes), loc)) in
-      env, tuple_contrainte
-    in
-    let env = { env with
-                contrainteMap = IntMap.add i contrainte env.contrainteMap }
-    in env, contrainte
-) e env
+      let env = { env with
+                  contrainteMap = IntMap.add i contrainte env.contrainteMap }
+      in env, contrainte
+    ) e env
 
 let collect_contraintes_instruction env instruction =
   Instr.Fixed.Deep.fold2i_bottomup
     (fun i instruction env ty_ret ->
-      let loc = Ast.PosMap.get i in
-      match instruction with
-      | Instr.Tag _ -> env
-      | Instr.Declare (var, ty, contrainte_expr, _) ->
-        let ty = expand env ty loc in
-        let env, contrainte_expr = contrainte_expr env in
-        let env, contrainte_ty = ty2typeContrainte env ty loc in
-        let env =
-          { env with locales =
-              BindingMap.add var contrainte_ty env.locales } in
-        {env with
+       let loc = Ast.PosMap.get i in
+       match instruction with
+       | Instr.Tag _ -> env
+       | Instr.Declare (var, ty, contrainte_expr, _) ->
+         let ty = expand env ty loc in
+         let env, contrainte_expr = contrainte_expr env in
+         let env, contrainte_ty = ty2typeContrainte env ty loc in
+         let env =
+           { env with locales =
+                        BindingMap.add var contrainte_ty env.locales } in
+         {env with
           contraintes = (contrainte_ty, contrainte_expr) ::
-            env.contraintes}
-      | Instr.SelfAffect (mut, _, contrainte_expr) (* TODO operator constraint *)
-      | Instr.Affect (mut, contrainte_expr) ->
-          let env, contrainte_expr = contrainte_expr env in
-        let env, contrainte_mut = collect_contraintes_mutable (fun e env -> e env) mut env in
-        {env with
+                        env.contraintes}
+       | Instr.SelfAffect (mut, _, contrainte_expr) (* TODO operator constraint *)
+       | Instr.Affect (mut, contrainte_expr) ->
+         let env, contrainte_expr = contrainte_expr env in
+         let env, contrainte_mut = collect_contraintes_mutable (fun e env -> e env) mut env in
+         {env with
           contraintes = (contrainte_mut, contrainte_expr) ::
-            env.contraintes}
+                        env.contraintes}
 
-      | Instr.Loop (var, contrainte_e1, contrainte_e2, li) ->
-          let env, contrainte_e1 = contrainte_e1 env in
-          let env, contrainte_e2 = contrainte_e2 env in
+       | Instr.Loop (var, contrainte_e1, contrainte_e2, li) ->
+         let env, contrainte_e1 = contrainte_e1 env in
+         let env, contrainte_e2 = contrainte_e2 env in
 
-        let contrainte_integer = ref (Typed (Type.integer, loc) ) in
-        let env = {env with locales = BindingMap.add var contrainte_integer
-            env.locales } in
-        let env = {env with
-          contraintes =
-            (contrainte_integer, contrainte_e1) ::
-              (contrainte_integer, contrainte_e2) ::
-              env.contraintes}
-        in List.fold_left(fun env f -> f env ty_ret) env li
-      | Instr.While (contrainte_e, li) ->
-          let env, contrainte_e = contrainte_e env in
-          let contrainte_bool = ref (Typed (Type.bool, loc)) in
-          let env = {env with
-                     contraintes = (contrainte_bool, contrainte_e) ::
-                     env.contraintes}
-          in List.fold_left(fun env f -> f env ty_ret) env li
-      | Instr.Comment _ -> env
-      | Instr.Return contrainte_expr ->
-          let env, contrainte_expr = contrainte_expr env in
-          {env with
-           contraintes = (ty_ret, contrainte_expr) ::
-           env.contraintes}
-      | Instr.AllocArray (var, ty, contrainte_e, instrsopt, _) ->
-          let env, contrainte_e = contrainte_e env in
-        let ty = expand env ty loc in
-        let env, ty = ty2typeContrainte env ty loc in
-        let contrainte_integer = ref (Typed (Type.integer, loc) ) in
-        let env = {env with
-          contraintes =
-            (contrainte_integer, contrainte_e) ::
-              env.contraintes}
-        in
-        let env = match instrsopt with
-          | None -> env
-          | Some (var, instrs) ->
-            let env = {env with
-              locales = BindingMap.add var contrainte_integer env.locales}
-            in List.fold_left(fun env f -> f env ty) env instrs
-        in
-        let env = {env with
-          locales = BindingMap.add var
-            (ref (PreTyped (Type.Array ty, loc)))
-            env.locales}
-        in env
-      | Instr.AllocArrayConst (var, ty, contrainte_len, e, opt) ->
-          let env, contrainte_len = contrainte_len env in
-          let c = contrainte_of_lief loc env e in
-          let ty = expand env ty loc in
-          let contrainte_integer = ref (Typed (Type.integer, loc) ) in
-          let env, ty = ty2typeContrainte env ty loc in
-          let env = {env with
-          locales = BindingMap.add var
-            (ref (PreTyped (Type.Array ty, loc)))
-            env.locales;
-                   contraintes = 
-                     (contrainte_integer, contrainte_len) :: (c, ty) :: env.contraintes
+         let contrainte_integer = ref (Typed (Type.integer, loc) ) in
+         let env = {env with locales = BindingMap.add var contrainte_integer
+                                 env.locales } in
+         let env = {env with
+                    contraintes =
+                      (contrainte_integer, contrainte_e1) ::
+                      (contrainte_integer, contrainte_e2) ::
+                      env.contraintes}
+         in List.fold_left(fun env f -> f env ty_ret) env li
+       | Instr.While (contrainte_e, li) ->
+         let env, contrainte_e = contrainte_e env in
+         let contrainte_bool = ref (Typed (Type.bool, loc)) in
+         let env = {env with
+                    contraintes = (contrainte_bool, contrainte_e) ::
+                                  env.contraintes}
+         in List.fold_left(fun env f -> f env ty_ret) env li
+       | Instr.Comment _ -> env
+       | Instr.Return contrainte_expr ->
+         let env, contrainte_expr = contrainte_expr env in
+         {env with
+          contraintes = (ty_ret, contrainte_expr) ::
+                        env.contraintes}
+       | Instr.AllocArray (var, ty, contrainte_e, instrsopt, _) ->
+         let env, contrainte_e = contrainte_e env in
+         let ty = expand env ty loc in
+         let env, ty = ty2typeContrainte env ty loc in
+         let contrainte_integer = ref (Typed (Type.integer, loc) ) in
+         let env = {env with
+                    contraintes =
+                      (contrainte_integer, contrainte_e) ::
+                      env.contraintes}
+         in
+         let env = match instrsopt with
+           | None -> env
+           | Some (var, instrs) ->
+             let env = {env with
+                        locales = BindingMap.add var contrainte_integer env.locales}
+             in List.fold_left(fun env f -> f env ty) env instrs
+         in
+         let env = {env with
+                    locales = BindingMap.add var
+                        (ref (PreTyped (Type.Array ty, loc)))
+                        env.locales}
+         in env
+       | Instr.AllocArrayConst (var, ty, contrainte_len, e, opt) ->
+         let env, contrainte_len = contrainte_len env in
+         let c = contrainte_of_lief loc env e in
+         let ty = expand env ty loc in
+         let contrainte_integer = ref (Typed (Type.integer, loc) ) in
+         let env, ty = ty2typeContrainte env ty loc in
+         let env = {env with
+                    locales = BindingMap.add var
+                        (ref (PreTyped (Type.Array ty, loc)))
+                        env.locales;
+                    contraintes = 
+                      (contrainte_integer, contrainte_len) :: (c, ty) :: env.contraintes
                    }
-          in env
-      | Instr.AllocRecord (var, ty, li, _) ->
-        let ty = expand env ty loc in
-        let li_type = match li with
-          | (name, _) :: _ ->
-            begin try match StringMap.find name env.fields with
-            | (_, Type.Fixed.F (_, Type.Struct li), _) -> li
-            | _ -> assert false
-              with Not_found ->
-                error_field_not_found loc name ty
-            end
-          | _ -> assert false
-        in
-        let () =
-          let fields1 = List.map fst li |> List.sort String.compare in
-          let fields2 = List.map fst li_type |> List.sort String.compare in
-          if fields1 <> fields2 then
-            error_record_types fields1 fields2 loc
-        in
-        let env = List.fold_left
-          (fun env (name, c2) ->
-            let env, c2 = c2 env in
-            let c1 = ref ( Typed( snd (List.find
-                                         ((String.equals name) @* fst) li_type
-            ), loc)) in
-            {env with contraintes = (c1, c2) :: env.contraintes }
-          ) env li
-        in
-        let env, ty = ty2typeContrainte env ty loc in
-        let env = {env with
-          locales = BindingMap.add var
-            ty env.locales}
-        in env
-      | Instr.If (contrainte_expr, instrs1, instrs2) ->
-        let contrainte_ty = ref (Typed (Type.bool, loc)) in
-        let env, contrainte_expr = contrainte_expr env in
-        let env = {env with
-          contraintes = (contrainte_ty, contrainte_expr) ::
-            env.contraintes} in
-        let env =List.fold_left(fun env f -> f env ty_ret) env instrs1 in
-        let env =List.fold_left(fun env f -> f env ty_ret) env instrs2 in
-        env
-      | Instr.Call (f, eli) ->
-        let (args, out_contraint) =
-          try
-            StringMap.find f env.functions
-          with Not_found ->
-            error_function_not_found loc f
-        in
-        let len1 = List.length args in
-        let len2 = List.length eli in
-        let () = if len1 != len2
-          then error_arrity f len1 len2 loc
-        in
-        let void_contraint = ref (Typed (Type.void, loc)) in
-        let env = List.fold_left
-          (fun (env:env) (arg_ty, contrainte_e) ->
-            let env, contrainte_e = contrainte_e env in
-            let env, contrainte_ty = ty2typeContrainte env arg_ty loc in
-            {env with
-              contraintes = (contrainte_e, contrainte_ty) ::
-                env.contraintes}
-          ) env (List.zip args eli) in
-        {env with
+         in env
+       | Instr.AllocRecord (var, ty, li, _) ->
+         let ty = expand env ty loc in
+         let li_type = match li with
+           | (name, _) :: _ ->
+             begin try match StringMap.find name env.fields with
+               | (_, Type.Fixed.F (_, Type.Struct li), _) -> li
+               | _ -> assert false
+               with Not_found ->
+                 error_field_not_found loc name ty
+             end
+           | _ -> assert false
+         in
+         let () =
+           let fields1 = List.map fst li |> List.sort String.compare in
+           let fields2 = List.map fst li_type |> List.sort String.compare in
+           if fields1 <> fields2 then
+             error_record_types fields1 fields2 loc
+         in
+         let env = List.fold_left
+             (fun env (name, c2) ->
+                let env, c2 = c2 env in
+                let c1 = ref ( Typed( snd (List.find
+                                             ((String.equals name) @* fst) li_type
+                                          ), loc)) in
+                {env with contraintes = (c1, c2) :: env.contraintes }
+             ) env li
+         in
+         let env, ty = ty2typeContrainte env ty loc in
+         let env = {env with
+                    locales = BindingMap.add var
+                        ty env.locales}
+         in env
+       | Instr.If (contrainte_expr, instrs1, instrs2) ->
+         let contrainte_ty = ref (Typed (Type.bool, loc)) in
+         let env, contrainte_expr = contrainte_expr env in
+         let env = {env with
+                    contraintes = (contrainte_ty, contrainte_expr) ::
+                                  env.contraintes} in
+         let env =List.fold_left(fun env f -> f env ty_ret) env instrs1 in
+         let env =List.fold_left(fun env f -> f env ty_ret) env instrs2 in
+         env
+       | Instr.Call (f, eli) ->
+         let (args, out_contraint) =
+           try
+             StringMap.find f env.functions
+           with Not_found ->
+             error_function_not_found loc f
+         in
+         let len1 = List.length args in
+         let len2 = List.length eli in
+         let () = if len1 != len2
+           then error_arrity f len1 len2 loc
+         in
+         let void_contraint = ref (Typed (Type.void, loc)) in
+         let env = List.fold_left
+             (fun (env:env) (arg_ty, contrainte_e) ->
+                let env, contrainte_e = contrainte_e env in
+                let env, contrainte_ty = ty2typeContrainte env arg_ty loc in
+                {env with
+                 contraintes = (contrainte_e, contrainte_ty) ::
+                               env.contraintes}
+             ) env (List.zip args eli) in
+         {env with
           contraintes = (void_contraint, out_contraint) ::
-            env.contraintes}
-      | Instr.Print li ->
-          List.fold_left (fun env -> function
-            | Instr.PrintExpr (ty, contrainte_expr) ->
-                let ty = expand env ty loc in
-                let env, contrainte_expr = contrainte_expr env in
-                let env, contrainte_ty = ty2typeContrainte env ty loc in
-                {env with
-                 contraintes = (contrainte_ty, contrainte_expr) ::
-                 env.contraintes}
-            | Instr.StringConst _ -> env) env li
-      | Instr.Untuple (li, contrainte_expr, _) ->
-          let env, contrainte_expr = contrainte_expr env in
-        let env, li_contraintes =
-          List.fold_left_map (fun env (ty, variable) ->
-            let ty = expand env ty loc in
-            let env, contrainte = ty2typeContrainte env ty loc in
-            env, (contrainte, variable)) env li in
-        let env = List.fold_left (fun env (contrainte, variable) ->
-          { env with locales = BindingMap.add variable contrainte env.locales })
-          env li_contraintes in
-        let tuple_contrainte = ref (PreTyped (Type.Tuple (List.map fst li_contraintes), loc)) in
-        {env with contraintes = (tuple_contrainte, contrainte_expr) :: env.contraintes}
-      | Instr.Read li ->
-          List.fold_left (fun env -> function
-            | Instr.Separation -> env
-            | Instr.DeclRead (ty, var, _) ->
-                let ty = expand env ty loc in
-                let env, ty = ty2typeContrainte env ty loc in
-                let env =
-                  { env with locales =
-                    BindingMap.add var ty env.locales }
-                in env
-            | Instr.ReadExpr (ty, mut) ->
-                let ty = expand env ty loc in
-                let env, contrainte_mut = collect_contraintes_mutable (fun e env -> e env) mut env in
-                let env, contrainte_expr = ty2typeContrainte env ty loc in
-                {env with
-                 contraintes = (contrainte_mut, contrainte_expr) ::
-                 env.contraintes}) env li
-      | Instr.Unquote li ->
-        raise (Error (fun f -> Format.fprintf f "There is still unquote near %a" ploc loc ))
+                        env.contraintes}
+       | Instr.Print li ->
+         List.fold_left (fun env -> function
+             | Instr.PrintExpr (ty, contrainte_expr) ->
+               let ty = expand env ty loc in
+               let env, contrainte_expr = contrainte_expr env in
+               let env, contrainte_ty = ty2typeContrainte env ty loc in
+               {env with
+                contraintes = (contrainte_ty, contrainte_expr) ::
+                              env.contraintes}
+             | Instr.StringConst _ -> env) env li
+       | Instr.Untuple (li, contrainte_expr, _) ->
+         let env, contrainte_expr = contrainte_expr env in
+         let env, li_contraintes =
+           List.fold_left_map (fun env (ty, variable) ->
+               let ty = expand env ty loc in
+               let env, contrainte = ty2typeContrainte env ty loc in
+               env, (contrainte, variable)) env li in
+         let env = List.fold_left (fun env (contrainte, variable) ->
+             { env with locales = BindingMap.add variable contrainte env.locales })
+             env li_contraintes in
+         let tuple_contrainte = ref (PreTyped (Type.Tuple (List.map fst li_contraintes), loc)) in
+         {env with contraintes = (tuple_contrainte, contrainte_expr) :: env.contraintes}
+       | Instr.Read li ->
+         List.fold_left (fun env -> function
+             | Instr.Separation -> env
+             | Instr.DeclRead (ty, var, _) ->
+               let ty = expand env ty loc in
+               let env, ty = ty2typeContrainte env ty loc in
+               let env =
+                 { env with locales =
+                              BindingMap.add var ty env.locales }
+               in env
+             | Instr.ReadExpr (ty, mut) ->
+               let ty = expand env ty loc in
+               let env, contrainte_mut = collect_contraintes_mutable (fun e env -> e env) mut env in
+               let env, contrainte_expr = ty2typeContrainte env ty loc in
+               {env with
+                contraintes = (contrainte_mut, contrainte_expr) ::
+                              env.contraintes}) env li
+       | Instr.Unquote li ->
+         raise (Error (fun f -> Format.fprintf f "There is still unquote near %a" ploc loc ))
     )
     collect_contraintes_expr instruction env
 
@@ -735,18 +735,18 @@ let collect_contraintes e
   let ty = expand e ty tyloc in
   let e, ty = ty2typeContrainte e ty tyloc in
   let function_type = (List.map ((fun x ->
-    let loc = Ast.PosMap.get (Type.Fixed.annot x) in
-    expand e x loc) @*snd) params), ty in
+      let loc = Ast.PosMap.get (Type.Fixed.annot x) in
+      expand e x loc) @*snd) params), ty in
   let e = { e with
-    functions = StringMap.add funname function_type e.functions;
-    locales = BindingMap.empty
-  } in
+            functions = StringMap.add funname function_type e.functions;
+            locales = BindingMap.empty
+          } in
   let e = List.fold_left (fun e (name, ty) ->
-    let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
-    let ty = expand e ty tyloc in
-    let e, ty = ty2typeContrainte e ty tyloc in
-    {e with locales = BindingMap.add name ty e.locales}
-  ) e params
+      let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
+      let ty = expand e ty tyloc in
+      let e, ty = ty2typeContrainte e ty tyloc in
+      {e with locales = BindingMap.add name ty e.locales}
+    ) e params
   in
   let e = List.fold_left (fun env i -> collect_contraintes_instruction env i ty) e instructions in
   e
@@ -791,19 +791,19 @@ let map_ty env prog =
     | Instr.AllocRecord (p1, ty, p2, opt) ->
       let ty = map_ty ty in Instr.fixa a (Instr.AllocRecord (p1, ty, p2, opt) )
     | Instr.Print li ->
-        let li = List.map (function
+      let li = List.map (function
           | Instr.PrintExpr (ty, p1) ->
-              let ty = map_ty ty in Instr.PrintExpr (ty, p1)
+            let ty = map_ty ty in Instr.PrintExpr (ty, p1)
           | Instr.StringConst str -> Instr.StringConst str) li
-        in Instr.fixa a (Instr.Print li)
+      in Instr.fixa a (Instr.Print li)
     | Instr.Read li ->
-        let li = List.map (function
+      let li = List.map (function
           | Instr.DeclRead (ty, p1, opt) ->
-              let ty = map_ty ty in Instr.DeclRead (ty, p1, opt)
+            let ty = map_ty ty in Instr.DeclRead (ty, p1, opt)
           | Instr.ReadExpr (ty, p1) ->
-              let ty = map_ty ty in Instr.ReadExpr (ty, p1)
+            let ty = map_ty ty in Instr.ReadExpr (ty, p1)
           | Instr.Separation -> Instr.Separation) li
-        in Instr.fixa a (Instr.Read li )
+      in Instr.fixa a (Instr.Read li )
     | Instr.Untuple (li, e, opt) ->
       let li = List.map (fun (t, name) -> map_ty t, name) li
       in Instr.fixa a (Instr.Untuple (li, e, opt) )
@@ -811,14 +811,14 @@ let map_ty env prog =
   in
   let map_instrs instrs =
     List.map (fun i ->
-      Instr.Writer.Deep.map f ( f i)
-    ) instrs
+        Instr.Writer.Deep.map f ( f i)
+      ) instrs
   in
   let toplvl = function
     | Prog.DeclarFun (var, ty, params, instrs, opt) ->
       let ty = map_ty ty in
       let params = List.map
-        (fun (a, b) -> a, map_ty b) params
+          (fun (a, b) -> a, map_ty b) params
       in
       let instrs = map_instrs instrs in
       Prog.DeclarFun (var, ty, params, instrs, opt)
@@ -841,10 +841,10 @@ let not_done
 
 let unify_once env =
   let modified = List.fold_left (fun acc (a, b) ->
-    unify env a b || acc) false env.contraintes in
+      unify env a b || acc) false env.contraintes in
   (modified ,
    {env with
-     contraintes = List.filter (not_done env) env.contraintes
+    contraintes = List.filter (not_done env) env.contraintes
    }
   )
 
@@ -872,28 +872,28 @@ let process_tfun env p = match p with
     { env with
       gamma = StringMap.add name ty env.gamma;
       fields = (match (Type.Fixed.unfix ty) with
-      | Type.Struct li ->
-        List.fold_left
-          (fun acc (fieldname, ty_field) ->
-            StringMap.add fieldname (ty_field, ty, name) acc
-          ) env.fields li
-      | _ -> env.fields);
+          | Type.Struct li ->
+            List.fold_left
+              (fun acc (fieldname, ty_field) ->
+                 StringMap.add fieldname (ty_field, ty, name) acc
+              ) env.fields li
+          | _ -> env.fields);
       enum = (match (Type.Fixed.unfix ty) with
-      | Type.Enum li ->
-        List.fold_left
-          (fun acc fname ->
-            StringMap.add fname (ty, name) acc
-          ) env.enum li
-      | _ -> env.enum
-      )
+          | Type.Enum li ->
+            List.fold_left
+              (fun acc fname ->
+                 StringMap.add fname (ty, name) acc
+              ) env.enum li
+          | _ -> env.enum
+        )
     }
   | Prog.Macro (name, ty, params, _) ->
     let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
     let ty = expand env ty tyloc in
     let env, ty = ty2typeContrainte env ty tyloc in
     let function_type = (List.map ((fun x ->
-      let tyloc = Ast.PosMap.get (Type.Fixed.annot x) in
-      expand env x tyloc) @* snd) params), ty in
+        let tyloc = Ast.PosMap.get (Type.Fixed.annot x) in
+        expand env x tyloc) @* snd) params), ty in
     { env with functions = StringMap.add name function_type env.functions}
   | Prog.Comment _ -> env
 
@@ -914,7 +914,7 @@ let type_for_enum en env =
     t
   with Not_found ->
     raise ( Error (fun f ->
-      Format.fprintf f "Cannot find type for enum field %s\n" en))
+        Format.fprintf f "Cannot find type for enum field %s\n" en))
 
 let typename_for_enum en env =
   try
@@ -922,7 +922,7 @@ let typename_for_enum en env =
     name
   with Not_found ->
     raise ( Error (fun f ->
-      Format.fprintf f "Cannot find typename for enum %s\n" en))
+        Format.fprintf f "Cannot find typename for enum %s\n" en))
 
 let typename_for_field en env =
   try
@@ -930,6 +930,6 @@ let typename_for_field en env =
     name
   with Not_found ->
     raise ( Error (fun f ->
-      Format.fprintf f "Cannot find typename for field %s\n" en))
+        Format.fprintf f "Cannot find typename for field %s\n" en))
 
 let byname name env = StringMap.find name env.gamma

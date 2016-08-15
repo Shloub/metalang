@@ -47,7 +47,7 @@ let name_of_field (i: int) (t : Type.t) (acc, _) =
     List.nth (TypeMap.find t acc) i
   with Not_found ->
     (raise (Error (fun f -> Format.fprintf f "cannot find field %i in type %s@\n" i
-      (Type.type_t_to_string t))))
+                      (Type.type_t_to_string t))))
 
 let locate loc instr =
   PosMap.add (Instr.Fixed.annot instr) loc; instr
@@ -61,9 +61,9 @@ let rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
     let vb = Mutable.var b in
     let t_tuple = Type.tuple (List.map fst li) in
     let access = List.mapi (fun i (t, name) ->
-      let fieldname = name_of_field i t_tuple acc in
-      Instr.Declare (name, t, Expr.access (Mutable.dot vb fieldname), opt) |> Instr.fix |> locate loc
-    ) li in
+        let fieldname = name_of_field i t_tuple acc in
+        Instr.Declare (name, t, Expr.access (Mutable.dot vb fieldname), opt) |> Instr.fix |> locate loc
+      ) li in
     (Instr.Declare (b, t, e, opt) |> Instr.fix |> locate loc)::access
   | j -> [i]
 

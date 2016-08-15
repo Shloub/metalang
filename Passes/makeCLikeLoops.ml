@@ -30,7 +30,7 @@
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)
- *)
+*)
 
 open Stdlib
 open Ast
@@ -41,13 +41,13 @@ let init_acc () = ()
 
 let process () li =
   (), List.map (fun i ->
-    Instr.Writer.Deep.map (fun i -> match Instr.unfix i with
-    | Instr.Loop (varname, startvalue, endvalue, li) ->
-        let var () = Mutable.var varname in
-        let accessvar () = Expr.access (var ()) in
-        let declaration = Instr.declare varname Type.integer startvalue Instr.useless_declaration_option in
-        let comparison = Expr.binop Expr.LowerEq (accessvar ()) endvalue in
-        let incr = Instr.affect (var ()) (Expr.add (accessvar ()) (Expr.integer 1)) in
-        let i' = Instr.ClikeLoop([declaration], comparison, [incr], li)
-        in Instr.fixa (Instr.Fixed.annot i) i'
-    | _ -> i ) i ) li
+      Instr.Writer.Deep.map (fun i -> match Instr.unfix i with
+          | Instr.Loop (varname, startvalue, endvalue, li) ->
+            let var () = Mutable.var varname in
+            let accessvar () = Expr.access (var ()) in
+            let declaration = Instr.declare varname Type.integer startvalue Instr.useless_declaration_option in
+            let comparison = Expr.binop Expr.LowerEq (accessvar ()) endvalue in
+            let incr = Instr.affect (var ()) (Expr.add (accessvar ()) (Expr.integer 1)) in
+            let i' = Instr.ClikeLoop([declaration], comparison, [incr], li)
+            in Instr.fixa (Instr.Fixed.annot i) i'
+          | _ -> i ) i ) li

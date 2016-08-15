@@ -51,41 +51,41 @@ let add s =
 
 let fresh_init prog =
   let addset acc i = Instr.Writer.Deep.fold
-    (fun acc i ->
-      match Instr.unfix i with
-      | Instr.Declare (UserName b, _, _, _)
-      | Instr.AllocRecord(UserName b, _, _, _)
-      | Instr.AllocArray (UserName b, _, _, None, _)
-      | Instr.Loop (UserName b, _, _, _)
-        -> StringSet.add b acc
-      | Instr.Read li ->
-          List.fold_left (fun acc -> function
-            | Instr.DeclRead (_, UserName b, _) -> StringSet.add b acc
-            | _ -> acc) acc li
-      | Instr.AllocArray (b1, _, _, Some (b2, _), _)
-        ->
-        let acc = match b1 with
-          | UserName b1 -> StringSet.add b1 acc
-          | _ -> acc in
-        let acc = match b2 with
-          | UserName b2 -> StringSet.add b2 acc
-          | _ -> acc
-        in acc
-      | Instr.Untuple (li, e, _) ->
-        List.fold_left (fun acc (_, name) ->
-          match name with UserName name -> StringSet.add name acc
-          | _ -> acc) acc li
-      | _ -> acc
-    ) acc i
+      (fun acc i ->
+         match Instr.unfix i with
+         | Instr.Declare (UserName b, _, _, _)
+         | Instr.AllocRecord(UserName b, _, _, _)
+         | Instr.AllocArray (UserName b, _, _, None, _)
+         | Instr.Loop (UserName b, _, _, _)
+           -> StringSet.add b acc
+         | Instr.Read li ->
+           List.fold_left (fun acc -> function
+               | Instr.DeclRead (_, UserName b, _) -> StringSet.add b acc
+               | _ -> acc) acc li
+         | Instr.AllocArray (b1, _, _, Some (b2, _), _)
+           ->
+           let acc = match b1 with
+             | UserName b1 -> StringSet.add b1 acc
+             | _ -> acc in
+           let acc = match b2 with
+             | UserName b2 -> StringSet.add b2 acc
+             | _ -> acc
+           in acc
+         | Instr.Untuple (li, e, _) ->
+           List.fold_left (fun acc (_, name) ->
+               match name with UserName name -> StringSet.add name acc
+                             | _ -> acc) acc li
+         | _ -> acc
+      ) acc i
   in
   let addtop (acc : StringSet.t) t : StringSet.t = match t with
     | Prog.DeclarFun (v, t, params, instrs, _) ->
       let acc = StringSet.add v acc in
       let acc:StringSet.t = List.fold_left
-        (fun acc (v, _ ) -> match v with
-        | UserName v -> StringSet.add v acc
-        | _ -> acc)
-        acc params in
+          (fun acc (v, _ ) -> match v with
+             | UserName v -> StringSet.add v acc
+             | _ -> acc)
+          acc params in
       let acc:StringSet.t = List.fold_left addset acc instrs in
       acc
     | _ -> acc

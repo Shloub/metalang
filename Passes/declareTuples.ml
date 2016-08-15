@@ -49,18 +49,18 @@ let freshname = function
   | Type.Struct li ->
     List.fold_left
       (fun acc (name, t) ->
-        acc ^ "_"^name^"_"^t
+         acc ^ "_"^name^"_"^t
       ) "struct" li
   | Type.Enum li ->
     List.fold_left
       (fun acc name ->
-        acc ^ "_"^name
+         acc ^ "_"^name
       ) "enum" li
   | Type.Named tyname -> tyname
   | Type.Tuple li ->
     List.fold_left
       (fun acc name ->
-        acc ^ "_"^name
+         acc ^ "_"^name
       ) "tuple" li
   | Type.Auto -> "auto"
 
@@ -70,21 +70,21 @@ let fold_ty tyenv torig t ((_, acc_names, _) as acc) =
   let default acc t = Type.Fixed.Surface.fold (fun acc f -> f acc) acc t in
   if TypeMap.mem torig acc_names then acc
   else match t with
-  | Type.Tuple l ->
+    | Type.Tuple l ->
       let (acc_fields, acc_names, li) = default acc t in
-    let prefix =  freshname torig in
-    let lnames = List.mapi (fun i _ -> prefix^"_field_" ^ (string_of_int i) ) l in
-    let acc_fields = TypeMap.add torig lnames acc_fields in
-    let lorig = match Type.unfix torig with
-    | Type.Tuple l -> l
-    | _ -> assert false
-    in
-    let ty = Type.struct_ (List.combine lnames lorig) in
-    let tynamed = Type.named prefix in
-    let acc_names = TypeMap.add torig tynamed acc_names in
-    let declaration = Prog.DeclareType ( prefix, ty ) in
-    acc_fields, acc_names, declaration :: li
-  | _ ->
+      let prefix =  freshname torig in
+      let lnames = List.mapi (fun i _ -> prefix^"_field_" ^ (string_of_int i) ) l in
+      let acc_fields = TypeMap.add torig lnames acc_fields in
+      let lorig = match Type.unfix torig with
+        | Type.Tuple l -> l
+        | _ -> assert false
+      in
+      let ty = Type.struct_ (List.combine lnames lorig) in
+      let tynamed = Type.named prefix in
+      let acc_names = TypeMap.add torig tynamed acc_names in
+      let declaration = Prog.DeclareType ( prefix, ty ) in
+      acc_fields, acc_names, declaration :: li
+    | _ ->
       let (acc_fields, acc_names, li) = default acc t in
       acc_fields, (TypeMap.add torig torig acc_names), li
 
