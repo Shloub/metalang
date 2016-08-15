@@ -60,6 +60,10 @@ let int_of_bool b = if b then 1 else 0
 let float_of_char = float_of_int @* int_of_char
 let float_of_bool = float_of_int @* int_of_bool
 
+(** {missing functions in pervasives} *)
+
+let xor a b = (a && not b) || (b && not a)
+                            
 (** {2 Standard modules } *)
 
 module Int = struct

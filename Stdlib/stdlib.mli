@@ -61,6 +61,10 @@ val float_of_char : char -> float
 val float_of_bool : bool -> float
 val int_of_bool : bool -> int
 
+(** {missing functions in pervasives} *)
+
+val xor : bool -> bool -> bool
+                            
 (** {2 Standard modules } *)
 
 module Int :
