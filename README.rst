@@ -18,8 +18,14 @@ Voici le programme helloworld.metalang ::
 	  print "Hello World"
   end
 
+Dépendances :
+----------------
+
+L'idéal est d'installer OPAM et une version récente d'ocaml (actuellement, je tourne sur 4.02.3), ajoutez y menhir pour le parser et vous devriez pouvoir compiler metalang.
+
 Quick start
 ----------------
+
 ouvrir une console, aller dans le dossier metalang, taper ::
 
   make metalang
@@ -35,8 +41,7 @@ Pour générer uniquement une langue ::
 
   ./metalang -lang lang1,lang2,...
 
-Les langues possibles sont : adb, c, cc, cl, cs, fs, fun.ml, go, hs, java, js, lua, m, ml, pas, php, pl, py, rb, rkt, scala, st, vb
-fun.ml correspond à une version fonctionelle, en ocaml, du code metalang.
+Les langues possibles sont : adb pour ADA, c, cc pour le C++, cl pour le common lisp, cpp pour un c++ version prologin (les accès mémoire sont buggés sur certains tests mais pour les tests prologin ça passe et c'est plus lisible), cs pour C#, fs pour forth, fsscript pour F#, fun.ml est une version écrite dans un style fonctionnel en ocaml, go, groovy, hs pour haskell, java, js pour javascript, lua, m pour objective-c, ml pour ocaml en style impératif, pas pour pascal, php, pl pour perl, py pour python 3, rb pour ruby, rkt pour racket, scala, st pour smalltalk, vb pour visual basic .Net]
 
 L'option -o vous permet de choisir le dossier de destination. Comme nous générons plusieurs fichiers, on ne peut pas choisir le nom des fichiers générés.
 
@@ -47,52 +52,6 @@ pour afficher l'aide ::
 pour afficher la version ::
 
   ./metalang -version
-
-
-
-Backends
-----------------
-Langages cibles :
-
-* Ada
-* C
-* C++
-* common lisp (se lance avec sbcl dans les tests)
-* C#
-* Forth (se lance avec gforth dans les tests)
-* Go (Version 1.1 minimum, sinon on a des soucis avec leur test qui vérifie si chaque fonction renvoie bien.)
-* Haskell
-* java
-* javascript
-* Lua
-* Objective-C
-* Ocaml
-* Pascal
-* php
-* perl
-* python
-* ruby
-* scheme (racket)
-* scala
-* smalltalk
-* visual basic (.net)
-
-Pour installer go 1.1 ::
-
-  hg clone -u release https://code.google.com/p/go
-  hg update default
-  cd go/src
-  ./all.bash
-
-Pour installer nodejs ::
-
-  wget http://nodejs.org/dist/v0.10.10/node-v0.10.10.tar.gz
-  tar -xvf node-v0.10.10.tar.gz
-  cd node-v0.10.10
-  ./configure --prefix $PREFIX
-  make install
-
-Les autres compilateurs devraient être packagé sur votre distribution de linux.
 
 Modes
 ----------------
@@ -111,7 +70,12 @@ Exemples
 Vous trouverez de nombreux exemples de programmes dans le dossier
 tests/progs le plus notable est probablement le tictactoe avec une IA.
 En tapant make testCompare, on peut lancer ces tests, et comparer les résultats dans les différents langages
+Si vous souhaitez vérifier que votre programme metalang génère bien le même programme dans tous les langages, vous pouvez placer votre programme dans le dossier tests/prog accompagné d'un fichier {programme}.in pour l'entrée standard et taper ::
 
+  make out/{programme}.test
+
+l'effet est de recompiler metalang si besoin, de générer les différents langages cibles et de comparer les sorties
+  
 HOWTO Metalang
 ----------------
 
@@ -126,7 +90,7 @@ Dans un premier temps, la structure d'un code metlang pour prologin est la suiva
   end
 
 * dans ...1 on écrit le type de retour de la fonction. Souvent void ou int.
-* dans ...2 on écrit les paramètres
+* dans ...2 on écrit les paramètres comme en C : type1 nom_de_l_argument1, type2 nom_de_l_argument2, ...
 * dans ...3 on écrit le code de parsing, et de quoi appeller la fonction, et afficher son résultat.
 
 En métalang, on a trois primitives de parsing : une qui lit un entier, une qui lit un char, et une qui saute les espaces
@@ -160,11 +124,10 @@ Types simples manipulables
 Les types simples que metalang gère sont les entiers (notés int), les booleans (notés bool) les chars et les chaines de caractères (notés string).
 Il n'existe pratiquement aucune fonction pour manipuler les chaines de caractères. Elles n'existent que pour l'instruction print.
 Le type int représente des entiers, leur taille n'est pas définie. En C ils font 32 bits, en ocaml 31 bits, en python ce sont des bigints.
-Le type char représente un caractère.
+Le type char représente un caractère, parfois en unicode, parfois signé, parfois non.
 
 Il n'existe pas de type float en metalang.
 Les conversions automatiques entre deux types ne sont pas possibles en metalang. Pour convertir un char en int, il faut utiliser la fonction int_of_char.
-Attention toutefois : dans certains langages les chars sont signés, alors que dans d'autres ils sont non signés.
 
 Null n'existe pas en metalang.
 
@@ -195,8 +158,6 @@ ou encore ::
 
   def read x
 
-Il faut noter que dans certains langages, une valeur par défault leur sera attribuée (en C par exemple)
-
 Declaration de tableaux
 ----------------
 
@@ -204,7 +165,14 @@ Pour définir un tableau, rien de plus simple ::
 
   def array<type> tab[taille] with variable do /* instructions */ return valeur end
 
-Cette syntaxe correspond plus ou moins aux Array.init d'ocaml. Dans les autres langage, ce code est compilé vers une boucle for pour l'initialisation
+  Cette syntaxe correspond plus ou moins aux Array.init d'ocaml. Dans les autres langage, ce code est compilé vers une boucle for pour l'initialisation ::
+
+    type *tab = calloc(taille, sizeof(type));
+    for (variable = 0; variable < taille; variable++)
+    {
+      /* instructions */ 
+      tab[variable] = valeur;
+    }
 
 
 Declaration de struct
@@ -227,7 +195,7 @@ Pour définir une variable de type @nom_de_la_struct ::
 
 Pour récupérer ou affecter la valeur du champ 1, on utilise variable.field1
 
-Pour éviter tout code moche généré, deux structures doivent avoir des noms de champs distincts.
+Deux structures doivent avoir des noms de champs distincts.
 
 Declaration d'enums
 ----------------
@@ -239,6 +207,7 @@ Pour définir un enum ::
   end
 
 Ensuite, le type a pour nom @foo_t et on utilise Foo, Bar Blah comme des valeurs
+La majuscule est obligatoire.
 
 Fonctions
 ----------------
@@ -270,7 +239,7 @@ Les boucles for ont pour syntaxe ::
   end
 
 L'incrémentation ne peut pas être définie. Elle est toujours égale à 1.
-Attention : la boucle for déclare une nouvelle variable.
+Attention : la boucle for déclare une nouvelle variable read-only.
 
 Les boucles while ont pour syntaxe ::
 
@@ -278,7 +247,7 @@ Les boucles while ont pour syntaxe ::
     ...
   end
 
-Les instructions break et continue n'existent pas en metalang. Cependant, vous pouvez utiliser return à l'interieur de ces boucles.
+Les instructions break et continue n'existent pas en metalang. Cependant, vous pouvez utiliser return à l'interieur de ces boucles pour les fonctions qui ne renvoient pas void.
 
 If Then Else
 ----------------
@@ -302,6 +271,7 @@ L'instruction print vous permet d'écrire sur la sortie standard::
   def x = 42
   print x print "\n"
 
+Print permet d'afficher des chaines, des entiers et des chars.
 
 Librairie Standard
 ----------------
@@ -313,22 +283,10 @@ La librairie standard contient un enum ::
     LANG_Cc
     LANG_Cl
     LANG_Cs
-    LANG_Fun_ml
-    LANG_Go
-    LANG_Hs
-    LANG_Java
-    LANG_Js
-    LANG_M
-    LANG_Ml
-    LANG_Pas
-    LANG_Php
-    LANG_Pl
-    LANG_Py
-    LANG_Rb
-    LANG_Rkt
-    LANG_Metalang_parsed
+    ...
   end
 
+Cet enum permet d'écrire des macros, il y a une valeur par extension que metalang génère.
 
 Elle comprend aussi les fonctions suivantes :
 
@@ -364,8 +322,6 @@ Le type s'écrit (a, b) (exemple : (int, int) )
 Les valeurs de types tuples s'écrivent aussi (a, b) (exemple : (1, 2) )
 
 Un exemple se trouve ici : tests/prog/tuple.metalang
-
-Leur utilisation n'a pas été très testée. Il est possible que cette fonctionalité ne soit pas très stable.
 
 inline
 ----------------
@@ -411,8 +367,6 @@ Lorsque l'on écrit une macro, il faut faire attention au parenthésage et aux c
 Lexems
 ----------------
 
-Cette notion est une notion de préprocessing avancée.
-
 Il existe un autre type en metalang : lexems. Ce type représente une liste de "mots" metalang.
 Pour en créer une, il suffit de faire taper du code entre des accolades ::
 
@@ -451,5 +405,45 @@ Quels langages ne seront probablement jamais gérés dans Metalang ?
 
 * TCL : le passage des tableaux par référence n'est pas une feature propre du langage, et le retour d'un tableau par référence ne fonctionne pas.
 * Bash pour les memes raisons.
+* Erlang pour des raisons de modèle mémoire  
+* Tout les langages qui ne se testent pas facilement sous linux.
 
-Tout les langages qui ne se testent pas facilement sous linux.
+Et pour développer ?
+----------------
+
+Le Makefile propose plusieurs règles :
+* clean permet de nettoyer un peu le dossier
+* metalang permet de compiler le compilateur
+* testCompare permet de lancer les gros tests : plusieurs programmes seront compilés dans tous les langages gérés par metalang et on comparera les sorties de ces programmes pour vérifier que tout a bien fonctionné
+* testNotCompile lance des tests qui ne doivent pas compiler
+* doc permet de générer la documentation du code
+* unit permet de lancer quelque tests unitaires sur la librairie standard
+
+  Si vous développez une fonctionalité précise liée à un langage, vous pouvez utiliser une des règle suivante :
+* test_fsscript.exe
+* test_groovy
+* test_fs
+* test_exeVB
+* test_st
+* test_adb.bin
+* etc...
+pour ne lancer les tests qu'entre ocaml et un autre langage.
+
+Si un test plante à cause d'une passe précise et que vous souhaitez lancer un test dans tous les langages, vous pouvez faire par exemple ::
+  
+  make out/aaa_00hello.test
+
+Du point de vue des dossiers :
+* Ast contient essentiellement les principaux Ast de metalang ainsi qu'un outil obsolète de parcours d'Ast.
+* Eval contient l'évaluateur metalang
+* Astfun contient la définition d'un Ast fonctionnel utilisé par exemple pour haskell, racket et un des backend ocaml
+* Main contient le parser d'option et le programme principale du compilateur
+* Parser contient le lexer et le parser
+* Passes contient la plupart des passes de compilation (typer, renomage, transformations diverses)
+* Passesfun contient aussi des passes de compilation mais elles fonctionnent sur l'ast fonctionnel
+* Printers contient tous les backends
+* Stdlib contient une librairie standard et des tests unitaires
+* tools contient essentiellement les modes vim et emacs
+* tests/demo contient du code metalang de présentation
+* tests/not_compile contient des tests qui ne doivent pas compiler
+* tests/prog contient des tests compilables avec chaque backend : par test on a un programme et une entrée standard. Les sorties des programmes générés sont comparés par la suite pour vérifier que le compilateur fonctionne correctement.
