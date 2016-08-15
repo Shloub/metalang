@@ -330,8 +330,17 @@ let print_instr printed_exn refbindings macros i =
                  
 (** the main class : the ocaml printer *)
 class fsharpPrinter = object(self)
-  inherit Printer.printer as super
 
+  method setTyperEnv (t:Typer.env) = ()
+  val mutable macros = StringMap.empty
+  (** used variables *)
+  val mutable used_variables = BindingSet.empty
+  method calc_used_variables (instrs : Utils.instr list ) =
+    used_variables <- calc_used_variables false instrs
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  method is_rec funname = StringSet.mem funname recursives_definitions
+                                        
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
   (** sad return in the current function *)
@@ -339,27 +348,7 @@ class fsharpPrinter = object(self)
   val mutable printed_exn = TypeMap.empty
   (** true if we are processing an expression *)
   val mutable current_etype = Ast.Type.void
-  val mutable in_expr = false
   val mutable exn_count = 0
-
-  method expr f e = print_expr refbindings (StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros) e f nop
-
-  method lang () = "fsharp"
-
-  method untuple f li e =
-    Format.fprintf f "@[<h>let (%a) = %a@]"
-      (print_list self#binding sep_c) (List.map snd li)
-      self#expr e
-
-  method record f li =
-    Format.fprintf f "{@\n  @[<v>%a@]@\n}"
-      (self#def_fields (InternalName 0)) li
-
-  (** read spaces from stdin *)
-  method stdin_sep f = Format.fprintf f "@[stdin_sep()%a@]" self#separator ()
 
   (** show the main *)
   method main f main =
@@ -454,14 +443,12 @@ let readInt () =
       | _ -> Format.fprintf f ": %a " ptype ty
     in
     match li with
-    | [] -> Format.fprintf f "let@ %a%a@ () %a="
-      self#rec_ rec_
-      self#funname funname
+    | [] -> Format.fprintf f "let@ %a%s@ () %a="
+      self#rec_ rec_ funname
           otype t
     | _ ->
-      Format.fprintf f "let@ %a%a@ %a %a="
-        self#rec_ rec_
-        self#funname funname
+      Format.fprintf f "let@ %a%s@ %a %a="
+        self#rec_ rec_ funname
         (print_list (fun f (name, ty) ->
           match Type.unfix ty with
           | Type.Integer -> self#binding f name
@@ -477,21 +464,13 @@ let readInt () =
                      with Not_found -> List.assoc "" li) macros in
     let instrs = List.map (print_instr printed_exn refbindings macros) instrs in
     instructions false current_etype f instrs
-                 
-  (** returns true if the function need to returns unit *)
-  method need_unit instrs =
-    match List.filter (fun i -> not i.is_comment) (List.rev instrs) with
-    | i::_ -> i.need_unit
-    | _ -> true
 
   (** show a binding *)
   method binding f i =
     if BindingSet.mem i used_variables then
-      Format.fprintf f "%a" super#binding i
+      Format.fprintf f "%a" print_varname i
     else
-      Format.fprintf f "_%a" super#binding i
-
-  method hasSelfAffect op = false
+      Format.fprintf f "_%a" print_varname i
 
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
@@ -521,22 +500,12 @@ let readInt () =
     | _ -> tra acc i
     in refbindings <- List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs
 
-  method m_variable f binding = if in_expr && BindingSet.mem binding refbindings
-  then Format.fprintf f "(!%a)" self#binding binding
-  else self#binding f binding
-
-  method m_array f m indexes = Format.fprintf f "@[<h>%a.[%a]@]"
-      self#mutable_get m
-      (print_list self#expr (sep "%a].[%a")) indexes
-
   method print_exns f exns =
     TypeMap.iter (fun ty str ->
       Format.fprintf f "exception %s of %a@\n"
         str
         ptype ty
     ) exns
-
-  method used_affect () = true
 
   method print_fun f funname (t : unit Type.Fixed.t) li instrs =
     current_etype <- t;
@@ -594,79 +563,8 @@ let readInt () =
     else
       self#ref_alias f tl
 
-  method combine_formats () = true
-
-  method print f t expr =
-    match Expr.unfix expr with
-    | Expr.Lief (Expr.String s) -> Format.fprintf f "@[Printf.printf %s@]" ( self#noformat s)
-    | _ ->
-      Format.fprintf f "@[Printf.printf \"%a\" %a@]"
-        self#format_type t
-        (if self#nop (Expr.unfix expr) then
-            self#expr
-         else self#printp) expr
-
   method comment f str =
     Format.fprintf f "(*%s*)" str
-
-  method affectarray f binding indexes e2 =
-    Format.fprintf f "@[<h>%a.(%a)@ <-@ %a@]"
-      self#binding binding
-      (print_list self#expr (sep "%a).(%a")) indexes
-      self#expr e2
-
-
-  method nop = function
-  | Expr.Lief _ -> true
-  | Expr.Access _ -> true
-  | Expr.Call (_, _) -> false
-  | Expr.Record _ -> true
-  | _ -> false
-
-  (* Todo virer les parentheses quand on peut*)
-  method apply f var li =
-    match StringMap.find_opt var macros with
-    | Some _ -> super#apply f var li
-    | None ->
-      match li with
-      | [] ->
-        Format.fprintf f "@[<h>(%a ())@]"
-          self#funname var
-      | _ ->
-        Format.fprintf
-          f
-          "@[<h>%a %a@]"
-          self#funname var
-          (print_list
-             (fun t e ->
-               if self#nop (Expr.unfix e) then self#expr f e
-               else Format.fprintf f "(%a)" self#expr e
-             )
-             sep_space
-          ) li
-
-  method def_fields name f li =
-    print_list
-      (fun f (fieldname, expr) ->
-        Format.fprintf f "@[<h>%a=%a;@]"
-          self#field fieldname
-          self#expr expr
-      )
-      sep_nl f li
-
-  method allocrecord f name t el =
-    let b = BindingSet.mem name refbindings in
-    Format.fprintf f "let %a = %a{@\n@[<v 2>  %a@]@\n}%a"
-      self#binding name
-      (fun t () ->
-        if b then
-          Format.fprintf t "ref(@ "
-      ) ()
-      (self#def_fields name) el
-      (fun t () ->
-        if b then
-          Format.fprintf t ")"
-      ) ()
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -684,26 +582,25 @@ let readInt () =
       Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
         name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
     | _ ->
-      Format.fprintf f "type %a = %a;;"
-        super#typename name
-        ptype t
+      Format.fprintf f "type %s = %a;;" name ptype t
 
-  method printf f () = Format.fprintf f "Printf.printf"
-  method multi_print f li =
-    let limit = 50 in
-    if List.length li > limit then
-      let lili = List.pack limit li in
-      print_list self#multi_print sep_nl f lili
-    else
-      let format, exprs = self#extract_multi_print li in
-      if exprs = [] then
-        Format.fprintf f "@[<h>%a \"%s\"@]" self#printf () format
-      else
-        Format.fprintf f "@[<h>%a \"%s\" %a@]" self#printf ()  format
-          (print_list
-             (fun f (t, expr) ->
-               (if self#nop (Expr.unfix expr) then
-                 self#expr
-               else self#printp) f expr) sep_space ) exprs
+  method proglist f funs =
+    Format.fprintf f "%a" (print_list self#prog_item nosep) funs
+  method prog_item (f:Format.formatter) t =
+    match t with
+    | Prog.Comment s -> self#comment f s;
+      Format.fprintf f "@\n"
+    | Prog.DeclarFun (var, t, li, instrs, _opt) ->
+      self#print_fun f var t li instrs;
+      Format.fprintf f "@\n"
+    | Prog.Macro (name, t, params, code) ->
+      macros <- StringMap.add
+        name (t, params, code)
+        macros;
+      ()
+    | Prog.Unquote _ -> assert false
+    | Prog.DeclareType (name, t) ->
+      self#decl_type f name t;
+      Format.fprintf f "@\n"
 
 end
