@@ -60,7 +60,7 @@ let () =
   let t = Array.init 4 (fun i ->
     mktoto i)
   t.[0].bar <- readInt()
-  stdin_sep();
+  stdin_sep()
   t.[1].blah <- readInt()
   let titi = result t 4
   Printf.printf "%d%d" titi t.[2].blah

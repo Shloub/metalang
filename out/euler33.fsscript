@@ -1,18 +1,14 @@
 let max2_ a b =
   if a > b then
     a
-    
   else
     b
-    
 
 let min2_ a b =
   if a < b then
     a
-    
   else
     b
-    
 
 let rec pgcd a b =
   let c = min2_ a b
@@ -20,10 +16,8 @@ let rec pgcd a b =
   let reste = d % c
   if reste = 0 then
     c
-    
   else
     pgcd c reste
-    
 
 let () =
   let top = ref( 1 )
@@ -32,12 +26,12 @@ let () =
     for j = 1 to 9 do
       for k = 1 to 9 do
         if i <> j && j <> k then
-            let a = i * 10 + j
-            let b = j * 10 + k
-            if a * k = i * b then
-                Printf.printf "%d/%d\n" a b
-                top := (!top) * a
-                bottom := (!bottom) * b
+          let a = i * 10 + j
+          let b = j * 10 + k
+          if a * k = i * b then
+            Printf.printf "%d/%d\n" a b
+            top := (!top) * a
+            bottom := (!bottom) * b
   Printf.printf "%d/%d\n" (!top) (!bottom)
   let p = pgcd (!top) (!bottom)
   Printf.printf "pgcd=%d\n%d\n" p ((!bottom) / p)

@@ -31,18 +31,14 @@ let stdin_sep () =
 let max2_ a b =
   if a > b then
     a
-    
   else
     b
-    
 
 let min2_ a b =
   if a < b then
     a
-    
   else
     b
-    
 
 type bigint = {
   mutable bigint_sign : bool;
@@ -51,9 +47,9 @@ type bigint = {
 };;
 
 let read_bigint len : bigint =
-  let chiffres = Array.init len (fun _j ->
+  let chiffres = Array.init len (fun j ->
     let c = readChar()
-    int (c))
+    (int (c)))
   for i = 0 to (len - 1) / 2 do
     let tmp = chiffres.[i]
     chiffres.[i] <- chiffres.[len - 1 - i]
@@ -65,7 +61,6 @@ let read_bigint len : bigint =
 let print_bigint (a:bigint) =
   if (not a.bigint_sign) then
     Printf.printf "%c" '-'
-    
   for i = 0 to a.bigint_len - 1 do
     Printf.printf "%d" a.bigint_chiffres.[a.bigint_len - 1 - i]
 
@@ -76,48 +71,41 @@ let bigint_eq (a:bigint) (b:bigint) : bool =
   (* Renvoie vrai si a = b *)
   if a.bigint_sign <> b.bigint_sign then
     false
-    
-  else if a.bigint_len <> b.bigint_len then
-    false
-    
   else
+    if a.bigint_len <> b.bigint_len then
+      false
+    else
       for i = 0 to a.bigint_len - 1 do
         if a.bigint_chiffres.[i] <> b.bigint_chiffres.[i] then
           raise (Found_1(false))
-          
       true
   with Found_1 (out) -> out
 
-exception Found_2 of bool
 
 let bigint_gt (a:bigint) (b:bigint) : bool =
   try
   (* Renvoie vrai si a > b *)
   if a.bigint_sign && (not b.bigint_sign) then
     true
-    
-  else if (not a.bigint_sign) && b.bigint_sign then
-    false
-    
   else
+    if (not a.bigint_sign) && b.bigint_sign then
+      false
+    else
       if a.bigint_len > b.bigint_len then
-        raise (Found_2(a.bigint_sign))
-        
-      else if a.bigint_len < b.bigint_len then
-        raise (Found_2((not a.bigint_sign)))
-        
+        raise (Found_1(a.bigint_sign))
       else
-        for i = 0 to a.bigint_len - 1 do
-          let j = a.bigint_len - 1 - i
-          if a.bigint_chiffres.[j] > b.bigint_chiffres.[j] then
-            raise (Found_2(a.bigint_sign))
-            
-          else if a.bigint_chiffres.[j] < b.bigint_chiffres.[j] then
-            raise (Found_2((not a.bigint_sign)))
-            
-        
+        if a.bigint_len < b.bigint_len then
+          raise (Found_1((not a.bigint_sign)))
+        else
+          for i = 0 to a.bigint_len - 1 do
+            let j = a.bigint_len - 1 - i
+            if a.bigint_chiffres.[j] > b.bigint_chiffres.[j] then
+              raise (Found_1(a.bigint_sign))
+            else
+              if a.bigint_chiffres.[j] < b.bigint_chiffres.[j] then
+                raise (Found_1((not a.bigint_sign)))
       true
-  with Found_2 (out) -> out
+  with Found_1 (out) -> out
 
 let bigint_lt (a:bigint) (b:bigint) : bool =
   (not (bigint_gt a b))
@@ -130,15 +118,12 @@ let add_bigint_positif (a:bigint) (b:bigint) : bigint =
     let tmp = ref( (!retenue) )
     if i < a.bigint_len then
       tmp := (!tmp) + a.bigint_chiffres.[i]
-      
     if i < b.bigint_len then
       tmp := (!tmp) + b.bigint_chiffres.[i]
-      
     retenue := (!tmp) / 10
     (!tmp) % 10)
   while (!len) > 0 && chiffres.[(!len) - 1] = 0 do
     len := (!len) - 1
-  
   {bigint_sign=true;
   bigint_len=(!len);
   bigint_chiffres=chiffres}
@@ -153,17 +138,14 @@ Pré-requis : a > b
     let tmp = ref( (!retenue) + a.bigint_chiffres.[i] )
     if i < b.bigint_len then
       tmp := (!tmp) - b.bigint_chiffres.[i]
-      
     if (!tmp) < 0 then
-        tmp := (!tmp) + 10
-        retenue := (- 1)
+      tmp := (!tmp) + 10
+      retenue := (- 1)
     else
       retenue := 0
-      
     (!tmp))
   while (!len) > 0 && chiffres.[(!len) - 1] = 0 do
     len := (!len) - 1
-  
   {bigint_sign=true;
   bigint_len=(!len);
   bigint_chiffres=chiffres}
@@ -175,28 +157,23 @@ let neg_bigint (a:bigint) : bigint =
 
 let add_bigint (a:bigint) (b:bigint) : bigint =
   if a.bigint_sign = b.bigint_sign then
-      if a.bigint_sign then
-        add_bigint_positif a b
-        
-      else
-        neg_bigint (add_bigint_positif a b)
-        
-  else if a.bigint_sign then
+    if a.bigint_sign then
+      add_bigint_positif a b
+    else
+      neg_bigint (add_bigint_positif a b)
+  else
+    if a.bigint_sign then
       (* a positif, b negatif *)
       if bigint_gt a (neg_bigint b) then
         sub_bigint_positif a b
-        
       else
         neg_bigint (sub_bigint_positif b a)
-        
-  else
+    else
       (* a negatif, b positif *)
       if bigint_gt (neg_bigint a) b then
         neg_bigint (sub_bigint_positif a b)
-        
       else
         sub_bigint_positif b a
-        
 
 let sub_bigint (a:bigint) (b:bigint) : bigint =
   add_bigint a (neg_bigint b)
@@ -206,7 +183,8 @@ let mul_bigint_cp (a:bigint) (b:bigint) : bigint =
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. *)
   let len = ref( a.bigint_len + b.bigint_len + 1 )
-  let chiffres = Array.create (!len) 0
+  let chiffres = Array.init (!len) (fun k ->
+    0)
   for i = 0 to a.bigint_len - 1 do
     let retenue = ref( 0 )
     for j = 0 to b.bigint_len - 1 do
@@ -216,10 +194,9 @@ D'ou le nom de la fonction. *)
     chiffres.[i + b.bigint_len] <- chiffres.[i + b.bigint_len] + (!retenue)
   chiffres.[a.bigint_len + b.bigint_len] <- chiffres.[a.bigint_len + b.bigint_len - 1] / 10
   chiffres.[a.bigint_len + b.bigint_len - 1] <- chiffres.[a.bigint_len + b.bigint_len - 1] % 10
-  for _l = 0 to 2 do
+  for l = 0 to 2 do
     if (!len) <> 0 && chiffres.[(!len) - 1] = 0 then
       len := (!len) - 1
-      
   {bigint_sign=a.bigint_sign = b.bigint_sign;
   bigint_len=(!len);
   bigint_chiffres=chiffres}
@@ -228,7 +205,6 @@ let bigint_premiers_chiffres (a:bigint) i : bigint =
   let len = ref( min2_ i a.bigint_len )
   while (!len) <> 0 && a.bigint_chiffres.[(!len) - 1] = 0 do
     len := (!len) - 1
-  
   {bigint_sign=a.bigint_sign;
   bigint_len=(!len);
   bigint_chiffres=a.bigint_chiffres}
@@ -237,10 +213,8 @@ let bigint_shift (a:bigint) i : bigint =
   let chiffres = Array.init (a.bigint_len + i) (fun k ->
     if k >= i then
       a.bigint_chiffres.[k - i]
-      
     else
-      0
-      )
+      0)
   {bigint_sign=a.bigint_sign;
   bigint_len=a.bigint_len + i;
   bigint_chiffres=chiffres}
@@ -248,28 +222,27 @@ let bigint_shift (a:bigint) i : bigint =
 let rec mul_bigint (aa:bigint) (bb:bigint) : bigint =
   if aa.bigint_len = 0 then
     aa
-    
-  else if bb.bigint_len = 0 then
-    bb
-    
-  else if aa.bigint_len < 3 || bb.bigint_len < 3 then
-    mul_bigint_cp aa bb
-    
   else
-      (* Algorithme de Karatsuba *)
-      let split = min2_ aa.bigint_len bb.bigint_len / 2
-      let a = bigint_shift aa (- split)
-      let b = bigint_premiers_chiffres aa split
-      let c = bigint_shift bb (- split)
-      let d = bigint_premiers_chiffres bb split
-      let amoinsb = sub_bigint a b
-      let cmoinsd = sub_bigint c d
-      let ac = mul_bigint a c
-      let bd = mul_bigint b d
-      let amoinsbcmoinsd = mul_bigint amoinsb cmoinsd
-      let acdec = bigint_shift ac (2 * split)
-      add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split)
-      (* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd *)
+    if bb.bigint_len = 0 then
+      bb
+    else
+      if aa.bigint_len < 3 || bb.bigint_len < 3 then
+        mul_bigint_cp aa bb
+      else
+        (* Algorithme de Karatsuba *)
+        let split = min2_ aa.bigint_len bb.bigint_len / 2
+        let a = bigint_shift aa (- split)
+        let b = bigint_premiers_chiffres aa split
+        let c = bigint_shift bb (- split)
+        let d = bigint_premiers_chiffres bb split
+        let amoinsb = sub_bigint a b
+        let cmoinsd = sub_bigint c d
+        let ac = mul_bigint a c
+        let bd = mul_bigint b d
+        let amoinsbcmoinsd = mul_bigint amoinsb cmoinsd
+        let acdec = bigint_shift ac (2 * split)
+        add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split)
+        (* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd *)
 
 (*
 Division,
@@ -281,7 +254,6 @@ let log10 a =
   while (!a) >= 10 do
     a := (!a) / 10
     out0 := (!out0) + 1
-  
   (!out0)
 
 let bigint_of_int i : bigint =
@@ -289,8 +261,8 @@ let bigint_of_int i : bigint =
   let size = ref( log10 (!i) )
   if (!i) = 0 then
     size := 0
-    
-  let t = Array.create (!size) 0
+  let t = Array.init (!size) (fun j ->
+    0)
   for k = 0 to (!size) - 1 do
     t.[k] <- (!i) % 10
     i := (!i) / 10
@@ -305,7 +277,6 @@ let fact_bigint (a:bigint) : bigint =
   while (not (bigint_eq (!a) one)) do
     out0 := mul_bigint (!a) (!out0)
     a := sub_bigint (!a) one
-  
   (!out0)
 
 let sum_chiffres_bigint (a:bigint) =
@@ -324,25 +295,21 @@ let euler20 () =
 let rec bigint_exp (a:bigint) b : bigint =
   if b = 1 then
     a
-    
-  else if b % 2 = 0 then
-    bigint_exp (mul_bigint a a) (b / 2)
-    
   else
-    mul_bigint a (bigint_exp a (b - 1))
-    
+    if b % 2 = 0 then
+      bigint_exp (mul_bigint a a) (b / 2)
+    else
+      mul_bigint a (bigint_exp a (b - 1))
 
 let rec bigint_exp_10chiffres (a:bigint) b : bigint =
   let a = bigint_premiers_chiffres a 10
   if b = 1 then
     a
-    
-  else if b % 2 = 0 then
-    bigint_exp_10chiffres (mul_bigint a a) (b / 2)
-    
   else
-    mul_bigint a (bigint_exp_10chiffres a (b - 1))
-    
+    if b % 2 = 0 then
+      bigint_exp_10chiffres (mul_bigint a a) (b / 2)
+    else
+      mul_bigint a (bigint_exp_10chiffres a (b - 1))
 
 let euler48 () =
   let sum = ref( bigint_of_int 0 )
@@ -372,7 +339,6 @@ let euler25 () =
     a := (!b)
     b := c
     i := (!i) + 1
-  
   (!i)
 
 let euler29 () =
@@ -382,7 +348,8 @@ let euler29 () =
     bigint_of_int (j * j))
   let a0_bigint = Array.init (maxA + 1) (fun j2 ->
     bigint_of_int j2)
-  let b = Array.create (maxA + 1) 2
+  let b = Array.init (maxA + 1) (fun k ->
+    2)
   let n = ref( 0 )
   let found = ref( true )
   while (!found) do
@@ -390,33 +357,31 @@ let euler29 () =
     found := false
     for i = 2 to maxA do
       if b.[i] <= maxB then
-          if (!found) then
-              if bigint_lt a_bigint.[i] (!min0) then
-                min0 := a_bigint.[i]
-                
-          else
-              min0 := a_bigint.[i]
-              found := true
+        if (!found) then
+          if bigint_lt a_bigint.[i] (!min0) then
+            min0 := a_bigint.[i]
+        else
+          min0 := a_bigint.[i]
+          found := true
     if (!found) then
-        n := (!n) + 1
-        for l = 2 to maxA do
-          if bigint_eq a_bigint.[l] (!min0) && b.[l] <= maxB then
-              b.[l] <- b.[l] + 1
-              a_bigint.[l] <- mul_bigint a_bigint.[l] a0_bigint.[l]
-  
+      n := (!n) + 1
+      for l = 2 to maxA do
+        if bigint_eq a_bigint.[l] (!min0) && b.[l] <= maxB then
+          b.[l] <- b.[l] + 1
+          a_bigint.[l] <- mul_bigint a_bigint.[l] a0_bigint.[l]
   (!n)
 
 let () =
   Printf.printf "%d\n" (euler29 ())
   let sum = ref( read_bigint 50 )
-  for _i = 2 to 100 do
-    stdin_sep();
+  for i = 2 to 100 do
+    stdin_sep()
     let tmp = read_bigint 50
     sum := add_bigint (!sum) tmp
   Printf.printf "euler13 = "
   print_bigint (!sum)
   Printf.printf "\neuler25 = %d\neuler16 = %d\n" (euler25 ()) (euler16 ())
-  (euler48 ())
+  euler48 ()
   Printf.printf "euler20 = %d\n" (euler20 ())
   let a = bigint_of_int 999999
   let b = bigint_of_int 9951263
@@ -460,9 +425,7 @@ let () =
   Printf.printf "="
   if bigint_gt a b then
     Printf.printf "True"
-    
   else
     Printf.printf "False"
-    
   Printf.printf "\n"
  

@@ -44,38 +44,36 @@ let readInt () =
   loop 0
 
 let position_alphabet (c:char) =
-  let i = int (c)
-  if i <= int ('Z') && i >= int ('A') then
-    i - int ('A')
-    
-  else if i <= int ('z') && i >= int ('a') then
-    i - int ('a')
-    
+  let i = (int (c))
+  if i <= (int ('Z')) && i >= (int ('A')) then
+    i - (int ('A'))
   else
-    (- 1)
-    
+    if i <= (int ('z')) && i >= (int ('a')) then
+      i - (int ('a'))
+    else
+      (- 1)
 
 let of_position_alphabet c : char =
-  char (c + int ('a'))
+  (char (c + (int ('a'))))
 
 let crypte taille_cle (cle:char array) taille (message:char array) =
   for i = 0 to taille - 1 do
     let lettre = position_alphabet message.[i]
     if lettre <> (- 1) then
-        let addon = position_alphabet cle.[i % taille_cle]
-        let new0 = (addon + lettre) % 26
-        message.[i] <- of_position_alphabet new0
+      let addon = position_alphabet cle.[i % taille_cle]
+      let new0 = (addon + lettre) % 26
+      message.[i] <- of_position_alphabet new0
 
 let () =
   let taille_cle = readInt()
-  stdin_sep();
-  let cle = Array.init taille_cle (fun _index ->
+  stdin_sep()
+  let cle = Array.init taille_cle (fun index ->
     let out0 = readChar()
     out0)
-  stdin_sep();
+  stdin_sep()
   let taille = readInt()
-  stdin_sep();
-  let message = Array.init taille (fun _index2 ->
+  stdin_sep()
+  let message = Array.init taille (fun index2 ->
     let out2 = readChar()
     out2)
   crypte taille_cle cle taille message

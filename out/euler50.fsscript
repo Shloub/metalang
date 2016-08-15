@@ -1,22 +1,19 @@
 let min2_ a b =
   if a < b then
     a
-    
   else
     b
-    
 
 let eratostene (t:int array) max0 =
   let n = ref( 0 )
   for i = 2 to max0 - 1 do
     if t.[i] = i then
-        n := (!n) + 1
-        if max0 / i > i then
-            let j = ref( i * i )
-            while (!j) < max0 && (!j) > 0 do
-              t.[(!j)] <- 0
-              j := (!j) + i
-            
+      n := (!n) + 1
+      if max0 / i > i then
+        let j = ref( i * i )
+        while (!j) < max0 && (!j) > 0 do
+          t.[(!j)] <- 0
+          j := (!j) + i
   (!n)
 
 let () =
@@ -24,12 +21,13 @@ let () =
   let era = Array.init maximumprimes (fun j ->
     j)
   let nprimes = eratostene era maximumprimes
-  let primes = Array.create nprimes 0
+  let primes = Array.init nprimes (fun o ->
+    0)
   let l = ref( 0 )
   for k = 2 to maximumprimes - 1 do
     if era.[k] = k then
-        primes.[(!l)] <- k
-        l := (!l) + 1
+      primes.[(!l)] <- k
+      l := (!l) + 1
   Printf.printf "%d == %d\n" (!l) nprimes
   let sum = Array.init nprimes (fun i_ ->
     primes.[i_])
@@ -42,16 +40,14 @@ let () =
     process := false
     for i = 0 to (!stop) do
       if i + (!len) < nprimes then
-          sum.[i] <- sum.[i] + primes.[i + (!len)]
-          if maximumprimes > sum.[i] then
-              process := true
-              if era.[sum.[i]] = sum.[i] then
-                  maxl := (!len)
-                  resp := sum.[i]
-          else
-            stop := min2_ (!stop) i
-            
+        sum.[i] <- sum.[i] + primes.[i + (!len)]
+        if maximumprimes > sum.[i] then
+          process := true
+          if era.[sum.[i]] = sum.[i] then
+            maxl := (!len)
+            resp := sum.[i]
+        else
+          stop := min2_ (!stop) i
     len := (!len) + 1
-  
   Printf.printf "%d\n%d\n" (!resp) (!maxl)
  

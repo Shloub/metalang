@@ -6,7 +6,8 @@ exception Found_1 of int
 
 let result len (tab:int array) =
   try
-  let tab2 = Array.create len false
+  let tab2 = Array.init len (fun i ->
+    false)
   for i1 = 0 to len - 1 do
     Printf.printf "%d " tab.[i1]
     tab2.[tab.[i1]] <- true
@@ -14,13 +15,12 @@ let result len (tab:int array) =
   for i2 = 0 to len - 1 do
     if (not tab2.[i2]) then
       raise (Found_1(i2))
-      
   (- 1)
   with Found_1 (out) -> out
 
 let () =
-  let len = Console.ReadLine () |> Int32.Parse
+  let len = (Console.ReadLine () |> Int32.Parse)
   Printf.printf "%d\n" len
-  let tab = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+  let tab = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
   Printf.printf "%d\n" (result len tab)
  

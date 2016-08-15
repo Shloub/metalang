@@ -1,5 +1,6 @@
 let () =
-  let f = Array.create 10 1
+  let f = Array.init 10 (fun j ->
+    1)
   for i = 1 to 9 do
     f.[i] <- f.[i] * i * f.[i - 1]
     Printf.printf "%d " f.[i]
@@ -14,16 +15,15 @@ let () =
               let sum = ref( f.[a] + f.[b] + f.[c] + f.[d] + f.[e] + f.[g] )
               let num = ((((a * 10 + b) * 10 + c) * 10 + d) * 10 + e) * 10 + g
               if a = 0 then
+                sum := (!sum) - 1
+                if b = 0 then
                   sum := (!sum) - 1
-                  if b = 0 then
+                  if c = 0 then
+                    sum := (!sum) - 1
+                    if d = 0 then
                       sum := (!sum) - 1
-                      if c = 0 then
-                          sum := (!sum) - 1
-                          if d = 0 then
-                            sum := (!sum) - 1
-                            
               if (!sum) = num && (!sum) <> 1 && (!sum) <> 2 then
-                  out0 := (!out0) + num
-                  Printf.printf "%d " num
+                out0 := (!out0) + num
+                Printf.printf "%d " num
   Printf.printf "\n%d\n" (!out0)
  

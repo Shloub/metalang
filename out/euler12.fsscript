@@ -1,21 +1,18 @@
 let max2_ a b =
   if a > b then
     a
-    
   else
     b
-    
 
 let eratostene (t:int array) max0 =
   let n = ref( 0 )
   for i = 2 to max0 - 1 do
     if t.[i] = i then
-        let j = ref( i * i )
-        n := (!n) + 1
-        while (!j) < max0 && (!j) > 0 do
-          t.[(!j)] <- 0
-          j := (!j) + i
-        
+      let j = ref( i * i )
+      n := (!n) + 1
+      while (!j) < max0 && (!j) > 0 do
+        t.[(!j)] <- 0
+        j := (!j) + i
   (!n)
 
 exception Found_1 of int
@@ -28,14 +25,11 @@ let fillPrimesFactors (t:int array) n (primes:int array) nprimes =
     while (!n) % d = 0 do
       t.[d] <- t.[d] + 1
       n := (!n) / d
-    
     if (!n) = 1 then
       raise (Found_1(primes.[i]))
-      
   (!n)
   with Found_1 (out) -> out
 
-exception Found_2 of int
 
 let find ndiv2 =
   try
@@ -43,27 +37,27 @@ let find ndiv2 =
   let era = Array.init maximumprimes (fun j ->
     j)
   let nprimes = eratostene era maximumprimes
-  let primes = Array.create nprimes 0
+  let primes = Array.init nprimes (fun o ->
+    0)
   let l = ref( 0 )
   for k = 2 to maximumprimes - 1 do
     if era.[k] = k then
-        primes.[(!l)] <- k
-        l := (!l) + 1
+      primes.[(!l)] <- k
+      l := (!l) + 1
   for n = 1 to 10000 do
-    let primesFactors = Array.create (n + 2) 0
+    let primesFactors = Array.init (n + 2) (fun m ->
+      0)
     let max0 = max2_ (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)
     primesFactors.[2] <- primesFactors.[2] - 1
     let ndivs = ref( 1 )
     for i = 0 to max0 do
       if primesFactors.[i] <> 0 then
         ndivs := (!ndivs) * (1 + primesFactors.[i])
-        
     if (!ndivs) > ndiv2 then
-      raise (Found_2(n * (n + 1) / 2))
-      
+      raise (Found_1(n * (n + 1) / 2))
     (* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" *)
   0
-  with Found_2 (out) -> out
+  with Found_1 (out) -> out
 
 let () =
   Printf.printf "%d\n" (find 500)

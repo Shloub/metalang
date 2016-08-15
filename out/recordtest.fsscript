@@ -46,7 +46,7 @@ let () =
   let param = {foo=0;
   bar=0}
   param.bar <- readInt()
-  stdin_sep();
+  stdin_sep()
   param.foo <- readInt()
   Printf.printf "%d" (param.bar + param.foo * param.bar)
  

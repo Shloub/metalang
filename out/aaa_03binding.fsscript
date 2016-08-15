@@ -2,10 +2,8 @@ let g i =
   let j = i * 4
   if j % 2 = 1 then
     0
-    
   else
     j
-    
 
 let h i =
   Printf.printf "%d\n" i

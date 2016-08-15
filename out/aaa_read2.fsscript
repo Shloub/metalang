@@ -4,26 +4,25 @@ Ce test permet de vérifier si les différents backends pour les langages implé
 read int, read char et skip
 *)
 let () =
-  let len = Console.ReadLine () |> Int32.Parse
+  let len = (Console.ReadLine () |> Int32.Parse)
   Printf.printf "%d=len\n" len
-  let tab = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+  let tab = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
   for i = 0 to len - 1 do
     Printf.printf "%d=>%d " i tab.[i]
   Printf.printf "\n"
-  let tab2 = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+  let tab2 = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
   for i_ = 0 to len - 1 do
     Printf.printf "%d==>%d " i_ tab2.[i_]
-  let strlen = Console.ReadLine () |> Int32.Parse
+  let strlen = (Console.ReadLine () |> Int32.Parse)
   Printf.printf "%d=strlen\n" strlen
-  let tab4 = (Console.ReadLine ()).ToCharArray ()
+  let tab4 = ((Console.ReadLine ()).ToCharArray ())
   for i3 = 0 to strlen - 1 do
     let tmpc = tab4.[i3]
-    let c = ref( int (tmpc) )
+    let c = ref( (int (tmpc)) )
     Printf.printf "%c:%d " tmpc (!c)
     if tmpc <> ' ' then
-      c := ((!c) - int ('a') + 13) % 26 + int ('a')
-      
-    tab4.[i3] <- char ((!c))
+      c := ((!c) - (int ('a')) + 13) % 26 + (int ('a'))
+    tab4.[i3] <- (char ((!c)))
   for j = 0 to strlen - 1 do
     Printf.printf "%c" tab4.[j]
  

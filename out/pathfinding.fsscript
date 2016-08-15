@@ -46,37 +46,34 @@ let readInt () =
 let min2_ a b =
   if a < b then
     a
-    
   else
     b
-    
 
 let rec pathfind_aux (cache:int array array) (tab:char array array) x y posX posY =
   if posX = x - 1 && posY = y - 1 then
     0
-    
-  else if posX < 0 || posY < 0 || posX >= x || posY >= y then
-    x * y * 10
-    
-  else if tab.[posY].[posX] = '#' then
-    x * y * 10
-    
-  else if cache.[posY].[posX] <> (- 1) then
-    cache.[posY].[posX]
-    
   else
-      cache.[posY].[posX] <- x * y * 10
-      let val1 = pathfind_aux cache tab x y (posX + 1) posY
-      let val2 = pathfind_aux cache tab x y (posX - 1) posY
-      let val3 = pathfind_aux cache tab x y posX (posY - 1)
-      let val4 = pathfind_aux cache tab x y posX (posY + 1)
-      let out0 = 1 + min2_ (min2_ (min2_ val1 val2) val3) val4
-      cache.[posY].[posX] <- out0
-      out0
+    if posX < 0 || posY < 0 || posX >= x || posY >= y then
+      x * y * 10
+    else
+      if tab.[posY].[posX] = '#' then
+        x * y * 10
+      else
+        if cache.[posY].[posX] <> (- 1) then
+          cache.[posY].[posX]
+        else
+          cache.[posY].[posX] <- x * y * 10
+          let val1 = pathfind_aux cache tab x y (posX + 1) posY
+          let val2 = pathfind_aux cache tab x y (posX - 1) posY
+          let val3 = pathfind_aux cache tab x y posX (posY - 1)
+          let val4 = pathfind_aux cache tab x y posX (posY + 1)
+          let out0 = 1 + min2_ (min2_ (min2_ val1 val2) val3) val4
+          cache.[posY].[posX] <- out0
+          out0
 
 let pathfind (tab:char array array) x y =
-  let cache = Array.init y (fun _i ->
-    let tmp = Array.init x (fun _j ->
+  let cache = Array.init y (fun i ->
+    let tmp = Array.init x (fun j ->
       (- 1))
     tmp)
   pathfind_aux cache tab x y 0 0
@@ -85,15 +82,15 @@ let () =
   let x = ref( 0 )
   let y = ref( 0 )
   x := readInt()
-  stdin_sep();
+  stdin_sep()
   y := readInt()
-  stdin_sep();
-  let tab = Array.init (!y) (fun _i ->
-    let tab2 = Array.init (!x) (fun _j ->
+  stdin_sep()
+  let tab = Array.init (!y) (fun i ->
+    let tab2 = Array.init (!x) (fun j ->
       let tmp = ref( '\000' )
       tmp := readChar()
       (!tmp))
-    stdin_sep();
+    stdin_sep()
     tab2)
   let result = pathfind tab (!x) (!y)
   Printf.printf "%d" result

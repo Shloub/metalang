@@ -1,6 +1,6 @@
 open System
 let () =
-              let str = (Console.ReadLine ()).ToCharArray ()
+              let str = ((Console.ReadLine ()).ToCharArray ())
               for i = 0 to 11 do
                 Printf.printf "%c" str.[i]
              

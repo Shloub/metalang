@@ -41,37 +41,34 @@ let readInt () =
 let rec pathfind_aux (cache:int array) (tab:int array) len pos =
   if pos >= len - 1 then
     0
-    
-  else if cache.[pos] <> (- 1) then
-    cache.[pos]
-    
   else
+    if cache.[pos] <> (- 1) then
+      cache.[pos]
+    else
       cache.[pos] <- len * 2
       let posval = pathfind_aux cache tab len tab.[pos]
       let oneval = pathfind_aux cache tab len (pos + 1)
       let out0 = ref( 0 )
       if posval < oneval then
         out0 := 1 + posval
-        
       else
         out0 := 1 + oneval
-        
       cache.[pos] <- (!out0)
       (!out0)
 
 let pathfind (tab:int array) len =
-  let cache = Array.init len (fun _i ->
+  let cache = Array.init len (fun i ->
     (- 1))
   pathfind_aux cache tab len 0
 
 let () =
   let len = ref( 0 )
   len := readInt()
-  stdin_sep();
-  let tab = Array.init (!len) (fun _i ->
+  stdin_sep()
+  let tab = Array.init (!len) (fun i ->
     let tmp = ref( 0 )
     tmp := readInt()
-    stdin_sep();
+    stdin_sep()
     (!tmp))
   let result = pathfind tab (!len)
   Printf.printf "%d" result

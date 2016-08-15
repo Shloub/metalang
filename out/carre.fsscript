@@ -2,21 +2,18 @@ open System
 let min2_ a b =
   if a < b then
     a
-    
   else
     b
-    
 
 let () =
-  let x = Console.ReadLine () |> Int32.Parse
-  let y = Console.ReadLine () |> Int32.Parse
-  let tab = Array.init y (fun _d ->
-    (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
+  let x = (Console.ReadLine () |> Int32.Parse)
+  let y = (Console.ReadLine () |> Int32.Parse)
+  let tab = Array.init y (fun d ->
+    ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse))
   for ix = 1 to x - 1 do
     for iy = 1 to y - 1 do
       if tab.[iy].[ix] = 1 then
         tab.[iy].[ix] <- min2_ (min2_ tab.[iy].[ix - 1] tab.[iy - 1].[ix]) tab.[iy - 1].[ix - 1] + 1
-        
   for jy = 0 to y - 1 do
     for jx = 0 to x - 1 do
       Printf.printf "%d " tab.[jy].[jx]
