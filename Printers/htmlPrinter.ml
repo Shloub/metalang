@@ -53,7 +53,7 @@ class htmlPrinter = object(self)
       self#expr e
 
   method bloc f li = Format.fprintf f "<div class=\"metalang_bloc\"><span class=\"keyword\">do</span><div class=\"metalang_bloc_content\">@\n%a</div>@\n<span class=\"keyword\">end</span></div>@\n"
-    (print_list self#instr sep_nl) li
+      (print_list self#instr sep_nl) li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "<span class=\"keyword\">for</span>@ %a=%a@ <span class=\"keyword\">to</span>@ %a@\n%a"
@@ -76,8 +76,8 @@ class htmlPrinter = object(self)
   method ptype f t = Format.fprintf f "<span class=\"type\">%a</span>" super#ptype t
 
   method p_option f = function
-  | { Ast.Instr.useless = true } -> Format.fprintf f "<span class=\"keyword\">useless</span> "
-  | { Ast.Instr.useless = false } -> ()
+    | { Ast.Instr.useless = true } -> Format.fprintf f "<span class=\"keyword\">useless</span> "
+    | { Ast.Instr.useless = false } -> ()
 
   method allocarray_lambda f binding type_ len binding2 lambda useless=
     Format.fprintf f "@[<h><span class=\"keyword\">def</span> %a <span class=\"keyword\">array</span><%a>%a[%a] <span class=\"keyword\">with</span> %a <span class=\"keyword\">do</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>@]"
@@ -97,13 +97,13 @@ class htmlPrinter = object(self)
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-        Format.fprintf f "%a = %a"
-          self#field fieldname
-          self#expr expr
+         Format.fprintf f "%a = %a"
+           self#field fieldname
+           self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a<br/>@\n%a" f1 e1 f2 e2)
+         Format.fprintf t
+           "%a<br/>@\n%a" f1 e1 f2 e2)
       f
       li
 
@@ -149,9 +149,9 @@ class htmlPrinter = object(self)
       self#funname funname
       (print_list
          (fun f (n, t) ->
-           Format.fprintf f "%a@ %a"
-             self#ptype t
-             self#binding n) sep_c) li
+            Format.fprintf f "%a@ %a"
+              self#ptype t
+              self#binding n) sep_c) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "<div class==\"metalang_function\"><span class=\"proto\">%a</span>@\n<div class=\"metalang_bloc_content\">%a@]</div><span class=\"keyword\">end</span></div>"
@@ -165,7 +165,7 @@ class htmlPrinter = object(self)
         name
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#field name
+              Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#field name
            ) nosep
         ) li
     | Type.Enum li ->

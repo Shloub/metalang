@@ -86,7 +86,7 @@ and lexems f li  =
 let rec string_of_lexems f = function
   | [] -> ()
   | hd::tl -> Format.fprintf f "%a%a" string_of_lexem hd
-    string_of_lexems tl
+                string_of_lexems tl
 
 type expr = Parser.token Ast.expr
 type instr = Parser.token Ast.instr

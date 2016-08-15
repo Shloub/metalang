@@ -33,14 +33,14 @@ open AstFun
 *)
 
 let tr macros e = match Expr.unfix e with
-| Expr.Apply(Expr.Fixed.F (_, Expr.Lief (Expr.Binding m)), li ) when Ast.BindingSet.mem m macros ->
+  | Expr.Apply(Expr.Fixed.F (_, Expr.Lief (Expr.Binding m)), li ) when Ast.BindingSet.mem m macros ->
     Expr.Fixed.fixa (Expr.Fixed.annot e) (Expr.ApplyMacro(m, li))
-| _ -> e
+  | _ -> e
 
 let apply p =
   let declarations = snd $ List.fold_left_map (fun acc p -> match p with
-  | Declaration (name, e) -> acc, Declaration (name, Expr.Fixed.Deep.map (tr acc) e)
-  | Macro (name, _, _, _) -> Ast.BindingSet.add name acc, p
-  | x -> acc, x
-  ) Ast.BindingSet.empty p.declarations
+      | Declaration (name, e) -> acc, Declaration (name, Expr.Fixed.Deep.map (tr acc) e)
+      | Macro (name, _, _, _) -> Ast.BindingSet.add name acc, p
+      | x -> acc, x
+    ) Ast.BindingSet.empty p.declarations
   in {p with declarations = declarations }

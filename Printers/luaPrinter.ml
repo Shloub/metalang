@@ -34,51 +34,51 @@ open Helper
 open Ast
 let print_op f op = 
   let open Ast.Expr in Format.fprintf f (match op with
-  | Add -> "+"
-  | Sub -> "-"
-  | Mul -> "*"
-  | Div -> "/"
-  | Mod -> "%%"
-  | Or -> "or"
-  | And -> "and"
-  | Lower -> "<"
-  | LowerEq -> "<="
-  | Higher -> ">"
-  | HigherEq -> ">="
-  | Eq -> "=="
-  | Diff -> "~=")
-    
+      | Add -> "+"
+      | Sub -> "-"
+      | Mul -> "*"
+      | Div -> "/"
+      | Mod -> "%%"
+      | Or -> "or"
+      | And -> "and"
+      | Lower -> "<"
+      | LowerEq -> "<="
+      | Higher -> ">"
+      | HigherEq -> ">="
+      | Eq -> "=="
+      | Diff -> "~=")
+
 let print_lief prio f = function
   | Ast.Expr.Char c -> Format.fprintf f "%d" (int_of_char c)
   | x -> print_lief prio f x
 
 let print_mut conf prio f m = Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio
-  
+
 let config macros = {
-    prio_binop;
-    prio_unop;
-    print_varname;
-    print_lief;
-    print_op;
-    print_unop;
-    print_mut;
-    macros
+  prio_binop;
+  prio_unop;
+  print_varname;
+  print_lief;
+  print_op;
+  print_unop;
+  print_mut;
+  macros
 }
 
 let print_expr config e f p =
   let open Format in
   let open Ast.Expr in
   let print_expr0 config e f prio_parent = match e with
-  | BinOp (a, (Div as op), b) ->
+    | BinOp (a, (Div as op), b) ->
       let _, priol, prior = prio_binop op in
       fprintf f "trunc(%a %a %a)" a priol print_op op b prior
-  | BinOp (a, Mod, b) -> fprintf f "math.mod(%a, %a)" a nop b nop
-  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
-  | Tuple li -> fprintf f "{%a}" (print_list (fun f x -> x f nop) sep_c) li
-  | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
-      fprintf f "%s=%a" name x nop) sep_c) li
-  | _ -> print_expr0 config e f prio_parent
+    | BinOp (a, Mod, b) -> fprintf f "math.mod(%a, %a)" a nop b nop
+    | UnOp (a, Not) -> fprintf f "not(%a)" a nop
+    | Tuple li -> fprintf f "{%a}" (print_list (fun f x -> x f nop) sep_c) li
+    | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
+        fprintf f "%s=%a" name x nop) sep_c) li
+    | _ -> print_expr0 config e f prio_parent
   in Fixed.Deep.fold (print_expr0 config) e f p
 
 let print_instr c i =
@@ -93,8 +93,8 @@ let print_instr c i =
     | Affect (mut, e) -> fprintf f "%a = %a" (c.print_mut c nop) mut e nop
     | ClikeLoop (init, cond, incr, li) -> assert false
     | Loop (var, e1, e2, li) -> fprintf f "@[<v 4>@[<h>for %a = %a, %a do@]%a@\nend"
-          c.print_varname var e1 nop e2 nop
-          block li
+                                  c.print_varname var e1 nop e2 nop
+                                  block li
     | While (e, li) -> fprintf f "@[<v 4>while @[<h>%a@] do%a@]@\nend" e nop block li
     | Comment s -> fprintf f "--[[%s--]]" s
     | Tag s -> assert false
@@ -103,80 +103,80 @@ let print_instr c i =
     | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
     | AllocArrayConst (name, ty, len, lief, opt) -> assert false
     | AllocRecord (name, ty, list, opt) ->
-        fprintf f "@[<v 4>%a = {%a}@\n@]" c.print_varname name
-          (print_list (fun f (field, x) -> fprintf f "%s:%a" field x nop) sep_nl) list
+      fprintf f "@[<v 4>%a = {%a}@\n@]" c.print_varname name
+        (print_list (fun f (field, x) -> fprintf f "%s:%a" field x nop) sep_nl) list
     | If (e, listif, []) when inelseif ->
-        fprintf f "if %a then%a@]@\nend" e nop block listif
+      fprintf f "if %a then%a@]@\nend" e nop block listif
     | If (e, listif, [elsecase]) when inelseif && elsecase.is_if ->
-        fprintf f "if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p true   
+      fprintf f "if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p true   
     | If (e, listif, listelse)  when inelseif ->
-        fprintf f "if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
+      fprintf f "if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
     | If (e, listif, []) ->
-        fprintf f "@[<v 4>if %a then%a@]@\nend" e nop block listif
+      fprintf f "@[<v 4>if %a then%a@]@\nend" e nop block listif
     | If (e, listif, [elsecase]) when elsecase.is_if ->
-        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p true
+      fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else%a" e nop block listif elsecase.p true
     | If (e, listif, listelse) ->
-        fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
+      fprintf f "@[<v 4>if %a then%a@]@\n@[<v 4>else %a@]@\nend" e nop block listif block listelse
     | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
-      | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
-      | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
-    end
+        | Some ( (t, params, code) ) -> pmacros f "%s" t params code li nop
+        | None -> fprintf f "%s(%a)" func (print_list (fun f x -> x f nop) sep_c) li
+      end
     | Print [PrintExpr ( Ast.Type.Fixed.F(_, Ast.Type.Integer) , expr)] -> fprintf f "io.write(%a)" expr nop
     | Print [StringConst s] -> fprintf f "io.write(%a)" (print_lief nop) (Expr.String s)
     | Print li->
-        let li = List.pack 50 li in
-        let li = List.map (fun li f ->
+      let li = List.pack 50 li in
+      let li = List.map (fun li f ->
           let format, exprs = extract_multi_print clike_noformat format_type li in
           match exprs with
           | [] -> fprintf f "io.write(\"%s\")" format
           | _ -> fprintf f "io.write(string.format(\"%s\", %a))" format
-                (print_list (fun f (t, e) -> e f nop) sep_c) exprs) li
-        in print_list (fun f g -> g f) sep_nl f li
+                   (print_list (fun f (t, e) -> e f nop) sep_c) exprs) li
+      in print_list (fun f g -> g f) sep_nl f li
     | Read li ->
-        let li = List.map (fun i f -> match i with
+      let li = List.map (fun i f -> match i with
           | Separation -> fprintf f "stdinsep()"
           | DeclRead (ty, name, _) -> fprintf f "local %a = read%a()" c.print_varname name
-                (fun f ty -> match Type.unfix ty with
-                | Type.Integer -> fprintf f "int"
-                | Type.Char -> fprintf f "char"
-                | _ -> assert false) ty
+                                        (fun f ty -> match Type.unfix ty with
+                                           | Type.Integer -> fprintf f "int"
+                                           | Type.Char -> fprintf f "char"
+                                           | _ -> assert false) ty
           | ReadExpr (ty, mut) ->fprintf f "%a = read%a()" (c.print_mut c nop) mut
-                (fun f ty -> match Type.unfix ty with
-                | Type.Integer -> fprintf f "int"
-                | Type.Char -> fprintf f "char"
-                | _ -> assert false) ty) li
-        in
-        fprintf f "%a" (print_list (fun f g -> g f) sep_nl) li
+                                   (fun f ty -> match Type.unfix ty with
+                                      | Type.Integer -> fprintf f "int"
+                                      | Type.Char -> fprintf f "char"
+                                      | _ -> assert false) ty) li
+      in
+      fprintf f "%a" (print_list (fun f g -> g f) sep_nl) li
     | Untuple (li, expr, opt) -> fprintf f "%a = unpack(%a)" (print_list c.print_varname sep_c) (List.map snd li) expr nop
     | Unquote e -> assert false in
   let is_multi_instr = match i with
-  | Read (hd::tl) -> true
-  | _ -> false in
+    | Read (hd::tl) -> true
+    | _ -> false in
   {
-   is_multi_instr = is_multi_instr;
-   is_if=is_if i;
-   is_if_noelse=is_if_noelse i;
-   is_comment=is_comment i;
-   p=p;
-   default = false;
-   print_lief = c.print_lief;
- }
+    is_multi_instr = is_multi_instr;
+    is_if=is_if i;
+    is_if_noelse=is_if_noelse i;
+    is_comment=is_comment i;
+    p=p;
+    default = false;
+    print_lief = c.print_lief;
+  }
 
 let print_instr macros i =
   let open Ast.Instr.Fixed.Deep in
   let c = config macros in
   let i = (fold (print_instr c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
-      
+
 class luaPrinter = object(self)
   inherit Printer.printer as super
 
   method instr f (t:Utils.instr) =
-   let macros = StringMap.map (fun (ty, params, li) ->
+    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "lua" li
         with Not_found -> List.assoc "" li) macros
-   in (print_instr macros t) f
+    in (print_instr macros t) f
 
   method decl_type f name t = ()
   method prog f prog =
@@ -185,8 +185,8 @@ class luaPrinter = object(self)
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "%a%a%a%a%a%a%a%a@\n%a"
-  (fun f () -> if Tags.is_taged "use_readintline" then
-Format.fprintf f "
+      (fun f () -> if Tags.is_taged "use_readintline" then
+          Format.fprintf f "
 function readintline()
   local tab = {}
   for a in string.gmatch(io.read(\"*l\"), \"-?%%d+\") do
@@ -194,8 +194,8 @@ function readintline()
   end
   return tab
 end@\n") ()
-  (fun f () -> if Tags.is_taged "use_readcharline" then
-Format.fprintf f "
+      (fun f () -> if Tags.is_taged "use_readcharline" then
+          Format.fprintf f "
 function readcharline()
   local tab = {}
   local i = 0
@@ -204,24 +204,24 @@ function readcharline()
   end
   return tab
 end@\n") ()
-  (fun f () -> if Tags.is_taged "__internal__div" then Format.fprintf f "
+      (fun f () -> if Tags.is_taged "__internal__div" then Format.fprintf f "
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end@\n") ()
-(fun f () -> if need then Format.fprintf f "buffer =  \"\"@\n") ()
-(fun f () -> if need_readint then Format.fprintf f "function readint()
+      (fun f () -> if need then Format.fprintf f "buffer =  \"\"@\n") ()
+      (fun f () -> if need_readint then Format.fprintf f "function readint()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     local num, buffer0 = string.match(buffer, '^([\\-0-9]*)(.*)')
     buffer = buffer0
     return tonumber(num)
 end@\n") ()
-(fun f () -> if need_readchar then Format.fprintf f "function readchar()
+      (fun f () -> if need_readchar then Format.fprintf f "function readchar()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     local c = string.byte(buffer)
     buffer = string.sub(buffer, 2, -1)
     return c
 end@\n") ()
-(fun f () -> if need_stdinsep then Format.fprintf f "
+      (fun f () -> if need_stdinsep then Format.fprintf f "
 function stdinsep()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%%s*', \"\") end

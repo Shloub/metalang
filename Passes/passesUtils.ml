@@ -84,13 +84,13 @@ module Walk (T:SigPass) = struct
   let apply_prog acc p =
     List.fold_left_map
       (fun acc item ->
-        match item with
-        | Prog.Macro _ | Prog.Unquote _ -> acc, item
-        | Prog.Comment _ -> acc, item
-        | Prog.DeclareType _ -> acc, item
-        | Prog.DeclarFun (name, t, params, instrs, opt) ->
-          let acc, instrs = apply_instr acc instrs
-          in acc, Prog.DeclarFun (name, t, params, instrs, opt)
+         match item with
+         | Prog.Macro _ | Prog.Unquote _ -> acc, item
+         | Prog.Comment _ -> acc, item
+         | Prog.DeclareType _ -> acc, item
+         | Prog.DeclarFun (name, t, params, instrs, opt) ->
+           let acc, instrs = apply_instr acc instrs
+           in acc, Prog.DeclarFun (name, t, params, instrs, opt)
       )
       acc
       p
@@ -103,9 +103,9 @@ module Walk (T:SigPass) = struct
         | (a, b) -> a, Some b
     in
     acc, {prog with
-      Prog.main = m;
-      Prog.funs = p;
-    }
- let apply acc0 p  = snd (foldmap acc0 p)
- let fold acc0 p  = fst (foldmap acc0 p)
+          Prog.main = m;
+          Prog.funs = p;
+         }
+  let apply acc0 p  = snd (foldmap acc0 p)
+  let fold acc0 p  = fst (foldmap acc0 p)
 end

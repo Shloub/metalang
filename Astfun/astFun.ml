@@ -39,14 +39,14 @@ type effect = EMacro | EPure | EEffect
 module Expr = struct
 
   type lief = (* le même type que dans Ast, sauf qu'on ajoute unit *)
-  | Unit
-  | Error
-  | Char of char
-  | String of string
-  | Integer of int
-  | Bool of bool
-  | Enum of string
-  | Binding of Ast.varname
+    | Unit
+    | Error
+    | Char of char
+    | String of string
+    | Integer of int
+    | Bool of bool
+    | Enum of string
+    | Binding of Ast.varname
 
   type formatPart =
     | IntFormat
@@ -55,71 +55,71 @@ module Expr = struct
     | StringConstant of string
 
   type 'a tofix =
-  | Skip
-  | LetRecIn of Ast.varname * Ast.varname list * 'a * 'a
-  | UnOp of 'a * Ast.Expr.unop
-  | BinOp of 'a * Ast.Expr.binop * 'a
-  | Fun of Ast.varname list * 'a
-  | FunTuple of Ast.varname list * 'a
-  | Apply of 'a * 'a list
-  | ApplyMacro of Ast.varname * 'a list
-  | Tuple of 'a list
-  | Lief of lief
-  | Comment of string * 'a
-  | If of 'a * 'a * 'a
-  | Print of 'a * Ast.Type.t
-  | MultiPrint of (formatPart list) * ('a * Ast.Type.t) list
-  | ReadIn of Ast.Type.t * 'a
-  | Block of 'a list
-  | Record of ('a * string) list
-  | RecordAffect of 'a * string * 'a
-  | RecordAccess of 'a * string
-  | ArrayMake of 'a * 'a * 'a
-  | ArrayInit of 'a * 'a
-  | ArrayAccess of 'a * 'a list
-  | ArrayAffect of 'a * 'a list * 'a
-  | LetIn of Ast.varname * 'a * 'a
+    | Skip
+    | LetRecIn of Ast.varname * Ast.varname list * 'a * 'a
+    | UnOp of 'a * Ast.Expr.unop
+    | BinOp of 'a * Ast.Expr.binop * 'a
+    | Fun of Ast.varname list * 'a
+    | FunTuple of Ast.varname list * 'a
+    | Apply of 'a * 'a list
+    | ApplyMacro of Ast.varname * 'a list
+    | Tuple of 'a list
+    | Lief of lief
+    | Comment of string * 'a
+    | If of 'a * 'a * 'a
+    | Print of 'a * Ast.Type.t
+    | MultiPrint of (formatPart list) * ('a * Ast.Type.t) list
+    | ReadIn of Ast.Type.t * 'a
+    | Block of 'a list
+    | Record of ('a * string) list
+    | RecordAffect of 'a * string * 'a
+    | RecordAccess of 'a * string
+    | ArrayMake of 'a * 'a * 'a
+    | ArrayInit of 'a * 'a
+    | ArrayAccess of 'a * 'a list
+    | ArrayAffect of 'a * 'a list * 'a
+    | LetIn of Ast.varname * 'a * 'a
 
   module Fixed = Fix2(struct
 
-    type ('a, 'b) alias = 'a tofix
-    type ('a, 'b) tofix = ('a, 'b) alias
+      type ('a, 'b) alias = 'a tofix
+      type ('a, 'b) tofix = ('a, 'b) alias
 
-    let next () = Ast.next ()
+      let next () = Ast.next ()
 
-    module Make(F:Applicative) = struct
-      open F
-      module LF = ListApp(F)
-      open LF
-    let foldmap f g e =
-      let f'f (x, a) = ret (fun x -> x, a) <*> f x in
-      match e with
-      | LetRecIn (name, params, e1, e2) -> ret (fun e1 e2 -> LetRecIn (name, params, e1, e2)) <*> f e1 <*> f e2
-      | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f a <*> f b
-      | UnOp (a, op) -> ret (fun a -> UnOp (a, op)) <*> f a
-      | Fun (params, e) -> ret (fun e -> Fun (params, e)) <*> f e
-      | FunTuple (params, e) -> ret (fun e -> FunTuple (params, e)) <*> f e
-      | Apply (e, li) -> ret (fun e li -> Apply (e, li)) <*> f e <*> fold_left_map f li
-      | ApplyMacro(m, li) -> ret (fun li -> ApplyMacro (m, li)) <*> fold_left_map f li
-      | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f li
-      | Lief l -> ret (Lief l)
-      | Comment (s, c) -> ret (fun c -> Comment (s, c)) <*> f c
-      | If (e1, e2, e3) -> ret (fun e1 e2 e3 -> If (e1, e2, e3)) <*> f e1 <*> f e2 <*> f e3
-      | Print (e, ty) -> ret (fun e -> Print (e, ty)) <*> f e
-      | ReadIn (ty, e) -> ret (fun e -> ReadIn (ty, e)) <*> f e
-      | Skip -> ret Skip
-      | Block li -> ret (fun li -> Block li) <*> fold_left_map f li
-      | Record li -> ret (fun li -> Record li) <*> fold_left_map f'f li
-      | RecordAffect (e1, s, e2) -> ret (fun e1 e2 -> RecordAffect (e1, s, e2)) <*> f e1 <*> f e2
-      | RecordAccess (e, s) -> ret (fun e -> RecordAccess (e, s)) <*> f e
-      | ArrayAccess (tab, indexes) -> ret (fun tab indexes -> ArrayAccess (tab, indexes)) <*> f tab <*> fold_left_map f indexes
-      | ArrayMake (len, lambda, env) -> ret (fun len lambda env -> ArrayMake (len, lambda, env)) <*> f len <*> f lambda <*> f env
-      | ArrayInit (len, lambda) -> ret (fun len lambda -> ArrayInit (len, lambda)) <*> f len <*> f lambda
-      | ArrayAffect (tab, indexes, v) -> ret (fun tab indexes v -> ArrayAffect(tab, indexes, v)) <*> f tab <*> fold_left_map f indexes <*> f v
-      | LetIn (binding, e, b) -> ret (fun e b -> LetIn (binding, e, b)) <*> f e <*> f b
-      | MultiPrint (format, li) -> ret (fun li -> MultiPrint (format, li)) <*> fold_left_map f'f li
-  end
-  end)
+      module Make(F:Applicative) = struct
+        open F
+        module LF = ListApp(F)
+        open LF
+        let foldmap f g e =
+          let f'f (x, a) = ret (fun x -> x, a) <*> f x in
+          match e with
+          | LetRecIn (name, params, e1, e2) -> ret (fun e1 e2 -> LetRecIn (name, params, e1, e2)) <*> f e1 <*> f e2
+          | BinOp (a, op, b) -> ret (fun a b -> BinOp (a, op, b)) <*> f a <*> f b
+          | UnOp (a, op) -> ret (fun a -> UnOp (a, op)) <*> f a
+          | Fun (params, e) -> ret (fun e -> Fun (params, e)) <*> f e
+          | FunTuple (params, e) -> ret (fun e -> FunTuple (params, e)) <*> f e
+          | Apply (e, li) -> ret (fun e li -> Apply (e, li)) <*> f e <*> fold_left_map f li
+          | ApplyMacro(m, li) -> ret (fun li -> ApplyMacro (m, li)) <*> fold_left_map f li
+          | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f li
+          | Lief l -> ret (Lief l)
+          | Comment (s, c) -> ret (fun c -> Comment (s, c)) <*> f c
+          | If (e1, e2, e3) -> ret (fun e1 e2 e3 -> If (e1, e2, e3)) <*> f e1 <*> f e2 <*> f e3
+          | Print (e, ty) -> ret (fun e -> Print (e, ty)) <*> f e
+          | ReadIn (ty, e) -> ret (fun e -> ReadIn (ty, e)) <*> f e
+          | Skip -> ret Skip
+          | Block li -> ret (fun li -> Block li) <*> fold_left_map f li
+          | Record li -> ret (fun li -> Record li) <*> fold_left_map f'f li
+          | RecordAffect (e1, s, e2) -> ret (fun e1 e2 -> RecordAffect (e1, s, e2)) <*> f e1 <*> f e2
+          | RecordAccess (e, s) -> ret (fun e -> RecordAccess (e, s)) <*> f e
+          | ArrayAccess (tab, indexes) -> ret (fun tab indexes -> ArrayAccess (tab, indexes)) <*> f tab <*> fold_left_map f indexes
+          | ArrayMake (len, lambda, env) -> ret (fun len lambda env -> ArrayMake (len, lambda, env)) <*> f len <*> f lambda <*> f env
+          | ArrayInit (len, lambda) -> ret (fun len lambda -> ArrayInit (len, lambda)) <*> f len <*> f lambda
+          | ArrayAffect (tab, indexes, v) -> ret (fun tab indexes v -> ArrayAffect(tab, indexes, v)) <*> f tab <*> fold_left_map f indexes <*> f v
+          | LetIn (binding, e, b) -> ret (fun e b -> LetIn (binding, e, b)) <*> f e <*> f b
+          | MultiPrint (format, li) -> ret (fun li -> MultiPrint (format, li)) <*> fold_left_map f'f li
+      end
+    end)
 
   type t = unit Fixed.t
   let fix : 'a -> t = Fixed.fix
@@ -159,9 +159,9 @@ end
 type expr = Expr.t
 
 type declaration =
-| Declaration of Ast.varname * expr
-| DeclareType of string * Ast.Type.t
-| Macro of Ast.varname * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
+  | Declaration of Ast.varname * expr
+  | DeclareType of string * Ast.Type.t
+  | Macro of Ast.varname * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
 
 type opts = { hasSkip : bool; reads : Ast.TypeSet.t }
 type prog = { declarations : declaration list; options : opts ; side_effects : effect IntMap.t }

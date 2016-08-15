@@ -42,8 +42,8 @@ let init_acc env = env;;
 let rec foldmapexpr tyenv acc e = match Expr.unfix e with
   | Expr.Record li ->
     let acc, li = List.fold_left_map (fun acc (name, e) ->
-      let acc, e = process tyenv acc e in
-      acc, (name, e) ) acc li in
+        let acc, e = process tyenv acc e in
+        acc, (name, e) ) acc li in
     let t = Typer.get_type tyenv e in
     let varname = Fresh.fresh_internal () in
     let ni = Instr.alloc_record varname t li Instr.useless_declaration_option in
@@ -60,8 +60,8 @@ let process_mut tyenv acc m = Mutable.Fixed.Deep.foldmapg (fun e acc -> process 
 let expand tyenv i = match Instr.unfix i with
   | Instr.Declare (n, t, (Expr.Fixed.F (_, Expr.Record li) ), opt) ->
     let acc, li = List.fold_left_map (fun acc (name, e) ->
-      let acc, e = process tyenv acc e in
-      acc, (name, e) ) [] li in
+        let acc, e = process tyenv acc e in
+        acc, (name, e) ) [] li in
     List.append acc [Instr.alloc_record n t li opt]
   | Instr.Declare (n, t, e, opt) ->
     let instrs, e = process tyenv [] e in
@@ -92,8 +92,8 @@ let expand tyenv i = match Instr.unfix i with
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocArray (n, t, e, opt, opt2))  ) :: instrs)
   | Instr.AllocRecord (n, t, lie, opt) ->
     let instrs, lie = List.fold_left_map (fun acc (f, e) ->
-      let acc, e = process tyenv acc e
-      in acc, (f, e)) [] lie in
+        let acc, e = process tyenv acc e
+        in acc, (f, e)) [] lie in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocRecord (n, t, lie, opt))  ) :: instrs)
   | Instr.If (e, l1, l2) ->
     let instrs, e = process tyenv [] e in
@@ -102,21 +102,21 @@ let expand tyenv i = match Instr.unfix i with
     let instrs, lie = List.fold_left_map (process tyenv) [] lie in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Call (funname, lie))  ) :: instrs)
   | Instr.Print li ->
-      let instrs, li = List.fold_left_map (fun instrs -> function
+    let instrs, li = List.fold_left_map (fun instrs -> function
         | (Instr.StringConst _ ) as e-> instrs, e
         | Instr.PrintExpr (ty, e) ->
-            let instrs, e = process tyenv instrs e in
-            instrs, Instr.PrintExpr (ty, e)) [] li
-      in
-      List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Print li)  ) :: instrs)
+          let instrs, e = process tyenv instrs e in
+          instrs, Instr.PrintExpr (ty, e)) [] li
+    in
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Print li)  ) :: instrs)
   | Instr.Read li ->
-      let instrs, li = List.fold_left_map (fun instrs -> function
+    let instrs, li = List.fold_left_map (fun instrs -> function
         | Instr.Separation -> instrs, Instr.Separation
         | (Instr.DeclRead _ ) as o -> instrs, o
         | Instr.ReadExpr (t, mut) ->
-            let instrs, mut = process_mut tyenv instrs mut in
-            instrs, Instr.ReadExpr (t, mut) ) [] li
-      in
+          let instrs, mut = process_mut tyenv instrs mut in
+          instrs, Instr.ReadExpr (t, mut) ) [] li
+    in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Read li)  ) :: instrs)
   | Instr.Untuple(li, e, opt) ->
     let instrs, e = process tyenv [] e in

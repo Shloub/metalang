@@ -36,12 +36,12 @@ let print_lief prio f l =
   let open Format in
   let open Expr in
   match l with
-    | Char c ->
-        let cs = sprintf "%C" c in
-        if String.length cs == 6 then fprintf f "'\\x%02x'" (int_of_char c)
-        else fprintf f "%s" cs
-    | Enum e -> fprintf f "%S" e
-    | x -> print_lief prio f x
+  | Char c ->
+    let cs = sprintf "%C" c in
+    if String.length cs == 6 then fprintf f "'\\x%02x'" (int_of_char c)
+    else fprintf f "%s" cs
+  | Enum e -> fprintf f "%S" e
+  | x -> print_lief prio f x
 
 let config macros = {
   prio_binop;
@@ -60,71 +60,71 @@ let print_expr config e f p =
   let print_mut conf priority f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f priority in
   let print_expr0 config e f prio_parent = match e with
-  | BinOp (a, ((Div | Mod) as op), b) ->
+    | BinOp (a, ((Div | Mod) as op), b) ->
       let prio, priol, prior = prio_binop op in
       fprintf f "~~(%a %a %a)" a priol print_op op b prior
-  | _ -> print_expr0 config e f prio_parent
+    | _ -> print_expr0 config e f prio_parent
   in Fixed.Deep.fold (print_expr0 config) e f p
 
 let print_instr c i =
   let open Ast.Instr in
   let open Format in
   let p f pend = match i with
-  | Declare (var, ty, e, _) -> fprintf f "var %a = %a%a" c.print_varname var e nop pend ()
-  | AllocArray (name, t, e, None, opt) -> fprintf f "var %a = new Array(%a)%a"
-        c.print_varname name
-        e nop
-        pend ()
-  | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
-  | AllocArrayConst (name, ty, len, lief, opt) ->
+    | Declare (var, ty, e, _) -> fprintf f "var %a = %a%a" c.print_varname var e nop pend ()
+    | AllocArray (name, t, e, None, opt) -> fprintf f "var %a = new Array(%a)%a"
+                                              c.print_varname name
+                                              e nop
+                                              pend ()
+    | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
+    | AllocArrayConst (name, ty, len, lief, opt) ->
       fprintf f "@[<h>%a = array_fill(0, %a, %a)%a@]" c.print_varname name
         len nop (c.print_lief nop) lief pend ()
-  | AllocRecord (name, ty, list, opt) ->
+    | AllocRecord (name, ty, list, opt) ->
       fprintf f "@[<v 4>var %a = {@\n%a}%a@]" c.print_varname name
         (print_list (fun f (field, x) -> fprintf f "%S:%a" field x nop) (sep "%a,@\n%a")) list
         pend ()
-  | Print li->
+    | Print li->
       fprintf f "util.print(%a)%a"
         (print_list
            (fun f -> function
-             | StringConst s -> c.print_lief nop f (Ast.Expr.String s)
-             | PrintExpr (_, e) -> e f nop) sep_c) li
+              | StringConst s -> c.print_lief nop f (Ast.Expr.String s)
+              | PrintExpr (_, e) -> e f nop) sep_c) li
         pend ()
-  | Read li ->
+    | Read li ->
       print_list
         (fun f -> function
-          | Separation -> Format.fprintf f "@[stdinsep()%a@]" pend ()
-          | DeclRead (ty, v, opt) ->
-              begin match Ast.Type.unfix ty with
-              | Ast.Type.Char -> fprintf f "@[var %a = read_char_()%a@]" c.print_varname v pend ()
-              | Ast.Type.Integer -> fprintf f "@[var %a = read_int_()%a@]" c.print_varname v pend ()
-              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                    (Type.type_t_to_string ty)))
-              end
-          | ReadExpr (ty, mut) ->
-              begin match Ast.Type.unfix ty with
-              | Ast.Type.Char -> fprintf f "@[%a = read_char_()%a@]" (c.print_mut c nop) mut pend ()
-              | Ast.Type.Integer -> fprintf f "@[%a = read_int_()%a@]" (c.print_mut c nop) mut pend ()
-              | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                    (Type.type_t_to_string ty)))
-              end
+           | Separation -> Format.fprintf f "@[stdinsep()%a@]" pend ()
+           | DeclRead (ty, v, opt) ->
+             begin match Ast.Type.unfix ty with
+               | Ast.Type.Char -> fprintf f "@[var %a = read_char_()%a@]" c.print_varname v pend ()
+               | Ast.Type.Integer -> fprintf f "@[var %a = read_int_()%a@]" c.print_varname v pend ()
+               | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                                              (Type.type_t_to_string ty)))
+             end
+           | ReadExpr (ty, mut) ->
+             begin match Ast.Type.unfix ty with
+               | Ast.Type.Char -> fprintf f "@[%a = read_char_()%a@]" (c.print_mut c nop) mut pend ()
+               | Ast.Type.Integer -> fprintf f "@[%a = read_int_()%a@]" (c.print_mut c nop) mut pend ()
+               | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                                              (Type.type_t_to_string ty)))
+             end
         ) sep_nl f li
-  | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
-  | Unquote e -> assert false
-  | _ -> clike_print_instr c i f pend
+    | Untuple (li, expr, opt) -> fprintf f "list(%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
+    | Unquote e -> assert false
+    | _ -> clike_print_instr c i f pend
   in
   let is_multi_instr = match i with
-  | Read (hd::tl) -> true
-  | _ -> false in
+    | Read (hd::tl) -> true
+    | _ -> false in
   {
-   is_multi_instr = is_multi_instr;
-   is_if=is_if i;
-   is_if_noelse=is_if_noelse i;
-   is_comment=is_comment i;
-   p=p;
-   default = seppt;
-   print_lief = c.print_lief;
- }
+    is_multi_instr = is_multi_instr;
+    is_if=is_if i;
+    is_if_noelse=is_if_noelse i;
+    is_comment=is_comment i;
+    p=p;
+    default = seppt;
+    print_lief = c.print_lief;
+  }
 
 let print_instr macros i =
   let open Ast.Instr.Fixed.Deep in
@@ -136,11 +136,11 @@ class jsPrinter = object(self)
   inherit Printer.printer as super
 
   method instr f t =
-   let macros = StringMap.map (fun (ty, params, li) ->
+    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "js" li
         with Not_found -> List.assoc "" li) macros
-   in (print_instr macros t) f
+    in (print_instr macros t) f
 
   method decl_type f name t = ()
 
@@ -149,32 +149,32 @@ class jsPrinter = object(self)
       self#funname funname
       (print_list self#binding sep_c) (List.map fst li)
       self#instructions instrs
-      
+
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "var util = require(\"util\");@\n%s%s%s%s%a%a@\n"
-(if need then "var fs = require(\"fs\");
+      (if need then "var fs = require(\"fs\");
 var current_char = null;
 function read_char0(){
     return fs.readSync(process.stdin.fd, 1)[0];
 }" else "")
-(if need_readchar then "
+      (if need_readchar then "
 function read_char_(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();
     return out;
 }" else "")
-(if need_stdinsep then "
+      (if need_stdinsep then "
 function stdinsep(){
     if (current_char == null) current_char = read_char0();
     while (current_char.match(/[\\n\\t\\s]/g))
         current_char = read_char0();
 }" else "")
-(if need_readint then "
+      (if need_readint then "
 function read_int_(){
   if (current_char == null) current_char = read_char0();
   var sign = 1;

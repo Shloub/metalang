@@ -43,13 +43,13 @@ let init_acc () = ()
 
 let rec map li =
   List.filter_map (fun i ->
-    match Instr.unfix i with
-    | Instr.Tag s -> let () = Tags.tag s in None
-    | Instr.Loop (v, e1, e2, li) ->
-      let li = map li in
-      Some ( Instr.fixa (Instr.Fixed.annot i) (Instr.Loop (v, e1, e2, li)))
-    | _ -> Some i
-  ) li
+      match Instr.unfix i with
+      | Instr.Tag s -> let () = Tags.tag s in None
+      | Instr.Loop (v, e1, e2, li) ->
+        let li = map li in
+        Some ( Instr.fixa (Instr.Fixed.annot i) (Instr.Loop (v, e1, e2, li)))
+      | _ -> Some i
+    ) li
 
 let process acc p =
   match p with

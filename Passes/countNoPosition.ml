@@ -41,21 +41,21 @@ let init_acc () = 0
 
 let count_type e =
   Type.Fixed.Deep.foldmap2i_topdown (fun i _ acc ->
-    (if Ast.PosMap.mem i then acc else acc + 1), ())
+      (if Ast.PosMap.mem i then acc else acc + 1), ())
     (fun b acc -> acc, b) e 0 |> fst
 
 let fmut m = Mutable.Fixed.Deep.folda (fun i m ->
-  let acc = if Ast.PosMap.mem i then 0 else 1
-  in match m with
-  | Mutable.Array (_, li) -> List.fold_left (+) acc li
-  | _ -> acc ) m
+    let acc = if Ast.PosMap.mem i then 0 else 1
+    in match m with
+    | Mutable.Array (_, li) -> List.fold_left (+) acc li
+    | _ -> acc ) m
 
 let fexpr e = Expr.Fixed.Deep.folda (fun i e ->
-  let acc = if Ast.PosMap.mem i then 0
-  else 1
-  in match e with
-  | Expr.Access mut -> acc + fmut mut
-  | _ -> Expr.Fixed.Surface.fold (+) acc e) e
+    let acc = if Ast.PosMap.mem i then 0
+      else 1
+    in match e with
+    | Expr.Access mut -> acc + fmut mut
+    | _ -> Expr.Fixed.Surface.fold (+) acc e) e
 
 let count_tys e = List.fold_left (fun acc e -> acc + count_type e) 0 e
 
@@ -63,25 +63,25 @@ let count_tys e = List.fold_left (fun acc e -> acc + count_type e) 0 e
 let finstr i =
   Instr.Fixed.Deep.fold2i_bottomup
     (fun annot instr ->
-      let acc = if Ast.PosMap.mem annot then 0
-      else 1
-      in match instr with
-      | Instr.Affect (m, e) -> acc + e + fmut m
-      | Instr.Read li ->
-          List.fold_left (fun acc -> function
-            | Instr.Separation -> acc
-            | Instr.DeclRead (t, _, _) -> acc + count_type t
-            | Instr.ReadExpr (t, e) ->
-                acc + count_type t + fmut e ) acc li
-      | Instr.Declare (_, t, e, _) -> acc + count_type t + e
-      | Instr.AllocArray (_, t, e, _, _) -> acc + count_type t + e
-      | Instr.AllocArrayConst (_, t, e, _, _) -> acc + count_type t + e
-      | Instr.AllocRecord (_, t, li, _) -> count_type t + List.fold_left (fun acc (_, e) -> acc + e) acc li
-      | Instr.Print li ->
-          List.fold_left (fun acc -> function
-            | Instr.StringConst _str -> acc
-            | Instr.PrintExpr (t, e) -> acc + count_type t + e) acc li
-      | _ -> Instr.Fixed.Surface.fold (+) acc instr
+       let acc = if Ast.PosMap.mem annot then 0
+         else 1
+       in match instr with
+       | Instr.Affect (m, e) -> acc + e + fmut m
+       | Instr.Read li ->
+         List.fold_left (fun acc -> function
+             | Instr.Separation -> acc
+             | Instr.DeclRead (t, _, _) -> acc + count_type t
+             | Instr.ReadExpr (t, e) ->
+               acc + count_type t + fmut e ) acc li
+       | Instr.Declare (_, t, e, _) -> acc + count_type t + e
+       | Instr.AllocArray (_, t, e, _, _) -> acc + count_type t + e
+       | Instr.AllocArrayConst (_, t, e, _, _) -> acc + count_type t + e
+       | Instr.AllocRecord (_, t, li, _) -> count_type t + List.fold_left (fun acc (_, e) -> acc + e) acc li
+       | Instr.Print li ->
+         List.fold_left (fun acc -> function
+             | Instr.StringConst _str -> acc
+             | Instr.PrintExpr (t, e) -> acc + count_type t + e) acc li
+       | _ -> Instr.Fixed.Surface.fold (+) acc instr
     )
     fexpr i
 
@@ -92,8 +92,8 @@ let process acc p =
   match p with
   | Prog.DeclarFun (funname, t, params, instrs, opt) ->
     (acc + count instrs +
-       count_type t +
-       count_tys (List.map snd params)
+     count_type t +
+     count_tys (List.map snd params)
     ), Prog.DeclarFun (funname, t, params, instrs, opt)
   | _ -> acc, p
 

@@ -37,16 +37,16 @@ open AstFun
 module BindingMap = Ast.BindingMap
 
 let mapname rename name =
-	if BindingMap.mem name rename then
-		let name2 = Fresh.fresh_internal () in
-		BindingMap.add name name2 rename, name2
-	else
+  if BindingMap.mem name rename then
+    let name2 = Fresh.fresh_internal () in
+    BindingMap.add name name2 rename, name2
+  else
     BindingMap.add name name rename, name
 
 let mapfun f fix params e rename =
-    let rename, params = List.fold_left_map mapname rename params
-    in let e = e rename
-    in fix (f params e)
+  let rename, params = List.fold_left_map mapname rename params
+  in let e = e rename
+  in fix (f params e)
 
 let transform annot e =
   let fix = Expr.Fixed.fixa annot in
@@ -63,21 +63,21 @@ let transform annot e =
           BindingMap.add name name rename, name
       in fix (Expr.LetIn (name, v rename, e rename2)))
   | Expr.LetRecIn (name, params, v, e) ->
-     (fun rename ->
-      let rename2, name = mapname rename name in
-      let rename3, params = List.fold_left_map mapname rename2 params
-      in fix (Expr.LetRecIn (name, params, v rename3, e rename2)))	
+    (fun rename ->
+       let rename2, name = mapname rename name in
+       let rename3, params = List.fold_left_map mapname rename2 params
+       in fix (Expr.LetRecIn (name, params, v rename3, e rename2)))	
   | Expr.Lief (Expr.Binding name) ->
-     (fun rename -> begin match BindingMap.find_opt name rename with
-     | None -> default rename
-     | Some name2 -> fix (Expr.Lief (Expr.Binding name2))
-     end)
+    (fun rename -> begin match BindingMap.find_opt name rename with
+         | None -> default rename
+         | Some name2 -> fix (Expr.Lief (Expr.Binding name2))
+       end)
   | _ -> default
-								    
+
 let apply p =
   let declarations = List.map (function
-  | Declaration (name, e) -> Declaration (name, Expr.Fixed.Deep.folda transform e BindingMap.empty)
-  | x -> x
-  ) p.declarations
+      | Declaration (name, e) -> Declaration (name, Expr.Fixed.Deep.folda transform e BindingMap.empty)
+      | x -> x
+    ) p.declarations
   in {p with declarations = declarations }
 

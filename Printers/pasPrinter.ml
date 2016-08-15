@@ -36,45 +36,45 @@ let config macros =
   let open Format in
   let open Expr in
   let prio_binop op = match op with
-  | Mul -> assoc 5
-  | Div
-  | Mod -> nonassocr 7
-  | And -> assoc 9
-  | Add -> assoc 11
-  | Sub -> nonassocr 11
-  | Or -> assoc 13
-  | Eq -> nonassocl 15
-  | Diff -> nonassocl 15
-  | Lower
-  | LowerEq
-  | Higher
-  | HigherEq -> assoc 17
+    | Mul -> assoc 5
+    | Div
+    | Mod -> nonassocr 7
+    | And -> assoc 9
+    | Add -> assoc 11
+    | Sub -> nonassocr 11
+    | Or -> assoc 13
+    | Eq -> nonassocl 15
+    | Diff -> nonassocl 15
+    | Lower
+    | LowerEq
+    | Higher
+    | HigherEq -> assoc 17
   in
   let print_lief prio f = function
     | Char c -> fprintf f "#%d" (int_of_char c)
     | String i ->
-        fprintf f "'";
-        String.fold_left (fun () c ->
+      fprintf f "'";
+      String.fold_left (fun () c ->
           let ns = 
             if is_printable c then String.of_char c
             else "'#"^(string_of_int (int_of_char c))^"'"
           in fprintf f "%s" ns ) () i;
-        fprintf f "'"
+      fprintf f "'"
     | x -> print_lief prio f x in
   let print_op f op = fprintf f (match op with
-  | Add -> "+"
-  | Sub -> "-"
-  | Mul -> "*"
-  | Div -> "Div"
-  | Mod -> "Mod"
-  | Or -> "or"
-  | And -> "and"
-  | Lower -> "<"
-  | LowerEq -> "<="
-  | Higher -> ">"
-  | HigherEq -> ">="
-  | Eq -> "="
-  | Diff -> "<>") in
+      | Add -> "+"
+      | Sub -> "-"
+      | Mul -> "*"
+      | Div -> "Div"
+      | Mod -> "Mod"
+      | Or -> "or"
+      | And -> "and"
+      | Lower -> "<"
+      | LowerEq -> "<="
+      | Higher -> ">"
+      | HigherEq -> ">="
+      | Eq -> "="
+      | Diff -> "<>") in
   let print_mut conf prio f m = Mutable.Fixed.Deep.fold
       (print_mut0 "%a%a" "[%a]" "%a^.%s" conf) m f prio in
   {
@@ -92,8 +92,8 @@ let print_expr macros e f p =
   let open Format in
   let open Expr in
   let print_expr0 config e f prio_parent = match e with
-  | UnOp (a, Not) -> fprintf f "not(%a)" a nop
-  | _ -> print_expr0 config e f prio_parent
+    | UnOp (a, Not) -> fprintf f "not(%a)" a nop
+    | _ -> print_expr0 config e f prio_parent
   in
   let config = config macros in
   Fixed.Deep.fold (print_expr0 config) e f p
@@ -107,10 +107,10 @@ let print_instr macros i =
   let def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-        Format.fprintf f "%a^.%s := %a;"
-          print_varname name
-          fieldname
-          expr nop
+         Format.fprintf f "%a^.%s := %a;"
+           print_varname name
+           fieldname
+           expr nop
       ) sep_nl f li in
   let print f t expr = fprintf f "@[<h>Write(%a);@]" expr nop in
   let read t pp f =
@@ -122,73 +122,73 @@ let print_instr macros i =
       Tag _ | Untuple _ | SelfAffect _ | Unquote _-> assert false
     | Declare (var, _, expr, _) -> fprintf f "@[<h>%a@ :=@ %a;@]" print_varname var expr nop
     | Affect (mutable_, expr) ->
-        fprintf f "@[<h>%a@ :=@ %a;@]" (config.print_mut config nop) mutable_ expr nop
+      fprintf f "@[<h>%a@ :=@ %a;@]" (config.print_mut config nop) mutable_ expr nop
     | ClikeLoop (init, cond, incr, li) -> assert false
     | Loop (varname, expr1, expr2, li) -> fprintf f "@[<h>for@ %a@ :=@ %a@ to @ %a do@\n@]%a;"
-          print_varname varname expr1 nop expr2 nop bloc li
+                                            print_varname varname expr1 nop expr2 nop bloc li
     | While (expr, li) ->
-        fprintf f "@[<hov>while %a do@]@\n%a;" expr nop bloc li
+      fprintf f "@[<hov>while %a do@]@\n%a;" expr nop bloc li
     | Comment s -> fprintf f "{%s}" s
     | Return e -> fprintf f "@[<hov>exit(%a);@]" e nop
     | AllocRecord (name, t, el, _) ->
-        fprintf f "new(%a);@\n%a" print_varname name (def_fields name) el
+      fprintf f "new(%a);@\n%a" print_varname name (def_fields name) el
     | AllocArray (binding, type_, len, None, u) ->
-        fprintf f "@[<hov>SetLength(%a, %a);@]" print_varname binding len nop
+      fprintf f "@[<hov>SetLength(%a, %a);@]" print_varname binding len nop
     | AllocArray (binding, type_, len, Some ( (b, l) ), u) -> assert false
     | AllocArrayConst (b, t, len, e, opt) -> assert false
     | If (e, ifcase, elsecase) -> begin
         match elsecase with
         | [] -> fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v2>  %a;@]" e nop bloc ifcase
         | [instr] when instr.is_if ->
-            fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nelse %a;"
-              e nop bloc ifcase instr.p ()
+          fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nelse %a;"
+            e nop bloc ifcase instr.p ()
         | _ -> fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a;@]"
-              e nop bloc ifcase bloc elsecase
-    end
+                 e nop bloc ifcase bloc elsecase
+      end
     | Call (var, li) -> begin match StringMap.find_opt var macros with
-      | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
-      | None ->
+        | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
+        | None ->
           if li = [] then fprintf f "%s;" var
           else fprintf f "%s(%a);" var (print_list (fun f expr -> expr f nop) sep_c) li
-    end
+      end
     | Read li ->
-        let li = List.map (function
+      let li = List.map (function
           | Separation -> fun f -> fprintf f "@[<hov>skip();@]"
           | DeclRead (t, var, _option) -> read t (fun f () -> print_varname f var)
           | ReadExpr (t, m) -> read t (fun f () -> config.print_mut config nop f m)) li
-        in print_list (fun f e -> e f) sep_nl f li
+      in print_list (fun f e -> e f) sep_nl f li
     | Print li ->
-        let li = List.map (function
+      let li = List.map (function
           | StringConst str -> fun f -> print f Type.string (fun f prio -> config.print_lief prio f (Expr.String str))
           | PrintExpr (t, expr) -> fun f -> print f t expr ) li
-        in print_list (fun f e -> e f) sep_nl f li
+      in print_list (fun f e -> e f) sep_nl f li
   in
   {
-   is_multi_instr = false;
-   is_if=is_if i;
-   is_if_noelse=is_if_noelse i;
-   is_comment=is_comment i;
-   p=p;
-   default=();
-   print_lief = print_lief;
- }
+    is_multi_instr = false;
+    is_if=is_if i;
+    is_if_noelse=is_if_noelse i;
+    is_comment=is_comment i;
+    p=p;
+    default=();
+    print_lief = print_lief;
+  }
 
 let print_instr macros i =
   let open Ast.Instr.Fixed.Deep in
   fold (print_instr macros) (mapg (print_expr macros) i)
-    
+
 class pasPrinter = object(self)
   inherit Printer.printer as super
 
   val mutable declared_types : string TypeMap.t = TypeMap.empty
 
- method instr f t =
-   let macros = StringMap.map (fun (ty, params, li) ->
+  method instr f t =
+    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc (self#lang ()) li
         with Not_found -> List.assoc "" li) macros
-   in (print_instr macros t).p f ()
- 
+    in (print_instr macros t).p f ()
+
   method lang () = "pas"
 
   val mutable bindings = BindingSet.empty
@@ -217,25 +217,25 @@ class pasPrinter = object(self)
       self#funname funname
       (print_list
          (fun t (binding, type_) ->
-           Format.fprintf t "%a : %a"
-             self#binding binding
-             self#ptype type_
+            Format.fprintf t "%a : %a"
+              self#binding binding
+              self#ptype type_
          )
          sep_dc
       ) li
 
   method decl_function f funname t li =
-      Format.fprintf f "@[<h>function %a(%a) : %a;@]"
-        self#funname funname
-        (print_list
-           (fun t (binding, type_) ->
-             Format.fprintf t "%a : %a"
-               self#binding binding
-               self#ptype type_
-           )
-           sep_dc
-        ) li
-        self#ptype t
+    Format.fprintf f "@[<h>function %a(%a) : %a;@]"
+      self#funname funname
+      (print_list
+         (fun t (binding, type_) ->
+            Format.fprintf t "%a : %a"
+              self#binding binding
+              self#ptype type_
+         )
+         sep_dc
+      ) li
+      self#ptype t
 
   method print_proto f (funname, t, li) =
     match Type.unfix t with
@@ -258,33 +258,33 @@ class pasPrinter = object(self)
 
   method declare_type declared_types f t =
     Type.Fixed.Deep.fold_acc (fun declared_types t ->
-      match Type.unfix t with
-      | Type.Array _ -> begin match TypeMap.find_opt t declared_types with
-        | Some _ -> declared_types
-        | None ->
-            let name = Fresh.fresh_user () in
-            Format.fprintf f "type %s = %a;@\n" name self#ptype t;
-            TypeMap.add t name declared_types
-	    end
-      | _ -> declared_types
-    ) declared_types t
+        match Type.unfix t with
+        | Type.Array _ -> begin match TypeMap.find_opt t declared_types with
+            | Some _ -> declared_types
+            | None ->
+              let name = Fresh.fresh_user () in
+              Format.fprintf f "type %s = %a;@\n" name self#ptype t;
+              TypeMap.add t name declared_types
+          end
+        | _ -> declared_types
+      ) declared_types t
 
   method declare_types f instrs =
     declared_types <- List.fold_left
-      (Instr.Writer.Deep.fold
-         (fun declared_types i ->
-           match Instr.Fixed.unfix i with
-           | Instr.Declare (_, t, _, _) -> self#declare_type declared_types f t
-           | Instr.Read li ->
-               List.fold_left (fun declared_types -> function
-	               | Instr.DeclRead (t, _, _) -> self#declare_type declared_types f t
-                 | _ -> declared_types ) declared_types li
-           | Instr.AllocArray (_, t, _, _, _) -> self#declare_type declared_types f (Type.array t)
-           | Instr.AllocRecord (_, t, _, _) -> self#declare_type declared_types f t
-           | _ -> declared_types
-	 ))
-      declared_types
-      instrs
+        (Instr.Writer.Deep.fold
+           (fun declared_types i ->
+              match Instr.Fixed.unfix i with
+              | Instr.Declare (_, t, _, _) -> self#declare_type declared_types f t
+              | Instr.Read li ->
+                List.fold_left (fun declared_types -> function
+                    | Instr.DeclRead (t, _, _) -> self#declare_type declared_types f t
+                    | _ -> declared_types ) declared_types li
+              | Instr.AllocArray (_, t, _, _, _) -> self#declare_type declared_types f (Type.array t)
+              | Instr.AllocRecord (_, t, _, _) -> self#declare_type declared_types f t
+              | _ -> declared_types
+           ))
+        declared_types
+        instrs
 
   method declarevars f instrs =
     let bindings = self#declaredvars BindingMap.empty instrs
@@ -294,10 +294,10 @@ class pasPrinter = object(self)
       Format.fprintf f "@\n@[<v 2>var%a@]"
         (BindingMap.fold
            (fun key value next f () ->
-             Format.fprintf f "%a@\n%a : %a;"
-               next ()
-               self#binding key
-               self#ptype value
+              Format.fprintf f "%a@\n%a : %a;"
+                next ()
+                self#binding key
+                self#ptype value
            )
            bindings
            (fun f () -> ())
@@ -308,21 +308,21 @@ class pasPrinter = object(self)
     List.fold_left
       (Instr.Writer.Deep.fold
          (fun bindings i ->
-           match Instr.Fixed.unfix i with
-           | Instr.Loop (b, _, _, _) ->
-             BindingMap.add b Type.integer bindings
+            match Instr.Fixed.unfix i with
+            | Instr.Loop (b, _, _, _) ->
+              BindingMap.add b Type.integer bindings
 
-           | Instr.Read li ->
-               List.fold_left (fun bindings -> function
-                 | Instr.DeclRead (t, b, _) -> BindingMap.add b t bindings
-                 | _ -> bindings) bindings li
-           | Instr.Declare (b, t, _, _) ->
-             BindingMap.add b t bindings
-           | Instr.AllocArray (b, t, _, _, _) ->
-             BindingMap.add b (Type.array t) bindings
-           | Instr.AllocRecord (b, t, _, _) ->
-             BindingMap.add b t bindings
-           | _ -> bindings
+            | Instr.Read li ->
+              List.fold_left (fun bindings -> function
+                  | Instr.DeclRead (t, b, _) -> BindingMap.add b t bindings
+                  | _ -> bindings) bindings li
+            | Instr.Declare (b, t, _, _) ->
+              BindingMap.add b t bindings
+            | Instr.AllocArray (b, t, _, _, _) ->
+              BindingMap.add b (Type.array t) bindings
+            | Instr.AllocRecord (b, t, _, _) ->
+              BindingMap.add b t bindings
+            | _ -> bindings
          )
       )
       bindings
@@ -336,9 +336,9 @@ class pasPrinter = object(self)
     Format.fprintf f "program %s;@\n%a%s%s%s%s%s@\n%a%a.@\n@\n"
       prog.Prog.progname
       (fun f () ->
-        if Tags.is_taged "use_math" ||
-        Tags.is_taged "use_pascal_math"
-        then Format.fprintf f "Uses math;@\n"
+         if Tags.is_taged "use_math" ||
+            Tags.is_taged "use_pascal_math"
+         then Format.fprintf f "Uses math;@\n"
       ) ()
       (if need then "
 var global_char : char;
@@ -424,15 +424,15 @@ end;
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        Format.fprintf f "type@[<v>@\n%a=^%a_r;@\n%a_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
-          self#typename name
-          self#typename name
-          self#typename name
-          (print_list
-             (fun t (name, type_) ->
-               Format.fprintf t "%a : %a;" self#field name self#ptype type_
-             ) sep_nl
-          ) li
+      Format.fprintf f "type@[<v>@\n%a=^%a_r;@\n%a_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
+        self#typename name
+        self#typename name
+        self#typename name
+        (print_list
+           (fun t (name, type_) ->
+              Format.fprintf t "%a : %a;" self#field name self#ptype type_
+           ) sep_nl
+        ) li
     | Type.Enum li ->
       Format.fprintf f "Type %a = (@\n@[<v2>  %a@]);@\n"
         self#typename name

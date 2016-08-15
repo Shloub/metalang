@@ -45,8 +45,8 @@ let apply prog funs =
   in
 
   let used_functions = Passes.WalkCollectCalls.fold ()
-    {prog with Prog.funs = funs } in (* fonctions utilisées dans le
-                                        programme (stdlib non comprise) *)
+      {prog with Prog.funs = funs } in (* fonctions utilisées dans le
+                                          programme (stdlib non comprise) *)
   let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
   let prog = { prog with Prog.funs = funs} in
   prog

@@ -71,12 +71,12 @@ let mapname map = function
   | InternalName i -> InternalName i
 
 let rec mapty map t = match Type.unfix t with
-| Type.Integer | Type.String | Type.Char | Type.Void | Type.Bool | Type.Lexems | Type.Auto -> t
-| Type.Array t2 -> Type.array (mapty map t2)
-| Type.Struct li -> Type.struct_ (List.map (fun (name, t) -> mapname_field map name, mapty map t) li)
-| Type.Enum li -> Type.enum (List.map (mapname_enum map) li)
-| Type.Named n -> Type.named (mapname_ty map n)
-| Type.Tuple li -> Type.tuple (List.map (mapty map) li)
+  | Type.Integer | Type.String | Type.Char | Type.Void | Type.Bool | Type.Lexems | Type.Auto -> t
+  | Type.Array t2 -> Type.array (mapty map t2)
+  | Type.Struct li -> Type.struct_ (List.map (fun (name, t) -> mapname_field map name, mapty map t) li)
+  | Type.Enum li -> Type.enum (List.map (mapname_enum map) li)
+  | Type.Named n -> Type.named (mapname_ty map n)
+  | Type.Tuple li -> Type.tuple (List.map (mapty map) li)
 
 let rec mapmutable map m =
   match m |> Mutable.unfix with
@@ -88,15 +88,15 @@ let rec mapmutable map m =
 
 and process_expr map e =
   let f e = Expr.Fixed.fixa (Expr.Fixed.annot e) (match Expr.Fixed.unfix e with
-  | Expr.Access mutable_ ->
-      Expr.Access (mapmutable map mutable_)
-  | Expr.Call (funname, li) ->
-      Expr.Call (mapname_fun map funname, li)
-  | Expr.Lief (Expr.Enum e) -> Expr.Lief (Expr.Enum (mapname_enum map e))
-  | Expr.Record li ->
-      let li = List.map (fun (s, e) -> mapname_field map s, process_expr map e) li in
-      Expr.Record li
-  | e -> e)
+      | Expr.Access mutable_ ->
+        Expr.Access (mapmutable map mutable_)
+      | Expr.Call (funname, li) ->
+        Expr.Call (mapname_fun map funname, li)
+      | Expr.Lief (Expr.Enum e) -> Expr.Lief (Expr.Enum (mapname_enum map e))
+      | Expr.Record li ->
+        let li = List.map (fun (s, e) -> mapname_field map s, process_expr map e) li in
+        Expr.Record li
+      | e -> e)
   in Expr.Writer.Deep.map f e
 
 let rec process_instr map i =
@@ -126,26 +126,26 @@ let rec process_instr map i =
       Instr.AllocRecord (mapname map name, mapty map t,
                          (List.map
                             (fun (field, e) ->
-                              (mapname_field map field, process_expr map e))
+                               (mapname_field map field, process_expr map e))
                          ) el, opt)
     | Instr.If (e, li1, li2) ->
       Instr.If ((process_expr map e),
                 (List.map (process_instr map) li1 ),
                 (List.map (process_instr map) li2 )
-      )
+               )
     | Instr.Call (name, li) ->
       Instr.Call (mapname_fun map name, List.map (process_expr map) li)
     | Instr.Print li ->
-        let li = List.map (function
+      let li = List.map (function
           | Instr.StringConst str -> Instr.StringConst str
           | Instr.PrintExpr (t, e) -> Instr.PrintExpr (mapty map t, process_expr map e)) li
-        in Instr.Print li
+      in Instr.Print li
     | Instr.Read li ->
-        let li = List.map (function
+      let li = List.map (function
           | Instr.Separation -> Instr.Separation
           | Instr.DeclRead (t, v, opt) -> Instr.DeclRead (mapty map t, mapname map v, opt)
           | Instr.ReadExpr (t, m) -> Instr.ReadExpr (mapty map t, mapmutable map m)) li
-        in Instr.Read li
+      in Instr.Read li
     | Instr.Untuple (li, e, opt)->
       Instr.Untuple (List.map (fun (t, n) -> mapty map t, mapname map n) li, process_expr map e, opt)
   in Instr.Fixed.fixa (Instr.Fixed.annot i) i2
@@ -158,6 +158,6 @@ let process acc p =
                       (List.map (fun (n, t) -> (mapname acc n),  mapty acc t) params),
                       (List.map (process_instr acc) instrs), opt)
     | Prog.DeclareType (tyname, ty) ->
-        Prog.DeclareType (mapname_ty acc tyname, mapty acc ty)
+      Prog.DeclareType (mapname_ty acc tyname, mapty acc ty)
     | _ -> p
   in acc, p

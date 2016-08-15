@@ -56,5 +56,5 @@ exception Error of (Format.formatter -> unit);;
 
 let err funname msg =
   raise (Error (fun f ->
-    Format.fprintf f
-      "Error : in function %s,@\n@[<h>  %a@]@\n" funname msg ()))
+      Format.fprintf f
+        "Error : in function %s,@\n@[<h>  %a@]@\n" funname msg ()))

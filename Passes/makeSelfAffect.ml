@@ -41,23 +41,23 @@ let init_acc conf = conf
 
 let process acc li =
   List.fold_left_map (fun ((incr, li) as acc) i ->
-    Instr.Writer.Deep.foldmap (fun acc i -> match Instr.unfix i with
-    | Instr.Affect (m, Expr.Fixed.F(_, Expr.BinOp (
-                                    Expr.Fixed.F (_, Expr.Access m2),
-                                    ((Expr.Add | Expr.Sub) as op),
-                                    Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1))
-                                   ))) when incr && List.mem op li &&
-                                     Mutable.equals Expr.equals m m2 ->
-                                       let i0 = match op with
-                                       | Expr.Add -> Instr.Incr m
-                                       | Expr.Sub -> Instr.Decr m
-                                       in acc, Instr.Fixed.fixa (Instr.Fixed.annot i) i0
-    | Instr.Affect (m, Expr.Fixed.F(_, Expr.BinOp (
-                                    Expr.Fixed.F (_, Expr.Access m2),
-                                    op,
-                                    expr))) when List.mem op li &&
-                                      Mutable.equals Expr.equals m m2
-      ->
-        acc, Instr.SelfAffect (m, op, expr) |> Instr.Fixed.fixa (Instr.Fixed.annot i)
-      | _ -> acc, i) acc i
-                     ) acc li
+      Instr.Writer.Deep.foldmap (fun acc i -> match Instr.unfix i with
+          | Instr.Affect (m, Expr.Fixed.F(_, Expr.BinOp (
+              Expr.Fixed.F (_, Expr.Access m2),
+              ((Expr.Add | Expr.Sub) as op),
+              Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1))
+            ))) when incr && List.mem op li &&
+                     Mutable.equals Expr.equals m m2 ->
+            let i0 = match op with
+              | Expr.Add -> Instr.Incr m
+              | Expr.Sub -> Instr.Decr m
+            in acc, Instr.Fixed.fixa (Instr.Fixed.annot i) i0
+          | Instr.Affect (m, Expr.Fixed.F(_, Expr.BinOp (
+              Expr.Fixed.F (_, Expr.Access m2),
+              op,
+              expr))) when List.mem op li &&
+                           Mutable.equals Expr.equals m m2
+            ->
+            acc, Instr.SelfAffect (m, op, expr) |> Instr.Fixed.fixa (Instr.Fixed.annot i)
+          | _ -> acc, i) acc i
+    ) acc li

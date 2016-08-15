@@ -38,50 +38,50 @@ open AstFun
 
 let combine_prints li =
   let formats, exprs = List.fold_left (fun (formats, exprs) (e, ty) ->
-				       match Expr.unfix e with
-				       | Expr.Lief (Expr.String s) ->
-					  (Expr.StringConstant s) :: formats, exprs
-				       | _ -> let f = match Ast.Type.unfix ty with
-						| Ast.Type.Integer -> Expr.IntFormat
-						| Ast.Type.String -> Expr.StringFormat
-						| Ast.Type.Char -> Expr.CharFormat
-						| _ -> assert false
-					      in  f:: formats, (e, ty) :: exprs
-				      ) ([], []) li
+      match Expr.unfix e with
+      | Expr.Lief (Expr.String s) ->
+        (Expr.StringConstant s) :: formats, exprs
+      | _ -> let f = match Ast.Type.unfix ty with
+          | Ast.Type.Integer -> Expr.IntFormat
+          | Ast.Type.String -> Expr.StringFormat
+          | Ast.Type.Char -> Expr.CharFormat
+          | _ -> assert false
+        in  f:: formats, (e, ty) :: exprs
+    ) ([], []) li
   in List.rev formats, List.rev exprs
 
 let rec extract_prints acc = function
   | [] -> List.rev acc, []
   | hd::tl -> match Expr.unfix hd with
-	      | Expr.Block li -> extract_prints acc (List.append tl li)
-	      | Expr.Print (e, ty) -> extract_prints ((e, ty)::acc) tl
-	      | _ -> List.rev acc, hd::tl
+    | Expr.Block li -> extract_prints acc (List.append tl li)
+    | Expr.Print (e, ty) -> extract_prints ((e, ty)::acc) tl
+    | _ -> List.rev acc, hd::tl
 
 let rec merge li =
   if li = [] then [] else
     let prints, li2 = extract_prints [] li in
     match prints with
     | [] | [_] ->
-	    begin match li with
-		    | hd::tl -> hd::(merge tl)
-		    | _ -> li
-	    end
+      begin match li with
+        | hd::tl -> hd::(merge tl)
+        | _ -> li
+      end
     | _ ->
-       let formats, lie = combine_prints prints in
-       (Expr.multiprint formats lie) :: (merge li2)
+      let formats, lie = combine_prints prints in
+      (Expr.multiprint formats lie) :: (merge li2)
 
 let tr e = match Expr.unfix e with
   | Expr.Block li ->
-     begin match merge li with
-	   | [item] -> item
-	   | li -> Expr.block li
-     end
+    begin match merge li with
+      | [item] -> item
+      | li -> Expr.block li
+    end
   | _ -> e
 
 let apply p =
   let declarations = List.map (function
-  | Declaration (name, e) -> Declaration (name, Expr.Fixed.Deep.map tr e)
-  | x -> x
-  ) p.declarations
+      | Declaration (name, e) -> Declaration (name, Expr.Fixed.Deep.map tr e)
+      | x -> x
+    ) p.declarations
   in {p with declarations = declarations }
 

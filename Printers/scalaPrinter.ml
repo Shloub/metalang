@@ -65,7 +65,7 @@ let skip = "def skip() {
 }
   "
 
-  
+
 let print_mut conf prio f m = Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "(%a)" "%a.%s" conf) m f prio
 
@@ -75,8 +75,8 @@ let print_lief prio f l =
   | Char c -> unicode f c
   | String s -> fprintf f "%S" s
   | Integer i ->
-      if i < 0 then parens prio (-1) f "%i" i
-      else Format.fprintf f "%i" i
+    if i < 0 then parens prio (-1) f "%i" i
+    else Format.fprintf f "%i" i
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
   | Enum s -> fprintf f "%s" s
@@ -96,117 +96,117 @@ let print_expr tyenv config e f p =
   let open Format in
   let open Expr in
   let print_expr0 config e f prio_parent = match e with
-  | Record li -> begin match li with
-    | (field, _)::_ ->
-        let t = Typer.typename_for_field field tyenv in
-        fprintf f "new %s(%a)"
-          (String.capitalize t)
-          (print_list
-             (fun f (_fieldname, expr) -> expr f nop) sep_c
-          )
-          li
-    | _ -> assert false
-  end
-  | _ -> print_expr0 config e f prio_parent in
+    | Record li -> begin match li with
+        | (field, _)::_ ->
+          let t = Typer.typename_for_field field tyenv in
+          fprintf f "new %s(%a)"
+            (String.capitalize t)
+            (print_list
+               (fun f (_fieldname, expr) -> expr f nop) sep_c
+            )
+            li
+        | _ -> assert false
+      end
+    | _ -> print_expr0 config e f prio_parent in
   Fixed.Deep.fold (print_expr0 config) e f p
 
 let ptype f ty =
   let open Type in
   let open Format in
   let ptype ty f () = match ty with
-  | Integer -> fprintf f "Int"
-  | String -> fprintf f "String"
-  | Array a -> fprintf f "Array[%a]" a ()
-  | Void ->  fprintf f "Unit"
-  | Bool -> fprintf f "Boolean"
-  | Char -> fprintf f "Char"
-  | Named n -> fprintf f "%s" (String.capitalize n)
-  | Enum _ -> fprintf f "an enum"
-  | Struct _ -> fprintf f "a struct"
-  | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f ()) sep_c) li
-  | Auto | Lexems -> assert false
+    | Integer -> fprintf f "Int"
+    | String -> fprintf f "String"
+    | Array a -> fprintf f "Array[%a]" a ()
+    | Void ->  fprintf f "Unit"
+    | Bool -> fprintf f "Boolean"
+    | Char -> fprintf f "Char"
+    | Named n -> fprintf f "%s" (String.capitalize n)
+    | Enum _ -> fprintf f "an enum"
+    | Struct _ -> fprintf f "a struct"
+    | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f ()) sep_c) li
+    | Auto | Lexems -> assert false
   in Fixed.Deep.fold ptype ty f ()
 
 let print_instr c i =
   let open Ast.Instr in
   let open Format in
   let p f pend = match i with
-  | Declare (var, ty, e, _) -> fprintf f "var %a: %a = %a%a" c.print_varname var
-        ptype ty e nop pend ()
+    | Declare (var, ty, e, _) -> fprintf f "var %a: %a = %a%a" c.print_varname var
+                                   ptype ty e nop pend ()
     | SelfAffect (mut, op, e) -> fprintf f "%a %a= %a%a" (c.print_mut c nop) mut c.print_op op e nop pend ()
     | Affect (mut, e) -> fprintf f "%a = %a%a" (c.print_mut c nop) mut e nop pend ()
     | Loop (var, e1, e2, li) -> fprintf f "for (%a <- %a to %a)%a"
-          c.print_varname var e1 nop e2 nop
-          block li
+                                  c.print_varname var e1 nop e2 nop
+                                  block li
     | ClikeLoop (init, cond, incr, li) -> assert false
     | While (e, li) -> fprintf f "while (@[<h>%a@])%a" e nop block li
     | Comment s -> fprintf f "/*%s*/" s
     | Tag s -> fprintf f "/*%S*/" s
     | Return e -> fprintf f "return %a%a" e nop pend ()
     | AllocArray (name, t, e, None, opt) -> fprintf f "@[<h>var %a@ :Array[%a]@ =@ new Array[%a](%a)%a@]"
-          c.print_varname name
-          ptype t ptype t
-          e nop
-          pend ()
+                                              c.print_varname name
+                                              ptype t ptype t
+                                              e nop
+                                              pend ()
     | AllocArray (name, t, e, Some (var, lambda), opt) -> assert false
     | AllocArrayConst (name, ty, len, lief, opt) ->
-        fprintf f "@[<h>%a = array_fill(0, %a, %a)%a@]" c.print_varname name
-          len nop (c.print_lief nop) lief pend ()
+      fprintf f "@[<h>%a = array_fill(0, %a, %a)%a@]" c.print_varname name
+        len nop (c.print_lief nop) lief pend ()
     | AllocRecord (name, ty, list, opt) ->
-        fprintf f "@[<v 4>var %a = {@\n%a}%a@]" c.print_varname name
-          (print_list (fun f (field, x) -> fprintf f "%S:%a" field x nop) (sep "%a,@\n%a")) list
-          pend ()
+      fprintf f "@[<v 4>var %a = {@\n%a}%a@]" c.print_varname name
+        (print_list (fun f (field, x) -> fprintf f "%S:%a" field x nop) (sep "%a,@\n%a")) list
+        pend ()
     | If (e, listif, []) ->
-        fprintf f "if (%a)%a" e nop block listif
+      fprintf f "if (%a)%a" e nop block listif
     | If (e, listif, [elsecase]) when elsecase.is_if ->
-        fprintf f "if (%a)%a@\n@[<v 4>else@\n%a@]" e nop block_ifcase listif elsecase.p seppt
+      fprintf f "if (%a)%a@\n@[<v 4>else@\n%a@]" e nop block_ifcase listif elsecase.p seppt
     | If (e, listif, listelse) ->
-        fprintf f "if (%a)%a@\nelse%a" e nop block_ifcase listif block listelse
+      fprintf f "if (%a)%a@\nelse%a" e nop block_ifcase listif block listelse
     | Call (func, li) ->  begin match StringMap.find_opt func c.macros with
-      | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
-      | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
-    end
+        | Some ( (t, params, code) ) -> pmacros f "%s;" t params code li nop
+        | None -> fprintf f "%s(%a)%a" func (print_list (fun f x -> x f nop) sep_c) li pend ()
+      end
     | Print li->
-        let format, exprs = extract_multi_print clike_noformat format_type li in
-        begin match exprs with
+      let format, exprs = extract_multi_print clike_noformat format_type li in
+      begin match exprs with
         | [] -> fprintf f "printf(\"%s\")%a" format pend ()
         | _ -> fprintf f "printf(\"%s\", %a)%a" format
-              (print_list (fun f (t, e) -> e f nop) sep_c) exprs pend ()
-        end
+                 (print_list (fun f (t, e) -> e f nop) sep_c) exprs pend ()
+      end
     | Read li ->
-        print_list
-          (fun f -> function
-            | Separation -> Format.fprintf f "@[skip()%a@]" pend ()
-            | DeclRead (ty, v, opt) ->
-                begin match Ast.Type.unfix ty with
-                | Ast.Type.Char -> fprintf f "@[var %a = read_char()%a@]" c.print_varname v pend ()
-                | Ast.Type.Integer -> fprintf f "@[var %a = read_int()%a@]" c.print_varname v pend ()
-                | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                      (Type.type_t_to_string ty)))
-                end
-            | ReadExpr (ty, mut) ->
-                begin match Ast.Type.unfix ty with
-                | Ast.Type.Char -> fprintf f "@[%a = read_char()%a@]" (c.print_mut c nop) mut pend ()
-                | Ast.Type.Integer -> fprintf f "@[%a = read_int()%a@]" (c.print_mut c nop) mut pend ()
-                | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
-                      (Type.type_t_to_string ty)))
-                end
-          ) sep_nl f li
+      print_list
+        (fun f -> function
+           | Separation -> Format.fprintf f "@[skip()%a@]" pend ()
+           | DeclRead (ty, v, opt) ->
+             begin match Ast.Type.unfix ty with
+               | Ast.Type.Char -> fprintf f "@[var %a = read_char()%a@]" c.print_varname v pend ()
+               | Ast.Type.Integer -> fprintf f "@[var %a = read_int()%a@]" c.print_varname v pend ()
+               | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                                              (Type.type_t_to_string ty)))
+             end
+           | ReadExpr (ty, mut) ->
+             begin match Ast.Type.unfix ty with
+               | Ast.Type.Char -> fprintf f "@[%a = read_char()%a@]" (c.print_mut c nop) mut pend ()
+               | Ast.Type.Integer -> fprintf f "@[%a = read_int()%a@]" (c.print_mut c nop) mut pend ()
+               | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot read type %s"
+                                              (Type.type_t_to_string ty)))
+             end
+        ) sep_nl f li
     | Untuple (li, expr, opt) -> fprintf f "var (%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
     | Unquote e -> assert false in
   let is_multi_instr = match i with
-  | Read (hd::tl) -> true
-  | Declare _ -> true
-  | _ -> false in
+    | Read (hd::tl) -> true
+    | Declare _ -> true
+    | _ -> false in
   {
-   is_multi_instr = is_multi_instr;
-   is_if=is_if i;
-   is_if_noelse=is_if_noelse i;
-   is_comment=is_comment i;
-   p=p;
-   default = seppt;
-   print_lief = c.print_lief;
- }
+    is_multi_instr = is_multi_instr;
+    is_if=is_if i;
+    is_if_noelse=is_if_noelse i;
+    is_comment=is_comment i;
+    p=p;
+    default = seppt;
+    print_lief = c.print_lief;
+  }
 
 let print_instr tyenv macros i =
   let open Ast.Instr.Fixed.Deep in
@@ -218,12 +218,12 @@ class scalaPrinter = object(self)
   inherit Printer.printer as printer
 
   method instr f t =
-   let macros = StringMap.map (fun (ty, params, li) ->
+    let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc (self#lang ()) li
         with Not_found -> List.assoc "" li) macros
-   in (print_instr (self#getTyperEnv ()) macros t) f
-     
+    in (print_instr (self#getTyperEnv ()) macros t) f
+
   method lang () = "scala"
 
   method header f prog =
@@ -236,7 +236,7 @@ class scalaPrinter = object(self)
       (if need_readint then readint else "")
       (if need_readchar then readchar else "")
       (if need_stdinsep then skip else "")
-     
+
   method prog f prog =
     Format.fprintf f
       "object %s@\n@[<v 2>{@\n%a%a@\n%a@]@\n}@\n"
@@ -249,35 +249,35 @@ class scalaPrinter = object(self)
   val mutable refbindings = BindingSet.empty
 
   method ref_alias f li = match li with
-  | [] -> ()
-  | (name, _) :: tl ->
-    let b = BindingSet.mem name refbindings in
-    if b then
-      Format.fprintf f "var %a = _%a;@\n%a"
-        self#binding name
-        self#binding name
-        self#ref_alias tl
-    else
-      self#ref_alias f tl
+    | [] -> ()
+    | (name, _) :: tl ->
+      let b = BindingSet.mem name refbindings in
+      if b then
+        Format.fprintf f "var %a = _%a;@\n%a"
+          self#binding name
+          self#binding name
+          self#ref_alias tl
+      else
+        self#ref_alias f tl
 
- method print_fun f funname (t : unit Type.Fixed.t) li instrs =
-   self#calc_refs instrs;
-   Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a%a@]@\n}@\n"
-     self#print_proto (funname, t, li)
-     self#ref_alias li
-     self#instructions instrs
-     
+  method print_fun f funname (t : unit Type.Fixed.t) li instrs =
+    self#calc_refs instrs;
+    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a%a@]@\n}@\n"
+      self#print_proto (funname, t, li)
+      self#ref_alias li
+      self#instructions instrs
+
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
     let g acc i =
       match Instr.unfix i with
       | Instr.Read li ->
-          List.fold_left (fun acc -> function
+        List.fold_left (fun acc -> function
             | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
             | _ -> acc) acc li
       | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _)
       | Instr.SelfAffect (Mutable.Fixed.F (_, Mutable.Var varname), _, _) ->
-          BindingSet.add varname acc
+        BindingSet.add varname acc
       | _ -> acc
     in let g acc i = Instr.Writer.Deep.fold g (g acc i) i
     in refbindings <- List.fold_left g BindingSet.empty instrs
@@ -287,16 +287,16 @@ class scalaPrinter = object(self)
       self#funname funname
       (print_list
          (fun t (binding, type_) ->
-           if BindingSet.mem binding refbindings then
-             Format.fprintf t "_%a :@ %a" self#binding binding self#ptype type_
-           else
-             Format.fprintf t "%a :@ %a" self#binding binding self#ptype type_
+            if BindingSet.mem binding refbindings then
+              Format.fprintf t "_%a :@ %a" self#binding binding self#ptype type_
+            else
+              Format.fprintf t "%a :@ %a" self#binding binding self#ptype type_
          ) sep_c
       ) li
       (fun f t ->
-        match Type.unfix t with
-        | Type.Void -> ()
-        | _ -> Format.fprintf f ": %a = " self#ptype t
+         match Type.unfix t with
+         | Type.Void -> ()
+         | _ -> Format.fprintf f ": %a = " self#ptype t
       ) t
 
   method main f main =
@@ -310,25 +310,25 @@ class scalaPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        (* TODO trier les champs *)
-        Format.fprintf f "class %a(%a){@\n@[<v 2>  %a@]@\n}@\n"
-          self#typename name
-          (print_list
-             (fun t (name, type_) ->
-               Format.fprintf t "_%a: %a" self#field name self#ptype type_
-             ) sep_c
-          ) li
-          (print_list
-             (fun t (name, type_) ->
-               Format.fprintf t "var %a: %a=_%a%a" self#field name self#ptype type_ self#field name self#separator ()
-             ) sep_nl
-          ) li
+      (* TODO trier les champs *)
+      Format.fprintf f "class %a(%a){@\n@[<v 2>  %a@]@\n}@\n"
+        self#typename name
+        (print_list
+           (fun t (name, type_) ->
+              Format.fprintf t "_%a: %a" self#field name self#ptype type_
+           ) sep_c
+        ) li
+        (print_list
+           (fun t (name, type_) ->
+              Format.fprintf t "var %a: %a=_%a%a" self#field name self#ptype type_ self#field name self#separator ()
+           ) sep_nl
+        ) li
     | Type.Enum li ->
       Format.fprintf f "object %a extends Enumeration {@\n  type %a = Value;@\n  val %a = Value@\n}@\nimport %a._"
         self#typename name
         self#typename name
         (print_list (fun f s -> Format.fprintf f "%s" s) sep_c) li
-          self#typename name
+        self#typename name
     | _ -> assert false
 
 end

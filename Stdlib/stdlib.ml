@@ -63,7 +63,7 @@ let float_of_bool = float_of_int @* int_of_bool
 (** {missing functions in pervasives} *)
 
 let xor a b = (a && not b) || (b && not a)
-                            
+
 (** {2 Standard modules } *)
 
 module Int = struct
@@ -131,8 +131,8 @@ end
 *)
 module Either = struct
   type ('a, 'b) t =
-  | A of 'a
-  | B of 'b
+    | A of 'a
+    | B of 'b
 end
 
 (**
@@ -146,7 +146,7 @@ module List = struct
       | [] -> List.rev (List.rev acc1 :: acc2)
       | hd::tl -> if i = 1 then
           f [hd] (List.rev acc1::acc2) n tl
-      else f (hd::acc1) acc2 (i - 1) tl
+        else f (hd::acc1) acc2 (i - 1) tl
     in f [] [] (n +1) li
 
   (* TODO faire plus efficace*)
@@ -155,8 +155,8 @@ module List = struct
   let indexof item li =
     fold_left
       (fun (found, index) i ->
-        if i = item then index, index + 1
-        else (found, index + 1)
+         if i = item then index, index + 1
+         else (found, index + 1)
       ) (-1, 0) li |> fst
 
   let zip = combine
@@ -177,8 +177,8 @@ module List = struct
     if n = 0
     then item :: li
     else match li with
-    | hd::tl -> hd :: insert (n - 1) item tl
-    | [] -> invalid_arg "List.insert"
+      | hd::tl -> hd :: insert (n - 1) item tl
+      | [] -> invalid_arg "List.insert"
 
   let rec last = function
     | [] -> invalid_arg "List.last"
@@ -269,7 +269,7 @@ module String = struct
     try for i = 0 to length s - 1 do
         if s.[i] <> s'.[i + from] then raise Not_found
       done ;
-        true
+      true
     with Not_found -> false
 
   let index s s' from =
@@ -288,15 +288,15 @@ module String = struct
     let l = String.length s in
     let l' = String.length s' in
     if l' > l then false else
-    let s = String.sub s (l - l') l' in
-    s = s'
+      let s = String.sub s (l - l') l' in
+      s = s'
 
   let starts_with s s' =
     let l = String.length s in
     let l' = String.length s' in
     if l' > l then false else
-    let s = String.sub s 0 l' in
-    s = s'
+      let s = String.sub s 0 l' in
+      s = s'
 
   let is_prefix s s' = match_from s s' 0
 
@@ -337,9 +337,9 @@ module String = struct
     let buf = Buffer.create (String.length s) in
     let add c = Buffer.add_char buf c ; false in
     ignore $ fold_left (fun escaped c ->
-      if not escaped
-      then c = '\\' || add c
-      else add (escape c)) false s ;
+        if not escaped
+        then c = '\\' || add c
+        else add (escape c)) false s ;
     Buffer.contents buf
 
   let replace a b c =
@@ -391,36 +391,36 @@ module MakeSet (K : Set.OrderedType) : SigSet with type elt = K.t = struct
 end
 
 module type SigMap = sig
-    type key
-    type 'a t
-    val empty : 'a t
-    val is_empty : 'a t -> bool
-    val mem : key -> 'a t -> bool
-    val add : key -> 'a -> 'a t -> 'a t
-    val singleton : key -> 'a -> 'a t
-    val remove : key -> 'a t -> 'a t
-    val compare : ('a -> 'a -> int) -> 'a t -> 'a t -> int
-    val equal : ('a -> 'a -> bool) -> 'a t -> 'a t -> bool
-    val iter : (key -> 'a -> unit) -> 'a t -> unit
-    val fold : (key -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
-    val for_all : (key -> 'a -> bool) -> 'a t -> bool
-    val exists : (key -> 'a -> bool) -> 'a t -> bool
-    val filter : (key -> 'a -> bool) -> 'a t -> 'a t
-    val partition : (key -> 'a -> bool) -> 'a t -> 'a t * 'a t
-    val cardinal : 'a t -> int
-    val bindings : 'a t -> (key * 'a) list
-    val min_binding : 'a t -> key * 'a
-    val max_binding : 'a t -> key * 'a
-    val choose : 'a t -> key * 'a
-    val split : key -> 'a t -> 'a t * 'a option * 'a t
-    val find : key -> 'a t -> 'a
-    val map : ('a -> 'b) -> 'a t -> 'b t
-    val mapi : (key -> 'a -> 'b) -> 'a t -> 'b t
-    val merge : (key -> 'a option -> 'a option -> 'a option) -> 'a t -> 'a t -> 'a t
-    val to_list : 'a t -> (key * 'a) list
-    val from_list : (key * 'a) list -> 'a t
-    val find_opt : key -> 'a t -> 'a option
-  end
+  type key
+  type 'a t
+  val empty : 'a t
+  val is_empty : 'a t -> bool
+  val mem : key -> 'a t -> bool
+  val add : key -> 'a -> 'a t -> 'a t
+  val singleton : key -> 'a -> 'a t
+  val remove : key -> 'a t -> 'a t
+  val compare : ('a -> 'a -> int) -> 'a t -> 'a t -> int
+  val equal : ('a -> 'a -> bool) -> 'a t -> 'a t -> bool
+  val iter : (key -> 'a -> unit) -> 'a t -> unit
+  val fold : (key -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
+  val for_all : (key -> 'a -> bool) -> 'a t -> bool
+  val exists : (key -> 'a -> bool) -> 'a t -> bool
+  val filter : (key -> 'a -> bool) -> 'a t -> 'a t
+  val partition : (key -> 'a -> bool) -> 'a t -> 'a t * 'a t
+  val cardinal : 'a t -> int
+  val bindings : 'a t -> (key * 'a) list
+  val min_binding : 'a t -> key * 'a
+  val max_binding : 'a t -> key * 'a
+  val choose : 'a t -> key * 'a
+  val split : key -> 'a t -> 'a t * 'a option * 'a t
+  val find : key -> 'a t -> 'a
+  val map : ('a -> 'b) -> 'a t -> 'b t
+  val mapi : (key -> 'a -> 'b) -> 'a t -> 'b t
+  val merge : (key -> 'a option -> 'a option -> 'a option) -> 'a t -> 'a t -> 'a t
+  val to_list : 'a t -> (key * 'a) list
+  val from_list : (key * 'a) list -> 'a t
+  val find_opt : key -> 'a t -> 'a option
+end
 module MakeMap (K : Map.OrderedType) = struct
   include Map.Make (K)
   let to_list map = fold (curry cons) map []
@@ -498,9 +498,9 @@ module Applicatives = struct
       acc
   end
   module Accumule (Acc : sig type t
-    val merge : t -> t -> t
-    val zero : t
-  end) = struct
+      val merge : t -> t -> t
+      val zero : t
+    end) = struct
     type 'a t = Acc.t * 'a
     let ret x = Acc.zero, x
     let (<*>) (acc1, f1) (acc2, x) = Acc.merge acc1 acc2, f1 x
@@ -603,8 +603,8 @@ module Fix2 (F : Fixable2) = struct
 
     let rec fold_acc f acc ((F(i, x)) as orig) =
       let acc = Surface.fold (fun acc x ->
-        let acc = fold_acc f acc x in
-        f acc orig) acc x
+          let acc = fold_acc f acc x in
+          f acc orig) acc x
       in f acc orig
 
     let rec foldorig f (F(i, x) as orig)  = f orig (Surface.map (foldorig f) x)
@@ -699,9 +699,9 @@ module Printers = struct
       | [] -> ()
       | [hd] -> func t hd
       | hd::tl ->
-          sep
-            t
-            func hd
-            p tl
+        sep
+          t
+          func hd
+          p tl
     in p f li
 end
