@@ -44,28 +44,30 @@ let print_lief f l =
 let prio_arg = -105
 let prio_tuple = -103
 let prio_apply = -101
-
-let print_expr refbindings macros e f p =
+let print_mut0 refbindings m f () =
   let open Format in
-  let open Ast.Expr in
-  let print_op f op = fprintf f "%s" (OcamlFunPrinter.binopstr op) in
-  let print_mut0 m f () =
-    let open Mutable in match m with
+  let open Mutable in match m with
     | Var v ->
         if BindingSet.mem v refbindings
         then fprintf f "(!%a)" print_varname v
         else print_varname f v
     | Array (m, fi) -> fprintf f "%a%a" m ()
           (print_list (fun f a -> fprintf f ".(%a)" a nop) (sep "%a%a")) fi
-    | Dot (m, field) -> fprintf f "%a.%s" m () field in
-  let print_mut f m = Mutable.Fixed.Deep.fold print_mut0 m f in
+    | Dot (m, field) -> fprintf f "%a.%s" m () field
+                                
+let print_mut refbindings f m = Mutable.Fixed.Deep.fold (print_mut0 refbindings) m f ()
+
+let print_expr refbindings macros e f p =
+  let open Format in
+  let open Ast.Expr in
+  let print_op f op = fprintf f "%s" (OcamlFunPrinter.binopstr op) in
   let print_expr0 e f prio_parent = match e with
   | BinOp (a, op, b) ->
       let prio, priol, prior = prio_binop op in
       parens prio_parent prio f "%a %a %a" a priol print_op op b prior
   | UnOp (a, op) -> parens prio_parent prio_apply f "%s %a" (OcamlFunPrinter.unopstr op) a prio_arg
   | Lief l -> print_lief f l
-  | Access m -> print_mut f m ()
+  | Access m -> print_mut refbindings f m
   | Call (func, li) ->
       begin match StringMap.find_opt func macros with
       | Some ( (t, params, code) ) ->
