@@ -39,9 +39,9 @@ let readInt () =
   loop 0
 (* lit un sudoku sur l'entrée standard *)
 let read_sudoku () : int array =
-  let out0 = Array.init (9 * 9) (fun _i ->
+  let out0 = Array.init (9 * 9) (fun i ->
     let k = readInt()
-    stdin_sep();
+    stdin_sep()
     k)
   out0
 
@@ -52,11 +52,9 @@ let print_sudoku (sudoku0:int array) =
       Printf.printf "%d " sudoku0.[x + y * 9]
       if x % 3 = 2 then
         Printf.printf " "
-        
     Printf.printf "\n"
     if y % 3 = 2 then
       Printf.printf "\n"
-      
   Printf.printf "\n"
 
 (* dit si les variables sont toutes différentes *)
@@ -69,7 +67,6 @@ let sudoku_done (s:int array) : bool =
   for i = 0 to 80 do
     if s.[i] = 0 then
       raise (Found_1(false))
-      
   true
   with Found_1 (out) -> out
 
@@ -87,36 +84,31 @@ let sudoku_error (s:int array) : bool =
   (!out1) || (!out2) || (!out3)
 
 (* résout le sudoku*)
-exception Found_2 of bool
 
 let rec solve (sudoku0:int array) : bool =
   try
   if sudoku_error sudoku0 then
     false
-    
-  else if sudoku_done sudoku0 then
-    true
-    
   else
+    if sudoku_done sudoku0 then
+      true
+    else
       for i = 0 to 80 do
         if sudoku0.[i] = 0 then
-            for p = 1 to 9 do
-              sudoku0.[i] <- p
-              if solve sudoku0 then
-                raise (Found_2(true))
-                
-            sudoku0.[i] <- 0
-            raise (Found_2(false))
+          for p = 1 to 9 do
+            sudoku0.[i] <- p
+            if solve sudoku0 then
+              raise (Found_1(true))
+          sudoku0.[i] <- 0
+          raise (Found_1(false))
       false
-  with Found_2 (out) -> out
+  with Found_1 (out) -> out
 
 let () =
   let sudoku0 = read_sudoku ()
   print_sudoku sudoku0
   if solve sudoku0 then
     print_sudoku sudoku0
-    
   else
     Printf.printf "no solution\n"
-    
  

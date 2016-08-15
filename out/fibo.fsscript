@@ -44,7 +44,7 @@ let fibo0 a b i =
   let out0 = ref( 0 )
   let a2 = ref( a )
   let b2 = ref( b )
-  for _j = 0 to i + 1 do
+  for j = 0 to i + 1 do
     out0 := (!out0) + (!a2)
     let tmp = (!b2)
     b2 := (!b2) + (!a2)
@@ -56,9 +56,9 @@ let () =
   let b = ref( 0 )
   let i = ref( 0 )
   a := readInt()
-  stdin_sep();
+  stdin_sep()
   b := readInt()
-  stdin_sep();
+  stdin_sep()
   i := readInt()
   Printf.printf "%d" (fibo0 (!a) (!b) (!i))
  

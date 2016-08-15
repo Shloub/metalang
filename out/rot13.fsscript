@@ -47,14 +47,13 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 *)
 let () =
   let strlen = readInt()
-  stdin_sep();
-  let tab4 = Array.init strlen (fun _toto ->
+  stdin_sep()
+  let tab4 = Array.init strlen (fun toto ->
     let tmpc = readChar()
-    let c = ref( int (tmpc) )
+    let c = ref( (int (tmpc)) )
     if tmpc <> ' ' then
-      c := ((!c) - int ('a') + 13) % 26 + int ('a')
-      
-    char ((!c)))
+      c := ((!c) - (int ('a')) + 13) % 26 + (int ('a'))
+    (char ((!c))))
   for j = 0 to strlen - 1 do
     Printf.printf "%c" tab4.[j]
  

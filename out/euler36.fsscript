@@ -8,46 +8,44 @@ let palindrome2 (pow2:int array) n : bool =
   for j = 1 to 19 do
     if t.[j] then
       nnum := j
-      
   for k = 0 to (!nnum) / 2 do
     if t.[k] <> t.[(!nnum) - k] then
       raise (Found_1(false))
-      
   true
   with Found_1 (out) -> out
 
 let () =
   let p = ref( 1 )
-  let pow2 = Array.init 20 (fun _i ->
+  let pow2 = Array.init 20 (fun i ->
     p := (!p) * 2
     (!p) / 2)
   let sum = ref( 0 )
   for d = 1 to 9 do
     if palindrome2 pow2 d then
-        Printf.printf "%d\n" d
-        sum := (!sum) + d
+      Printf.printf "%d\n" d
+      sum := (!sum) + d
     if palindrome2 pow2 (d * 10 + d) then
-        Printf.printf "%d\n" (d * 10 + d)
-        sum := (!sum) + d * 10 + d
+      Printf.printf "%d\n" (d * 10 + d)
+      sum := (!sum) + d * 10 + d
   for a0 = 0 to 4 do
     let a = a0 * 2 + 1
     for b = 0 to 9 do
       for c = 0 to 9 do
         let num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a
         if palindrome2 pow2 num0 then
-            Printf.printf "%d\n" num0
-            sum := (!sum) + num0
+          Printf.printf "%d\n" num0
+          sum := (!sum) + num0
         let num1 = a * 10000 + b * 1000 + c * 100 + b * 10 + a
         if palindrome2 pow2 num1 then
-            Printf.printf "%d\n" num1
-            sum := (!sum) + num1
+          Printf.printf "%d\n" num1
+          sum := (!sum) + num1
       let num2 = a * 100 + b * 10 + a
       if palindrome2 pow2 num2 then
-          Printf.printf "%d\n" num2
-          sum := (!sum) + num2
+        Printf.printf "%d\n" num2
+        sum := (!sum) + num2
       let num3 = a * 1000 + b * 100 + b * 10 + a
       if palindrome2 pow2 num3 then
-          Printf.printf "%d\n" num3
-          sum := (!sum) + num3
+        Printf.printf "%d\n" num3
+        sum := (!sum) + num3
   Printf.printf "sum=%d\n" (!sum)
  

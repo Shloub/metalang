@@ -4,6 +4,6 @@ type foo_t =
   | Blah
 
 let () =
-  let _foo_val = Foo
+  let foo_val = Foo
   ()
  

@@ -56,7 +56,7 @@ let result (t:toto) =
 let () =
   let t = mktoto 4
   t.bar <- readInt()
-  stdin_sep();
+  stdin_sep()
   t.blah <- readInt()
   Printf.printf "%d" (result t)
  

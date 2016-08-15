@@ -1,18 +1,17 @@
 let () =
-  let t = Array.create 1001 0
+  let t = Array.init 1001 (fun i ->
+    0)
   for a = 1 to 1000 do
     for b = 1 to 1000 do
       let c2 = a * a + b * b
-      let c = (int (sqrt (float (c2))))
+      let c = ((int (sqrt (float (c2)))))
       if c * c = c2 then
-          let p = a + b + c
-          if p < 1001 then
-            t.[p] <- t.[p] + 1
-            
+        let p = a + b + c
+        if p < 1001 then
+          t.[p] <- t.[p] + 1
   let j = ref( 0 )
   for k = 1 to 1000 do
     if t.[k] > t.[(!j)] then
       j := k
-      
   Printf.printf "%d" (!j)
  

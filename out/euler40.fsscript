@@ -1,6 +1,6 @@
 let exp0 a e =
   let o = ref( 1 )
-  for _i = 1 to e do
+  for i = 1 to e do
     o := (!o) * a
   (!o)
 
@@ -12,11 +12,10 @@ let e (t:int array) n =
   for i = 1 to 8 do
     if (!n) >= t.[i] * i then
       n := (!n) - t.[i] * i
-      
     else
-        let nombre = exp0 10 (i - 1) + (!n) / i
-        let chiffre = i - 1 - (!n) % i
-        raise (Found_1(nombre / exp0 10 chiffre % 10))
+      let nombre = exp0 10 (i - 1) + (!n) / i
+      let chiffre = i - 1 - (!n) % i
+      raise (Found_1(nombre / exp0 10 chiffre % 10))
   (- 1)
   with Found_1 (out) -> out
 

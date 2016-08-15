@@ -45,20 +45,18 @@ let summax (lst:int array) len =
     current := (!current) + lst.[i]
     if (!current) < 0 then
       current := 0
-      
     if (!max0) < (!current) then
       max0 := (!current)
-      
   (!max0)
 
 let () =
   let len = ref( 0 )
   len := readInt()
-  stdin_sep();
-  let tab = Array.init (!len) (fun _i ->
+  stdin_sep()
+  let tab = Array.init (!len) (fun i ->
     let tmp = ref( 0 )
     tmp := readInt()
-    stdin_sep();
+    stdin_sep()
     (!tmp))
   let result = summax tab (!len)
   Printf.printf "%d" result

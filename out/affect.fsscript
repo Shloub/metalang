@@ -82,11 +82,11 @@ let () =
   let t = mktoto 4
   let t2 = mktoto 5
   t.bar <- readInt()
-  stdin_sep();
+  stdin_sep()
   t.blah <- readInt()
-  stdin_sep();
+  stdin_sep()
   t2.bar <- readInt()
-  stdin_sep();
+  stdin_sep()
   t2.blah <- readInt()
   Printf.printf "%d%d" (result t t2) t.blah
  

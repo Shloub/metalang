@@ -5,10 +5,8 @@ let () =
   while (!a) < 4000000 do
     if (!a) % 2 = 0 then
       sum := (!sum) + (!a)
-      
     let c = (!a)
     a := (!b)
     b := (!b) + c
-  
   Printf.printf "%d\n" (!sum)
  

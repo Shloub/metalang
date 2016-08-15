@@ -6,23 +6,23 @@ let fact n =
 
 let show lim nth =
   let nth = ref nth
-  let _t = Array.init lim (fun i ->
+  let t = Array.init lim (fun i ->
     i)
-  let pris = Array.create lim false
+  let pris = Array.init lim (fun j ->
+    false)
   for k = 1 to lim - 1 do
     let n = fact (lim - k)
     let nchiffre = ref( (!nth) / n )
     nth := (!nth) % n
     for l = 0 to lim - 1 do
       if (not pris.[l]) then
-          if (!nchiffre) = 0 then
-              Printf.printf "%d" l
-              pris.[l] <- true
-          nchiffre := (!nchiffre) - 1
+        if (!nchiffre) = 0 then
+          Printf.printf "%d" l
+          pris.[l] <- true
+        nchiffre := (!nchiffre) - 1
   for m = 0 to lim - 1 do
     if (not pris.[m]) then
       Printf.printf "%d" m
-      
   Printf.printf "\n"
 
 let () =

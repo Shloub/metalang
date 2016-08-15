@@ -43,11 +43,10 @@ let is_empty (_foo:intlist) : bool =
 let rec rev2 (acc:intlist) (torev:intlist) : intlist =
   if is_empty torev then
     acc
-    
   else
-      let _acc2 = {head=torev.head;
-      tail=acc}
-      rev2 acc torev.tail
+    let acc2 = {head=torev.head;
+    tail=acc}
+    rev2 acc torev.tail
 
 let rev (empty:intlist) (torev:intlist) : intlist =
   rev2 empty torev
@@ -59,8 +58,6 @@ let test (empty:intlist) =
     i := readInt()
     if (!i) <> 0 then
       list := cons (!list) (!i)
-      
-  
 
 let () =
   

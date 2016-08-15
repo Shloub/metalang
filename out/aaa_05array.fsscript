@@ -13,17 +13,13 @@ let () =
   Printf.printf "%d " (!j)
   if a.[0] then
     Printf.printf "True"
-    
   else
     Printf.printf "False"
-    
   Printf.printf "\n"
   g (id a) 0
   if a.[0] then
     Printf.printf "True"
-    
   else
     Printf.printf "False"
-    
   Printf.printf "\n"
  

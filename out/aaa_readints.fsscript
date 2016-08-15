@@ -1,13 +1,13 @@
 open System
 let () =
-              let len = Console.ReadLine () |> Int32.Parse
+              let len = (Console.ReadLine () |> Int32.Parse)
               Printf.printf "%d=len\n" len
-              let tab1 = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+              let tab1 = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
               for i = 0 to len - 1 do
                 Printf.printf "%d=>%d\n" i tab1.[i]
-              let len = Console.ReadLine () |> Int32.Parse
-              let tab2 = Array.init (len - 1) (fun _a ->
-                (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
+              let len = (Console.ReadLine () |> Int32.Parse)
+              let tab2 = Array.init (len - 1) (fun a ->
+                ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse))
               for i = 0 to len - 2 do
                 for j = 0 to len - 1 do
                   Printf.printf "%d " tab2.[i].[j]

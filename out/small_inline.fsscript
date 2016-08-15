@@ -39,9 +39,9 @@ let readInt () =
   loop 0
 
 let () =
-  let t = Array.init 2 (fun _d ->
+  let t = Array.init 2 (fun d ->
     let out0 = readInt()
-    stdin_sep();
+    stdin_sep()
     out0)
   Printf.printf "%d - %d\n" t.[0] t.[1]
  

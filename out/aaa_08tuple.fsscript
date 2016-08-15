@@ -5,8 +5,8 @@ type toto = {
 };;
 
 let () =
-  let bar_ = Console.ReadLine () |> Int32.Parse
-  let c = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+  let bar_ = (Console.ReadLine () |> Int32.Parse)
+  let c = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
   let t = {foo=(c.[0], c.[1]);
   bar=bar_}
   let (a, b) = t.foo

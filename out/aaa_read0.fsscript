@@ -1,5 +1,5 @@
 open System
 let () =
-              let len = Console.ReadLine () |> Int32.Parse
+              let len = (Console.ReadLine () |> Int32.Parse)
               Printf.printf "%d\n" len
              

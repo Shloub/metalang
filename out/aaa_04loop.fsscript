@@ -9,9 +9,7 @@ let h i : bool =
   while (!j) <= i + 2 do
     if i % (!j) = 5 then
       raise (Found_1(true))
-      
     j := (!j) + 1
-  
   false
   with Found_1 (out) -> out
 
@@ -25,6 +23,5 @@ let () =
     Printf.printf "%d" (!i)
     i := (!i) + 1
     j := (!j) + (!i)
-  
   Printf.printf "%d%dFIN TEST\n" (!j) (!i)
  

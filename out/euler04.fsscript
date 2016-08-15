@@ -1,10 +1,8 @@
 let max2_ a b =
   if a > b then
     a
-    
   else
     b
-    
 
 (*
 
@@ -27,10 +25,8 @@ c * f * 10000
 let rec chiffre c m =
   if c = 0 then
     m % 10
-    
   else
     chiffre (c - 1) (m / 10)
-    
 
 let () =
   let m = ref( 1 )
@@ -43,6 +39,5 @@ let () =
               let mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
               if chiffre 0 mul = chiffre 5 mul && chiffre 1 mul = chiffre 4 mul && chiffre 2 mul = chiffre 3 mul then
                 m := max2_ mul (!m)
-                
   Printf.printf "%d\n" (!m)
  

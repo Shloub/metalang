@@ -1,11 +1,11 @@
 open System
 let () =
-              for _i = 1 to 3 do
-                let c = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+              for i = 1 to 3 do
+                let c = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
                 let a = c.[0]
                 let b = c.[1]
                 Printf.printf "a = %d b = %d\n" a b
-              let l = (Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse
+              let l = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
               for j = 0 to 9 do
                 Printf.printf "%d\n" l.[j]
              
