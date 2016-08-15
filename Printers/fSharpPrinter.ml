@@ -427,13 +427,6 @@ let readInt () =
   method rec_ f b =
     if b then Format.fprintf f "rec@ "
 
-  (** show the prototype of a recursive function *)
-  method print_rec_proto f triplet = self#print_proto_aux f true triplet
-
-  (** show the prototype of a function*)
-  method print_proto f triplet = self#print_proto_aux f false triplet
-
-
   (** util method to print a function prototype*)
   method print_proto_aux f rec_ ((funname:string), (t:Ast.Type.t), li) =
     let otype f ty =
@@ -512,7 +505,7 @@ let readInt () =
     self#calc_refs instrs;
     self#calc_used_variables instrs;
     let is_rec = self#is_rec funname in
-    let proto = if is_rec then self#print_rec_proto else self#print_proto in
+    let proto f = self#print_proto_aux f is_rec in
     let sad_types = collect_sad_returns t instrs in
     let () = sad_returns <- collect_sad_return instrs in
     match t with
