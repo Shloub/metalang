@@ -1,0 +1,81 @@
+
+def void testA (bool a, bool b)
+  if a then
+    if b then
+      print "A"
+    else
+      print "B"
+    end
+  else
+    if b then
+      print "C"
+    else
+      print "D"
+    end
+  end
+end
+
+def void testB (bool a, bool b)
+  if a then
+    print "A"
+  else
+    if b then
+      print "B"
+    else
+      print "C"
+    end
+  end
+end
+def void testC (bool a, bool b)
+  if a then
+    if b then
+      print "A"
+    else
+      print "B"
+    end
+  else
+      print "C"
+  end
+end
+def void testD (bool a, bool b)
+  if a then
+    if b then
+      print "A"
+    else
+      print "B"
+    end
+    print "C"
+  else
+    print "D"
+  end
+end
+def void testE (bool a, bool b)
+  if a then
+    if b then
+      print "A"
+    end
+  else
+    if b then
+      print "C"
+    else
+      print "D"
+    end
+    print "E"
+  end
+end
+
+def void test (bool a, bool b)
+#  testA(a, b)
+#  testB(a, b)
+#  testC(a, b)
+  testD(a, b)
+  testE(a, b)
+  print "\n"
+end
+
+main
+  test(true, true)
+  test(true, false)
+  test(false, true)
+  test(false, false)
+end
