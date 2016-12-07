@@ -1,10 +1,10 @@
 let () =
-begin
-  let n = 10 in
+ let n = 10 in
   (* normalement on doit mettre 20 mais là on se tape un overflow *)
   let n = n + 1 in
-  let tab = Array.init n (fun _i ->
-    let tab2 = Array.make n 0 in
+  let tab = Array.init n (fun i ->
+    let tab2 = Array.init n (fun j ->
+      0) in
     tab2) in
   for l = 0 to n - 1 do
     tab.(n - 1).(l) <- 1;
@@ -23,6 +23,5 @@ begin
     done;
     Printf.printf "\n"
   done;
-  Printf.printf "%d\n" tab.(0).(0)
-end
+  Printf.printf "%d\n" tab.(0).(0) 
  

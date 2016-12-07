@@ -15,7 +15,5 @@ let fibo a b i =
   (!out_)
 
 let () =
-begin
-  Printf.printf "%d" (fibo 1 2 4)
-end
+ Printf.printf "%d" (fibo 1 2 4) 
  

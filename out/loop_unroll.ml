@@ -3,8 +3,7 @@ Ce test permet de vérifier le comportement des macros
 Il effectue du loop unrolling
 *)
 let () =
-begin
-  let j = 0 in
+ let j = 0 in
   let j = 0 in
   Printf.printf "%d\n" j;
   let j = 1 in
@@ -14,6 +13,5 @@ begin
   let j = 3 in
   Printf.printf "%d\n" j;
   let j = 4 in
-  Printf.printf "%d\n" j
-end
+  Printf.printf "%d\n" j 
  

@@ -40,13 +40,11 @@ let result t_ t2_ =
   t.foo + t.blah * t.bar + t.bar * t.foo
 
 let () =
-begin
-  let t = mktoto 4 in
+ let t = mktoto 4 in
   let t2 = mktoto 5 in
-  Scanf.scanf "%d %d %d %d" (fun a b c d -> t.bar <- a;
-                                            t.blah <- b;
-                                            t2.bar <- c;
-                                            t2.blah <- d);
-  Printf.printf "%d%d" (result t t2) t.blah
-end
+  Scanf.scanf "%d %d %d %d" (fun k l m n -> t.bar <- k;
+                                            t.blah <- l;
+                                            t2.bar <- m;
+                                            t2.blah <- n);
+  Printf.printf "%d%d" (result t t2) t.blah 
  

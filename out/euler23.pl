@@ -113,12 +113,12 @@ my $n = 100;
 my $abondant = [];
 foreach my $p (0 .. $n)
 {
-    $abondant->[$p] = ();
+    $abondant->[$p] = !(1);
 }
 my $summable = [];
 foreach my $q (0 .. $n)
 {
-    $summable->[$q] = ();
+    $summable->[$q] = !(1);
 }
 my $sum = 0;
 foreach my $r (2 .. $n)
@@ -126,7 +126,7 @@ foreach my $r (2 .. $n)
     my $other = sumdiv($nprimes, $primes, $r) - $r;
     if ($other > $r)
     {
-        $abondant->[$r] = 1;
+        $abondant->[$r] = !(0);
     }
 }
 foreach my $i (1 .. $n)
@@ -135,7 +135,7 @@ foreach my $i (1 .. $n)
     {
         if ($abondant->[$i] && $abondant->[$j] && $i + $j <= $n)
         {
-            $summable->[$i + $j] = 1;
+            $summable->[$i + $j] = !(0);
         }
     }
 }

@@ -5,8 +5,7 @@ let test tab len =
   Printf.printf "\n"
 
 let () =
-begin
-  let t = Array.make 5 1 in
-  test t 5
-end
+ let t = Array.init 5 (fun i ->
+   1) in
+  test t 5 
  

@@ -26,7 +26,5 @@ let sumdiag n =
   (!sum)
 
 let () =
-begin
-  Printf.printf "%d" (sumdiag 1001)
-end
+ Printf.printf "%d" (sumdiag 1001) 
  

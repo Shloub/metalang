@@ -35,11 +35,11 @@ sub isPrime{
   {
       if (remainder($n, $primes->[$i]) eq 0)
       {
-          return ();
+          return !(1);
       }
       $i = $i + 1;
   }
-  return 1;
+  return !(0);
 }
 
 sub test{

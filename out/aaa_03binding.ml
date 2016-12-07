@@ -9,8 +9,7 @@ let h i =
   Printf.printf "%d\n" i
 
 let () =
-begin
-  h 14;
+ h 14;
   let a = 4 in
   let b = 5 in
   Printf.printf "%d" (a + b);
@@ -18,6 +17,5 @@ begin
   h 15;
   let a = 2 in
   let b = 1 in
-  Printf.printf "%d" (a + b)
-end
+  Printf.printf "%d" (a + b) 
  

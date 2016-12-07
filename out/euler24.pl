@@ -25,7 +25,7 @@ sub show{
   my $pris = [];
   foreach my $j (0 .. $lim - 1)
   {
-      $pris->[$j] = ();
+      $pris->[$j] = !(1);
   }
   foreach my $k (1 .. $lim - 1)
   {
@@ -39,7 +39,7 @@ sub show{
               if ($nchiffre eq 0)
               {
                   print $l;
-                  $pris->[$l] = 1;
+                  $pris->[$l] = !(0);
               }
               $nchiffre = $nchiffre - 1;
           }

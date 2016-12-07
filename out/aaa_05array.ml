@@ -5,8 +5,7 @@ let g t index =
   t.(index) <- false
 
 let () =
-begin
-  let j = ref( 0 ) in
+ let j = ref( 0 ) in
   let a = Array.init 5 (fun i ->
     Printf.printf "%d" i;
     j := (!j) + i;
@@ -22,6 +21,5 @@ begin
     Printf.printf "True"
   else
     Printf.printf "False";
-  Printf.printf "\n"
-end
+  Printf.printf "\n" 
  

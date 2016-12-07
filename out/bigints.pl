@@ -31,7 +31,7 @@ sub read_bigint{
       $chiffres->[$i] = $chiffres->[$len - 1 - $i];
       $chiffres->[$len - 1 - $i] = $tmp;
   }
-  return {"bigint_sign" => 1, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => !(0), "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
 
 sub print_bigint{
@@ -52,11 +52,11 @@ sub bigint_eq{
   
   if ($a->{"bigint_sign"} ne $b->{"bigint_sign"})
   {
-      return ();
+      return !(1);
   }
   elsif ($a->{"bigint_len"} ne $b->{"bigint_len"})
       {
-          return ();
+          return !(1);
       }
       else
       {
@@ -64,10 +64,10 @@ sub bigint_eq{
           {
               if ($a->{"bigint_chiffres"}->[$i] ne $b->{"bigint_chiffres"}->[$i])
               {
-                  return ();
+                  return !(1);
               }
           }
-          return 1;
+          return !(0);
       }
 }
 
@@ -77,11 +77,11 @@ sub bigint_gt{
   
   if ($a->{"bigint_sign"} && !$b->{"bigint_sign"})
   {
-      return 1;
+      return !(0);
   }
   elsif (!$a->{"bigint_sign"} && $b->{"bigint_sign"})
       {
-          return ();
+          return !(1);
       }
       else
       {
@@ -108,7 +108,7 @@ sub bigint_gt{
                           }
                   }
               }
-          return 1;
+          return !(0);
       }
 }
 
@@ -142,7 +142,7 @@ sub add_bigint_positif{
   {
       $len = $len - 1;
   }
-  return {"bigint_sign" => 1, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => !(0), "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
 
 sub sub_bigint_positif{
@@ -176,7 +176,7 @@ sub sub_bigint_positif{
   {
       $len = $len - 1;
   }
-  return {"bigint_sign" => 1, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
+  return {"bigint_sign" => !(0), "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
 
 sub neg_bigint{
@@ -357,7 +357,7 @@ sub bigint_of_int{
       $t->[$k] = remainder($i, 10);
       $i = int($i / 10);
   }
-  return {"bigint_sign" => 1, "bigint_len" => $size, "bigint_chiffres" => $t};
+  return {"bigint_sign" => !(0), "bigint_len" => $size, "bigint_chiffres" => $t};
 }
 
 sub fact_bigint{
@@ -484,11 +484,11 @@ sub euler29{
       $b->[$k] = 2;
   }
   my $n = 0;
-  my $found = 1;
+  my $found = !(0);
   while ($found)
   {
       my $min0 = $a0_bigint->[0];
-      $found = ();
+      $found = !(1);
       foreach my $i (2 .. $maxA)
       {
           if ($b->[$i] <= $maxB)
@@ -503,7 +503,7 @@ sub euler29{
               else
               {
                   $min0 = $a_bigint->[$i];
-                  $found = 1;
+                  $found = !(0);
               }
           }
       }

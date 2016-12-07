@@ -9,12 +9,12 @@ sub result{
   my $tab2 = [];
   foreach my $i (0 .. $len - 1)
   {
-      $tab2->[$i] = ();
+      $tab2->[$i] = !(1);
   }
   foreach my $i1 (0 .. $len - 1)
   {
       print($tab->[$i1], " ");
-      $tab2->[$tab->[$i1]] = 1;
+      $tab2->[$tab->[$i1]] = !(0);
   }
   print "\n";
   foreach my $i2 (0 .. $len - 1)

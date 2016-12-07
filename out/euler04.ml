@@ -23,8 +23,7 @@ let rec chiffre c m =
     chiffre (c - 1) (m / 10)
 
 let () =
-begin
-  let m = ref( 1 ) in
+ let m = ref( 1 ) in
   for a = 0 to 9 do
     for f = 1 to 9 do
       for d = 0 to 9 do
@@ -33,13 +32,12 @@ begin
             for e = 0 to 9 do
               let mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f in
               if chiffre 0 mul = chiffre 5 mul && chiffre 1 mul = chiffre 4 mul && chiffre 2 mul = chiffre 3 mul then
-                m := max (mul) ((!m))
+                m := (max (mul) ((!m)))
             done
           done
         done
       done
     done
   done;
-  Printf.printf "%d\n" (!m)
-end
+  Printf.printf "%d\n" (!m) 
  

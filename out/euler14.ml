@@ -7,19 +7,21 @@ let next0 n =
 let rec find n m =
   if n = 1 then
     1
-  else if n >= 1000000 then
-    1 + find (next0 n) m
-  else if m.(n) <> 0 then
-    m.(n)
   else
-    begin
-      m.(n) <- 1 + find (next0 n) m;
-      m.(n)
-    end
+    if n >= 1000000 then
+      1 + find (next0 n) m
+    else
+      if m.(n) <> 0 then
+        m.(n)
+      else
+        begin
+           m.(n) <- 1 + find (next0 n) m;
+           m.(n)
+        end
 
 let () =
-begin
-  let m = Array.make 1000000 0 in
+ let m = Array.init 1000000 (fun j ->
+   0) in
   let max0 = ref( 0 ) in
   let maxi = ref( 0 ) in
   for i = 1 to 999 do
@@ -27,10 +29,9 @@ begin
     let n2 = find i m in
     if n2 > (!max0) then
       begin
-        max0 := n2;
-        maxi := i
+         max0 := n2;
+         maxi := i
       end
   done;
-  Printf.printf "%d\n%d\n" (!max0) (!maxi)
-end
+  Printf.printf "%d\n%d\n" (!max0) (!maxi) 
  

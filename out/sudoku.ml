@@ -1,6 +1,6 @@
 (* lit un sudoku sur l'entrée standard *)
 let read_sudoku () =
-  let out0 = Array.init (9 * 9) (fun _i ->
+  let out0 = Array.init (9 * 9) (fun i ->
     let k = Scanf.scanf "%d " (fun k -> k) in
     k) in
   out0
@@ -50,39 +50,37 @@ let sudoku_error s =
   (!out1) || (!out2) || (!out3)
 
 (* résout le sudoku*)
-exception Found_2 of bool
 
 let rec solve sudoku0 =
   try
   if sudoku_error sudoku0 then
     false
-  else if sudoku_done sudoku0 then
-    true
   else
-    begin
-      for i = 0 to 80 do
-        if sudoku0.(i) = 0 then
-          begin
-            for p = 1 to 9 do
-              sudoku0.(i) <- p;
-              if solve sudoku0 then
-                raise (Found_2(true))
-            done;
-            sudoku0.(i) <- 0;
-            raise (Found_2(false))
-          end
-      done;
-      false
-    end
-  with Found_2 (out) -> out
+    if sudoku_done sudoku0 then
+      true
+    else
+      begin
+         for i = 0 to 80 do
+           if sudoku0.(i) = 0 then
+             begin
+                for p = 1 to 9 do
+                  sudoku0.(i) <- p;
+                  if solve sudoku0 then
+                    raise (Found_1(true))
+                done;
+                sudoku0.(i) <- 0;
+                raise (Found_1(false))
+             end
+         done;
+         false
+      end
+  with Found_1 (out) -> out
 
 let () =
-begin
-  let sudoku0 = read_sudoku () in
+ let sudoku0 = read_sudoku () in
   print_sudoku sudoku0;
   if solve sudoku0 then
     print_sudoku sudoku0
   else
-    Printf.printf "no solution\n"
-end
+    Printf.printf "no solution\n" 
  

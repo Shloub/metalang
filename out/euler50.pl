@@ -51,13 +51,13 @@ foreach my $i_ (0 .. $nprimes - 1)
     $sum->[$i_] = $primes->[$i_];
 }
 my $maxl = 0;
-my $process = 1;
+my $process = !(0);
 my $stop = $maximumprimes - 1;
 my $len = 1;
 my $resp = 1;
 while ($process)
 {
-    $process = ();
+    $process = !(1);
     foreach my $i (0 .. $stop)
     {
         if ($i + $len < $nprimes)
@@ -65,7 +65,7 @@ while ($process)
             $sum->[$i] = $sum->[$i] + $primes->[$i + $len];
             if ($maximumprimes > $sum->[$i])
             {
-                $process = 1;
+                $process = !(0);
                 if ($era->[$sum->[$i]] eq $sum->[$i])
                 {
                     $maxl = $len;

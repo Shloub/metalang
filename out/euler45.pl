@@ -44,7 +44,7 @@ sub findPenta2{
   my $p = penta($c);
   if ($p eq $n)
   {
-      return 1;
+      return !(0);
   }
   elsif ($p < $n)
       {
@@ -66,7 +66,7 @@ sub findHexa2{
   my $p = hexa($c);
   if ($p eq $n)
   {
-      return 1;
+      return !(0);
   }
   elsif ($p < $n)
       {

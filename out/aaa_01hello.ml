@@ -1,6 +1,5 @@
 let () =
-begin
-  Printf.printf "Hello World";
+ Printf.printf "Hello World";
   let a = 5 in
   Printf.printf "%d \n%dfoo" ((4 + 6) * 2) a;
   if 1 + 2 * 2 * (3 + 8) / 4 - 2 = 12 && true then
@@ -26,6 +25,5 @@ begin
     Printf.printf "True"
   else
     Printf.printf "False";
-  Printf.printf "\n"
-end
+  Printf.printf "\n" 
  

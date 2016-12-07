@@ -12,7 +12,7 @@ my $sqrtia = int(sqrt($a));
 while ($a ne 1)
 {
     my $b = $b0;
-    my $found = ();
+    my $found = !(1);
     while ($b <= $sqrtia)
     {
         if (remainder($a, $b) eq 0)
@@ -21,7 +21,7 @@ while ($a ne 1)
             $b0 = $b;
             $b = $a;
             $sqrtia = int(sqrt($a));
-            $found = 1;
+            $found = !(0);
         }
         $b = $b + 1;
     }

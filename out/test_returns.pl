@@ -14,13 +14,13 @@ sub is_pair{
       if ($i eq 0)
       {
           $j = 4;
-          return 1;
+          return !(0);
       }
       $j = 3;
       if ($i eq 2)
       {
           $j = 4;
-          return 1;
+          return !(0);
       }
       $j = 5;
   }

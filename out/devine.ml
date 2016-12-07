@@ -18,14 +18,12 @@ let devine0 nombre tab len =
   with Found_1 (out) -> out
 
 let () =
-begin
-  let nombre, len = Scanf.scanf "%d %d " (fun nombre len -> nombre, len) in
-  let tab = Array.init len (fun _i ->
+ let nombre, len = Scanf.scanf "%d %d " (fun nombre len -> nombre, len) in
+  let tab = Array.init len (fun i ->
     let tmp = Scanf.scanf "%d " (fun tmp -> tmp) in
     tmp) in
   if devine0 nombre tab len then
     Printf.printf "True"
   else
-    Printf.printf "False"
-end
+    Printf.printf "False" 
  

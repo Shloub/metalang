@@ -47,7 +47,7 @@ print($l, " == ", $nprimes, "\n");
 my $canbe = [];
 foreach my $i_ (0 .. $maximumprimes - 1)
 {
-    $canbe->[$i_] = ();
+    $canbe->[$i_] = !(1);
 }
 foreach my $i (0 .. $nprimes - 1)
 {
@@ -56,7 +56,7 @@ foreach my $i (0 .. $nprimes - 1)
         my $n = $primes->[$i] + 2 * $j * $j;
         if ($n < $maximumprimes)
         {
-            $canbe->[$n] = 1;
+            $canbe->[$n] = !(0);
         }
     }
 }
