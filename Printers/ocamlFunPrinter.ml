@@ -141,38 +141,6 @@ let print_expr macros e f prio_parent =
 let print_expr macros f e =
   AstFun.Expr.Fixed.Deep.fold (print_expr macros) e f nop
 
-let ptype ty f () =
-  let open Ast.Type in
-  let open Format in
-  match ty with
-  | Integer -> fprintf f "int"
-  | String -> fprintf f "string"
-  | Array a -> fprintf f "%a array" a ()
-  | Void ->  fprintf f "unit"
-  | Bool -> fprintf f "bool"
-  | Char -> fprintf f "char"
-  | Named n -> fprintf f "%s" n
-  | Struct li -> fprintf f "{%a}"
-                   (print_list
-                      (fun t (name, type_) ->
-                         fprintf t "mutable %s : %a;" name type_ ()
-                      )
-                      sep_space
-                   ) li
-  | Enum li ->
-    fprintf f "%a"
-      (print_list
-         (fun t name ->
-            fprintf t "%s" name
-         )
-         (sep "%a@\n| %a")
-      ) li
-  | Lexems -> assert false
-  | Auto -> assert false
-  | Tuple li -> fprintf f "(%a)" (print_list (fun f p -> p f ()) (sep "%a * %a")) li
-
-let ptype f t = Ast.Type.Fixed.Deep.fold ptype t f ()
-
 class camlFunPrinter = object(self)
 
   val mutable macros = Ast.BindingMap.empty
@@ -193,7 +161,7 @@ class camlFunPrinter = object(self)
       with Not_found -> List.assoc "" li) macros) f e
 
   (** show a type *)
-  method ptype f t = ptype f t
+  method ptype f t = Mllike.ptype f t
 
   method is_rec name e =
     E.Fixed.Deep.exists (fun e -> match E.unfix e with
