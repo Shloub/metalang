@@ -33,21 +33,21 @@ sub okdigits{
   my($ok, $n) = @_;
   if ($n eq 0)
   {
-      return 1;
+      return !(0);
   }
   else
   {
       my $digit = remainder($n, 10);
       if ($ok->[$digit])
       {
-          $ok->[$digit] = ();
+          $ok->[$digit] = !(1);
           my $o = okdigits($ok, int($n / 10));
-          $ok->[$digit] = 1;
+          $ok->[$digit] = !(0);
           return $o;
       }
       else
       {
-          return ();
+          return !(1);
       }
   }
 }
@@ -61,41 +61,41 @@ foreach my $i (0 .. 9)
 my $counted = [];
 foreach my $j (0 .. 99999)
 {
-    $counted->[$j] = ();
+    $counted->[$j] = !(1);
 }
 foreach my $e (1 .. 9)
 {
-    $allowed->[$e] = ();
+    $allowed->[$e] = !(1);
     foreach my $b (1 .. 9)
     {
         if ($allowed->[$b])
         {
-            $allowed->[$b] = ();
+            $allowed->[$b] = !(1);
             my $be = remainder($b * $e, 10);
             if ($allowed->[$be])
             {
-                $allowed->[$be] = ();
+                $allowed->[$be] = !(1);
                 foreach my $a (1 .. 9)
                 {
                     if ($allowed->[$a])
                     {
-                        $allowed->[$a] = ();
+                        $allowed->[$a] = !(1);
                         foreach my $c (1 .. 9)
                         {
                             if ($allowed->[$c])
                             {
-                                $allowed->[$c] = ();
+                                $allowed->[$c] = !(1);
                                 foreach my $d (1 .. 9)
                                 {
                                     if ($allowed->[$d])
                                     {
-                                        $allowed->[$d] = ();
+                                        $allowed->[$d] = !(1);
                                         # 2 * 3 digits 
                                         
                                         my $product = ($a * 10 + $b) * ($c * 100 + $d * 10 + $e);
                                         if (!$counted->[$product] && okdigits($allowed, int($product / 10)))
                                         {
-                                            $counted->[$product] = 1;
+                                            $counted->[$product] = !(0);
                                             $count = $count + $product;
                                             print($product, " ");
                                         }
@@ -104,25 +104,25 @@ foreach my $e (1 .. 9)
                                         my $product2 = $b * ($a * 1000 + $c * 100 + $d * 10 + $e);
                                         if (!$counted->[$product2] && okdigits($allowed, int($product2 / 10)))
                                         {
-                                            $counted->[$product2] = 1;
+                                            $counted->[$product2] = !(0);
                                             $count = $count + $product2;
                                             print($product2, " ");
                                         }
-                                        $allowed->[$d] = 1;
+                                        $allowed->[$d] = !(0);
                                     }
                                 }
-                                $allowed->[$c] = 1;
+                                $allowed->[$c] = !(0);
                             }
                         }
-                        $allowed->[$a] = 1;
+                        $allowed->[$a] = !(0);
                     }
                 }
-                $allowed->[$be] = 1;
+                $allowed->[$be] = !(0);
             }
-            $allowed->[$b] = 1;
+            $allowed->[$b] = !(0);
         }
     }
-    $allowed->[$e] = 1;
+    $allowed->[$e] = !(0);
 }
 print($count, "\n");
 

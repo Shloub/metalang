@@ -15,10 +15,8 @@ let result t =
   t.foo + t.blah * t.bar + t.bar * t.foo
 
 let () =
-begin
-  let t = mktoto 4 in
-  Scanf.scanf "%d %d" (fun a b -> t.bar <- a;
-                                  t.blah <- b);
-  Printf.printf "%d" (result t)
-end
+ let t = mktoto 4 in
+  Scanf.scanf "%d %d" (fun e f -> t.bar <- e;
+                                  t.blah <- f);
+  Printf.printf "%d" (result t) 
  

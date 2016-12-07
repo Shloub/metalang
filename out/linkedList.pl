@@ -23,7 +23,7 @@ sub cons{
 
 sub is_empty{
   my($foo) = @_;
-  return 1;
+  return !(0);
 }
 
 sub rev2{

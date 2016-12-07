@@ -7,9 +7,10 @@ let fact n =
 
 let show lim nth =
   let nth = ref nth in
-  let _t = Array.init lim (fun i ->
+  let t = Array.init lim (fun i ->
     i) in
-  let pris = Array.make lim false in
+  let pris = Array.init lim (fun j ->
+    false) in
   for k = 1 to lim - 1 do
     let n = fact (lim - k) in
     let nchiffre = ref( (!nth) / n ) in
@@ -17,12 +18,12 @@ let show lim nth =
     for l = 0 to lim - 1 do
       if not pris.(l) then
         begin
-          if (!nchiffre) = 0 then
-            begin
-              Printf.printf "%d" l;
-              pris.(l) <- true
-            end;
-          nchiffre := (!nchiffre) - 1
+           if (!nchiffre) = 0 then
+             begin
+                Printf.printf "%d" l;
+                pris.(l) <- true
+             end;
+           nchiffre := (!nchiffre) - 1
         end
     done
   done;
@@ -33,7 +34,5 @@ let show lim nth =
   Printf.printf "\n"
 
 let () =
-begin
-  show 10 999999
-end
+ show 10 999999 
  

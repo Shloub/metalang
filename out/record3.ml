@@ -19,12 +19,10 @@ let result t len =
   (!out0)
 
 let () =
-begin
-  let t = Array.init 4 (fun i ->
-    mktoto i) in
-  Scanf.scanf "%d %d" (fun a b -> t.(0).bar <- a;
-                                  t.(1).blah <- b);
+ let t = Array.init 4 (fun i ->
+   mktoto i) in
+  Scanf.scanf "%d %d" (fun e f -> t.(0).bar <- e;
+                                  t.(1).blah <- f);
   let titi = result t 4 in
-  Printf.printf "%d%d" titi t.(2).blah
-end
+  Printf.printf "%d%d" titi t.(2).blah 
  

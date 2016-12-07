@@ -70,27 +70,27 @@ sub sudoku_done{
   {
       if ($s->[$i] eq 0)
       {
-          return ();
+          return !(1);
       }
   }
-  return 1;
+  return !(0);
 }
 
 # dit si il y a une erreur dans le sudoku 
 
 sub sudoku_error{
   my($s) = @_;
-  my $out1 = ();
+  my $out1 = !(1);
   foreach my $x (0 .. 8)
   {
       $out1 = $out1 || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9] || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9 * 2] || $s->[$x + 9] ne 0 && $s->[$x + 9] eq $s->[$x + 9 * 2] || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9 * 3] || $s->[$x + 9] ne 0 && $s->[$x + 9] eq $s->[$x + 9 * 3] || $s->[$x + 9 * 2] ne 0 && $s->[$x + 9 * 2] eq $s->[$x + 9 * 3] || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9 * 4] || $s->[$x + 9] ne 0 && $s->[$x + 9] eq $s->[$x + 9 * 4] || $s->[$x + 9 * 2] ne 0 && $s->[$x + 9 * 2] eq $s->[$x + 9 * 4] || $s->[$x + 9 * 3] ne 0 && $s->[$x + 9 * 3] eq $s->[$x + 9 * 4] || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9 * 5] || $s->[$x + 9] ne 0 && $s->[$x + 9] eq $s->[$x + 9 * 5] || $s->[$x + 9 * 2] ne 0 && $s->[$x + 9 * 2] eq $s->[$x + 9 * 5] || $s->[$x + 9 * 3] ne 0 && $s->[$x + 9 * 3] eq $s->[$x + 9 * 5] || $s->[$x + 9 * 4] ne 0 && $s->[$x + 9 * 4] eq $s->[$x + 9 * 5] || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9 * 6] || $s->[$x + 9] ne 0 && $s->[$x + 9] eq $s->[$x + 9 * 6] || $s->[$x + 9 * 2] ne 0 && $s->[$x + 9 * 2] eq $s->[$x + 9 * 6] || $s->[$x + 9 * 3] ne 0 && $s->[$x + 9 * 3] eq $s->[$x + 9 * 6] || $s->[$x + 9 * 4] ne 0 && $s->[$x + 9 * 4] eq $s->[$x + 9 * 6] || $s->[$x + 9 * 5] ne 0 && $s->[$x + 9 * 5] eq $s->[$x + 9 * 6] || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9 * 7] || $s->[$x + 9] ne 0 && $s->[$x + 9] eq $s->[$x + 9 * 7] || $s->[$x + 9 * 2] ne 0 && $s->[$x + 9 * 2] eq $s->[$x + 9 * 7] || $s->[$x + 9 * 3] ne 0 && $s->[$x + 9 * 3] eq $s->[$x + 9 * 7] || $s->[$x + 9 * 4] ne 0 && $s->[$x + 9 * 4] eq $s->[$x + 9 * 7] || $s->[$x + 9 * 5] ne 0 && $s->[$x + 9 * 5] eq $s->[$x + 9 * 7] || $s->[$x + 9 * 6] ne 0 && $s->[$x + 9 * 6] eq $s->[$x + 9 * 7] || $s->[$x] ne 0 && $s->[$x] eq $s->[$x + 9 * 8] || $s->[$x + 9] ne 0 && $s->[$x + 9] eq $s->[$x + 9 * 8] || $s->[$x + 9 * 2] ne 0 && $s->[$x + 9 * 2] eq $s->[$x + 9 * 8] || $s->[$x + 9 * 3] ne 0 && $s->[$x + 9 * 3] eq $s->[$x + 9 * 8] || $s->[$x + 9 * 4] ne 0 && $s->[$x + 9 * 4] eq $s->[$x + 9 * 8] || $s->[$x + 9 * 5] ne 0 && $s->[$x + 9 * 5] eq $s->[$x + 9 * 8] || $s->[$x + 9 * 6] ne 0 && $s->[$x + 9 * 6] eq $s->[$x + 9 * 8] || $s->[$x + 9 * 7] ne 0 && $s->[$x + 9 * 7] eq $s->[$x + 9 * 8];
   }
-  my $out2 = ();
+  my $out2 = !(1);
   foreach my $x (0 .. 8)
   {
       $out2 = $out2 || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 1] || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 2] || $s->[$x * 9 + 1] ne 0 && $s->[$x * 9 + 1] eq $s->[$x * 9 + 2] || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 3] || $s->[$x * 9 + 1] ne 0 && $s->[$x * 9 + 1] eq $s->[$x * 9 + 3] || $s->[$x * 9 + 2] ne 0 && $s->[$x * 9 + 2] eq $s->[$x * 9 + 3] || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 4] || $s->[$x * 9 + 1] ne 0 && $s->[$x * 9 + 1] eq $s->[$x * 9 + 4] || $s->[$x * 9 + 2] ne 0 && $s->[$x * 9 + 2] eq $s->[$x * 9 + 4] || $s->[$x * 9 + 3] ne 0 && $s->[$x * 9 + 3] eq $s->[$x * 9 + 4] || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 5] || $s->[$x * 9 + 1] ne 0 && $s->[$x * 9 + 1] eq $s->[$x * 9 + 5] || $s->[$x * 9 + 2] ne 0 && $s->[$x * 9 + 2] eq $s->[$x * 9 + 5] || $s->[$x * 9 + 3] ne 0 && $s->[$x * 9 + 3] eq $s->[$x * 9 + 5] || $s->[$x * 9 + 4] ne 0 && $s->[$x * 9 + 4] eq $s->[$x * 9 + 5] || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 6] || $s->[$x * 9 + 1] ne 0 && $s->[$x * 9 + 1] eq $s->[$x * 9 + 6] || $s->[$x * 9 + 2] ne 0 && $s->[$x * 9 + 2] eq $s->[$x * 9 + 6] || $s->[$x * 9 + 3] ne 0 && $s->[$x * 9 + 3] eq $s->[$x * 9 + 6] || $s->[$x * 9 + 4] ne 0 && $s->[$x * 9 + 4] eq $s->[$x * 9 + 6] || $s->[$x * 9 + 5] ne 0 && $s->[$x * 9 + 5] eq $s->[$x * 9 + 6] || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 7] || $s->[$x * 9 + 1] ne 0 && $s->[$x * 9 + 1] eq $s->[$x * 9 + 7] || $s->[$x * 9 + 2] ne 0 && $s->[$x * 9 + 2] eq $s->[$x * 9 + 7] || $s->[$x * 9 + 3] ne 0 && $s->[$x * 9 + 3] eq $s->[$x * 9 + 7] || $s->[$x * 9 + 4] ne 0 && $s->[$x * 9 + 4] eq $s->[$x * 9 + 7] || $s->[$x * 9 + 5] ne 0 && $s->[$x * 9 + 5] eq $s->[$x * 9 + 7] || $s->[$x * 9 + 6] ne 0 && $s->[$x * 9 + 6] eq $s->[$x * 9 + 7] || $s->[$x * 9] ne 0 && $s->[$x * 9] eq $s->[$x * 9 + 8] || $s->[$x * 9 + 1] ne 0 && $s->[$x * 9 + 1] eq $s->[$x * 9 + 8] || $s->[$x * 9 + 2] ne 0 && $s->[$x * 9 + 2] eq $s->[$x * 9 + 8] || $s->[$x * 9 + 3] ne 0 && $s->[$x * 9 + 3] eq $s->[$x * 9 + 8] || $s->[$x * 9 + 4] ne 0 && $s->[$x * 9 + 4] eq $s->[$x * 9 + 8] || $s->[$x * 9 + 5] ne 0 && $s->[$x * 9 + 5] eq $s->[$x * 9 + 8] || $s->[$x * 9 + 6] ne 0 && $s->[$x * 9 + 6] eq $s->[$x * 9 + 8] || $s->[$x * 9 + 7] ne 0 && $s->[$x * 9 + 7] eq $s->[$x * 9 + 8];
   }
-  my $out3 = ();
+  my $out3 = !(1);
   foreach my $x (0 .. 8)
   {
       $out3 = $out3 || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] eq $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] || $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] ne 0 && $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2] || $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[remainder($x, 3) * 3 * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2] || $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] ne 0 && $s->[(remainder($x, 3) * 3 + 1) * 9 + int($x / 3) * 3 + 2] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2] || $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] ne 0 && $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2] || $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] ne 0 && $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 1] eq $s->[(remainder($x, 3) * 3 + 2) * 9 + int($x / 3) * 3 + 2];
@@ -104,11 +104,11 @@ sub solve{
   my($sudoku0) = @_;
   if (sudoku_error($sudoku0))
   {
-      return ();
+      return !(1);
   }
   if (sudoku_done($sudoku0))
   {
-      return 1;
+      return !(0);
   }
   foreach my $i (0 .. 80)
   {
@@ -119,14 +119,14 @@ sub solve{
               $sudoku0->[$i] = $p;
               if (solve($sudoku0))
               {
-                  return 1;
+                  return !(0);
               }
           }
           $sudoku0->[$i] = 0;
-          return ();
+          return !(1);
       }
   }
-  return ();
+  return !(1);
 }
 
 my $sudoku0 = read_sudoku();

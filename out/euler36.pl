@@ -24,10 +24,10 @@ sub palindrome2{
   {
       if ($t->[$k] ne $t->[$nnum - $k])
       {
-          return ();
+          return !(1);
       }
   }
-  return 1;
+  return !(0);
 }
 
 my $p = 1;

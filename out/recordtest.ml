@@ -4,11 +4,9 @@ type toto = {
 };;
 
 let () =
-begin
-  let param = {foo=0;
-  bar=0} in
-  Scanf.scanf "%d %d" (fun a b -> param.bar <- a;
-                                  param.foo <- b);
-  Printf.printf "%d" (param.bar + param.foo * param.bar)
-end
+ let param = {foo=0;
+ bar=0} in
+  Scanf.scanf "%d %d" (fun e f -> param.bar <- e;
+                                  param.foo <- f);
+  Printf.printf "%d" (param.bar + param.foo * param.bar) 
  

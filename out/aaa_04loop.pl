@@ -16,11 +16,11 @@ sub h{
   {
       if (remainder($i, $j) eq 5)
       {
-          return 1;
+          return !(0);
       }
       $j = $j + 1;
   }
-  return ();
+  return !(1);
 }
 
 my $j = 0;

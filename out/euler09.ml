@@ -1,6 +1,5 @@
 let () =
-begin
-  (*
+ (*
 	a + b + c = 1000 && a * a + b * b = c * c
 	*)
   for a = 1 to 1000 do
@@ -11,6 +10,5 @@ begin
       if cc = a2b2 && c > a then
         Printf.printf "%d\n%d\n%d\n%d\n" a b c (a * b * c)
     done
-  done
-end
+  done 
  

@@ -25,79 +25,76 @@ let rec okdigits ok n =
   if n = 0 then
     true
   else
-    begin
-      let digit = n mod 10 in
-      if ok.(digit) then
-        begin
-          ok.(digit) <- false;
-          let o = okdigits ok (n / 10) in
-          ok.(digit) <- true;
-          o
-        end
-      else
-        false
-    end
+    let digit = n mod 10 in
+    if ok.(digit) then
+      begin
+         ok.(digit) <- false;
+         let o = okdigits ok (n / 10) in
+         ok.(digit) <- true;
+         o
+      end
+    else
+      false
 
 let () =
-begin
-  let count = ref( 0 ) in
+ let count = ref( 0 ) in
   let allowed = Array.init 10 (fun i ->
     i <> 0) in
-  let counted = Array.make 100000 false in
+  let counted = Array.init 100000 (fun j ->
+    false) in
   for e = 1 to 9 do
     allowed.(e) <- false;
     for b = 1 to 9 do
       if allowed.(b) then
         begin
-          allowed.(b) <- false;
-          let be = b * e mod 10 in
-          if allowed.(be) then
-            begin
-              allowed.(be) <- false;
-              for a = 1 to 9 do
-                if allowed.(a) then
-                  begin
-                    allowed.(a) <- false;
-                    for c = 1 to 9 do
-                      if allowed.(c) then
-                        begin
-                          allowed.(c) <- false;
-                          for d = 1 to 9 do
-                            if allowed.(d) then
-                              begin
-                                allowed.(d) <- false;
-                                (* 2 * 3 digits *)
-                                let product = (a * 10 + b) * (c * 100 + d * 10 + e) in
-                                if not counted.(product) && okdigits allowed (product / 10) then
+           allowed.(b) <- false;
+           let be = b * e mod 10 in
+           if allowed.(be) then
+             begin
+                allowed.(be) <- false;
+                for a = 1 to 9 do
+                  if allowed.(a) then
+                    begin
+                       allowed.(a) <- false;
+                       for c = 1 to 9 do
+                         if allowed.(c) then
+                           begin
+                              allowed.(c) <- false;
+                              for d = 1 to 9 do
+                                if allowed.(d) then
                                   begin
-                                    counted.(product) <- true;
-                                    count := (!count) + product;
-                                    Printf.printf "%d " product
-                                  end;
-                                (* 1  * 4 digits *)
-                                let product2 = b * (a * 1000 + c * 100 + d * 10 + e) in
-                                if not counted.(product2) && okdigits allowed (product2 / 10) then
-                                  begin
-                                    counted.(product2) <- true;
-                                    count := (!count) + product2;
-                                    Printf.printf "%d " product2
-                                  end;
-                                allowed.(d) <- true
-                              end
-                          done;
-                          allowed.(c) <- true
-                        end
-                    done;
-                    allowed.(a) <- true
-                  end
-              done;
-              allowed.(be) <- true
-            end;
-          allowed.(b) <- true
+                                     allowed.(d) <- false;
+                                     (* 2 * 3 digits *)
+                                     let product = (a * 10 + b) * (c * 100 + d * 10 + e) in
+                                     if not counted.(product) && okdigits allowed (product / 10) then
+                                       begin
+                                          counted.(product) <- true;
+                                          count := (!count) + product;
+                                          Printf.printf "%d " product
+                                       end;
+                                     (* 1  * 4 digits *)
+                                     let product2 = b * (a * 1000 + c * 100 + d * 10 + e) in
+                                     if not counted.(product2) && okdigits allowed (product2 / 10) then
+                                       begin
+                                          counted.(product2) <- true;
+                                          count := (!count) + product2;
+                                          Printf.printf "%d " product2
+                                       end;
+                                     allowed.(d) <- true
+                                  end
+                              done;
+                              allowed.(c) <- true
+                           end
+                       done;
+                       allowed.(a) <- true
+                    end
+                done;
+                allowed.(be) <- true
+             end;
+           allowed.(b) <- true
         end
     done;
     allowed.(e) <- true
   done;
-  Printf.printf "%d\n" (!count)
-end
+  Printf.printf "%d\n" (!count) 
  

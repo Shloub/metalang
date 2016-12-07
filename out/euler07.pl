@@ -11,10 +11,10 @@ sub divisible{
   {
       if (remainder($n, $t->[$i]) eq 0)
       {
-          return 1;
+          return !(0);
       }
   }
-  return ();
+  return !(1);
 }
 
 sub find{

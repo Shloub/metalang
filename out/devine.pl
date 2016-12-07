@@ -25,7 +25,7 @@ sub devine0{
   {
       if ($tab->[$i] > $max0 || $tab->[$i] < $min0)
       {
-          return ();
+          return !(1);
       }
       if ($tab->[$i] < $nombre)
       {
@@ -37,10 +37,10 @@ sub devine0{
       }
       if ($tab->[$i] eq $nombre && $len ne $i + 1)
       {
-          return ();
+          return !(1);
       }
   }
-  return 1;
+  return !(0);
 }
 
 my $nombre = readint();

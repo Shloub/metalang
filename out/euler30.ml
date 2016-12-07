@@ -1,6 +1,5 @@
 let () =
-begin
-  (*
+ (*
 a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   a ^ 5 +
   b ^ 5 +
@@ -21,8 +20,8 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
               let r = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000 in
               if s = r && r <> 1 then
                 begin
-                  Printf.printf "%d%d%d%d%d%d %d\n" f e d c b a r;
-                  sum := (!sum) + r
+                   Printf.printf "%d%d%d%d%d%d %d\n" f e d c b a r;
+                   sum := (!sum) + r
                 end
             done
           done
@@ -30,6 +29,5 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
       done
     done
   done;
-  Printf.printf "%d" (!sum)
-end
+  Printf.printf "%d" (!sum) 
  

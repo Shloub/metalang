@@ -1,6 +1,6 @@
 let exp0 a e =
   let o = ref( 1 ) in
-  for _i = 1 to e do
+  for i = 1 to e do
     o := (!o) * a
   done;
   (!o)
@@ -14,19 +14,16 @@ let e t n =
     if (!n) >= t.(i) * i then
       n := (!n) - t.(i) * i
     else
-      begin
-        let nombre = exp0 10 (i - 1) + (!n) / i in
-        let chiffre = i - 1 - (!n) mod i in
-        raise (Found_1(nombre / exp0 10 chiffre mod 10))
-      end
+      let nombre = exp0 10 (i - 1) + (!n) / i in
+      let chiffre = i - 1 - (!n) mod i in
+      raise (Found_1(nombre / exp0 10 chiffre mod 10))
   done;
   - 1
   with Found_1 (out) -> out
 
 let () =
-begin
-  let t = Array.init 9 (fun i ->
-    exp0 10 i - exp0 10 (i - 1)) in
+ let t = Array.init 9 (fun i ->
+   exp0 10 i - exp0 10 (i - 1)) in
   for i2 = 1 to 8 do
     Printf.printf "%d => %d\n" i2 t.(i2)
   done;
@@ -53,6 +50,5 @@ begin
     out0 := (!out0) * v;
     Printf.printf "10^%d=%d v=%d\n" l puiss v
   done;
-  Printf.printf "%d\n" (!out0)
-end
+  Printf.printf "%d\n" (!out0) 
  

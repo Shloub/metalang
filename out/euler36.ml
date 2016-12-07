@@ -17,22 +17,21 @@ let palindrome2 pow2 n =
   with Found_1 (out) -> out
 
 let () =
-begin
-  let p = ref( 1 ) in
-  let pow2 = Array.init 20 (fun _i ->
+ let p = ref( 1 ) in
+  let pow2 = Array.init 20 (fun i ->
     p := (!p) * 2;
     (!p) / 2) in
   let sum = ref( 0 ) in
   for d = 1 to 9 do
     if palindrome2 pow2 d then
       begin
-        Printf.printf "%d\n" d;
-        sum := (!sum) + d
+         Printf.printf "%d\n" d;
+         sum := (!sum) + d
       end;
     if palindrome2 pow2 (d * 10 + d) then
       begin
-        Printf.printf "%d\n" (d * 10 + d);
-        sum := (!sum) + d * 10 + d
+         Printf.printf "%d\n" (d * 10 + d);
+         sum := (!sum) + d * 10 + d
       end
   done;
   for a0 = 0 to 4 do
@@ -42,30 +41,29 @@ begin
         let num0 = a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a in
         if palindrome2 pow2 num0 then
           begin
-            Printf.printf "%d\n" num0;
-            sum := (!sum) + num0
+             Printf.printf "%d\n" num0;
+             sum := (!sum) + num0
           end;
         let num1 = a * 10000 + b * 1000 + c * 100 + b * 10 + a in
         if palindrome2 pow2 num1 then
           begin
-            Printf.printf "%d\n" num1;
-            sum := (!sum) + num1
+             Printf.printf "%d\n" num1;
+             sum := (!sum) + num1
           end
       done;
       let num2 = a * 100 + b * 10 + a in
       if palindrome2 pow2 num2 then
         begin
-          Printf.printf "%d\n" num2;
-          sum := (!sum) + num2
+           Printf.printf "%d\n" num2;
+           sum := (!sum) + num2
         end;
       let num3 = a * 1000 + b * 100 + b * 10 + a in
       if palindrome2 pow2 num3 then
         begin
-          Printf.printf "%d\n" num3;
-          sum := (!sum) + num3
+           Printf.printf "%d\n" num3;
+           sum := (!sum) + num3
         end
     done
   done;
-  Printf.printf "sum=%d\n" (!sum)
-end
+  Printf.printf "sum=%d\n" (!sum) 
  

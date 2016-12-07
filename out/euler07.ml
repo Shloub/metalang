@@ -12,23 +12,21 @@ let divisible n t size =
 let find n t used nth =
   let n = ref n in
   let used = ref used in
-  while (!used) <> nth
-  do
-      if divisible (!n) t (!used) then
-        n := (!n) + 1
-      else
-        begin
-          t.((!used)) <- (!n);
-          n := (!n) + 1;
-          used := (!used) + 1
-        end
+  while (!used) <> nth do
+    if divisible (!n) t (!used) then
+      n := (!n) + 1
+    else
+      begin
+         t.((!used)) <- (!n);
+         n := (!n) + 1;
+         used := (!used) + 1
+      end
   done;
   t.((!used) - 1)
 
 let () =
-begin
-  let n = 10001 in
-  let t = Array.make n 2 in
-  Printf.printf "%d\n" (find 3 t 1 n)
-end
+ let n = 10001 in
+  let t = Array.init n (fun i ->
+    2) in
+  Printf.printf "%d\n" (find 3 t 1 n) 
  

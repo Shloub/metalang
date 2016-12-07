@@ -4,7 +4,6 @@ type foo_t =
   | Blah
 
 let () =
-begin
-  let _foo_val = Foo in ()
-end
+ let foo_val = Foo in
+  () 
  

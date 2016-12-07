@@ -16,8 +16,8 @@ let nbPassePartout n passepartout m serrures =
     let pp = passepartout.(i) in
     if pp.(0) >= (!max_ancient) && pp.(1) >= (!max_recent) then
       raise (Found_1(1));
-    max_ancient_pp := max ((!max_ancient_pp)) (pp.(0));
-    max_recent_pp := max ((!max_recent_pp)) (pp.(1))
+    max_ancient_pp := (max ((!max_ancient_pp)) (pp.(0)));
+    max_recent_pp := (max ((!max_recent_pp)) (pp.(1)))
   done;
   if (!max_ancient_pp) >= (!max_ancient) && (!max_recent_pp) >= (!max_recent) then
     2
@@ -26,19 +26,17 @@ let nbPassePartout n passepartout m serrures =
   with Found_1 (out) -> out
 
 let () =
-begin
-  let n = Scanf.scanf "%d " (fun n -> n) in
-  let passepartout = Array.init n (fun _i ->
-    let out0 = Array.init 2 (fun _j ->
+ let n = Scanf.scanf "%d " (fun n -> n) in
+  let passepartout = Array.init n (fun i ->
+    let out0 = Array.init 2 (fun j ->
       let out01 = Scanf.scanf "%d " (fun out01 -> out01) in
       out01) in
     out0) in
   let m = Scanf.scanf "%d " (fun m -> m) in
-  let serrures = Array.init m (fun _k ->
-    let out1 = Array.init 2 (fun _l ->
+  let serrures = Array.init m (fun k ->
+    let out1 = Array.init 2 (fun l ->
       let out_ = Scanf.scanf "%d " (fun out_ -> out_) in
       out_) in
     out1) in
-  Printf.printf "%d" (nbPassePartout n passepartout m serrures)
-end
+  Printf.printf "%d" (nbPassePartout n passepartout m serrures) 
  
