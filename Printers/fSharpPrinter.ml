@@ -31,23 +31,15 @@
 open Stdlib
 open Helper
 open Ast
+open Mllike
 
-
-let ptype f (t : Ast.Type.t ) = OcamlFunPrinter.ptype f t
-
-
-let print_lief f l =
-  let open Ast.Expr in let open Format in match l with
-  | Char c -> fprintf f "%C" c
-  | String s -> fprintf f "%S" s
-  | Integer i -> fprintf f "%i" i
-  | Bool true -> fprintf f "true"
-  | Bool false -> fprintf f "false"
-  | Enum s -> fprintf f "%s" s
-
-let prio_arg = -105
-let prio_tuple = -103
-let prio_apply = -101
+type pinstr_acc = { p: Format.formatter -> string Ast.TypeMap.t ->  bool -> Ast.Type.t -> unit;
+                    need_unit : bool;
+                    is_comment : bool;
+                    is_return : bool;
+                    is_sad_return : bool;
+                    sad_returned_types : Ast.TypeSet.t
+                  }
 
 let print_op f op = 
   let open Ast.Expr in Format.fprintf f "%s" (match op with
@@ -79,14 +71,6 @@ let print_mut0 refbindings m f () =
 
 let print_mut refbindings f m = Mutable.Fixed.Deep.fold (print_mut0 refbindings) m f ()
 
-let pcall macros f prio_parent func li =
-  match StringMap.find_opt func macros with
-  | Some ( (t, params, code) ) ->
-    pmacros f "(%s)" t params code li nop
-  | None ->
-    if li = [] then parens prio_parent prio_apply f "%s ()" func
-    else parens prio_parent prio_apply f "%s %a" func (print_list (fun f x -> x f prio_arg) sep_space) li
-
 let print_expr refbindings macros e f p =
   let open Format in
   let open Ast.Expr in
@@ -104,14 +88,6 @@ let print_expr refbindings macros e f p =
     | Record li -> fprintf f "{%a}" (print_list (fun f (name, x) ->
         fprintf f "%s=%a" name x nop) (sep "%a;@\n%a")) li
   in Fixed.Deep.fold print_expr0 e f p
-
-type pinstr_acc = { p: Format.formatter -> string Ast.TypeMap.t ->  bool -> Ast.Type.t -> unit;
-                    need_unit : bool;
-                    is_comment : bool;
-                    is_return : bool;
-                    is_sad_return : bool;
-                    sad_returned_types : Ast.TypeSet.t
-                  }
 
 let instructions printed_exn sad_returns current_etype f li =
   let li, _, united, _ = List.fold_left (fun (acc, returned, united, askunit) i ->
