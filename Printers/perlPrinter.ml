@@ -52,8 +52,8 @@ let print_lief prio f l =
   | Integer i ->
     if i < 0 then parens prio (-1) f "%i" i
     else fprintf f "%i" i
-  | Bool true -> fprintf f "1"
-  | Bool false -> fprintf f "()"
+  | Bool true -> fprintf f "!(0)"
+  | Bool false -> fprintf f "!(1)"
   | Enum s -> fprintf f "%S" s
 
 let print_op f op =
