@@ -436,11 +436,8 @@ class camlPrinter = object(self)
     used_variables <- calc_used_variables false instrs
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
-  (** sad return in the current function *)
-  val mutable sad_returns = IntSet.empty
   val mutable printed_exn = TypeMap.empty
   (** true if we are processing an expression *)
-  val mutable in_expr = false
   val mutable exn_count = 0
 
   method calc_addons sad_types = TypeSet.fold (fun t (acc: string TypeMap.t) ->
