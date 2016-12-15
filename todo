@@ -36,7 +36,6 @@ Printer -> PasPrinter[OK]-> AdaPrinter[OK]
         -> CommonLispPrinter
         -> HtmlPrinter
         -> LuaPrinter[OK]
-        -> OcamlPrinter
         -> JSPrinter[OK]
         -> SmalltalkPrinter[OK]
         -> VBDotNetPrinter[OK]
@@ -51,6 +50,7 @@ Printer -> PasPrinter[OK]-> AdaPrinter[OK]
 FSharpPrinter[OK]
 ForthPrinter[OK]
 RbPrinter[OK]
+OcamlPrinter[OK]
 HaskellPrinter
 OcamlFunPrinter
 RacketPrinter
