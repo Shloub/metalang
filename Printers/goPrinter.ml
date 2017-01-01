@@ -113,8 +113,7 @@ func skip() {
   } else {
     reader.UnreadByte()
   }
-}
-") ()
+}\n\n") ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

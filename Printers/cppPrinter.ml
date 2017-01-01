@@ -101,7 +101,7 @@ class cppPrinter = object(self)
 
   method prog f prog =
     Format.fprintf f
-      "#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
+      "#include <iostream>@\n#include <vector>@\n%a@\n%a@\n%a\n"
       (fun f () ->
         if Tags.is_taged "use_math"
         then Format.fprintf f "#include<cmath>@\n";
@@ -123,14 +123,14 @@ class cppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>( %a );@]"
+    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>(%a);@]"
       self#ptype type_
       self#binding binding
       self#ptype type_
       self#expr len
 
   method allocarrayconst f binding type_ len e opt =
-    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a);@]"
+    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>(%a);@\nstd::fill(%a->begin(), %a->end(), %a);@]"
       self#ptype type_
       self#binding binding
       self#ptype type_
