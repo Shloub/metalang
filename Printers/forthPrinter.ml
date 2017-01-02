@@ -141,7 +141,7 @@ let ptypename f t = match Type.unfix t with
 let print_instr tyenv macros i =
   let open Ast.Instr in
   let open Format in
-  let block_ndrop ndrop f li = print_list (fun f i -> i.p f ndrop) sep_nl f li in
+  let block_ndrop ndrop f li = print_list (fun f i -> i f ndrop) sep_nl f li in
   let readtype f t = match Type.unfix t with
     | Type.Integer -> fprintf f "read-int"
     | Type.Char -> fprintf f "read-char"
@@ -208,22 +208,12 @@ let print_instr tyenv macros i =
           | ReadExpr (t, mut) -> fprintf f "@[%a %a@]" readtype t (mut_set tyenv) mut) li in
       print_list (fun f e -> e f) sep_nl f li
     | Untuple (li, expr, opt) -> assert false
-    | Unquote e -> assert false in
-  let is_multi_instr = true in
-  {
-    is_multi_instr = is_multi_instr;
-    is_if=is_if i;
-    is_if_noelse=is_if_noelse i;
-    is_comment=is_comment i;
-    p=p;
-    default = 0;
-    print_lief = (fun _ -> print_lief);
-  }
+    | Unquote e -> assert false in p
 
 let print_instr tyenv macros i =
   let open Ast.Instr.Fixed.Deep in
-  let i = (fold (print_instr tyenv macros) (mapg (print_expr tyenv macros) i))
-  in fun f -> i.p f i.default
+  let p = (fold (print_instr tyenv macros) (mapg (print_expr tyenv macros) i))
+  in fun f -> p f 0
 
 
 class forthPrinter = object(self)
