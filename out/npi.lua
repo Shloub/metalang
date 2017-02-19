@@ -16,14 +16,13 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function is_number( c )
+function is_number (c)
   return c <= 57 and c >= 48
 end
-
 --[[
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 --]]
-function npi0( str, len )
+function npi0 (str, len)
   local stack = {}
   for i = 0, len - 1 do
       stack[i + 1] = 0
@@ -49,7 +48,6 @@ function npi0( str, len )
       end
       return stack[1]
   end
-  
   
   local len = 0
   len = readint()

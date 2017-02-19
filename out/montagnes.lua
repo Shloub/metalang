@@ -10,7 +10,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function montagnes0( tab, len )
+function montagnes0 (tab, len)
   local max0 = 1
   local j = 1
   local i = len - 2
@@ -28,7 +28,6 @@ function montagnes0( tab, len )
   end
   return max0
 end
-
 
 local len = 0
 len = readint()

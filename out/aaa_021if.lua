@@ -1,4 +1,4 @@
-function testA( a, b )
+function testA (a, b)
   if a then
       if b then
           io.write("A")
@@ -11,8 +11,7 @@ function testA( a, b )
       io.write("D")
   end
 end
-
-function testB( a, b )
+function testB (a, b)
   if a then
       io.write("A")
   elseif b then
@@ -21,8 +20,7 @@ function testB( a, b )
       io.write("C")
   end
 end
-
-function testC( a, b )
+function testC (a, b)
   if a then
       if b then
           io.write("A")
@@ -33,8 +31,7 @@ function testC( a, b )
       io.write("C")
   end
 end
-
-function testD( a, b )
+function testD (a, b)
   if a then
       if b then
           io.write("A")
@@ -46,8 +43,7 @@ function testD( a, b )
       io.write("D")
   end
 end
-
-function testE( a, b )
+function testE (a, b)
   if a then
       if b then
           io.write("A")
@@ -61,13 +57,11 @@ function testE( a, b )
       io.write("E")
   end
 end
-
-function test( a, b )
+function test (a, b)
   testD(a, b)
   testE(a, b)
   io.write("\n")
 end
-
 
 test(true, true)
 test(true, false)

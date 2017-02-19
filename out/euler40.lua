@@ -2,15 +2,14 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function exp0( a, e )
+function exp0 (a, e)
   local o = 1
   for i = 1, e do
       o = o * a
       end
       return o
   end
-  
-  function e( t, n )
+  function e (t, n)
     for i = 1, 8 do
         if n >= t[i + 1] * i then
             n = n - t[i + 1] * i
@@ -22,7 +21,6 @@ function exp0( a, e )
         end
         return -1
     end
-    
     
     local t = {}
     for i = 0, 8 do

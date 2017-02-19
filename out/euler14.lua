@@ -2,15 +2,14 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function next0( n )
+function next0 (n)
   if math.mod(n, 2) == 0 then
       return trunc(n / 2)
   else 
       return 3 * n + 1
   end
 end
-
-function find( n, m )
+function find (n, m)
   if n == 1 then
       return 1
   elseif n >= 1000000 then
@@ -22,7 +21,6 @@ function find( n, m )
       return m[n + 1]
   end
 end
-
 
 local m = {}
 for j = 0, 999999 do

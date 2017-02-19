@@ -14,7 +14,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function exp0( a, b )
+function exp0 (a, b)
   if b == 0 then
       return 1
   end
@@ -25,7 +25,6 @@ function exp0( a, b )
       return a * exp0(a, b - 1)
   end
 end
-
 
 local a = 0
 local b = 0

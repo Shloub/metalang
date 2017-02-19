@@ -2,7 +2,7 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function pgcd( a, b )
+function pgcd (a, b)
   local c = math.min(a, b)
   local d = math.max(a, b)
   local reste = math.mod(d, c)
@@ -12,7 +12,6 @@ function pgcd( a, b )
       return pgcd(c, reste)
   end
 end
-
 
 local top = 1
 local bottom = 1

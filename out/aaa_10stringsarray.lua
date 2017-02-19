@@ -1,16 +1,12 @@
-
-function idstring( s )
+function idstring (s)
   return s
 end
-
-function printstring( s )
+function printstring (s)
   io.write(string.format("%s\n", idstring(s)))
 end
-
-function print_toto( t )
+function print_toto (t)
   io.write(string.format("%s = %d\n", t.s, t.v))
 end
-
 
 local tab = {}
 for i = 0, 1 do

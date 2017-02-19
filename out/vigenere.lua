@@ -16,7 +16,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function position_alphabet( c )
+function position_alphabet (c)
   local i = c
   if i <= 90 and i >= 65 then
       return i - 65
@@ -26,12 +26,10 @@ function position_alphabet( c )
       return -1
   end
 end
-
-function of_position_alphabet( c )
+function of_position_alphabet (c)
   return c + 97
 end
-
-function crypte( taille_cle, cle, taille, message )
+function crypte (taille_cle, cle, taille, message)
   for i = 0, taille - 1 do
       local lettre = position_alphabet(message[i + 1])
       if lettre ~= -1 then
@@ -41,7 +39,6 @@ function crypte( taille_cle, cle, taille, message )
       end
       end
   end
-  
   
   local taille_cle = readint()
   stdinsep()

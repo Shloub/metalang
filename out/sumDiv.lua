@@ -5,24 +5,21 @@ function readint()
     buffer = buffer0
     return tonumber(num)
 end
-function foo(  )
+function foo ()
   local a = 0
   --[[ test --]]
   a = a + 1
   --[[ test 2 --]]
 end
-
-function foo2(  )
+function foo2 ()
   
 end
-
-function foo3(  )
+function foo3 ()
   if 1 == 1 then
       
   end
 end
-
-function sumdiv( n )
+function sumdiv (n)
   --[[ On désire renvoyer la somme des diviseurs --]]
   local out0 = 0
   --[[ On déclare un entier qui contiendra la somme --]]
@@ -39,7 +36,6 @@ function sumdiv( n )
       return out0
       --[[On renvoie out--]]
   end
-  
   
   --[[ Programme principal --]]
   local n = 0

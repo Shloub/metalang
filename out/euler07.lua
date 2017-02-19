@@ -1,4 +1,4 @@
-function divisible( n, t, size )
+function divisible (n, t, size)
   for i = 0, size - 1 do
       if math.mod(n, t[i + 1]) == 0 then
           return true
@@ -6,8 +6,7 @@ function divisible( n, t, size )
       end
       return false
   end
-  
-  function find( n, t, used, nth )
+  function find (n, t, used, nth)
     while used ~= nth do
         if divisible(n, t, used) then
             n = n + 1
@@ -19,7 +18,6 @@ function divisible( n, t, size )
     end
     return t[used]
   end
-  
   
   local n = 10001
   local t = {}

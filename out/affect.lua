@@ -13,18 +13,15 @@ end
 --[[
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 --]]
-
-function mktoto( v1 )
+function mktoto (v1)
   local t = {foo=v1, bar=v1, blah=v1}
   return t
 end
-
-function mktoto2( v1 )
+function mktoto2 (v1)
   local t = {foo=v1 + 3, bar=v1 + 2, blah=v1 + 1}
   return t
 end
-
-function result( t_, t2_ )
+function result (t_, t2_)
   local t = t_
   local t2 = t2_
   local t3 = {foo=0, bar=0, blah=0}
@@ -46,7 +43,6 @@ function result( t_, t2_ )
           cache2 = cache0
           return t.foo + t.blah * t.bar + t.bar * t.foo
       end
-      
       
       local t = mktoto(4)
       local t2 = mktoto(5)

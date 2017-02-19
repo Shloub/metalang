@@ -10,7 +10,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function devine0( nombre, tab, len )
+function devine0 (nombre, tab, len)
   local min0 = tab[1]
   local max0 = tab[2]
   for i = 2, len - 1 do
@@ -29,7 +29,6 @@ function devine0( nombre, tab, len )
       end
       return true
   end
-  
   
   local nombre = readint()
   stdinsep()

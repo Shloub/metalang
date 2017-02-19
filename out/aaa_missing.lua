@@ -9,7 +9,7 @@ end
 --[[
   Ce test a été généré par Metalang.
 --]]
-function result( len, tab )
+function result (len, tab)
   local tab2 = {}
   for i = 0, len - 1 do
       tab2[i + 1] = false
@@ -26,7 +26,6 @@ function result( len, tab )
               end
               return -1
           end
-          
           
           local len = tonumber(io.read('*l'))
           io.write(string.format("%d\n", len))

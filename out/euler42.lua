@@ -16,7 +16,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function is_triangular( n )
+function is_triangular (n)
   --[[
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
@@ -24,8 +24,7 @@ function is_triangular( n )
   local a = math.floor(math.sqrt(n * 2))
   return a * (a + 1) == n * 2
 end
-
-function score(  )
+function score ()
   stdinsep()
   local len = readint()
   stdinsep()
@@ -41,7 +40,6 @@ function score(  )
           return 0
       end
   end
-  
   
   for i = 1, 55 do
       if is_triangular(i) then

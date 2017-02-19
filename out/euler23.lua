@@ -2,7 +2,7 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function eratostene( t, max0 )
+function eratostene (t, max0)
   local n = 0
   for i = 2, max0 - 1 do
       if t[i + 1] == i then
@@ -16,8 +16,7 @@ function eratostene( t, max0 )
       end
       return n
   end
-  
-  function fillPrimesFactors( t, n, primes, nprimes )
+  function fillPrimesFactors (t, n, primes, nprimes)
     for i = 0, nprimes - 1 do
         local d = primes[i + 1]
         while math.mod(n, d) == 0 do
@@ -30,15 +29,13 @@ function eratostene( t, max0 )
         end
         return n
     end
-    
-    function sumdivaux2( t, n, i )
+    function sumdivaux2 (t, n, i)
       while i < n and t[i + 1] == 0 do
           i = i + 1
       end
       return i
     end
-    
-    function sumdivaux( t, n, i )
+    function sumdivaux (t, n, i)
       if i > n then
           return 1
       elseif t[i + 1] == 0 then
@@ -54,8 +51,7 @@ function eratostene( t, max0 )
               return (out0 + 1) * o
           end
       end
-      
-      function sumdiv( nprimes, primes, n )
+      function sumdiv (nprimes, primes, n)
         local t = {}
         for i = 0, n do
             t[i + 1] = 0
@@ -63,7 +59,6 @@ function eratostene( t, max0 )
             local max0 = fillPrimesFactors(t, n, primes, nprimes)
             return sumdivaux(t, max0, 0)
         end
-        
         
         local maximumprimes = 30001
         local era = {}

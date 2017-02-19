@@ -1,4 +1,4 @@
-function eratostene( t, max0 )
+function eratostene (t, max0)
   local n = 0
   for i = 2, max0 - 1 do
       if t[i + 1] == i then
@@ -12,8 +12,7 @@ function eratostene( t, max0 )
       end
       return n
   end
-  
-  function isPrime( n, primes, len )
+  function isPrime (n, primes, len)
     local i = 0
     if n < 0 then
         n = -n
@@ -26,8 +25,7 @@ function eratostene( t, max0 )
     end
     return true
   end
-  
-  function test( a, b, primes, len )
+  function test (a, b, primes, len)
     for n = 0, 200 do
         local j = n * n + a * n + b
         if not(isPrime(j, primes, len)) then
@@ -36,7 +34,6 @@ function eratostene( t, max0 )
         end
         return 200
     end
-    
     
     local maximumprimes = 1000
     local era = {}

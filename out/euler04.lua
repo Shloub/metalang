@@ -20,14 +20,13 @@ a * d +
 c * f * 10000
 
 --]]
-function chiffre( c, m )
+function chiffre (c, m)
   if c == 0 then
       return math.mod(m, 10)
   else 
       return chiffre(c - 1, trunc(m / 10))
   end
 end
-
 
 local m = 1
 for a = 0, 9 do

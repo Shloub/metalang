@@ -7,7 +7,6 @@ function readintline()
   return tab
 end
 
-
 local bar_ = tonumber(io.read('*l'))
 local t = {foo=readintline(), bar=bar_}
 a, b = unpack(t.foo)

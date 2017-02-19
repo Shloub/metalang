@@ -2,15 +2,14 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function fact( n )
+function fact (n)
   local prod = 1
   for i = 2, n do
       prod = prod * i
       end
       return prod
   end
-  
-  function show( lim, nth )
+  function show (lim, nth)
     local t = {}
     for i = 0, lim - 1 do
         t[i + 1] = i
@@ -40,7 +39,6 @@ function fact( n )
                         end
                         io.write("\n")
                     end
-                    
                     
                     show(10, 999999)
                     

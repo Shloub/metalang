@@ -17,7 +17,7 @@ end
 
 
 --]]
-function sumdiag( n )
+function sumdiag (n)
   local nterms = n * 2 - 1
   local un = 1
   local sum = 1
@@ -29,7 +29,6 @@ function sumdiag( n )
       end
       return sum
   end
-  
   
   io.write(sumdiag(1001))
   

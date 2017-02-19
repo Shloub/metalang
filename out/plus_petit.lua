@@ -14,7 +14,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function go0( tab, a, b )
+function go0 (tab, a, b)
   local m = trunc((a + b) / 2)
   if a == m then
       if tab[a + 1] == m then
@@ -41,11 +41,9 @@ function go0( tab, a, b )
       return go0(tab, m, b)
   end
 end
-
-function plus_petit0( tab, len )
+function plus_petit0 (tab, len)
   return go0(tab, 0, len)
 end
-
 
 local len = 0
 len = readint()

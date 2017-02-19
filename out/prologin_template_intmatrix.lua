@@ -6,7 +6,7 @@ function readintline()
   end
   return tab
 end
-function programme_candidat( tableau, x, y )
+function programme_candidat (tableau, x, y)
   local out0 = 0
   for i = 0, y - 1 do
       for j = 0, x - 1 do
@@ -15,7 +15,6 @@ function programme_candidat( tableau, x, y )
           end
           return out0
       end
-      
       
       local taille_x = tonumber(io.read('*l'))
       local taille_y = tonumber(io.read('*l'))

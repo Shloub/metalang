@@ -1,4 +1,4 @@
-function is_pair( i )
+function is_pair (i)
   local j = 1
   if i < 10 then
       j = 2
@@ -22,6 +22,5 @@ function is_pair( i )
   end
   return math.mod(i, 2) == 0
 end
-
 
 
