@@ -48,12 +48,14 @@
   (loop for i2 from 0 to (- len 1) do
     (if
       (not (aref tab2 i2))
-      (return-from result i2)))
-  (return-from result (- 0 1))
-  )))
+      (return-from result i2)
+      '()))
+  (return-from result (- 0 1)))
+  
+))
 
 (progn
-  (let ((len (mread-int )))
+  (let ((len (mread-int)))
     (mread-blank)
     (format t "~D~%" len)
     (let
@@ -61,12 +63,14 @@
               len
               (function (lambda (a)
               (block lambda_2
-                (let ((b (mread-int )))
+                (let ((b (mread-int)))
                   (mread-blank)
                   (return-from lambda_2 b)
                 )))
               ))))
-    (format t "~D~%" (result len tab))
-    )))
+    (format t "~D~%" (result len tab)))
+    )
+    
+)
 
 

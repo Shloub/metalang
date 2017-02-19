@@ -37,7 +37,7 @@ Ce test permet de vérifier si les différents backends pour les langages implé
 read int, read char et skip
 |#
 (progn
-  (let ((len (mread-int )))
+  (let ((len (mread-int)))
     (mread-blank)
     (format t "~D=len~%" len)
     (let
@@ -45,7 +45,7 @@ read int, read char et skip
               len
               (function (lambda (a)
               (block lambda_1
-                (let ((b (mread-int )))
+                (let ((b (mread-int)))
                   (mread-blank)
                   (return-from lambda_1 b)
                 )))
@@ -59,14 +59,14 @@ read int, read char et skip
                len
                (function (lambda (d)
                (block lambda_2
-                 (let ((e (mread-int )))
+                 (let ((e (mread-int)))
                    (mread-blank)
                    (return-from lambda_2 e)
                  )))
                ))))
     (loop for i_ from 0 to (- len 1) do
       (format t "~D==>~D " i_ (aref tab2 i_)))
-    (let ((strlen (mread-int )))
+    (let ((strlen (mread-int)))
       (mread-blank)
       (format t "~D=strlen~%" strlen)
       (let
@@ -74,7 +74,7 @@ read int, read char et skip
                  strlen
                  (function (lambda (f)
                  (block lambda_3
-                   (let ((g (mread-char )))
+                   (let ((g (mread-char)))
                      (return-from lambda_3 g)
                    )))
                  ))))
@@ -86,11 +86,17 @@ read int, read char et skip
               (format t "~C:~D " tmpc c)
               (if
                 (not (eq tmpc #\Space))
-                (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a))))
+                (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a)))
+                '())
               (setf (aref tab4 i3) (code-char c))
             ))))
       (loop for j from 0 to (- strlen 1) do
-        (princ (aref tab4 j)))
-      ))))))
+        (princ (aref tab4 j))))
+      )
+      )
+    )
+    )
+    
+)
 
 

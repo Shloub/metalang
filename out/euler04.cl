@@ -3,10 +3,12 @@
 (defun remainder (a b) (- a (* b (truncate a b))))
 
 (defun max2_ (a b)
-(if
-  (> a b)
-  (return-from max2_ a)
-  (return-from max2_ b)))
+(progn
+  (if
+    (> a b)
+    (return-from max2_ a)
+    (return-from max2_ b))
+))
 
 #|
 
@@ -27,10 +29,12 @@ c * f * 10000
 
 |#
 (defun chiffre (c m)
-(if
-  (= c 0)
-  (return-from chiffre (remainder m 10))
-  (return-from chiffre (chiffre (- c 1) (quotient m 10)))))
+(progn
+  (if
+    (= c 0)
+    (return-from chiffre (remainder m 10))
+    (return-from chiffre (chiffre (- c 1) (quotient m 10))))
+))
 
 (progn
   (let ((m 1))
@@ -45,9 +49,11 @@ c * f * 10000
                     (if
                       (and (= (chiffre 0 mul) (chiffre 5 mul)) (= (chiffre 1 mul) (chiffre 4 mul)) 
                       (= (chiffre 2 mul) (chiffre 3 mul)))
-                      (setq m (max2_ mul m)))
+                      (setq m (max2_ mul m))
+                      '())
                   ))))))))
-    (format t "~D~%" m)
-  ))
+    (format t "~D~%" m))
+    
+)
 
 

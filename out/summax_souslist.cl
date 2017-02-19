@@ -35,17 +35,21 @@
           (setq current (+ current (aref lst i)))
           (if
             (< current 0)
-            (setq current 0))
+            (setq current 0)
+            '())
           (if
             (< max0 current)
-            (setq max0 current))
+            (setq max0 current)
+            '())
         ))
-      (return-from summax max0)
-    ))))
+      (return-from summax max0))
+      )
+    
+))
 
 (progn
   (let ((len 0))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let
      ((tab (array_init
@@ -53,13 +57,16 @@
               (function (lambda (i)
               (block lambda_1
                 (let ((tmp 0))
-                  (setq tmp (mread-int ))
+                  (setq tmp (mread-int))
                   (mread-blank)
                   (return-from lambda_1 tmp)
                 )))
               ))))
     (let ((result (summax tab len)))
-      (princ result)
-    ))))
+      (princ result))
+      )
+    )
+    
+)
 
 

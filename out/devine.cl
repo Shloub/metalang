@@ -34,31 +34,37 @@
         (progn
           (if
             (or (> (aref tab i) max0) (< (aref tab i) min0))
-            (return-from devine0 nil))
+            (return-from devine0 nil)
+            '())
           (if
             (< (aref tab i) nombre)
-            (setq min0 (aref tab i)))
+            (setq min0 (aref tab i))
+            '())
           (if
             (> (aref tab i) nombre)
-            (setq max0 (aref tab i)))
+            (setq max0 (aref tab i))
+            '())
           (if
             (and (= (aref tab i) nombre) (not (= len (+ i 1))))
-            (return-from devine0 nil))
+            (return-from devine0 nil)
+            '())
         ))
-      (return-from devine0 t)
-    ))))
+      (return-from devine0 t))
+      )
+    
+))
 
 (progn
-  (let ((nombre (mread-int )))
+  (let ((nombre (mread-int)))
     (mread-blank)
-    (let ((len (mread-int )))
+    (let ((len (mread-int)))
       (mread-blank)
       (let
        ((tab (array_init
                 len
                 (function (lambda (i)
                 (block lambda_1
-                  (let ((tmp (mread-int )))
+                  (let ((tmp (mread-int)))
                     (mread-blank)
                     (return-from lambda_1 tmp)
                   )))
@@ -66,7 +72,10 @@
       (if
         (devine0 nombre tab len)
         (princ "True")
-        (princ "False"))
-      ))))
+        (princ "False")))
+      )
+      )
+    
+)
 
 

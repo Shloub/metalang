@@ -12,7 +12,18 @@
                   (let ((one_to_eighty (+ one_to_seventy (* 7 9) one_to_nine 6)))
                     (let ((one_to_ninety (+ one_to_eighty (* 6 9) one_to_nine 6)))
                       (let ((one_to_ninety_nine (+ one_to_ninety (* 6 9) one_to_nine)))
-                        (format t "~D~%~D~%" one_to_ninety_nine (+ (* 100 one_to_nine) (* one_to_ninety_nine 10) (* 10 9 99) (* 7 9) 11))
-                      ))))))))))))
+                        (format t "~D~%~D~%" one_to_ninety_nine (+ (* 100 one_to_nine) (* one_to_ninety_nine 10) (* 10 9 99) (* 7 9) 11)))
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    
+)
 
 

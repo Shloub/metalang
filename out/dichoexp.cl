@@ -22,24 +22,28 @@
 ))
 
 (defun exp0 (a b)
-(if
-  (= b 0)
-  (return-from exp0 1)
+(progn
   (if
-    (= (remainder b 2) 0)
-    (progn
-      (let ((o (exp0 a (quotient b 2))))
-        (return-from exp0 (* o o))
-      ))
-    (return-from exp0 (* a (exp0 a (- b 1)))))))
+    (= b 0)
+    (return-from exp0 1)
+    (if
+      (= (remainder b 2) 0)
+      (progn
+        (let ((o (exp0 a (quotient b 2))))
+          (return-from exp0 (* o o))
+        ))
+      (return-from exp0 (* a (exp0 a (- b 1))))))
+))
 
 (progn
   (let ((a 0))
     (let ((b 0))
-      (setq a (mread-int ))
+      (setq a (mread-int))
       (mread-blank)
-      (setq b (mread-int ))
-      (princ (exp0 a b))
-    )))
+      (setq b (mread-int))
+      (princ (exp0 a b)))
+      )
+    
+)
 
 

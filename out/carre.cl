@@ -27,9 +27,9 @@
 ))
 
 (progn
-  (let ((x (mread-int )))
+  (let ((x (mread-int)))
     (mread-blank)
-    (let ((y (mread-int )))
+    (let ((y (mread-int)))
       (mread-blank)
       (let
        ((tab (array_init
@@ -41,7 +41,7 @@
                           x
                           (function (lambda (g)
                           (block lambda_2
-                            (let ((e (mread-int )))
+                            (let ((e (mread-int)))
                               (mread-blank)
                               (return-from lambda_2 e)
                             )))
@@ -53,14 +53,18 @@
         (loop for iy from 1 to (- y 1) do
           (if
             (= (aref (aref tab iy) ix) 1)
-            (setf (aref (aref tab iy) ix) (+ (min (aref (aref tab iy) (- ix 1)) (aref (aref tab (- iy 1)) ix) (aref (aref tab (- iy 1)) (- ix 1))) 1)))))
+            (setf (aref (aref tab iy) ix) (+ (min (aref (aref tab iy) (- ix 1)) (aref (aref tab (- iy 1)) ix) (aref (aref tab (- iy 1)) (- ix 1))) 1))
+            '())))
       (loop for jy from 0 to (- y 1) do
         (progn
           (loop for jx from 0 to (- x 1) do
             (format t "~D " (aref (aref tab jy) jx)))
           (princ "
 ")
-        ))
-      ))))
+        )))
+      )
+      )
+    
+)
 
 

@@ -14,9 +14,14 @@ La suite de fibonaci
               (setq b2 (+ b2 a2))
               (setq a2 tmp)
             )))
-        (return-from fibo out_)
-      )))))
+        (return-from fibo out_))
+        )
+      )
+    
+))
 
-(princ (fibo 1 2 4))
+(progn
+  (princ (fibo 1 2 4))
+)
 
 

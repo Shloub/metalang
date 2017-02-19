@@ -11,10 +11,12 @@
 (defun remainder (a b) (- a (* b (truncate a b))))
 
 (defun max2_ (a b)
-(if
-  (> a b)
-  (return-from max2_ a)
-  (return-from max2_ b)))
+(progn
+  (if
+    (> a b)
+    (return-from max2_ a)
+    (return-from max2_ b))
+))
 
 (defun eratostene (t0 max0)
 (progn
@@ -31,9 +33,11 @@
                  (setq j (+ j i))
                  )
             )
-          ))))
-    (return-from eratostene n)
-  )))
+          ))
+        '()))
+    (return-from eratostene n))
+    
+))
 
 (defun fillPrimesFactors (t0 n primes nprimes)
 (progn
@@ -48,7 +52,8 @@
         )
         (if
           (= n 1)
-          (return-from fillPrimesFactors (aref primes i)))
+          (return-from fillPrimesFactors (aref primes i))
+          '())
       )))
   (return-from fillPrimesFactors n)
 ))
@@ -80,7 +85,8 @@
             (progn
               (setf (aref primes l) k)
               (setq l (+ l 1))
-            )))
+            )
+            '()))
         (loop for n from 1 to 10000 do
           (progn
             (let
@@ -97,15 +103,24 @@
                 (loop for i from 0 to max0 do
                   (if
                     (not (= (aref primesFactors i) 0))
-                    (setq ndivs (* ndivs (+ 1 (aref primesFactors i))))))
+                    (setq ndivs (* ndivs (+ 1 (aref primesFactors i))))
+                    '()))
                 (if
                   (> ndivs ndiv2)
-                  (return-from find0 (quotient (* n (+ n 1)) 2)))
+                  (return-from find0 (quotient (* n (+ n 1)) 2))
+                  '())
                 #| print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" |#
               )))))
-        (return-from find0 0)
-      )))))))
+        (return-from find0 0))
+        )
+      )
+      )
+    )
+    
+))
 
-(format t "~D~%" (find0 500))
+(progn
+  (format t "~D~%" (find0 500))
+)
 
 

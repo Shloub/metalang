@@ -27,7 +27,7 @@
 ))
 
 (progn
-  (let ((len (mread-int )))
+  (let ((len (mread-int)))
     (mread-blank)
     (format t "~D=len~%" len)
     (let
@@ -35,14 +35,14 @@
                len
                (function (lambda (a)
                (block lambda_1
-                 (let ((b (mread-int )))
+                 (let ((b (mread-int)))
                    (mread-blank)
                    (return-from lambda_1 b)
                  )))
                ))))
     (loop for i from 0 to (- len 1) do
       (format t "~D=>~D~%" i (aref tab1 i)))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let
      ((tab2 (array_init
@@ -54,7 +54,7 @@
                          len
                          (function (lambda (f)
                          (block lambda_3
-                           (let ((d (mread-int )))
+                           (let ((d (mread-int)))
                              (mread-blank)
                              (return-from lambda_3 d)
                            )))
@@ -68,7 +68,10 @@
           (format t "~D " (aref (aref tab2 i) j)))
         (princ "
 ")
-      ))
-    ))))
+      )))
+    )
+    )
+    
+)
 
 

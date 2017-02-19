@@ -19,9 +19,10 @@
 ))
 
 (progn
-  (let ((len (mread-int )))
+  (let ((len (mread-int)))
     (mread-blank)
-    (format t "~D~%" len)
-  ))
+    (format t "~D~%" len))
+    
+)
 
 

@@ -1,4 +1,6 @@
-(princ "Hello World
+(progn
+  (princ "Hello World
 ")
+)
 
 

@@ -12,13 +12,19 @@
   )
 
 (defun idstring (s)
-(return-from idstring s))
+(progn
+  (return-from idstring s)
+))
 
 (defun printstring (s)
-(format t "~A~%" (idstring s)))
+(progn
+  (format t "~A~%" (idstring s))
+))
 
 (defun print_toto (t0)
-(format t "~A = ~D~%" (toto-s t0) (toto-v t0)))
+(progn
+  (format t "~A = ~D~%" (toto-s t0) (toto-v t0))
+))
 
 (progn
   (let
@@ -31,9 +37,10 @@
             ))))
   (loop for j from 0 to 1 do
     (printstring (idstring (aref tab j))))
-  (let ((a (make-toto :s "one"
-                      :v 1)))
-  (print_toto a)
-  )))
+  (let ((a (make-toto :s "one" :v 1)))
+  (print_toto a))
+  )
+  
+)
 
 

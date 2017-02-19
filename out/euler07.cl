@@ -13,7 +13,8 @@
   (loop for i from 0 to (- size 1) do
     (if
       (= (remainder n (aref t0 i)) 0)
-      (return-from divisible t)))
+      (return-from divisible t)
+      '()))
   (return-from divisible nil)
 ))
 
@@ -42,7 +43,9 @@
                (return-from lambda_1 2)
              ))
              ))))
-    (format t "~D~%" (find0 3 t0 1 n))
-    )))
+    (format t "~D~%" (find0 3 t0 1 n)))
+    )
+    
+)
 
 

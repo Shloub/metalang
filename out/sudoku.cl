@@ -36,13 +36,14 @@
              (* 9 9)
              (function (lambda (i)
              (block lambda_1
-               (let ((k (mread-int )))
+               (let ((k (mread-int)))
                  (mread-blank)
                  (return-from lambda_1 k)
                )))
              ))))
-  (return-from read_sudoku out0)
-  )))
+  (return-from read_sudoku out0))
+  
+))
 
 #| affiche un sudoku |#
 (defun print_sudoku (sudoku0)
@@ -54,14 +55,16 @@
           (format t "~D " (aref sudoku0 (+ x (* y 9))))
           (if
             (= (remainder x 3) 2)
-            (princ " "))
+            (princ " ")
+            '())
         ))
       (princ "
 ")
       (if
         (= (remainder y 3) 2)
         (princ "
-"))
+")
+        '())
     ))
   (princ "
 ")
@@ -75,7 +78,8 @@
   (loop for i from 0 to 80 do
     (if
       (= (aref s i) 0)
-      (return-from sudoku_done nil)))
+      (return-from sudoku_done nil)
+      '()))
   (return-from sudoku_done t)
 ))
 
@@ -91,34 +95,41 @@
       (let ((out3 nil))
         (loop for x from 0 to 8 do
           (setq out3 (or out3 (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (remainder x 3) 3 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 1) 9) (* (quotient x 3) 3) 2)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3))) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))) (and (not (= (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)) 0)) (= (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 1)) (aref s (+ (* (+ (* (remainder x 3) 3) 2) 9) (* (quotient x 3) 3) 2)))))))
-        (return-from sudoku_error (or out1 out2 out3))
-      )))))
+        (return-from sudoku_error (or out1 out2 out3)))
+        )
+      )
+    
+))
 
 #| résout le sudoku|#
 (defun solve (sudoku0)
-(if
-  (sudoku_error sudoku0)
-  (return-from solve nil)
+(progn
   (if
-    (sudoku_done sudoku0)
-    (return-from solve t)
-    (progn
-      (loop for i from 0 to 80 do
-        (if
-          (= (aref sudoku0 i) 0)
-          (progn
-            (loop for p from 1 to 9 do
-              (progn
-                (setf (aref sudoku0 i) p)
-                (if
-                  (solve sudoku0)
-                  (return-from solve t))
-              ))
-            (setf (aref sudoku0 i) 0)
-            (return-from solve nil)
-          )))
-      (return-from solve nil)
-    ))))
+    (sudoku_error sudoku0)
+    (return-from solve nil)
+    (if
+      (sudoku_done sudoku0)
+      (return-from solve t)
+      (progn
+        (loop for i from 0 to 80 do
+          (if
+            (= (aref sudoku0 i) 0)
+            (progn
+              (loop for p from 1 to 9 do
+                (progn
+                  (setf (aref sudoku0 i) p)
+                  (if
+                    (solve sudoku0)
+                    (return-from solve t)
+                    '())
+                ))
+              (setf (aref sudoku0 i) 0)
+              (return-from solve nil)
+            )
+            '()))
+        (return-from solve nil)
+      )))
+))
 
 (progn
   (let ((sudoku0 (read_sudoku )))
@@ -127,7 +138,8 @@
       (solve sudoku0)
       (print_sudoku sudoku0)
       (princ "no solution
-"))
-  ))
+")))
+    
+)
 
 

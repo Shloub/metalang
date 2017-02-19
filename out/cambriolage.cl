@@ -27,10 +27,12 @@
 ))
 
 (defun max2_ (a b)
-(if
-  (> a b)
-  (return-from max2_ a)
-  (return-from max2_ b)))
+(progn
+  (if
+    (> a b)
+    (return-from max2_ a)
+    (return-from max2_ b))
+))
 
 (defun nbPassePartout (n passepartout m serrures)
 (progn
@@ -40,10 +42,12 @@
         (progn
           (if
             (and (= (aref (aref serrures i) 0) (- 0 1)) (> (aref (aref serrures i) 1) max_ancient))
-            (setq max_ancient (aref (aref serrures i) 1)))
+            (setq max_ancient (aref (aref serrures i) 1))
+            '())
           (if
             (and (= (aref (aref serrures i) 0) 1) (> (aref (aref serrures i) 1) max_recent))
-            (setq max_recent (aref (aref serrures i) 1)))
+            (setq max_recent (aref (aref serrures i) 1))
+            '())
         ))
       (let ((max_ancient_pp 0))
         (let ((max_recent_pp 0))
@@ -52,18 +56,23 @@
               (let ((pp (aref passepartout i)))
                 (if
                   (and (>= (aref pp 0) max_ancient) (>= (aref pp 1) max_recent))
-                  (return-from nbPassePartout 1))
+                  (return-from nbPassePartout 1)
+                  '())
                 (setq max_ancient_pp (max2_ max_ancient_pp (aref pp 0)))
                 (setq max_recent_pp (max2_ max_recent_pp (aref pp 1)))
               )))
           (if
             (and (>= max_ancient_pp max_ancient) (>= max_recent_pp max_recent))
             (return-from nbPassePartout 2)
-            (return-from nbPassePartout 0))
-        ))))))
+            (return-from nbPassePartout 0)))
+          )
+        )
+      )
+    
+))
 
 (progn
-  (let ((n (mread-int )))
+  (let ((n (mread-int)))
     (mread-blank)
     (let
      ((passepartout (array_init
@@ -75,7 +84,7 @@
                                     2
                                     (function (lambda (j)
                                     (block lambda_2
-                                      (let ((out01 (mread-int )))
+                                      (let ((out01 (mread-int)))
                                         (mread-blank)
                                         (return-from lambda_2 out01)
                                       )))
@@ -83,7 +92,7 @@
                          (return-from lambda_1 out0)
                          )))
                        ))))
-    (let ((m (mread-int )))
+    (let ((m (mread-int)))
       (mread-blank)
       (let
        ((serrures (array_init
@@ -95,7 +104,7 @@
                                   2
                                   (function (lambda (l)
                                   (block lambda_4
-                                    (let ((out_ (mread-int )))
+                                    (let ((out_ (mread-int)))
                                       (mread-blank)
                                       (return-from lambda_4 out_)
                                     )))
@@ -103,7 +112,11 @@
                        (return-from lambda_3 out1)
                        )))
                      ))))
-      (princ (nbPassePartout n passepartout m serrures))
-      )))))
+      (princ (nbPassePartout n passepartout m serrures)))
+      )
+      )
+    )
+    
+)
 
 

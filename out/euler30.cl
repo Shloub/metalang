@@ -39,9 +39,12 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
                         (progn
                           (format t "~D~D~D~D~D~D ~D~%" f e d c b a r)
                           (setq sum (+ sum r))
-                        ))
+                        )
+                        '())
                     )))))))))
-    (princ sum)
-  )))
+    (princ sum))
+    )
+  
+)
 
 

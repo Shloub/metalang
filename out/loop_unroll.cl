@@ -13,7 +13,8 @@ Il effectue du loop unrolling
     (setq j 3)
     (format t "~D~%" j)
     (setq j 4)
-    (format t "~D~%" j)
-  ))
+    (format t "~D~%" j))
+    
+)
 
 

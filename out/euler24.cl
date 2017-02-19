@@ -15,8 +15,9 @@
   (let ((prod 1))
     (loop for i from 2 to n do
       (setq prod (* prod i)))
-    (return-from fact prod)
-  )))
+    (return-from fact prod))
+    
+))
 
 (defun show (lim nth0)
 (progn
@@ -50,18 +51,25 @@
                   (progn
                     (princ l)
                     (setf (aref pris l) t)
-                  ))
+                  )
+                  '())
                 (setq nchiffre (- nchiffre 1))
-              )))
+              )
+              '()))
         ))))
   (loop for m from 0 to (- lim 1) do
     (if
       (not (aref pris m))
-      (princ m)))
+      (princ m)
+      '()))
   (princ "
-")
-  ))))
+"))
+  )
+  
+))
 
-(show 10 999999)
+(progn
+  (show 10 999999)
+)
 
 

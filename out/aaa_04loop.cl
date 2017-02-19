@@ -9,12 +9,14 @@
                                                        do (progn
                                                             (if
                                                               (= (remainder i j) 5)
-                                                              (return-from h t))
+                                                              (return-from h t)
+                                                              '())
                                                             (setq j (+ j 1))
                                                             )
                                                        )
-                                                       (return-from h nil)
-                                                     )))
+                                                       (return-from h nil))
+                                                       
+                                                   ))
 
 (progn
   (let ((j 0))
@@ -31,7 +33,9 @@
            (setq j (+ j i))
            )
       )
-      (format t "~D~DFIN TEST~%" j i)
-    )))
+      (format t "~D~DFIN TEST~%" j i))
+      )
+    
+)
 
 

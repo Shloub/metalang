@@ -38,16 +38,18 @@
     (loop for i from 0 to (- len 1) do
       (if
         (eq (aref tab i) tofind)
-        (setq out0 (+ out0 1))))
-    (return-from nth0 out0)
-  )))
+        (setq out0 (+ out0 1))
+        '()))
+    (return-from nth0 out0))
+    
+))
 
 (progn
   (let ((len 0))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let ((tofind (code-char 0)))
-      (setq tofind (mread-char ))
+      (setq tofind (mread-char))
       (mread-blank)
       (let
        ((tab (array_init
@@ -55,12 +57,16 @@
                 (function (lambda (i)
                 (block lambda_1
                   (let ((tmp (code-char 0)))
-                    (setq tmp (mread-char ))
+                    (setq tmp (mread-char))
                     (return-from lambda_1 tmp)
                   )))
                 ))))
       (let ((result (nth0 tab tofind len)))
-        (princ result)
-      )))))
+        (princ result))
+        )
+      )
+      )
+    
+)
 
 

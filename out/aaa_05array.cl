@@ -9,10 +9,14 @@
 (defun remainder (a b) (- a (* b (truncate a b))))
 
 (defun id (b)
-(return-from id b))
+(progn
+  (return-from id b)
+))
 
 (defun g (t0 index)
-(setf (aref t0 index) nil))
+(progn
+  (setf (aref t0 index) nil)
+))
 
 (progn
   (let ((j 0))
@@ -39,7 +43,9 @@
       (princ "True")
       (princ "False"))
     (princ "
-")
-    )))
+"))
+    )
+    
+)
 
 

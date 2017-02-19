@@ -36,56 +36,63 @@
             (return-from lambda_1 (aref tab i))
           ))
           ))))
-  (return-from copytab o)
-  )))
+  (return-from copytab o))
+  
+))
 
 (defun bubblesort (tab len)
-(loop for i from 0 to (- len 1) do
-  (loop for j from (+ i 1) to (- len 1) do
-    (if
-      (> (aref tab i) (aref tab j))
-      (progn
-        (let ((tmp (aref tab i)))
-          (setf (aref tab i) (aref tab j))
-          (setf (aref tab j) tmp)
-        ))))))
+(progn
+  (loop for i from 0 to (- len 1) do
+    (loop for j from (+ i 1) to (- len 1) do
+      (if
+        (> (aref tab i) (aref tab j))
+        (progn
+          (let ((tmp (aref tab i)))
+            (setf (aref tab i) (aref tab j))
+            (setf (aref tab j) tmp)
+          ))
+        '())))
+))
 
 (defun qsort0 (tab len i j)
-(if
-  (< i j)
-  (progn
-    (let ((i0 i))
-      (let ((j0 j))
-        #| pivot : tab[0] |#
-        (loop while (not (= i j))
-        do (if
-             (> (aref tab i) (aref tab j))
-             (if
-               (= i (- j 1))
-               (progn
-                 #| on inverse simplement|#
-                 (let ((tmp (aref tab i)))
-                   (setf (aref tab i) (aref tab j))
-                   (setf (aref tab j) tmp)
-                   (setq i (+ i 1))
-                 ))
-               (progn
-                 #| on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] |#
-                 (let ((tmp (aref tab i)))
-                   (setf (aref tab i) (aref tab j))
-                   (setf (aref tab j) (aref tab (+ i 1)))
-                   (setf (aref tab (+ i 1)) tmp)
-                   (setq i (+ i 1))
-                 )))
-             (setq j (- j 1)))
-        )
-        (qsort0 tab len i0 (- i 1))
-        (qsort0 tab len (+ i 1) j0)
-      )))))
+(progn
+  (if
+    (< i j)
+    (progn
+      (let ((i0 i))
+        (let ((j0 j))
+          #| pivot : tab[0] |#
+          (loop while (not (= i j))
+          do (if
+               (> (aref tab i) (aref tab j))
+               (if
+                 (= i (- j 1))
+                 (progn
+                   #| on inverse simplement|#
+                   (let ((tmp (aref tab i)))
+                     (setf (aref tab i) (aref tab j))
+                     (setf (aref tab j) tmp)
+                     (setq i (+ i 1))
+                   ))
+                 (progn
+                   #| on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] |#
+                   (let ((tmp (aref tab i)))
+                     (setf (aref tab i) (aref tab j))
+                     (setf (aref tab j) (aref tab (+ i 1)))
+                     (setf (aref tab (+ i 1)) tmp)
+                     (setq i (+ i 1))
+                   )))
+               (setq j (- j 1)))
+          )
+          (qsort0 tab len i0 (- i 1))
+          (qsort0 tab len (+ i 1) j0)
+        )))
+    '())
+))
 
 (progn
   (let ((len 2))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let
      ((tab (array_init
@@ -93,7 +100,7 @@
               (function (lambda (i_)
               (block lambda_2
                 (let ((tmp 0))
-                  (setq tmp (mread-int ))
+                  (setq tmp (mread-int))
                   (mread-blank)
                   (return-from lambda_2 tmp)
                 )))
@@ -109,7 +116,11 @@
         (loop for i from 0 to (- len 1) do
           (format t "~D " (aref tab3 i)))
         (princ "
-")
-      )))))
+"))
+        )
+      )
+    )
+    
+)
 
 

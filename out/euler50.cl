@@ -27,10 +27,13 @@
                      (setq j (+ j i))
                      )
                 )
-              )))
-        )))
-    (return-from eratostene n)
-  )))
+              ))
+            '())
+        )
+        '()))
+    (return-from eratostene n))
+    
+))
 
 (progn
   (let ((maximumprimes 1000001))
@@ -58,7 +61,8 @@
             (progn
               (setf (aref primes l) k)
               (setq l (+ l 1))
-            )))
+            )
+            '()))
         (format t "~D == ~D~%" l nprimes)
         (let
          ((sum (array_init
@@ -90,14 +94,27 @@
                                    (progn
                                      (setq maxl len)
                                      (setq resp (aref sum i))
-                                   ))
+                                   )
+                                   '())
                                )
                                (setq stop (min stop i)))
-                           )))
+                           )
+                           '()))
                        (setq len (+ len 1))
                        )
                   )
-                  (format t "~D~%~D~%" resp maxl)
-                ))))))))))))
+                  (format t "~D~%~D~%" resp maxl))
+                  )
+                )
+              )
+            )
+          )
+        )
+        )
+      )
+      )
+    )
+    
+)
 
 

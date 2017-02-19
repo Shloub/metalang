@@ -24,13 +24,17 @@
     (loop for j from 1 to 19 do
       (if
         (aref t0 j)
-        (setq nnum j)))
+        (setq nnum j)
+        '()))
     (loop for k from 0 to (quotient nnum 2) do
       (if
         (not (eq (aref t0 k) (aref t0 (- nnum k))))
-        (return-from palindrome2 nil)))
-    (return-from palindrome2 t)
-  ))))
+        (return-from palindrome2 nil)
+        '()))
+    (return-from palindrome2 t))
+    )
+  
+))
 
 (progn
   (let ((p 1))
@@ -51,13 +55,15 @@
             (progn
               (format t "~D~%" d)
               (setq sum (+ sum d))
-            ))
+            )
+            '())
           (if
             (palindrome2 pow2 (+ (* d 10) d))
             (progn
               (format t "~D~%" (+ (* d 10) d))
               (setq sum (+ sum (* d 10) d))
-            ))
+            )
+            '())
         ))
       (loop for a0 from 0 to 4 do
         (progn
@@ -72,14 +78,16 @@
                         (progn
                           (format t "~D~%" num0)
                           (setq sum (+ sum num0))
-                        ))
+                        )
+                        '())
                       (let ((num1 (+ (* a 10000) (* b 1000) (* c 100) (* b 10) a)))
                         (if
                           (palindrome2 pow2 num1)
                           (progn
                             (format t "~D~%" num1)
                             (setq sum (+ sum num1))
-                          ))
+                          )
+                          '())
                       ))))
                 (let ((num2 (+ (* a 100) (* b 10) a)))
                   (if
@@ -87,17 +95,22 @@
                     (progn
                       (format t "~D~%" num2)
                       (setq sum (+ sum num2))
-                    ))
+                    )
+                    '())
                   (let ((num3 (+ (* a 1000) (* b 100) (* b 10) a)))
                     (if
                       (palindrome2 pow2 num3)
                       (progn
                         (format t "~D~%" num3)
                         (setq sum (+ sum num3))
-                      ))
+                      )
+                      '())
                   ))))
           )))
-      (format t "sum=~D~%" sum)
-    ))))
+      (format t "sum=~D~%" sum))
+      )
+    )
+    
+)
 
 

@@ -1,3 +1,5 @@
-(princ "ma petite chaine en or")
+(progn
+  (princ "ma petite chaine en or")
+)
 
 

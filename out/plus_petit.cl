@@ -57,15 +57,18 @@
               (< i m)
               (return-from go0 (go0 tab a m))
               (return-from go0 (go0 tab m b)))
-          ))))
-  )))
+          )))))
+    
+))
 
 (defun plus_petit0 (tab len)
-(return-from plus_petit0 (go0 tab 0 len)))
+(progn
+  (return-from plus_petit0 (go0 tab 0 len))
+))
 
 (progn
   (let ((len 0))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let
      ((tab (array_init
@@ -73,12 +76,14 @@
               (function (lambda (i)
               (block lambda_1
                 (let ((tmp 0))
-                  (setq tmp (mread-int ))
+                  (setq tmp (mread-int))
                   (mread-blank)
                   (return-from lambda_1 tmp)
                 )))
               ))))
-    (princ (plus_petit0 tab len))
-    )))
+    (princ (plus_petit0 tab len)))
+    )
+    
+)
 
 

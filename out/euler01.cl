@@ -5,8 +5,10 @@
                                                          (if
                                                            (or (= (remainder i 3) 0) 
                                                            (= (remainder i 5) 0))
-                                                           (setq sum (+ sum i))))
-                                                       (format t "~D~%" sum)
-                                                     ))
+                                                           (setq sum (+ sum i))
+                                                           '()))
+                                                       (format t "~D~%" sum))
+                                                       
+)
 
 

@@ -28,20 +28,26 @@
   )
 
 (progn
-  (let ((bar_ (mread-int )))
+  (let ((bar_ (mread-int)))
     (mread-blank)
-    (let ((c (mread-int )))
+    (let ((c (mread-int)))
       (mread-blank)
-      (let ((d (mread-int )))
+      (let ((d (mread-int)))
         (mread-blank)
-        (let ((e (make-tuple_int_int :tuple_int_int_field_0 c
-                                     :tuple_int_int_field_1 d)))
-        (let ((t0 (make-toto :foo e
-                             :bar bar_)))
+        (let ((e (make-tuple_int_int :tuple_int_int_field_0 c :tuple_int_int_field_1 d)))
+        (let ((t0 (make-toto :foo e :bar bar_)))
         (let ((f (toto-foo t0)))
           (let ((a (tuple_int_int-tuple_int_int_field_0 f)))
             (let ((b (tuple_int_int-tuple_int_int_field_1 f)))
-              (format t "~D ~D ~D~%" a b (toto-bar t0))
-            )))))))))
+              (format t "~D ~D ~D~%" a b (toto-bar t0)))
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+
+)
 
 

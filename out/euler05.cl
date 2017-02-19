@@ -11,10 +11,12 @@
 (defun remainder (a b) (- a (* b (truncate a b))))
 
 (defun max2_ (a b)
-(if
-  (> a b)
-  (return-from max2_ a)
-  (return-from max2_ b)))
+(progn
+  (if
+    (> a b)
+    (return-from max2_ a)
+    (return-from max2_ b))
+))
 
 (defun primesfactors (n)
 (progn
@@ -37,8 +39,10 @@
          (setq d (+ d 1)))
     )
     (setf (aref tab n) (+ (aref tab n) 1))
-    (return-from primesfactors tab)
-  ))))
+    (return-from primesfactors tab))
+    )
+  
+))
 
 (progn
   (let ((lim 20))
@@ -60,7 +64,10 @@
       (loop for k from 1 to lim do
         (loop for l from 1 to (aref o k) do
           (setq product (* product k))))
-      (format t "~D~%" product)
-    ))))
+      (format t "~D~%" product))
+      )
+    )
+    
+)
 
 

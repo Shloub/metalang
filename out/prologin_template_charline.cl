@@ -42,23 +42,26 @@
       ))
     (princ "--
 ")
-    (return-from programme_candidat out0)
-  )))
+    (return-from programme_candidat out0))
+    
+))
 
 (progn
-  (let ((taille (mread-int )))
+  (let ((taille (mread-int)))
     (mread-blank)
     (let
      ((tableau (array_init
                   taille
                   (function (lambda (a)
                   (block lambda_1
-                    (let ((b (mread-char )))
+                    (let ((b (mread-char)))
                       (return-from lambda_1 b)
                     )))
                   ))))
     (mread-blank)
-    (format t "~D~%" (programme_candidat tableau taille))
-    )))
+    (format t "~D~%" (programme_candidat tableau taille)))
+    )
+    
+)
 
 

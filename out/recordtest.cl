@@ -23,12 +23,12 @@
   )
 
 (progn
-  (let ((param (make-toto :foo 0
-                          :bar 0)))
-  (setf (toto-bar param) (mread-int ))
+  (let ((param (make-toto :foo 0 :bar 0)))
+  (setf (toto-bar param) (mread-int))
   (mread-blank)
-  (setf (toto-foo param) (mread-int ))
-  (princ (+ (toto-bar param) (* (toto-foo param) (toto-bar param))))
-))
+  (setf (toto-foo param) (mread-int))
+  (princ (+ (toto-bar param) (* (toto-foo param) (toto-bar param)))))
+  
+)
 
 

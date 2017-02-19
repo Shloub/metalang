@@ -19,7 +19,8 @@
            (loop for i from 0 to (- len 1) do
              (if
                (= (aref restes i) reste)
-               (return-from periode (- len i))))
+               (return-from periode (- len i))
+               '()))
            (setf (aref restes len) reste)
            (setq len (+ len 1))
            (setq a (* reste 10))
@@ -47,9 +48,13 @@
               (progn
                 (setq mi i)
                 (setq m p)
-              ))
+              )
+              '())
           )))
-      (format t "~D~%~D~%" mi m)
-    ))))
+      (format t "~D~%~D~%" mi m))
+      )
+    )
+  
+)
 
 

@@ -29,9 +29,9 @@
 (progn
   (loop for i from 1 to 3 do
     (progn
-      (let ((a (mread-int )))
+      (let ((a (mread-int)))
         (mread-blank)
-        (let ((b (mread-int )))
+        (let ((b (mread-int)))
           (mread-blank)
           (format t "a = ~D b = ~D~%" a b)
         ))))
@@ -40,13 +40,14 @@
           10
           (function (lambda (c)
           (block lambda_1
-            (let ((d (mread-int )))
+            (let ((d (mread-int)))
               (mread-blank)
               (return-from lambda_1 d)
             )))
           ))))
   (loop for j from 0 to 9 do
-    (format t "~D~%" (aref l j)))
-  ))
+    (format t "~D~%" (aref l j))))
+  
+)
 
 

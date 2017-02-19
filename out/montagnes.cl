@@ -41,16 +41,20 @@
                (setf (aref tab (- len j)) x)
                (if
                  (> j max0)
-                 (setq max0 j))
+                 (setq max0 j)
+                 '())
                (setq i (- i 1))
              ))
         )
-        (return-from montagnes0 max0)
-      )))))
+        (return-from montagnes0 max0))
+        )
+      )
+    
+))
 
 (progn
   (let ((len 0))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let
      ((tab (array_init
@@ -58,12 +62,14 @@
               (function (lambda (i)
               (block lambda_1
                 (let ((x 0))
-                  (setq x (mread-int ))
+                  (setq x (mread-int))
                   (mread-blank)
                   (return-from lambda_1 x)
                 )))
               ))))
-    (princ (montagnes0 tab len))
-    )))
+    (princ (montagnes0 tab len)))
+    )
+    
+)
 
 
