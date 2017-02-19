@@ -40,7 +40,6 @@
       )
     
 ))
-
 (progn
   (let ((sum 0))
     (let ((n (mread-int)))
@@ -50,5 +49,4 @@
       )
     
 )
-
 

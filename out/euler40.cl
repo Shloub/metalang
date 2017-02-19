@@ -18,7 +18,6 @@
     (return-from exp0 o))
     
 ))
-
 (defun e (t0 n)
 (progn
   (loop for i from 1 to 8 do
@@ -32,7 +31,6 @@
           )))))
   (return-from e (- 0 1))
 ))
-
 (progn
   (let
    ((t0 (array_init
@@ -72,5 +70,4 @@
     )
   
 )
-
 

@@ -9,7 +9,6 @@
     (return-from max2_ a)
     (return-from max2_ b))
 ))
-
 #|
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -35,7 +34,6 @@ c * f * 10000
     (return-from chiffre (remainder m 10))
     (return-from chiffre (chiffre (- c 1) (quotient m 10))))
 ))
-
 (progn
   (let ((m 1))
     (loop for a from 0 to 9 do
@@ -55,5 +53,4 @@ c * f * 10000
     (format t "~D~%" m))
     
 )
-
 

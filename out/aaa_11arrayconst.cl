@@ -14,7 +14,6 @@
   (princ "
 ")
 ))
-
 (progn
   (let
    ((t0 (array_init
@@ -27,5 +26,4 @@
   (test t0 5))
   
 )
-
 

@@ -34,7 +34,6 @@
     (return-from is_triangular (= (* a (+ a 1)) (* n 2))))
     
 ))
-
 (defun score ()
 (progn
   (mread-blank)
@@ -54,7 +53,6 @@
       )
     
 ))
-
 (progn
   (loop for i from 1 to 55 do
     (if
@@ -71,5 +69,4 @@
       )
     
 )
-
 

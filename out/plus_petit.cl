@@ -60,12 +60,10 @@
           )))))
     
 ))
-
 (defun plus_petit0 (tab len)
 (progn
   (return-from plus_petit0 (go0 tab 0 len))
 ))
-
 (progn
   (let ((len 0))
     (setq len (mread-int))
@@ -85,5 +83,4 @@
     )
     
 )
-
 

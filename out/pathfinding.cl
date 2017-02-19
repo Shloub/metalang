@@ -57,7 +57,6 @@
                       (return-from pathfind_aux out0)
                     ))))))))))
 ))
-
 (defun pathfind (tab x y)
 (progn
   (let
@@ -79,7 +78,6 @@
   (return-from pathfind (pathfind_aux cache tab x y 0 0)))
   
 ))
-
 (progn
   (let ((x 0))
     (let ((y 0))
@@ -113,5 +111,4 @@
       )
     
 )
-
 

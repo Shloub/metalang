@@ -21,12 +21,10 @@
   tuple_int_int_field_0
   tuple_int_int_field_1
   )
-
 (defstruct (toto (:type list) :named)
   foo
   bar
   )
-
 (progn
   (let ((bar_ (mread-int)))
     (mread-blank)
@@ -49,5 +47,4 @@
   )
 
 )
-
 

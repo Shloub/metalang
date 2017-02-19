@@ -44,7 +44,6 @@
   (return-from read_sudoku out0))
   
 ))
-
 #| affiche un sudoku |#
 (defun print_sudoku (sudoku0)
 (progn
@@ -69,7 +68,6 @@
   (princ "
 ")
 ))
-
 #| dit si les variables sont toutes différentes |#
 #| dit si les variables sont toutes différentes |#
 #| dit si le sudoku est terminé de remplir |#
@@ -82,7 +80,6 @@
       '()))
   (return-from sudoku_done t)
 ))
-
 #| dit si il y a une erreur dans le sudoku |#
 (defun sudoku_error (s)
 (progn
@@ -100,7 +97,6 @@
       )
     
 ))
-
 #| résout le sudoku|#
 (defun solve (sudoku0)
 (progn
@@ -130,7 +126,6 @@
         (return-from solve nil)
       )))
 ))
-
 (progn
   (let ((sudoku0 (read_sudoku )))
     (print_sudoku sudoku0)
@@ -141,5 +136,4 @@
 ")))
     
 )
-
 

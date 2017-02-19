@@ -2,7 +2,6 @@
   tuple_int_int_field_0
   tuple_int_int_field_1
   )
-
 (defun f (tuple0)
 (progn
   (let ((c tuple0))
@@ -15,7 +14,6 @@
     )
   
 ))
-
 (progn
   (let ((e (make-tuple_int_int :tuple_int_int_field_0 0 :tuple_int_int_field_1 1)))
   (let ((t0 (f e)))
@@ -29,5 +27,4 @@
     )
   
 )
-
 

@@ -3,7 +3,6 @@
                                                    (progn
                                                      (return-from is_leap (or (= (remainder year 400) 0) (and (not (= (remainder year 100) 0)) (= (remainder year 4) 0))))
                                                    ))
-
 (defun ndayinmonth (month year)
 (progn
   (if
@@ -47,7 +46,6 @@
                           (return-from ndayinmonth 31)
                           (return-from ndayinmonth 0)))))))))))))
 ))
-
 (progn
   (let ((month 0))
     (let ((year 1901))
@@ -78,5 +76,4 @@
       )
     
 )
-
 

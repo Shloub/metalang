@@ -17,4 +17,3 @@ Il effectue du loop unrolling
     
 )
 
-

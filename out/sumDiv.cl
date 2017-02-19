@@ -24,12 +24,10 @@
     #| test 2 |#)
     
 ))
-
 (defun foo2 ()
 (progn
   
 ))
-
 (defun foo3 ()
 (progn
   (if
@@ -37,7 +35,6 @@
     '()
     '())
 ))
-
 (defun sumdiv (n)
 (progn
   #| On désire renvoyer la somme des diviseurs |#
@@ -59,7 +56,6 @@
     #|On renvoie out|#)
     
 ))
-
 (progn
   #| Programme principal |#
   (let ((n 0))
@@ -68,5 +64,4 @@
     (princ (sumdiv n)))
     
 )
-
 

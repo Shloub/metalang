@@ -18,14 +18,12 @@
                 (return-from chiffre_sort (+ d (* (chiffre_sort (+ c (* e 10))) 10))))
             ))))))
 ))
-
 (defun same_numbers (a b c d e f)
 (progn
   (let ((ca (chiffre_sort a)))
     (return-from same_numbers (and (= ca (chiffre_sort b)) (= ca (chiffre_sort c)) (= ca (chiffre_sort d)) (= ca (chiffre_sort e)) (= ca (chiffre_sort f)))))
     
 ))
-
 (progn
   (let ((num 142857))
     (if
@@ -34,5 +32,4 @@
       '()))
     
 )
-
 

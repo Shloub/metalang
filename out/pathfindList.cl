@@ -47,7 +47,6 @@
               (return-from pathfind_aux out0)
             ))))))
 ))
-
 (defun pathfind (tab len)
 (progn
   (let
@@ -61,7 +60,6 @@
   (return-from pathfind (pathfind_aux cache tab len 0)))
   
 ))
-
 (progn
   (let ((len 0))
     (setq len (mread-int))
@@ -83,5 +81,4 @@
     )
     
 )
-
 

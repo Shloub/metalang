@@ -34,7 +34,6 @@
     (return-from eratostene n))
     
 ))
-
 (progn
   (let ((maximumprimes 6000))
     (let
@@ -96,5 +95,4 @@
     )
     
 )
-
 
