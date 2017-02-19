@@ -69,8 +69,34 @@ let p_string f s = let open Format in
                        then fprintf f " %a" p_char c) s
       ) s
 
+let print_mut tyenv f m = Mutable.Fixed.Deep.fold (print_mut0 tyenv) m f ()
+
+let p_record tyenv f li =
+  let open Format in
+  let t = Typer.typename_for_field (fst (List.hd li) ) tyenv in
+  fprintf f "(make-%s @[<v>%a@])" t
+    (print_list (fun f (name, (_, x)) ->
+         fprintf f ":%s %a" name x None) sep_space) li
+let print_lief f l =
+  let open Expr in   
+  let open Format in
+  match l with
+  | Char c -> p_char f c
+  | String s -> p_string f s
+  | Bool true -> fprintf f "t"
+  | Bool false -> fprintf f "nil"
+  | Integer i -> fprintf f "%i" i
+  | Enum e -> fprintf f "'%s" e
+
+let pcall f func li macros =
+  let li = List.map snd li in
+  begin match StringMap.find_opt func macros with
+    | Some ( (t, params, code) ) ->
+      pmacros f "%s" t params code li None
+    | None -> Format.fprintf f "(%s %a)" func (print_list (fun f x -> x f None) sep_space) li
+  end
+  
 let print_expr0 macros tyenv (annot:int) e =
-  let print_mut tyenv f m = Mutable.Fixed.Deep.fold (print_mut0 tyenv) m f () in
   let open Expr in   
   let open Format in
   let binopstr = function
@@ -101,33 +127,155 @@ let print_expr0 macros tyenv (annot:int) e =
         fprintf f "(%s %a %a)" (binopstr op) a sop b sop
       | UnOp ((_, a), Not) -> fprintf f "(not %a)" a None
       | UnOp ((_, a), Neg) -> fprintf f "(- 0 %a)" a None
-      | Lief l -> begin match l with
-          | Char c -> p_char f c
-          | String s -> p_string f s
-          | Bool true -> fprintf f "t"
-          | Bool false -> fprintf f "nil"
-          | Integer i -> fprintf f "%i" i
-          | Enum e -> fprintf f "'%s" e
-        end
+      | Lief l -> print_lief f l
       | Access m -> print_mut tyenv f m
-      | Call (func, li) ->
-        let li = List.map snd li in
-        begin match StringMap.find_opt func macros with
-          | Some ( (t, params, code) ) ->
-            pmacros f "%s" t params code li None
-          | None -> fprintf f "(%s %a)" func (print_list (fun f x -> x f None) sep_space) li
-        end
+      | Call (func, li) -> pcall f func li macros
       | Tuple _
       | Lexems _ -> assert false
-      | Record li ->
-        let t = Typer.typename_for_field (fst (List.hd li) ) tyenv in
-        fprintf f "(make-%s @[<v>%a@])" t
-          (print_list (fun f (name, (_, x)) ->
-               fprintf f ":%s %a" name x None) sep_c) li
+      | Record li -> p_record tyenv f li
     ) in annot, lambda
 
+let print_printable f = function
+  | Ast.Instr.StringConst s -> print_lief f (Ast.Expr.String s)
+  | Ast.Instr.PrintExpr (_, (_, e)) -> e f None
 
-let print_expr tyenv macros e f () = ( snd (Expr.Fixed.Deep.folda (print_expr0 tyenv macros) e) ) f None
+let print_expr0 macros tyenv e = Expr.Fixed.Deep.folda (print_expr0 macros tyenv) e
+let print_expr macros tyenv e f () =
+  let _, b = print_expr0 macros tyenv e
+  in b f None
+
+
+
+let print_instr =
+  let iblocname = ref 0 in
+  fun tyenv macros i ->
+  let open Ast.Instr in
+  let open Format in
+  let affectop f m = match Mutable.unfix m with
+    | Mutable.Array _ | Mutable.Dot _ -> fprintf f "setf"
+    | Mutable.Var _ ->  fprintf f "setq" in
+  let mutable_set f m = print_mut tyenv f m in
+  let instructions funname f li = print_list (fun f (_, g) -> g f funname) sep_nl f li in
+  let bloc f li funname =
+    match li with
+    | [nlet, instr] ->
+      begin
+        fprintf f "@[<v 2>%a@]" instr funname;
+        for i = 1 to nlet do
+          fprintf f ")@]";
+        done;
+      end
+    | _ ->
+      let nlet = List.fold_left (+) 0 (List.map fst li) in
+      begin
+        fprintf f "@[<v 2>(progn@\n%a@]@\n)" (instructions funname) li;
+        for i = 1 to nlet do
+          fprintf f ")@]";
+        done;
+      end
+  in
+  let blocnonnull funname f = function
+    | [] -> fprintf f "'()"
+    | li -> bloc f li funname
+  in
+  let blocnamed f li =
+    incr iblocname;
+    let nlet = List.fold_left (+) 0 (List.map fst li) in
+    let funname = "lambda_" ^ (string_of_int (!iblocname)) in
+    fprintf f "@[<v 2>(block %s@\n%a@]@\n)" funname (instructions funname) li;
+    for i = 1 to nlet do
+      fprintf f ")@]";
+    done
+  in
+  let noformat s = let s = sprintf "-%s-" s
+    in List.fold_left (fun s (from, to_) -> String.replace from to_ s) s
+      ["~", "~~"; "\n", "~%"] in
+ let formater_type t = match Type.unfix t with
+    | Type.Integer -> "~D"
+    | Type.Char -> "~C"
+    | Type.String ->  "~A"
+    | _ -> raise (Warner.Error (fun f -> fprintf f "invalid type %s for format\n" (Type.type_t_to_string t))) in
+  let count_let = match i with
+    | AllocRecord _ | AllocArray _ | Declare _ -> 1
+    | Read li -> List.fold_left (fun acc -> function
+                                        | Separation | ReadExpr _ -> acc
+                                        | DeclRead _ -> acc + 1) 0 li
+    | _ -> 0
+  in
+  let p f funname = match i with
+    | Declare (var, ty, (_, e), _) -> fprintf f "@[<v2>(let @[<h>((%a@ %a))@]" print_varname var e None
+    | SelfAffect (mut, op, (_, e)) -> assert false
+    | Affect (mut, (_, e)) -> fprintf f "@[<h>(%a@ %a@ %a)@]" affectop mut mutable_set mut e None
+    | ClikeLoop (init, cond, incr, li) -> assert false
+    | Loop (var, (_, e1), (_, e2), li) ->
+      fprintf f "@[<v 2>(loop for %a from %a to %a do@\n%a)@]"
+      print_varname var
+      e1 None e2 None
+      (blocnonnull funname) li
+    | While ( (_,e), li) -> fprintf f "@[<h>(loop while %a@]@\ndo @[<v 2>%a@]@\n)" e None
+                              (blocnonnull funname) li
+    | Comment s -> fprintf f "#|%s|#" s
+    | Tag s -> assert false
+    | Return (_,e) -> fprintf f "@[<h>(return-from %s %a)@]" funname e None
+    | AllocArray (name, t, (_,e), None, opt) -> assert false
+    | AllocArray (name, t, (_,e), Some (binding, li), opt) ->
+      fprintf f "@[<h>(let@\n ((%a@ (@[<v 2>array_init@\n%a@\n(function (lambda (%a)@\n%a)@\n@]))))"
+      print_varname name e None
+      print_varname binding
+      blocnamed li
+    | AllocArrayConst (name, ty, len, lief, opt) -> assert false
+    | Print [i] ->
+      fprintf f "@[(princ %a)@]" print_printable i
+    | Print li ->
+      let format, li = extract_multi_print noformat formater_type li in
+      fprintf f "@[(format t %a %a)@]"
+        p_string format
+        (print_list (fun f (_, (_, e)) -> e f None) sep_space) li
+    | If ((_,e), listif, listelse) ->
+      fprintf f "@[<v 2>(if@\n%a@\n%a)@]" e None (print_list (blocnonnull funname)(sep "%a@\n%a"))
+        [listif; listelse]
+    | Call (func, li) -> pcall f func li macros
+    | Read li ->
+      print_list
+        (fun f -> function
+           | Separation -> fprintf f "@[(mread-blank)@]"
+           | DeclRead (ty, v, opt) ->
+             begin match Ast.Type.unfix ty with
+               | Type.Integer -> fprintf f "@[<v2>(let @[<h>((%a@ (mread-int)))@]" print_varname v
+               | Type.Char -> fprintf f "@[<v2>(let @[<h>((%a@ (mread-char)))@]" print_varname v
+               | _ -> assert false
+             end
+           | ReadExpr (ty, mut) ->
+             begin match Ast.Type.unfix ty with
+               | Type.Integer -> fprintf f "@[<h>(%a@ %a@ (mread-int))@]" affectop mut mutable_set mut
+               | Type.Char -> fprintf f "@[<h>(%a@ %a@ (mread-char))@]" affectop mut mutable_set mut
+               | _ -> assert false
+             end) sep_nl f li
+    | AllocRecord (name, ty, list, opt) -> fprintf f "(let ((%a %a))" print_varname  name (p_record tyenv) list
+    | Incr _ | Decr _
+    | Untuple _
+    | Unquote _ -> assert false
+  in count_let, p
+(*
+let print_instr tyenv macros i f funname =
+  let open Ast.Instr.Fixed.Deep in
+  let i =  mapg (print_expr0 macros tyenv) i in
+  let nlet, p = (fold (print_instr tyenv macros) i)
+  in p f funname;
+  for i = 1 to nlet do
+    Format.fprintf f ")@]";
+  done
+            *)
+
+let print_instrs tyenv macros i f funname =
+  let open Ast.Instr.Fixed.Deep in
+  let i =  List.map (mapg (print_expr0 macros tyenv)) i in
+  let i = List.map (fold (print_instr tyenv macros)) i in
+  let nlet = List.fold_left (+) 0 (List.map fst i) in
+  print_list (fun f (_,  g) -> g f funname) sep_nl f i;
+  for i = 1 to nlet do
+    Format.fprintf f ")@\n@]";
+  done
 
 class commonLispPrinter = object(self)
   inherit Printer.printer as super
@@ -140,25 +288,19 @@ class commonLispPrinter = object(self)
            try List.assoc (self#lang ()) li
            with Not_found -> List.assoc "" li) macros) (self#getTyperEnv ()) e f ()
 
-  method affectop f m = match Mutable.unfix m with
-    | Mutable.Array _ | Mutable.Dot _ -> Format.fprintf f "setf"
-    | Mutable.Var _ ->  Format.fprintf f "setq"
-
-  val mutable iblocname = 0
   val mutable funname_ = ""
-  val mutable nlet = 0
 
+  method instructions f li =
+    let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc "clisp" li
+        with Not_found -> List.assoc "" li) macros
+    in (print_instrs typerEnv macros li) f funname_
+    
+  
   method comment f str = Format.fprintf f "#|%s|#" str
 
   method hasSelfAffect op = false
-
-  method allocarray_lambda f binding type_ len binding2 lambda _ =
-    let () = nlet <- nlet + 1 in
-    Format.fprintf f "@[<h>(let@\n ((%a@ (@[<v 2>array_init@\n%a@\n(function (lambda (%a)@\n%a)@\n@]))))"
-      self#binding binding
-      self#expr len
-      self#binding binding2
-      self#blocnamed lambda
 
   method stdin_sep f = Format.fprintf f "@[(mread-blank)@]"
 
@@ -191,6 +333,12 @@ class commonLispPrinter = object(self)
       f
       ()
 
+  method record f el =
+    let t = Typer.typename_for_field (fst (List.hd el) ) typerEnv in
+    Format.fprintf f "(make-%s @[<v>%a@])"
+      t
+      (self#def_fields (InternalName 0)) el
+
   method print_proto f (funname, t, li) =
     funname_ <- funname;
     Format.fprintf f "%a (%a)"
@@ -202,43 +350,12 @@ class commonLispPrinter = object(self)
       self#print_proto (funname, t, li)
       self#bloc instrs
 
-  method if_ f e ifcase elsecase =
-    match elsecase with
-    | [] ->
-      Format.fprintf f "@[<v 2>(if@\n%a@\n%a)@]"
-        self#expr e
-        self#blocnonnull ifcase
-    | _ ->
-      Format.fprintf f "@[<v 2>(if@\n%a@\n%a@\n%a)@]"
-        self#expr e
-        self#blocnonnull ifcase
-        self#bloc elsecase
-
-  method blocnonnull f = function
-    | [] -> Format.fprintf f "'()"
-    | li -> self#bloc f li
-
-  method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v 2>(loop for %a from %a to %a do@\n%a)@]"
-      self#binding varname
-      self#expr expr1
-      self#expr expr2
-      self#blocnonnull li
-
   method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     match StringMap.find_opt var macros with
     | Some _ -> super#apply f var li
     | None -> Format.fprintf f "@[<h>(%a %a)@]" self#funname var (print_list self#expr sep_space) li
 
-  method call (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit = self#apply f var li
-
   method print f t expr = Format.fprintf f "@[(princ %a)@]" self#expr expr
-
-  method declaration f var t e =
-    let () = nlet <- nlet + 1 in
-    Format.fprintf f "@[<v2>(let @[<h>((%a@ %a))@]"
-      self#binding var
-      self#expr e
 
   method def_fields name f li =
     print_list
@@ -251,27 +368,9 @@ class commonLispPrinter = object(self)
       li
 
   method allocrecord f name t el =
-    let () = nlet <- nlet + 1 in
     Format.fprintf f "(let ((%a %a))"
       self#binding name
       self#record el
-
-  method record f el =
-    let t = Typer.typename_for_field (fst (List.hd el) ) typerEnv in
-    Format.fprintf f "(make-%s @[<v>%a@])"
-      t
-      (self#def_fields (InternalName 0)) el
-
-  method whileloop f expr li =
-    Format.fprintf f "@[<h>(loop while %a@]@\ndo @[<v 2>%a@]@\n)"
-      self#expr expr
-      self#blocnonnull li
-
-  method affect f mutable_ expr =
-    Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#affectop mutable_ self#mutable_set mutable_ self#expr expr
-
-  method return f e =
-    Format.fprintf f "@[<h>(return-from %s %a)@]" funname_ self#expr e
 
   method formater_type t = match Type.unfix t with
     | Type.Integer -> "~D"
@@ -288,47 +387,6 @@ class commonLispPrinter = object(self)
     Format.fprintf f "@[<v>(format t %a %a)@]"
       p_string format
       (print_list (fun f (t, e) -> self#expr f e) sep_space) exprs
-
-  method bloc f li =
-    match li with
-    | [instr] ->
-      let exnlet = nlet in
-      begin
-        nlet <- 0;
-        Format.fprintf f "@[<v 2>%a@]" self#instr instr;
-        for i = 1 to nlet do
-          Format.fprintf f ")@]";
-        done;
-        nlet <- exnlet;
-      end
-    | _ ->
-      let exnlet = nlet in
-      begin
-        nlet <- 0;
-        Format.fprintf f "@[<v 2>(progn@\n%a@]@\n)"
-          self #instructions li;
-        for i = 1 to nlet do
-          Format.fprintf f ")@]";
-        done;
-        nlet <- exnlet;
-      end
-
-  method blocnamed f li =
-    let exname = funname_ in
-    let exnlet = nlet in
-    begin
-      nlet <- 0;
-      iblocname <- iblocname + 1;
-      funname_ <- "lambda_" ^ (string_of_int iblocname);
-      Format.fprintf f "@[<v 2>(block %s@\n%a@]@\n)"
-        funname_
-        self#instructions li;
-      for i = 1 to nlet do
-        Format.fprintf f ")@]";
-      done;
-      nlet <- exnlet;
-      funname_ <- exname;
-    end
 
   method prog f (prog:Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -383,8 +441,11 @@ class commonLispPrinter = object(self)
 
       super#prog prog
 
-  method main f main =
-    self#bloc f main
+  method main f main = self#bloc f main
+
+  method bloc f main =
+    Format.fprintf f "@[<v 2>(progn@\n%a@]@\n)"
+      self#instructions main
 
   method print_op f op =
     Format.fprintf f
