@@ -278,122 +278,30 @@ let print_instrs tyenv macros i f funname =
   done
 
 class commonLispPrinter = object(self)
-  inherit Printer.printer as super
 
-  method lang () = "clisp"
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
-  method expr f e = print_expr
-      (StringMap.map (fun (ty, params, li) ->
-           ty, params,
-           try List.assoc (self#lang ()) li
-           with Not_found -> List.assoc "" li) macros) (self#getTyperEnv ()) e f ()
-
-  val mutable funname_ = ""
-
-  method instructions f li =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "clisp" li
-        with Not_found -> List.assoc "" li) macros
-    in (print_instrs typerEnv macros li) f funname_
-    
   
-  method comment f str = Format.fprintf f "#|%s|#" str
-
-  method hasSelfAffect op = false
-
-  method stdin_sep f = Format.fprintf f "@[(mread-blank)@]"
-
-  method read_decl f t v =
-    match Type.unfix t with
-    | Type.Integer -> self#declaration f v t (Expr.call "mread-int" [])
-    | Type.Char -> self#declaration f v t (Expr.call "mread-char" [])
-    | _ -> assert false
-
-  method read f t mutable_ =
-    match Type.unfix t with
-    | Type.Integer -> self#affect f mutable_ (Expr.call "mread-int" [])
-    | Type.Char -> self#affect f mutable_ (Expr.call "mread-char" [])
-    | _ -> assert false
-
-  method m_field f m field =
-    Format.fprintf f "@[<h>(%s-%a %a)@]"
-      (self#typename_of_field field)
-      self#field field
-      self#mutable_get m
-
-  method m_array f m indexes =
-    List.fold_left (fun func e f () ->
-        Format.fprintf f "(aref %a %a)"
-          func ()
-          self#expr e
-      )
-      (fun f () -> self#mutable_get f m)
-      indexes
-      f
-      ()
-
-  method record f el =
-    let t = Typer.typename_for_field (fst (List.hd el) ) typerEnv in
-    Format.fprintf f "(make-%s @[<v>%a@])"
-      t
-      (self#def_fields (InternalName 0)) el
-
-  method print_proto f (funname, t, li) =
-    funname_ <- funname;
-    Format.fprintf f "%a (%a)"
-      self#funname funname
-      (print_list self#binding sep_space) (List.map fst li)
-
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>(defun@ %a@\n%a)@]@\n"
-      self#print_proto (funname, t, li)
-      self#bloc instrs
-
-  method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
-    match StringMap.find_opt var macros with
-    | Some _ -> super#apply f var li
-    | None -> Format.fprintf f "@[<h>(%a %a)@]" self#funname var (print_list self#expr sep_space) li
-
-  method print f t expr = Format.fprintf f "@[(princ %a)@]" self#expr expr
-
-  method def_fields name f li =
-    print_list
-      (fun f (fieldname, expr) ->
-         Format.fprintf f ":%a %a"
-           self#field fieldname
-           self#expr expr
-      ) sep_nl
-      f
-      li
-
-  method allocrecord f name t el =
-    Format.fprintf f "(let ((%a %a))"
-      self#binding name
-      self#record el
-
-  method formater_type t = match Type.unfix t with
-    | Type.Integer -> "~D"
-    | Type.Char -> "~C"
-    | Type.String ->  "~A"
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
-
-  method noformat s = let s = Format.sprintf "-%s-" s
-    in List.fold_left (fun s (from, to_) -> String.replace from to_ s) s
-      ["~", "~~"; "\n", "~%"]
-
-  method multi_print f li =
-    let format, exprs = self#extract_multi_print li in
-    Format.fprintf f "@[<v>(format t %a %a)@]"
-      p_string format
-      (print_list (fun f (t, e) -> self#expr f e) sep_space) exprs
+  method lang () = "clisp"
 
   method prog f (prog:Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "%s%s%s%s%s%s%s%a@\n"
+    let instructions funname_ f li =
+    let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc "clisp" li
+        with Not_found -> List.assoc "" li) macros
+    in (print_instrs typerEnv macros li) f funname_ in
+    let bloc funname_ f li = Format.fprintf f "@[<v 2>(progn@\n%a@]@\n)" (instructions funname_) li in
+    Format.fprintf f "%s%s%s%s%s%s%s%a%a@\n"
       (if Tags.is_taged "__internal__allocArray" then "
 (defun array_init (len fun)
   (let ((out (make-array len)))
@@ -438,44 +346,34 @@ class commonLispPrinter = object(self)
   (loop while (or (eq last-char #\\NewLine) (eq last-char #\\Space) ) do (next-char))
 ))
 " else "")
-
-      super#prog prog
-
-  method main f main = self#bloc f main
-
-  method bloc f main =
-    Format.fprintf f "@[<v 2>(progn@\n%a@]@\n)"
-      self#instructions main
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-       | Expr.Add -> "+"
-       | Expr.Sub -> "-"
-       | Expr.Mul -> "*"
-       | Expr.Div -> "quotient"
-       | Expr.Mod -> "remainder"
-       | Expr.Or -> "or"
-       | Expr.And -> "and"
-       | Expr.Lower -> "<"
-       | Expr.LowerEq -> "<="
-       | Expr.Higher -> ">"
-       | Expr.HigherEq -> ">="
-       | _ -> assert false)
-
-  method decl_type f name t =
-    match (Type.unfix t) with
-    | Type.Struct li ->
-      Format.fprintf f "(defstruct (%a (:type list) :named)@\n  @[<v>%a@])@\n"
-        self#typename name
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "%a@\n" self#field name
-           ) nosep
-        ) li
-    | Type.Enum li -> ()
-    | _ ->
-      Format.fprintf f "type %a = %a;" self#typename name self#ptype t
+      (print_list (fun f t -> match t with
+           | Prog.Comment s -> Format.fprintf f "#|%s|#@\n" s
+           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
+             Format.fprintf f "@[<h>(defun@ %s (%a)@\n%a)@]@\n"
+               funname
+               (print_list print_varname sep_space) (List.map fst li)
+               (bloc funname) instrs
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros;
+             ()
+           | Prog.Unquote _ -> assert false
+           | Prog.DeclareType (name, t) ->
+             begin
+               match (Type.unfix t) with
+               | Type.Struct li ->
+                 Format.fprintf f "(defstruct (%s (:type list) :named)@\n  @[<v>%a@])@\n"
+                   name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "%s@\n" name
+                      ) nosep
+                   ) li
+               | Type.Enum li -> ()
+               | _ -> assert false
+             end
+         ) nosep) prog.Prog.funs
+      (print_option (bloc "main")) prog.Prog.main
 
 end
