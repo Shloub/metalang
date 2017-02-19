@@ -27,15 +27,20 @@
                 (let ((p (+ a b c)))
                   (if
                     (< p 1001)
-                    (setf (aref t0 p) (+ (aref t0 p) 1)))
-                )))
+                    (setf (aref t0 p) (+ (aref t0 p) 1))
+                    '())
+                ))
+              '())
           )))))
   (let ((j 0))
     (loop for k from 1 to 1000 do
       (if
         (> (aref t0 k) (aref t0 j))
-        (setq j k)))
-    (princ j)
-  )))
+        (setq j k)
+        '()))
+    (princ j))
+    )
+  
+)
 
 

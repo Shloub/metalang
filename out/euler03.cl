@@ -21,7 +21,8 @@
                             (setq b a)
                             (setq sqrtia (isqrt a))
                             (setq found t)
-                          ))
+                          )
+                          '())
                         (setq b (+ b 1))
                         )
                    )
@@ -30,9 +31,14 @@
                      (progn
                        (format t "~D~%" a)
                        (setq a 1)
-                     ))
+                     )
+                     '())
                  )))
+          ))
           )
-        )))))
+        )
+      )
+    
+)
 
 

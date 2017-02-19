@@ -88,7 +88,10 @@ et qui produit les macros metalang correspondante
            (princ (code-char (aref mem0 current_pos)))
            (setq current_pos (+ current_pos 1))
            )
+      ))
       )
-      ))))
+      )
+    
+)
 
 

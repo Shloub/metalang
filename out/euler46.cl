@@ -27,10 +27,13 @@
                      (setq j (+ j i))
                      )
                 )
-              )))
-        )))
-    (return-from eratostene n)
-  )))
+              ))
+            '())
+        )
+        '()))
+    (return-from eratostene n))
+    
+))
 
 (progn
   (let ((maximumprimes 6000))
@@ -58,7 +61,8 @@
             (progn
               (setf (aref primes l) k)
               (setq l (+ l 1))
-            )))
+            )
+            '()))
         (format t "~D == ~D~%" l nprimes)
         (let
          ((canbe (array_init
@@ -74,15 +78,23 @@
               (let ((n (+ (aref primes i) (* 2 j j))))
                 (if
                   (< n maximumprimes)
-                  (setf (aref canbe n) t))
+                  (setf (aref canbe n) t)
+                  '())
               ))))
         (loop for m from 1 to maximumprimes do
           (progn
             (let ((m2 (+ (* m 2) 1)))
               (if
                 (and (< m2 maximumprimes) (not (aref canbe m2)))
-                (format t "~D~%" m2))
-            )))
-        )))))))
+                (format t "~D~%" m2)
+                '())
+            ))))
+        )
+        )
+      )
+      )
+    )
+    
+)
 
 

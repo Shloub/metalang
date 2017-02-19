@@ -21,26 +21,31 @@
 
 (defun cons0 (list i)
 (progn
-  (let ((out0 (make-intlist :head i
-                            :tail list)))
-  (return-from cons0 out0)
-)))
+  (let ((out0 (make-intlist :head i :tail list)))
+  (return-from cons0 out0))
+  
+))
 
 (defun is_empty (foo)
-(return-from is_empty t))
+(progn
+  (return-from is_empty t)
+))
 
 (defun rev2 (acc torev)
-(if
-  (is_empty torev)
-  (return-from rev2 acc)
-  (progn
-    (let ((acc2 (make-intlist :head (intlist-head torev)
-                              :tail acc)))
-    (return-from rev2 (rev2 acc (intlist-tail torev)))
-  ))))
+(progn
+  (if
+    (is_empty torev)
+    (return-from rev2 acc)
+    (progn
+      (let ((acc2 (make-intlist :head (intlist-head torev) :tail acc)))
+      (return-from rev2 (rev2 acc (intlist-tail torev)))
+    )))
+))
 
 (defun rev (empty torev)
-(return-from rev (rev2 empty torev)))
+(progn
+  (return-from rev (rev2 empty torev))
+))
 
 (defun test (empty)
 (progn
@@ -48,13 +53,16 @@
     (let ((i (- 0 1)))
       (loop while (not (= i 0))
       do (progn
-           (setq i (mread-int ))
+           (setq i (mread-int))
            (if
              (not (= i 0))
-             (setq list (cons0 list i)))
+             (setq list (cons0 list i))
+             '())
            )
+      ))
       )
-    ))))
+    
+))
 
 (progn
   

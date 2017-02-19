@@ -3,10 +3,12 @@
 (defun remainder (a b) (- a (* b (truncate a b))))
 
 (defun max2_ (a b)
-(if
-  (> a b)
-  (return-from max2_ a)
-  (return-from max2_ b)))
+(progn
+  (if
+    (> a b)
+    (return-from max2_ a)
+    (return-from max2_ b))
+))
 
 (defun pgcd (a b)
 (progn
@@ -16,8 +18,11 @@
         (if
           (= reste 0)
           (return-from pgcd c)
-          (return-from pgcd (pgcd c reste)))
-      )))))
+          (return-from pgcd (pgcd c reste))))
+        )
+      )
+    
+))
 
 (progn
   (let ((top 1))
@@ -36,11 +41,16 @@
                         (format t "~D/~D~%" a b)
                         (setq top (* top a))
                         (setq bottom (* bottom b))
-                      ))
-                  )))))))
+                      )
+                      '())
+                  )))
+              '()))))
       (format t "~D/~D~%" top bottom)
       (let ((p (pgcd top bottom)))
-        (format t "pgcd=~D~%~D~%" p (quotient bottom p))
-      ))))
+        (format t "pgcd=~D~%~D~%" p (quotient bottom p)))
+        )
+      )
+    
+)
 
 

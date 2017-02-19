@@ -23,26 +23,31 @@
                  (setq j (+ j i))
                  )
             )
-          ))))
-    (return-from eratostene n)
-  )))
+          ))
+        '()))
+    (return-from eratostene n))
+    
+))
 
 (defun isPrime (n primes len)
 (progn
   (let ((i 0))
     (if
       (< n 0)
-      (setq n (- 0 n)))
+      (setq n (- 0 n))
+      '())
     (loop while (< (* (aref primes i) (aref primes i)) n)
     do (progn
          (if
            (= (remainder n (aref primes i)) 0)
-           (return-from isPrime nil))
+           (return-from isPrime nil)
+           '())
          (setq i (+ i 1))
          )
     )
-    (return-from isPrime t)
-  )))
+    (return-from isPrime t))
+    
+))
 
 (defun test (a b primes len)
 (progn
@@ -51,7 +56,8 @@
       (let ((j (+ (* n n) (* a n) b)))
         (if
           (not (isPrime j primes len))
-          (return-from test n))
+          (return-from test n)
+          '())
       )))
   (return-from test 200)
 ))
@@ -84,7 +90,8 @@
                 (progn
                   (setf (aref primes l) k)
                   (setq l (+ l 1))
-                )))
+                )
+                '()))
             (format t "~D == ~D~%" l nprimes)
             (let ((ma 0))
               (let ((mb 0))
@@ -102,7 +109,8 @@
                                 (setq result (* a b))
                                 (setq ma a)
                                 (setq mb b)
-                              ))
+                              )
+                              '())
                             (if
                               (> n2 max0)
                               (progn
@@ -110,9 +118,20 @@
                                 (setq result (* (- 0 a) b))
                                 (setq ma a)
                                 (setq mb (- 0 b))
-                              ))
-                          ))))))
-                (format t "~D ~D~%~D~%~D~%" ma mb max0 result)
-              ))))))))))
+                              )
+                              '())
+                          ))))
+                    '()))
+                (format t "~D ~D~%~D~%~D~%" ma mb max0 result))
+                )
+              )
+            )
+          )
+          )
+        )
+      )
+    )
+    
+)
 
 

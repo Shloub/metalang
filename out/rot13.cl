@@ -36,23 +36,26 @@
 Ce test effectue un rot13 sur une chaine lue en entrée
 |#
 (progn
-  (let ((strlen (mread-int )))
+  (let ((strlen (mread-int)))
     (mread-blank)
     (let
      ((tab4 (array_init
                strlen
                (function (lambda (toto)
                (block lambda_1
-                 (let ((tmpc (mread-char )))
+                 (let ((tmpc (mread-char)))
                    (let ((c (char-code tmpc)))
                      (if
                        (not (eq tmpc #\Space))
-                       (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a))))
+                       (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a)))
+                       '())
                      (return-from lambda_1 (code-char c))
                    ))))
                ))))
     (loop for j from 0 to (- strlen 1) do
-      (princ (aref tab4 j)))
-    )))
+      (princ (aref tab4 j))))
+    )
+    
+)
 
 

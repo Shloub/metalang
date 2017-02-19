@@ -27,9 +27,14 @@
               #| print int d print "=>" print un print " " |#
               (setq sum (+ sum un))
             )))
-        (return-from sumdiag sum)
-      )))))
+        (return-from sumdiag sum))
+        )
+      )
+    
+))
 
-(princ (sumdiag 1001))
+(progn
+  (princ (sumdiag 1001))
+)
 
 

@@ -32,19 +32,25 @@ La suite de fibonaci
               (setq b2 (+ b2 a2))
               (setq a2 tmp)
             )))
-        (return-from fibo0 out0)
-      )))))
+        (return-from fibo0 out0))
+        )
+      )
+    
+))
 
 (progn
   (let ((a 0))
     (let ((b 0))
       (let ((i 0))
-        (setq a (mread-int ))
+        (setq a (mread-int))
         (mread-blank)
-        (setq b (mread-int ))
+        (setq b (mread-int))
         (mread-blank)
-        (setq i (mread-int ))
-        (princ (fibo0 a b i))
-      ))))
+        (setq i (mread-int))
+        (princ (fibo0 a b i)))
+        )
+      )
+    
+)
 
 

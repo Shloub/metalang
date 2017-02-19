@@ -1,8 +1,10 @@
 (defun f (i)
-(if
-  (= i 0)
-  (return-from f t)
-  (return-from f nil)))
+(progn
+  (if
+    (= i 0)
+    (return-from f t)
+    (return-from f nil))
+))
 
 (progn
   (if

@@ -25,13 +25,14 @@
             12
             (function (lambda (a)
             (block lambda_1
-              (let ((b (mread-char )))
+              (let ((b (mread-char)))
                 (return-from lambda_1 b)
               )))
             ))))
   (mread-blank)
   (loop for i from 0 to 11 do
-    (princ (aref str i)))
-  ))
+    (princ (aref str i))))
+  
+)
 
 

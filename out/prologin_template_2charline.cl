@@ -49,35 +49,40 @@
       ))
     (princ "--
 ")
-    (return-from programme_candidat out0)
-  )))
+    (return-from programme_candidat out0))
+    
+))
 
 (progn
-  (let ((taille1 (mread-int )))
+  (let ((taille1 (mread-int)))
     (mread-blank)
     (let
      ((tableau1 (array_init
                    taille1
                    (function (lambda (a)
                    (block lambda_1
-                     (let ((b (mread-char )))
+                     (let ((b (mread-char)))
                        (return-from lambda_1 b)
                      )))
                    ))))
     (mread-blank)
-    (let ((taille2 (mread-int )))
+    (let ((taille2 (mread-int)))
       (mread-blank)
       (let
        ((tableau2 (array_init
                      taille2
                      (function (lambda (c)
                      (block lambda_2
-                       (let ((d (mread-char )))
+                       (let ((d (mread-char)))
                          (return-from lambda_2 d)
                        )))
                      ))))
       (mread-blank)
-      (format t "~D~%" (programme_candidat tableau1 taille1 tableau2 taille2))
-      )))))
+      (format t "~D~%" (programme_candidat tableau1 taille1 tableau2 taille2)))
+      )
+      )
+    )
+    
+)
 
 

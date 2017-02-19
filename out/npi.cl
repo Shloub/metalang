@@ -33,7 +33,9 @@
 ))
 
 (defun is_number (c)
-(return-from is_number (and (<= (char-code c) (char-code #\9)) (>= (char-code c) (char-code #\0)))))
+(progn
+  (return-from is_number (and (<= (char-code c) (char-code #\9)) (>= (char-code c) (char-code #\0))))
+))
 
 #|
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
@@ -73,14 +75,18 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
                  (setf (aref stack (- ptrStack 2)) (+ (aref stack (- ptrStack 2)) (aref stack (- ptrStack 1))))
                  (setq ptrStack (- ptrStack 1))
                  (setq ptrStr (+ ptrStr 1))
-               ))))
+               )
+               '())))
       )
-      (return-from npi0 (aref stack 0))
-    )))))
+      (return-from npi0 (aref stack 0)))
+      )
+    )
+  
+))
 
 (progn
   (let ((len 0))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let
      ((tab (array_init
@@ -88,12 +94,15 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
               (function (lambda (i)
               (block lambda_2
                 (let ((tmp (code-char 0)))
-                  (setq tmp (mread-char ))
+                  (setq tmp (mread-char))
                   (return-from lambda_2 tmp)
                 )))
               ))))
     (let ((result (npi0 tab len)))
-      (princ result)
-    ))))
+      (princ result))
+      )
+    )
+    
+)
 
 

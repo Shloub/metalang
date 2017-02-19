@@ -25,9 +25,11 @@
                  (setq j (+ j i))
                  )
             )
-          ))))
-    (return-from eratostene n)
-  )))
+          ))
+        '()))
+    (return-from eratostene n))
+    
+))
 
 (defun fillPrimesFactors (t0 n primes nprimes)
 (progn
@@ -42,7 +44,8 @@
         )
         (if
           (= n 1)
-          (return-from fillPrimesFactors (aref primes i)))
+          (return-from fillPrimesFactors (aref primes i))
+          '())
       )))
   (return-from fillPrimesFactors n)
 ))
@@ -56,23 +59,25 @@
 ))
 
 (defun sumdivaux (t0 n i)
-(if
-  (> i n)
-  (return-from sumdivaux 1)
+(progn
   (if
-    (= (aref t0 i) 0)
-    (return-from sumdivaux (sumdivaux t0 n (sumdivaux2 t0 n (+ i 1))))
-    (progn
-      (let ((o (sumdivaux t0 n (sumdivaux2 t0 n (+ i 1)))))
-        (let ((out0 0))
-          (let ((p i))
-            (loop for j from 1 to (aref t0 i) do
-              (progn
-                (setq out0 (+ out0 p))
-                (setq p (* p i))
-              ))
-            (return-from sumdivaux (* (+ out0 1) o))
-          )))))))
+    (> i n)
+    (return-from sumdivaux 1)
+    (if
+      (= (aref t0 i) 0)
+      (return-from sumdivaux (sumdivaux t0 n (sumdivaux2 t0 n (+ i 1))))
+      (progn
+        (let ((o (sumdivaux t0 n (sumdivaux2 t0 n (+ i 1)))))
+          (let ((out0 0))
+            (let ((p i))
+              (loop for j from 1 to (aref t0 i) do
+                (progn
+                  (setq out0 (+ out0 p))
+                  (setq p (* p i))
+                ))
+              (return-from sumdivaux (* (+ out0 1) o))
+            ))))))
+))
 
 (defun sumdiv (nprimes primes n)
 (progn
@@ -85,8 +90,10 @@
            ))
            ))))
   (let ((max0 (fillPrimesFactors t0 n primes nprimes)))
-    (return-from sumdiv (sumdivaux t0 max0 0))
-  ))))
+    (return-from sumdiv (sumdivaux t0 max0 0)))
+    )
+  
+))
 
 (progn
   (let ((maximumprimes 1001))
@@ -114,7 +121,8 @@
             (progn
               (setf (aref primes l) k)
               (setq l (+ l 1))
-            )))
+            )
+            '()))
         (format t "~D == ~D~%" l nprimes)
         (let ((sum 0))
           (loop for n from 2 to 1000 do
@@ -129,10 +137,18 @@
                         (progn
                           (format t "~D & ~D~%" other n)
                           (setq sum (+ sum other n))
-                        ))
-                    )))
+                        )
+                        '())
+                    ))
+                  '())
               )))
-          (format t "~%~D~%" sum)
-        )))))))
+          (format t "~%~D~%" sum))
+          )
+        )
+      )
+      )
+    )
+    
+)
 
 

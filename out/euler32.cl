@@ -33,21 +33,23 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   a != d != (b * e / 10 + b * d + a * e ) % 10
 |#
 (defun okdigits (ok n)
-(if
-  (= n 0)
-  (return-from okdigits t)
-  (progn
-    (let ((digit (remainder n 10)))
-      (if
-        (aref ok digit)
-        (progn
-          (setf (aref ok digit) nil)
-          (let ((o (okdigits ok (quotient n 10))))
-            (setf (aref ok digit) t)
-            (return-from okdigits o)
-          ))
-        (return-from okdigits nil))
-    ))))
+(progn
+  (if
+    (= n 0)
+    (return-from okdigits t)
+    (progn
+      (let ((digit (remainder n 10)))
+        (if
+          (aref ok digit)
+          (progn
+            (setf (aref ok digit) nil)
+            (let ((o (okdigits ok (quotient n 10))))
+              (setf (aref ok digit) t)
+              (return-from okdigits o)
+            ))
+          (return-from okdigits nil))
+      )))
+))
 
 (progn
   (let ((count 0))
@@ -103,7 +105,8 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                             (setf (aref counted product) t)
                                             (setq count (+ count product))
                                             (format t "~D " product)
-                                          ))
+                                          )
+                                          '())
                                         #| 1  * 4 digits |#
                                         (let ((product2 (* b (+ (* a 1000) (* c 100) (* d 10) e))))
                                           (if
@@ -112,20 +115,29 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                               (setf (aref counted product2) t)
                                               (setq count (+ count product2))
                                               (format t "~D " product2)
-                                            ))
+                                            )
+                                            '())
                                           (setf (aref allowed d) t)
-                                        )))))
+                                        )))
+                                    '()))
                                 (setf (aref allowed c) t)
-                              )))
+                              )
+                              '()))
                           (setf (aref allowed a) t)
-                        )))
+                        )
+                        '()))
                     (setf (aref allowed be) t)
-                  ))
+                  )
+                  '())
                 (setf (aref allowed b) t)
-              ))))
+              ))
+            '()))
         (setf (aref allowed e) t)
       ))
-    (format t "~D~%" count)
-    ))))
+    (format t "~D~%" count))
+    )
+    )
+    
+)
 
 

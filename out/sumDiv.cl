@@ -21,8 +21,9 @@
   (let ((a 0))
     #| test |#
     (setq a (+ a 1))
-    #| test 2 |#
-  )))
+    #| test 2 |#)
+    
+))
 
 (defun foo2 ()
 (progn
@@ -30,9 +31,12 @@
 ))
 
 (defun foo3 ()
-(if
-  (= 1 1)
-  '()))
+(progn
+  (if
+    (= 1 1)
+    '()
+    '())
+))
 
 (defun sumdiv (n)
 (progn
@@ -52,15 +56,17 @@
           #| nop |#)
       ))
     (return-from sumdiv out0)
-    #|On renvoie out|#
-  )))
+    #|On renvoie out|#)
+    
+))
 
 (progn
   #| Programme principal |#
   (let ((n 0))
-    (setq n (mread-int ))
+    (setq n (mread-int))
     #| Lecture de l'entier |#
-    (princ (sumdiv n))
-  ))
+    (princ (sumdiv n)))
+    
+)
 
 

@@ -33,11 +33,10 @@
 
 (defun mktoto (v1)
 (progn
-  (let ((t0 (make-toto :foo v1
-                       :bar 0
-                       :blah 0)))
-  (return-from mktoto t0)
-)))
+  (let ((t0 (make-toto :foo v1 :bar 0 :blah 0)))
+  (return-from mktoto t0))
+  
+))
 
 (defun result (t0 len)
 (progn
@@ -47,8 +46,9 @@
         (setf (toto-blah (aref t0 j)) (+ (toto-blah (aref t0 j)) 1))
         (setq out0 (+ out0 (toto-foo (aref t0 j)) (* (toto-blah (aref t0 j)) (toto-bar (aref t0 j))) (* (toto-bar (aref t0 j)) (toto-foo (aref t0 j)))))
       ))
-    (return-from result out0)
-  )))
+    (return-from result out0))
+    
+))
 
 (progn
   (let
@@ -59,11 +59,13 @@
              (return-from lambda_1 (mktoto i))
            ))
            ))))
-  (setf (toto-bar (aref t0 0)) (mread-int ))
+  (setf (toto-bar (aref t0 0)) (mread-int))
   (mread-blank)
-  (setf (toto-blah (aref t0 1)) (mread-int ))
+  (setf (toto-blah (aref t0 1)) (mread-int))
   (let ((titi (result t0 4)))
-    (format t "~D~D" titi (toto-blah (aref t0 2)))
-  )))
+    (format t "~D~D" titi (toto-blah (aref t0 2))))
+    )
+  
+)
 
 

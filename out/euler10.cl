@@ -27,10 +27,13 @@
                      (setq j (+ j i))
                      )
                 )
-              )))
-        )))
-    (return-from eratostene sum)
-  )))
+              ))
+            '())
+        )
+        '()))
+    (return-from eratostene sum))
+    
+))
 
 (progn
   (let ((n 100000))
@@ -44,7 +47,9 @@
              ))
              ))))
     (setf (aref t0 1) 0)
-    (format t "~D~%" (eratostene t0 n))
-    )))
+    (format t "~D~%" (eratostene t0 n)))
+    )
+    
+)
 
 

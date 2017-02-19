@@ -7,13 +7,17 @@
                                                            do (progn
                                                                 (if
                                                                   (= (remainder a 2) 0)
-                                                                  (setq sum (+ sum a)))
+                                                                  (setq sum (+ sum a))
+                                                                  '())
                                                                 (let ((c a))
                                                                   (setq a b)
                                                                   (setq b (+ b c))
                                                                 ))
                                                            )
-                                                           (format t "~D~%" sum)
-                                                         ))))
+                                                           (format t "~D~%" sum))
+                                                           )
+                                                         )
+                                                       
+)
 
 

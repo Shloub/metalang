@@ -47,18 +47,25 @@
                                   (setq sum (- sum 1))
                                   (if
                                     (= d 0)
-                                    (setq sum (- sum 1)))
-                                ))
-                            ))
-                        ))
+                                    (setq sum (- sum 1))
+                                    '())
+                                )
+                                '())
+                            )
+                            '())
+                        )
+                        '())
                       (if
                         (and (= sum num) (not (= sum 1)) (not (= sum 2)))
                         (progn
                           (setq out0 (+ out0 num))
                           (format t "~D " num)
-                        ))
+                        )
+                        '())
                     )))))))))
-    (format t "~%~D~%" out0)
-  )))
+    (format t "~%~D~%" out0))
+    )
+  
+)
 
 

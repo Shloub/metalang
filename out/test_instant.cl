@@ -1,6 +1,10 @@
 (defun foo (a b)
-(return-from foo (+ a b)))
+(progn
+  (return-from foo (+ a b))
+))
 
-(princ 10)
+(progn
+  (princ 10)
+)
 
 

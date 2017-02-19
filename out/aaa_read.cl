@@ -39,7 +39,7 @@ Ce test permet de vérifier si les différents backends pour les langages implé
 read int, read char et skip
 |#
 (progn
-  (let ((len (mread-int )))
+  (let ((len (mread-int)))
     (mread-blank)
     (format t "~D=len~%" len)
     (setq len (* len 2))
@@ -50,7 +50,7 @@ read int, read char et skip
               len
               (function (lambda (i)
               (block lambda_1
-                (let ((tmpi1 (mread-int )))
+                (let ((tmpi1 (mread-int)))
                   (mread-blank)
                   (format t "~D=>~D " i tmpi1)
                   (return-from lambda_1 tmpi1)
@@ -63,13 +63,13 @@ read int, read char et skip
                len
                (function (lambda (i_)
                (block lambda_2
-                 (let ((tmpi2 (mread-int )))
+                 (let ((tmpi2 (mread-int)))
                    (mread-blank)
                    (format t "~D==>~D " i_ tmpi2)
                    (return-from lambda_2 tmpi2)
                  )))
                ))))
-    (let ((strlen (mread-int )))
+    (let ((strlen (mread-int)))
       (mread-blank)
       (format t "~D=strlen~%" strlen)
       (let
@@ -77,17 +77,23 @@ read int, read char et skip
                  strlen
                  (function (lambda (toto)
                  (block lambda_3
-                   (let ((tmpc (mread-char )))
+                   (let ((tmpc (mread-char)))
                      (let ((c (char-code tmpc)))
                        (format t "~C:~D " tmpc c)
                        (if
                          (not (eq tmpc #\Space))
-                         (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a))))
+                         (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a)))
+                         '())
                        (return-from lambda_3 (code-char c))
                      ))))
                  ))))
       (loop for j from 0 to (- strlen 1) do
-        (princ (aref tab4 j)))
-      ))))))
+        (princ (aref tab4 j))))
+      )
+      )
+    )
+    )
+    
+)
 
 

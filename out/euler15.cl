@@ -48,7 +48,9 @@
         (princ "
 ")
       ))
-    (format t "~D~%" (aref (aref tab 0) 0))
-    )))
+    (format t "~D~%" (aref (aref tab 0) 0)))
+    )
+    
+)
 
 

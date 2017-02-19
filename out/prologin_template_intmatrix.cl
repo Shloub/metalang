@@ -32,13 +32,14 @@
     (loop for i from 0 to (- y 1) do
       (loop for j from 0 to (- x 1) do
         (setq out0 (+ out0 (* (aref (aref tableau i) j) (+ (* i 2) j))))))
-    (return-from programme_candidat out0)
-  )))
+    (return-from programme_candidat out0))
+    
+))
 
 (progn
-  (let ((taille_x (mread-int )))
+  (let ((taille_x (mread-int)))
     (mread-blank)
-    (let ((taille_y (mread-int )))
+    (let ((taille_y (mread-int)))
       (mread-blank)
       (let
        ((tableau (array_init
@@ -50,7 +51,7 @@
                               taille_x
                               (function (lambda (d)
                               (block lambda_2
-                                (let ((b (mread-int )))
+                                (let ((b (mread-int)))
                                   (mread-blank)
                                   (return-from lambda_2 b)
                                 )))
@@ -58,7 +59,10 @@
                       (return-from lambda_1 c)
                       )))
                     ))))
-      (format t "~D~%" (programme_candidat tableau taille_x taille_y))
-      ))))
+      (format t "~D~%" (programme_candidat tableau taille_x taille_y)))
+      )
+      )
+    
+)
 
 

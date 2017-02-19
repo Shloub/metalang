@@ -75,12 +75,13 @@ on le retrouve ici : http://projecteuler.net/problem=18
                (return-from lambda_1 tab3)
                )))
              ))))
-  (return-from find01 (find0 len tab tab2 0 0))
-  )))
+  (return-from find01 (find0 len tab tab2 0 0)))
+  
+))
 
 (progn
   (let ((len 0))
-    (setq len (mread-int ))
+    (setq len (mread-int))
     (mread-blank)
     (let
      ((tab (array_init
@@ -93,7 +94,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
                            (function (lambda (j)
                            (block lambda_4
                              (let ((tmp 0))
-                               (setq tmp (mread-int ))
+                               (setq tmp (mread-int))
                                (mread-blank)
                                (return-from lambda_4 tmp)
                              )))
@@ -108,7 +109,9 @@ on le retrouve ici : http://projecteuler.net/problem=18
           (format t "~D " (aref (aref tab k) l)))
         (princ "
 ")
-      ))
-    )))
+      )))
+    )
+    
+)
 
 

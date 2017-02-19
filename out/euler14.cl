@@ -11,25 +11,29 @@
 (defun remainder (a b) (- a (* b (truncate a b))))
 
 (defun next0 (n)
-(if
-  (= (remainder n 2) 0)
-  (return-from next0 (quotient n 2))
-  (return-from next0 (+ (* 3 n) 1))))
+(progn
+  (if
+    (= (remainder n 2) 0)
+    (return-from next0 (quotient n 2))
+    (return-from next0 (+ (* 3 n) 1)))
+))
 
 (defun find0 (n m)
-(if
-  (= n 1)
-  (return-from find0 1)
+(progn
   (if
-    (>= n 1000000)
-    (return-from find0 (+ 1 (find0 (next0 n) m)))
+    (= n 1)
+    (return-from find0 1)
     (if
-      (not (= (aref m n) 0))
-      (return-from find0 (aref m n))
-      (progn
-        (setf (aref m n) (+ 1 (find0 (next0 n) m)))
+      (>= n 1000000)
+      (return-from find0 (+ 1 (find0 (next0 n) m)))
+      (if
+        (not (= (aref m n) 0))
         (return-from find0 (aref m n))
-      )))))
+        (progn
+          (setf (aref m n) (+ 1 (find0 (next0 n) m)))
+          (return-from find0 (aref m n))
+        ))))
+))
 
 (progn
   (let
@@ -51,9 +55,13 @@
               (progn
                 (setq max0 n2)
                 (setq maxi i)
-              ))
+              )
+              '())
           )))
-      (format t "~D~%~D~%" max0 maxi)
-    ))))
+      (format t "~D~%~D~%" max0 maxi))
+      )
+    )
+  
+)
 
 

@@ -32,12 +32,13 @@
            2
            (function (lambda (d)
            (block lambda_1
-             (let ((out0 (mread-int )))
+             (let ((out0 (mread-int)))
                (mread-blank)
                (return-from lambda_1 out0)
              )))
            ))))
-  (format t "~D - ~D~%" (aref t0 0) (aref t0 1))
-  ))
+  (format t "~D - ~D~%" (aref t0 0) (aref t0 1)))
+  
+)
 
 

@@ -10,20 +10,22 @@
 (defun quotient (a b) (truncate a b))
 
 (defun result (sum t0 maxIndex cache)
-(if
-  (not (= (aref (aref cache sum) maxIndex) 0))
-  (return-from result (aref (aref cache sum) maxIndex))
+(progn
   (if
-    (or (= sum 0) (= maxIndex 0))
-    (return-from result 1)
-    (progn
-      (let ((out0 0))
-        (let ((div (quotient sum (aref t0 maxIndex))))
-          (loop for i from 0 to div do
-            (setq out0 (+ out0 (result (- sum (* i (aref t0 maxIndex))) t0 (- maxIndex 1) cache))))
-          (setf (aref (aref cache sum) maxIndex) out0)
-          (return-from result out0)
-        ))))))
+    (not (= (aref (aref cache sum) maxIndex) 0))
+    (return-from result (aref (aref cache sum) maxIndex))
+    (if
+      (or (= sum 0) (= maxIndex 0))
+      (return-from result 1)
+      (progn
+        (let ((out0 0))
+          (let ((div (quotient sum (aref t0 maxIndex))))
+            (loop for i from 0 to div do
+              (setq out0 (+ out0 (result (- sum (* i (aref t0 maxIndex))) t0 (- maxIndex 1) cache))))
+            (setf (aref (aref cache sum) maxIndex) out0)
+            (return-from result out0)
+          )))))
+))
 
 (progn
   (let
@@ -58,7 +60,9 @@
                 (return-from lambda_2 o)
                 )))
               ))))
-  (princ (result 200 t0 7 cache))
-  )))
+  (princ (result 200 t0 7 cache)))
+  )
+  
+)
 
 

@@ -15,8 +15,9 @@
   (let ((o 1))
     (loop for i from 1 to e do
       (setq o (* o a)))
-    (return-from exp0 o)
-  )))
+    (return-from exp0 o))
+    
+))
 
 (defun e (t0 n)
 (progn
@@ -67,7 +68,9 @@
             (setq out0 (* out0 v))
             (format t "10^~D=~D v=~D~%" l puiss v)
           ))))
-    (format t "~D~%" out0)
-  )))
+    (format t "~D~%" out0))
+    )
+  
+)
 
 
