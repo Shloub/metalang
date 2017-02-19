@@ -25,7 +25,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 --]]
-function okdigits( ok, n )
+function okdigits (ok, n)
   if n == 0 then
       return true
   else 
@@ -40,7 +40,6 @@ function okdigits( ok, n )
       end
   end
 end
-
 
 local count = 0
 local allowed = {}

@@ -6,7 +6,7 @@ function readintline()
   end
   return tab
 end
-function find( n, m, x, y, dx, dy )
+function find (n, m, x, y, dx, dy)
   if x < 0 or x == 20 or y < 0 or y == 20 then
       return -1
   elseif n == 0 then
@@ -15,7 +15,6 @@ function find( n, m, x, y, dx, dy )
       return m[y + 1][x + 1] * find(n - 1, m, x + dx, y + dy, dx, dy)
   end
 end
-
 
 local directions = {}
 for i = 0, 7 do

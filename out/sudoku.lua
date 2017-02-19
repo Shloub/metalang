@@ -15,7 +15,7 @@ function stdinsep()
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
 --[[ lit un sudoku sur l'entrée standard --]]
-function read_sudoku(  )
+function read_sudoku ()
   local out0 = {}
   for i = 0, 9 * 9 - 1 do
       local k = readint()
@@ -24,9 +24,8 @@ function read_sudoku(  )
       end
       return out0
   end
-  
   --[[ affiche un sudoku --]]
-  function print_sudoku( sudoku0 )
+  function print_sudoku (sudoku0)
     for y = 0, 8 do
         for x = 0, 8 do
             io.write(string.format("%d ", sudoku0[x + y * 9 + 1]))
@@ -41,11 +40,10 @@ function read_sudoku(  )
             end
             io.write("\n")
         end
-        
         --[[ dit si les variables sont toutes différentes --]]
         --[[ dit si les variables sont toutes différentes --]]
         --[[ dit si le sudoku est terminé de remplir --]]
-        function sudoku_done( s )
+        function sudoku_done (s)
           for i = 0, 80 do
               if s[i + 1] == 0 then
                   return false
@@ -53,9 +51,8 @@ function read_sudoku(  )
               end
               return true
           end
-          
           --[[ dit si il y a une erreur dans le sudoku --]]
-          function sudoku_error( s )
+          function sudoku_error (s)
             local out1 = false
             for x = 0, 8 do
                 out1 = out1 or s[x + 1] ~= 0 and s[x + 1] == s[x + 10] or s[x + 1] ~= 0 and s[x + 1] == s[x + 9 * 2 + 1] or s[x + 10] ~= 0 and s[x + 10] == s[x + 9 * 2 + 1] or s[x + 1] ~= 0 and s[x + 1] == s[x + 9 * 3 + 1] or s[x + 10] ~= 0 and s[x + 10] == s[x + 9 * 3 + 1] or s[x + 9 * 2 + 1] ~= 0 and s[x + 9 * 2 + 1] == s[x + 9 * 3 + 1] or s[x + 1] ~= 0 and s[x + 1] == s[x + 9 * 4 + 1] or s[x + 10] ~= 0 and s[x + 10] == s[x + 9 * 4 + 1] or s[x + 9 * 2 + 1] ~= 0 and s[x + 9 * 2 + 1] == s[x + 9 * 4 + 1] or s[x + 9 * 3 + 1] ~= 0 and s[x + 9 * 3 + 1] == s[x + 9 * 4 + 1] or s[x + 1] ~= 0 and s[x + 1] == s[x + 9 * 5 + 1] or s[x + 10] ~= 0 and s[x + 10] == s[x + 9 * 5 + 1] or s[x + 9 * 2 + 1] ~= 0 and s[x + 9 * 2 + 1] == s[x + 9 * 5 + 1] or s[x + 9 * 3 + 1] ~= 0 and s[x + 9 * 3 + 1] == s[x + 9 * 5 + 1] or s[x + 9 * 4 + 1] ~= 0 and s[x + 9 * 4 + 1] == s[x + 9 * 5 + 1] or s[x + 1] ~= 0 and s[x + 1] == s[x + 9 * 6 + 1] or s[x + 10] ~= 0 and s[x + 10] == s[x + 9 * 6 + 1] or s[x + 9 * 2 + 1] ~= 0 and s[x + 9 * 2 + 1] == s[x + 9 * 6 + 1] or s[x + 9 * 3 + 1] ~= 0 and s[x + 9 * 3 + 1] == s[x + 9 * 6 + 1] or s[x + 9 * 4 + 1] ~= 0 and s[x + 9 * 4 + 1] == s[x + 9 * 6 + 1] or s[x + 9 * 5 + 1] ~= 0 and s[x + 9 * 5 + 1] == s[x + 9 * 6 + 1] or s[x + 1] ~= 0 and s[x + 1] == s[x + 9 * 7 + 1] or s[x + 10] ~= 0 and s[x + 10] == s[x + 9 * 7 + 1] or s[x + 9 * 2 + 1] ~= 0 and s[x + 9 * 2 + 1] == s[x + 9 * 7 + 1] or s[x + 9 * 3 + 1] ~= 0 and s[x + 9 * 3 + 1] == s[x + 9 * 7 + 1] or s[x + 9 * 4 + 1] ~= 0 and s[x + 9 * 4 + 1] == s[x + 9 * 7 + 1] or s[x + 9 * 5 + 1] ~= 0 and s[x + 9 * 5 + 1] == s[x + 9 * 7 + 1] or s[x + 9 * 6 + 1] ~= 0 and s[x + 9 * 6 + 1] == s[x + 9 * 7 + 1] or s[x + 1] ~= 0 and s[x + 1] == s[x + 9 * 8 + 1] or s[x + 10] ~= 0 and s[x + 10] == s[x + 9 * 8 + 1] or s[x + 9 * 2 + 1] ~= 0 and s[x + 9 * 2 + 1] == s[x + 9 * 8 + 1] or s[x + 9 * 3 + 1] ~= 0 and s[x + 9 * 3 + 1] == s[x + 9 * 8 + 1] or s[x + 9 * 4 + 1] ~= 0 and s[x + 9 * 4 + 1] == s[x + 9 * 8 + 1] or s[x + 9 * 5 + 1] ~= 0 and s[x + 9 * 5 + 1] == s[x + 9 * 8 + 1] or s[x + 9 * 6 + 1] ~= 0 and s[x + 9 * 6 + 1] == s[x + 9 * 8 + 1] or s[x + 9 * 7 + 1] ~= 0 and s[x + 9 * 7 + 1] == s[x + 9 * 8 + 1]
@@ -70,9 +67,8 @@ function read_sudoku(  )
                         end
                         return out1 or out2 or out3
                     end
-                    
                     --[[ résout le sudoku--]]
-                    function solve( sudoku0 )
+                    function solve (sudoku0)
                       if sudoku_error(sudoku0) then
                           return false
                       end
@@ -93,7 +89,6 @@ function read_sudoku(  )
                               end
                               return false
                           end
-                          
                           
                           local sudoku0 = read_sudoku()
                           print_sudoku(sudoku0)

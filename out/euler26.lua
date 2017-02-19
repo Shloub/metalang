@@ -2,7 +2,7 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function periode( restes, len, a, b )
+function periode (restes, len, a, b)
   while a ~= 0 do
       local chiffre = trunc(a / b)
       local reste = math.mod(a, b)
@@ -17,7 +17,6 @@ function periode( restes, len, a, b )
       end
       return 0
   end
-  
   
   local t = {}
   for j = 0, 999 do

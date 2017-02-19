@@ -1,11 +1,9 @@
-function id( b )
+function id (b)
   return b
 end
-
-function g( t, index )
+function g (t, index)
   t[index + 1] = false
 end
-
 
 local j = 0
 local a = {}

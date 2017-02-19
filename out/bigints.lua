@@ -14,8 +14,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-
-function read_bigint( len )
+function read_bigint (len)
   local chiffres = {}
   for j = 0, len - 1 do
       local c = readchar()
@@ -28,8 +27,7 @@ function read_bigint( len )
           end
           return {bigint_sign=true, bigint_len=len, bigint_chiffres=chiffres}
       end
-      
-      function print_bigint( a )
+      function print_bigint (a)
         if not(a.bigint_sign) then
             io.write(string.format("%c", 45))
         end
@@ -37,8 +35,7 @@ function read_bigint( len )
             io.write(a.bigint_chiffres[a.bigint_len - 1 - i + 1])
             end
         end
-        
-        function bigint_eq( a, b )
+        function bigint_eq (a, b)
           --[[ Renvoie vrai si a = b --]]
           if a.bigint_sign ~= b.bigint_sign then
               return false
@@ -53,8 +50,7 @@ function read_bigint( len )
                   return true
               end
           end
-          
-          function bigint_gt( a, b )
+          function bigint_gt (a, b)
             --[[ Renvoie vrai si a > b --]]
             if a.bigint_sign and not(b.bigint_sign) then
                 return true
@@ -78,12 +74,10 @@ function read_bigint( len )
                     return true
                 end
             end
-            
-            function bigint_lt( a, b )
+            function bigint_lt (a, b)
               return not(bigint_gt(a, b))
             end
-            
-            function add_bigint_positif( a, b )
+            function add_bigint_positif (a, b)
               --[[ Une addition ou on en a rien a faire des signes --]]
               local len = math.max(a.bigint_len, b.bigint_len) + 1
               local retenue = 0
@@ -104,8 +98,7 @@ function read_bigint( len )
                   end
                   return {bigint_sign=true, bigint_len=len, bigint_chiffres=chiffres}
               end
-              
-              function sub_bigint_positif( a, b )
+              function sub_bigint_positif (a, b)
                 --[[ Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
 --]]
@@ -130,12 +123,10 @@ Pré-requis : a > b
                     end
                     return {bigint_sign=true, bigint_len=len, bigint_chiffres=chiffres}
                 end
-                
-                function neg_bigint( a )
+                function neg_bigint (a)
                   return {bigint_sign=not(a.bigint_sign), bigint_len=a.bigint_len, bigint_chiffres=a.bigint_chiffres}
                 end
-                
-                function add_bigint( a, b )
+                function add_bigint (a, b)
                   if a.bigint_sign == b.bigint_sign then
                       if a.bigint_sign then
                           return add_bigint_positif(a, b)
@@ -158,12 +149,10 @@ Pré-requis : a > b
                       end
                   end
                 end
-                
-                function sub_bigint( a, b )
+                function sub_bigint (a, b)
                   return add_bigint(a, neg_bigint(b))
                 end
-                
-                function mul_bigint_cp( a, b )
+                function mul_bigint_cp (a, b)
                   --[[ Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. --]]
@@ -190,16 +179,14 @@ D'ou le nom de la fonction. --]]
                                   end
                                   return {bigint_sign=a.bigint_sign == b.bigint_sign, bigint_len=len, bigint_chiffres=chiffres}
                               end
-                              
-                              function bigint_premiers_chiffres( a, i )
+                              function bigint_premiers_chiffres (a, i)
                                 local len = math.min(i, a.bigint_len)
                                 while len ~= 0 and a.bigint_chiffres[len] == 0 do
                                     len = len - 1
                                 end
                                 return {bigint_sign=a.bigint_sign, bigint_len=len, bigint_chiffres=a.bigint_chiffres}
                               end
-                              
-                              function bigint_shift( a, i )
+                              function bigint_shift (a, i)
                                 local chiffres = {}
                                 for k = 0, a.bigint_len + i - 1 do
                                     if k >= i then
@@ -210,8 +197,7 @@ D'ou le nom de la fonction. --]]
                                     end
                                     return {bigint_sign=a.bigint_sign, bigint_len=a.bigint_len + i, bigint_chiffres=chiffres}
                                 end
-                                
-                                function mul_bigint( aa, bb )
+                                function mul_bigint (aa, bb)
                                   if aa.bigint_len == 0 then
                                       return aa
                                   elseif bb.bigint_len == 0 then
@@ -234,12 +220,11 @@ D'ou le nom de la fonction. --]]
                                   return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
                                   --[[ ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd --]]
                                 end
-                                
                                 --[[
 Division,
 Modulo
 --]]
-                                function log10( a )
+                                function log10 (a)
                                   local out0 = 1
                                   while a >= 10 do
                                       a = trunc(a / 10)
@@ -247,8 +232,7 @@ Modulo
                                   end
                                   return out0
                                 end
-                                
-                                function bigint_of_int( i )
+                                function bigint_of_int (i)
                                   local size = log10(i)
                                   if i == 0 then
                                       size = 0
@@ -263,8 +247,7 @@ Modulo
                                           end
                                           return {bigint_sign=true, bigint_len=size, bigint_chiffres=t}
                                       end
-                                      
-                                      function fact_bigint( a )
+                                      function fact_bigint (a)
                                         local one = bigint_of_int(1)
                                         local out0 = one
                                         while not(bigint_eq(a, one)) do
@@ -273,24 +256,21 @@ Modulo
                                         end
                                         return out0
                                       end
-                                      
-                                      function sum_chiffres_bigint( a )
+                                      function sum_chiffres_bigint (a)
                                         local out0 = 0
                                         for i = 0, a.bigint_len - 1 do
                                             out0 = out0 + a.bigint_chiffres[i + 1]
                                             end
                                             return out0
                                         end
-                                        
                                         --[[ http://projecteuler.net/problem=20 --]]
-                                        function euler20(  )
+                                        function euler20 ()
                                           local a = bigint_of_int(15)
                                           --[[ normalement c'est 100 --]]
                                           a = fact_bigint(a)
                                           return sum_chiffres_bigint(a)
                                         end
-                                        
-                                        function bigint_exp( a, b )
+                                        function bigint_exp (a, b)
                                           if b == 1 then
                                               return a
                                           elseif math.mod(b, 2) == 0 then
@@ -299,8 +279,7 @@ Modulo
                                               return mul_bigint(a, bigint_exp(a, b - 1))
                                           end
                                         end
-                                        
-                                        function bigint_exp_10chiffres( a, b )
+                                        function bigint_exp_10chiffres (a, b)
                                           a = bigint_premiers_chiffres(a, 10)
                                           if b == 1 then
                                               return a
@@ -310,8 +289,7 @@ Modulo
                                               return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
                                           end
                                         end
-                                        
-                                        function euler48(  )
+                                        function euler48 ()
                                           local sum = bigint_of_int(0)
                                           for i = 1, 100 do
                                               --[[ 1000 normalement --]]
@@ -324,15 +302,13 @@ Modulo
                                               print_bigint(sum)
                                               io.write("\n")
                                           end
-                                          
-                                          function euler16(  )
+                                          function euler16 ()
                                             local a = bigint_of_int(2)
                                             a = bigint_exp(a, 100)
                                             --[[ 1000 normalement --]]
                                             return sum_chiffres_bigint(a)
                                           end
-                                          
-                                          function euler25(  )
+                                          function euler25 ()
                                             local i = 2
                                             local a = bigint_of_int(1)
                                             local b = bigint_of_int(1)
@@ -345,8 +321,7 @@ Modulo
                                             end
                                             return i
                                           end
-                                          
-                                          function euler29(  )
+                                          function euler29 ()
                                             local maxA = 5
                                             local maxB = 5
                                             local a_bigint = {}
@@ -390,7 +365,6 @@ Modulo
                                                                 end
                                                                 return n
                                                             end
-                                                            
                                                             
                                                             io.write(string.format("%d\n", euler29()))
                                                             local sum = read_bigint(50)

@@ -7,7 +7,7 @@ function readcharline()
   end
   return tab
 end
-function pathfind_aux( cache, tab, x, y, posX, posY )
+function pathfind_aux (cache, tab, x, y, posX, posY)
   if posX == x - 1 and posY == y - 1 then
       return 0
   elseif posX < 0 or posY < 0 or posX >= x or posY >= y then
@@ -27,8 +27,7 @@ function pathfind_aux( cache, tab, x, y, posX, posY )
       return out0
   end
 end
-
-function pathfind( tab, x, y )
+function pathfind (tab, x, y)
   local cache = {}
   for i = 0, y - 1 do
       local tmp = {}
@@ -41,7 +40,6 @@ function pathfind( tab, x, y )
           end
           return pathfind_aux(cache, tab, x, y, 0, 0)
       end
-      
       
       local x = tonumber(io.read('*l'))
       local y = tonumber(io.read('*l'))

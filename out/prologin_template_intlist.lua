@@ -6,14 +6,13 @@ function readintline()
   end
   return tab
 end
-function programme_candidat( tableau, taille )
+function programme_candidat (tableau, taille)
   local out0 = 0
   for i = 0, taille - 1 do
       out0 = out0 + tableau[i + 1]
       end
       return out0
   end
-  
   
   local taille = tonumber(io.read('*l'))
   local tableau = readintline()

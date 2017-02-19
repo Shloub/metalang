@@ -10,7 +10,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function nbPassePartout( n, passepartout, m, serrures )
+function nbPassePartout (n, passepartout, m, serrures)
   local max_ancient = 0
   local max_recent = 0
   for i = 0, m - 1 do
@@ -37,7 +37,6 @@ function nbPassePartout( n, passepartout, m, serrures )
               return 0
           end
       end
-      
       
       local n = readint()
       stdinsep()

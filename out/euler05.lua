@@ -2,7 +2,7 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function primesfactors( n )
+function primesfactors (n)
   local tab = {}
   for i = 0, n do
       tab[i + 1] = 0
@@ -19,7 +19,6 @@ function primesfactors( n )
       tab[n + 1] = tab[n + 1] + 1
       return tab
   end
-  
   
   local lim = 20
   local o = {}

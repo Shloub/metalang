@@ -1,7 +1,6 @@
-function foo( a )
+function foo (a)
   a = 4
 end
-
 
 local a = 0
 foo(a)

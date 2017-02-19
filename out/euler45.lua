@@ -2,27 +2,24 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function triangle( n )
+function triangle (n)
   if math.mod(n, 2) == 0 then
       return trunc(n / 2) * (n + 1)
   else 
       return n * trunc((n + 1) / 2)
   end
 end
-
-function penta( n )
+function penta (n)
   if math.mod(n, 2) == 0 then
       return trunc(n / 2) * (3 * n - 1)
   else 
       return trunc((3 * n - 1) / 2) * n
   end
 end
-
-function hexa( n )
+function hexa (n)
   return n * (2 * n - 1)
 end
-
-function findPenta2( n, a, b )
+function findPenta2 (n, a, b)
   if b == a + 1 then
       return penta(a) == n or penta(b) == n
   end
@@ -36,8 +33,7 @@ function findPenta2( n, a, b )
       return findPenta2(n, a, c)
   end
 end
-
-function findHexa2( n, a, b )
+function findHexa2 (n, a, b)
   if b == a + 1 then
       return hexa(a) == n or hexa(b) == n
   end
@@ -51,7 +47,6 @@ function findHexa2( n, a, b )
       return findHexa2(n, a, c)
   end
 end
-
 
 for n = 285, 55385 do
     local t = triangle(n)

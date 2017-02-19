@@ -1,8 +1,7 @@
-function is_leap( year )
+function is_leap (year)
   return math.mod(year, 400) == 0 or math.mod(year, 100) ~= 0 and math.mod(year, 4) == 0
 end
-
-function ndayinmonth( month, year )
+function ndayinmonth (month, year)
   if month == 0 then
       return 31
   elseif month == 1 then
@@ -34,7 +33,6 @@ function ndayinmonth( month, year )
   end
   return 0
 end
-
 
 local month = 0
 local year = 1901

@@ -16,7 +16,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function score(  )
+function score ()
   stdinsep()
   local len = readint()
   stdinsep()
@@ -28,7 +28,6 @@ function score(  )
       end
       return sum
   end
-  
   
   local sum = 0
   local n = readint()

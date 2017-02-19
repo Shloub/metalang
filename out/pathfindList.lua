@@ -10,7 +10,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function pathfind_aux( cache, tab, len, pos )
+function pathfind_aux (cache, tab, len, pos)
   if pos >= len - 1 then
       return 0
   elseif cache[pos + 1] ~= -1 then
@@ -29,15 +29,13 @@ function pathfind_aux( cache, tab, len, pos )
       return out0
   end
 end
-
-function pathfind( tab, len )
+function pathfind (tab, len)
   local cache = {}
   for i = 0, len - 1 do
       cache[i + 1] = -1
       end
       return pathfind_aux(cache, tab, len, 0)
   end
-  
   
   local len = 0
   len = readint()

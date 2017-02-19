@@ -10,15 +10,14 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function copytab( tab, len )
+function copytab (tab, len)
   local o = {}
   for i = 0, len - 1 do
       o[i + 1] = tab[i + 1]
       end
       return o
   end
-  
-  function bubblesort( tab, len )
+  function bubblesort (tab, len)
     for i = 0, len - 1 do
         for j = i + 1, len - 1 do
             if tab[i + 1] > tab[j + 1] then
@@ -29,8 +28,7 @@ function copytab( tab, len )
             end
             end
         end
-        
-        function qsort0( tab, len, i, j )
+        function qsort0 (tab, len, i, j)
           if i < j then
               local i0 = i
               local j0 = j
@@ -59,7 +57,6 @@ function copytab( tab, len )
               qsort0(tab, len, i + 1, j0)
           end
         end
-        
         
         local len = 2
         len = readint()

@@ -1,4 +1,4 @@
-function h( i )
+function h (i)
   --[[  for j = i - 2 to i + 2 do
     if i % j == 5 then return true end
   end --]]
@@ -11,7 +11,6 @@ function h( i )
   end
   return false
 end
-
 
 local j = 0
 for k = 0, 10 do

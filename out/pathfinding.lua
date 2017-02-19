@@ -16,7 +16,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function pathfind_aux( cache, tab, x, y, posX, posY )
+function pathfind_aux (cache, tab, x, y, posX, posY)
   if posX == x - 1 and posY == y - 1 then
       return 0
   elseif posX < 0 or posY < 0 or posX >= x or posY >= y then
@@ -36,8 +36,7 @@ function pathfind_aux( cache, tab, x, y, posX, posY )
       return out0
   end
 end
-
-function pathfind( tab, x, y )
+function pathfind (tab, x, y)
   local cache = {}
   for i = 0, y - 1 do
       local tmp = {}
@@ -48,7 +47,6 @@ function pathfind( tab, x, y )
           end
           return pathfind_aux(cache, tab, x, y, 0, 0)
       end
-      
       
       local x = 0
       local y = 0

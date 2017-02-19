@@ -11,7 +11,6 @@ function stdinsep()
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
 
-
 local param = {foo=0, bar=0}
 param.bar = readint()
 stdinsep()

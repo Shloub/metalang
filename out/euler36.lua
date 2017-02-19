@@ -2,7 +2,7 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function palindrome2( pow2, n )
+function palindrome2 (pow2, n)
   local t = {}
   for i = 0, 19 do
       t[i + 1] = math.mod(trunc(n / pow2[i + 1]), 2) == 1
@@ -20,7 +20,6 @@ function palindrome2( pow2, n )
               end
               return true
           end
-          
           
           local p = 1
           local pow2 = {}

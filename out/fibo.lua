@@ -13,7 +13,7 @@ end
 --[[
 La suite de fibonaci
 --]]
-function fibo0( a, b, i )
+function fibo0 (a, b, i)
   local out0 = 0
   local a2 = a
   local b2 = b
@@ -25,7 +25,6 @@ function fibo0( a, b, i )
       end
       return out0
   end
-  
   
   local a = 0
   local b = 0

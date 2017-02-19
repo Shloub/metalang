@@ -2,7 +2,7 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function result( sum, t, maxIndex, cache )
+function result (sum, t, maxIndex, cache)
   if cache[sum + 1][maxIndex + 1] ~= 0 then
       return cache[sum + 1][maxIndex + 1]
   elseif sum == 0 or maxIndex == 0 then
@@ -17,7 +17,6 @@ function result( sum, t, maxIndex, cache )
           return out0
       end
   end
-  
   
   local t = {}
   for i = 0, 7 do

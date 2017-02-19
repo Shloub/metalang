@@ -1,7 +1,7 @@
 --[[
 La suite de fibonaci
 --]]
-function fibo( a, b, i )
+function fibo (a, b, i)
   local out_ = 0
   local a2 = a
   local b2 = b
@@ -14,7 +14,6 @@ function fibo( a, b, i )
       end
       return out_
   end
-  
   
   io.write(fibo(1, 2, 4))
   

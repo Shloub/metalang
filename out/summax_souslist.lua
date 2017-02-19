@@ -10,7 +10,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function summax( lst, len )
+function summax (lst, len)
   local current = 0
   local max0 = 0
   for i = 0, len - 1 do
@@ -24,7 +24,6 @@ function summax( lst, len )
       end
       return max0
   end
-  
   
   local len = 0
   len = readint()

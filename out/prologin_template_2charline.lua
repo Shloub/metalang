@@ -7,7 +7,7 @@ function readcharline()
   end
   return tab
 end
-function programme_candidat( tableau1, taille1, tableau2, taille2 )
+function programme_candidat (tableau1, taille1, tableau2, taille2)
   local out0 = 0
   for i = 0, taille1 - 1 do
       out0 = out0 + tableau1[i + 1] * i
@@ -21,7 +21,6 @@ function programme_candidat( tableau1, taille1, tableau2, taille2 )
           io.write("--\n")
           return out0
       end
-      
       
       local taille1 = tonumber(io.read('*l'))
       local tableau1 = readcharline()

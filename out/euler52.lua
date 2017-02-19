@@ -2,7 +2,7 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function chiffre_sort( a )
+function chiffre_sort (a)
   if a < 10 then
       return a
   else 
@@ -17,12 +17,10 @@ function chiffre_sort( a )
       end
   end
 end
-
-function same_numbers( a, b, c, d, e, f )
+function same_numbers (a, b, c, d, e, f)
   local ca = chiffre_sort(a)
   return ca == chiffre_sort(b) and ca == chiffre_sort(c) and ca == chiffre_sort(d) and ca == chiffre_sort(e) and ca == chiffre_sort(f)
 end
-
 
 local num = 142857
 if same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5) then

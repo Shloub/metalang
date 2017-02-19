@@ -16,7 +16,7 @@ function stdinsep()
     if buffer == "" then buffer = io.read("*line") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
-function nth( tab, tofind, len )
+function nth (tab, tofind, len)
   local out0 = 0
   for i = 0, len - 1 do
       if tab[i + 1] == tofind then
@@ -25,7 +25,6 @@ function nth( tab, tofind, len )
       end
       return out0
   end
-  
   
   local len = 0
   len = readint()
