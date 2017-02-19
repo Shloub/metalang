@@ -169,17 +169,21 @@ let print_instr macros i =
   in fun f -> i.p f i.default
 
 class luaPrinter = object(self)
-  inherit Printer.printer as super
+                         
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
-  method instr f (t:Utils.instr) =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "lua" li
-        with Not_found -> List.assoc "" li) macros
-    in (print_instr macros t) f
-
-  method decl_type f name t = ()
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
+    let instructions f li =
+      let macros = StringMap.map (fun (ty, params, li) ->
+          ty, params,
+          try List.assoc "lua" li
+          with Not_found -> List.assoc "" li) macros in
+      print_list (fun f i -> print_instr macros i f) sep_nl f li in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -226,18 +230,25 @@ function stdinsep()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%%s*', \"\") end
 end@\n") ()
+(print_list (fun f t -> match t with
+           | Prog.Comment s -> Format.fprintf f "--[[%s--]]@\n" s
+           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
+             Format.fprintf f "@[<v 2>@[function@ %s (%a)@]@\n%a@]@\nend@\n"
+               funname
+               (print_list print_varname sep_c) (List.map fst li)
+               instructions instrs
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros;
+             ()
+           | Prog.Unquote _ -> assert false
+           | Prog.DeclareType (name, t) -> ()
 
-      self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
+        ) nosep)
 
-  method comment f str = Format.fprintf f "--[[%s--]]" str
-
-  method main f main = self#instructions f main
-
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "function %a( %a )"
-      self#funname funname
-      (print_list (fun t (a, type_) -> self#binding t a) sep_c) li
+      prog.Prog.funs
+      (print_option instructions) prog.Prog.main
 
 end
 
