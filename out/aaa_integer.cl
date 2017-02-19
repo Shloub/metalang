@@ -25,4 +25,3 @@ http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_l
     
 )
 
-

@@ -2,9 +2,7 @@
 (progn
   (return-from foo (+ a b))
 ))
-
 (progn
   (princ 10)
 )
-
 

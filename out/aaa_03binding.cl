@@ -8,12 +8,10 @@
                                                          (return-from g j)))
                                                        
                                                    ))
-
 (defun h (i)
 (progn
   (format t "~D~%" i)
 ))
-
 (progn
   (h 14)
   (let ((a 4))
@@ -27,5 +25,4 @@
       )
     
 )
-
 

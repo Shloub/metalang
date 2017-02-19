@@ -53,7 +53,6 @@
   (return-from result (- 0 1)))
   
 ))
-
 (progn
   (let ((len (mread-int)))
     (mread-blank)
@@ -72,5 +71,4 @@
     )
     
 )
-
 

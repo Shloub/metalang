@@ -19,9 +19,7 @@ La suite de fibonaci
       )
     
 ))
-
 (progn
   (princ (fibo 1 2 4))
 )
-
 

@@ -39,7 +39,6 @@
   (return-from copytab o))
   
 ))
-
 (defun bubblesort (tab len)
 (progn
   (loop for i from 0 to (- len 1) do
@@ -53,7 +52,6 @@
           ))
         '())))
 ))
-
 (defun qsort0 (tab len i j)
 (progn
   (if
@@ -89,7 +87,6 @@
         )))
     '())
 ))
-
 (progn
   (let ((len 2))
     (setq len (mread-int))
@@ -122,5 +119,4 @@
     )
     
 )
-
 

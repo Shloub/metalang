@@ -50,7 +50,6 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
           (return-from okdigits nil))
       )))
 ))
-
 (progn
   (let ((count 0))
     (let
@@ -139,5 +138,4 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
     )
     
 )
-
 

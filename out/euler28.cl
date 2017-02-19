@@ -32,9 +32,7 @@
       )
     
 ))
-
 (progn
   (princ (sumdiag 1001))
 )
-
 

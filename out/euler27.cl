@@ -28,7 +28,6 @@
     (return-from eratostene n))
     
 ))
-
 (defun isPrime (n primes len)
 (progn
   (let ((i 0))
@@ -48,7 +47,6 @@
     (return-from isPrime t))
     
 ))
-
 (defun test (a b primes len)
 (progn
   (loop for n from 0 to 200 do
@@ -61,7 +59,6 @@
       )))
   (return-from test 200)
 ))
-
 (progn
   (let ((maximumprimes 1000))
     (let
@@ -133,5 +130,4 @@
     )
     
 )
-
 

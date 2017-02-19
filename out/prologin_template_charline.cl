@@ -45,7 +45,6 @@
     (return-from programme_candidat out0))
     
 ))
-
 (progn
   (let ((taille (mread-int)))
     (mread-blank)
@@ -63,5 +62,4 @@
     )
     
 )
-
 

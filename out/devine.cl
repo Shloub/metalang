@@ -53,7 +53,6 @@
       )
     
 ))
-
 (progn
   (let ((nombre (mread-int)))
     (mread-blank)
@@ -77,5 +76,4 @@
       )
     
 )
-
 

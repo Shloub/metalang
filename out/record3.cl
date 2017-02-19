@@ -30,14 +30,12 @@
   bar
   blah
   )
-
 (defun mktoto (v1)
 (progn
   (let ((t0 (make-toto :foo v1 :bar 0 :blah 0)))
   (return-from mktoto t0))
   
 ))
-
 (defun result (t0 len)
 (progn
   (let ((out0 0))
@@ -49,7 +47,6 @@
     (return-from result out0))
     
 ))
-
 (progn
   (let
    ((t0 (array_init
@@ -67,5 +64,4 @@
     )
   
 )
-
 

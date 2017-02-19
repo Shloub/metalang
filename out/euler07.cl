@@ -17,7 +17,6 @@
       '()))
   (return-from divisible nil)
 ))
-
 (defun find0 (n t0 used nth0)
 (progn
   (loop while (not (= used nth0))
@@ -32,7 +31,6 @@
   )
   (return-from find0 (aref t0 (- used 1)))
 ))
-
 (progn
   (let ((n 10001))
     (let
@@ -47,5 +45,4 @@
     )
     
 )
-
 

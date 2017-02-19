@@ -56,7 +56,6 @@ on le retrouve ici : http://projecteuler.net/problem=18
                 (return-from find0 result)
               )))))))
 ))
-
 (defun find01 (len tab)
 (progn
   (let
@@ -78,7 +77,6 @@ on le retrouve ici : http://projecteuler.net/problem=18
   (return-from find01 (find0 len tab tab2 0 0)))
   
 ))
-
 (progn
   (let ((len 0))
     (setq len (mread-int))
@@ -113,5 +111,4 @@ on le retrouve ici : http://projecteuler.net/problem=18
     )
     
 )
-
 

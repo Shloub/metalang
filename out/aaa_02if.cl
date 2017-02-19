@@ -5,7 +5,6 @@
     (return-from f t)
     (return-from f nil))
 ))
-
 (progn
   (if
     (f 4)
@@ -18,5 +17,4 @@
   (princ "small test end
 ")
 )
-
 

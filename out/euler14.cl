@@ -17,7 +17,6 @@
     (return-from next0 (quotient n 2))
     (return-from next0 (+ (* 3 n) 1)))
 ))
-
 (defun find0 (n m)
 (progn
   (if
@@ -34,7 +33,6 @@
           (return-from find0 (aref m n))
         ))))
 ))
-
 (progn
   (let
    ((m (array_init
@@ -63,5 +61,4 @@
     )
   
 )
-
 

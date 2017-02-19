@@ -36,7 +36,6 @@
 (progn
   (return-from is_number (and (<= (char-code c) (char-code #\9)) (>= (char-code c) (char-code #\0))))
 ))
-
 #|
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 |#
@@ -83,7 +82,6 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     )
   
 ))
-
 (progn
   (let ((len 0))
     (setq len (mread-int))
@@ -104,5 +102,4 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     )
     
 )
-
 

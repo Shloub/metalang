@@ -9,7 +9,6 @@
     (return-from triangle (* (quotient n 2) (+ n 1)))
     (return-from triangle (* n (quotient (+ n 1) 2))))
 ))
-
 (defun penta (n)
 (progn
   (if
@@ -17,12 +16,10 @@
     (return-from penta (* (quotient n 2) (- (* 3 n) 1)))
     (return-from penta (* (quotient (- (* 3 n) 1) 2) n)))
 ))
-
 (defun hexa (n)
 (progn
   (return-from hexa (* n (- (* 2 n) 1)))
 ))
-
 (defun findPenta2 (n a b)
 (progn
   (if
@@ -40,7 +37,6 @@
               (return-from findPenta2 (findPenta2 n a c))))
         ))))
 ))
-
 (defun findHexa2 (n a b)
 (progn
   (if
@@ -58,7 +54,6 @@
               (return-from findHexa2 (findHexa2 n a c))))
         ))))
 ))
-
 (progn
   (loop for n from 285 to 55385 do
     (progn
@@ -69,5 +64,4 @@
           '())
       )))
 )
-
 

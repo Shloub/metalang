@@ -35,13 +35,11 @@ Tictactoe : un tictactoe avec une IA
   note
   ended
   )
-
 #| Un Mouvement |#
 (defstruct (move (:type list) :named)
   x
   y
   )
-
 #| On affiche l'état |#
 (defun print_state (g)
 (progn
@@ -70,7 +68,6 @@ Tictactoe : un tictactoe avec une IA
   (princ "
 ")
 ))
-
 #| On dit qui gagne (info stoquées dans g.ended et g.note ) |#
 (defun eval0 (g)
 (progn
@@ -135,7 +132,6 @@ Tictactoe : un tictactoe avec une IA
       )
     
 ))
-
 #| On applique un mouvement |#
 (defun apply_move_xy (x y g)
 (progn
@@ -148,34 +144,28 @@ Tictactoe : un tictactoe avec une IA
     (setf (gamestate-firstToPlay g) (not (gamestate-firstToPlay g))))
     
 ))
-
 (defun apply_move (m g)
 (progn
   (apply_move_xy (move-x m) (move-y m) g)
 ))
-
 (defun cancel_move_xy (x y g)
 (progn
   (setf (aref (aref (gamestate-cases g) x) y) 0)
   (setf (gamestate-firstToPlay g) (not (gamestate-firstToPlay g)))
   (setf (gamestate-ended g) nil)
 ))
-
 (defun cancel_move (m g)
 (progn
   (cancel_move_xy (move-x m) (move-y m) g)
 ))
-
 (defun can_move_xy (x y g)
 (progn
   (return-from can_move_xy (= (aref (aref (gamestate-cases g) x) y) 0))
 ))
-
 (defun can_move (m g)
 (progn
   (return-from can_move (can_move_xy (move-x m) (move-y m) g))
 ))
-
 #|
 Un minimax classique, renvoie la note du plateau
 |#
@@ -209,7 +199,6 @@ Un minimax classique, renvoie la note du plateau
         (return-from minmax maxNote)
       )))
 ))
-
 #|
 Renvoie le coup de l'IA
 |#
@@ -241,7 +230,6 @@ Renvoie le coup de l'IA
     )
   
 ))
-
 (defun init0 ()
 (progn
   (let
@@ -265,7 +253,6 @@ Renvoie le coup de l'IA
   )
   
 ))
-
 (defun read_move ()
 (progn
   (let ((x (mread-int)))
@@ -278,7 +265,6 @@ Renvoie le coup de l'IA
     )
   
 ))
-
 (progn
   (loop for i from 0 to 1 do
     (progn
@@ -306,5 +292,4 @@ Renvoie le coup de l'IA
         (format t "~D~%" (gamestate-note state))
       )))))
 )
-
 

@@ -37,7 +37,6 @@ La suite de fibonaci
       )
     
 ))
-
 (progn
   (let ((a 0))
     (let ((b 0))
@@ -52,5 +51,4 @@ La suite de fibonaci
       )
     
 )
-
 

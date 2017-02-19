@@ -28,7 +28,6 @@
   )
   (return-from periode 0)
 ))
-
 (progn
   (let
    ((t0 (array_init
@@ -56,5 +55,4 @@
     )
   
 )
-
 

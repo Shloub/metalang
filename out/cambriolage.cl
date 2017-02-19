@@ -33,7 +33,6 @@
     (return-from max2_ a)
     (return-from max2_ b))
 ))
-
 (defun nbPassePartout (n passepartout m serrures)
 (progn
   (let ((max_ancient 0))
@@ -70,7 +69,6 @@
       )
     
 ))
-
 (progn
   (let ((n (mread-int)))
     (mread-blank)
@@ -118,5 +116,4 @@
     )
     
 )
-
 
