@@ -356,8 +356,7 @@ class commonLispPrinter = object(self)
            | Prog.Macro (name, t, params, code) ->
              macros <- StringMap.add
                  name (t, params, code)
-                 macros;
-             ()
+                 macros
            | Prog.Unquote _ -> assert false
            | Prog.DeclareType (name, t) ->
              begin

@@ -133,24 +133,22 @@ let print_instr macros i =
   in fun f -> i.p f i.default
 
 class jsPrinter = object(self)
-  inherit Printer.printer as super
+                         
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
-  method instr f t =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "js" li
-        with Not_found -> List.assoc "" li) macros
-    in (print_instr macros t) f
-
-  method decl_type f name t = ()
-
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<v 4>@[<hov>function %a(%a){@]@\n%a@]@\n}@\n"
-      self#funname funname
-      (print_list self#binding sep_c) (List.map fst li)
-      self#instructions instrs
-
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
+    let instr f t =
+      let macros = StringMap.map (fun (ty, params, li) ->
+          ty, params,
+          try List.assoc "js" li
+          with Not_found -> List.assoc "" li) macros
+      in (print_instr macros t) f in
+    let instrs f t = print_list instr sep_nl f t in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -193,10 +191,20 @@ function read_int_(){
   }
 }
 " else "")
-      self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method main f main =
-    self#instructions f main
+      (print_list (fun f t -> match t with
+           | Prog.Comment s -> if String.contains s '\n' then
+               Format.fprintf f "/*%s@*/\n" s
+               else Format.fprintf f "// %s@\n" s
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+    Format.fprintf f "@[<v 4>@[<hov>function %s(%a){@]@\n%a@]@\n}@\n" funname
+      (print_list print_varname sep_c) (List.map fst li)
+      instrs liinstrs
+           | _ -> ()
+        ) nosep) prog.Prog.funs
+      (print_option instrs) prog.Prog.main
 
 end

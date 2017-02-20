@@ -393,7 +393,9 @@ let clike_print_instr c i =
                                             plifor incr
                                             block li
     | While (e, li) -> fprintf f "while (@[<h>%a@])%a" e nop block li
-    | Comment s -> fprintf f "/*%s*/" s
+    | Comment s -> if String.contains s '\n' then
+        fprintf f "/*%s*/" s
+      else fprintf f "// %s@\n" s
     | Tag s -> fprintf f "/*%S*/" s
     | Return e -> fprintf f "return %a%a" e nop pend ()
     | Declare _

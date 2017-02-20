@@ -93,6 +93,7 @@ let print_instr0 ptype c i f pend =
   let open Ast.Instr in
   let open Format in
   match i with
+  | Comment s -> fprintf f "/*%s*/" s
   | Declare (var, ty, e, _) -> fprintf f "%a %a = %a%a" ptype ty c.print_varname var e nop pend ()
   | AllocArray (name, ty, e, None, opt) -> fprintf f "%a *%a = calloc(%a, sizeof(%a))%a"
                                              ptype ty
