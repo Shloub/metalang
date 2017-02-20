@@ -6,19 +6,23 @@ public class tictactoe
   /*
 Tictactoe : un tictactoe avec une IA
 */
-  /* La structure de donnée */
+  
+  //  La structure de donnée 
+  
   static class gamestate {
     public int[][] cases;
     public boolean firstToPlay;
     public int note;
     public boolean ended;
   }
-  /* Un Mouvement */
+  //  Un Mouvement 
+  
   static class move {
     public int x;
     public int y;
   }
-  /* On affiche l'état */
+  //  On affiche l'état 
+  
   static void print_state(gamestate g)
   {
     System.out.print("\n|");
@@ -40,7 +44,8 @@ Tictactoe : un tictactoe avec une IA
     System.out.print("\n");
   }
   
-  /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
+  //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
+  
   static void eval0(gamestate g)
   {
     int win = 0;
@@ -85,7 +90,8 @@ Tictactoe : un tictactoe avec une IA
         g.note = 0;
   }
   
-  /* On applique un mouvement */
+  //  On applique un mouvement 
+  
   static void apply_move_xy(int x, int y, gamestate g)
   {
     int player = 2;
@@ -125,6 +131,7 @@ Tictactoe : un tictactoe avec une IA
   /*
 Un minimax classique, renvoie la note du plateau
 */
+  
   static int minmax(gamestate g)
   {
     eval0(g);
@@ -140,7 +147,7 @@ Un minimax classique, renvoie la note du plateau
                 apply_move_xy(x, y, g);
                 int currentNote = minmax(g);
                 cancel_move_xy(x, y, g);
-                /* Minimum ou Maximum selon le coté ou l'on joue*/
+                //  Minimum ou Maximum selon le coté ou l'on joue
                 if (currentNote > maxNote == g.firstToPlay)
                     maxNote = currentNote;
             }
@@ -150,6 +157,7 @@ Un minimax classique, renvoie la note du plateau
   /*
 Renvoie le coup de l'IA
 */
+  
   static move play(gamestate g)
   {
     move minMove = new move();

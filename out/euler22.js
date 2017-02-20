@@ -42,11 +42,10 @@ function score(){
     {
         var c = read_char_();
         sum += c.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-        /*		print c print " " print sum print " " */
+        // 		print c print " " print sum print " " 
     }
     return sum;
 }
-
 var sum = 0;
 var n = read_int_();
 for (var i = 1; i <= n; i++)

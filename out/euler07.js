@@ -5,7 +5,6 @@ function divisible(n, t, size){
             return true;
     return false;
 }
-
 function find(n, t, used, nth){
     while (used != nth)
         if (divisible(n, t, used))
@@ -18,7 +17,6 @@ function find(n, t, used, nth){
         }
     return t[used - 1];
 }
-
 var n = 10001;
 var t = new Array(n);
 for (var i = 0; i < n; i++)

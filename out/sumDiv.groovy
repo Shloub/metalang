@@ -4,9 +4,9 @@ import java.util.*
 void foo()
 {
   int a = 0
-  /* test */
+  //  test 
   a++
-  /* test 2 */
+  //  test 2 
 }
 
 void foo2()
@@ -24,28 +24,28 @@ void foo3()
 
 int sumdiv(int n)
 {
-  /* On désire renvoyer la somme des diviseurs */
+  //  On désire renvoyer la somme des diviseurs 
   int out0 = 0
-  /* On déclare un entier qui contiendra la somme */
+  //  On déclare un entier qui contiendra la somme 
   for (int i = 1; i <= n; i++)
-      /* La boucle : i est le diviseur potentiel*/
+      //  La boucle : i est le diviseur potentiel
       if (n % i == 0)
       {
-          /* Si i divise */
+          //  Si i divise 
           out0 += i
-          /* On incrémente */
+          //  On incrémente 
       }
       else
       {
-          /* nop */
+          //  nop 
       }
   return out0
-  /*On renvoie out*/
+  // On renvoie out
 }
 
 
 @Field Scanner scanner = new Scanner(System.in)
-/* Programme principal */
+//  Programme principal 
 int n = 0
 if (scanner.hasNext("^-")) {
   scanner.next("^-")
@@ -53,6 +53,6 @@ if (scanner.hasNext("^-")) {
 }else{
   n = scanner.nextInt()
 }
-/* Lecture de l'entier */
+//  Lecture de l'entier 
 print(sumdiv(n))
 

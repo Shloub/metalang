@@ -44,7 +44,6 @@ function montagnes0(tab, len){
     }
     return max0;
 }
-
 var len = 0;
 len = read_int_();
 stdinsep();

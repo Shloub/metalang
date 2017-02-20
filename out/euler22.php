@@ -35,7 +35,7 @@ function score() {
     {
         $c = nextChar();
         $sum += ord($c) - ord("A") + 1;
-        /*		print c print " " print sum print " " */
+        // 		print c print " " print sum print " " 
     }
     return $sum;
 }

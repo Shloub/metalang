@@ -16,7 +16,9 @@ func skip() {
 /*
 Tictactoe : un tictactoe avec une IA
 */
-/* La structure de donnée */
+
+//  La structure de donnée 
+
 
 type gamestate struct {
   cases [][]int;
@@ -25,14 +27,16 @@ type gamestate struct {
   ended bool;
 }
 
-/* Un Mouvement */
+//  Un Mouvement 
+
 
 type move struct {
   x int;
   y int;
 }
 
-/* On affiche l'état */
+//  On affiche l'état 
+
 func print_state(g * gamestate) {
   fmt.Printf("\n|")
   for y := 0; y < 3; y++ {
@@ -53,7 +57,8 @@ func print_state(g * gamestate) {
   fmt.Printf("\n")
 }
 
-/* On dit qui gagne (info stoquées dans g.ended et g.note ) */
+//  On dit qui gagne (info stoquées dans g.ended et g.note ) 
+
 func eval0(g * gamestate) {
   win := 0
   freecase := 0
@@ -101,7 +106,8 @@ func eval0(g * gamestate) {
   }
 }
 
-/* On applique un mouvement */
+//  On applique un mouvement 
+
 func apply_move_xy(x int, y int, g * gamestate) {
   player := 2
   if (*g).firstToPlay {
@@ -136,6 +142,7 @@ func can_move(m * move, g * gamestate) bool{
 /*
 Un minimax classique, renvoie la note du plateau
 */
+
 func minmax(g * gamestate) int{
   eval0(g)
   if (*g).ended {
@@ -164,6 +171,7 @@ func minmax(g * gamestate) int{
 /*
 Renvoie le coup de l'IA
 */
+
 func play(g * gamestate) * move{
   var minMove * move = new (move)
       (*minMove).x=0

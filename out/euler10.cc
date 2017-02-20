@@ -23,7 +23,7 @@ int eratostene(std::vector<int> * t, int max0) {
 
 int main() {
     int n = 100000;
-    /* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages */
+    //  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
     std::vector<int> *t = new std::vector<int>( n );
     for (int i = 0; i < n; i++)
         t->at(i) = i;

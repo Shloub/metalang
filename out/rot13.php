@@ -29,6 +29,7 @@ function nextChar(){
 /*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
+
 list($strlen) = scan("%d");
 scantrim();
 $tab4 = array();

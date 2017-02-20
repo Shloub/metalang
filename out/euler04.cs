@@ -20,6 +20,7 @@ a * d +
 c * f * 10000
 
 */
+  
   static int chiffre(int c, int m)
   {
     if (c == 0)

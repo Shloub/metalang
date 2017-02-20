@@ -5,6 +5,7 @@
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
+
 @interface toto : NSObject
 {
   @public int foo;

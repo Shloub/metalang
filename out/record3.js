@@ -34,7 +34,6 @@ function mktoto(v1){
         "blah":0};
     return t;
 }
-
 function result(t, len){
     var out0 = 0;
     for (var j = 0; j < len; j++)
@@ -44,7 +43,6 @@ function result(t, len){
     }
     return out0;
 }
-
 var t = new Array(4);
 for (var i = 0; i < 4; i++)
     t[i] = mktoto(i);

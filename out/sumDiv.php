@@ -13,9 +13,9 @@ function scan($format){
 }
 function foo() {
     $a = 0;
-    /* test */
+    //  test 
     $a++;
-    /* test 2 */
+    //  test 2 
 }
 
 function foo2() {
@@ -30,28 +30,28 @@ function foo3() {
 }
 
 function sumdiv($n) {
-    /* On désire renvoyer la somme des diviseurs */
+    //  On désire renvoyer la somme des diviseurs 
     $out0 = 0;
-    /* On déclare un entier qui contiendra la somme */
+    //  On déclare un entier qui contiendra la somme 
     for ($i = 1; $i <= $n; $i++)
-        /* La boucle : i est le diviseur potentiel*/
+        //  La boucle : i est le diviseur potentiel
         if ($n % $i == 0)
         {
-            /* Si i divise */
+            //  Si i divise 
             $out0 += $i;
-            /* On incrémente */
+            //  On incrémente 
         }
         else
         {
-            /* nop */
+            //  nop 
         }
     return $out0;
-    /*On renvoie out*/
+    // On renvoie out
 }
 
-/* Programme principal */
+//  Programme principal 
 $n = 0;
 list($n) = scan("%d");
-/* Lecture de l'entier */
+//  Lecture de l'entier 
 echo sumdiv($n);
 

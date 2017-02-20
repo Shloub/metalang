@@ -40,7 +40,6 @@ function nth(tab, tofind, len){
             out0++;
     return out0;
 }
-
 var len = 0;
 len = read_int_();
 stdinsep();

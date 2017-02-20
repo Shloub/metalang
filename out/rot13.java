@@ -7,6 +7,7 @@ public class rot13
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
   
+  
   public static void main(String args[])
   {
     int strlen;

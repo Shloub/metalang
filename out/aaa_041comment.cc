@@ -3,10 +3,10 @@
 
 int main() {
     int i = 4;
-    /*while i < 10 do */
+    // while i < 10 do 
     std::cout << i;
     i++;
-    /*  end */
+    //   end 
     std::cout << i;
 }
 

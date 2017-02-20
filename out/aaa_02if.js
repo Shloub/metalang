@@ -4,7 +4,6 @@ function f(i){
         return true;
     return false;
 }
-
 if (f(4))
     util.print("true <-\n ->\n");
 else

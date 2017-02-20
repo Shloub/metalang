@@ -4,6 +4,7 @@
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
 
+
 int main() {
     int strlen;
     char tmpc;

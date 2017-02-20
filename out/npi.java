@@ -11,6 +11,7 @@ public class npi
   /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
+  
   static int npi0(char[] str, int len)
   {
     int[] stack = new int[len];

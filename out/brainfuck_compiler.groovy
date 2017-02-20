@@ -7,6 +7,7 @@ et qui produit les macros metalang correspondante
 */
 
 
+
 char input = (char)' '
 int current_pos = 500
 int[] mem = new int[1000]

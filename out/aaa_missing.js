@@ -44,7 +44,6 @@ function result(len, tab){
             return i2;
     return -1;
 }
-
 var len = read_int_();
 stdinsep();
 util.print(len, "\n");

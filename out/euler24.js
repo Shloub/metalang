@@ -5,7 +5,6 @@ function fact(n){
         prod *= i;
     return prod;
 }
-
 function show(lim, nth){
     var t = new Array(lim);
     for (var i = 0; i < lim; i++)
@@ -34,6 +33,5 @@ function show(lim, nth){
             util.print(m);
     util.print("\n");
 }
-
 show(10, 999999);
 

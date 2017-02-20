@@ -19,7 +19,7 @@ h(14)
 int a = 4
 int b = 5
 print(a + b)
-/* main */
+//  main 
 h(15)
 a = 2
 b = 1

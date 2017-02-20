@@ -46,7 +46,6 @@ function programme_candidat(tableau, taille_x, taille_y){
     }
     return out0;
 }
-
 var taille_x = read_int_();
 stdinsep();
 var taille_y = read_int_();

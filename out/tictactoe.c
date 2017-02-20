@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
+/* 
 Tictactoe : un tictactoe avec une IA
-*/
-/* La structure de donnée */
+ */
+
+/*  La structure de donnée  */
+
 typedef struct gamestate {
   int** cases;
     int firstToPlay;
@@ -12,13 +14,15 @@ typedef struct gamestate {
     int ended;
 } gamestate;
 
-/* Un Mouvement */
+/*  Un Mouvement  */
+
 typedef struct move {
   int x;
     int y;
 } move;
 
-/* On affiche l'état */
+/*  On affiche l'état  */
+
 
 void print_state(struct gamestate * g) {
     int y, x;
@@ -41,7 +45,8 @@ void print_state(struct gamestate * g) {
     printf("\n");
 }
 
-/* On dit qui gagne (info stoquées dans g.ended et g.note ) */
+/*  On dit qui gagne (info stoquées dans g.ended et g.note )  */
+
 
 void eval0(struct gamestate * g) {
     int y, x;
@@ -87,7 +92,8 @@ void eval0(struct gamestate * g) {
         g->note = 0;
 }
 
-/* On applique un mouvement */
+/*  On applique un mouvement  */
+
 
 void apply_move_xy(int x, int y, struct gamestate * g) {
     int player = 2;
@@ -124,9 +130,10 @@ int can_move(struct move * m, struct gamestate * g) {
     return can_move_xy(m->x, m->y, g);
 }
 
-/*
+/* 
 Un minimax classique, renvoie la note du plateau
-*/
+ */
+
 
 int minmax(struct gamestate * g) {
     int x, y;
@@ -150,9 +157,10 @@ int minmax(struct gamestate * g) {
     return maxNote;
 }
 
-/*
+/* 
 Renvoie le coup de l'IA
-*/
+ */
+
 
 struct move * play(struct gamestate * g) {
     int x, y;

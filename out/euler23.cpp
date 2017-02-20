@@ -83,7 +83,7 @@ int main() {
             l++;
         }
     int n = 100;
-    /* 28124 ça prend trop de temps mais on arrive a passer le test */
+    //  28124 ça prend trop de temps mais on arrive a passer le test 
     std::vector<bool> abondant( n + 1, false );
     std::vector<bool> summable( n + 1, false );
     int sum = 0;

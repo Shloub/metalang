@@ -6,10 +6,10 @@ public class aaa_041comment
   public static void Main(String[] args)
   {
     int i = 4;
-    /*while i < 10 do */
+    // while i < 10 do 
     Console.Write(i);
     i++;
-    /*  end */
+    //   end 
     Console.Write(i);
   }
   

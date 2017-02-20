@@ -3,7 +3,8 @@ import java.util.*;
 public class sudoku
 {
   static Scanner scanner = new Scanner(System.in);
-  /* lit un sudoku sur l'entrée standard */
+  //  lit un sudoku sur l'entrée standard 
+  
   static int[] read_sudoku()
   {
     int[] out0 = new int[9 * 9];
@@ -22,7 +23,8 @@ public class sudoku
     return out0;
   }
   
-  /* affiche un sudoku */
+  //  affiche un sudoku 
+  
   static void print_sudoku(int[] sudoku0)
   {
     for (int y = 0; y < 9; y++)
@@ -40,9 +42,12 @@ public class sudoku
     System.out.print("\n");
   }
   
-  /* dit si les variables sont toutes différentes */
-  /* dit si les variables sont toutes différentes */
-  /* dit si le sudoku est terminé de remplir */
+  //  dit si les variables sont toutes différentes 
+  
+  //  dit si les variables sont toutes différentes 
+  
+  //  dit si le sudoku est terminé de remplir 
+  
   static boolean sudoku_done(int[] s)
   {
     for (int i = 0; i < 81; i++)
@@ -51,7 +56,8 @@ public class sudoku
     return true;
   }
   
-  /* dit si il y a une erreur dans le sudoku */
+  //  dit si il y a une erreur dans le sudoku 
+  
   static boolean sudoku_error(int[] s)
   {
     boolean out1 = false;
@@ -66,7 +72,8 @@ public class sudoku
     return out1 || out2 || out3;
   }
   
-  /* résout le sudoku*/
+  //  résout le sudoku
+  
   static boolean solve(int[] sudoku0)
   {
     if (sudoku_error(sudoku0))

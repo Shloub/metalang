@@ -29,7 +29,6 @@ function read_int_(){
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
-
 function mktoto(v1){
     var t = {
         "foo":v1,
@@ -37,7 +36,6 @@ function mktoto(v1){
         "blah":v1};
     return t;
 }
-
 function mktoto2(v1){
     var t = {
         "foo":v1 + 3,
@@ -45,7 +43,6 @@ function mktoto2(v1){
         "blah":v1 + 1};
     return t;
 }
-
 function result(t_, t2_){
     var t = t_;
     var t2 = t2_;
@@ -69,7 +66,6 @@ function result(t_, t2_){
     cache2 = cache0;
     return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
 }
-
 var t = mktoto(4);
 var t2 = mktoto(5);
 t["bar"] = read_int_();

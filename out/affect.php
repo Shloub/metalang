@@ -23,6 +23,7 @@ function scantrim(){
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
 
+
 function &mktoto($v1) {
     $t = array(
         "foo" => $v1,

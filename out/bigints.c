@@ -284,10 +284,11 @@ struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb) {
     /* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd */
 }
 
-/*
+/* 
 Division,
 Modulo
-*/
+ */
+
 
 int log10(int a) {
     int out0 = 1;
@@ -341,7 +342,8 @@ int sum_chiffres_bigint(struct bigint * a) {
     return out0;
 }
 
-/* http://projecteuler.net/problem=20 */
+/*  http://projecteuler.net/problem=20  */
+
 
 int euler20() {
     struct bigint * a = bigint_of_int(15);

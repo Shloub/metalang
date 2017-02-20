@@ -39,7 +39,7 @@ void print_bigint(bigint * a) {
 
 
 bool bigint_eq(bigint * a, bigint * b) {
-    /* Renvoie vrai si a = b */
+    //  Renvoie vrai si a = b 
     if (a->bigint_sign != b->bigint_sign)
         return false;
     else if (a->bigint_len != b->bigint_len)
@@ -55,7 +55,7 @@ bool bigint_eq(bigint * a, bigint * b) {
 
 
 bool bigint_gt(bigint * a, bigint * b) {
-    /* Renvoie vrai si a > b */
+    //  Renvoie vrai si a > b 
     if (a->bigint_sign && !b->bigint_sign)
         return true;
     else if (!a->bigint_sign && b->bigint_sign)
@@ -86,7 +86,7 @@ bool bigint_lt(bigint * a, bigint * b) {
 
 
 bigint * add_bigint_positif(bigint * a, bigint * b) {
-    /* Une addition ou on en a rien a faire des signes */
+    //  Une addition ou on en a rien a faire des signes 
     int len = std::max(a->bigint_len, b->bigint_len) + 1;
     int retenue = 0;
     std::vector<int> *chiffres = new std::vector<int>( len );
@@ -158,14 +158,14 @@ bigint * add_bigint(bigint * a, bigint * b) {
             return neg_bigint(add_bigint_positif(a, b));
     else if (a->bigint_sign)
     {
-        /* a positif, b negatif */
+        //  a positif, b negatif 
         if (bigint_gt(a, neg_bigint(b)))
             return sub_bigint_positif(a, b);
         else
             return neg_bigint(sub_bigint_positif(b, a));
     }
     else
-        /* a negatif, b positif */
+        //  a negatif, b positif 
         if (bigint_gt(neg_bigint(a), b))
             return neg_bigint(sub_bigint_positif(a, b));
         else
@@ -243,7 +243,7 @@ bigint * mul_bigint(bigint * aa, bigint * bb) {
         return bb;
     else if (aa->bigint_len < 3 || bb->bigint_len < 3)
         return mul_bigint_cp(aa, bb);
-    /* Algorithme de Karatsuba */
+    //  Algorithme de Karatsuba 
     int split = std::min(aa->bigint_len, bb->bigint_len) / 2;
     bigint * a = bigint_shift(aa, -split);
     bigint * b = bigint_premiers_chiffres(aa, split);
@@ -256,13 +256,14 @@ bigint * mul_bigint(bigint * aa, bigint * bb) {
     bigint * amoinsbcmoinsd = mul_bigint(amoinsb, cmoinsd);
     bigint * acdec = bigint_shift(ac, 2 * split);
     return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split));
-    /* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd */
+    //  ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
 }
 
 /*
 Division,
 Modulo
 */
+
 
 int log10(int a) {
     int out0 = 1;
@@ -313,11 +314,12 @@ int sum_chiffres_bigint(bigint * a) {
     return out0;
 }
 
-/* http://projecteuler.net/problem=20 */
+//  http://projecteuler.net/problem=20 
+
 
 int euler20() {
     bigint * a = bigint_of_int(15);
-    /* normalement c'est 100 */
+    //  normalement c'est 100 
     a = fact_bigint(a);
     return sum_chiffres_bigint(a);
 }
@@ -348,7 +350,7 @@ void euler48() {
     bigint * sum = bigint_of_int(0);
     for (int i = 1; i < 101; i++)
     {
-        /* 1000 normalement */
+        //  1000 normalement 
         bigint * ib = bigint_of_int(i);
         bigint * ibeib = bigint_exp_10chiffres(ib, i);
         sum = add_bigint(sum, ibeib);
@@ -363,7 +365,7 @@ void euler48() {
 int euler16() {
     bigint * a = bigint_of_int(2);
     a = bigint_exp(a, 100);
-    /* 1000 normalement */
+    //  1000 normalement 
     return sum_chiffres_bigint(a);
 }
 
@@ -374,7 +376,7 @@ int euler25() {
     bigint * b = bigint_of_int(1);
     while (b->bigint_len < 100)
     {
-        /* 1000 normalement */
+        //  1000 normalement 
         bigint * c = add_bigint(a, b);
         a = b;
         b = c;

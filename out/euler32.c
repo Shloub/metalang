@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
+/* 
 We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
 for example, the 5-digit number, 15234, is 1 through 5 pandigital.
 
@@ -23,7 +23,8 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   b * e
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
-*/
+ */
+
 
 int okdigits(int* ok, int n) {
     if (n == 0)

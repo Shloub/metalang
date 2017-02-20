@@ -12,7 +12,6 @@ function palindrome2(pow2, n){
             return false;
     return true;
 }
-
 var p = 1;
 var pow2 = new Array(20);
 for (var i = 0; i < 20; i++)

@@ -6,6 +6,7 @@ public class aaa_missing
   /*
   Ce test a été généré par Metalang.
 */
+  
   static int result(int len, int[] tab)
   {
     bool[] tab2 = new bool[len];

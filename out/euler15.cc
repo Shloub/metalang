@@ -3,7 +3,7 @@
 
 int main() {
     int n = 10;
-    /* normalement on doit mettre 20 mais là on se tape un overflow */
+    //  normalement on doit mettre 20 mais là on se tape un overflow 
     n++;
     std::vector<std::vector<int> *> *tab = new std::vector<std::vector<int> *>( n );
     for (int i = 0; i < n; i++)

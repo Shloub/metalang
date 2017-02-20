@@ -25,6 +25,7 @@ def skip() {
   /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
+  
   class Toto(_foo: Int, _bar: Int, _blah: Int){
     var foo: Int=_foo;
     var bar: Int=_bar;

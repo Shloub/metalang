@@ -15,7 +15,6 @@ function primesfactors(n){
     tab[n]++;
     return tab;
 }
-
 var lim = 20;
 var o = new Array(lim + 1);
 for (var m = 0; m <= lim; m++)

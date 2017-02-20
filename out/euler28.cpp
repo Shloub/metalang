@@ -16,6 +16,7 @@
 
 */
 
+
 int sumdiag(int n) {
     int nterms = n * 2 - 1;
     int un = 1;
@@ -24,7 +25,7 @@ int sumdiag(int n) {
     {
         int d = 2 * (1 + i / 4);
         un += d;
-        /* print int d print "=>" print un print " " */
+        //  print int d print "=>" print un print " " 
         sum += un;
     }
     return sum;

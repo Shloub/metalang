@@ -8,7 +8,6 @@ function pgcd(a, b){
     else
         return pgcd(c, reste);
 }
-
 var top = 1;
 var bottom = 1;
 for (var i = 1; i < 10; i++)

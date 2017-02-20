@@ -42,7 +42,6 @@ function fibo0(a, b, i){
     }
     return out0;
 }
-
 var a = 0;
 var b = 0;
 var i = 0;

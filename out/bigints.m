@@ -294,6 +294,7 @@ Division,
 Modulo
 */
 
+
 int log100(int a) {
     int out0 = 1;
     while (a >= 10)
@@ -346,7 +347,8 @@ int sum_chiffres_bigint(bigint * a) {
     return out0;
 }
 
-/* http://projecteuler.net/problem=20 */
+//  http://projecteuler.net/problem=20 
+
 
 int euler20() {
     bigint * a = bigint_of_int(15);

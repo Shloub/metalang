@@ -16,6 +16,5 @@ function fibo(a, b, i){
     }
     return out_;
 }
-
 util.print(fibo(1, 2, 4));
 

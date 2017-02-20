@@ -18,6 +18,7 @@ a * d +
 c * f * 10000
 
 */
+
 int chiffre(int c, int m)
 {
   if (c == 0)

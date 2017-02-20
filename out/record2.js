@@ -34,12 +34,10 @@ function mktoto(v1){
         "blah":0};
     return t;
 }
-
 function result(t){
     t["blah"]++;
     return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
 }
-
 var t = mktoto(4);
 t["bar"] = read_int_();
 stdinsep();

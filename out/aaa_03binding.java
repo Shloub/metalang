@@ -23,7 +23,7 @@ public class aaa_03binding
     int a = 4;
     int b = 5;
     System.out.print(a + b);
-    /* main */
+    //  main 
     h(15);
     a = 2;
     b = 1;

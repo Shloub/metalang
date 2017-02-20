@@ -3,6 +3,7 @@ import "fmt"
 /*
 La suite de fibonaci
 */
+
 func fibo(a int, b int, i int) int{
   out_ := 0
   a2 := a

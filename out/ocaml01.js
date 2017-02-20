@@ -6,12 +6,10 @@ function foo(){
     }
     return 0;
 }
-
 function bar(){
     for (var i = 0; i < 11; i++)
         var a = 0;
     return 0;
 }
-
 
 

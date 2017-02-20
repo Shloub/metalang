@@ -33,7 +33,6 @@ function copytab(tab, len){
         o[i] = tab[i];
     return o;
 }
-
 function bubblesort(tab, len){
     for (var i = 0; i < len; i++)
         for (var j = i + 1; j < len; j++)
@@ -44,18 +43,17 @@ function bubblesort(tab, len){
                 tab[j] = tmp;
             }
 }
-
 function qsort0(tab, len, i, j){
     if (i < j)
     {
         var i0 = i;
         var j0 = j;
-        /* pivot : tab[0] */
+        //  pivot : tab[0] 
         while (i != j)
             if (tab[i] > tab[j])
                 if (i == j - 1)
                 {
-                    /* on inverse simplement*/
+                    //  on inverse simplement
                     var tmp = tab[i];
                     tab[i] = tab[j];
                     tab[j] = tmp;
@@ -63,7 +61,7 @@ function qsort0(tab, len, i, j){
                 }
                 else
                 {
-                    /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
+                    //  on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
                     var tmp = tab[i];
                     tab[i] = tab[j];
                     tab[j] = tab[i + 1];
@@ -76,7 +74,6 @@ function qsort0(tab, len, i, j){
         qsort0(tab, len, i + 1, j0);
     }
 }
-
 var len = 2;
 len = read_int_();
 stdinsep();

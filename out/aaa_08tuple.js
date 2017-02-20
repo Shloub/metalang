@@ -27,7 +27,6 @@ function read_int_(){
   }
 }
 
-
 var bar_ = read_int_();
 stdinsep();
 var c = read_int_();

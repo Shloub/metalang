@@ -23,7 +23,6 @@ function chiffre(c, m){
     else
         return chiffre(c - 1, ~~(m / 10));
 }
-
 var m = 1;
 for (var a = 0; a < 10; a++)
     for (var f = 1; f < 10; f++)

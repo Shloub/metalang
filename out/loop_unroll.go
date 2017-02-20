@@ -4,6 +4,7 @@ import "fmt"
 Ce test permet de vérifier le comportement des macros
 Il effectue du loop unrolling
 */
+
 func main() {
   j := 0
   j = 0

@@ -17,6 +17,7 @@ Ce test permet de vérifier si les différents backends pour les langages implé
 read int, read char et skip
 */
 
+
 int main() {
     int strlen, len;
     std::cin >> len;

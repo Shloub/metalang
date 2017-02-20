@@ -4,6 +4,7 @@ import java.util.*
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
+
 class Toto {
   int foo
   int bar

@@ -43,7 +43,6 @@ function programme_candidat(tableau, taille){
     util.print("--\n");
     return out0;
 }
-
 var taille = read_int_();
 stdinsep();
 var tableau = new Array(taille);

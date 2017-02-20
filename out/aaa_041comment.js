@@ -1,8 +1,8 @@
 var util = require("util");
 var i = 4;
-/*while i < 10 do */
+// while i < 10 do 
 util.print(i);
 i++;
-/*  end */
+//   end 
 util.print(i);
 

@@ -17,7 +17,6 @@ function eratostene(t, max0){
         }
     return n;
 }
-
 var maximumprimes = 1000001;
 var era = new Array(maximumprimes);
 for (var j = 0; j < maximumprimes; j++)

@@ -4,6 +4,7 @@ import java.util.*
 /*
 La suite de fibonaci
 */
+
 int fibo0(int a, int b, int i)
 {
   int out0 = 0

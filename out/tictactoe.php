@@ -22,11 +22,15 @@ function scantrim(){
 /*
 Tictactoe : un tictactoe avec une IA
 */
-/* La structure de donnée */
 
-/* Un Mouvement */
+//  La structure de donnée 
 
-/* On affiche l'état */
+
+//  Un Mouvement 
+
+
+//  On affiche l'état 
+
 function print_state(&$g) {
     echo "\n|";
     for ($y = 0; $y < 3; $y++)
@@ -47,7 +51,8 @@ function print_state(&$g) {
     echo "\n";
 }
 
-/* On dit qui gagne (info stoquées dans g.ended et g.note ) */
+//  On dit qui gagne (info stoquées dans g.ended et g.note ) 
+
 function eval0(&$g) {
     $win = 0;
     $freecase = 0;
@@ -91,7 +96,8 @@ function eval0(&$g) {
         $g["note"] = 0;
 }
 
-/* On applique un mouvement */
+//  On applique un mouvement 
+
 function apply_move_xy($x, $y, &$g) {
     $player = 2;
     if ($g["firstToPlay"])
@@ -125,6 +131,7 @@ function can_move(&$m, &$g) {
 /*
 Un minimax classique, renvoie la note du plateau
 */
+
 function minmax(&$g) {
     eval0($g);
     if ($g["ended"])
@@ -139,7 +146,7 @@ function minmax(&$g) {
                 apply_move_xy($x, $y, $g);
                 $currentNote = minmax($g);
                 cancel_move_xy($x, $y, $g);
-                /* Minimum ou Maximum selon le coté ou l'on joue*/
+                //  Minimum ou Maximum selon le coté ou l'on joue
                 if ($currentNote > $maxNote == $g["firstToPlay"])
                     $maxNote = $currentNote;
             }
@@ -149,6 +156,7 @@ function minmax(&$g) {
 /*
 Renvoie le coup de l'IA
 */
+
 function &play(&$g) {
     $minMove = array(
         "x" => 0,
