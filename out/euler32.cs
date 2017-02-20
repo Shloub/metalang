@@ -77,7 +77,8 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                         if (allowed[d])
                                         {
                                             allowed[d] = false;
-                                            /* 2 * 3 digits */
+                                            //  2 * 3 digits 
+                                            
                                             int product = (a * 10 + b) * (c * 100 + d * 10 + e);
                                             if (!counted[product] && okdigits(allowed, product / 10))
                                             {
@@ -85,7 +86,8 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                                 count += product;
                                                 Console.Write(product + " ");
                                             }
-                                            /* 1  * 4 digits */
+                                            //  1  * 4 digits 
+                                            
                                             int product2 = b * (a * 1000 + c * 100 + d * 10 + e);
                                             if (!counted[product2] && okdigits(allowed, product2 / 10))
                                             {

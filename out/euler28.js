@@ -13,7 +13,8 @@ var util = require("util");
   2 2 2 2 4  4  4  4  6   6  6  6
 
 
-*/
+@*/
+
 function sumdiag(n){
     var nterms = n * 2 - 1;
     var un = 1;
@@ -22,11 +23,11 @@ function sumdiag(n){
     {
         var d = 2 * (1 + ~~(i / 4));
         un += d;
-        /* print int d print "=>" print un print " " */
+        //  print int d print "=>" print un print " " 
+        
         sum += un;
     }
     return sum;
 }
-
 util.print(sumdiag(1001));
 

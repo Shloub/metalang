@@ -4,7 +4,6 @@ function test(tab, len){
         util.print(tab[i], " ");
     util.print("\n");
 }
-
 var t = new Array(5);
 for (var i = 0; i < 5; i++)
     t[i] = 1;

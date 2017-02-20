@@ -28,7 +28,8 @@ function read_int_(){
 }
 /*
 La suite de fibonaci
-*/
+@*/
+
 function fibo0(a, b, i){
     var out0 = 0;
     var a2 = a;
@@ -42,7 +43,6 @@ function fibo0(a, b, i){
     }
     return out0;
 }
-
 var a = 0;
 var b = 0;
 var i = 0;

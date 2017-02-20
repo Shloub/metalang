@@ -16,14 +16,14 @@ a * d +
 (c * e + b * f) * 1000 +
 c * f * 10000
 
-*/
+@*/
+
 function chiffre(c, m){
     if (c == 0)
         return ~~(m % 10);
     else
         return chiffre(c - 1, ~~(m / 10));
 }
-
 var m = 1;
 for (var a = 0; a < 10; a++)
     for (var f = 1; f < 10; f++)

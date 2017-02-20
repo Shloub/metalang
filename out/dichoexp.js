@@ -38,7 +38,6 @@ function exp0(a, b){
     else
         return a * exp0(a, b - 1);
 }
-
 var a = 0;
 var b = 0;
 a = read_int_();

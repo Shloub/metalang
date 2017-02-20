@@ -43,7 +43,6 @@ function devine0(nombre, tab, len){
     }
     return true;
 }
-
 var nombre = read_int_();
 stdinsep();
 var len = read_int_();

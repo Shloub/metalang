@@ -41,7 +41,6 @@ function is_triangular(n){
     var a = Math.floor(Math.sqrt(n * 2));
     return a * (a + 1) == n * 2;
 }
-
 function score(){
     stdinsep();
     var len = read_int_();
@@ -51,14 +50,14 @@ function score(){
     {
         var c = read_char_();
         sum += c.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
-        /*		print c print " " print sum print " " */
+        // 		print c print " " print sum print " " 
+        
     }
     if (is_triangular(sum))
         return 1;
     else
         return 0;
 }
-
 for (var i = 1; i < 56; i++)
     if (is_triangular(i))
         util.print(i, " ");

@@ -54,7 +54,6 @@ function pathfind_aux(cache, tab, x, y, posX, posY){
         return out0;
     }
 }
-
 function pathfind(tab, x, y){
     var cache = new Array(y);
     for (var i = 0; i < y; i++)
@@ -70,7 +69,6 @@ function pathfind(tab, x, y){
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
 }
-
 var x = read_int_();
 stdinsep();
 var y = read_int_();

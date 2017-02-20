@@ -42,11 +42,9 @@ function position_alphabet(c){
     else
         return -1;
 }
-
 function of_position_alphabet(c){
     return String.fromCharCode(c + 'a'.charCodeAt(0));
 }
-
 function crypte(taille_cle, cle, taille, message){
     for (var i = 0; i < taille; i++)
     {
@@ -59,7 +57,6 @@ function crypte(taille_cle, cle, taille, message){
         }
     }
 }
-
 var taille_cle = read_int_();
 stdinsep();
 var cle = new Array(taille_cle);

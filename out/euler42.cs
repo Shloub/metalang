@@ -71,7 +71,8 @@ static int readInt(){
     {
         char c = readChar();
         sum += (int)(c) - (int)('A') + 1;
-        /*		print c print " " print sum print " " */
+        // 		print c print " " print sum print " " 
+        
     }
     if (is_triangular(sum))
         return 1;

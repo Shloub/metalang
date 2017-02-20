@@ -14,7 +14,6 @@ function eratostene(t, max0){
         }
     return n;
 }
-
 function fillPrimesFactors(t, n, primes, nprimes){
     for (var i = 0; i < nprimes; i++)
     {
@@ -29,7 +28,6 @@ function fillPrimesFactors(t, n, primes, nprimes){
     }
     return n;
 }
-
 function find(ndiv2){
     var maximumprimes = 110;
     var era = new Array(maximumprimes);
@@ -59,10 +57,10 @@ function find(ndiv2){
                 ndivs *= 1 + primesFactors[i];
         if (ndivs > ndiv2)
             return ~~(n * (n + 1) / 2);
-        /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
+        //  print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
+        
     }
     return 0;
 }
-
 util.print(find(500), "\n");
 

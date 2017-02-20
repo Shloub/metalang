@@ -139,7 +139,8 @@ function minmax(&$g) {
                 apply_move_xy($x, $y, $g);
                 $currentNote = minmax($g);
                 cancel_move_xy($x, $y, $g);
-                /* Minimum ou Maximum selon le coté ou l'on joue*/
+                //  Minimum ou Maximum selon le coté ou l'on joue
+                
                 if ($currentNote > $maxNote == $g["firstToPlay"])
                     $maxNote = $currentNote;
             }

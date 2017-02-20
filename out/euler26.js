@@ -13,7 +13,6 @@ function periode(restes, len, a, b){
     }
     return 0;
 }
-
 var t = new Array(1000);
 for (var j = 0; j < 1000; j++)
     t[j] = 0;

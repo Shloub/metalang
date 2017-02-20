@@ -42,7 +42,8 @@ int main() {
     int month = 0;
     int year = 1901;
     int dayofweek = 1;
-    /* 01-01-1901 : mardi */
+    //  01-01-1901 : mardi 
+    
     int count = 0;
     while (year != 2001)
     {

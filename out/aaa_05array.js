@@ -2,11 +2,9 @@ var util = require("util");
 function id(b){
     return b;
 }
-
 function g(t, index){
     t[index] = false;
 }
-
 var j = 0;
 var a = new Array(5);
 for (var i = 0; i < 5; i++)

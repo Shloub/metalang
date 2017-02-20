@@ -55,7 +55,8 @@ function print_bigint(&$a) {
 }
 
 function bigint_eq(&$a, &$b) {
-    /* Renvoie vrai si a = b */
+    //  Renvoie vrai si a = b 
+    
     if ($a["bigint_sign"] != $b["bigint_sign"])
         return false;
     else if ($a["bigint_len"] != $b["bigint_len"])
@@ -70,7 +71,8 @@ function bigint_eq(&$a, &$b) {
 }
 
 function bigint_gt(&$a, &$b) {
-    /* Renvoie vrai si a > b */
+    //  Renvoie vrai si a > b 
+    
     if ($a["bigint_sign"] && !$b["bigint_sign"])
         return true;
     else if (!$a["bigint_sign"] && $b["bigint_sign"])
@@ -99,7 +101,8 @@ function bigint_lt(&$a, &$b) {
 }
 
 function &add_bigint_positif(&$a, &$b) {
-    /* Une addition ou on en a rien a faire des signes */
+    //  Une addition ou on en a rien a faire des signes 
+    
     $len = max($a["bigint_len"], $b["bigint_len"]) + 1;
     $retenue = 0;
     $chiffres = array();
@@ -168,14 +171,16 @@ function &add_bigint(&$a, &$b) {
             return neg_bigint(add_bigint_positif($a, $b));
     else if ($a["bigint_sign"])
     {
-        /* a positif, b negatif */
+        //  a positif, b negatif 
+        
         if (bigint_gt($a, neg_bigint($b)))
             return sub_bigint_positif($a, $b);
         else
             return neg_bigint(sub_bigint_positif($b, $a));
     }
     else
-        /* a negatif, b positif */
+        //  a negatif, b positif 
+        
         if (bigint_gt(neg_bigint($a), $b))
             return neg_bigint(sub_bigint_positif($a, $b));
         else
@@ -247,7 +252,8 @@ function &mul_bigint(&$aa, &$bb) {
         return $bb;
     else if ($aa["bigint_len"] < 3 || $bb["bigint_len"] < 3)
         return mul_bigint_cp($aa, $bb);
-    /* Algorithme de Karatsuba */
+    //  Algorithme de Karatsuba 
+    
     $split = intval(min($aa["bigint_len"], $bb["bigint_len"]) / 2);
     $a = bigint_shift($aa, -$split);
     $b = bigint_premiers_chiffres($aa, $split);
@@ -260,7 +266,8 @@ function &mul_bigint(&$aa, &$bb) {
     $amoinsbcmoinsd = mul_bigint($amoinsb, $cmoinsd);
     $acdec = bigint_shift($ac, 2 * $split);
     return add_bigint(add_bigint($acdec, $bd), bigint_shift(sub_bigint(add_bigint($ac, $bd), $amoinsbcmoinsd), $split));
-    /* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd */
+    //  ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
+    
 }
 
 /*
@@ -315,7 +322,8 @@ function sum_chiffres_bigint(&$a) {
 /* http://projecteuler.net/problem=20 */
 function euler20() {
     $a = bigint_of_int(15);
-    /* normalement c'est 100 */
+    //  normalement c'est 100 
+    
     $a = fact_bigint($a);
     return sum_chiffres_bigint($a);
 }
@@ -343,7 +351,8 @@ function euler48() {
     $sum = bigint_of_int(0);
     for ($i = 1; $i < 101; $i++)
     {
-        /* 1000 normalement */
+        //  1000 normalement 
+        
         $ib = bigint_of_int($i);
         $ibeib = bigint_exp_10chiffres($ib, $i);
         $sum = add_bigint($sum, $ibeib);
@@ -357,7 +366,8 @@ function euler48() {
 function euler16() {
     $a = bigint_of_int(2);
     $a = bigint_exp($a, 100);
-    /* 1000 normalement */
+    //  1000 normalement 
+    
     return sum_chiffres_bigint($a);
 }
 
@@ -367,7 +377,8 @@ function euler25() {
     $b = bigint_of_int(1);
     while ($b["bigint_len"] < 100)
     {
-        /* 1000 normalement */
+        //  1000 normalement 
+        
         $c = add_bigint($a, $b);
         $a = $b;
         $b = $c;

@@ -1,8 +1,10 @@
 <?php
 $i = 4;
-/*while i < 10 do */
+// while i < 10 do 
+
 echo $i;
 $i++;
-/*  end */
+//   end 
+
 echo $i;
 

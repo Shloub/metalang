@@ -73,7 +73,8 @@ int main() {
                                         if (allowed->at(d))
                                         {
                                             allowed->at(d) = false;
-                                            /* 2 * 3 digits */
+                                            //  2 * 3 digits 
+                                            
                                             int product = (a * 10 + b) * (c * 100 + d * 10 + e);
                                             if (!counted->at(product) && okdigits(allowed, product / 10))
                                             {
@@ -81,7 +82,8 @@ int main() {
                                                 count += product;
                                                 std::cout << product << " ";
                                             }
-                                            /* 1  * 4 digits */
+                                            //  1  * 4 digits 
+                                            
                                             int product2 = b * (a * 1000 + c * 100 + d * 10 + e);
                                             if (!counted->at(product2) && okdigits(allowed, product2 / 10))
                                             {

@@ -14,7 +14,6 @@ function eratostene(t, max0){
         }
     return n;
 }
-
 function fillPrimesFactors(t, n, primes, nprimes){
     for (var i = 0; i < nprimes; i++)
     {
@@ -29,13 +28,11 @@ function fillPrimesFactors(t, n, primes, nprimes){
     }
     return n;
 }
-
 function sumdivaux2(t, n, i){
     while (i < n && t[i] == 0)
         i++;
     return i;
 }
-
 function sumdivaux(t, n, i){
     if (i > n)
         return 1;
@@ -54,7 +51,6 @@ function sumdivaux(t, n, i){
         return (out0 + 1) * o;
     }
 }
-
 function sumdiv(nprimes, primes, n){
     var t = new Array(n + 1);
     for (var i = 0; i <= n; i++)
@@ -62,7 +58,6 @@ function sumdiv(nprimes, primes, n){
     var max0 = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
 }
-
 var maximumprimes = 30001;
 var era = new Array(maximumprimes);
 for (var s = 0; s < maximumprimes; s++)
@@ -79,7 +74,8 @@ for (var k = 2; k < maximumprimes; k++)
         l++;
     }
 var n = 100;
-/* 28124 ça prend trop de temps mais on arrive a passer le test */
+//  28124 ça prend trop de temps mais on arrive a passer le test 
+
 var abondant = new Array(n + 1);
 for (var p = 0; p <= n; p++)
     abondant[p] = false;

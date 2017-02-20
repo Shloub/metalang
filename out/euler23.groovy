@@ -87,7 +87,8 @@ for (int k = 2; k < maximumprimes; k++)
         l++
     }
 int n = 100
-/* 28124 ça prend trop de temps mais on arrive a passer le test */
+//  28124 ça prend trop de temps mais on arrive a passer le test 
+
 boolean[] abondant = new boolean[n + 1]
 for (int p = 0; p <= n; p++)
     abondant[p] = false

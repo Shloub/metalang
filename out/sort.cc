@@ -26,12 +26,14 @@ void qsort0(std::vector<int> * tab, int len, int i, int j) {
     {
         int i0 = i;
         int j0 = j;
-        /* pivot : tab[0] */
+        //  pivot : tab[0] 
+        
         while (i != j)
             if (tab->at(i) > tab->at(j))
                 if (i == j - 1)
                 {
-                    /* on inverse simplement*/
+                    //  on inverse simplement
+                    
                     int tmp = tab->at(i);
                     tab->at(i) = tab->at(j);
                     tab->at(j) = tmp;
@@ -39,7 +41,8 @@ void qsort0(std::vector<int> * tab, int len, int i, int j) {
                 }
                 else
                 {
-                    /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
+                    //  on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
+                    
                     int tmp = tab->at(i);
                     tab->at(i) = tab->at(j);
                     tab->at(j) = tab->at(i + 1);

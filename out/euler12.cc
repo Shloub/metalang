@@ -62,7 +62,8 @@ int find(int ndiv2) {
                 ndivs *= 1 + primesFactors->at(i);
         if (ndivs > ndiv2)
             return n * (n + 1) / 2;
-        /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
+        //  print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
+        
     }
     return 0;
 }

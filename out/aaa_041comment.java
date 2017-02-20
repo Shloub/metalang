@@ -7,10 +7,12 @@ public class aaa_041comment
   public static void main(String args[])
   {
     int i = 4;
-    /*while i < 10 do */
+    // while i < 10 do 
+    
     System.out.print(i);
     i++;
-    /*  end */
+    //   end 
+    
     System.out.print(i);
   }
   

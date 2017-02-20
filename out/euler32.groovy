@@ -74,7 +74,8 @@ for (int e = 1; e < 10; e++)
                                     if (allowed[d])
                                     {
                                         allowed[d] = false
-                                        /* 2 * 3 digits */
+                                        //  2 * 3 digits 
+                                        
                                         int product = (a * 10 + b) * (c * 100 + d * 10 + e)
                                         if (!counted[product] && okdigits(allowed, product.intdiv(10)))
                                         {
@@ -82,7 +83,8 @@ for (int e = 1; e < 10; e++)
                                             count += product
                                             System.out.printf("%d ", product)
                                         }
-                                        /* 1  * 4 digits */
+                                        //  1  * 4 digits 
+                                        
                                         int product2 = b * (a * 1000 + c * 100 + d * 10 + e)
                                         if (!counted[product2] && okdigits(allowed, product2.intdiv(10)))
                                         {

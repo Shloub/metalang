@@ -46,14 +46,12 @@ function pathfind_aux(cache, tab, len, pos){
         return out0;
     }
 }
-
 function pathfind(tab, len){
     var cache = new Array(len);
     for (var i = 0; i < len; i++)
         cache[i] = -1;
     return pathfind_aux(cache, tab, len, 0);
 }
-
 var len = 0;
 len = read_int_();
 stdinsep();

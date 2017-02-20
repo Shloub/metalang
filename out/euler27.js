@@ -14,7 +14,6 @@ function eratostene(t, max0){
         }
     return n;
 }
-
 function isPrime(n, primes, len){
     var i = 0;
     if (n < 0)
@@ -27,7 +26,6 @@ function isPrime(n, primes, len){
     }
     return true;
 }
-
 function test(a, b, primes, len){
     for (var n = 0; n < 201; n++)
     {
@@ -37,7 +35,6 @@ function test(a, b, primes, len){
     }
     return 200;
 }
-
 var maximumprimes = 1000;
 var era = new Array(maximumprimes);
 for (var j = 0; j < maximumprimes; j++)

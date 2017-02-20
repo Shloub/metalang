@@ -52,7 +52,6 @@ function nbPassePartout(n, passepartout, m, serrures){
     else
         return 0;
 }
-
 var n = read_int_();
 stdinsep();
 var passepartout = new Array(n);

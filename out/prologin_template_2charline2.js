@@ -49,7 +49,6 @@ function programme_candidat(tableau1, taille1, tableau2, taille2){
     util.print("--\n");
     return out0;
 }
-
 var taille1 = read_int_();
 stdinsep();
 var taille2 = read_int_();

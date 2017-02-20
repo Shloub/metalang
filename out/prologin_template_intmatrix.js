@@ -34,7 +34,6 @@ function programme_candidat(tableau, x, y){
             out0 += tableau[i][j] * (i * 2 + j);
     return out0;
 }
-
 var taille_x = read_int_();
 stdinsep();
 var taille_y = read_int_();

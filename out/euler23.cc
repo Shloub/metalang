@@ -85,7 +85,8 @@ int main() {
             l++;
         }
     int n = 100;
-    /* 28124 ça prend trop de temps mais on arrive a passer le test */
+    //  28124 ça prend trop de temps mais on arrive a passer le test 
+    
     std::vector<bool> *abondant = new std::vector<bool>( n + 1 );
     std::fill(abondant->begin(), abondant->end(), false);
     std::vector<bool> *summable = new std::vector<bool>( n + 1 );
