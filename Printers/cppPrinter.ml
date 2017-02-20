@@ -244,6 +244,8 @@ class cppPrinter = object(self)
       Format.fprintf f "typedef %a %a;"
         self#ptype t
         self#typename name
+        
+  method comment f str = Format.fprintf f "%a@\n" clike_comment str
 end
 
 let cpp_print_mut conf prio f m = Mutable.Fixed.Deep.fold
@@ -319,4 +321,6 @@ class proloCppPrinter = object(self)
       (self#declare_for "char") li_forc
       self#instructions main
 
+  method comment f str = Format.fprintf f "%a@\n" clike_comment str
+      
 end

@@ -88,11 +88,12 @@ let def_fields c name f li =
     sep_nl
     f
     li
-
+    
 let print_instr0 ptype c i f pend =
   let open Ast.Instr in
   let open Format in
   match i with
+  | Comment s -> fprintf f "/*%s*/" s
   | Declare (var, ty, e, _) -> fprintf f "%a %a = %a%a" ptype ty c.print_varname var e nop pend ()
   | AllocArray (name, ty, e, None, opt) -> fprintf f "%a *%a = calloc(%a, sizeof(%a))%a"
                                              ptype ty
@@ -265,6 +266,8 @@ class cPrinter = object(self)
         s
         (print_list self#binding sep_c) li
         self#separator ()
+
+  method comment f str = Format.fprintf f "/* %s */@\n" str
 
   method print_fun f funname t li instrs =
     let li_fori, li_forc = self#collect_for instrs false in

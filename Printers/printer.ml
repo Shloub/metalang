@@ -101,8 +101,7 @@ class printer = object(self)
       self#expr expr
       self#bloc li
 
-  method comment f str =
-    Format.fprintf f "/*%s*/" str
+  method comment f str = Format.fprintf f "%a@\n" clike_comment str
 
   method return f e =
     Format.fprintf f "@[<hov>return@ %a@]" self#expr e
