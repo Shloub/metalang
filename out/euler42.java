@@ -30,7 +30,6 @@ public class euler42
         char c = scanner.findWithinHorizon(".", 1).charAt(0);
         sum += (int)(c) - (int)('A') + 1;
         // 		print c print " " print sum print " " 
-        
     }
     if (is_triangular(sum))
         return 1;

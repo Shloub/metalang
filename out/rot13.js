@@ -34,8 +34,7 @@ function read_int_(){
 }
 /*
 Ce test effectue un rot13 sur une chaine lue en entrée
-@*/
-
+*/
 var strlen = read_int_();
 stdinsep();
 var tab4 = new Array(strlen);

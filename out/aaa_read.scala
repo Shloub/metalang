@@ -33,6 +33,7 @@ Ce test permet de vérifier si les différents backends pour les langages implé
 read int, read char et skip
 */
   
+  
   def main(args : Array[String])
   {
     var len = read_int();

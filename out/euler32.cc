@@ -24,6 +24,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
 
+
 bool okdigits(std::vector<bool> * ok, int n) {
     if (n == 0)
         return true;
@@ -74,7 +75,6 @@ int main() {
                                         {
                                             allowed->at(d) = false;
                                             //  2 * 3 digits 
-                                            
                                             int product = (a * 10 + b) * (c * 100 + d * 10 + e);
                                             if (!counted->at(product) && okdigits(allowed, product / 10))
                                             {
@@ -83,7 +83,6 @@ int main() {
                                                 std::cout << product << " ";
                                             }
                                             //  1  * 4 digits 
-                                            
                                             int product2 = b * (a * 1000 + c * 100 + d * 10 + e);
                                             if (!counted->at(product2) && okdigits(allowed, product2 / 10))
                                             {

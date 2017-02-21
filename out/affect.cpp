@@ -3,6 +3,7 @@
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
+
 typedef struct toto {
   int foo;
     int bar;

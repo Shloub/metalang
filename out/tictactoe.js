@@ -28,7 +28,7 @@ function read_int_(){
 }
 /*
 Tictactoe : un tictactoe avec une IA
-@*/
+*/
 //  La structure de donnée 
 //  Un Mouvement 
 //  On affiche l'état 
@@ -121,53 +121,52 @@ function can_move(m, g){
 }
 /*
 Un minimax classique, renvoie la note du plateau
-@*/
+*/
 function minmax(g){
-                                                            eval0(g);
-                                                            if (g["ended"])
-                                                                return g["note"];
-                                                            var maxNote = -10000;
-                                                            if (!g["firstToPlay"])
-                                                                maxNote = 10000;
-                                                            for (var x = 0; x < 3; x++)
-                                                                for (var y = 0; y < 3; y++)
-                                                                    if (can_move_xy(x, y, g))
-                                                                    {
-                                                                        apply_move_xy(x, y, g);
-                                                                        var currentNote = minmax(g);
-                                                                        cancel_move_xy(x, y, g);
-                                                                        //  Minimum ou Maximum selon le coté ou l'on joue
-                                                                        
-                                                                        if (currentNote > maxNote == g["firstToPlay"])
-                                                                            maxNote = currentNote;
-                                                                    }
-                                                            return maxNote;
+    eval0(g);
+    if (g["ended"])
+        return g["note"];
+    var maxNote = -10000;
+    if (!g["firstToPlay"])
+        maxNote = 10000;
+    for (var x = 0; x < 3; x++)
+        for (var y = 0; y < 3; y++)
+            if (can_move_xy(x, y, g))
+            {
+                apply_move_xy(x, y, g);
+                var currentNote = minmax(g);
+                cancel_move_xy(x, y, g);
+                //  Minimum ou Maximum selon le coté ou l'on joue
+                if (currentNote > maxNote == g["firstToPlay"])
+                    maxNote = currentNote;
+            }
+    return maxNote;
 }
 /*
 Renvoie le coup de l'IA
-@*/
+*/
 function play(g){
-                                   var minMove = {
-                                       "x":0,
-                                       "y":0};
-                                   var minNote = 10000;
-                                   for (var x = 0; x < 3; x++)
-                                       for (var y = 0; y < 3; y++)
-                                           if (can_move_xy(x, y, g))
-                                           {
-                                               apply_move_xy(x, y, g);
-                                               var currentNote = minmax(g);
-                                               util.print(x, ", ", y, ", ", currentNote, "\n");
-                                               cancel_move_xy(x, y, g);
-                                               if (currentNote < minNote)
-                                               {
-                                                   minNote = currentNote;
-                                                   minMove["x"] = x;
-                                                   minMove["y"] = y;
-                                               }
-                                           }
-                                   util.print(minMove["x"], minMove["y"], "\n");
-                                   return minMove;
+    var minMove = {
+        "x":0,
+        "y":0};
+    var minNote = 10000;
+    for (var x = 0; x < 3; x++)
+        for (var y = 0; y < 3; y++)
+            if (can_move_xy(x, y, g))
+            {
+                apply_move_xy(x, y, g);
+                var currentNote = minmax(g);
+                util.print(x, ", ", y, ", ", currentNote, "\n");
+                cancel_move_xy(x, y, g);
+                if (currentNote < minNote)
+                {
+                    minNote = currentNote;
+                    minMove["x"] = x;
+                    minMove["y"] = y;
+                }
+            }
+    util.print(minMove["x"], minMove["y"], "\n");
+    return minMove;
 }
 function init0(){
     var cases = new Array(3);

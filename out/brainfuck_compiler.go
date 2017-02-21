@@ -5,6 +5,7 @@ Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 et qui produit les macros metalang correspondante
 */
+
 func main() {
   var input byte = ' '
   _  = input

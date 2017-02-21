@@ -20,7 +20,6 @@ function eratostene(&$t, $max0) {
 
 $n = 100000;
 //  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
-
 $t = array();
 for ($i = 0; $i < $n; $i++)
     $t[$i] = $i;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
-/* lit un sudoku sur l'entrée standard */
+//  lit un sudoku sur l'entrée standard 
+
 
 std::vector<int> read_sudoku() {
     int k;
@@ -13,7 +14,8 @@ std::vector<int> read_sudoku() {
     return out0;
 }
 
-/* affiche un sudoku */
+//  affiche un sudoku 
+
 
 void print_sudoku(std::vector<int>& sudoku0) {
     for (int y = 0; y < 9; y++)
@@ -31,9 +33,12 @@ void print_sudoku(std::vector<int>& sudoku0) {
     std::cout << "\n";
 }
 
-/* dit si les variables sont toutes différentes */
-/* dit si les variables sont toutes différentes */
-/* dit si le sudoku est terminé de remplir */
+//  dit si les variables sont toutes différentes 
+
+//  dit si les variables sont toutes différentes 
+
+//  dit si le sudoku est terminé de remplir 
+
 
 bool sudoku_done(std::vector<int>& s) {
     for (int i = 0; i < 81; i++)
@@ -42,7 +47,8 @@ bool sudoku_done(std::vector<int>& s) {
     return true;
 }
 
-/* dit si il y a une erreur dans le sudoku */
+//  dit si il y a une erreur dans le sudoku 
+
 
 bool sudoku_error(std::vector<int>& s) {
     bool out1 = false;
@@ -57,7 +63,8 @@ bool sudoku_error(std::vector<int>& s) {
     return out1 || out2 || out3;
 }
 
-/* résout le sudoku*/
+//  résout le sudoku
+
 
 bool solve(std::vector<int>& sudoku0) {
     if (sudoku_error(sudoku0))

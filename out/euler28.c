@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
+/* 
 
 43 44 45 46 47 48 49
 42 21 22 23 24 25 26
@@ -15,7 +15,8 @@
   2 2 2 2 4  4  4  4  6   6  6  6
 
 
-*/
+ */
+
 
 int sumdiag(int n) {
     int i;

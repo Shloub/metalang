@@ -22,6 +22,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
+
 function okdigits(&$ok, $n) {
     if ($n == 0)
         return true;
@@ -69,7 +70,6 @@ for ($e = 1; $e < 10; $e++)
                                     {
                                         $allowed[$d] = false;
                                         //  2 * 3 digits 
-                                        
                                         $product = ($a * 10 + $b) * ($c * 100 + $d * 10 + $e);
                                         if (!$counted[$product] && okdigits($allowed, intval($product / 10)))
                                         {
@@ -78,7 +78,6 @@ for ($e = 1; $e < 10; $e++)
                                             echo $product, " ";
                                         }
                                         //  1  * 4 digits 
-                                        
                                         $product2 = $b * ($a * 1000 + $c * 100 + $d * 10 + $e);
                                         if (!$counted[$product2] && okdigits($allowed, intval($product2 / 10)))
                                         {

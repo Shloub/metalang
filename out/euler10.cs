@@ -27,7 +27,6 @@ public class euler10
   {
     int n = 100000;
     //  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
-    
     int[] t = new int[n];
     for (int i = 0; i < n; i++)
         t[i] = i;

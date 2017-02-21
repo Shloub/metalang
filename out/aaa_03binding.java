@@ -24,7 +24,6 @@ public class aaa_03binding
     int b = 5;
     System.out.print(a + b);
     //  main 
-    
     h(15);
     a = 2;
     b = 1;

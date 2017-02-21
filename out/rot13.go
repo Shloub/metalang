@@ -16,6 +16,7 @@ func skip() {
 /*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
+
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var strlen int

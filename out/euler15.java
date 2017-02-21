@@ -8,7 +8,6 @@ public class euler15
   {
     int n = 10;
     //  normalement on doit mettre 20 mais là on se tape un overflow 
-    
     n++;
     int[][] tab = new int[n][];
     for (int i = 0; i < n; i++)

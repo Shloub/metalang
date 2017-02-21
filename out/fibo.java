@@ -6,6 +6,7 @@ public class fibo
   /*
 La suite de fibonaci
 */
+  
   static int fibo0(int a, int b, int i)
   {
     int out0 = 0;

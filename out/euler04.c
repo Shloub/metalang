@@ -9,7 +9,7 @@ int max2_(int a, int b) {
         return b;
 }
 
-/*
+/* 
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
 a * d + a * e * 10 + a * f * 100 +
@@ -26,7 +26,8 @@ a * d +
 (c * e + b * f) * 1000 +
 c * f * 10000
 
-*/
+ */
+
 
 int chiffre(int c, int m) {
     if (c == 0)

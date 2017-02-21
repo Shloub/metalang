@@ -8,11 +8,9 @@ public class aaa_041comment
   {
     int i = 4;
     // while i < 10 do 
-    
     System.out.print(i);
     i++;
     //   end 
-    
     System.out.print(i);
   }
   

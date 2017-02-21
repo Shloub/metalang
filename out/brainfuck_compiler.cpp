@@ -6,6 +6,7 @@ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compila
 et qui produit les macros metalang correspondante
 */
 
+
 int main() {
     char input = ' ';
     int current_pos = 500;

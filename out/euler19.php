@@ -38,7 +38,6 @@ $month = 0;
 $year = 1901;
 $dayofweek = 1;
 //  01-01-1901 : mardi 
-
 $count = 0;
 while ($year != 2001)
 {

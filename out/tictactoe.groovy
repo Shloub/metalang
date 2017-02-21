@@ -4,19 +4,23 @@ import java.util.*
 /*
 Tictactoe : un tictactoe avec une IA
 */
-/* La structure de donnée */
+
+//  La structure de donnée 
+
 class Gamestate {
   int[][] cases
   boolean firstToPlay
   int note
   boolean ended
 }
-/* Un Mouvement */
+//  Un Mouvement 
+
 class Move {
   int x
   int y
 }
-/* On affiche l'état */
+//  On affiche l'état 
+
 void print_state(Gamestate g)
 {
   print("\n|")
@@ -38,7 +42,8 @@ void print_state(Gamestate g)
   print("\n")
 }
 
-/* On dit qui gagne (info stoquées dans g.ended et g.note ) */
+//  On dit qui gagne (info stoquées dans g.ended et g.note ) 
+
 void eval0(Gamestate g)
 {
   int win = 0
@@ -83,7 +88,8 @@ void eval0(Gamestate g)
       g.note = 0
 }
 
-/* On applique un mouvement */
+//  On applique un mouvement 
+
 void apply_move_xy(int x, int y, Gamestate g)
 {
   int player = 2
@@ -123,6 +129,7 @@ boolean can_move(Move m, Gamestate g)
 /*
 Un minimax classique, renvoie la note du plateau
 */
+
 int minmax(Gamestate g)
 {
   eval0(g)
@@ -139,7 +146,6 @@ int minmax(Gamestate g)
               int currentNote = minmax(g)
               cancel_move_xy(x, y, g)
               //  Minimum ou Maximum selon le coté ou l'on joue
-              
               if (currentNote > maxNote == g.firstToPlay)
                   maxNote = currentNote
           }
@@ -149,6 +155,7 @@ int minmax(Gamestate g)
 /*
 Renvoie le coup de l'IA
 */
+
 Move play(Gamestate g)
 {
   Move minMove = new Move()

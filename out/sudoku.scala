@@ -22,7 +22,8 @@ def skip() {
     buffer = buffer.substring(1);
 }
   
-  /* lit un sudoku sur l'entrée standard */
+  //  lit un sudoku sur l'entrée standard 
+  
   def read_sudoku(): Array[Int] = {
     var out0 :Array[Int] = new Array[Int](9 * 9);
     for (i <- 0 to 9 * 9 - 1)
@@ -34,7 +35,8 @@ def skip() {
     return out0;
   }
   
-  /* affiche un sudoku */
+  //  affiche un sudoku 
+  
   def print_sudoku(sudoku0 : Array[Int]){
     for (y <- 0 to 8)
     {
@@ -51,9 +53,12 @@ def skip() {
     printf("\n");
   }
   
-  /* dit si les variables sont toutes différentes */
-  /* dit si les variables sont toutes différentes */
-  /* dit si le sudoku est terminé de remplir */
+  //  dit si les variables sont toutes différentes 
+  
+  //  dit si les variables sont toutes différentes 
+  
+  //  dit si le sudoku est terminé de remplir 
+  
   def sudoku_done(s : Array[Int]): Boolean = {
     for (i <- 0 to 80)
         if (s(i) == 0)
@@ -61,7 +66,8 @@ def skip() {
     return true;
   }
   
-  /* dit si il y a une erreur dans le sudoku */
+  //  dit si il y a une erreur dans le sudoku 
+  
   def sudoku_error(s : Array[Int]): Boolean = {
     var out1: Boolean = false;
     for (x <- 0 to 8)
@@ -75,7 +81,8 @@ def skip() {
     return out1 || out2 || out3;
   }
   
-  /* résout le sudoku*/
+  //  résout le sudoku
+  
   def solve(sudoku0 : Array[Int]): Boolean = {
     if (sudoku_error(sudoku0))
         return false;

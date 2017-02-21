@@ -16,6 +16,7 @@ func skip() {
 /*
   Ce test a été généré par Metalang.
 */
+
 func result(len int, tab []int) int{
   var tab2 []bool = make([]bool, len)
   for i := 0; i < len; i++ {

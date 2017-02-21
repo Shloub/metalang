@@ -17,6 +17,7 @@ func skip() {
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
 
+
 type toto struct {
   foo int;
   bar int;

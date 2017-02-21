@@ -4,6 +4,7 @@
   Ce test a été généré par Metalang.
 */
 
+
 int result(int len, std::vector<int> * tab) {
     std::vector<bool> *tab2 = new std::vector<bool>( len );
     std::fill(tab2->begin(), tab2->end(), false);

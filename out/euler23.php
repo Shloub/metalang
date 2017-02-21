@@ -76,7 +76,6 @@ for ($k = 2; $k < $maximumprimes; $k++)
     }
 $n = 100;
 //  28124 ça prend trop de temps mais on arrive a passer le test 
-
 $abondant = array_fill(0, $n + 1, false);
 $summable = array_fill(0, $n + 1, false);
 $sum = 0;

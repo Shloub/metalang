@@ -24,6 +24,7 @@ function scantrim(){
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
+
 function find0($len, &$tab, &$cache, $x, $y) {
     /*
 	Cette fonction est récursive

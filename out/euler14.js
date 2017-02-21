@@ -26,7 +26,6 @@ var maxi = 0;
 for (var i = 1; i < 1000; i++)
 {
     //  normalement on met 999999 mais ça dépasse les int32... 
-    
     var n2 = find(i, m);
     if (n2 > max0)
     {

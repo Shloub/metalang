@@ -17,6 +17,7 @@ public class euler28
 
 
 */
+  
   static int sumdiag(int n)
   {
     int nterms = n * 2 - 1;
@@ -27,7 +28,6 @@ public class euler28
         int d = 2 * (1 + i / 4);
         un += d;
         //  print int d print "=>" print un print " " 
-        
         sum += un;
     }
     return sum;

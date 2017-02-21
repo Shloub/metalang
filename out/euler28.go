@@ -15,6 +15,7 @@ import "fmt"
 
 
 */
+
 func sumdiag(n int) int{
   nterms := n * 2 - 1
   un := 1

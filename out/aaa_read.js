@@ -35,8 +35,7 @@ function read_int_(){
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
-@*/
-
+*/
 var len = read_int_();
 stdinsep();
 util.print(len, "=len\n");

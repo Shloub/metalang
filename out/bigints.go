@@ -289,6 +289,7 @@ func mul_bigint(aa * bigint, bb * bigint) * bigint{
 Division,
 Modulo
 */
+
 func log10(a int) int{
   out0 := 1
   for a >= 10 {
@@ -336,7 +337,8 @@ func sum_chiffres_bigint(a * bigint) int{
   return out0
 }
 
-/* http://projecteuler.net/problem=20 */
+//  http://projecteuler.net/problem=20 
+
 func euler20() int{
   var a * bigint = bigint_of_int(15)
   /* normalement c'est 100 */

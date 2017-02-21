@@ -73,13 +73,11 @@ static int readInt(){
         int i0 = i;
         int j0 = j;
         //  pivot : tab[0] 
-        
         while (i != j)
             if (tab[i] > tab[j])
                 if (i == j - 1)
                 {
                     //  on inverse simplement
-                    
                     int tmp = tab[i];
                     tab[i] = tab[j];
                     tab[j] = tmp;
@@ -88,7 +86,6 @@ static int readInt(){
                 else
                 {
                     //  on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
-                    
                     int tmp = tab[i];
                     tab[i] = tab[j];
                     tab[j] = tab[i + 1];

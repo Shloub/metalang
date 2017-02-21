@@ -28,8 +28,7 @@ function read_int_(){
 }
 /*
   Ce test a été généré par Metalang.
-@*/
-
+*/
 function result(len, tab){
     var tab2 = new Array(len);
     for (var i = 0; i < len; i++)

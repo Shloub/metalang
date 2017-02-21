@@ -75,7 +75,6 @@ for (var k = 2; k < maximumprimes; k++)
     }
 var n = 100;
 //  28124 ça prend trop de temps mais on arrive a passer le test 
-
 var abondant = new Array(n + 1);
 for (var p = 0; p <= n; p++)
     abondant[p] = false;

@@ -23,6 +23,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
+
 boolean okdigits(boolean[] ok, int n)
 {
   if (n == 0)
@@ -75,7 +76,6 @@ for (int e = 1; e < 10; e++)
                                     {
                                         allowed[d] = false
                                         //  2 * 3 digits 
-                                        
                                         int product = (a * 10 + b) * (c * 100 + d * 10 + e)
                                         if (!counted[product] && okdigits(allowed, product.intdiv(10)))
                                         {
@@ -84,7 +84,6 @@ for (int e = 1; e < 10; e++)
                                             System.out.printf("%d ", product)
                                         }
                                         //  1  * 4 digits 
-                                        
                                         int product2 = b * (a * 1000 + c * 100 + d * 10 + e)
                                         if (!counted[product2] && okdigits(allowed, product2.intdiv(10)))
                                         {

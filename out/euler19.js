@@ -36,7 +36,6 @@ var month = 0;
 var year = 1901;
 var dayofweek = 1;
 //  01-01-1901 : mardi 
-
 var count = 0;
 while (year != 2001)
 {

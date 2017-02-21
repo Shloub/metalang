@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* lit un sudoku sur l'entrée standard */
+/*  lit un sudoku sur l'entrée standard  */
+
 
 int* read_sudoku() {
     int i, k;
@@ -14,7 +15,8 @@ int* read_sudoku() {
     return out0;
 }
 
-/* affiche un sudoku */
+/*  affiche un sudoku  */
+
 
 void print_sudoku(int* sudoku0) {
     int y, x;
@@ -33,9 +35,12 @@ void print_sudoku(int* sudoku0) {
     printf("\n");
 }
 
-/* dit si les variables sont toutes différentes */
-/* dit si les variables sont toutes différentes */
-/* dit si le sudoku est terminé de remplir */
+/*  dit si les variables sont toutes différentes  */
+
+/*  dit si les variables sont toutes différentes  */
+
+/*  dit si le sudoku est terminé de remplir  */
+
 
 int sudoku_done(int* s) {
     int i;
@@ -45,7 +50,8 @@ int sudoku_done(int* s) {
     return 1;
 }
 
-/* dit si il y a une erreur dans le sudoku */
+/*  dit si il y a une erreur dans le sudoku  */
+
 
 int sudoku_error(int* s) {
     int x;
@@ -61,7 +67,8 @@ int sudoku_error(int* s) {
     return out1 || out2 || out3;
 }
 
-/* résout le sudoku*/
+/*  résout le sudoku */
+
 
 int solve(int* sudoku0) {
     int i, p;

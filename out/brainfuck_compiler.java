@@ -9,6 +9,7 @@ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compila
 et qui produit les macros metalang correspondante
 */
   
+  
   public static void main(String args[])
   {
     char input = ' ';

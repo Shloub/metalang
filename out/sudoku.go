@@ -13,7 +13,8 @@ func skip() {
     reader.UnreadByte()
   }
 }
-/* lit un sudoku sur l'entrée standard */
+//  lit un sudoku sur l'entrée standard 
+
 func read_sudoku() []int{
   var out0 []int = make([]int, 9 * 9)
   for i := 0; i < 9 * 9; i++ {
@@ -25,7 +26,8 @@ func read_sudoku() []int{
   return out0
 }
 
-/* affiche un sudoku */
+//  affiche un sudoku 
+
 func print_sudoku(sudoku0 []int) {
   for y := 0; y < 9; y++ {
       for x := 0; x < 9; x++ {
@@ -42,9 +44,12 @@ func print_sudoku(sudoku0 []int) {
   fmt.Printf("\n")
 }
 
-/* dit si les variables sont toutes différentes */
-/* dit si les variables sont toutes différentes */
-/* dit si le sudoku est terminé de remplir */
+//  dit si les variables sont toutes différentes 
+
+//  dit si les variables sont toutes différentes 
+
+//  dit si le sudoku est terminé de remplir 
+
 func sudoku_done(s []int) bool{
   for i := 0; i < 81; i++ {
       if s[i] == 0 {
@@ -54,7 +59,8 @@ func sudoku_done(s []int) bool{
   return true
 }
 
-/* dit si il y a une erreur dans le sudoku */
+//  dit si il y a une erreur dans le sudoku 
+
 func sudoku_error(s []int) bool{
   var out1 bool = false
   for x := 0; x < 9; x++ {
@@ -71,7 +77,8 @@ func sudoku_error(s []int) bool{
   return out1 || out2 || out3
 }
 
-/* résout le sudoku*/
+//  résout le sudoku
+
 func solve(sudoku0 []int) bool{
   if sudoku_error(sudoku0) {
       return false

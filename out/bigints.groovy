@@ -38,7 +38,6 @@ void print_bigint(Bigint a)
 boolean bigint_eq(Bigint a, Bigint b)
 {
   //  Renvoie vrai si a = b 
-  
   if (a.bigint_sign != b.bigint_sign)
       return false
   else if (a.bigint_len != b.bigint_len)
@@ -55,7 +54,6 @@ boolean bigint_eq(Bigint a, Bigint b)
 boolean bigint_gt(Bigint a, Bigint b)
 {
   //  Renvoie vrai si a > b 
-  
   if (a.bigint_sign && !b.bigint_sign)
       return true
   else if (!a.bigint_sign && b.bigint_sign)
@@ -87,7 +85,6 @@ boolean bigint_lt(Bigint a, Bigint b)
 Bigint add_bigint_positif(Bigint a, Bigint b)
 {
   //  Une addition ou on en a rien a faire des signes 
-  
   int len = Math.max(a.bigint_len, b.bigint_len) + 1
   int retenue = 0
   int[] chiffres = new int[len]
@@ -160,7 +157,6 @@ Bigint add_bigint(Bigint a, Bigint b)
   else if (a.bigint_sign)
   {
       //  a positif, b negatif 
-      
       if (bigint_gt(a, neg_bigint(b)))
           return sub_bigint_positif(a, b)
       else
@@ -168,7 +164,6 @@ Bigint add_bigint(Bigint a, Bigint b)
   }
   else
       //  a negatif, b positif 
-      
       if (bigint_gt(neg_bigint(a), b))
           return neg_bigint(sub_bigint_positif(a, b))
       else
@@ -248,7 +243,6 @@ Bigint mul_bigint(Bigint aa, Bigint bb)
   else if (aa.bigint_len < 3 || bb.bigint_len < 3)
       return mul_bigint_cp(aa, bb)
   //  Algorithme de Karatsuba 
-  
   int split = Math.min(aa.bigint_len, bb.bigint_len).intdiv(2)
   Bigint a = bigint_shift(aa, -split)
   Bigint b = bigint_premiers_chiffres(aa, split)
@@ -262,13 +256,13 @@ Bigint mul_bigint(Bigint aa, Bigint bb)
   Bigint acdec = bigint_shift(ac, 2 * split)
   return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
   //  ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
-  
 }
 
 /*
 Division,
 Modulo
 */
+
 int log10(int a)
 {
   int out0 = 1
@@ -320,12 +314,12 @@ int sum_chiffres_bigint(Bigint a)
   return out0
 }
 
-/* http://projecteuler.net/problem=20 */
+//  http://projecteuler.net/problem=20 
+
 int euler20()
 {
   Bigint a = bigint_of_int(15)
   //  normalement c'est 100 
-  
   a = fact_bigint(a)
   return sum_chiffres_bigint(a)
 }
@@ -357,7 +351,6 @@ void euler48()
   for (int i = 1; i < 101; i++)
   {
       //  1000 normalement 
-      
       Bigint ib = bigint_of_int(i)
       Bigint ibeib = bigint_exp_10chiffres(ib, i)
       sum = add_bigint(sum, ibeib)
@@ -373,7 +366,6 @@ int euler16()
   Bigint a = bigint_of_int(2)
   a = bigint_exp(a, 100)
   //  1000 normalement 
-  
   return sum_chiffres_bigint(a)
 }
 
@@ -385,7 +377,6 @@ int euler25()
   while (b.bigint_len < 100)
   {
       //  1000 normalement 
-      
       Bigint c = add_bigint(a, b)
       a = b
       b = c

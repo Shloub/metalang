@@ -38,8 +38,7 @@ function is_number(c){
 }
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
-@*/
-
+*/
 function npi0(str, len){
     var stack = new Array(len);
     for (var i = 0; i < len; i++)

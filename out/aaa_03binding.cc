@@ -20,7 +20,6 @@ int main() {
     int b = 5;
     std::cout << a + b;
     //  main 
-    
     h(15);
     a = 2;
     b = 1;

@@ -28,7 +28,6 @@ int score()
       char c = scanner.findWithinHorizon(".", 1).charAt(0)
       sum += (0+c) - (0+(char)'A') + 1
       // 		print c print " " print sum print " " 
-      
   }
   if (is_triangular(sum))
       return 1

@@ -13,6 +13,7 @@ import java.util.*
 /*
   Ce test a été généré par Metalang.
 */
+
 int result(int len, int[] tab)
 {
   boolean[] tab2 = new boolean[len]

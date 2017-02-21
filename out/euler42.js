@@ -51,7 +51,6 @@ function score(){
         var c = read_char_();
         sum += c.charCodeAt(0) - 'A'.charCodeAt(0) + 1;
         // 		print c print " " print sum print " " 
-        
     }
     if (is_triangular(sum))
         return 1;

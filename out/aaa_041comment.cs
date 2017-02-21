@@ -7,11 +7,9 @@ public class aaa_041comment
   {
     int i = 4;
     // while i < 10 do 
-    
     Console.Write(i);
     i++;
     //   end 
-    
     Console.Write(i);
   }
   

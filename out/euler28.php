@@ -14,6 +14,7 @@
 
 
 */
+
 function sumdiag($n) {
     $nterms = $n * 2 - 1;
     $un = 1;
@@ -23,7 +24,6 @@ function sumdiag($n) {
         $d = 2 * (1 + intval($i / 4));
         $un += $d;
         //  print int d print "=>" print un print " " 
-        
         $sum += $un;
     }
     return $sum;

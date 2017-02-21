@@ -26,6 +26,7 @@ a * d +
 c * f * 10000
 
 */
+
 func chiffre(c int, m int) int{
   if c == 0 {
       return m % 10

@@ -26,6 +26,7 @@ a * d +
 c * f * 10000
 
 */
+  
   def chiffre(c : Int, m : Int): Int = {
     if (c == 0)
         return m % 10;

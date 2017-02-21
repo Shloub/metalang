@@ -91,7 +91,6 @@ public class euler23
         }
     int n = 100;
     //  28124 ça prend trop de temps mais on arrive a passer le test 
-    
     bool[] abondant = new bool[n + 1];
     for (int p = 0; p <= n; p++)
         abondant[p] = false;

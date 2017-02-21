@@ -16,6 +16,7 @@ object euler28
 
 
 */
+  
   def sumdiag(n : Int): Int = {
     var nterms: Int = n * 2 - 1;
     var un: Int = 1;

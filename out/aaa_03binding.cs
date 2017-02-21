@@ -23,7 +23,6 @@ public class aaa_03binding
     int b = 5;
     Console.Write(a + b);
     //  main 
-    
     h(15);
     a = 2;
     b = 1;

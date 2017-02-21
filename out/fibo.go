@@ -16,6 +16,7 @@ func skip() {
 /*
 La suite de fibonaci
 */
+
 func fibo0(a int, b int, i int) int{
   out0 := 0
   a2 := a

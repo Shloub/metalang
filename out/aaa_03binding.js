@@ -13,7 +13,6 @@ var a = 4;
 var b = 5;
 util.print(a + b);
 //  main 
-
 h(15);
 a = 2;
 b = 1;
