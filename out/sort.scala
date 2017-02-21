@@ -42,8 +42,7 @@ def skip() {
   
   def qsort0(tab : Array[Int], len : Int, _i : Int, _j : Int){
     var i = _i;
-    var j = _j;
-    if (i < j)
+    var j = _j;if (i < j)
     {
         var i0: Int = i;
         var j0: Int = j;

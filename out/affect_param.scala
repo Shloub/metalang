@@ -2,8 +2,7 @@ object affect_param
 {
   
   def foo(_a : Int){
-    var a = _a;
-    a = 4;
+    var a = _a;a = 4;
   }
   
   

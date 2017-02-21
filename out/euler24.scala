@@ -9,8 +9,7 @@ object euler24
   }
   
   def show(lim : Int, _nth : Int){
-    var nth = _nth;
-    var t :Array[Int] = new Array[Int](lim);
+    var nth = _nth;var t :Array[Int] = new Array[Int](lim);
     for (i <- 0 to lim - 1)
         t(i) = i;
     var pris :Array[Boolean] = new Array[Boolean](lim);

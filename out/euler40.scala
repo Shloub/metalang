@@ -9,8 +9,7 @@ object euler40
   }
   
   def e(t : Array[Int], _n : Int): Int = {
-    var n = _n;
-    for (i <- 1 to 8)
+    var n = _n;for (i <- 1 to 8)
         if (n >= t(i) * i)
             n = n - t(i) * i;
         else

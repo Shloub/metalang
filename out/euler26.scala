@@ -3,8 +3,7 @@ object euler26
   
   def periode(restes : Array[Int], _len : Int, _a : Int, b : Int): Int = {
     var len = _len;
-    var a = _a;
-    while (a != 0)
+    var a = _a;while (a != 0)
     {
         var chiffre: Int = a / b;
         var reste: Int = a % b;

@@ -32,7 +32,6 @@ def skip() {
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
   
-  
   def main(args : Array[String])
   {
     var strlen = read_int();
