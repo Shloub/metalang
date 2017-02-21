@@ -255,10 +255,8 @@ D'ou le nom de la fonction. */
 Division,
 Modulo
 */
-  
   def log10(_a : Int): Int = {
-    var a = _a;
-    var out0: Int = 1;
+    var a = _a;var out0: Int = 1;
     while (a >= 10)
     {
         a = a / 10;
@@ -268,8 +266,7 @@ Modulo
   }
   
   def bigint_of_int(_i : Int): Bigint = {
-    var i = _i;
-    var size: Int = log10(i);
+    var i = _i;var size: Int = log10(i);
     if (i == 0)
         size = 0;
     var t :Array[Int] = new Array[Int](size);
@@ -284,8 +281,7 @@ Modulo
   }
   
   def fact_bigint(_a : Bigint): Bigint = {
-    var a = _a;
-    var one: Bigint = bigint_of_int(1);
+    var a = _a;var one: Bigint = bigint_of_int(1);
     var out0: Bigint = one;
     while (!bigint_eq(a, one))
     {
@@ -303,7 +299,6 @@ Modulo
   }
   
   //  http://projecteuler.net/problem=20 
-  
   def euler20(): Int = {
     var a: Bigint = bigint_of_int(15);
     /* normalement c'est 100 */
@@ -322,8 +317,7 @@ Modulo
   }
   
   def bigint_exp_10chiffres(_a : Bigint, b : Int): Bigint = {
-    var a = _a;
-    a = bigint_premiers_chiffres(a, 10);
+    var a = _a;a = bigint_premiers_chiffres(a, 10);
     if (b == 1)
         return a;
     else

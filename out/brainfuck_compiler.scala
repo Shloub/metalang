@@ -7,7 +7,6 @@ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compila
 et qui produit les macros metalang correspondante
 */
   
-  
   def main(args : Array[String])
   {
     var input: Char = ' ';

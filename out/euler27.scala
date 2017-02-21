@@ -18,8 +18,7 @@ object euler27
   }
   
   def isPrime(_n : Int, primes : Array[Int], len : Int): Boolean = {
-    var n = _n;
-    var i: Int = 0;
+    var n = _n;var i: Int = 0;
     if (n < 0)
         n = -n;
     while (primes(i) * primes(i) < n)

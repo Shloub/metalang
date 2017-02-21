@@ -25,8 +25,7 @@ object euler12
   }
   
   def fillPrimesFactors(t : Array[Int], _n : Int, primes : Array[Int], nprimes : Int): Int = {
-    var n = _n;
-    for (i <- 0 to nprimes - 1)
+    var n = _n;for (i <- 0 to nprimes - 1)
     {
         var d: Int = primes(i);
         while (n % d == 0)

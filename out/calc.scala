@@ -4,7 +4,6 @@ object calc
   /*
 La suite de fibonaci
 */
-  
   def fibo(a : Int, b : Int, i : Int): Int = {
     var out_0: Int = 0;
     var a2: Int = a;

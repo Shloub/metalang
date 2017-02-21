@@ -10,8 +10,7 @@ object euler07
   
   def find(_n : Int, t : Array[Int], _used : Int, nth : Int): Int = {
     var n = _n;
-    var used = _used;
-    while (used != nth)
+    var used = _used;while (used != nth)
         if (divisible(n, t, used))
             n = n + 1;
         else

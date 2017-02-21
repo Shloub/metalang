@@ -9,8 +9,7 @@ object euler05
   }
   
   def primesfactors(_n : Int): Array[Int] = {
-    var n = _n;
-    var tab :Array[Int] = new Array[Int](n + 1);
+    var n = _n;var tab :Array[Int] = new Array[Int](n + 1);
     for (i <- 0 to n)
         tab(i) = 0;
     var d: Int = 2;

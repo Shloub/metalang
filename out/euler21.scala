@@ -18,8 +18,7 @@ object euler21
   }
   
   def fillPrimesFactors(t : Array[Int], _n : Int, primes : Array[Int], nprimes : Int): Int = {
-    var n = _n;
-    for (i <- 0 to nprimes - 1)
+    var n = _n;for (i <- 0 to nprimes - 1)
     {
         var d: Int = primes(i);
         while (n % d == 0)
@@ -34,8 +33,7 @@ object euler21
   }
   
   def sumdivaux2(t : Array[Int], n : Int, _i : Int): Int = {
-    var i = _i;
-    while (i < n && t(i) == 0)
+    var i = _i;while (i < n && t(i) == 0)
         i = i + 1;
     return i;
   }
