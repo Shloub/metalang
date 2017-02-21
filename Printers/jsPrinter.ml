@@ -192,9 +192,7 @@ function read_int_(){
 }
 " else "")
       (print_list (fun f t -> match t with
-           | Prog.Comment s -> if String.contains s '\n' then
-               Format.fprintf f "/*%s@*/\n" s
-               else Format.fprintf f "// %s@\n" s
+           | Prog.Comment s -> Format.fprintf f "%a@\n" clike_comment s
            | Prog.Macro (name, t, params, code) ->
              macros <- StringMap.add
                  name (t, params, code)

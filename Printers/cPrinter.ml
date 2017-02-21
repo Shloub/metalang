@@ -88,7 +88,7 @@ let def_fields c name f li =
     sep_nl
     f
     li
-
+    
 let print_instr0 ptype c i f pend =
   let open Ast.Instr in
   let open Format in
@@ -266,6 +266,8 @@ class cPrinter = object(self)
         s
         (print_list self#binding sep_c) li
         self#separator ()
+
+  method comment f str = Format.fprintf f "/* %s */@\n" str
 
   method print_fun f funname t li instrs =
     let li_fori, li_forc = self#collect_for instrs false in

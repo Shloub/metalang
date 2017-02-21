@@ -372,7 +372,9 @@ let split_multi_read li space_format format_type =
         (format ^ addons, mutable_::variables, declared)
     ) ("", [], []) li
   in format, List.rev variables, declared
-
+     
+let clike_comment f c = Format.fprintf f (if String.contains c '\n' then "/*%s*/" else "// %s") c
+    
 let clike_print_instr c i =
   let open Ast.Instr in
   let open Format in
@@ -393,9 +395,7 @@ let clike_print_instr c i =
                                             plifor incr
                                             block li
     | While (e, li) -> fprintf f "while (@[<h>%a@])%a" e nop block li
-    | Comment s -> if String.contains s '\n' then
-        fprintf f "/*%s*/" s
-      else fprintf f "// %s@\n" s
+    | Comment s -> clike_comment f s
     | Tag s -> fprintf f "/*%S*/" s
     | Return e -> fprintf f "return %a%a" e nop pend ()
     | Declare _

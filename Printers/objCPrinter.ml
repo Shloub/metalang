@@ -64,6 +64,8 @@ let print_instr0 ptype c i f pend =
 class objCPrinter = object(self)
   inherit CPrinter.cPrinter as baseprinter
   method lang () = "objc"
+    
+  method comment f str = Format.fprintf f "%a@\n" clike_comment str
 
   method instr f t =
     let rewrite i = match Instr.unfix i with
