@@ -142,13 +142,12 @@ class jsPrinter = object(self)
   val mutable macros = StringMap.empty
 
   method prog f (prog: Utils.prog) =
-    let instr f t =
+    let instrs f t =
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,
           try List.assoc "js" li
           with Not_found -> List.assoc "" li) macros
-      in (print_instr macros t) f in
-    let instrs f t = print_list instr sep_nl f t in
+      in print_list (fun f t -> print_instr macros t f) sep_nl f t in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
