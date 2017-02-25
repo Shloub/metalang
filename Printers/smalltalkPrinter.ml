@@ -230,11 +230,15 @@ let print_instr prototypes c i =
 
 
 class smalltalkPrinter = object(self)
-  inherit Printer.printer as base
+
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
   val mutable prototypes = StringMap.empty
-
-  method lang () = "st"
 
   method instructions f li =
     let open Ast.Instr.Fixed.Deep in
@@ -266,9 +270,6 @@ class smalltalkPrinter = object(self)
       bindings
       instrs
 
-  method comment f str =
-    Format.fprintf f "\"%s\"" (String.replace "\"" "\"\"" str)
-
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
 
@@ -286,34 +287,28 @@ class smalltalkPrinter = object(self)
           )
           bindings  []
       in Format.fprintf f "@[|%a|@]"
-        (print_list self#binding sep_space) li
-
-  method main f (main : Utils.instr list) =
-    Format.fprintf f "@[<v 2>main [@\n%a%a@\n@]]"
-      (self#declarevars []) main
-      self#instructions main
+        (print_list print_varname sep_space) li
 
   method print_proto f (funname, t, li) =
     prototypes <- StringMap.add funname (match li with
         | [] -> []
-        | (hd, _)::tl -> (fun f () -> self#funname f funname) :: (List.map (fun (n, _) f () -> self#binding f n) tl)) prototypes;
+        | (hd, _)::tl -> (fun f () -> Format.fprintf f "%s" funname) :: (List.map (fun (n, _) f () -> print_varname f n) tl)) prototypes;
     match li with
     | [] -> begin
         prototypes <- StringMap.add funname [] prototypes;
-        Format.fprintf f "%a" self#funname funname
+        Format.fprintf f "%s" funname
       end
     | (hd, _)::tl -> begin
-        prototypes <- StringMap.add funname ((fun f () -> self#funname f funname) :: (List.map (fun (n, _) f () -> self#binding f n) tl)) prototypes;
-        Format.fprintf f " %a: %a %a"
-          self#funname funname
+        prototypes <- StringMap.add funname ((fun f () -> Format.fprintf f "%s" funname) :: (List.map (fun (n, _) f () -> print_varname f n) tl)) prototypes;
+        Format.fprintf f " %s: %a %a" funname
           (fun f () -> if BindingSet.mem hd refbindings
-            then Format.fprintf f "_%a" self#binding hd
-            else self#binding f hd
+            then Format.fprintf f "_%a" print_varname hd
+            else print_varname f hd
           ) ()
           (print_list
              (fun f (n, t) -> if BindingSet.mem n refbindings
-               then Format.fprintf f "%a: _%a" self#binding n self#binding n
-               else Format.fprintf f "%a: %a" self#binding n self#binding n
+               then Format.fprintf f "%a: _%a" print_varname n print_varname n
+               else Format.fprintf f "%a: %a" print_varname n print_varname n
              ) sep_space ) tl
       end
 
@@ -334,8 +329,8 @@ class smalltalkPrinter = object(self)
   method ref_alias f li =
     print_list (fun f (a, b) ->
         Format.fprintf f "%a := %a.@\n"
-          self#binding a
-          self#binding b)
+          print_varname a
+          print_varname b)
       nosep f li
 
   method print_fun f funname t li instrs =
@@ -395,12 +390,6 @@ class smalltalkPrinter = object(self)
       "^o.";
       "]"]
 
-  method decl_type f name t = ()
-  method ptype f (t:Type.t) =
-    match Type.unfix t with
-    | Type.Named n -> Format.fprintf f "%s" n
-    | _ -> assert false
-
   method structDeclarations f li =
     print_list
       (fun f t -> match t with
@@ -431,7 +420,31 @@ class smalltalkPrinter = object(self)
       self#structDeclarations prog.Prog.funs
       prog.Prog.progname
       self#header prog
-      self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> Format.fprintf f "\"%s\"@\n" (String.replace "\"" "\"\"" str)
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+             self#calc_refs liinstrs;
+             let li2, liproto = List.map (fun (n, t) ->
+                 if BindingSet.mem n refbindings then
+                   let f = UserName ( Fresh.fresh_user () ) in
+                   Some (n, f), (f, t)
+                 else None, (n, t)) li |> List.unzip in
+             let li2 = List.filter_map id li2 in
+             Format.fprintf f "@[<v 2>@[<h>%a [%a@]@\n%a%a@]@\n]@\n"
+               self#print_proto (funname, t, liproto)
+               (self#declarevars li) liinstrs
+               self#ref_alias li2
+               self#instructions liinstrs
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) nosep) prog.Prog.funs
+      (print_option (fun f main ->
+           Format.fprintf f "@[<v 2>main [@\n%a%a@\n@]]"
+             (self#declarevars []) main
+             self#instructions main
+         )) prog.Prog.main
       prog.Prog.progname
 end

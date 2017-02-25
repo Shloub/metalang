@@ -153,28 +153,22 @@ let print_instr tyenv macros i =
 
 
 class javaPrinter = object(self)
-  inherit Printer.printer as super
+                          
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
-  method instr f t =
+  method instructions f li =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "java" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instr (self#getTyperEnv ()) macros t) f
+    in print_list (fun f t -> print_instr (self#getTyperEnv ()) macros t f) sep_nl f li
 
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "@[<v 2>static class %a {@\n%a@]@\n}"
-        self#typename name
-        (print_list (fun f (name, type_) -> Format.fprintf f "public %a %a;" ptype type_ self#field name) sep_nl) li
-    | Type.Enum li ->
-      Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
-        self#typename name
-        (print_list self#enumfield (sep "%a,@\n %a")) li
-    | _ -> assert false
-
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
     let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
     let datareader = Tags.is_taged "use_java_readline" in
     Format.fprintf f
@@ -182,7 +176,32 @@ class javaPrinter = object(self)
       prog.Prog.progname
       (if reader || datareader then self#print_scanner else fun f () -> ()) ()
       (if datareader then self#print_datareader else fun f () -> ()) ()
-      self#proglist prog.Prog.funs
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> clike_comment f str
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+             Format.fprintf f "@[<h>static %a %s(%a)@]@\n@[<v 2>{@\n%a@]@\n}"
+               ptype t funname
+               (print_list
+                  (fun t (binding, type_) -> Format.fprintf t "%a@ %a" ptype type_ print_varname binding) sep_c
+               ) li
+               self#instructions liinstrs
+           | Prog.DeclareType (name, t) ->
+             begin match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "@[<v 2>static class %s {@\n%a@]@\n}" name
+                   (print_list (fun f (name, type_) -> Format.fprintf f "public %a %s;" ptype type_ name) sep_nl) li
+               | Type.Enum li ->
+                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}@\n" name
+                   (print_list (fun f e -> Format.fprintf f "%s" e) (sep "%a,@\n %a")) li
+               | _ -> assert false
+             end
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) sep_nl)
+      prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   method main f main =
@@ -203,16 +222,5 @@ class javaPrinter = object(self)
     return out;
   }
 @]"
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>static %a %a(%a)@]@\n@[<v 2>{@\n%a@]@\n}@\n"
-      ptype t
-      self#funname funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a@ %a"
-              ptype type_
-              self#binding binding
-         ) sep_c
-      ) li
-      self#instructions instrs
+      
 end

@@ -201,7 +201,12 @@ let print_instr tyenv c i =
   }
 
 class pyPrinter = object(self)
-  inherit Printer.printer as super
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
   method main f main = self#instructions f main
 
@@ -212,7 +217,7 @@ class pyPrinter = object(self)
         try List.assoc "py" li
         with Not_found -> List.assoc "" li) macros in
     let c = config macros in
-    let li = List.map (fun i -> (fold (print_instr (super#getTyperEnv ()) c) (mapg (print_expr c) i))) li in
+    let li = List.map (fun i -> (fold (print_instr typerEnv c) (mapg (print_expr c) i))) li in
     let p f () = print_list (fun f i -> i.p f i.default) sep_nl f li in
     if List.for_all (fun i -> i.is_comment) li then
       Format.fprintf f "@[<h>pass@]"
@@ -287,27 +292,29 @@ def skipchar():
 "
        else "")
 
-  method prog f prog =
+  method prog f (prog: Utils.prog)  =
     Format.fprintf f "%a%a%a@\n"
       self#header prog
-      self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method comment f str =
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> 
     let trimmed = String.trim str in
     if not (String.starts_with trimmed "\"" || String.ends_with trimmed "\"") then
-      Format.fprintf f "\"\"\"%s\"\"\"" trimmed
+      Format.fprintf f "\"\"\"%s\"\"\"@\n" trimmed
     else if not (String.starts_with trimmed "'" || String.ends_with trimmed "'") then
-      Format.fprintf f "'''%s'''" trimmed
+      Format.fprintf f "'''%s'''@\n" trimmed
     else
-      Format.fprintf f "\"\"\"@\n%s@\n\"\"\"" trimmed
-
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<v 4>@[<h>def %a(%a):@]@\n%a@]@\n"
-      self#funname funname
-      (print_list self#binding sep_c) (List.map fst li)
+      Format.fprintf f "\"\"\"@\n%s@\n\"\"\"@\n" trimmed
+           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
+             Format.fprintf f "@[<v 4>@[<h>def %s(%a):@]@\n%a@]@\n" funname
+      (print_list print_varname sep_c) (List.map fst li)
       self#instructions instrs
-
-  method decl_type f name t = ()
+          | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) nosep)
+      prog.Prog.funs
+      (print_option self#main) prog.Prog.main
 
 end

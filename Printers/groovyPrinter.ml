@@ -168,24 +168,20 @@ let print_instr tyenv macros i =
 
 (** the main class : the ocaml printer *)
 class groovyPrinter = object(self)
-  inherit Printer.printer as super
-
-  method instr f t =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "groovy" li
-        with Not_found -> List.assoc "" li) macros
-    in (print_instr (self#getTyperEnv ()) macros t) f
-
-  method lang () = "groovy"
-
-  method main f main = self#instructions f main
-
-  method formater_type t = "%s"
-
-  method typename f n = Format.fprintf f "%s" (String.capitalize n)
-
-  method prog f prog =
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
+    
+  method prog f (prog: Utils.prog) =
+    let instructions f li =
+      let macros = StringMap.map (fun (ty, params, li) ->
+          ty, params,
+          try List.assoc "groovy" li
+          with Not_found -> List.assoc "" li) macros
+      in print_list (fun f t -> print_instr (self#getTyperEnv ()) macros t f) sep_nl f li in
     let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
     let datareader = Tags.is_taged "use_java_readline" in
     Format.fprintf f
@@ -201,36 +197,40 @@ class groovyPrinter = object(self)
     return out;
   }
 @]" else fun f () -> ()) ()
-      self#proglist prog.Prog.funs
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> clike_comment f str
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+             Format.fprintf f "@[<h>%a %s(%a)@]@\n@[<v 2>{@\n%a@]@\n}@\n"
+               ptype t funname
+               (print_list
+                  (fun t (binding, type_) ->
+                     Format.fprintf t "%a@ %a"
+                       ptype type_ print_varname binding
+                  ) sep_c
+               ) li
+               instructions liinstrs
+           | Prog.DeclareType (name, t) ->
+             begin
+               match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "@[<v 2>class %s {@\n%a@]@\n}" (String.capitalize name)
+                   (print_list
+                      (fun f (name, type_) -> Format.fprintf f "%a %s" ptype type_ name)
+                      sep_nl) li
+               | Type.Enum li ->
+                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}@\n" (String.capitalize name)
+                   (print_list (fun f e -> Format.fprintf f "%s" e) (sep "%a,@\n %a")) li
+               | _ -> assert false
+             end
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) sep_nl)
+      prog.Prog.funs
       (if reader || datareader then fun f () ->
-          Format.fprintf f "@[<h>@@Field Scanner scanner = new Scanner(System.in)@]"
+    Format.fprintf f "@[<h>@@Field Scanner scanner = new Scanner(System.in)@]"
        else fun f () -> ()) ()
-      (print_option self#main) prog.Prog.main
-
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a %a(%a)@]@\n@[<v 2>{@\n%a@]@\n}@\n"
-      ptype t
-      self#funname funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a@ %a"
-              ptype type_
-              self#binding binding
-         ) sep_c
-      ) li
-      self#instructions instrs
-
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "@[<v 2>class %a {@\n%a@]@\n}"
-        self#typename name
-        (print_list
-           (fun f (name, type_) -> Format.fprintf f "%a %a" ptype type_ self#field name)
-           sep_nl) li
-    | Type.Enum li ->
-      Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
-        self#typename name
-        (print_list self#enumfield (sep "%a,@\n %a")) li
-    | _ -> assert false
+      (print_option instructions) prog.Prog.main
 end
