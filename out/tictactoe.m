@@ -5,9 +5,7 @@
 /*
 Tictactoe : un tictactoe avec une IA
 */
-
 //  La structure de donnée 
-
 @interface gamestate : NSObject
 {
   @public int** cases;
@@ -20,7 +18,6 @@ Tictactoe : un tictactoe avec une IA
 @end
 
 //  Un Mouvement 
-
 @interface move : NSObject
 {
   @public int x;
@@ -31,7 +28,6 @@ Tictactoe : un tictactoe avec une IA
 @end
 
 //  On affiche l'état 
-
 
 void print_state(gamestate * g) {
     int y, x;
@@ -55,7 +51,6 @@ void print_state(gamestate * g) {
 }
 
 //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
-
 
 void eval0(gamestate * g) {
     int y, x;
@@ -103,7 +98,6 @@ void eval0(gamestate * g) {
 
 //  On applique un mouvement 
 
-
 void apply_move_xy(int x, int y, gamestate * g) {
     int player = 2;
     if (g->firstToPlay)
@@ -143,7 +137,6 @@ int can_move(move * m, gamestate * g) {
 Un minimax classique, renvoie la note du plateau
 */
 
-
 int minmax(gamestate * g) {
     int x, y;
     eval0(g);
@@ -169,7 +162,6 @@ int minmax(gamestate * g) {
 /*
 Renvoie le coup de l'IA
 */
-
 
 move * play(gamestate * g) {
     int x, y;

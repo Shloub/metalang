@@ -6,7 +6,6 @@
 La suite de fibonaci
 */
 
-
 int fibo(int a, int b, int i) {
     int j;
     int out_ = 0;

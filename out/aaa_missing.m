@@ -6,7 +6,6 @@
   Ce test a été généré par Metalang.
 */
 
-
 int result(int len, int* tab) {
     int i2, i1, i;
     int *tab2 = calloc(len, sizeof(int));

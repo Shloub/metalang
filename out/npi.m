@@ -3,6 +3,7 @@
 #include<stdlib.h>
 
 
+
 int is_number(char c) {
     return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
 }
@@ -10,7 +11,6 @@ int is_number(char c) {
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-
 
 int npi0(char* str, int len) {
     int i;

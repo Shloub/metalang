@@ -2,11 +2,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
+
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int j, toto, strlen, i_, tmpi2, i, tmpi1, len;

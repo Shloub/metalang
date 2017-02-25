@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i6, d7, d8, d9, d10, d5, i4, d3, d2, d1, i;

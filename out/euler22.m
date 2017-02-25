@@ -3,6 +3,7 @@
 #include<stdlib.h>
 
 
+
 int score() {
     int i, len;
     char c;

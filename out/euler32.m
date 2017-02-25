@@ -26,7 +26,6 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
 
-
 int okdigits(int* ok, int n) {
     if (n == 0)
         return 1;
