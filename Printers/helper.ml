@@ -430,6 +430,24 @@ let clike_collect_for instrs onlyread =
     in
     List.fold_left collect ([], []) instrs
 
+let cclike_decltype ptype f name t =
+  match Ast.Type.unfix t with
+      Ast.Type.Struct li ->
+      Format.fprintf f "struct %s {@\n@[<v 4>    %a@]@\n};@\n" name
+        (print_list
+           (fun t (name, type_) ->
+              Format.fprintf t "%a %s;"  ptype type_ name
+           )
+           sep_nl
+        ) li
+    | Ast.Type.Enum li ->
+      Format.fprintf f "typedef enum %s {@\n@[<v 4>    %a@]@\n} %s;" name
+        (print_list
+           (fun t name -> Format.fprintf f "%s" name)
+           (sep "%a,@\n%a")
+        ) li name
+    | _ -> Format.fprintf f "typedef %a %s;" ptype t name
+
 let jlike_prio_operator = -100
 
 let rec jlike_prefix_type ptype f t =

@@ -233,38 +233,34 @@ class racketPrinter = object(self)
   (if (or (eq? last-char #\\NewLine) (eq? last-char #\\Space) ) (block (next-char) (mread-blank)) '())
 ))
 ") ()
-
-  method toplvl_declare f name e =
-    match E.unfix e with
-    | E.Fun (params, e) ->
-      let params = if params = [] then [Ast.UserName "_"] else params in
-      Format.fprintf f "@[<v2>(define (%a %a)@\n%a@]@\n)@\n" print_varname name
-        (print_list print_varname sep_space) params
-        (print_expr macros typerEnv) e
-    | _ -> Format.fprintf f "@[<v2>(define %a@\n%a@]@\n)@\n" print_varname name (print_expr macros typerEnv) e
-
-  method toplvl_declarety f name ty =
+  
+  method prog (f:Format.formatter) (prog:AstFun.prog) =
+    let toplvl_declare f name e =
+      match E.unfix e with
+      | E.Fun (params, e) ->
+        let params = if params = [] then [Ast.UserName "_"] else params in
+        Format.fprintf f "@[<v2>(define (%a %a)@\n%a@]@\n)@\n" print_varname name
+          (print_list print_varname sep_space) params
+          (print_expr macros typerEnv) e
+      | _ -> Format.fprintf f "@[<v2>(define %a@\n%a@]@\n)@\n" print_varname name (print_expr macros typerEnv) e in
+    let toplvl_declarety f name ty =
     match Ast.Type.unfix ty with
     | Type.Struct fields ->
       let fields = List.sort String.compare @$ List.map fst fields in
       Format.fprintf f "@[<v 2>(struct %s (%a)@])@\n" name
         (print_list (fun f name -> Format.fprintf f "[%s #:mutable]" name)
            sep_space) fields
-    | _ -> ()
-
-  method prog (f:Format.formatter) (prog:AstFun.prog) =
+    | _ -> () in
+    let decl f d = match d with
+      | AstFun.Declaration (name, e) -> toplvl_declare f name e
+      | AstFun.DeclareType (name, ty) -> toplvl_declarety f name ty
+      | AstFun.Macro (name, t, params, code) ->
+        macros <- Ast.BindingMap.add
+            name (t, params, code)
+            macros in
     let array_make = AstFun.existsExpr (fun e ->match E.unfix e with
         | E.ArrayMake _ -> true
         | _ -> false ) prog.AstFun.declarations in
     self#header array_make f prog.AstFun.options;
-    List.iter (self#decl f) prog.AstFun.declarations
-
-  method decl f d = match d with
-    | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
-    | AstFun.DeclareType (name, ty) -> self#toplvl_declarety f name ty
-    | AstFun.Macro (name, t, params, code) ->
-      macros <- Ast.BindingMap.add
-          name (t, params, code)
-          macros;
-      ()
+    print_list decl nosep f prog.AstFun.declarations
 end

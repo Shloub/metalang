@@ -136,10 +136,7 @@ class objCPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method declare_for s f li =
-    if li <> [] then
-      Format.fprintf f "%s %a;@\n"
-        s
-        (print_list print_varname sep_c) li
+    if li <> [] then Format.fprintf f "%s %a;@\n" s (print_list print_varname sep_c) li
         
   method main f main =
     let li_fori, li_forc = clike_collect_for main false in
