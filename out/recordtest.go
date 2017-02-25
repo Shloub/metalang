@@ -18,7 +18,6 @@ type toto struct {
   foo int;
   bar int;
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var param * toto = new (toto)

@@ -14,12 +14,10 @@ public class linkedList
     out0.tail = list;
     return out0;
   }
-  
   static boolean is_empty(intlist foo)
   {
     return true;
   }
-  
   static intlist rev2(intlist acc, intlist torev)
   {
     if (is_empty(torev))
@@ -32,12 +30,10 @@ public class linkedList
         return rev2(acc, torev.tail);
     }
   }
-  
   static intlist rev(intlist empty, intlist torev)
   {
     return rev2(empty, torev);
   }
-  
   static void test(intlist empty)
   {
     intlist list = empty;
@@ -54,8 +50,6 @@ public class linkedList
             list = cons(list, i);
     }
   }
-  
-  
   public static void main(String args[])
   {
     

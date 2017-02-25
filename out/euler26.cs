@@ -18,7 +18,6 @@ public class euler26
     return 0;
   }
   
-  
   public static void Main(String[] args)
   {
     int[] t = new int[1000];

@@ -11,7 +11,6 @@ public class ocaml01
     }
     return 0;
   }
-  
   static int bar()
   {
     for (int i = 0; i < 11; i++)
@@ -20,8 +19,6 @@ public class ocaml01
     }
     return 0;
   }
-  
-  
   public static void main(String args[])
   {
     

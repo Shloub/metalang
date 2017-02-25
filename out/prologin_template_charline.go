@@ -13,6 +13,7 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
 func programme_candidat(tableau []byte, taille int) int{
   out0 := 0
   for i := 0; i < taille; i++ {
@@ -22,7 +23,6 @@ func programme_candidat(tableau []byte, taille int) int{
   fmt.Printf("--\n")
   return out0
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var taille int

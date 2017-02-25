@@ -11,8 +11,6 @@ public class countchar
             out0++;
     return out0;
   }
-  
-  
   public static void main(String args[])
   {
     int len = 0;

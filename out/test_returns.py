@@ -21,6 +21,5 @@ def is_pair(i):
             j = 0
         j = 8
     return mod(i, 2) == 0
-
 pass
 

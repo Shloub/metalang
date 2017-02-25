@@ -25,7 +25,6 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
-  
   static bool okdigits(bool[] ok, int n)
   {
     if (n == 0)
@@ -44,7 +43,6 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
             return false;
     }
   }
-  
   
   public static void Main(String[] args)
   {

@@ -14,7 +14,6 @@ int exp0(int a, int b)
       return a * exp0(a, b - 1)
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 int a = 0
 int b = 0

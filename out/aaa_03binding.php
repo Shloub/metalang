@@ -5,11 +5,9 @@ function g($i) {
         return 0;
     return $j;
 }
-
 function h($i) {
     echo $i, "\n";
 }
-
 h(14);
 $a = 4;
 $b = 5;

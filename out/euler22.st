@@ -36,7 +36,6 @@ Object subclass: euler22 [
     ].
     ^ sum
   ]
-  
   main [
     |sum n|sum := 0.
     n := self read_int.

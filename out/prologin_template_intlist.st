@@ -21,7 +21,6 @@ Object subclass: prologin_template_intlist [
     (0 to: (taille - 1)) do: [:i| out0 := out0 + (tableau at: (i + 1)).].
     ^ out0
   ]
-  
   main [
     |taille tableau|taille := self read_int.
     self skip.

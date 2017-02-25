@@ -27,18 +27,15 @@ sub foo{
   # test 2 
   
 }
-
 sub foo2{
   
 }
-
 sub foo3{
   if (1 eq 1)
   {
       
   }
 }
-
 sub sumdiv{
   my($n) = @_;
   # On désire renvoyer la somme des diviseurs 
@@ -68,7 +65,6 @@ sub sumdiv{
   #On renvoie out
   
 }
-
 # Programme principal 
 
 my $n = 0;

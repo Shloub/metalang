@@ -40,7 +40,6 @@ Object subclass: prologin_template_2charline [
 ' display.
     ^ out0
   ]
-  
   main [
     |taille2 taille1 tableau2 tableau1|taille1 := self read_int.
     self skip.

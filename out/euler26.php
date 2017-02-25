@@ -13,7 +13,6 @@ function periode(&$restes, $len, $a, $b) {
     }
     return 0;
 }
-
 $t = array_fill(0, 1000, 0);
 $m = 0;
 $mi = 0;

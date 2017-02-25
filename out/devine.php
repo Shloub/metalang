@@ -35,7 +35,6 @@ function devine0($nombre, &$tab, $len) {
     }
     return true;
 }
-
 list($nombre) = scan("%d");
 scantrim();
 list($len) = scan("%d");

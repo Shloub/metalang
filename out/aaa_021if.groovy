@@ -73,7 +73,6 @@ void test(boolean a, boolean b)
 }
 
 
-
 test(true, true)
 test(true, false)
 test(false, true)

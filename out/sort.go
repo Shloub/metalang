@@ -20,7 +20,6 @@ func copytab(tab []int, len int) []int{
   }
   return o
 }
-
 func bubblesort(tab []int, len int) {
   for i := 0; i < len; i++ {
       for j := i + 1; j < len; j++ {
@@ -32,7 +31,6 @@ func bubblesort(tab []int, len int) {
       }
   }
 }
-
 func qsort0(tab []int, len int, i int, j int) {
   if i < j {
       i0 := i
@@ -62,7 +60,6 @@ func qsort0(tab []int, len int, i int, j int) {
       qsort0(tab, len, i + 1, j0)
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   len := 2

@@ -14,7 +14,6 @@ function result($sum, &$t, $maxIndex, &$cache) {
         return $out0;
     }
 }
-
 $t = array_fill(0, 8, 0);
 $t[0] = 1;
 $t[1] = 2;

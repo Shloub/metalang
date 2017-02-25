@@ -9,7 +9,6 @@ public class aaa_11arrayconst
     Console.Write("\n");
   }
   
-  
   public static void Main(String[] args)
   {
     int[] t = new int[5];

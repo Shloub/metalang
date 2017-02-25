@@ -2,6 +2,7 @@ using System;
 
 public class euler04
 {
+  
   /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -20,7 +21,6 @@ a * d +
 c * f * 10000
 
 */
-  
   static int chiffre(int c, int m)
   {
     if (c == 0)
@@ -28,7 +28,6 @@ c * f * 10000
     else
         return chiffre(c - 1, m / 10);
   }
-  
   
   public static void Main(String[] args)
   {

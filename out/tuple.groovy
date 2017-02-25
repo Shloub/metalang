@@ -16,7 +16,6 @@ Tuple_int_int f(Tuple_int_int tuple0)
 }
 
 
-
 Tuple_int_int e = new Tuple_int_int()
 e.tuple_int_int_field_0 = 0
 e.tuple_int_int_field_1 = 1

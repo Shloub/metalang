@@ -18,7 +18,6 @@ func palindrome2(pow2 []int, n int) bool{
   }
   return true
 }
-
 func main() {
   p := 1
   var pow2 []int = make([]int, 20)

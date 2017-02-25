@@ -4,7 +4,6 @@ function test(&$tab, $len) {
         echo $tab[$i], " ";
     echo "\n";
 }
-
 $t = array_fill(0, 5, 1);
 test($t, 5);
 

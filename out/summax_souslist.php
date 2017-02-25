@@ -32,7 +32,6 @@ function summax(&$lst, $len) {
     }
     return $max0;
 }
-
 $len = 0;
 list($len) = scan("%d");
 scantrim();

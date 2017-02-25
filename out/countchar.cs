@@ -60,7 +60,6 @@ static int readInt(){
     return out0;
   }
   
-  
   public static void Main(String[] args)
   {
     int len = 0;

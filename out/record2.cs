@@ -66,7 +66,6 @@ static int readInt(){
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   
-  
   public static void Main(String[] args)
   {
     toto t = mktoto(4);

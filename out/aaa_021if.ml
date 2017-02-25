@@ -9,7 +9,6 @@ let testA a b =
       Printf.printf "C"
     else
       Printf.printf "D"
-
 let testB a b =
   if a then
     Printf.printf "A"
@@ -18,7 +17,6 @@ let testB a b =
       Printf.printf "B"
     else
       Printf.printf "C"
-
 let testC a b =
   if a then
     if b then
@@ -27,7 +25,6 @@ let testC a b =
       Printf.printf "B"
   else
     Printf.printf "C"
-
 let testD a b =
   if a then
     begin
@@ -39,7 +36,6 @@ let testD a b =
     end
   else
     Printf.printf "D"
-
 let testE a b =
   if a then
     begin
@@ -54,12 +50,10 @@ let testE a b =
          Printf.printf "D";
        Printf.printf "E"
     end
-
 let test a b =
   testD a b;
   testE a b;
   Printf.printf "\n"
-
 let () =
  test true true;
   test true false;

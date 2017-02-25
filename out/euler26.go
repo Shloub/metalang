@@ -16,7 +16,6 @@ func periode(restes []int, len int, a int, b int) int{
   }
   return 0
 }
-
 func main() {
   var t []int = make([]int, 1000)
   for j := 0; j < 1000; j++ {

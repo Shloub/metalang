@@ -17,18 +17,15 @@ function foo() {
     $a++;
     //  test 2 
 }
-
 function foo2() {
     
 }
-
 function foo3() {
     if (1 == 1)
     {
         
     }
 }
-
 function sumdiv($n) {
     //  On désire renvoyer la somme des diviseurs 
     $out0 = 0;
@@ -48,7 +45,6 @@ function sumdiv($n) {
     return $out0;
     // On renvoie out
 }
-
 //  Programme principal 
 $n = 0;
 list($n) = scan("%d");

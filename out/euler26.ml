@@ -17,7 +17,6 @@ let periode restes len a b =
   done;
   0
   with Found_1 (out) -> out
-
 let () =
  let t = Array.init 1000 (fun j ->
    0) in

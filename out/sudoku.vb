@@ -137,7 +137,6 @@ End Function
       Return false
     End Function
     
-    
     Sub Main()
       Dim sudoku0 As Integer() = read_sudoku()
       print_sudoku(sudoku0)

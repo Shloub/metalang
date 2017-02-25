@@ -7,7 +7,6 @@ func fact(n int) int{
   }
   return prod
 }
-
 func show(lim int, nth int) {
   var t []int = make([]int, lim)
   for i := 0; i < lim; i++ {
@@ -38,7 +37,6 @@ func show(lim int, nth int) {
   }
   fmt.Printf("\n")
 }
-
 func main() {
   show(10, 999999)
 }

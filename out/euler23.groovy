@@ -70,7 +70,6 @@ int sumdiv(int nprimes, int[] primes, int n)
 }
 
 
-
 int maximumprimes = 30001
 int[] era = new int[maximumprimes]
 for (int s = 0; s < maximumprimes; s++)

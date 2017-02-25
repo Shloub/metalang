@@ -82,7 +82,6 @@ End Function
     Return go0(tab, 0, len)
   End Function
   
-  
   Sub Main()
     Dim len As Integer = 0
     len = readInt

@@ -15,7 +15,6 @@ Object subclass: euler50 [
       ].].
     ^ n
   ]
-  
   main [
     |sum stop resp process primes nprimes maxl maximumprimes len l era|maximumprimes := 1000001.
     era := Array new: maximumprimes.

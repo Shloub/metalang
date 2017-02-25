@@ -51,7 +51,6 @@ def montagnes0(tab, len):
             max0 = j
         i -= 1
     return max0
-
 len = 0
 len = readint()
 stdinsep()

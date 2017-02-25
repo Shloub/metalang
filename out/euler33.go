@@ -7,7 +7,6 @@ func max2_(a int, b int) int{
       return b
   }
 }
-
 func min2_(a int, b int) int{
   if a < b {
       return a
@@ -15,7 +14,6 @@ func min2_(a int, b int) int{
       return b
   }
 }
-
 func pgcd(a int, b int) int{
   c := min2_(a, b)
   d := max2_(a, b)
@@ -26,7 +24,6 @@ func pgcd(a int, b int) int{
       return pgcd(c, reste)
   }
 }
-
 func main() {
   top := 1
   bottom := 1

@@ -16,7 +16,6 @@ Module ocaml01
     Return 0
   End Function
   
-  
   Sub Main()
     
   End Sub

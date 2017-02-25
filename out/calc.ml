@@ -13,7 +13,6 @@ let fibo a b i =
     a2 := tmp
   done;
   (!out_)
-
 let () =
  Printf.printf "%d" (fibo 1 2 4) 
  

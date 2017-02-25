@@ -30,7 +30,6 @@ function exp0($a, $b) {
     else
         return $a * exp0($a, $b - 1);
 }
-
 $a = 0;
 $b = 0;
 list($a) = scan("%d");

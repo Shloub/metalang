@@ -13,7 +13,6 @@ def eratostene(t, max0):
                 t[j] = 0
                 j += i
     return n
-
 def fillPrimesFactors(t, n, primes, nprimes):
     for i in range(0, nprimes):
         d = primes[i]
@@ -23,7 +22,6 @@ def fillPrimesFactors(t, n, primes, nprimes):
         if n == 1:
             return primes[i]
     return n
-
 def find(ndiv2):
     maximumprimes = 110
     era = [None] * maximumprimes
@@ -49,6 +47,5 @@ def find(ndiv2):
         # print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
         
     return 0
-
 print("%d\n" % find(500), end='')
 

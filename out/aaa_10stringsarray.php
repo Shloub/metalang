@@ -1,17 +1,13 @@
 <?php
-
 function idstring($s) {
     return $s;
 }
-
 function printstring($s) {
     echo idstring($s), "\n";
 }
-
 function print_toto(&$t) {
     echo $t["s"], " = ", $t["v"], "\n";
 }
-
 $tab = array();
 for ($i = 0; $i < 2; $i++)
     $tab[$i] = idstring("chaine de test");

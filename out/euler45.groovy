@@ -50,7 +50,6 @@ boolean findHexa2(int n, int a, int b)
 }
 
 
-
 for (int n = 285; n < 55386; n++)
 {
     int t = triangle(n)

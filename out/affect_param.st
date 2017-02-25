@@ -3,7 +3,6 @@ Object subclass: affect_param [
     a := b.
     a := 4.
   ]
-  
   main [
     |a|a := 0.
     (self foo:a).

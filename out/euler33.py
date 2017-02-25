@@ -11,7 +11,6 @@ def pgcd(a, b):
         return c
     else:
         return pgcd(c, reste)
-
 top = 1
 bottom = 1
 for i in range(1, 10):

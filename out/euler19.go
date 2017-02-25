@@ -3,7 +3,6 @@ import "fmt"
 func is_leap(year int) bool{
   return year % 400 == 0 || year % 100 != 0 && year % 4 == 0
 }
-
 func ndayinmonth(month int, year int) int{
   if month == 0 {
       return 31
@@ -36,7 +35,6 @@ func ndayinmonth(month int, year int) int{
   }
   return 0
 }
-
 func main() {
   month := 0
   year := 1901

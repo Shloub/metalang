@@ -1,6 +1,8 @@
 import groovy.transform.Field
 import java.util.*
 
+
+
 boolean is_triangular(int n)
 {
   /*
@@ -34,7 +36,6 @@ int score()
   else
       return 0
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 for (int i = 1; i < 56; i++)

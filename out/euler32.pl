@@ -28,7 +28,6 @@ sub remainder {
 #  => b != e != b * e % 10 ET
 #  a != d != (b * e / 10 + b * d + a * e ) % 10
 #
-
 sub okdigits{
   my($ok, $n) = @_;
   if ($n eq 0)
@@ -51,7 +50,6 @@ sub okdigits{
       }
   }
 }
-
 my $count = 0;
 my $allowed = [];
 foreach my $i (0 .. 9)

@@ -61,14 +61,12 @@ def find0(len, tab, cache, x, y):
         result = out1 + tab[y][x]
     cache[y][x] = result
     return result
-
 def find(len, tab):
     tab2 = [None] * len
     for i in range(0, len):
         tab3 = [0] * (i + 1)
         tab2[i] = tab3
     return find0(len, tab, tab2, 0, 0)
-
 len = 0
 len = readint()
 stdinsep()

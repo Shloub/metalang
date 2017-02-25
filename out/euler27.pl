@@ -23,7 +23,6 @@ sub eratostene{
   }
   return $n;
 }
-
 sub isPrime{
   my($n, $primes, $len) = @_;
   my $i = 0;
@@ -41,7 +40,6 @@ sub isPrime{
   }
   return !(0);
 }
-
 sub test{
   my($a, $b, $primes, $len) = @_;
   foreach my $n (0 .. 200)
@@ -54,7 +52,6 @@ sub test{
   }
   return 200;
 }
-
 my $maximumprimes = 1000;
 my $era = [];
 foreach my $j (0 .. $maximumprimes - 1)

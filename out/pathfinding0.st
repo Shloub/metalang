@@ -44,7 +44,6 @@ Object subclass: pathfinding0 [
             ^ out0
           ].].].].
   ]
-  
    pathfind: tab x: x y: y [|tmp cache|
     cache := Array new: y.
     (0 to: (y - 1)) do: [:i|
@@ -59,7 +58,6 @@ Object subclass: pathfinding0 [
     ].
     ^ (self pathfind_aux: cache tab: tab x: x y: y posX: 0 posY: 0)
   ]
-  
   main [
     |y x tab result g e|x := self read_int.
     self skip.

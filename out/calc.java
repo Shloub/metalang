@@ -6,7 +6,6 @@ public class calc
   /*
 La suite de fibonaci
 */
-  
   static int fibo(int a, int b, int i)
   {
     int out_ = 0;
@@ -22,8 +21,6 @@ La suite de fibonaci
     }
     return out_;
   }
-  
-  
   public static void main(String args[])
   {
     System.out.print(fibo(1, 2, 4));

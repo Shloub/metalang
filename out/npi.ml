@@ -1,6 +1,5 @@
 let is_number c =
   (int_of_char (c)) <= (int_of_char ('9')) && (int_of_char (c)) >= (int_of_char ('0'))
-
 (*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 *)
@@ -32,7 +31,6 @@ let npi0 str len =
           end
   done;
   stack.(0)
-
 let () =
  let len = 0 in
   let len = Scanf.scanf "%d " (fun len -> len) in

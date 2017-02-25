@@ -14,6 +14,8 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
+
 func is_triangular(n int) bool{
   /*
    n = k * (k + 1) / 2
@@ -22,7 +24,6 @@ func is_triangular(n int) bool{
   a := int(math.Sqrt(float64(n * 2)))
   return a * (a + 1) == n * 2
 }
-
 func score() int{
   var len int
   skip()
@@ -41,7 +42,6 @@ func score() int{
       return 0
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   for i := 1; i < 56; i++ {

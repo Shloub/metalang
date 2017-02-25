@@ -55,6 +55,8 @@ Function readInt() As Integer
     End If
   Loop
 End Function
+  
+  
   Function position_alphabet(ByVal c as Char) As Integer
     Dim i As Integer = Asc(c)
     If i <= Asc("Z"C) AndAlso i >= Asc("A"C) Then
@@ -80,7 +82,6 @@ End Function
         End If
     Next
   End Sub
-  
   
   Sub Main()
     Dim taille_cle As Integer = readInt

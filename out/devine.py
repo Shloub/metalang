@@ -50,7 +50,6 @@ def devine0(nombre, tab, len):
         if tab[i] == nombre and len != i + 1:
             return False
     return True
-
 nombre = readint()
 stdinsep()
 len = readint()

@@ -7,7 +7,6 @@ func max2_(a int, b int) int{
       return b
   }
 }
-
 func primesfactors(n int) []int{
   var tab []int = make([]int, n + 1)
   for i := 0; i <= n; i++ {
@@ -25,7 +24,6 @@ func primesfactors(n int) []int{
   tab[n]++
   return tab
 }
-
 func main() {
   lim := 20
   var o []int = make([]int, lim + 1)

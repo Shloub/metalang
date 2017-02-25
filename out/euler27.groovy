@@ -43,7 +43,6 @@ int test(int a, int b, int[] primes, int len)
 }
 
 
-
 int maximumprimes = 1000
 int[] era = new int[maximumprimes]
 for (int j = 0; j < maximumprimes; j++)

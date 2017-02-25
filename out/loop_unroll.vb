@@ -7,7 +7,6 @@ Module loop_unroll
   'Il effectue du loop unrolling
   '
   
-  
   Sub Main()
     Dim j As Integer = 0
     j = 0

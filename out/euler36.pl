@@ -29,7 +29,6 @@ sub palindrome2{
   }
   return !(0);
 }
-
 my $p = 1;
 my $pow2 = [];
 foreach my $i (0 .. 19)

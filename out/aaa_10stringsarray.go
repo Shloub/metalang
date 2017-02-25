@@ -5,19 +5,15 @@ type toto struct {
   s string;
   v int;
 }
-
 func idstring(s string) string{
   return s
 }
-
 func printstring(s string) {
   fmt.Printf("%s\n", idstring(s))
 }
-
 func print_toto(t * toto) {
   fmt.Printf("%s = %d\n", (*t).s, (*t).v)
 }
-
 func main() {
   var tab []string = make([]string, 2)
   for i := 0; i < 2; i++ {

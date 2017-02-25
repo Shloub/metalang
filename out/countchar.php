@@ -33,7 +33,6 @@ function nth(&$tab, $tofind, $len) {
             $out0++;
     return $out0;
 }
-
 $len = 0;
 list($len) = scan("%d");
 scantrim();

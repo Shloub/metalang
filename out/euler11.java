@@ -12,6 +12,8 @@ public class euler11
     return out;
   }
 
+  
+  
   static int find(int n, int[][] m, int x, int y, int dx, int dy)
   {
     if (x < 0 || x == 20 || y < 0 || y == 20)
@@ -21,12 +23,10 @@ public class euler11
     else
         return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
   }
-  
   static class tuple_int_int {
     public int tuple_int_int_field_0;
     public int tuple_int_int_field_1;
   }
-  
   public static void main(String args[])
   {
     tuple_int_int[] directions = new tuple_int_int[8];

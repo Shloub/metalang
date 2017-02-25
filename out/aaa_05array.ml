@@ -1,9 +1,7 @@
 let id b =
   b
-
 let g t index =
   t.(index) <- false
-
 let () =
  let j = ref( 0 ) in
   let a = Array.init 5 (fun i ->

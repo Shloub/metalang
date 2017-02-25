@@ -16,7 +16,6 @@ func skip() {
 /*
 La suite de fibonaci
 */
-
 func fibo0(a int, b int, i int) int{
   out0 := 0
   a2 := a
@@ -29,7 +28,6 @@ func fibo0(a int, b int, i int) int{
   }
   return out0
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   a := 0

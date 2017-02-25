@@ -67,7 +67,6 @@ End Function
     Return out0
   End Function
   
-  
   Sub Main()
     Dim a As Integer = 0
     Dim b As Integer = 0

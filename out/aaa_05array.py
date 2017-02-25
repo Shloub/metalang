@@ -5,10 +5,8 @@ def mod(x, y):
 
 def id(b):
     return b
-
 def g(t, index):
     t[index] = False
-
 j = 0
 a = [None] * 5
 for i in range(0, 5):

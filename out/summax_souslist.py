@@ -47,7 +47,6 @@ def summax(lst, len):
         if max0 < current:
             max0 = current
     return max0
-
 len = 0
 len = readint()
 stdinsep()

@@ -41,7 +41,6 @@ Module euler27
     Return 200
   End Function
   
-  
   Sub Main()
     Dim maximumprimes As Integer = 1000
     Dim era(maximumprimes) As Integer

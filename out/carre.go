@@ -20,7 +20,6 @@ func min2_(a int, b int) int{
       return b
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var y int

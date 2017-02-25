@@ -4,7 +4,6 @@ Object subclass: euler24 [
     (2 to: n) do: [:i| prod := prod * i.].
     ^ prod
   ]
-  
    show: lim a: a [|t pris nth nchiffre n|
     nth := a.
     t := Array new: lim.
@@ -30,7 +29,6 @@ Object subclass: euler24 [
     '
 ' display.
   ]
-  
   main [
     (self show:10 a:999999).
     ]

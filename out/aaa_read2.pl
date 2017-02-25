@@ -9,7 +9,6 @@ sub remainder {
 #Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 #read int, read char et skip
 #
-
 my $len = int( <STDIN> );
 print($len, "=len\n");
 my $tab = [ map { int($_) } split(/\s+/, <STDIN>) ];

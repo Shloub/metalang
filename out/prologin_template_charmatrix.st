@@ -36,7 +36,6 @@ Object subclass: prologin_template_charmatrix [
     ].
     ^ out0
   ]
-  
   main [
     |taille_y taille_x tableau c a|taille_x := self read_int.
     self skip.

@@ -24,7 +24,6 @@ public class euler07
     return t[used - 1];
   }
   
-  
   public static void Main(String[] args)
   {
     int n = 10001;

@@ -36,7 +36,6 @@ def okdigits(ok, n):
             return o
         else:
             return False
-
 count = 0
 allowed = [None] * 10
 for i in range(0, 10):

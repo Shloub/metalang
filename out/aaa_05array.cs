@@ -12,7 +12,6 @@ public class aaa_05array
     t[index] = false;
   }
   
-  
   public static void Main(String[] args)
   {
     int j = 0;

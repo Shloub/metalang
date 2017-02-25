@@ -74,7 +74,6 @@ public class aaa_021if
     Console.Write("\n");
   }
   
-  
   public static void Main(String[] args)
   {
     test(true, true);

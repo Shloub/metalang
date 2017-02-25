@@ -16,7 +16,6 @@ public class record3
     t.blah = 0;
     return t;
   }
-  
   static int result(toto[] t, int len)
   {
     int out0 = 0;
@@ -27,8 +26,6 @@ public class record3
     }
     return out0;
   }
-  
-  
   public static void main(String args[])
   {
     toto[] t = new toto[4];

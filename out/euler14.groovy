@@ -24,7 +24,6 @@ int find(int n, int[] m)
 }
 
 
-
 int[] m = new int[1000000]
 for (int j = 0; j < 1000000; j++)
     m[j] = 0

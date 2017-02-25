@@ -17,7 +17,6 @@ sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar(); }
 }
 
-
 my $param = {"foo" => 0, "bar" => 0};
 $param->{"bar"} = readint();
 readspaces();

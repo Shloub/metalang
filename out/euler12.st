@@ -12,7 +12,6 @@ Object subclass: euler12 [
       ].].
     ^ n
   ]
-  
    fillPrimesFactors: t c: c primes: primes nprimes: nprimes [|n d|
     n := c.
     (0 to: (nprimes - 1)) do: [:i|
@@ -26,7 +25,6 @@ Object subclass: euler12 [
     ].
     ^ n
   ]
-  
    find: ndiv2  [|primesFactors primes nprimes ndivs maximumprimes max0 l era|
     maximumprimes := 110.
     era := Array new: maximumprimes.
@@ -54,7 +52,6 @@ Object subclass: euler12 [
     ].
     ^ 0
   ]
-  
   main [
     (self find: 500) display.
     '

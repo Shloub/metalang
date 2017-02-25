@@ -26,7 +26,6 @@ sub copytab{
   }
   return $o;
 }
-
 sub bubblesort{
   my($tab, $len) = @_;
   foreach my $i (0 .. $len - 1)
@@ -42,7 +41,6 @@ sub bubblesort{
       }
   }
 }
-
 sub qsort0{
   my($tab, $len, $i, $j) = @_;
   if ($i < $j)
@@ -84,7 +82,6 @@ sub qsort0{
       qsort0($tab, $len, $i + 1, $j0);
   }
 }
-
 my $len = 2;
 $len = readint();
 readspaces();

@@ -35,11 +35,9 @@ function position_alphabet($c) {
     else
         return -1;
 }
-
 function of_position_alphabet($c) {
     return chr($c + ord("a"));
 }
-
 function crypte($taille_cle, &$cle, $taille, &$message) {
     for ($i = 0; $i < $taille; $i++)
     {
@@ -52,7 +50,6 @@ function crypte($taille_cle, &$cle, $taille, &$message) {
         }
     }
 }
-
 list($taille_cle) = scan("%d");
 scantrim();
 $cle = array();

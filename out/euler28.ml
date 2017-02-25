@@ -24,7 +24,6 @@ let sumdiag n =
     sum := (!sum) + (!un)
   done;
   (!sum)
-
 let () =
  Printf.printf "%d" (sumdiag 1001) 
  

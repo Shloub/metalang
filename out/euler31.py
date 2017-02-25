@@ -12,7 +12,6 @@ def result(sum, t, maxIndex, cache):
             out0 += result(sum - i * t[maxIndex], t, maxIndex - 1, cache)
         cache[sum][maxIndex] = out0
         return out0
-
 t = [0] * 8
 t[0] = 1
 t[1] = 2

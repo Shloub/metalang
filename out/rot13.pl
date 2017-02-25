@@ -31,7 +31,6 @@ sub remainder {
 #
 #Ce test effectue un rot13 sur une chaine lue en entrée
 #
-
 my $strlen = readint();
 readspaces();
 my $tab4 = [];

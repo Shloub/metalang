@@ -13,14 +13,13 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
 func is_number(c byte) bool{
   return (int)(c) <= (int)('9') && (int)(c) >= (int)('0')
 }
-
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-
 func npi0(str []byte, len int) int{
   var stack []int = make([]int, len)
   for i := 0; i < len; i++ {
@@ -47,7 +46,6 @@ func npi0(str []byte, len int) int{
   }
   return stack[0]
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   len := 0

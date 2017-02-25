@@ -3,7 +3,6 @@ let test tab len =
     Printf.printf "%d " tab.(i)
   done;
   Printf.printf "\n"
-
 let () =
  let t = Array.init 5 (fun i ->
    1) in

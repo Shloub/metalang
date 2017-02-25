@@ -23,7 +23,6 @@ public class pathfindList
         return out0;
     }
   }
-  
   static int pathfind(int[] tab, int len)
   {
     int[] cache = new int[len];
@@ -31,8 +30,6 @@ public class pathfindList
         cache[i] = -1;
     return pathfind_aux(cache, tab, len, 0);
   }
-  
-  
   public static void main(String args[])
   {
     int len = 0;

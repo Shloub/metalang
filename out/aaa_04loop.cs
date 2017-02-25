@@ -17,7 +17,6 @@ public class aaa_04loop
     return false;
   }
   
-  
   public static void Main(String[] args)
   {
     int j = 0;

@@ -10,6 +10,8 @@ import java.util.*
     return out;
   }
 
+
+
 int find(int n, int[][] m, int x, int y, int dx, int dy)
 {
   if (x < 0 || x == 20 || y < 0 || y == 20)
@@ -24,7 +26,6 @@ class Tuple_int_int {
   int tuple_int_int_field_0
   int tuple_int_int_field_1
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 Tuple_int_int[] directions = new Tuple_int_int[8]
 for (int i = 0; i < 8; i++)

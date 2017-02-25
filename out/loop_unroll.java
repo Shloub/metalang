@@ -7,8 +7,6 @@ public class loop_unroll
 Ce test permet de vérifier le comportement des macros
 Il effectue du loop unrolling
 */
-  
-  
   public static void main(String args[])
   {
     int j = 0;

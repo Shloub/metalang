@@ -13,6 +13,7 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
 func score() int{
   var len int
   skip()
@@ -27,7 +28,6 @@ func score() int{
   }
   return sum
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   sum := 0

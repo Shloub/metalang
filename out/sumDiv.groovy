@@ -43,7 +43,6 @@ int sumdiv(int n)
   // On renvoie out
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 //  Programme principal 
 int n = 0

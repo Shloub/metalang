@@ -44,7 +44,6 @@ def readint():
 
 def is_number(c):
     return ord(c) <= ord('9') and ord(c) >= ord('0')
-
 """Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI"""
 def npi0(str, len):
     stack = [0] * len
@@ -65,7 +64,6 @@ def npi0(str, len):
             ptrStack -= 1
             ptrStr += 1
     return stack[0]
-
 len = 0
 len = readint()
 stdinsep()

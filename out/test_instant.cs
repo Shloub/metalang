@@ -7,7 +7,6 @@ public class test_instant
     return a + b;
   }
   
-  
   public static void Main(String[] args)
   {
     Console.Write(10);

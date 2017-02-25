@@ -1,6 +1,9 @@
 import groovy.transform.Field
 import java.util.*
 
+
+
+
 class Bigint {
   boolean bigint_sign
   int bigint_len
@@ -262,7 +265,6 @@ Bigint mul_bigint(Bigint aa, Bigint bb)
 Division,
 Modulo
 */
-
 int log10(int a)
 {
   int out0 = 1
@@ -315,7 +317,6 @@ int sum_chiffres_bigint(Bigint a)
 }
 
 //  http://projecteuler.net/problem=20 
-
 int euler20()
 {
   Bigint a = bigint_of_int(15)
@@ -429,7 +430,6 @@ int euler29()
   }
   return n
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 System.out.printf("%d\n", euler29())

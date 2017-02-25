@@ -45,11 +45,9 @@ function go0(&$tab, $a, $b) {
     else
         return go0($tab, $m, $b);
 }
-
 function plus_petit0(&$tab, $len) {
     return go0($tab, 0, $len);
 }
-
 $len = 0;
 list($len) = scan("%d");
 scantrim();

@@ -17,13 +17,11 @@ sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar(); }
 }
 
-
 sub mktoto{
   my($v1) = @_;
   my $t = {"foo" => $v1, "bar" => 0, "blah" => 0};
   return $t;
 }
-
 sub result{
   my($t, $len) = @_;
   my $out0 = 0;
@@ -34,7 +32,6 @@ sub result{
   }
   return $out0;
 }
-
 my $t = [];
 foreach my $i (0 .. 3)
 {

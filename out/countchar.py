@@ -48,7 +48,6 @@ def nth(tab, tofind, len):
         if tab[i] == tofind:
             out0 += 1
     return out0
-
 len = 0
 len = readint()
 stdinsep()

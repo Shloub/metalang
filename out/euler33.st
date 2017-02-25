@@ -7,7 +7,6 @@ Object subclass: euler33 [
     ifTrue:[^ c]
     ifFalse:[^ (self pgcd: c b: reste)].
   ]
-  
   main [
     |top p bottom b a|top := 1.
     bottom := 1.

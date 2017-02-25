@@ -47,7 +47,6 @@ static int readInt(){
   } while(true);
 } 
   //  lit un sudoku sur l'entrée standard 
-  
   static int[] read_sudoku()
   {
     int[] out0 = new int[9 * 9];
@@ -61,7 +60,6 @@ static int readInt(){
   }
   
   //  affiche un sudoku 
-  
   static void print_sudoku(int[] sudoku0)
   {
     for (int y = 0; y < 9; y++)
@@ -80,11 +78,8 @@ static int readInt(){
   }
   
   //  dit si les variables sont toutes différentes 
-  
   //  dit si les variables sont toutes différentes 
-  
   //  dit si le sudoku est terminé de remplir 
-  
   static bool sudoku_done(int[] s)
   {
     for (int i = 0; i < 81; i++)
@@ -94,7 +89,6 @@ static int readInt(){
   }
   
   //  dit si il y a une erreur dans le sudoku 
-  
   static bool sudoku_error(int[] s)
   {
     bool out1 = false;
@@ -110,7 +104,6 @@ static int readInt(){
   }
   
   //  résout le sudoku
-  
   static bool solve(int[] sudoku0)
   {
     if (sudoku_error(sudoku0))
@@ -131,7 +124,6 @@ static int readInt(){
         }
     return false;
   }
-  
   
   public static void Main(String[] args)
   {

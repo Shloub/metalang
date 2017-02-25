@@ -8,7 +8,6 @@ func divisible(n int, t []int, size int) bool{
   }
   return false
 }
-
 func find(n int, t []int, used int, nth int) int{
   for used != nth {
       if divisible(n, t, used) {
@@ -21,7 +20,6 @@ func find(n int, t []int, used int, nth int) int{
   }
   return t[used - 1]
 }
-
 func main() {
   n := 10001
   var t []int = make([]int, n)

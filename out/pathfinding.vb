@@ -55,6 +55,7 @@ Function readInt() As Integer
     End If
   Loop
 End Function
+  
   Function pathfind_aux(ByRef cache as Integer()(), ByRef tab as Char()(), ByVal x as Integer, ByVal y as Integer, ByVal posX as Integer, ByVal posY as Integer) As Integer
     If posX = x - 1 AndAlso posY = y - 1 Then
         Return 0
@@ -87,7 +88,6 @@ End Function
         Next
         Return pathfind_aux(cache, tab, x, y, 0, 0)
     End Function
-    
     
     Sub Main()
       Dim x As Integer = 0

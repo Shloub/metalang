@@ -9,7 +9,6 @@ sub programme_candidat{
   }
   return $out0;
 }
-
 my $taille = int( <STDIN> );
 my $tableau = [ map { int($_) } split(/\s+/, <STDIN>) ];
 print(programme_candidat($tableau, $taille), "\n");

@@ -41,7 +41,6 @@ Module euler24
     Console.Write(Chr(10))
     End Sub
     
-    
     Sub Main()
       show(10, 999999)
     End Sub

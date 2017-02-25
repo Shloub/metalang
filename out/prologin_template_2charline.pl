@@ -17,7 +17,6 @@ sub programme_candidat{
   print "--\n";
   return $out0;
 }
-
 my $taille1 = int( <STDIN> );
 my $tableau1 = [split(//, <STDIN>)];
 my $taille2 = int( <STDIN> );

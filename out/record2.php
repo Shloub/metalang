@@ -19,7 +19,6 @@ function scantrim(){
     stdin_();
   }
 }
-
 function &mktoto($v1) {
     $t = array(
         "foo" => $v1,
@@ -27,12 +26,10 @@ function &mktoto($v1) {
         "blah" => 0);
     return $t;
 }
-
 function result(&$t) {
     $t["blah"]++;
     return $t["foo"] + $t["blah"] * $t["bar"] + $t["bar"] * $t["foo"];
 }
-
 $t = mktoto(4);
 list($t["bar"]) = scan("%d");
 scantrim();

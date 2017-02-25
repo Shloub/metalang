@@ -6,7 +6,6 @@ func test(tab []int, len int) {
   }
   fmt.Printf("\n")
 }
-
 func main() {
   var t []int = make([]int, 5)
   for i := 0; i < 5; i++ {

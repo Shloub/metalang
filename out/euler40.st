@@ -4,7 +4,6 @@ Object subclass: euler40 [
     (1 to: e) do: [:i| o := o * a.].
     ^ o
   ]
-  
    e: t b: b [|nombre n chiffre|
     n := b.
     (1 to: 8) do: [:i| (n >= ((t at: (i + 1)) * i))
@@ -16,7 +15,6 @@ Object subclass: euler40 [
       ].].
     ^ 0 - 1
   ]
-  
   main [
     |v t puiss out0|t := Array new: 9.
     (0 to: 8) do: [:i| t at: (i + 1) put: ((self exp0: 10 e: i) - (self exp0: 10 e: (i - 1))).].

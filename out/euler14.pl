@@ -16,7 +16,6 @@ sub next0{
       return 3 * $n + 1;
   }
 }
-
 sub find{
   my($n, $m) = @_;
   if ($n eq 1)
@@ -37,7 +36,6 @@ sub find{
               return $m->[$n];
           }
 }
-
 my $m = [];
 foreach my $j (0 .. 999999)
 {

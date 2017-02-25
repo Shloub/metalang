@@ -6,6 +6,5 @@ int foo(int a, int b)
 }
 
 
-
 print(10)
 

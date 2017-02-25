@@ -39,6 +39,5 @@ void show(int lim, int nth)
 }
 
 
-
 show(10, 999999)
 

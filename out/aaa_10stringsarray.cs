@@ -21,7 +21,6 @@ public class aaa_10stringsarray
     Console.Write(t.s + " = " + t.v + "\n");
   }
   
-  
   public static void Main(String[] args)
   {
     String[] tab = new String[2];

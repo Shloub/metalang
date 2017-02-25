@@ -3,12 +3,12 @@ import java.util.*;
 public class aaa_read
 {
   static Scanner scanner = new Scanner(System.in);
+  
+  
   /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-  
-  
   public static void main(String args[])
   {
     int len;

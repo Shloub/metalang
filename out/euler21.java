@@ -19,7 +19,6 @@ public class euler21
         }
     return n;
   }
-  
   static int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
   {
     for (int i = 0; i < nprimes; i++)
@@ -35,14 +34,12 @@ public class euler21
     }
     return n;
   }
-  
   static int sumdivaux2(int[] t, int n, int i)
   {
     while (i < n && t[i] == 0)
         i++;
     return i;
   }
-  
   static int sumdivaux(int[] t, int n, int i)
   {
     if (i > n)
@@ -62,7 +59,6 @@ public class euler21
         return (out0 + 1) * o;
     }
   }
-  
   static int sumdiv(int nprimes, int[] primes, int n)
   {
     int[] t = new int[n + 1];
@@ -71,8 +67,6 @@ public class euler21
     int max0 = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
   }
-  
-  
   public static void main(String args[])
   {
     int maximumprimes = 1001;

@@ -53,7 +53,6 @@ void test(Intlist empty)
   }
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 
 

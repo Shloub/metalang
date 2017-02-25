@@ -13,6 +13,7 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
 func main() {
   reader = bufio.NewReader(os.Stdin)
   for i := 1; i < 4; i++ {

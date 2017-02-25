@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class prologin_template_charmatrix
 {
+  
+  
+  
   static int programme_candidat(char[][] tableau, int taille_x, int taille_y)
   {
     int out0 = 0;
@@ -17,7 +20,6 @@ public class prologin_template_charmatrix
     }
     return out0;
   }
-  
   
   public static void Main(String[] args)
   {

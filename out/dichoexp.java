@@ -15,8 +15,6 @@ public class dichoexp
     else
         return a * exp0(a, b - 1);
   }
-  
-  
   public static void main(String args[])
   {
     int a = 0;

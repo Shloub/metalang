@@ -3,11 +3,11 @@ import java.util.*;
 public class rot13
 {
   static Scanner scanner = new Scanner(System.in);
+  
+  
   /*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
-  
-  
   public static void main(String args[])
   {
     int strlen;

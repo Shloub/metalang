@@ -25,7 +25,6 @@ Object subclass: record2 [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  
    mktoto: v1  [|t|
     t := toto new.
     t foo: v1.
@@ -33,12 +32,10 @@ Object subclass: record2 [
     t blah: 0.
     ^ t
   ]
-  
    result: t  [
     t blah: (t blah + 1).
     ^ t foo + (t blah * t bar) + (t bar * t foo)
   ]
-  
   main [
     |t|t := (self mktoto: 4).
     t bar: self read_int.

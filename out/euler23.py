@@ -13,7 +13,6 @@ def eratostene(t, max0):
                 t[j] = 0
                 j += i
     return n
-
 def fillPrimesFactors(t, n, primes, nprimes):
     for i in range(0, nprimes):
         d = primes[i]
@@ -23,12 +22,10 @@ def fillPrimesFactors(t, n, primes, nprimes):
         if n == 1:
             return primes[i]
     return n
-
 def sumdivaux2(t, n, i):
     while i < n and t[i] == 0:
         i += 1
     return i
-
 def sumdivaux(t, n, i):
     if i > n:
         return 1
@@ -42,12 +39,10 @@ def sumdivaux(t, n, i):
             out0 += p
             p *= i
         return (out0 + 1) * o
-
 def sumdiv(nprimes, primes, n):
     t = [0] * (n + 1)
     max0 = fillPrimesFactors(t, n, primes, nprimes)
     return sumdivaux(t, max0, 0)
-
 maximumprimes = 30001
 era = [None] * maximumprimes
 for s in range(0, maximumprimes):

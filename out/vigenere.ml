@@ -7,10 +7,8 @@ let position_alphabet c =
       i - (int_of_char ('a'))
     else
       - 1
-
 let of_position_alphabet c =
   (char_of_int (c + (int_of_char ('a'))))
-
 let crypte taille_cle cle taille message =
   for i = 0 to taille - 1 do
     let lettre = position_alphabet message.(i) in
@@ -19,7 +17,6 @@ let crypte taille_cle cle taille message =
       let new0 = (addon + lettre) mod 26 in
       message.(i) <- of_position_alphabet new0
   done
-
 let () =
  let taille_cle = Scanf.scanf "%d " (fun taille_cle -> taille_cle) in
   let cle = Array.init taille_cle (fun index ->

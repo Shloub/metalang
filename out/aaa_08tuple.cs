@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class aaa_08tuple
 {
+  
+  
   public class tuple_int_int {
     public int tuple_int_int_field_0;
     public int tuple_int_int_field_1;
@@ -11,7 +13,6 @@ public class aaa_08tuple
     public tuple_int_int foo;
     public int bar;
   }
-  
   public static void Main(String[] args)
   {
     int bar_ = int.Parse(Console.ReadLine());

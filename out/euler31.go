@@ -15,7 +15,6 @@ func result(sum int, t []int, maxIndex int, cache [][]int) int{
       return out0
   }
 }
-
 func main() {
   var t []int = make([]int, 8)
   for i := 0; i < 8; i++ {

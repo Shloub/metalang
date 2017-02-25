@@ -5,18 +5,15 @@ function triangle($n) {
     else
         return $n * intval(($n + 1) / 2);
 }
-
 function penta($n) {
     if ($n % 2 == 0)
         return intval($n / 2) * (3 * $n - 1);
     else
         return intval((3 * $n - 1) / 2) * $n;
 }
-
 function hexa($n) {
     return $n * (2 * $n - 1);
 }
-
 function findPenta2($n, $a, $b) {
     if ($b == $a + 1)
         return penta($a) == $n || penta($b) == $n;
@@ -29,7 +26,6 @@ function findPenta2($n, $a, $b) {
     else
         return findPenta2($n, $a, $c);
 }
-
 function findHexa2($n, $a, $b) {
     if ($b == $a + 1)
         return hexa($a) == $n || hexa($b) == $n;
@@ -42,7 +38,6 @@ function findHexa2($n, $a, $b) {
     else
         return findHexa2($n, $a, $c);
 }
-
 for ($n = 285; $n < 55386; $n++)
 {
     $t = triangle($n);

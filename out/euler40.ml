@@ -4,7 +4,6 @@ let exp0 a e =
     o := (!o) * a
   done;
   (!o)
-
 exception Found_1 of int
 
 let e t n =
@@ -20,7 +19,6 @@ let e t n =
   done;
   - 1
   with Found_1 (out) -> out
-
 let () =
  let t = Array.init 9 (fun i ->
    exp0 10 i - exp0 10 (i - 1)) in

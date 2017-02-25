@@ -12,7 +12,6 @@ let eratostene t max0 =
       end
   done;
   (!n)
-
 exception Found_1 of int
 
 let fillPrimesFactors t n primes nprimes =
@@ -29,7 +28,6 @@ let fillPrimesFactors t n primes nprimes =
   done;
   (!n)
   with Found_1 (out) -> out
-
 
 let find ndiv2 =
   try
@@ -63,7 +61,6 @@ let find ndiv2 =
   done;
   0
   with Found_1 (out) -> out
-
 let () =
  Printf.printf "%d\n" (find 500) 
  

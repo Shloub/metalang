@@ -32,7 +32,6 @@ func pathfind_aux(cache []int, tab []int, len int, pos int) int{
       return out0
   }
 }
-
 func pathfind(tab []int, len int) int{
   var cache []int = make([]int, len)
   for i := 0; i < len; i++ {
@@ -40,7 +39,6 @@ func pathfind(tab []int, len int) int{
   }
   return pathfind_aux(cache, tab, len, 0)
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   len := 0

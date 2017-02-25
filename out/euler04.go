@@ -7,7 +7,6 @@ func max2_(a int, b int) int{
       return b
   }
 }
-
 /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -26,7 +25,6 @@ a * d +
 c * f * 10000
 
 */
-
 func chiffre(c int, m int) int{
   if c == 0 {
       return m % 10
@@ -34,7 +32,6 @@ func chiffre(c int, m int) int{
       return chiffre(c - 1, m / 10)
   }
 }
-
 func main() {
   m := 1
   for a := 0; a < 10; a++ {

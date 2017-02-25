@@ -22,8 +22,6 @@ public class euler10
         }
     return sum;
   }
-  
-  
   public static void main(String args[])
   {
     int n = 100000;

@@ -3,6 +3,8 @@ Imports System.Collections.Generic
 
 Module aaa_08tuple
 
+  
+  
   Public Class tuple_int_int
     Public tuple_int_int_field_0 As Integer
     Public tuple_int_int_field_1 As Integer
@@ -11,7 +13,6 @@ Module aaa_08tuple
     Public foo As tuple_int_int
     Public bar As Integer
   End Class
-  
   Sub Main()
     Dim bar_ As Integer = Integer.Parse(Console.ReadLine())
     Dim c As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))

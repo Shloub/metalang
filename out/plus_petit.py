@@ -59,10 +59,8 @@ def go0(tab, a, b):
         return go0(tab, a, m)
     else:
         return go0(tab, m, b)
-
 def plus_petit0(tab, len):
     return go0(tab, 0, len)
-
 len = 0
 len = readint()
 stdinsep()

@@ -16,7 +16,6 @@ func eratostene(t []int, max0 int) int{
   }
   return n
 }
-
 func main() {
   maximumprimes := 6000
   var era []int = make([]int, maximumprimes)

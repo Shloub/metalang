@@ -24,7 +24,6 @@ public class euler40
     return -1;
   }
   
-  
   public static void Main(String[] args)
   {
     int[] t = new int[9];

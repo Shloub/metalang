@@ -2,7 +2,6 @@ import groovy.transform.Field
 import java.util.*
 
 //  lit un sudoku sur l'entrée standard 
-
 int[] read_sudoku()
 {
   int[] out0 = new int[9 * 9]
@@ -22,7 +21,6 @@ int[] read_sudoku()
 }
 
 //  affiche un sudoku 
-
 void print_sudoku(int[] sudoku0)
 {
   for (int y = 0; y < 9; y++)
@@ -41,11 +39,8 @@ void print_sudoku(int[] sudoku0)
 }
 
 //  dit si les variables sont toutes différentes 
-
 //  dit si les variables sont toutes différentes 
-
 //  dit si le sudoku est terminé de remplir 
-
 boolean sudoku_done(int[] s)
 {
   for (int i = 0; i < 81; i++)
@@ -55,7 +50,6 @@ boolean sudoku_done(int[] s)
 }
 
 //  dit si il y a une erreur dans le sudoku 
-
 boolean sudoku_error(int[] s)
 {
   boolean out1 = false
@@ -71,7 +65,6 @@ boolean sudoku_error(int[] s)
 }
 
 //  résout le sudoku
-
 boolean solve(int[] sudoku0)
 {
   if (sudoku_error(sudoku0))
@@ -92,7 +85,6 @@ boolean solve(int[] sudoku0)
       }
   return false
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 int[] sudoku0 = read_sudoku()

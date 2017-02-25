@@ -16,7 +16,6 @@ func eratostene(t []int, max0 int) int{
   }
   return sum
 }
-
 func main() {
   n := 100000
   /* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages */

@@ -8,7 +8,6 @@ def fact(n):
     for i in range(2, n + 1):
         prod *= i
     return prod
-
 def show(lim, nth):
     t = [None] * lim
     for i in range(0, lim):
@@ -28,6 +27,5 @@ def show(lim, nth):
         if not pris[m]:
             print("%d" % m, end='')
     print("\n", end='')
-
 show(10, 999999)
 

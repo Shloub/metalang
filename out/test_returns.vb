@@ -27,7 +27,6 @@ Module test_returns
     Return i Mod 2 = 0
   End Function
   
-  
   Sub Main()
     
   End Sub

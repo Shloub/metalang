@@ -6,7 +6,6 @@ Module affect_param
     a = 4
   End Sub
   
-  
   Sub Main()
     Dim a As Integer = 0
     foo(a)

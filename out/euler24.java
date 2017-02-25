@@ -10,7 +10,6 @@ public class euler24
         prod *= i;
     return prod;
   }
-  
   static void show(int lim, int nth)
   {
     int[] t = new int[lim];
@@ -40,8 +39,6 @@ public class euler24
             System.out.print(m);
     System.out.print("\n");
   }
-  
-  
   public static void main(String args[])
   {
     show(10, 999999);

@@ -35,7 +35,6 @@ let rec okdigits ok n =
       end
     else
       false
-
 let () =
  let count = ref( 0 ) in
   let allowed = Array.init 10 (fun i ->

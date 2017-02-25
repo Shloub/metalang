@@ -9,7 +9,6 @@ sub is_leap{
   my($year) = @_;
   return remainder($year, 400) eq 0 || remainder($year, 100) ne 0 && remainder($year, 4) eq 0;
 }
-
 sub ndayinmonth{
   my($month, $year) = @_;
   if ($month eq 0)
@@ -69,7 +68,6 @@ sub ndayinmonth{
                                               }
   return 0;
 }
-
 my $month = 0;
 my $year = 1901;
 my $dayofweek = 1;

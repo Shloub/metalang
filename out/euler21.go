@@ -14,7 +14,6 @@ func eratostene(t []int, max0 int) int{
   }
   return n
 }
-
 func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   for i := 0; i < nprimes; i++ {
       d := primes[i]
@@ -28,14 +27,12 @@ func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   }
   return n
 }
-
 func sumdivaux2(t []int, n int, i int) int{
   for i < n && t[i] == 0 {
       i++
   }
   return i
 }
-
 func sumdivaux(t []int, n int, i int) int{
   if i > n {
       return 1
@@ -52,7 +49,6 @@ func sumdivaux(t []int, n int, i int) int{
       return (out0 + 1) * o
   }
 }
-
 func sumdiv(nprimes int, primes []int, n int) int{
   var t []int = make([]int, n + 1)
   for i := 0; i <= n; i++ {
@@ -61,7 +57,6 @@ func sumdiv(nprimes int, primes []int, n int) int{
   max0 := fillPrimesFactors(t, n, primes, nprimes)
   return sumdivaux(t, max0, 0)
 }
-
 func main() {
   maximumprimes := 1001
   var era []int = make([]int, maximumprimes)

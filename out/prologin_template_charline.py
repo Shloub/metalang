@@ -6,7 +6,6 @@ def programme_candidat(tableau, taille):
         print("%c" % tableau[i], end='')
     print("--\n", end='')
     return out0
-
 taille = int(input())
 tableau = list(input())
 print("%d\n" % programme_candidat(tableau, taille), end='')

@@ -8,7 +8,6 @@ boolean f(int i)
 }
 
 
-
 if (f(4))
     print("true <-\n ->\n")
 else

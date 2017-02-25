@@ -13,6 +13,7 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var str []byte = make([]byte, 12)

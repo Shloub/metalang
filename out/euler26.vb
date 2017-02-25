@@ -18,7 +18,6 @@ Module euler26
     Return 0
   End Function
   
-  
   Sub Main()
     Dim t(1000) As Integer
     For j As Integer = 0 To 999

@@ -17,7 +17,6 @@ public class tuple
     return d;
   }
   
-  
   public static void Main(String[] args)
   {
     tuple_int_int e = new tuple_int_int();

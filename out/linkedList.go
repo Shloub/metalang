@@ -8,18 +8,15 @@ type intlist struct {
   head int;
   tail * intlist;
 }
-
 func cons(list * intlist, i int) * intlist{
   var out0 * intlist = new (intlist)
       (*out0).head=i
       (*out0).tail=list
   return out0
 }
-
 func is_empty(foo * intlist) bool{
   return true
 }
-
 func rev2(acc * intlist, torev * intlist) * intlist{
   if is_empty(torev) {
       return acc
@@ -30,11 +27,9 @@ func rev2(acc * intlist, torev * intlist) * intlist{
       return rev2(acc, (*torev).tail)
   }
 }
-
 func rev(empty * intlist, torev * intlist) * intlist{
   return rev2(empty, torev)
 }
-
 func test(empty * intlist) {
   var list * intlist = empty
   i := -1
@@ -45,7 +40,6 @@ func test(empty * intlist) {
       }
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   

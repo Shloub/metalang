@@ -40,7 +40,6 @@ public class euler24
     Console.Write("\n");
   }
   
-  
   public static void Main(String[] args)
   {
     show(10, 999999);

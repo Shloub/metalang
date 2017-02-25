@@ -34,7 +34,6 @@ function is_triangular($n) {
     $a = intval(sqrt($n * 2));
     return $a * ($a + 1) == $n * 2;
 }
-
 function score() {
     scantrim();
     list($len) = scan("%d");
@@ -51,7 +50,6 @@ function score() {
     else
         return 0;
 }
-
 for ($i = 1; $i < 56; $i++)
     if (is_triangular($i))
         echo $i, " ";

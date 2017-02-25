@@ -1,5 +1,6 @@
 package main
 import "fmt"
+
 func main() {
   var f []int = make([]int, 10)
   for j := 0; j < 10; j++ {

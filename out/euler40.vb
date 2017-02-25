@@ -23,7 +23,6 @@ Module euler40
     Return -1
   End Function
   
-  
   Sub Main()
     Dim t(9) As Integer
     For i As Integer = 0 To 8

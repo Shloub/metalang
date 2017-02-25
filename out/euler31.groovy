@@ -18,7 +18,6 @@ int result(int sum, int[] t, int maxIndex, int[][] cache)
 }
 
 
-
 int[] t = new int[8]
 for (int i = 0; i < 8; i++)
     t[i] = 0

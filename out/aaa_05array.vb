@@ -10,7 +10,6 @@ Module aaa_05array
     t(index) = false
   End Sub
   
-  
   Sub Main()
     Dim j As Integer = 0
     Dim a(5) As Boolean

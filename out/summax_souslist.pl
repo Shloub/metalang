@@ -35,7 +35,6 @@ sub summax{
   }
   return $max0;
 }
-
 my $len = 0;
 $len = readint();
 readspaces();

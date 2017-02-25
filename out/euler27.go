@@ -14,7 +14,6 @@ func eratostene(t []int, max0 int) int{
   }
   return n
 }
-
 func isPrime(n int, primes []int, len int) bool{
   i := 0
   if n < 0 {
@@ -28,7 +27,6 @@ func isPrime(n int, primes []int, len int) bool{
   }
   return true
 }
-
 func test(a int, b int, primes []int, len int) int{
   for n := 0; n < 201; n++ {
       j := n * n + a * n + b
@@ -38,7 +36,6 @@ func test(a int, b int, primes []int, len int) int{
   }
   return 200
 }
-
 func main() {
   maximumprimes := 1000
   var era []int = make([]int, maximumprimes)

@@ -39,9 +39,7 @@ def readint():
 
 """Tictactoe : un tictactoe avec une IA"""
 """La structure de donnée"""
-
 """Un Mouvement"""
-
 """On affiche l'état"""
 def print_state(g):
     print("\n|", end='')
@@ -57,7 +55,6 @@ def print_state(g):
         if y != 2:
             print("\n|-|-|-|\n|", end='')
     print("\n", end='')
-
 """On dit qui gagne (info stoquées dans g.ended et g.note )"""
 def eval0(g):
     win = 0
@@ -94,7 +91,6 @@ def eval0(g):
         g["note"] = -1000
     else:
         g["note"] = 0
-
 """On applique un mouvement"""
 def apply_move_xy(x, y, g):
     player = 2
@@ -102,24 +98,18 @@ def apply_move_xy(x, y, g):
         player = 1
     g["cases"][x][y] = player
     g["firstToPlay"] = not g["firstToPlay"]
-
 def apply_move(m, g):
     apply_move_xy(m["x"], m["y"], g)
-
 def cancel_move_xy(x, y, g):
     g["cases"][x][y] = 0
     g["firstToPlay"] = not g["firstToPlay"]
     g["ended"] = False
-
 def cancel_move(m, g):
     cancel_move_xy(m["x"], m["y"], g)
-
 def can_move_xy(x, y, g):
     return g["cases"][x][y] == 0
-
 def can_move(m, g):
     return can_move_xy(m["x"], m["y"], g)
-
 """Un minimax classique, renvoie la note du plateau"""
 def minmax(g):
     eval0(g)
@@ -139,7 +129,6 @@ def minmax(g):
                 if (currentNote > maxNote) == g["firstToPlay"]:
                     maxNote = currentNote
     return maxNote
-
 """Renvoie le coup de l'IA"""
 def play(g):
     minMove = {"x":0, "y":0}
@@ -157,21 +146,18 @@ def play(g):
                     minMove["y"] = y
     print("%d%d\n" % (minMove["x"], minMove["y"]), end='')
     return minMove
-
 def init0():
     cases = [None] * 3
     for i in range(0, 3):
         tab = [0] * 3
         cases[i] = tab
     return {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
-
 def read_move():
     x = readint()
     stdinsep()
     y = readint()
     stdinsep()
     return {"x":x, "y":y}
-
 for i in range(0, 2):
     state = init0()
     apply_move({"x":1, "y":1}, state)

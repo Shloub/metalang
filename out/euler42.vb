@@ -55,6 +55,8 @@ Function readInt() As Integer
     End If
   Loop
 End Function
+  
+  
   Function is_triangular(ByVal n as Integer) As Boolean
     '
     '   n = k * (k + 1) / 2
@@ -82,7 +84,6 @@ End Function
         Return 0
     End If
   End Function
-  
   
   Sub Main()
     For i As Integer = 1 To 55

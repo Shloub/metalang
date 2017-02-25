@@ -3,15 +3,14 @@ import java.util.*;
 public class npi
 {
   static Scanner scanner = new Scanner(System.in);
+  
   static boolean is_number(char c)
   {
     return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
   }
-  
   /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-  
   static int npi0(char[] str, int len)
   {
     int[] stack = new int[len];
@@ -41,8 +40,6 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
         }
     return stack[0];
   }
-  
-  
   public static void main(String args[])
   {
     int len = 0;

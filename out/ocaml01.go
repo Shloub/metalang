@@ -5,7 +5,6 @@ func foo() int{
   }
   return 0
 }
-
 func bar() int{
   for i := 0; i < 11; i++ {
       a := 0
@@ -13,7 +12,6 @@ func bar() int{
   }
   return 0
 }
-
 func main() {
   
 }

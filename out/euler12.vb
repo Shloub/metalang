@@ -2,6 +2,7 @@ Imports System
 
 Module euler12
 
+  
   Function eratostene(ByRef t as Integer(), ByVal max0 as Integer) As Integer
     Dim n As Integer = 0
     For i As Integer = 2 To max0 - 1
@@ -70,7 +71,6 @@ Module euler12
         Next
         Return 0
     End Function
-    
     
     Sub Main()
       Console.Write(find(500) & Chr(10))

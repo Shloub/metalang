@@ -51,6 +51,8 @@ static int readInt(){
     }
   } while(true);
 } 
+  
+  
   static int position_alphabet(char c)
   {
     int i = (int)(c);
@@ -80,7 +82,6 @@ static int readInt(){
         }
     }
   }
-  
   
   public static void Main(String[] args)
   {

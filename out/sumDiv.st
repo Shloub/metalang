@@ -16,16 +16,13 @@ Object subclass: sumDiv [
     a := a + 1.
     " test 2 "
   ]
-  
   foo2 [
     
   ]
-  
   foo3 [
     (1 = 1)
     ifTrue:[].
   ]
-  
    sumdiv: n  [|out0|
     " On désire renvoyer la somme des diviseurs "
     out0 := 0.
@@ -43,7 +40,6 @@ Object subclass: sumDiv [
     ^ out0
     "On renvoie out"
   ]
-  
   main [
     |n|" Programme principal "
     n := 0.

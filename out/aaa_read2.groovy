@@ -10,12 +10,15 @@ import java.util.*
     return out;
   }
 
+
+
+
+
+
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = Integer.parseInt(scanner.nextLine())
 System.out.printf("%d=len\n", len)

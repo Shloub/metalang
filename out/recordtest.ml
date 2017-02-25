@@ -2,7 +2,6 @@ type toto = {
   mutable foo : int;
   mutable bar : int;
 };;
-
 let () =
  let param = {foo=0;
  bar=0} in

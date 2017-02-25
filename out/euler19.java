@@ -7,7 +7,6 @@ public class euler19
   {
     return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
   }
-  
   static int ndayinmonth(int month, int year)
   {
     if (month == 0)
@@ -39,8 +38,6 @@ public class euler19
         return 31;
     return 0;
   }
-  
-  
   public static void main(String args[])
   {
     int month = 0;

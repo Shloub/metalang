@@ -64,7 +64,6 @@ static int readInt(){
     return true;
   }
   
-  
   public static void Main(String[] args)
   {
     int nombre = readInt();

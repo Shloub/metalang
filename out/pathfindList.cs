@@ -75,7 +75,6 @@ static int readInt(){
     return pathfind_aux(cache, tab, len, 0);
   }
   
-  
   public static void Main(String[] args)
   {
     int len = 0;

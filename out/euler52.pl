@@ -27,13 +27,11 @@ sub chiffre_sort{
       }
   }
 }
-
 sub same_numbers{
   my($a, $b, $c, $d, $e, $f) = @_;
   my $ca = chiffre_sort($a);
   return $ca eq chiffre_sort($b) && $ca eq chiffre_sort($c) && $ca eq chiffre_sort($d) && $ca eq chiffre_sort($e) && $ca eq chiffre_sort($f);
 }
-
 my $num = 142857;
 if (same_numbers($num, $num * 2, $num * 3, $num * 4, $num * 6, $num * 5))
 {

@@ -4,7 +4,6 @@ function f($i) {
         return true;
     return false;
 }
-
 if (f(4))
     echo "true <-\n ->\n";
 else

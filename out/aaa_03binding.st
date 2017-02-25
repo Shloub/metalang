@@ -5,13 +5,11 @@ Object subclass: aaa_03binding [
     ifTrue:[^ 0].
     ^ j
   ]
-  
    h: i  [
     i display.
     '
 ' display.
   ]
-  
   main [
     |b a|(self h:14).
     a := 4.

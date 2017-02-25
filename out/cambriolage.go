@@ -20,7 +20,6 @@ func max2_(a int, b int) int{
       return b
   }
 }
-
 func nbPassePartout(n int, passepartout [][]int, m int, serrures [][]int) int{
   max_ancient := 0
   max_recent := 0
@@ -48,7 +47,6 @@ func nbPassePartout(n int, passepartout [][]int, m int, serrures [][]int) int{
       return 0
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var n int

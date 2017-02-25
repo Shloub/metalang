@@ -23,7 +23,6 @@ Module euler14
     End If
   End Function
   
-  
   Sub Main()
     Dim m(1000000) As Integer
     For j As Integer = 0 To 999999

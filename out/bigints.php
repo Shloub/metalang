@@ -26,7 +26,6 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-
 function &read_bigint($len) {
     $chiffres = array();
     for ($j = 0; $j < $len; $j++)
@@ -46,14 +45,12 @@ function &read_bigint($len) {
         "bigint_chiffres" => $chiffres);
     return $e;
 }
-
 function print_bigint(&$a) {
     if (!$a["bigint_sign"])
         echo "-";
     for ($i = 0; $i < $a["bigint_len"]; $i++)
         echo $a["bigint_chiffres"][$a["bigint_len"] - 1 - $i];
 }
-
 function bigint_eq(&$a, &$b) {
     //  Renvoie vrai si a = b 
     if ($a["bigint_sign"] != $b["bigint_sign"])
@@ -68,7 +65,6 @@ function bigint_eq(&$a, &$b) {
         return true;
     }
 }
-
 function bigint_gt(&$a, &$b) {
     //  Renvoie vrai si a > b 
     if ($a["bigint_sign"] && !$b["bigint_sign"])
@@ -93,11 +89,9 @@ function bigint_gt(&$a, &$b) {
         return true;
     }
 }
-
 function bigint_lt(&$a, &$b) {
     return !bigint_gt($a, $b);
 }
-
 function &add_bigint_positif(&$a, &$b) {
     //  Une addition ou on en a rien a faire des signes 
     $len = max($a["bigint_len"], $b["bigint_len"]) + 1;
@@ -121,7 +115,6 @@ function &add_bigint_positif(&$a, &$b) {
         "bigint_chiffres" => $chiffres);
     return $f;
 }
-
 function &sub_bigint_positif(&$a, &$b) {
     /* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -151,7 +144,6 @@ Pré-requis : a > b
         "bigint_chiffres" => $chiffres);
     return $g;
 }
-
 function &neg_bigint(&$a) {
     $h = array(
         "bigint_sign" => !$a["bigint_sign"],
@@ -159,7 +151,6 @@ function &neg_bigint(&$a) {
         "bigint_chiffres" => $a["bigint_chiffres"]);
     return $h;
 }
-
 function &add_bigint(&$a, &$b) {
     if ($a["bigint_sign"] == $b["bigint_sign"])
         if ($a["bigint_sign"])
@@ -181,11 +172,9 @@ function &add_bigint(&$a, &$b) {
         else
             return sub_bigint_positif($b, $a);
 }
-
 function &sub_bigint(&$a, &$b) {
     return add_bigint($a, neg_bigint($b));
 }
-
 function &mul_bigint_cp(&$a, &$b) {
     /* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -214,7 +203,6 @@ D'ou le nom de la fonction. */
         "bigint_chiffres" => $chiffres);
     return $m;
 }
-
 function &bigint_premiers_chiffres(&$a, $i) {
     $len = min($i, $a["bigint_len"]);
     while ($len != 0 && $a["bigint_chiffres"][$len - 1] == 0)
@@ -225,7 +213,6 @@ function &bigint_premiers_chiffres(&$a, $i) {
         "bigint_chiffres" => $a["bigint_chiffres"]);
     return $o;
 }
-
 function &bigint_shift(&$a, $i) {
     $chiffres = array();
     for ($k = 0; $k < $a["bigint_len"] + $i; $k++)
@@ -239,7 +226,6 @@ function &bigint_shift(&$a, $i) {
         "bigint_chiffres" => $chiffres);
     return $p;
 }
-
 function &mul_bigint(&$aa, &$bb) {
     if ($aa["bigint_len"] == 0)
         return $aa;
@@ -262,12 +248,10 @@ function &mul_bigint(&$aa, &$bb) {
     return add_bigint(add_bigint($acdec, $bd), bigint_shift(sub_bigint(add_bigint($ac, $bd), $amoinsbcmoinsd), $split));
     //  ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
 }
-
 /*
 Division,
 Modulo
 */
-
 function log100($a) {
     $out0 = 1;
     while ($a >= 10)
@@ -277,7 +261,6 @@ function log100($a) {
     }
     return $out0;
 }
-
 function &bigint_of_int($i) {
     $size = log100($i);
     if ($i == 0)
@@ -294,7 +277,6 @@ function &bigint_of_int($i) {
         "bigint_chiffres" => $t);
     return $q;
 }
-
 function &fact_bigint(&$a) {
     $one = bigint_of_int(1);
     $out0 = $one;
@@ -305,23 +287,19 @@ function &fact_bigint(&$a) {
     }
     return $out0;
 }
-
 function sum_chiffres_bigint(&$a) {
     $out0 = 0;
     for ($i = 0; $i < $a["bigint_len"]; $i++)
         $out0 += $a["bigint_chiffres"][$i];
     return $out0;
 }
-
 //  http://projecteuler.net/problem=20 
-
 function euler20() {
     $a = bigint_of_int(15);
     //  normalement c'est 100 
     $a = fact_bigint($a);
     return sum_chiffres_bigint($a);
 }
-
 function &bigint_exp(&$a, $b) {
     if ($b == 1)
         return $a;
@@ -330,7 +308,6 @@ function &bigint_exp(&$a, $b) {
     else
         return mul_bigint($a, bigint_exp($a, $b - 1));
 }
-
 function &bigint_exp_10chiffres(&$a, $b) {
     $a = bigint_premiers_chiffres($a, 10);
     if ($b == 1)
@@ -340,7 +317,6 @@ function &bigint_exp_10chiffres(&$a, $b) {
     else
         return mul_bigint($a, bigint_exp_10chiffres($a, $b - 1));
 }
-
 function euler48() {
     $sum = bigint_of_int(0);
     for ($i = 1; $i < 101; $i++)
@@ -355,14 +331,12 @@ function euler48() {
     print_bigint($sum);
     echo "\n";
 }
-
 function euler16() {
     $a = bigint_of_int(2);
     $a = bigint_exp($a, 100);
     //  1000 normalement 
     return sum_chiffres_bigint($a);
 }
-
 function euler25() {
     $i = 2;
     $a = bigint_of_int(1);
@@ -377,7 +351,6 @@ function euler25() {
     }
     return $i;
 }
-
 function euler29() {
     $maxA = 5;
     $maxB = 5;
@@ -419,7 +392,6 @@ function euler29() {
     }
     return $n;
 }
-
 echo euler29(), "\n";
 $sum = read_bigint(50);
 for ($i = 2; $i < 101; $i++)

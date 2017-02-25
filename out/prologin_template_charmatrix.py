@@ -7,7 +7,6 @@ def programme_candidat(tableau, taille_x, taille_y):
             print("%c" % tableau[i][j], end='')
         print("--\n", end='')
     return out0
-
 taille_x = int(input())
 taille_y = int(input())
 a = [None] * taille_y

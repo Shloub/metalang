@@ -3,6 +3,8 @@ import java.util.*;
 public class vigenere
 {
   static Scanner scanner = new Scanner(System.in);
+  
+  
   static int position_alphabet(char c)
   {
     int i = (int)(c);
@@ -13,12 +15,10 @@ public class vigenere
     else
         return -1;
   }
-  
   static char of_position_alphabet(int c)
   {
     return (char)(c + (int)('a'));
   }
-  
   static void crypte(int taille_cle, char[] cle, int taille, char[] message)
   {
     for (int i = 0; i < taille; i++)
@@ -32,8 +32,6 @@ public class vigenere
         }
     }
   }
-  
-  
   public static void main(String args[])
   {
     int taille_cle;

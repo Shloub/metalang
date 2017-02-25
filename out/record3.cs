@@ -71,7 +71,6 @@ static int readInt(){
     return out0;
   }
   
-  
   public static void Main(String[] args)
   {
     toto[] t = new toto[4];

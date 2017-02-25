@@ -1,6 +1,7 @@
 import groovy.transform.Field
 import java.util.*
 
+
 int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)
 {
   int max_ancient = 0
@@ -27,7 +28,6 @@ int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)
   else
       return 0
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 int n

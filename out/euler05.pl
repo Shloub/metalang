@@ -29,7 +29,6 @@ sub primesfactors{
   $tab->[$n] = $tab->[$n] + 1;
   return $tab;
 }
-
 my $lim = 20;
 my $o = [];
 foreach my $m (0 .. $lim)

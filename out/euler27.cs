@@ -44,7 +44,6 @@ public class euler27
     return 200;
   }
   
-  
   public static void Main(String[] args)
   {
     int maximumprimes = 1000;

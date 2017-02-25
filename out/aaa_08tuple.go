@@ -19,12 +19,10 @@ type tuple_int_int struct {
   tuple_int_int_field_1 int;
 }
 
-
 type toto struct {
   foo * tuple_int_int;
   bar int;
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var d int

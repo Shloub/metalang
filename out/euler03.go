@@ -1,6 +1,7 @@
 package main
 import "fmt"
 import "math"
+
 func main() {
   maximum := 1
   _ = maximum

@@ -25,7 +25,6 @@ public class euler14
     }
   }
   
-  
   public static void Main(String[] args)
   {
     int[] m = new int[1000000];

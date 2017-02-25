@@ -38,7 +38,6 @@ Object subclass: cambriolage [
     ifTrue:[^ 2]
     ifFalse:[^ 0].
   ]
-  
   main [
     |serrures passepartout out_ out1 out01 out0 n m|n := self read_int.
     self skip.

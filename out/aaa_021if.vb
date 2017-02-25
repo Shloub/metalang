@@ -72,7 +72,6 @@ Module aaa_021if
     Console.Write(Chr(10))
   End Sub
   
-  
   Sub Main()
     test(true, true)
     test(true, false)

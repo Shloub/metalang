@@ -7,7 +7,6 @@ public class recordtest
     public int foo;
     public int bar;
   }
-  
   public static void main(String args[])
   {
     toto param = new toto();

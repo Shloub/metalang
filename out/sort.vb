@@ -103,7 +103,6 @@ End Function
       End If
     End Sub
     
-    
     Sub Main()
       Dim len As Integer = 2
       len = readInt

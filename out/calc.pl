@@ -3,7 +3,6 @@
 #
 #La suite de fibonaci
 #
-
 sub fibo{
   my($a, $b, $i) = @_;
   my $out_ = 0;
@@ -19,7 +18,6 @@ sub fibo{
   }
   return $out_;
 }
-
 print fibo(1, 2, 4);
 
 

@@ -8,7 +8,6 @@ public class test_enum
      Bar,
      Blah}
   
-  
   public static void main(String args[])
   {
     foo_t foo_val = foo_t.Foo;

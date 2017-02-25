@@ -31,7 +31,6 @@ La suite de fibonaci
     ].
     ^ out0
   ]
-  
   main [
     |i b a|a := 0.
     b := 0.

@@ -15,7 +15,6 @@ def palindrome2(pow2, n):
         if t[k] != t[nnum - k]:
             return False
     return True
-
 p = 1
 pow2 = [None] * 20
 for i in range(0, 20):

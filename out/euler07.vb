@@ -24,7 +24,6 @@ Module euler07
     Return t(used - 1)
   End Function
   
-  
   Sub Main()
     Dim n As Integer = 10001
     Dim t(n) As Integer

@@ -10,7 +10,6 @@ function testA($a, $b) {
     else
         echo "D";
 }
-
 function testB($a, $b) {
     if ($a)
         echo "A";
@@ -19,7 +18,6 @@ function testB($a, $b) {
     else
         echo "C";
 }
-
 function testC($a, $b) {
     if ($a)
         if ($b)
@@ -29,7 +27,6 @@ function testC($a, $b) {
     else
         echo "C";
 }
-
 function testD($a, $b) {
     if ($a)
     {
@@ -42,7 +39,6 @@ function testD($a, $b) {
     else
         echo "D";
 }
-
 function testE($a, $b) {
     if ($a)
     {
@@ -58,13 +54,11 @@ function testE($a, $b) {
         echo "E";
     }
 }
-
 function test($a, $b) {
     testD($a, $b);
     testE($a, $b);
     echo "\n";
 }
-
 test(true, true);
 test(true, false);
 test(false, true);

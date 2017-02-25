@@ -16,7 +16,6 @@ sub divisible{
   }
   return !(1);
 }
-
 sub find{
   my($n, $t, $used, $nth) = @_;
   while ($used ne $nth)
@@ -34,7 +33,6 @@ sub find{
   }
   return $t->[$used - 1];
 }
-
 my $n = 10001;
 my $t = [];
 foreach my $i (0 .. $n - 1)

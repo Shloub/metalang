@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class carre
 {
   
+  
+  
   public static void Main(String[] args)
   {
     int x = int.Parse(Console.ReadLine());

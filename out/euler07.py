@@ -8,7 +8,6 @@ def divisible(n, t, size):
         if mod(n, t[i]) == 0:
             return True
     return False
-
 def find(n, t, used, nth):
     while used != nth:
         if divisible(n, t, used):
@@ -18,7 +17,6 @@ def find(n, t, used, nth):
             n += 1
             used += 1
     return t[used - 1]
-
 n = 10001
 t = [2] * n
 print("%d\n" % find(3, t, 1, n), end='')

@@ -4,16 +4,13 @@ let foo () =
   let a = a + 1 in
   (* test 2 *)
   ()
-
 let foo2 () =
   
   ()
-
 let foo3 () =
   if 1 = 1 then
     
     ()
-
 let sumdiv n =
   (* On désire renvoyer la somme des diviseurs *)
   let out0 = ref( 0 ) in
@@ -30,7 +27,6 @@ let sumdiv n =
   done;
   (!out0)
   (*On renvoie out*)
-
 let () =
  (* Programme principal *)
   let n = 0 in

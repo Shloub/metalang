@@ -8,7 +8,6 @@ function pgcd($a, $b) {
     else
         return pgcd($c, $reste);
 }
-
 $top = 1;
 $bottom = 1;
 for ($i = 1; $i < 10; $i++)

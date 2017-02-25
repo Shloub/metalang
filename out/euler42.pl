@@ -33,7 +33,6 @@ sub is_triangular{
   my $a = int(sqrt($n * 2));
   return $a * ($a + 1) eq $n * 2;
 }
-
 sub score{
   readspaces();
   my $len = readint();
@@ -55,7 +54,6 @@ sub score{
       return 0;
   }
 }
-
 foreach my $i (1 .. 55)
 {
     if (is_triangular($i))

@@ -10,13 +10,10 @@ public class aaa_03binding
         return 0;
     return j;
   }
-  
   static void h(int i)
   {
     System.out.printf("%d\n", i);
   }
-  
-  
   public static void main(String args[])
   {
     h(14);

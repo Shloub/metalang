@@ -51,7 +51,6 @@ static int readInt(){
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-  
   static int find0(int len, int[][] tab, int[][] cache, int x, int y)
   {
     /*
@@ -86,7 +85,6 @@ on le retrouve ici : http://projecteuler.net/problem=18
     }
     return find0(len, tab, tab2, 0, 0);
   }
-  
   
   public static void Main(String[] args)
   {

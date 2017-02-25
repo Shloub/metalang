@@ -4,7 +4,6 @@
 #Ce test permet de vérifier le comportement des macros
 #Il effectue du loop unrolling
 #
-
 my $j = 0;
 $j = 0;
 print($j, "\n");

@@ -40,7 +40,6 @@ on le retrouve ici : http://projecteuler.net/problem=18
     (cache at: (y + 1)) at: (x + 1) put: result.
     ^ result
   ]
-  
    find: len tab: tab [|tab3 tab2|
     tab2 := Array new: len.
     (0 to: (len - 1)) do: [:i|
@@ -50,7 +49,6 @@ on le retrouve ici : http://projecteuler.net/problem=18
     ].
     ^ (self find0: len tab: tab cache: tab2 x: 0 y: 0)
   ]
-  
   main [
     |tmp tab2 tab len|len := 0.
     len := self read_int.

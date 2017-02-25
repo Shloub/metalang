@@ -23,7 +23,6 @@ int find(int n, int[] t, int used, int nth)
 }
 
 
-
 int n = 10001
 int[] t = new int[n]
 for (int i = 0; i < n; i++)

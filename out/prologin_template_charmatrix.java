@@ -3,6 +3,9 @@ import java.util.*;
 public class prologin_template_charmatrix
 {
   static Scanner scanner = new Scanner(System.in);
+  
+  
+  
   static int programme_candidat(char[][] tableau, int taille_x, int taille_y)
   {
     int out0 = 0;
@@ -17,8 +20,6 @@ public class prologin_template_charmatrix
     }
     return out0;
   }
-  
-  
   public static void main(String args[])
   {
     int taille_x = Integer.parseInt(scanner.nextLine());

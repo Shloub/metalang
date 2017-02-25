@@ -17,7 +17,6 @@ function eratostene(&$t, $max0) {
         }
     return $n;
 }
-
 $maximumprimes = 1000001;
 $era = array();
 for ($j = 0; $j < $maximumprimes; $j++)

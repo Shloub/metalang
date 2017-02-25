@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class pathfinding0
 {
+  
+  
+  
   static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
@@ -42,7 +45,6 @@ public class pathfinding0
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
   }
-  
   
   public static void Main(String[] args)
   {

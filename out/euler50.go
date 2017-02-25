@@ -7,7 +7,6 @@ func min2_(a int, b int) int{
       return b
   }
 }
-
 func eratostene(t []int, max0 int) int{
   n := 0
   for i := 2; i < max0; i++ {
@@ -24,7 +23,6 @@ func eratostene(t []int, max0 int) int{
   }
   return n
 }
-
 func main() {
   maximumprimes := 1000001
   var era []int = make([]int, maximumprimes)

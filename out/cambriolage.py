@@ -57,7 +57,6 @@ def nbPassePartout(n, passepartout, m, serrures):
         return 2
     else:
         return 0
-
 n = readint()
 stdinsep()
 passepartout = [None] * n

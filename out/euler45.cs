@@ -51,7 +51,6 @@ public class euler45
         return findHexa2(n, a, c);
   }
   
-  
   public static void Main(String[] args)
   {
     for (int n = 285; n < 55386; n++)

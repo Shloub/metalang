@@ -3,6 +3,7 @@ import java.util.*;
 public class euler05
 {
   
+  
   static int[] primesfactors(int n)
   {
     int[] tab = new int[n + 1];
@@ -20,8 +21,6 @@ public class euler05
     tab[n]++;
     return tab;
   }
-  
-  
   public static void main(String args[])
   {
     int lim = 20;

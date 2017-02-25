@@ -6,7 +6,6 @@ let rec pgcd a b =
     c
   else
     pgcd c reste
-
 let () =
  let top = ref( 1 ) in
   let bottom = ref( 1 ) in

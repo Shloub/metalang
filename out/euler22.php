@@ -39,7 +39,6 @@ function score() {
     }
     return $sum;
 }
-
 $sum = 0;
 list($n) = scan("%d");
 for ($i = 1; $i <= $n; $i++)

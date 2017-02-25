@@ -7,7 +7,6 @@ let rec exp0 a b =
       o * o
     else
       a * exp0 a (b - 1)
-
 let () =
  let a = 0 in
   let b = 0 in

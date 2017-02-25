@@ -10,6 +10,8 @@ import java.util.*
     return out;
   }
 
+
+
 class Tuple_int_int {
   int tuple_int_int_field_0
   int tuple_int_int_field_1
@@ -18,7 +20,6 @@ class Toto {
   Tuple_int_int foo
   int bar
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int bar_ = Integer.parseInt(scanner.nextLine())
 int[] c = read_int_line()

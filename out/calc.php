@@ -2,7 +2,6 @@
 /*
 La suite de fibonaci
 */
-
 function fibo($a, $b, $i) {
     $out_ = 0;
     $a2 = $a;
@@ -17,6 +16,5 @@ function fibo($a, $b, $i) {
     }
     return $out_;
 }
-
 echo fibo(1, 2, 4);
 

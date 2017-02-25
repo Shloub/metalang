@@ -8,7 +8,6 @@ def next0(n):
         return math.trunc(n / 2)
     else:
         return 3 * n + 1
-
 def find(n, m):
     if n == 1:
         return 1
@@ -19,7 +18,6 @@ def find(n, m):
     else:
         m[n] = 1 + find(next0(n), m)
         return m[n]
-
 m = [0] * 1000000
 max0 = 0
 maxi = 0

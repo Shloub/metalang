@@ -10,7 +10,6 @@ public class sort
         o[i] = tab[i];
     return o;
   }
-  
   static void bubblesort(int[] tab, int len)
   {
     for (int i = 0; i < len; i++)
@@ -22,7 +21,6 @@ public class sort
                 tab[j] = tmp;
             }
   }
-  
   static void qsort0(int[] tab, int len, int i, int j)
   {
     if (i < j)
@@ -55,8 +53,6 @@ public class sort
         qsort0(tab, len, i + 1, j0);
     }
   }
-  
-  
   public static void main(String args[])
   {
     int len = 2;

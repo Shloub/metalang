@@ -39,7 +39,6 @@ sub montagnes0{
   }
   return $max0;
 }
-
 my $len = 0;
 $len = readint();
 readspaces();

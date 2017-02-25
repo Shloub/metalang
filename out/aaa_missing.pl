@@ -3,7 +3,6 @@
 #
 #  Ce test a été généré par Metalang.
 #
-
 sub result{
   my($len, $tab) = @_;
   my $tab2 = [];
@@ -26,7 +25,6 @@ sub result{
   }
   return -1;
 }
-
 my $len = int( <STDIN> );
 print($len, "\n");
 my $tab = [ map { int($_) } split(/\s+/, <STDIN>) ];

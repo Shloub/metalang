@@ -37,7 +37,6 @@ sub score{
   }
   return $sum;
 }
-
 my $sum = 0;
 my $n = readint();
 foreach my $i (1 .. $n)

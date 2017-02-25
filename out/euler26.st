@@ -13,7 +13,6 @@ Object subclass: euler26 [
     ].
     ^ 0
   ]
-  
   main [
     |t p mi m|t := Array new: 1000.
     (0 to: 999) do: [:j| t at: (j + 1) put: 0.].

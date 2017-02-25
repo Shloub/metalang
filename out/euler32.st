@@ -37,7 +37,6 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
       ifFalse:[^ false].
     ].
   ]
-  
   main [
     |product2 product counted count be allowed|count := 0.
     allowed := Array new: 10.

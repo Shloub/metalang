@@ -20,20 +20,16 @@ sub readspaces {
 #
 #Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 #
-
-
 sub mktoto{
   my($v1) = @_;
   my $t = {"foo" => $v1, "bar" => $v1, "blah" => $v1};
   return $t;
 }
-
 sub mktoto2{
   my($v1) = @_;
   my $t = {"foo" => $v1 + 3, "bar" => $v1 + 2, "blah" => $v1 + 1};
   return $t;
 }
-
 sub result{
   my($t_, $t2_) = @_;
   my $t = $t_;
@@ -59,7 +55,6 @@ sub result{
   $cache2 = $cache0;
   return $t->{"foo"} + $t->{"blah"} * $t->{"bar"} + $t->{"bar"} * $t->{"foo"};
 }
-
 my $t = mktoto(4);
 my $t2 = mktoto(5);
 $t->{"bar"} = readint();

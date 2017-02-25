@@ -3,11 +3,9 @@ import "fmt"
 func id(b []bool) []bool{
   return b
 }
-
 func g(t []bool, index int) {
   t[index] = false
 }
-
 func main() {
   j := 0
   var a []bool = make([]bool, 5)

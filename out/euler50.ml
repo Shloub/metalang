@@ -13,7 +13,6 @@ let eratostene t max0 =
       end
   done;
   (!n)
-
 let () =
  let maximumprimes = 1000001 in
   let era = Array.init maximumprimes (fun j ->

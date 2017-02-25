@@ -5,7 +5,6 @@ function exp0($a, $e) {
         $o *= $a;
     return $o;
 }
-
 function e(&$t, $n) {
     for ($i = 1; $i < 9; $i++)
         if ($n >= $t[$i] * $i)
@@ -18,7 +17,6 @@ function e(&$t, $n) {
         }
     return -1;
 }
-
 $t = array();
 for ($i = 0; $i < 9; $i++)
     $t[$i] = exp0(10, $i) - exp0(10, $i - 1);

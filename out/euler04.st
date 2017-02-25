@@ -22,7 +22,6 @@ c * f * 10000
     ifTrue:[^ m rem: 10]
     ifFalse:[^ (self chiffre: (c - 1) m: (m quo: 10))].
   ]
-  
   main [
     |mul m|m := 1.
     (0 to: 9) do: [:a| (1 to: 9) do: [:f| (0 to: 9) do: [:d| (1 to: 9) do: [:c| (0 to: 9) do: [:b| (0 to: 9) do: [:e|

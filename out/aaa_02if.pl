@@ -8,7 +8,6 @@ sub f{
   }
   return !(1);
 }
-
 if (f(4))
 {
     print "true <-\n ->\n";

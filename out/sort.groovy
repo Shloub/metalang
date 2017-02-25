@@ -54,7 +54,6 @@ void qsort0(int[] tab, int len, int i, int j)
   }
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 2
 if (scanner.hasNext("^-")) {

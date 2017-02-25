@@ -5,7 +5,6 @@ function fact($n) {
         $prod *= $i;
     return $prod;
 }
-
 function show($lim, $nth) {
     $t = array();
     for ($i = 0; $i < $lim; $i++)
@@ -32,6 +31,5 @@ function show($lim, $nth) {
             echo $m;
     echo "\n";
 }
-
 show(10, 999999);
 

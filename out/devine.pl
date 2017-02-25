@@ -42,7 +42,6 @@ sub devine0{
   }
   return !(0);
 }
-
 my $nombre = readint();
 readspaces();
 my $len = readint();

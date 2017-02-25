@@ -10,6 +10,8 @@ import java.util.*
     return out;
   }
 
+
+
 int programme_candidat(int[] tableau, int taille)
 {
   int out0 = 0
@@ -17,7 +19,6 @@ int programme_candidat(int[] tableau, int taille)
       out0 += tableau[i]
   return out0
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 int taille = Integer.parseInt(scanner.nextLine())

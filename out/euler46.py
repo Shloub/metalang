@@ -11,7 +11,6 @@ def eratostene(t, max0):
                     t[j] = 0
                     j += i
     return n
-
 maximumprimes = 6000
 era = [None] * maximumprimes
 for j_ in range(0, maximumprimes):
