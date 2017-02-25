@@ -153,9 +153,16 @@ let print_instr print_instr0 ptype macros i =
   in fun f -> i.p f i.default
 
 class cPrinter = object(self)
-  inherit Printer.printer as baseprinter
 
-  method instr f t =
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
+  
+
+  method instructions f li =
     let rewrite i = match Instr.unfix i with
       | Instr.ClikeLoop (init, cond, incr, li) ->
         let init = List.map (fun i -> match Instr.unfix i with
@@ -166,46 +173,52 @@ class cPrinter = object(self)
         in Instr.ClikeLoop (init, cond, incr, li) |> Instr.fix
       | _ -> i
     in
-    let t = Instr.Fixed.Deep.map rewrite t in
+    let li = List.map (Instr.Fixed.Deep.map rewrite) li in
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "c" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instr print_instr0 (ptype (baseprinter#getTyperEnv ())) macros t) f
+    in print_list (fun f t -> print_instr print_instr0 (ptype typerEnv) macros t f) sep_nl f li
 
-  method lang () = lang
-
-  method ptype f t = ptype (baseprinter#getTyperEnv ()) f t
+  method ptype f t = ptype typerEnv f t
 
   method main f main =
     let li_fori, li_forc = clike_collect_for main false in
-    Format.fprintf f "@[<v 4>int main(void) {@\n%a%a%a@\nreturn 0%a@]@\n}"
+    Format.fprintf f "@[<v 4>int main(void) {@\n%a%a%a@\nreturn 0;@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
-      self#separator ()
 
   method prototype f t = self#ptype f t
 
   method print_proto f (funname, t, li) =
-    Format.fprintf f "%a %a(%a)"
-      self#ptype t
-      self#funname funname
+    Format.fprintf f "%a %s(%a)"
+      self#ptype t funname
       (print_list
          (fun t (binding, type_) ->
             Format.fprintf t "%a@ %a"
-              self#prototype type_
-              self#binding binding
+              self#prototype type_ print_varname  binding
          ) sep_c
       ) li
 
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
     Format.fprintf f "#include <stdio.h>@\n#include <stdlib.h>@\n%a@\n%a%a@\n@\n"
       (fun f () ->
          if Tags.is_taged "use_math"
          then Format.fprintf f "#include <math.h>@\n"
       ) ()
-      self#proglist prog.Prog.funs
+(print_list (fun f t -> match t with
+           | Prog.Comment str -> Format.fprintf f "/* %s */@\n" str
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) -> self#print_fun f funname t li liinstrs
+           | Prog.DeclareType (name, t) -> self#decl_type f name t
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) sep_nl)
+             
+      prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   method decl_type f name t =
@@ -214,38 +227,25 @@ class cPrinter = object(self)
       let b = List.exists (fun (n, t) -> match Type.unfix t with
           | Type.Named n -> n = name
           | _ -> false) li in
-      Format.fprintf f "%atypedef struct %a {@\n@[<v 4>  %a@]@\n} %a%a@\n"
+      Format.fprintf f "%atypedef struct %s {@\n@[<v 4>  %a@]@\n} %s;@\n"
         (fun f b ->
-           if b then Format.fprintf f "struct %a%a@\n" self#typename name self#separator ()
-        ) b
-        self#typename name
+           if b then Format.fprintf f "struct %s;@\n" name
+        ) b name
         (print_list
            (fun t (name, type_) ->
-              Format.fprintf t "%a %a%a" self#ptype type_ self#field name self#separator ()
+              Format.fprintf t "%a %s;" self#ptype type_ name
            ) sep_nl
-        ) li
-        self#typename name
-        self#separator ()
+        ) li name
     | Type.Enum li ->
-      Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a%a"
-        self#typename name
-        (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li
-        self#typename name
-        self#separator ()
-    | _ ->
-      Format.fprintf f "typedef %a %a%a"
-        baseprinter#ptype t
-        baseprinter#typename name
-        self#separator ()
+      Format.fprintf f "typedef enum %s {@\n@[<v2>  %a@]@\n} %s;" name
+        (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li name
+    | _ -> assert false
 
   method declare_for s f li =
     if li <> [] then
-      Format.fprintf f "%s %a%a@\n"
+      Format.fprintf f "%s %a;@\n"
         s
-        (print_list self#binding sep_c) li
-        self#separator ()
-
-  method comment f str = Format.fprintf f "/* %s */@\n" str
+        (print_list print_varname sep_c) li
 
   method print_fun f funname t li instrs =
     let li_fori, li_forc = clike_collect_for instrs false in

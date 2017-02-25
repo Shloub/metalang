@@ -167,28 +167,25 @@ let cc_print_mut conf prio f m = Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "->at(%a)" "%a->%s" conf) m f prio
 
 class cppPrinter = object(self)
-  inherit CPrinter.cPrinter as super
 
-  method print_fun f funname t li instrs =
-    let li_fori, li_forc = clike_collect_for instrs true in
-    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
-      self#print_proto (funname, t, li)
-      (self#declare_for "int") li_fori
-      (self#declare_for "char") li_forc
-      self#instructions instrs
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
-  method instr f t =
+  method declare_for s f li =
+    if li <> [] then Format.fprintf f "%s %a;@\n" s (print_list print_varname sep_c) li
+
+  method instructions f li =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "cpp" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instr true cc_print_mut (super#getTyperEnv ()) macros t) f
+    in print_list (fun f t -> print_instr true cc_print_mut typerEnv macros t f) sep_nl f li
 
-  method lang () = "cpp"
-
-  method ptype f t = ptype true (super#getTyperEnv ()) f t
-
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
     Format.fprintf f
       "#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
       (fun f () ->
@@ -210,8 +207,28 @@ class cppPrinter = object(self)
     return c;
 }@\n"
       ) ()
-
-      self#proglist prog.Prog.funs
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> clike_comment f str
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+             let li_fori, li_forc = clike_collect_for liinstrs true in
+             Format.fprintf f "@\n@[<h>%a %s(%a)@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
+               (ptype true typerEnv) t funname
+               (print_list
+                  (fun t (binding, type_) ->
+                     Format.fprintf t "%a@ %a" (ptype true typerEnv) type_ print_varname binding
+                  ) sep_c
+               ) li
+               (self#declare_for "int") li_fori
+               (self#declare_for "char") li_forc
+               self#instructions liinstrs
+           | Prog.DeclareType (name, t) -> self#decl_type f name t
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) sep_nl)
+      prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   method main f main =
@@ -221,59 +238,39 @@ class cppPrinter = object(self)
       (self#declare_for "char") li_forc
       self#instructions main
 
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "struct %a {@\n@[<v 4>    %a@]@\n};@\n"
-        self#typename name
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "%a %a;" self#ptype type_ self#field name
-           )
-           sep_nl
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "typedef enum %a {@\n@[<v 4>    %a@]@\n} %a;"
-        self#typename name
-        (print_list
-           (fun t name -> self#enumfield t name)
-           (sep "%a,@\n%a")
-        ) li
-        self#typename name
-    | _ ->
-      Format.fprintf f "typedef %a %a;"
-        self#ptype t
-        self#typename name
-        
-  method comment f str = Format.fprintf f "%a@\n" clike_comment str
+  method decl_type f name t = cclike_decltype (ptype true typerEnv) f name t
 end
 
 let cpp_print_mut conf prio f m = Mutable.Fixed.Deep.fold
     (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f prio
 
 class proloCppPrinter = object(self)
-  inherit CPrinter.cPrinter as super
 
-  method print_fun f funname t li instrs =
-    let li_fori, li_forc = clike_collect_for instrs true in
-    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
-      self#print_proto (funname, t, li)
-      (self#declare_for "int") li_fori
-      (self#declare_for "char") li_forc
-      self#instructions instrs
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
+                         
+  method decl_type f name t = cclike_decltype (ptype false typerEnv) f name t
+      
+  method declare_for s f li =
+    if li <> [] then Format.fprintf f "%s %a;@\n" s (print_list print_varname sep_c) li
 
-  method instr f t =
+  method instructions f li =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "cpp" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instr false cpp_print_mut (super#getTyperEnv ()) macros t) f
+    in print_list (fun f t -> print_instr false cpp_print_mut typerEnv macros t f) sep_nl f li
 
-  method ptype f t = ptype false (super#getTyperEnv ()) f t
+  method ptype f t = ptype false typerEnv f t
+      
   method prototype f t =
     match Type.unfix t with
     | Type.Array a -> Format.fprintf f "%a&" self#ptype t
-    | Type.Named n -> begin match Typer.expand (super#getTyperEnv ()) t
+    | Type.Named n -> begin match Typer.expand typerEnv t
                                     default_location |> Type.unfix with
       | Type.Struct _ -> Format.fprintf f "%a&" self#ptype t
       | _ -> self#ptype f t
@@ -281,7 +278,7 @@ class proloCppPrinter = object(self)
     | _ -> self#ptype f t
 
 
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
     Format.fprintf f
       "#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
       (fun f () ->
@@ -311,7 +308,28 @@ class proloCppPrinter = object(self)
     return matrix;
 }@\n"
       ) ()
-      self#proglist prog.Prog.funs
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> clike_comment f str
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+let li_fori, li_forc = clike_collect_for liinstrs true in
+             Format.fprintf f "@\n@[<h>%a %s(%a)@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
+               self#ptype t funname
+               (print_list
+                  (fun t (binding, type_) ->
+                     Format.fprintf t "%a@ %a" self#prototype type_ print_varname binding
+                  ) sep_c
+               ) li
+               (self#declare_for "int") li_fori
+               (self#declare_for "char") li_forc
+               self#instructions liinstrs
+           | Prog.DeclareType (name, t) -> self#decl_type f name t
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) sep_nl)
+      prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   method main f main =
@@ -321,6 +339,5 @@ class proloCppPrinter = object(self)
       (self#declare_for "char") li_forc
       self#instructions main
 
-  method comment f str = Format.fprintf f "%a@\n" clike_comment str
       
 end

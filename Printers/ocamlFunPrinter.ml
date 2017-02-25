@@ -151,46 +151,31 @@ class camlFunPrinter = object(self)
   val mutable typerEnv : Typer.env = Typer.empty
   method setTyperEnv t = typerEnv <- t
 
-  method typename f s = Format.fprintf f "%s" s
-
-  method binding f s = print_varname f s
-
-  method expr f e = print_expr (Ast.BindingMap.map (fun (ty, params, li) ->
-      ty, params,
-      try List.assoc lang li
-      with Not_found -> List.assoc "" li) macros) f e
-
-  (** show a type *)
-  method ptype f t = Mllike.ptype f t
-
-  method is_rec name e =
-    E.Fixed.Deep.exists (fun e -> match E.unfix e with
-        | E.Lief (E.Binding n) -> n = name
-        | _ -> false) e
-
   method extract_fun_params e acc = match E.unfix e with
     | E.Fun ([], e) ->
       let acc f () = Format.fprintf f "%a ()" acc ()
       in self#extract_fun_params e acc
     | E.Fun (params, e) ->
-      let acc f () = Format.fprintf f "%a %a" acc () (print_list self#binding sep_space) params
+      let acc f () = Format.fprintf f "%a %a" acc () (print_list print_varname sep_space) params
       in self#extract_fun_params e acc
     | E.FunTuple (params, e) ->
-      let acc f () = Format.fprintf f "%a (%a)" acc () (print_list self#binding sep_c) params
+      let acc f () = Format.fprintf f "%a (%a)" acc () (print_list print_varname sep_c) params
       in self#extract_fun_params e acc
     | _ -> acc, e
 
-  method toplvl_declare f name e = 
-    let pparams, e = self#extract_fun_params e (fun f () -> ()) in
-    Format.fprintf f "@[<v 2>let%s %a%a =@\n%a@]@\n" (if self#is_rec name e then " rec" else "")
-      self#binding name pparams () self#expr e
-
-  method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>type %a = %a@]@\n"
-      self#typename name self#ptype ty
-
   method decl f d = match d with
-    | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
-    | AstFun.DeclareType (name, ty) -> self#toplvl_declarety f name ty
+    | AstFun.Declaration (name, e) ->
+      let is_rec =
+        E.Fixed.Deep.exists (fun e -> match E.unfix e with
+            | E.Lief (E.Binding n) -> n = name
+            | _ -> false) e in
+      let pparams, e = self#extract_fun_params e (fun f () -> ()) in
+      Format.fprintf f "@[<v 2>let%s %a%a =@\n%a@]@\n" (if is_rec then " rec" else "")
+        print_varname name pparams () (print_expr (Ast.BindingMap.map (fun (ty, params, li) ->
+            ty, params,
+            try List.assoc lang li with Not_found -> List.assoc "" li) macros))
+        e
+    | AstFun.DeclareType (name, ty) -> Format.fprintf f "@[<v 2>type %s = %a@]@\n" name Mllike.ptype ty
     | AstFun.Macro (name, t, params, code) ->
       macros <- Ast.BindingMap.add
           name (t, params, code)
