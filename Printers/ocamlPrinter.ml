@@ -450,28 +450,6 @@ class camlPrinter = object(self)
         end
     ) sad_types TypeMap.empty
 
-  method proglist f funs =
-    Format.fprintf f "%a" (print_list self#prog_item nosep) funs
-  method prog_item (f:Format.formatter) t =
-    match t with
-    | Prog.Comment s -> self#comment f s;
-      Format.fprintf f "@\n"
-    | Prog.DeclarFun (var, t, li, instrs, _opt) ->
-      self#print_fun f var t li instrs;
-      Format.fprintf f "@\n"
-    | Prog.Macro (name, t, params, code) ->
-      macros <- StringMap.add
-          name (t, params, code)
-          macros;
-      ()
-    | Prog.Unquote _ -> assert false
-    | Prog.DeclareType (name, t) ->
-      self#decl_type f name t;
-      Format.fprintf f "@\n"
-
-  (** show a type *)
-  method ptype f (t : Ast.Type.t ) = Mllike.ptype f t
-
   (** show the main *)
   method main f main =
     current_etype <- Ast.Type.void;
@@ -483,7 +461,50 @@ class camlPrinter = object(self)
   (** show all the programm *)
   method prog f prog =
     Format.fprintf f "%a%a"
-      self#proglist prog.Prog.funs
+      (print_list (fun f -> function
+           | Prog.Comment s -> Format.fprintf f "(*%s*)@\n" s
+           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
+             current_etype <- t;
+             let proto f = self#print_proto_aux f (self#is_rec funname) in
+             let sad_return_current, sad_types, pinstrs = self#instructions instrs in
+             let printed_exns_addon = self#calc_addons sad_types in
+             if not sad_return_current then
+               Format.fprintf f "%a@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
+                 self#print_exns printed_exns_addon
+                 proto (funname, t, li)
+                 self#ref_alias li
+                 pinstrs ()
+             else
+               Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
+                 self#print_exns printed_exns_addon
+                 proto (funname, t, li)
+                 self#ref_alias li
+                 pinstrs ()
+                 self#print_exnName t
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | Prog.Unquote _ -> assert false
+           | Prog.DeclareType (name, t) ->
+             begin match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
+                   name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "@[<h>mutable %s : %a;@]"
+                           name
+                           Mllike.ptype type_
+                      ) sep_nl
+                   ) li
+               | Type.Enum li ->
+                 Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
+                   name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
+               | _ ->
+                 Format.fprintf f "type %s = %a;;" name ptype t
+             end
+         ) nosep) prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   (** print recursive prefix *)
@@ -557,34 +578,14 @@ class camlPrinter = object(self)
     try
       Format.fprintf f "%s" (TypeMap.find t printed_exn)
     with Not_found ->
-      Format.fprintf f "NOT_FOUND_%a" self#ptype t
+      Format.fprintf f "NOT_FOUND_%a" Mllike.ptype t
 
   method print_exns f exns =
     TypeMap.iter (fun ty str ->
         Format.fprintf f "exception %s of %a@\n"
           str
-          self#ptype ty
+          Mllike.ptype ty
       ) exns
-
-  method print_fun f funname (t : unit Type.Fixed.t) li instrs =
-    current_etype <- t;
-    let proto f = self#print_proto_aux f (self#is_rec funname) in
-    let sad_return_current, sad_types, pinstrs = self#instructions instrs in
-    Printf.printf "in function %S, there is %d exceptions delcarations\n%!" funname (Ast.TypeSet.cardinal sad_types);
-    let printed_exns_addon = self#calc_addons sad_types in
-    if not sad_return_current then
-      Format.fprintf f "%a@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
-        self#print_exns printed_exns_addon
-        proto (funname, t, li)
-        self#ref_alias li
-        pinstrs ()
-    else
-      Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
-        self#print_exns printed_exns_addon
-        proto (funname, t, li)
-        self#ref_alias li
-        pinstrs ()
-        self#print_exnName t
 
   method ref_alias f li = match li with
     | [] -> ()
@@ -597,26 +598,5 @@ class camlPrinter = object(self)
           self#ref_alias tl
       else
         self#ref_alias f tl
-
-  method comment f str =
-    Format.fprintf f "(*%s*)" str
-
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
-        name
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "@[<h>mutable %s : %a;@]"
-                name
-                self#ptype type_
-           ) sep_nl
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
-        name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
-    | _ ->
-      Format.fprintf f "type %s = %a;;" name ptype t
 
 end

@@ -112,7 +112,6 @@ let print_instr tyenv c i =
   let open Ast.Instr in
   let open Format in
   let block value f li = fprintf f "@\n%a" (print_list (fun f i -> i.p f (false, value)) sep_nl) li in
-  let block_lambda = block true in
   let pread f ty = match Type.unfix ty with
     | Type.Integer -> fprintf f "readInt"
     | Type.Char -> fprintf f "readChar"
@@ -210,16 +209,22 @@ let print_instr tyenv macros i =
   in fun f -> i.p f i.default
 
 class vbDotNetPrinter = object(self)
-  inherit Printer.printer as super
+       
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty                       
 
-  method instr f (t:Utils.instr) =
+  method instrs f (t:Utils.instr list) =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "vb" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instr typerEnv macros t) f
+    in print_list (fun f t -> print_instr typerEnv macros t f) sep_nl f t
 
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -290,21 +295,58 @@ Function readInt() As Integer
     End If
   Loop
 End Function" else "")
-      self#proglist prog.Prog.funs
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> let lic = String.split str '\n' in
+             print_list
+               (fun f s -> Format.fprintf f "'%s@\n" s) nosep
+               f
+               lic
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+             begin
+               match Type.unfix t with
+               | Type.Void ->
+                 Format.fprintf f "Sub @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Sub@\n"
+                   self#print_proto (funname, t, li)
+                   self#instrs liinstrs
+               | _ ->
+                 Format.fprintf f "Function @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Function@\n"
+                   self#print_proto (funname, t, li)
+                   self#instrs liinstrs
+             end
+           | Prog.DeclareType (name, t) ->
+             begin
+               match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "Public Class %s@\n  @[<v>%a@]@\nEnd Class" name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "Public %s As %a" name ptype type_ 
+                      ) sep_nl
+                   ) li
+               | Type.Enum li ->
+                 Format.fprintf f "Enum %s@\n  @[<v>%a@]@\nEnd Enum@\n" name
+                   (print_list (fun f name -> Format.fprintf f "%s" name) sep_nl) li
+               | _ -> assert false
+             end
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) sep_nl)
+      prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   method main f main =
     Format.fprintf f "Sub Main()@\n  @[<v>%a@]@\nEnd Sub@\n"
-      self#instructions main
+      self#instrs main
 
   method print_proto f (funname, t, li) =
-    Format.fprintf f "%a(%a)%a"
-      self#funname funname
+    Format.fprintf f "%s(%a)%a" funname
       (print_list
          (fun t (binding, type_) ->
             Format.fprintf t "%a %a@ as@ %a"
-              self#val_or_ref type_
-              self#binding binding
+              self#val_or_ref type_ print_varname binding
               ptype type_
          ) sep_c
       ) li
@@ -320,43 +362,5 @@ End Function" else "")
     | Type.Char
     | Type.Enum _ ->  Format.fprintf f "ByVal"
     | _ ->  Format.fprintf f "ByRef"
-
-  method print_fun f funname t li instrs =
-    match Type.unfix t with
-    | Type.Void ->
-      Format.fprintf f "Sub @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Sub@\n"
-        self#print_proto (funname, t, li)
-        self#instructions instrs
-    | _ ->
-      Format.fprintf f "Function @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Function@\n"
-        self#print_proto (funname, t, li)
-        self#instructions instrs
-
-  method comment f s =
-    let lic = String.split s '\n' in
-    print_list
-      (fun f s -> Format.fprintf f "'%s@\n" s) nosep
-      f
-      lic
-
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "Public Class %a@\n  @[<v>%a@]@\nEnd Class"
-        self#typename name
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "Public %a As %a" self#field name ptype type_ 
-           ) sep_nl
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "Enum %a@\n  @[<v>%a@]@\nEnd Enum@\n"
-        self#typename name
-        (print_list
-           (fun t name ->
-              self#enumfield t name
-           ) sep_nl
-        ) li
-    | _ -> super#decl_type f name t
 
 end

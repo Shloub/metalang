@@ -194,34 +194,20 @@ let print_instr macros i =
   in fun f -> i.p f i.default
 
 class perlPrinter = object(self)
-  inherit Printer.printer as baseprinter
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
-  method binding f i = Format.fprintf f "$%a" baseprinter#binding i
-
-  method main f main = self#instructions f main
-
-  method instr f t =
+  method prog f (prog: Utils.prog) =
+    let instrs f t =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "pl" li
-        with Not_found -> List.assoc "" li) macros
-    in (print_instr macros t) f
-
-  method print_proto f (funname, t, li) =
-    if li = [] then Format.fprintf f "sub %a{" self#funname funname
-    else
-      Format.fprintf f "sub %a{@\n@[<h>my(%a) = @@_;@]"
-        self#funname funname
-        (print_list self#binding sep_c) (List.map fst li)
-
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<v 2>%a@\n%a@]@\n}@\n"
-      self#print_proto (funname, t, li)
-      self#instructions instrs
-
-  method decl_type f name t = ()
-
-  method prog f prog =
+        with Not_found -> List.assoc "" li) macros in
+    print_list (fun f t -> (print_instr macros t) f) sep_nl f t in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -268,11 +254,25 @@ class perlPrinter = object(self)
 }
 "
       ) ()
-      self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method comment f s =
-    let lic = String.split s '\n' in
-    print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
+      (print_list (fun f t -> match t with
+           | Prog.Comment s -> let lic = String.split s '\n' in
+             print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+             Format.fprintf f "@[<v 2>%a@\n%a@]@\n}@\n"
+               (fun f () ->
+                  if li = [] then Format.fprintf f "sub %s{" funname
+                  else
+                    Format.fprintf f "sub %s{@\n@[<h>my(%a) = @@_;@]" funname
+                      (print_list dolar_varname sep_c) (List.map fst li)
+               ) ()
+               instrs liinstrs
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) nosep)
+      prog.Prog.funs
+      (print_option instrs) prog.Prog.main
 
 end
