@@ -3,6 +3,7 @@
 #include<stdlib.h>
 
 
+
 int max2_(int a, int b) {
     if (a > b)
         return a;
@@ -294,7 +295,6 @@ Division,
 Modulo
 */
 
-
 int log100(int a) {
     int out0 = 1;
     while (a >= 10)
@@ -348,7 +348,6 @@ int sum_chiffres_bigint(bigint * a) {
 }
 
 //  http://projecteuler.net/problem=20 
-
 
 int euler20() {
     bigint * a = bigint_of_int(15);

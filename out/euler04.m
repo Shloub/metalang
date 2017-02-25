@@ -29,7 +29,6 @@ c * f * 10000
 
 */
 
-
 int chiffre(int c, int m) {
     if (c == 0)
         return m % 10;

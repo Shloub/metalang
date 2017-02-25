@@ -4,7 +4,6 @@
 
 //  lit un sudoku sur l'entrée standard 
 
-
 int* read_sudoku() {
     int i, k;
     int *out0 = calloc(9 * 9, sizeof(int));
@@ -17,7 +16,6 @@ int* read_sudoku() {
 }
 
 //  affiche un sudoku 
-
 
 void print_sudoku(int* sudoku0) {
     int y, x;
@@ -37,11 +35,8 @@ void print_sudoku(int* sudoku0) {
 }
 
 //  dit si les variables sont toutes différentes 
-
 //  dit si les variables sont toutes différentes 
-
 //  dit si le sudoku est terminé de remplir 
-
 
 int sudoku_done(int* s) {
     int i;
@@ -52,7 +47,6 @@ int sudoku_done(int* s) {
 }
 
 //  dit si il y a une erreur dans le sudoku 
-
 
 int sudoku_error(int* s) {
     int x;
@@ -69,7 +63,6 @@ int sudoku_error(int* s) {
 }
 
 //  résout le sudoku
-
 
 int solve(int* sudoku0) {
     int i, p;

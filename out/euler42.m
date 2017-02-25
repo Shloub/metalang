@@ -4,6 +4,8 @@
 #include<math.h>
 
 
+
+
 int is_triangular(int n) {
     /*
    n = k * (k + 1) / 2

@@ -6,7 +6,6 @@
 Ce test permet de vérifier le comportement des macros
 Il effectue du loop unrolling
 */
-
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int j = 0;

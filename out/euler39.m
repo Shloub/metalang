@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<math.h>
 
+
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int k, a, b, i;
