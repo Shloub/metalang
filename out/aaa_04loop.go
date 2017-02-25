@@ -13,7 +13,6 @@ func h(i int) bool{
   }
   return false
 }
-
 func main() {
   j := 0
   for k := 0; k < 11; k++ {

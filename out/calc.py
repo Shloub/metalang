@@ -11,6 +11,5 @@ def fibo(a, b, i):
         b2 += a2
         a2 = tmp
     return out_
-
 print("%d" % fibo(1, 2, 4), end='')
 

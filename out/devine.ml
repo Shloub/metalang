@@ -16,7 +16,6 @@ let devine0 nombre tab len =
   done;
   true
   with Found_1 (out) -> out
-
 let () =
  let nombre, len = Scanf.scanf "%d %d " (fun nombre len -> nombre, len) in
   let tab = Array.init len (fun i ->

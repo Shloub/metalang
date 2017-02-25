@@ -6,7 +6,6 @@ func f(i int) bool{
   }
   return false
 }
-
 func main() {
   if f(4) {
       fmt.Printf("true <-\n ->\n")

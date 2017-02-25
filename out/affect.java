@@ -6,7 +6,6 @@ public class affect
   /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
-  
   static class toto {
     public int foo;
     public int bar;
@@ -20,7 +19,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t.blah = v1;
     return t;
   }
-  
   static toto mktoto2(int v1)
   {
     toto t = new toto();
@@ -29,7 +27,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t.blah = v1 + 1;
     return t;
   }
-  
   static int result(toto t_, toto t2_)
   {
     toto t = t_;
@@ -54,8 +51,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     cache2 = cache0;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
-  
-  
   public static void main(String args[])
   {
     toto t = mktoto(4);

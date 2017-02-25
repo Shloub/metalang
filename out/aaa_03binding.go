@@ -7,11 +7,9 @@ func g(i int) int{
   }
   return j
 }
-
 func h(i int) {
   fmt.Printf("%d\n", i)
 }
-
 func main() {
   h(14)
   a := 4

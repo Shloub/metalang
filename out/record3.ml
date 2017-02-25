@@ -3,13 +3,11 @@ type toto = {
   mutable bar : int;
   mutable blah : int;
 };;
-
 let mktoto v1 =
   let t = {foo=v1;
   bar=0;
   blah=0} in
   t
-
 let result t len =
   let out0 = ref( 0 ) in
   for j = 0 to len - 1 do
@@ -17,7 +15,6 @@ let result t len =
     out0 := (!out0) + t.(j).foo + t.(j).blah * t.(j).bar + t.(j).bar * t.(j).foo
   done;
   (!out0)
-
 let () =
  let t = Array.init 4 (fun i ->
    mktoto i) in

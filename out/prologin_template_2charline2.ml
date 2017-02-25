@@ -11,7 +11,6 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
   done;
   Printf.printf "--\n";
   (!out0)
-
 let () =
  let taille1, taille2 = Scanf.scanf "%d %d " (fun taille1 taille2 -> taille1, taille2) in
   let tableau1 = Array.init taille1 (fun a ->

@@ -4,9 +4,7 @@ import java.util.*
 /*
 Tictactoe : un tictactoe avec une IA
 */
-
 //  La structure de donnée 
-
 class Gamestate {
   int[][] cases
   boolean firstToPlay
@@ -14,13 +12,11 @@ class Gamestate {
   boolean ended
 }
 //  Un Mouvement 
-
 class Move {
   int x
   int y
 }
 //  On affiche l'état 
-
 void print_state(Gamestate g)
 {
   print("\n|")
@@ -43,7 +39,6 @@ void print_state(Gamestate g)
 }
 
 //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
-
 void eval0(Gamestate g)
 {
   int win = 0
@@ -89,7 +84,6 @@ void eval0(Gamestate g)
 }
 
 //  On applique un mouvement 
-
 void apply_move_xy(int x, int y, Gamestate g)
 {
   int player = 2
@@ -129,7 +123,6 @@ boolean can_move(Move m, Gamestate g)
 /*
 Un minimax classique, renvoie la note du plateau
 */
-
 int minmax(Gamestate g)
 {
   eval0(g)
@@ -155,7 +148,6 @@ int minmax(Gamestate g)
 /*
 Renvoie le coup de l'IA
 */
-
 Move play(Gamestate g)
 {
   Move minMove = new Move()
@@ -222,7 +214,6 @@ Move read_move()
   b.y = y
   return b
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 for (int i = 0; i < 2; i++)

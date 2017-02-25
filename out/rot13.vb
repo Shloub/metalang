@@ -55,10 +55,11 @@ Function readInt() As Integer
     End If
   Loop
 End Function
+  
+  
   '
   'Ce test effectue un rot13 sur une chaine lue en entrée
   '
-  
   
   Sub Main()
     Dim strlen As Integer = readInt

@@ -13,7 +13,6 @@ def eratostene(t, max0):
                 t[j] = 0
                 j += i
     return n
-
 def isPrime(n, primes, len):
     i = 0
     if n < 0:
@@ -23,14 +22,12 @@ def isPrime(n, primes, len):
             return False
         i += 1
     return True
-
 def test(a, b, primes, len):
     for n in range(0, 201):
         j = n * n + a * n + b
         if not isPrime(j, primes, len):
             return n
     return 200
-
 maximumprimes = 1000
 era = [None] * maximumprimes
 for j in range(0, maximumprimes):

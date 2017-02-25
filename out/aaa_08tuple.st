@@ -30,8 +30,6 @@ Object subclass: aaa_08tuple [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  
-  
   main [
     |t f e d c bar_ b a|bar_ := self read_int.
     self skip.

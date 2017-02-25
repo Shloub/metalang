@@ -22,7 +22,6 @@ func nth(tab []byte, tofind byte, len int) int{
   }
   return out0
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   len := 0

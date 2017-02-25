@@ -20,7 +20,6 @@ func programme_candidat(tableau []int, taille int) int{
   }
   return out0
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var taille int

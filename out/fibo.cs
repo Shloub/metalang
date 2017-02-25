@@ -49,7 +49,6 @@ static int readInt(){
   /*
 La suite de fibonaci
 */
-  
   static int fibo0(int a, int b, int i)
   {
     int out0 = 0;
@@ -64,7 +63,6 @@ La suite de fibonaci
     }
     return out0;
   }
-  
   
   public static void Main(String[] args)
   {

@@ -6,7 +6,6 @@ Module test_instant
     Return a + b
   End Function
   
-  
   Sub Main()
     Console.Write(10)
   End Sub

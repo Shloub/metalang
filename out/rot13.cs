@@ -51,11 +51,11 @@ static int readInt(){
     }
   } while(true);
 } 
+  
+  
   /*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
-  
-  
   public static void Main(String[] args)
   {
     int strlen = readInt();

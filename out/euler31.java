@@ -19,8 +19,6 @@ public class euler31
         return out0;
     }
   }
-  
-  
   public static void main(String args[])
   {
     int[] t = new int[8];

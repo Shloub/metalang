@@ -1,12 +1,12 @@
 import groovy.transform.Field
 import java.util.*
 
+
+
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-
-
 @Field Scanner scanner = new Scanner(System.in)
 int len
 if (scanner.hasNext("^-")) {

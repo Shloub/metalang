@@ -13,6 +13,8 @@ public class carre
   }
 
   
+  
+  
   public static void main(String args[])
   {
     int x = Integer.parseInt(scanner.nextLine());

@@ -21,7 +21,6 @@ Object subclass: prologin_template_intmatrix [
     (0 to: (y - 1)) do: [:i| (0 to: (x - 1)) do: [:j| out0 := out0 + (((tableau at: (i + 1)) at: (j + 1)) * (i * 2 + j)).].].
     ^ out0
   ]
-  
   main [
     |taille_y taille_x tableau b|taille_x := self read_int.
     self skip.

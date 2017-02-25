@@ -27,14 +27,12 @@ let rec find0 len tab cache x y =
            cache.(y).(x) <- (!result);
            (!result)
         end
-
 let find len tab =
   let tab2 = Array.init len (fun i ->
     let tab3 = Array.init (i + 1) (fun j ->
       0) in
     tab3) in
   find0 len tab tab2 0 0
-
 let () =
  let len = 0 in
   let len = Scanf.scanf "%d " (fun len -> len) in

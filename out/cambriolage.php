@@ -44,7 +44,6 @@ function nbPassePartout($n, &$passepartout, $m, &$serrures) {
     else
         return 0;
 }
-
 list($n) = scan("%d");
 scantrim();
 $passepartout = array();

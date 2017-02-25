@@ -99,7 +99,6 @@ static int readInt(){
     }
   }
   
-  
   public static void Main(String[] args)
   {
     int len = 2;

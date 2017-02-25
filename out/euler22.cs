@@ -51,6 +51,7 @@ static int readInt(){
     }
   } while(true);
 } 
+  
   static int score()
   {
     stdin_sep();
@@ -65,7 +66,6 @@ static int readInt(){
     }
     return sum;
   }
-  
   
   public static void Main(String[] args)
   {

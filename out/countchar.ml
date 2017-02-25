@@ -5,7 +5,6 @@ let nth tab tofind len =
       out0 := (!out0) + 1
   done;
   (!out0)
-
 let () =
  let len = 0 in
   let len = Scanf.scanf "%d " (fun len -> len) in

@@ -51,6 +51,8 @@ static int readInt(){
     }
   } while(true);
 } 
+  
+  
   static bool is_triangular(int n)
   {
     /*
@@ -78,7 +80,6 @@ static int readInt(){
     else
         return 0;
   }
-  
   
   public static void Main(String[] args)
   {

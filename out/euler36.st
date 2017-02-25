@@ -9,7 +9,6 @@ Object subclass: euler36 [
       ifTrue:[^ false].].
     ^ true
   ]
-  
   main [
     |sum pow2 p num3 num2 num1 num0 a|p := 1.
     pow2 := Array new: 20.

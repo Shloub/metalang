@@ -5,7 +5,6 @@ def mod(x, y):
 
 def is_leap(year):
     return mod(year, 400) == 0 or mod(year, 100) != 0 and mod(year, 4) == 0
-
 def ndayinmonth(month, year):
     if month == 0:
         return 31
@@ -35,7 +34,6 @@ def ndayinmonth(month, year):
     elif month == 11:
         return 31
     return 0
-
 month = 0
 year = 1901
 dayofweek = 1

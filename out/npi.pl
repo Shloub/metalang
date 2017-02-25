@@ -27,11 +27,9 @@ sub is_number{
   my($c) = @_;
   return ord($c) <= ord("9") && ord($c) >= ord("0");
 }
-
 #
 #Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 #
-
 sub npi0{
   my($str, $len) = @_;
   my $stack = [];
@@ -67,7 +65,6 @@ sub npi0{
   }
   return $stack->[0];
 }
-
 my $len = 0;
 $len = readint();
 readspaces();

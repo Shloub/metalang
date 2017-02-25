@@ -4,7 +4,6 @@ import java.util.*
 /*
 La suite de fibonaci
 */
-
 int fibo0(int a, int b, int i)
 {
   int out0 = 0
@@ -19,7 +18,6 @@ int fibo0(int a, int b, int i)
   }
   return out0
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 int a = 0

@@ -24,7 +24,6 @@ func is_pair(i int) bool{
   }
   return i % 2 == 0
 }
-
 func main() {
   
 }

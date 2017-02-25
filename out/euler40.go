@@ -7,7 +7,6 @@ func exp0(a int, e int) int{
   }
   return o
 }
-
 func e(t []int, n int) int{
   for i := 1; i < 9; i++ {
       if n >= t[i] * i {
@@ -20,7 +19,6 @@ func e(t []int, n int) int{
   }
   return -1
 }
-
 func main() {
   var t []int = make([]int, 9)
   for i := 0; i < 9; i++ {

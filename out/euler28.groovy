@@ -15,7 +15,6 @@ import java.util.*
 
 
 */
-
 int sumdiag(int n)
 {
   int nterms = n * 2 - 1
@@ -30,7 +29,6 @@ int sumdiag(int n)
   }
   return sum
 }
-
 
 
 print(sumdiag(1001))

@@ -12,7 +12,6 @@ let eratostene t max0 =
       end
   done;
   (!n)
-
 exception Found_1 of int
 
 let fillPrimesFactors t n primes nprimes =
@@ -29,14 +28,12 @@ let fillPrimesFactors t n primes nprimes =
   done;
   (!n)
   with Found_1 (out) -> out
-
 let sumdivaux2 t n i =
   let i = ref i in
   while (!i) < n && t.((!i)) = 0 do
     i := (!i) + 1
   done;
   (!i)
-
 let rec sumdivaux t n i =
   if i > n then
     1
@@ -54,13 +51,11 @@ let rec sumdivaux t n i =
          done;
          ((!out0) + 1) * o
       end
-
 let sumdiv nprimes primes n =
   let t = Array.init (n + 1) (fun i ->
     0) in
   let max0 = fillPrimesFactors t n primes nprimes in
   sumdivaux t max0 0
-
 let () =
  let maximumprimes = 30001 in
   let era = Array.init maximumprimes (fun s ->

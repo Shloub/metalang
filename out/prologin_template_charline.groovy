@@ -1,6 +1,9 @@
 import groovy.transform.Field
 import java.util.*
 
+
+
+
 int programme_candidat(char[] tableau, int taille)
 {
   int out0 = 0
@@ -12,7 +15,6 @@ int programme_candidat(char[] tableau, int taille)
   print("--\n")
   return out0
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 int taille = Integer.parseInt(scanner.nextLine())

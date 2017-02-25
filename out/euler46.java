@@ -22,8 +22,6 @@ public class euler46
         }
     return n;
   }
-  
-  
   public static void main(String args[])
   {
     int maximumprimes = 6000;

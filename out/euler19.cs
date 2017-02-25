@@ -39,7 +39,6 @@ public class euler19
     return 0;
   }
   
-  
   public static void Main(String[] args)
   {
     int month = 0;

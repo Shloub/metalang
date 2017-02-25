@@ -46,6 +46,7 @@ static int readInt(){
     }
   } while(true);
 } 
+  
   static int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)
   {
     int max_ancient = 0;
@@ -72,7 +73,6 @@ static int readInt(){
     else
         return 0;
   }
-  
   
   public static void Main(String[] args)
   {

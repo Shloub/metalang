@@ -40,11 +40,9 @@ func go0(tab []int, a int, b int) int{
       return go0(tab, m, b)
   }
 }
-
 func plus_petit0(tab []int, len int) int{
   return go0(tab, 0, len)
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   len := 0

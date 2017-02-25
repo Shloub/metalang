@@ -14,7 +14,6 @@ Module aaa_03binding
     Console.Write(i & Chr(10))
   End Sub
   
-  
   Sub Main()
     h(14)
     Dim a As Integer = 4

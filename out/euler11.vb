@@ -3,6 +3,8 @@ Imports System.Collections.Generic
 
 Module euler11
 
+  
+  
   Function find(ByVal n as Integer, ByRef m as Integer()(), ByVal x as Integer, ByVal y as Integer, ByVal dx as Integer, ByVal dy as Integer) As Integer
     If x < 0 OrElse x = 20 OrElse y < 0 OrElse y = 20 Then
         Return -1
@@ -17,7 +19,6 @@ Module euler11
     Public tuple_int_int_field_0 As Integer
     Public tuple_int_int_field_1 As Integer
   End Class
-  
   Sub Main()
     Dim directions(8) As tuple_int_int
     For i As Integer = 0 To 7

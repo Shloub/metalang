@@ -60,7 +60,6 @@ def pathfind_aux(cache, tab, x, y, posX, posY):
         out0 = 1 + min(val1, val2, val3, val4)
         cache[posY][posX] = out0
         return out0
-
 def pathfind(tab, x, y):
     cache = [None] * y
     for i in range(0, y):
@@ -69,7 +68,6 @@ def pathfind(tab, x, y):
             tmp[j] = -1
         cache[i] = tmp
     return pathfind_aux(cache, tab, x, y, 0, 0)
-
 x = 0
 y = 0
 x = readint()

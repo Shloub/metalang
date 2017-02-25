@@ -10,7 +10,6 @@ public class euler45
     else
         return n * ((n + 1) / 2);
   }
-  
   static int penta(int n)
   {
     if (n % 2 == 0)
@@ -18,12 +17,10 @@ public class euler45
     else
         return ((3 * n - 1) / 2) * n;
   }
-  
   static int hexa(int n)
   {
     return n * (2 * n - 1);
   }
-  
   static boolean findPenta2(int n, int a, int b)
   {
     if (b == a + 1)
@@ -37,7 +34,6 @@ public class euler45
     else
         return findPenta2(n, a, c);
   }
-  
   static boolean findHexa2(int n, int a, int b)
   {
     if (b == a + 1)
@@ -51,8 +47,6 @@ public class euler45
     else
         return findHexa2(n, a, c);
   }
-  
-  
   public static void main(String args[])
   {
     for (int n = 285; n < 55386; n++)

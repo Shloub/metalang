@@ -34,7 +34,6 @@ Object subclass: prologin_template_charline [
 ' display.
     ^ out0
   ]
-  
   main [
     |taille tableau|taille := self read_int.
     self skip.

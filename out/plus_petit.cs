@@ -79,7 +79,6 @@ static int readInt(){
     return go0(tab, 0, len);
   }
   
-  
   public static void Main(String[] args)
   {
     int len = 0;

@@ -4,7 +4,6 @@ Object subclass: aaa_02if [
     ifTrue:[^ true].
     ^ false
   ]
-  
   main [
     (self f: 4)
     ifTrue:['true <-

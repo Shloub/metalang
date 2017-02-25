@@ -12,6 +12,8 @@ public class prologin_template_intmatrix
     return out;
   }
 
+  
+  
   static int programme_candidat(int[][] tableau, int x, int y)
   {
     int out0 = 0;
@@ -20,8 +22,6 @@ public class prologin_template_intmatrix
             out0 += tableau[i][j] * (i * 2 + j);
     return out0;
   }
-  
-  
   public static void main(String args[])
   {
     int taille_x = Integer.parseInt(scanner.nextLine());

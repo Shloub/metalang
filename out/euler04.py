@@ -22,7 +22,6 @@ def chiffre(c, m):
         return mod(m, 10)
     else:
         return chiffre(c - 1, math.trunc(m / 10))
-
 m = 1
 for a in range(0, 10):
     for f in range(1, 10):

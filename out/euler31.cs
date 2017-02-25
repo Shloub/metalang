@@ -19,7 +19,6 @@ public class euler31
     }
   }
   
-  
   public static void Main(String[] args)
   {
     int[] t = new int[8];

@@ -38,7 +38,6 @@ sub exp0{
       return $a * exp0($a, $b - 1);
   }
 }
-
 my $a = 0;
 my $b = 0;
 $a = readint();

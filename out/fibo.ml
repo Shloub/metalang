@@ -12,7 +12,6 @@ let fibo0 a b i =
     a2 := tmp
   done;
   (!out0)
-
 let () =
  let a = 0 in
   let b = 0 in

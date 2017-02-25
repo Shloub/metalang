@@ -31,8 +31,6 @@ public class test_returns
     }
     return i % 2 == 0;
   }
-  
-  
   public static void main(String args[])
   {
     

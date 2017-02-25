@@ -33,7 +33,6 @@ Object subclass: aaa_missing [
       ifTrue:[^ i2].].
     ^ 0 - 1
   ]
-  
   main [
     |tab len|len := self read_int.
     self skip.

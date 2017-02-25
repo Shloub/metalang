@@ -19,7 +19,6 @@ type toto struct {
   bar int;
   blah int;
 }
-
 func mktoto(v1 int) * toto{
   var t * toto = new (toto)
       (*t).foo=v1
@@ -27,12 +26,10 @@ func mktoto(v1 int) * toto{
       (*t).blah=0
   return t
 }
-
 func result(t * toto) int{
   (*t).blah++
   return (*t).foo + (*t).blah * (*t).bar + (*t).bar * (*t).foo
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var t * toto = mktoto(4)

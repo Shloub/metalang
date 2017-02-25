@@ -8,10 +8,8 @@ def g(i):
     if mod(j, 2) == 1:
         return 0
     return j
-
 def h(i):
     print("%d\n" % i, end='')
-
 h(14)
 a = 4
 b = 5

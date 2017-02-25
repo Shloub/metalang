@@ -20,7 +20,6 @@ int montagnes0(int[] tab, int len)
   return max0
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 0
 if (scanner.hasNext("^-")) {

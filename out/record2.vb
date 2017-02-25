@@ -68,7 +68,6 @@ End Function
     Return t.foo + t.blah * t.bar + t.bar * t.foo
   End Function
   
-  
   Sub Main()
     Dim t As toto = mktoto(4)
     t.bar = readInt

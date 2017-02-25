@@ -30,13 +30,10 @@ public class plus_petit
     else
         return go0(tab, m, b);
   }
-  
   static int plus_petit0(int[] tab, int len)
   {
     return go0(tab, 0, len);
   }
-  
-  
   public static void main(String args[])
   {
     int len = 0;

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class prologin_template_2charline
 {
+  
+  
+  
   static int programme_candidat(char[] tableau1, int taille1, char[] tableau2, int taille2)
   {
     int out0 = 0;
@@ -20,7 +23,6 @@ public class prologin_template_2charline
     Console.Write("--\n");
     return out0;
   }
-  
   
   public static void Main(String[] args)
   {

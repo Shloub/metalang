@@ -17,8 +17,6 @@ public class euler36
             return false;
     return true;
   }
-  
-  
   public static void main(String args[])
   {
     int p = 1;

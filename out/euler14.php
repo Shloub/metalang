@@ -5,7 +5,6 @@ function next0($n) {
     else
         return 3 * $n + 1;
 }
-
 function find($n, &$m) {
     if ($n == 1)
         return 1;
@@ -19,7 +18,6 @@ function find($n, &$m) {
         return $m[$n];
     }
 }
-
 $m = array_fill(0, 1000000, 0);
 $max0 = 0;
 $maxi = 0;

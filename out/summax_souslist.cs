@@ -61,7 +61,6 @@ static int readInt(){
     return max0;
   }
   
-  
   public static void Main(String[] args)
   {
     int len = 0;

@@ -31,7 +31,6 @@ sub pathfind_aux{
                   return $out0;
               }
 }
-
 sub pathfind{
   my($tab, $x, $y) = @_;
   my $cache = [];
@@ -48,7 +47,6 @@ sub pathfind{
   }
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
-
 my $x = int( <STDIN> );
 my $y = int( <STDIN> );
 print($x, " ", $y, "\n");

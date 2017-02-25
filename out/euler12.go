@@ -7,7 +7,6 @@ func max2_(a int, b int) int{
       return b
   }
 }
-
 func eratostene(t []int, max0 int) int{
   n := 0
   for i := 2; i < max0; i++ {
@@ -22,7 +21,6 @@ func eratostene(t []int, max0 int) int{
   }
   return n
 }
-
 func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   for i := 0; i < nprimes; i++ {
       d := primes[i]
@@ -36,7 +34,6 @@ func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   }
   return n
 }
-
 func find(ndiv2 int) int{
   maximumprimes := 110
   var era []int = make([]int, maximumprimes)
@@ -75,7 +72,6 @@ func find(ndiv2 int) int{
   }
   return 0
 }
-
 func main() {
   fmt.Printf("%d\n", find(500))
 }

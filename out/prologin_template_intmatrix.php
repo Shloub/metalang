@@ -6,7 +6,6 @@ function programme_candidat(&$tableau, $x, $y) {
             $out0 += $tableau[$i][$j] * ($i * 2 + $j);
     return $out0;
 }
-
 $taille_x = intval(trim(fgets(STDIN)));
 $taille_y = intval(trim(fgets(STDIN)));
 $tableau = array();

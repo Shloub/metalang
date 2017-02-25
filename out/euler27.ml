@@ -12,7 +12,6 @@ let eratostene t max0 =
       end
   done;
   (!n)
-
 exception Found_1 of bool
 
 let isPrime n primes _len =
@@ -28,7 +27,6 @@ let isPrime n primes _len =
   done;
   true
   with Found_1 (out) -> out
-
 exception Found_2 of int
 
 let test a b primes len =
@@ -40,7 +38,6 @@ let test a b primes len =
   done;
   200
   with Found_2 (out) -> out
-
 let () =
  let maximumprimes = 1000 in
   let era = Array.init maximumprimes (fun j ->

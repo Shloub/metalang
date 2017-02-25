@@ -14,7 +14,6 @@ sub fact{
   }
   return $prod;
 }
-
 sub show{
   my($lim, $nth) = @_;
   my $t = [];
@@ -54,7 +53,6 @@ sub show{
   }
   print "\n";
 }
-
 show(10, 999999);
 
 

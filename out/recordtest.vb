@@ -54,7 +54,6 @@ End Function
     Public foo As Integer
     Public bar As Integer
   End Class
-  
   Sub Main()
     Dim param As toto = new toto()
     param.foo = 0

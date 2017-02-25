@@ -1,5 +1,6 @@
 import java.util.*
 
+
 int eratostene(int[] t, int max0)
 {
   int n = 0
@@ -67,7 +68,6 @@ int find(int ndiv2)
   }
   return 0
 }
-
 
 
 System.out.printf("%d\n", find(500))

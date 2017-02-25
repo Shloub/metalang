@@ -7,7 +7,6 @@ public class affect_param
     a = 4;
   }
   
-  
   public static void Main(String[] args)
   {
     int a = 0;

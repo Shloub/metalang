@@ -17,18 +17,15 @@ Object subclass: linkedList [
     ].
     ^o asInteger. ]
   ]
-  
    cons: list i: i [|out0|
     out0 := intlist new.
     out0 head: i.
     out0 tail: list.
     ^ out0
   ]
-  
    is_empty: foo  [
     ^ true
   ]
-  
    rev2: acc torev: torev [|acc2|
     (self is_empty: torev)
     ifTrue:[^ acc]
@@ -39,11 +36,9 @@ Object subclass: linkedList [
       ^ (self rev2: acc torev: torev tail)
     ].
   ]
-  
    rev: empty torev: torev [
     ^ (self rev2: empty torev: torev)
   ]
-  
    test: empty  [|list i|
     list := empty.
     i := 0 - 1.
@@ -53,7 +48,6 @@ Object subclass: linkedList [
       ifTrue:[list := (self cons: list i: i).].
     ].
   ]
-  
   main [
     
     ]

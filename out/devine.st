@@ -31,7 +31,6 @@ Object subclass: devine [
     ].
     ^ true
   ]
-  
   main [
     |tmp tab nombre len|nombre := self read_int.
     self skip.

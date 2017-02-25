@@ -47,7 +47,6 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY) {
         return $out0;
     }
 }
-
 function pathfind(&$tab, $x, $y) {
     $cache = array();
     for ($i = 0; $i < $y; $i++)
@@ -59,7 +58,6 @@ function pathfind(&$tab, $x, $y) {
     }
     return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
-
 $x = 0;
 $y = 0;
 list($x) = scan("%d");

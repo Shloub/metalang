@@ -9,8 +9,6 @@ public class aaa_11arrayconst
         System.out.printf("%d ", tab[i]);
     System.out.print("\n");
   }
-  
-  
   public static void main(String args[])
   {
     int[] t = new int[5];

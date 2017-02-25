@@ -15,7 +15,6 @@ let palindrome2 pow2 n =
   done;
   true
   with Found_1 (out) -> out
-
 let () =
  let p = ref( 1 ) in
   let pow2 = Array.init 20 (fun i ->

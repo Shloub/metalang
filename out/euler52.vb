@@ -23,7 +23,6 @@ Module euler52
     Return ca = chiffre_sort(b) AndAlso ca = chiffre_sort(c) AndAlso ca = chiffre_sort(d) AndAlso ca = chiffre_sort(e) AndAlso ca = chiffre_sort(f)
   End Function
   
-  
   Sub Main()
     Dim num As Integer = 142857
     If same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5) Then

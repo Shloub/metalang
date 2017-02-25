@@ -3,6 +3,7 @@ import java.util.*;
 public class euler50
 {
   
+  
   static int eratostene(int[] t, int max0)
   {
     int n = 0;
@@ -22,8 +23,6 @@ public class euler50
         }
     return n;
   }
-  
-  
   public static void main(String args[])
   {
     int maximumprimes = 1000001;

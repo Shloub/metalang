@@ -21,6 +21,5 @@ def sumdiag(n):
         
         sum += un
     return sum
-
 print("%d" % sumdiag(1001), end='')
 

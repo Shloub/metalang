@@ -65,7 +65,6 @@ End Function
     Return out0
   End Function
   
-  
   Sub Main()
     Dim len As Integer = 0
     len = readInt

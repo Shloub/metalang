@@ -28,7 +28,6 @@ Object subclass: summax_souslist [
     ].
     ^ max0
   ]
-  
   main [
     |tmp tab result len|len := 0.
     len := self read_int.

@@ -24,7 +24,6 @@ sub periode{
   }
   return 0;
 }
-
 my $t = [];
 foreach my $j (0 .. 999)
 {

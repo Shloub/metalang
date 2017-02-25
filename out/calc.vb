@@ -20,7 +20,6 @@ Module calc
     Return out_
   End Function
   
-  
   Sub Main()
     Console.Write(fibo(1, 2, 4))
   End Sub

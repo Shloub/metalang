@@ -31,7 +31,6 @@ Object subclass: montagnes [
     ].
     ^ max0
   ]
-  
   main [
     |x tab len|len := 0.
     len := self read_int.

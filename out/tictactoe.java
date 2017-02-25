@@ -6,9 +6,7 @@ public class tictactoe
   /*
 Tictactoe : un tictactoe avec une IA
 */
-  
   //  La structure de donnée 
-  
   static class gamestate {
     public int[][] cases;
     public boolean firstToPlay;
@@ -16,13 +14,11 @@ Tictactoe : un tictactoe avec une IA
     public boolean ended;
   }
   //  Un Mouvement 
-  
   static class move {
     public int x;
     public int y;
   }
   //  On affiche l'état 
-  
   static void print_state(gamestate g)
   {
     System.out.print("\n|");
@@ -43,9 +39,7 @@ Tictactoe : un tictactoe avec une IA
     }
     System.out.print("\n");
   }
-  
   //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
-  
   static void eval0(gamestate g)
   {
     int win = 0;
@@ -89,9 +83,7 @@ Tictactoe : un tictactoe avec une IA
     else
         g.note = 0;
   }
-  
   //  On applique un mouvement 
-  
   static void apply_move_xy(int x, int y, gamestate g)
   {
     int player = 2;
@@ -100,38 +92,31 @@ Tictactoe : un tictactoe avec une IA
     g.cases[x][y] = player;
     g.firstToPlay = !g.firstToPlay;
   }
-  
   static void apply_move(move m, gamestate g)
   {
     apply_move_xy(m.x, m.y, g);
   }
-  
   static void cancel_move_xy(int x, int y, gamestate g)
   {
     g.cases[x][y] = 0;
     g.firstToPlay = !g.firstToPlay;
     g.ended = false;
   }
-  
   static void cancel_move(move m, gamestate g)
   {
     cancel_move_xy(m.x, m.y, g);
   }
-  
   static boolean can_move_xy(int x, int y, gamestate g)
   {
     return g.cases[x][y] == 0;
   }
-  
   static boolean can_move(move m, gamestate g)
   {
     return can_move_xy(m.x, m.y, g);
   }
-  
   /*
 Un minimax classique, renvoie la note du plateau
 */
-  
   static int minmax(gamestate g)
   {
     eval0(g);
@@ -153,11 +138,9 @@ Un minimax classique, renvoie la note du plateau
             }
     return maxNote;
   }
-  
   /*
 Renvoie le coup de l'IA
 */
-  
   static move play(gamestate g)
   {
     move minMove = new move();
@@ -182,7 +165,6 @@ Renvoie le coup de l'IA
     System.out.printf("%d%d\n", minMove.x, minMove.y);
     return minMove;
   }
-  
   static gamestate init0()
   {
     int[][] cases = new int[3][];
@@ -200,7 +182,6 @@ Renvoie le coup de l'IA
     a.ended = false;
     return a;
   }
-  
   static move read_move()
   {
     int x;
@@ -224,8 +205,6 @@ Renvoie le coup de l'IA
     b.y = y;
     return b;
   }
-  
-  
   public static void main(String args[])
   {
     for (int i = 0; i < 2; i++)

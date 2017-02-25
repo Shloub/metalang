@@ -7,7 +7,6 @@ function find($n, &$m, $x, $y, $dx, $dy) {
     else
         return $m[$y][$x] * find($n - 1, $m, $x + $dx, $y + $dy, $dx, $dy);
 }
-
 $directions = array();
 for ($i = 0; $i < 8; $i++)
     if ($i == 0)

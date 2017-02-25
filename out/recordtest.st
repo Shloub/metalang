@@ -23,7 +23,6 @@ Object subclass: recordtest [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  
   main [
     |param|param := toto new.
     param foo: 0.

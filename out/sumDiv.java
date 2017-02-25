@@ -10,12 +10,10 @@ public class sumDiv
     a++;
     //  test 2 
   }
-  
   static void foo2()
   {
     
   }
-  
   static void foo3()
   {
     if (1 == 1)
@@ -23,7 +21,6 @@ public class sumDiv
         
     }
   }
-  
   static int sumdiv(int n)
   {
     //  On désire renvoyer la somme des diviseurs 
@@ -44,8 +41,6 @@ public class sumDiv
     return out0;
     // On renvoie out
   }
-  
-  
   public static void main(String args[])
   {
     //  Programme principal 

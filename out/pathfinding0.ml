@@ -21,7 +21,6 @@ let rec pathfind_aux cache tab x y posX posY =
              cache.(posY).(posX) <- out0;
              out0
           end
-
 let pathfind tab x y =
   let cache = Array.init y (fun i ->
     let tmp = Array.init x (fun j ->
@@ -30,7 +29,6 @@ let pathfind tab x y =
     Printf.printf "\n";
     tmp) in
   pathfind_aux cache tab x y 0 0
-
 let () =
  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   Printf.printf "%d %d\n" x y;

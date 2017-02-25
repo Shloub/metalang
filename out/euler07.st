@@ -4,7 +4,6 @@ Object subclass: euler07 [
       ifTrue:[^ true].].
     ^ false
   ]
-  
    find: a t: t b: b nth: nth [|used n|
     n := a.
     used := b.
@@ -17,7 +16,6 @@ Object subclass: euler07 [
       ].].
     ^ t at: used
   ]
-  
   main [
     |t n|n := 10001.
     t := Array new: n.

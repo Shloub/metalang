@@ -71,7 +71,6 @@ public class euler21
     return sumdivaux(t, max0, 0);
   }
   
-  
   public static void Main(String[] args)
   {
     int maximumprimes = 1001;

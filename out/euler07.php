@@ -5,7 +5,6 @@ function divisible($n, &$t, $size) {
             return true;
     return false;
 }
-
 function find($n, &$t, $used, $nth) {
     while ($used != $nth)
         if (divisible($n, $t, $used))
@@ -18,7 +17,6 @@ function find($n, &$t, $used, $nth) {
         }
     return $t[$used - 1];
 }
-
 $n = 10001;
 $t = array_fill(0, $n, 2);
 echo find(3, $t, 1, $n), "\n";

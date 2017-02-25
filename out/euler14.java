@@ -10,7 +10,6 @@ public class euler14
     else
         return 3 * n + 1;
   }
-  
   static int find(int n, int[] m)
   {
     if (n == 1)
@@ -25,8 +24,6 @@ public class euler14
         return m[n];
     }
   }
-  
-  
   public static void main(String args[])
   {
     int[] m = new int[1000000];

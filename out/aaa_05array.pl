@@ -9,12 +9,10 @@ sub id{
   my($b) = @_;
   return $b;
 }
-
 sub g{
   my($t, $index) = @_;
   $t->[$index] = !(1);
 }
-
 my $j = 0;
 my $a = [];
 foreach my $i (0 .. 4)

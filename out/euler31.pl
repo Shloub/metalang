@@ -22,7 +22,6 @@ sub result{
           return $out0;
       }
 }
-
 my $t = [];
 foreach my $i (0 .. 7)
 {

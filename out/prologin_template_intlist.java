@@ -12,6 +12,8 @@ public class prologin_template_intlist
     return out;
   }
 
+  
+  
   static int programme_candidat(int[] tableau, int taille)
   {
     int out0 = 0;
@@ -19,8 +21,6 @@ public class prologin_template_intlist
         out0 += tableau[i];
     return out0;
   }
-  
-  
   public static void main(String args[])
   {
     int taille = Integer.parseInt(scanner.nextLine());

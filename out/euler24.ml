@@ -4,7 +4,6 @@ let fact n =
     prod := (!prod) * i
   done;
   (!prod)
-
 let show lim nth =
   let nth = ref nth in
   let t = Array.init lim (fun i ->
@@ -32,7 +31,6 @@ let show lim nth =
       Printf.printf "%d" m
   done;
   Printf.printf "\n"
-
 let () =
  show 10 999999 
  

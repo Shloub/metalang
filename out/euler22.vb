@@ -55,6 +55,7 @@ Function readInt() As Integer
     End If
   Loop
 End Function
+  
   Function score() As Integer
     stdin_sep
     Dim len As Integer = readInt
@@ -68,7 +69,6 @@ End Function
     Next
     Return sum
   End Function
-  
   
   Sub Main()
     Dim sum As Integer = 0

@@ -28,7 +28,6 @@ Object subclass: affect [
   "
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 "
-  
    mktoto: v1  [|t|
     t := toto new.
     t foo: v1.
@@ -36,7 +35,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t blah: v1.
     ^ t
   ]
-  
    mktoto2: v1  [|t|
     t := toto new.
     t foo: (v1 + 3).
@@ -44,7 +42,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t blah: (v1 + 1).
     ^ t
   ]
-  
    result: t_ t2_: t2_ [|t3 t2 t len cache2 cache1 cache0|
     t := t_.
     t2 := t2_.
@@ -66,7 +63,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     cache2 := cache0.
     ^ t foo + (t blah * t bar) + (t bar * t foo)
   ]
-  
   main [
     |t2 t|t := (self mktoto: 4).
     t2 := (self mktoto: 5).

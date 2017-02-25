@@ -20,7 +20,6 @@ void print_toto(Toto t)
 }
 
 
-
 String[] tab = new String[2]
 for (int i = 0; i < 2; i++)
     tab[i] = idstring("chaine de test")

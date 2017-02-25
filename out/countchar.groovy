@@ -10,7 +10,6 @@ int nth(char[] tab, char tofind, int len)
   return out0
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 0
 if (scanner.hasNext("^-")) {

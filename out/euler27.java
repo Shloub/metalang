@@ -19,7 +19,6 @@ public class euler27
         }
     return n;
   }
-  
   static boolean isPrime(int n, int[] primes, int len)
   {
     int i = 0;
@@ -33,7 +32,6 @@ public class euler27
     }
     return true;
   }
-  
   static int test(int a, int b, int[] primes, int len)
   {
     for (int n = 0; n < 201; n++)
@@ -44,8 +42,6 @@ public class euler27
     }
     return 200;
   }
-  
-  
   public static void main(String args[])
   {
     int maximumprimes = 1000;

@@ -15,7 +15,6 @@ public class aaa_021if
     else
         System.out.print("D");
   }
-  
   static void testB(boolean a, boolean b)
   {
     if (a)
@@ -25,7 +24,6 @@ public class aaa_021if
     else
         System.out.print("C");
   }
-  
   static void testC(boolean a, boolean b)
   {
     if (a)
@@ -36,7 +34,6 @@ public class aaa_021if
     else
         System.out.print("C");
   }
-  
   static void testD(boolean a, boolean b)
   {
     if (a)
@@ -50,7 +47,6 @@ public class aaa_021if
     else
         System.out.print("D");
   }
-  
   static void testE(boolean a, boolean b)
   {
     if (a)
@@ -67,15 +63,12 @@ public class aaa_021if
         System.out.print("E");
     }
   }
-  
   static void test(boolean a, boolean b)
   {
     testD(a, b);
     testE(a, b);
     System.out.print("\n");
   }
-  
-  
   public static void main(String args[])
   {
     test(true, true);

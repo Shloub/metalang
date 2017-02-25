@@ -23,7 +23,6 @@ sub eratostene{
   }
   return $n;
 }
-
 sub fillPrimesFactors{
   my($t, $n, $primes, $nprimes) = @_;
   foreach my $i (0 .. $nprimes - 1)
@@ -41,7 +40,6 @@ sub fillPrimesFactors{
   }
   return $n;
 }
-
 sub sumdivaux2{
   my($t, $n, $i) = @_;
   while ($i < $n && $t->[$i] eq 0)
@@ -50,7 +48,6 @@ sub sumdivaux2{
   }
   return $i;
 }
-
 sub sumdivaux{
   my($t, $n, $i) = @_;
   if ($i > $n)
@@ -74,7 +71,6 @@ sub sumdivaux{
           return ($out0 + 1) * $o;
       }
 }
-
 sub sumdiv{
   my($nprimes, $primes, $n) = @_;
   my $t = [];
@@ -85,7 +81,6 @@ sub sumdiv{
   my $max0 = fillPrimesFactors($t, $n, $primes, $nprimes);
   return sumdivaux($t, $max0, 0);
 }
-
 my $maximumprimes = 30001;
 my $era = [];
 foreach my $s (0 .. $maximumprimes - 1)

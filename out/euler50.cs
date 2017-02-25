@@ -2,6 +2,7 @@ using System;
 
 public class euler50
 {
+  
   static int eratostene(int[] t, int max0)
   {
     int n = 0;
@@ -21,7 +22,6 @@ public class euler50
         }
     return n;
   }
-  
   
   public static void Main(String[] args)
   {

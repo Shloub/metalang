@@ -36,6 +36,9 @@ Sub stdin_sep()
     End If
   Loop
 End Sub
+  
+  
+  
   Public Class bigint
     Public bigint_sign As Boolean
     Public bigint_len As Integer
@@ -463,7 +466,6 @@ End Sub
                 Loop
                 Return n
                 End Function
-                
                 
                 Sub Main()
                   Console.Write(euler29() & Chr(10))

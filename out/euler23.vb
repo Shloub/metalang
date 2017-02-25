@@ -64,7 +64,6 @@ Module euler23
     Return sumdivaux(t, max0, 0)
     End Function
     
-    
     Sub Main()
       Dim maximumprimes As Integer = 30001
       Dim era(maximumprimes) As Integer

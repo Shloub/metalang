@@ -10,17 +10,14 @@ func foo() {
   a++
   /* test 2 */
 }
-
 func foo2() {
   
 }
-
 func foo3() {
   if 1 == 1 {
       
   }
 }
-
 func sumdiv(n int) int{
   /* On désire renvoyer la somme des diviseurs */
   out0 := 0
@@ -38,7 +35,6 @@ func sumdiv(n int) int{
   return out0
   /*On renvoie out*/
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   /* Programme principal */

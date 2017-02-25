@@ -8,7 +8,6 @@ public class triangles
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-  
   static int find0(int len, int[][] tab, int[][] cache, int x, int y)
   {
     /*
@@ -30,7 +29,6 @@ on le retrouve ici : http://projecteuler.net/problem=18
     cache[y][x] = result;
     return result;
   }
-  
   static int find(int len, int[][] tab)
   {
     int[][] tab2 = new int[len][];
@@ -43,8 +41,6 @@ on le retrouve ici : http://projecteuler.net/problem=18
     }
     return find0(len, tab, tab2, 0, 0);
   }
-  
-  
   public static void main(String args[])
   {
     int len = 0;

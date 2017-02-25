@@ -3,6 +3,8 @@ import java.util.*;
 public class euler42
 {
   static Scanner scanner = new Scanner(System.in);
+  
+  
   static boolean is_triangular(int n)
   {
     /*
@@ -12,7 +14,6 @@ public class euler42
     int a = (int)Math.sqrt(n * 2);
     return a * (a + 1) == n * 2;
   }
-  
   static int score()
   {
     scanner.findWithinHorizon("[\n\r ]*", 1);
@@ -36,8 +37,6 @@ public class euler42
     else
         return 0;
   }
-  
-  
   public static void main(String args[])
   {
     for (int i = 1; i < 56; i++)

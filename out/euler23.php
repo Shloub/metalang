@@ -14,7 +14,6 @@ function eratostene(&$t, $max0) {
         }
     return $n;
 }
-
 function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     for ($i = 0; $i < $nprimes; $i++)
     {
@@ -29,13 +28,11 @@ function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     }
     return $n;
 }
-
 function sumdivaux2(&$t, $n, $i) {
     while ($i < $n && $t[$i] == 0)
         $i++;
     return $i;
 }
-
 function sumdivaux(&$t, $n, $i) {
     if ($i > $n)
         return 1;
@@ -54,13 +51,11 @@ function sumdivaux(&$t, $n, $i) {
         return ($out0 + 1) * $o;
     }
 }
-
 function sumdiv($nprimes, &$primes, $n) {
     $t = array_fill(0, $n + 1, 0);
     $max0 = fillPrimesFactors($t, $n, $primes, $nprimes);
     return sumdivaux($t, $max0, 0);
 }
-
 $maximumprimes = 30001;
 $era = array();
 for ($s = 0; $s < $maximumprimes; $s++)

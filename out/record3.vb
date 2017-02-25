@@ -72,7 +72,6 @@ End Function
     Return out0
   End Function
   
-  
   Sub Main()
     Dim t(4) As toto
     For i As Integer = 0 To 3

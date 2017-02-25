@@ -55,6 +55,7 @@ Function readInt() As Integer
     End If
   Loop
 End Function
+  
   Function is_number(ByVal c as Char) As Boolean
     Return Asc(c) <= Asc("9"C) AndAlso Asc(c) >= Asc("0"C)
   End Function
@@ -89,7 +90,6 @@ End Function
     Loop
     Return stack(0)
     End Function
-    
     
     Sub Main()
       Dim len As Integer = 0

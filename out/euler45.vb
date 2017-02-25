@@ -52,7 +52,6 @@ Module euler45
     End If
   End Function
   
-  
   Sub Main()
     For n As Integer = 285 To 55385
         Dim t As Integer = triangle(n)

@@ -30,7 +30,6 @@ int pathfind(int[] tab, int len)
   return pathfind_aux(cache, tab, len, 0)
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 0
 if (scanner.hasNext("^-")) {

@@ -4,7 +4,6 @@ import java.util.*
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
-
 class Toto {
   int foo
   int bar
@@ -52,7 +51,6 @@ int result(Toto t_, Toto t2_)
   cache2 = cache0
   return t.foo + t.blah * t.bar + t.bar * t.foo
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 Toto t = mktoto(4)

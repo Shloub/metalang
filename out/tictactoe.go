@@ -16,9 +16,7 @@ func skip() {
 /*
 Tictactoe : un tictactoe avec une IA
 */
-
 //  La structure de donnée 
-
 
 type gamestate struct {
   cases [][]int;
@@ -26,17 +24,13 @@ type gamestate struct {
   note int;
   ended bool;
 }
-
 //  Un Mouvement 
-
 
 type move struct {
   x int;
   y int;
 }
-
 //  On affiche l'état 
-
 func print_state(g * gamestate) {
   fmt.Printf("\n|")
   for y := 0; y < 3; y++ {
@@ -56,9 +50,7 @@ func print_state(g * gamestate) {
   }
   fmt.Printf("\n")
 }
-
 //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
-
 func eval0(g * gamestate) {
   win := 0
   freecase := 0
@@ -105,9 +97,7 @@ func eval0(g * gamestate) {
       (*g).note = 0
   }
 }
-
 //  On applique un mouvement 
-
 func apply_move_xy(x int, y int, g * gamestate) {
   player := 2
   if (*g).firstToPlay {
@@ -116,33 +106,26 @@ func apply_move_xy(x int, y int, g * gamestate) {
   (*g).cases[x][y] = player
   (*g).firstToPlay = !(*g).firstToPlay
 }
-
 func apply_move(m * move, g * gamestate) {
   apply_move_xy((*m).x, (*m).y, g)
 }
-
 func cancel_move_xy(x int, y int, g * gamestate) {
   (*g).cases[x][y] = 0
   (*g).firstToPlay = !(*g).firstToPlay
   (*g).ended = false
 }
-
 func cancel_move(m * move, g * gamestate) {
   cancel_move_xy((*m).x, (*m).y, g)
 }
-
 func can_move_xy(x int, y int, g * gamestate) bool{
   return (*g).cases[x][y] == 0
 }
-
 func can_move(m * move, g * gamestate) bool{
   return can_move_xy((*m).x, (*m).y, g)
 }
-
 /*
 Un minimax classique, renvoie la note du plateau
 */
-
 func minmax(g * gamestate) int{
   eval0(g)
   if (*g).ended {
@@ -167,11 +150,9 @@ func minmax(g * gamestate) int{
   }
   return maxNote
 }
-
 /*
 Renvoie le coup de l'IA
 */
-
 func play(g * gamestate) * move{
   var minMove * move = new (move)
       (*minMove).x=0
@@ -195,7 +176,6 @@ func play(g * gamestate) * move{
   fmt.Printf("%d%d\n", (*minMove).x, (*minMove).y)
   return minMove
 }
-
 func init0() * gamestate{
   var cases [][]int = make([][]int, 3)
   for i := 0; i < 3; i++ {
@@ -212,7 +192,6 @@ func init0() * gamestate{
       (*a).ended=false
   return a
 }
-
 func read_move() * move{
   var y int
   var x int
@@ -225,7 +204,6 @@ func read_move() * move{
       (*b).y=y
   return b
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   for i := 0; i < 2; i++ {

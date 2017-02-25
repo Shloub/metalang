@@ -30,7 +30,6 @@ def mod(x, y):
     return x - y * math.trunc(x / y)
 
 
-
 def read_bigint(len):
     chiffres = [None] * len
     for j in range(0, len):
@@ -41,13 +40,11 @@ def read_bigint(len):
         chiffres[i] = chiffres[len - 1 - i]
         chiffres[len - 1 - i] = tmp
     return {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
-
 def print_bigint(a):
     if not a["bigint_sign"]:
         print("%c" % '-', end='')
     for i in range(0, a["bigint_len"]):
         print("%d" % a["bigint_chiffres"][a["bigint_len"] - 1 - i], end='')
-
 def bigint_eq(a, b):
     # Renvoie vrai si a = b 
     
@@ -60,7 +57,6 @@ def bigint_eq(a, b):
             if a["bigint_chiffres"][i] != b["bigint_chiffres"][i]:
                 return False
         return True
-
 def bigint_gt(a, b):
     # Renvoie vrai si a > b 
     
@@ -81,10 +77,8 @@ def bigint_gt(a, b):
                 elif a["bigint_chiffres"][j] < b["bigint_chiffres"][j]:
                     return not a["bigint_sign"]
         return True
-
 def bigint_lt(a, b):
     return not bigint_gt(a, b)
-
 def add_bigint_positif(a, b):
     # Une addition ou on en a rien a faire des signes 
     
@@ -102,7 +96,6 @@ def add_bigint_positif(a, b):
     while len > 0 and chiffres[len - 1] == 0:
         len -= 1
     return {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
-
 def sub_bigint_positif(a, b):
     # Une soustraction ou on en a rien a faire des signes
     #Pré-requis : a > b
@@ -124,10 +117,8 @@ def sub_bigint_positif(a, b):
     while len > 0 and chiffres[len - 1] == 0:
         len -= 1
     return {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
-
 def neg_bigint(a):
     return {"bigint_sign":not a["bigint_sign"], "bigint_len":a["bigint_len"], "bigint_chiffres":a["bigint_chiffres"]}
-
 def add_bigint(a, b):
     if a["bigint_sign"] == b["bigint_sign"]:
         if a["bigint_sign"]:
@@ -148,10 +139,8 @@ def add_bigint(a, b):
             return neg_bigint(sub_bigint_positif(a, b))
         else:
             return sub_bigint_positif(b, a)
-
 def sub_bigint(a, b):
     return add_bigint(a, neg_bigint(b))
-
 def mul_bigint_cp(a, b):
     # Cet algorithm est quadratique.
     #C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -172,13 +161,11 @@ def mul_bigint_cp(a, b):
         if len != 0 and chiffres[len - 1] == 0:
             len -= 1
     return {"bigint_sign":a["bigint_sign"] == b["bigint_sign"], "bigint_len":len, "bigint_chiffres":chiffres}
-
 def bigint_premiers_chiffres(a, i):
     len = min(i, a["bigint_len"])
     while len != 0 and a["bigint_chiffres"][len - 1] == 0:
         len -= 1
     return {"bigint_sign":a["bigint_sign"], "bigint_len":len, "bigint_chiffres":a["bigint_chiffres"]}
-
 def bigint_shift(a, i):
     chiffres = [None] * (a["bigint_len"] + i)
     for k in range(0, a["bigint_len"] + i):
@@ -187,7 +174,6 @@ def bigint_shift(a, i):
         else:
             chiffres[k] = 0
     return {"bigint_sign":a["bigint_sign"], "bigint_len":a["bigint_len"] + i, "bigint_chiffres":chiffres}
-
 def mul_bigint(aa, bb):
     if aa["bigint_len"] == 0:
         return aa
@@ -211,7 +197,6 @@ def mul_bigint(aa, bb):
     return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
     # ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
     
-
 """Division,
 Modulo"""
 def log10(a):
@@ -220,7 +205,6 @@ def log10(a):
         a = math.trunc(a / 10)
         out0 += 1
     return out0
-
 def bigint_of_int(i):
     size = log10(i)
     if i == 0:
@@ -230,7 +214,6 @@ def bigint_of_int(i):
         t[k] = mod(i, 10)
         i = math.trunc(i / 10)
     return {"bigint_sign":True, "bigint_len":size, "bigint_chiffres":t}
-
 def fact_bigint(a):
     one = bigint_of_int(1)
     out0 = one
@@ -238,13 +221,11 @@ def fact_bigint(a):
         out0 = mul_bigint(a, out0)
         a = sub_bigint(a, one)
     return out0
-
 def sum_chiffres_bigint(a):
     out0 = 0
     for i in range(0, a["bigint_len"]):
         out0 += a["bigint_chiffres"][i]
     return out0
-
 """http://projecteuler.net/problem=20"""
 def euler20():
     a = bigint_of_int(15)
@@ -252,7 +233,6 @@ def euler20():
     
     a = fact_bigint(a)
     return sum_chiffres_bigint(a)
-
 def bigint_exp(a, b):
     if b == 1:
         return a
@@ -260,7 +240,6 @@ def bigint_exp(a, b):
         return bigint_exp(mul_bigint(a, a), math.trunc(b / 2))
     else:
         return mul_bigint(a, bigint_exp(a, b - 1))
-
 def bigint_exp_10chiffres(a, b):
     a = bigint_premiers_chiffres(a, 10)
     if b == 1:
@@ -269,7 +248,6 @@ def bigint_exp_10chiffres(a, b):
         return bigint_exp_10chiffres(mul_bigint(a, a), math.trunc(b / 2))
     else:
         return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
-
 def euler48():
     sum = bigint_of_int(0)
     for i in range(1, 101):
@@ -282,14 +260,12 @@ def euler48():
     print("euler 48 = ", end='')
     print_bigint(sum)
     print("\n", end='')
-
 def euler16():
     a = bigint_of_int(2)
     a = bigint_exp(a, 100)
     # 1000 normalement 
     
     return sum_chiffres_bigint(a)
-
 def euler25():
     i = 2
     a = bigint_of_int(1)
@@ -302,7 +278,6 @@ def euler25():
         b = c
         i += 1
     return i
-
 def euler29():
     maxA = 5
     maxB = 5
@@ -333,7 +308,6 @@ def euler29():
                     b[l] += 1
                     a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l])
     return n
-
 print("%d\n" % euler29(), end='')
 sum = read_bigint(50)
 for i in range(2, 101):

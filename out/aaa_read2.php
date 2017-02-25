@@ -3,7 +3,6 @@
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-
 $len = intval(trim(fgets(STDIN)));
 echo $len, "=len\n";
 $tab = array_map("intval", explode(" ", fgets(STDIN)));

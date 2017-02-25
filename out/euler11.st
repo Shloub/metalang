@@ -30,8 +30,6 @@ Object subclass: euler11 [
       ifTrue:[^ 1]
       ifFalse:[^ ((m at: (y + 1)) at: (x + 1)) * (self find: (n - 1) m: m x: (x + dx) y: (y + dy) dx: dx dy: dy)].].
   ]
-  
-  
   main [
     |r p max0 m l k h g f e dy dx directions d c|directions := Array new: 8.
     (0 to: 7) do: [:i| (i = 0)

@@ -14,7 +14,6 @@ def h(i):
             return True
         j += 1
     return False
-
 j = 0
 for k in range(0, 11):
     j += k

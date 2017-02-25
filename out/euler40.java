@@ -10,7 +10,6 @@ public class euler40
         o *= a;
     return o;
   }
-  
   static int e(int[] t, int n)
   {
     for (int i = 1; i < 9; i++)
@@ -24,8 +23,6 @@ public class euler40
         }
     return -1;
   }
-  
-  
   public static void main(String args[])
   {
     int[] t = new int[9];

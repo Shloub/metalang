@@ -15,7 +15,6 @@ import "fmt"
 
 
 */
-
 func sumdiag(n int) int{
   nterms := n * 2 - 1
   un := 1
@@ -28,7 +27,6 @@ func sumdiag(n int) int{
   }
   return sum
 }
-
 func main() {
   fmt.Printf("%d", sumdiag(1001))
 }

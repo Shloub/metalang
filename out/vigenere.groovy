@@ -1,6 +1,8 @@
 import groovy.transform.Field
 import java.util.*
 
+
+
 int position_alphabet(char c)
 {
   int i = (0+c)
@@ -30,7 +32,6 @@ void crypte(int taille_cle, char[] cle, int taille, char[] message)
       }
   }
 }
-
 
 @Field Scanner scanner = new Scanner(System.in)
 int taille_cle

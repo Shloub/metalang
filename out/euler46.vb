@@ -19,7 +19,6 @@ Module euler46
     Return n
   End Function
   
-  
   Sub Main()
     Dim maximumprimes As Integer = 6000
     Dim era(maximumprimes) As Integer

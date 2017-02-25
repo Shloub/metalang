@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class euler11
 {
+  
+  
   static int find(int n, int[][] m, int x, int y, int dx, int dy)
   {
     if (x < 0 || x == 20 || y < 0 || y == 20)
@@ -17,7 +19,6 @@ public class euler11
     public int tuple_int_int_field_0;
     public int tuple_int_int_field_1;
   }
-  
   public static void Main(String[] args)
   {
     tuple_int_int[] directions = new tuple_int_int[8];

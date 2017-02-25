@@ -16,7 +16,6 @@ sub find{
           return $m->[$y]->[$x] * find($n - 1, $m, $x + $dx, $y + $dy, $dx, $dy);
       }
 }
-
 my $directions = [];
 foreach my $i (0 .. 7)
 {

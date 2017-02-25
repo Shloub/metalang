@@ -21,7 +21,6 @@ int result(Toto t)
   return t.foo + t.blah * t.bar + t.bar * t.foo
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 Toto t = mktoto(4)
 if (scanner.hasNext("^-")) {

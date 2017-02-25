@@ -24,7 +24,6 @@ func exp0(a int, b int) int{
       return a * exp0(a, b - 1)
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   a := 0

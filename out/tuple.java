@@ -17,8 +17,6 @@ public class tuple
     d.tuple_int_int_field_1 = b + 1;
     return d;
   }
-  
-  
   public static void main(String args[])
   {
     tuple_int_int e = new tuple_int_int();

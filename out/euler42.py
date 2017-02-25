@@ -51,7 +51,6 @@ def is_triangular(n):
     
     a = math.floor(math.sqrt(n * 2))
     return a * (a + 1) == n * 2
-
 def score():
     stdinsep()
     len = readint()
@@ -66,7 +65,6 @@ def score():
         return 1
     else:
         return 0
-
 for i in range(1, 56):
     if is_triangular(i):
         print("%d " % i, end='')

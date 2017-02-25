@@ -59,7 +59,6 @@ static int readInt(){
         return a * exp0(a, b - 1);
   }
   
-  
   public static void Main(String[] args)
   {
     int a = 0;

@@ -5,7 +5,6 @@ class Toto {
   int foo
   int bar
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 Toto param = new Toto()
 param.foo = 0

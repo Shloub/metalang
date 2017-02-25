@@ -12,7 +12,6 @@ Object subclass: euler31 [
         ^ out0
       ].].
   ]
-  
   main [
     |t o cache|t := Array new: 8.
     (0 to: 7) do: [:i| t at: (i + 1) put: 0.].

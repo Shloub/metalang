@@ -20,7 +20,6 @@ func min2_(a int, b int) int{
       return b
   }
 }
-
 func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int) int{
   if posX == x - 1 && posY == y - 1 {
       return 0
@@ -41,7 +40,6 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
       return out0
   }
 }
-
 func pathfind(tab [][]byte, x int, y int) int{
   var cache [][]int = make([][]int, y)
   for i := 0; i < y; i++ {
@@ -53,7 +51,6 @@ func pathfind(tab [][]byte, x int, y int) int{
   }
   return pathfind_aux(cache, tab, x, y, 0, 0)
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   x := 0

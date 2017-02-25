@@ -7,13 +7,10 @@ public class aaa_05array
   {
     return b;
   }
-  
   static void g(boolean[] t, int index)
   {
     t[index] = false;
   }
-  
-  
   public static void main(String args[])
   {
     int j = 0;

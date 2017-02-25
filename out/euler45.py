@@ -8,16 +8,13 @@ def triangle(n):
         return math.trunc(n / 2) * (n + 1)
     else:
         return n * math.trunc((n + 1) / 2)
-
 def penta(n):
     if mod(n, 2) == 0:
         return math.trunc(n / 2) * (3 * n - 1)
     else:
         return math.trunc((3 * n - 1) / 2) * n
-
 def hexa(n):
     return n * (2 * n - 1)
-
 def findPenta2(n, a, b):
     if b == a + 1:
         return penta(a) == n or penta(b) == n
@@ -29,7 +26,6 @@ def findPenta2(n, a, b):
         return findPenta2(n, c, b)
     else:
         return findPenta2(n, a, c)
-
 def findHexa2(n, a, b):
     if b == a + 1:
         return hexa(a) == n or hexa(b) == n
@@ -41,7 +37,6 @@ def findHexa2(n, a, b):
         return findHexa2(n, c, b)
     else:
         return findHexa2(n, a, c)
-
 for n in range(285, 55386):
     t = triangle(n)
     if findPenta2(t, math.trunc(n / 5), n) and findHexa2(t, math.trunc(n / 5), math.trunc(n / 2) + 10):

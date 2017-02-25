@@ -30,7 +30,6 @@ function nextChar(){
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-
 list($len) = scan("%d");
 scantrim();
 echo $len, "=len\n";

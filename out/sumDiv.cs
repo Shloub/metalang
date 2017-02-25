@@ -77,7 +77,6 @@ static int readInt(){
     // On renvoie out
   }
   
-  
   public static void Main(String[] args)
   {
     //  Programme principal 

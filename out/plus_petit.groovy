@@ -34,7 +34,6 @@ int plus_petit0(int[] tab, int len)
   return go0(tab, 0, len)
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 0
 if (scanner.hasNext("^-")) {

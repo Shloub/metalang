@@ -20,7 +20,6 @@ func max2_(a int, b int) int{
       return b
   }
 }
-
 func find(n int, m [][]int, x int, y int, dx int, dy int) int{
   if x < 0 || x == 20 || y < 0 || y == 20 {
       return -1
@@ -31,12 +30,10 @@ func find(n int, m [][]int, x int, y int, dx int, dy int) int{
   }
 }
 
-
 type tuple_int_int struct {
   tuple_int_int_field_0 int;
   tuple_int_int_field_1 int;
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var directions []* tuple_int_int = make([]* tuple_int_int, 8)

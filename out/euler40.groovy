@@ -23,7 +23,6 @@ int e(int[] t, int n)
 }
 
 
-
 int[] t = new int[9]
 for (int i = 0; i < 9; i++)
     t[i] = exp0(10, i) - exp0(10, i - 1)

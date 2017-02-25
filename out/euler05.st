@@ -13,7 +13,6 @@ Object subclass: euler05 [
     tab at: (n + 1) put: ((tab at: (n + 1)) + 1).
     ^ tab
   ]
-  
   main [
     |t product o lim|lim := 20.
     o := Array new: (lim + 1).

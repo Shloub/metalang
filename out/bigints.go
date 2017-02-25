@@ -13,6 +13,7 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
 func max2_(a int, b int) int{
   if a > b {
       return a
@@ -20,7 +21,6 @@ func max2_(a int, b int) int{
       return b
   }
 }
-
 func min2_(a int, b int) int{
   if a < b {
       return a
@@ -29,13 +29,11 @@ func min2_(a int, b int) int{
   }
 }
 
-
 type bigint struct {
   bigint_sign bool;
   bigint_len int;
   bigint_chiffres []int;
 }
-
 func read_bigint(len int) * bigint{
   var chiffres []int = make([]int, len)
   for j := 0; j < len; j++ {
@@ -54,7 +52,6 @@ func read_bigint(len int) * bigint{
       (*e).bigint_chiffres=chiffres
   return e
 }
-
 func print_bigint(a * bigint) {
   if !(*a).bigint_sign {
       fmt.Printf("%c", '-')
@@ -63,7 +60,6 @@ func print_bigint(a * bigint) {
       fmt.Printf("%d", (*a).bigint_chiffres[(*a).bigint_len - 1 - i])
   }
 }
-
 func bigint_eq(a * bigint, b * bigint) bool{
   /* Renvoie vrai si a = b */
   if (*a).bigint_sign != (*b).bigint_sign {
@@ -79,7 +75,6 @@ func bigint_eq(a * bigint, b * bigint) bool{
       return true
   }
 }
-
 func bigint_gt(a * bigint, b * bigint) bool{
   /* Renvoie vrai si a > b */
   if (*a).bigint_sign && !(*b).bigint_sign {
@@ -104,11 +99,9 @@ func bigint_gt(a * bigint, b * bigint) bool{
       return true
   }
 }
-
 func bigint_lt(a * bigint, b * bigint) bool{
   return !bigint_gt(a, b)
 }
-
 func add_bigint_positif(a * bigint, b * bigint) * bigint{
   /* Une addition ou on en a rien a faire des signes */
   len := max2_((*a).bigint_len, (*b).bigint_len) + 1
@@ -134,7 +127,6 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
       (*f).bigint_chiffres=chiffres
   return f
 }
-
 func sub_bigint_positif(a * bigint, b * bigint) * bigint{
   /* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -164,7 +156,6 @@ Pré-requis : a > b
       (*g).bigint_chiffres=chiffres
   return g
 }
-
 func neg_bigint(a * bigint) * bigint{
   var h * bigint = new (bigint)
       (*h).bigint_sign=!(*a).bigint_sign
@@ -172,7 +163,6 @@ func neg_bigint(a * bigint) * bigint{
       (*h).bigint_chiffres=(*a).bigint_chiffres
   return h
 }
-
 func add_bigint(a * bigint, b * bigint) * bigint{
   if (*a).bigint_sign == (*b).bigint_sign {
       if (*a).bigint_sign {
@@ -196,11 +186,9 @@ func add_bigint(a * bigint, b * bigint) * bigint{
       }
   }
 }
-
 func sub_bigint(a * bigint, b * bigint) * bigint{
   return add_bigint(a, neg_bigint(b))
 }
-
 func mul_bigint_cp(a * bigint, b * bigint) * bigint{
   /* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -232,7 +220,6 @@ D'ou le nom de la fonction. */
       (*m).bigint_chiffres=chiffres
   return m
 }
-
 func bigint_premiers_chiffres(a * bigint, i int) * bigint{
   len := min2_(i, (*a).bigint_len)
   for len != 0 && (*a).bigint_chiffres[len - 1] == 0 {
@@ -244,7 +231,6 @@ func bigint_premiers_chiffres(a * bigint, i int) * bigint{
       (*o).bigint_chiffres=(*a).bigint_chiffres
   return o
 }
-
 func bigint_shift(a * bigint, i int) * bigint{
   var chiffres []int = make([]int, (*a).bigint_len + i)
   for k := 0; k < (*a).bigint_len + i; k++ {
@@ -260,7 +246,6 @@ func bigint_shift(a * bigint, i int) * bigint{
       (*p).bigint_chiffres=chiffres
   return p
 }
-
 func mul_bigint(aa * bigint, bb * bigint) * bigint{
   if (*aa).bigint_len == 0 {
       return aa
@@ -284,12 +269,10 @@ func mul_bigint(aa * bigint, bb * bigint) * bigint{
   return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
   /* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd */
 }
-
 /*
 Division,
 Modulo
 */
-
 func log10(a int) int{
   out0 := 1
   for a >= 10 {
@@ -298,7 +281,6 @@ func log10(a int) int{
   }
   return out0
 }
-
 func bigint_of_int(i int) * bigint{
   size := log10(i)
   if i == 0 {
@@ -318,7 +300,6 @@ func bigint_of_int(i int) * bigint{
       (*q).bigint_chiffres=t
   return q
 }
-
 func fact_bigint(a * bigint) * bigint{
   var one * bigint = bigint_of_int(1)
   var out0 * bigint = one
@@ -328,7 +309,6 @@ func fact_bigint(a * bigint) * bigint{
   }
   return out0
 }
-
 func sum_chiffres_bigint(a * bigint) int{
   out0 := 0
   for i := 0; i < (*a).bigint_len; i++ {
@@ -336,16 +316,13 @@ func sum_chiffres_bigint(a * bigint) int{
   }
   return out0
 }
-
 //  http://projecteuler.net/problem=20 
-
 func euler20() int{
   var a * bigint = bigint_of_int(15)
   /* normalement c'est 100 */
   a = fact_bigint(a)
   return sum_chiffres_bigint(a)
 }
-
 func bigint_exp(a * bigint, b int) * bigint{
   if b == 1 {
       return a
@@ -355,7 +332,6 @@ func bigint_exp(a * bigint, b int) * bigint{
       return mul_bigint(a, bigint_exp(a, b - 1))
   }
 }
-
 func bigint_exp_10chiffres(a * bigint, b int) * bigint{
   a = bigint_premiers_chiffres(a, 10)
   if b == 1 {
@@ -366,7 +342,6 @@ func bigint_exp_10chiffres(a * bigint, b int) * bigint{
       return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
   }
 }
-
 func euler48() {
   var sum * bigint = bigint_of_int(0)
   for i := 1; i < 101; i++ {
@@ -380,14 +355,12 @@ func euler48() {
   print_bigint(sum)
   fmt.Printf("\n")
 }
-
 func euler16() int{
   var a * bigint = bigint_of_int(2)
   a = bigint_exp(a, 100)
   /* 1000 normalement */
   return sum_chiffres_bigint(a)
 }
-
 func euler25() int{
   i := 2
   var a * bigint = bigint_of_int(1)
@@ -401,7 +374,6 @@ func euler25() int{
   }
   return i
 }
-
 func euler29() int{
   maxA := 5
   maxB := 5
@@ -446,7 +418,6 @@ func euler29() int{
   }
   return n
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   fmt.Printf("%d\n", euler29())

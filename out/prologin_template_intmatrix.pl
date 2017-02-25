@@ -12,7 +12,6 @@ sub programme_candidat{
   }
   return $out0;
 }
-
 my $taille_x = int( <STDIN> );
 my $taille_y = int( <STDIN> );
 my $tableau = [];

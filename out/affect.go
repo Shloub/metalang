@@ -17,13 +17,11 @@ func skip() {
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
 
-
 type toto struct {
   foo int;
   bar int;
   blah int;
 }
-
 func mktoto(v1 int) * toto{
   var t * toto = new (toto)
       (*t).foo=v1
@@ -31,7 +29,6 @@ func mktoto(v1 int) * toto{
       (*t).blah=v1
   return t
 }
-
 func mktoto2(v1 int) * toto{
   var t * toto = new (toto)
       (*t).foo=v1 + 3
@@ -39,7 +36,6 @@ func mktoto2(v1 int) * toto{
       (*t).blah=v1 + 1
   return t
 }
-
 func result(t_ * toto, t2_ * toto) int{
   var t * toto = t_
   var t2 * toto = t2_
@@ -66,7 +62,6 @@ func result(t_ * toto, t2_ * toto) int{
   cache2 = cache0
   return (*t).foo + (*t).blah * (*t).bar + (*t).bar * (*t).foo
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var t * toto = mktoto(4)

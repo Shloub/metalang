@@ -14,7 +14,6 @@
 
 
 */
-
 function sumdiag($n) {
     $nterms = $n * 2 - 1;
     $un = 1;
@@ -28,6 +27,5 @@ function sumdiag($n) {
     }
     return $sum;
 }
-
 echo sumdiag(1001);
 

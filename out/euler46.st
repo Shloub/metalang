@@ -15,7 +15,6 @@ Object subclass: euler46 [
       ].].
     ^ n
   ]
-  
   main [
     |primes nprimes n maximumprimes m2 l era canbe|maximumprimes := 6000.
     era := Array new: maximumprimes.

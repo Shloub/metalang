@@ -39,7 +39,6 @@ Module euler19
     Return 0
   End Function
   
-  
   Sub Main()
     Dim month As Integer = 0
     Dim year As Integer = 1901

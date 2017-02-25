@@ -8,7 +8,6 @@ def exp0(a, e):
     for i in range(1, e + 1):
         o *= a
     return o
-
 def e(t, n):
     for i in range(1, 9):
         if n >= t[i] * i:
@@ -18,7 +17,6 @@ def e(t, n):
             chiffre = i - 1 - mod(n, i)
             return mod(math.trunc(nombre / exp0(10, chiffre)), 10)
     return -1
-
 t = [None] * 9
 for i in range(0, 9):
     t[i] = exp0(10, i) - exp0(10, i - 1)

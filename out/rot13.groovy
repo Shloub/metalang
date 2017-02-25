@@ -1,11 +1,11 @@
 import groovy.transform.Field
 import java.util.*
 
+
+
 /*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
-
-
 @Field Scanner scanner = new Scanner(System.in)
 int strlen
 if (scanner.hasNext("^-")) {

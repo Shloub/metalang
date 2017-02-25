@@ -50,7 +50,6 @@ static int readInt(){
     public int foo;
     public int bar;
   }
-  
   public static void Main(String[] args)
   {
     toto param = new toto();

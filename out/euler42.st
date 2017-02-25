@@ -32,7 +32,6 @@ Object subclass: euler42 [
     a := ((n * 2) sqrt floor).
     ^ a * (a + 1) = (n * 2)
   ]
-  
   score [|sum len c|
     self skip.
     len := self read_int.
@@ -47,7 +46,6 @@ Object subclass: euler42 [
     ifTrue:[^ 1]
     ifFalse:[^ 0].
   ]
-  
   main [
     |sum n|(1 to: 55) do: [:i| (self is_triangular: i)
              ifTrue:[i display.

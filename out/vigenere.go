@@ -13,6 +13,8 @@ func skip() {
     reader.UnreadByte()
   }
 }
+
+
 func position_alphabet(c byte) int{
   i := (int)(c)
   if i <= (int)('Z') && i >= (int)('A') {
@@ -23,11 +25,9 @@ func position_alphabet(c byte) int{
       return -1
   }
 }
-
 func of_position_alphabet(c int) byte{
   return (byte)(c + (int)('a'))
 }
-
 func crypte(taille_cle int, cle []byte, taille int, message []byte) {
   for i := 0; i < taille; i++ {
       lettre := position_alphabet(message[i])
@@ -38,7 +38,6 @@ func crypte(taille_cle int, cle []byte, taille int, message []byte) {
       }
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var taille_cle int

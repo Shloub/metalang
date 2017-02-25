@@ -49,7 +49,6 @@ def exp0(a, b):
         return o * o
     else:
         return a * exp0(a, b - 1)
-
 a = 0
 b = 0
 a = readint()

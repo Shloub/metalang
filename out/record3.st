@@ -25,7 +25,6 @@ Object subclass: record3 [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  
    mktoto: v1  [|t|
     t := toto new.
     t foo: v1.
@@ -33,7 +32,6 @@ Object subclass: record3 [
     t blah: 0.
     ^ t
   ]
-  
    result: t len: len [|out0|
     out0 := 0.
     (0 to: (len - 1)) do: [:j|
@@ -42,7 +40,6 @@ Object subclass: record3 [
     ].
     ^ out0
   ]
-  
   main [
     |titi t|t := Array new: 4.
     (0 to: 3) do: [:i| t at: (i + 1) put: (self mktoto: i).].

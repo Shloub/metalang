@@ -14,7 +14,6 @@ sub exp0{
   }
   return $o;
 }
-
 sub e{
   my($t, $n) = @_;
   foreach my $i (1 .. 8)
@@ -32,7 +31,6 @@ sub e{
   }
   return -1;
 }
-
 my $t = [];
 foreach my $i (0 .. 8)
 {

@@ -40,14 +40,11 @@ def foo():
     a += 1
     # test 2 
     
-
 def foo2():
     pass
-
 def foo3():
     if 1 == 1:
         pass
-
 def sumdiv(n):
     # On désire renvoyer la somme des diviseurs 
     
@@ -68,7 +65,6 @@ def sumdiv(n):
     return out0
     #On renvoie out
     
-
 # Programme principal 
 
 n = 0

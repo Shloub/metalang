@@ -20,7 +20,6 @@ sub pgcd{
       return pgcd($c, $reste);
   }
 }
-
 my $top = 1;
 my $bottom = 1;
 foreach my $i (1 .. 9)

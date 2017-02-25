@@ -1,7 +1,6 @@
 let f tuple0 =
   let (a, b) = tuple0 in
   (a + 1, b + 1)
-
 let () =
  let t = f (0, 1) in
   let (a, b) = t in

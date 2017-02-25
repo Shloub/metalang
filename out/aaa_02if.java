@@ -9,8 +9,6 @@ public class aaa_02if
         return true;
     return false;
   }
-  
-  
   public static void main(String args[])
   {
     if (f(4))

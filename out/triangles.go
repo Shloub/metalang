@@ -18,7 +18,6 @@ func skip() {
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-
 func find0(len int, tab [][]int, cache [][]int, x int, y int) int{
   /*
 	Cette fonction est récursive
@@ -41,7 +40,6 @@ func find0(len int, tab [][]int, cache [][]int, x int, y int) int{
   cache[y][x] = result
   return result
 }
-
 func find(len int, tab [][]int) int{
   var tab2 [][]int = make([][]int, len)
   for i := 0; i < len; i++ {
@@ -53,7 +51,6 @@ func find(len int, tab [][]int) int{
   }
   return find0(len, tab, tab2, 0, 0)
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   len := 0

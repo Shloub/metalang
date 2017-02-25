@@ -4,7 +4,6 @@ def programme_candidat(tableau, taille):
     for i in range(0, taille):
         out0 += tableau[i]
     return out0
-
 taille = int(input())
 tableau = list(map(int, input().split()))
 print("%d\n" % programme_candidat(tableau, taille), end='')

@@ -2,7 +2,6 @@
 function is_leap($year) {
     return $year % 400 == 0 || $year % 100 != 0 && $year % 4 == 0;
 }
-
 function ndayinmonth($month, $year) {
     if ($month == 0)
         return 31;
@@ -33,7 +32,6 @@ function ndayinmonth($month, $year) {
         return 31;
     return 0;
 }
-
 $month = 0;
 $year = 1901;
 $dayofweek = 1;

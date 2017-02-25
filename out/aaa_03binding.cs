@@ -15,7 +15,6 @@ public class aaa_03binding
     Console.Write(i + "\n");
   }
   
-  
   public static void Main(String[] args)
   {
     h(14);

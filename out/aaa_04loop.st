@@ -11,7 +11,6 @@ Object subclass: aaa_04loop [
     ].
     ^ false
   ]
-  
   main [
     |j i|j := 0.
     (0 to: 10) do: [:k|

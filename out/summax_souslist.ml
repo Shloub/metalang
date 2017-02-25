@@ -9,7 +9,6 @@ let summax lst len =
       max0 := (!current)
   done;
   (!max0)
-
 let () =
  let len = 0 in
   let len = Scanf.scanf "%d " (fun len -> len) in

@@ -26,7 +26,6 @@ Object subclass: dichoexp [
     ]
     ifFalse:[^ a * (self exp0: a b: (b - 1))].
   ]
-  
   main [
     |b a|a := 0.
     b := 0.

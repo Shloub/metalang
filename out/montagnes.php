@@ -36,7 +36,6 @@ function montagnes0(&$tab, $len) {
     }
     return $max0;
 }
-
 $len = 0;
 list($len) = scan("%d");
 scantrim();

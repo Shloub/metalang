@@ -2,6 +2,7 @@ Imports System
 
 Module euler04
 
+  
   '
   '
   '(a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -28,7 +29,6 @@ Module euler04
         Return chiffre(c - 1, m \ 10)
     End If
   End Function
-  
   
   Sub Main()
     Dim m As Integer = 1

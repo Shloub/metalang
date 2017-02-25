@@ -14,12 +14,10 @@ sub g{
   }
   return $j;
 }
-
 sub h{
   my($i) = @_;
   print($i, "\n");
 }
-
 h(14);
 my $a = 4;
 my $b = 5;

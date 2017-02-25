@@ -10,7 +10,6 @@ def programme_candidat(tableau1, taille1, tableau2, taille2):
         print("%c" % tableau2[j], end='')
     print("--\n", end='')
     return out0
-
 taille1 = int(input())
 tableau1 = list(input())
 taille2 = int(input())

@@ -10,7 +10,6 @@ public class euler07
             return true;
     return false;
   }
-  
   static int find(int n, int[] t, int used, int nth)
   {
     while (used != nth)
@@ -24,8 +23,6 @@ public class euler07
         }
     return t[used - 1];
   }
-  
-  
   public static void main(String args[])
   {
     int n = 10001;

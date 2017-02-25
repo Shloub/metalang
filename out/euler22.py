@@ -53,7 +53,6 @@ def score():
         #		print c print " " print sum print " " 
         
     return sum
-
 sum = 0
 n = readint()
 for i in range(1, n + 1):

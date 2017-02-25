@@ -26,7 +26,6 @@ Object subclass: sudoku [
     ].
     ^ out0
   ]
-  
   " affiche un sudoku "
    print_sudoku: sudoku0  [
     (0 to: 8) do: [:y|
@@ -45,7 +44,6 @@ Object subclass: sudoku [
     '
 ' display.
   ]
-  
   " dit si les variables sont toutes différentes "
   " dit si les variables sont toutes différentes "
   " dit si le sudoku est terminé de remplir "
@@ -54,7 +52,6 @@ Object subclass: sudoku [
       ifTrue:[^ false].].
     ^ true
   ]
-  
   " dit si il y a une erreur dans le sudoku "
    sudoku_error: s  [|out3 out2 out1|
     out1 := false.
@@ -65,7 +62,6 @@ Object subclass: sudoku [
     (0 to: 8) do: [:x| out3 := (((((((((((((((((((((((((((((((((((out3 or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 1 * 9 + ((x quo: 3) * 3) + 3)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 1)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]]) or: [((s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2)) ~= 0) and: [(s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 2)) = (s at: ((x rem: 3) * 3 + 2 * 9 + ((x quo: 3) * 3) + 3))]].].
     ^ (out1 or: [out2]) or: [out3]
   ]
-  
   " résout le sudoku"
    solve: sudoku0  [
     (self sudoku_error: sudoku0)
@@ -84,7 +80,6 @@ Object subclass: sudoku [
       ].].
     ^ false
   ]
-  
   main [
     |sudoku0|sudoku0 := (self read_sudoku).
     (self print_sudoku:sudoku0).

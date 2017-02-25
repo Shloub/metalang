@@ -37,18 +37,15 @@ def readint():
             return out * sign
 
 
-
 def mktoto(v1):
     t = {"foo":v1, "bar":0, "blah":0}
     return t
-
 def result(t, len):
     out0 = 0
     for j in range(0, len):
         t[j]["blah"] += 1
         out0 = out0 + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"]
     return out0
-
 t = [None] * 4
 for i in range(0, 4):
     t[i] = mktoto(i)

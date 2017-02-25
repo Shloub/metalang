@@ -49,7 +49,6 @@ def read_sudoku():
         stdinsep()
         out0[i] = k
     return out0
-
 """affiche un sudoku"""
 def print_sudoku(sudoku0):
     for y in range(0, 9):
@@ -61,7 +60,6 @@ def print_sudoku(sudoku0):
         if mod(y, 3) == 2:
             print("\n", end='')
     print("\n", end='')
-
 """dit si les variables sont toutes différentes"""
 """dit si les variables sont toutes différentes"""
 """dit si le sudoku est terminé de remplir"""
@@ -70,7 +68,6 @@ def sudoku_done(s):
         if s[i] == 0:
             return False
     return True
-
 """dit si il y a une erreur dans le sudoku"""
 def sudoku_error(s):
     out1 = False
@@ -83,7 +80,6 @@ def sudoku_error(s):
     for x in range(0, 9):
         out3 = out3 or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] == s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] or s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] != 0 and s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2] or s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[mod(x, 3) * 3 * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2] or s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] != 0 and s[(mod(x, 3) * 3 + 1) * 9 + math.trunc(x / 3) * 3 + 2] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2] or s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] != 0 and s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2] or s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] != 0 and s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 1] == s[(mod(x, 3) * 3 + 2) * 9 + math.trunc(x / 3) * 3 + 2]
     return out1 or out2 or out3
-
 """résout le sudoku"""
 def solve(sudoku0):
     if sudoku_error(sudoku0):
@@ -99,7 +95,6 @@ def solve(sudoku0):
             sudoku0[i] = 0
             return False
     return False
-
 sudoku0 = read_sudoku()
 print_sudoku(sudoku0)
 if solve(sudoku0):

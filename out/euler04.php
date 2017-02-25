@@ -17,14 +17,12 @@ a * d +
 c * f * 10000
 
 */
-
 function chiffre($c, $m) {
     if ($c == 0)
         return $m % 10;
     else
         return chiffre($c - 1, intval($m / 10));
 }
-
 $m = 1;
 for ($a = 0; $a < 10; $a++)
     for ($f = 1; $f < 10; $f++)

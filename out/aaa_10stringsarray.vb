@@ -18,7 +18,6 @@ Module aaa_10stringsarray
     Console.Write(t.s & " = " & t.v & Chr(10))
   End Sub
   
-  
   Sub Main()
     Dim tab(2) As String
     For i As Integer = 0 To 1

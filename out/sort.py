@@ -42,7 +42,6 @@ def copytab(tab, len):
     for i in range(0, len):
         o[i] = tab[i]
     return o
-
 def bubblesort(tab, len):
     for i in range(0, len):
         for j in range(i + 1, len):
@@ -50,7 +49,6 @@ def bubblesort(tab, len):
                 tmp = tab[i]
                 tab[i] = tab[j]
                 tab[j] = tmp
-
 def qsort0(tab, len, i, j):
     if i < j:
         i0 = i
@@ -78,7 +76,6 @@ def qsort0(tab, len, i, j):
                 j -= 1
         qsort0(tab, len, i0, i - 1)
         qsort0(tab, len, i + 1, j0)
-
 len = 2
 len = readint()
 stdinsep()

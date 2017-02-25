@@ -2,7 +2,6 @@
 /*
   Ce test a été généré par Metalang.
 */
-
 function result($len, &$tab) {
     $tab2 = array_fill(0, $len, false);
     for ($i1 = 0; $i1 < $len; $i1++)
@@ -16,7 +15,6 @@ function result($len, &$tab) {
             return $i2;
     return -1;
 }
-
 $len = intval(trim(fgets(STDIN)));
 echo $len, "\n";
 $tab = array_map("intval", explode(" ", fgets(STDIN)));

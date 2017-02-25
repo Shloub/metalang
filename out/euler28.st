@@ -26,7 +26,6 @@ Object subclass: euler28 [
     ].
     ^ sum
   ]
-  
   main [
     (self sumdiag: 1001) display.
     ]

@@ -4,7 +4,6 @@ Object subclass: euler14 [
     ifTrue:[^ n quo: 2]
     ifFalse:[^ 3 * n + 1].
   ]
-  
    find: n m: m [
     (n = 1)
     ifTrue:[^ 1]
@@ -17,7 +16,6 @@ Object subclass: euler14 [
           ^ m at: (n + 1)
         ].].].
   ]
-  
   main [
     |n2 maxi max0 m|m := Array new: 1000000.
     (0 to: 999999) do: [:j| m at: (j + 1) put: 0.].

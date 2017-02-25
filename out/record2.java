@@ -16,14 +16,11 @@ public class record2
     t.blah = 0;
     return t;
   }
-  
   static int result(toto t)
   {
     t.blah++;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
-  
-  
   public static void main(String args[])
   {
     toto t = mktoto(4);

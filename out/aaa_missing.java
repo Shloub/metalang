@@ -12,10 +12,11 @@ public class aaa_missing
     return out;
   }
 
+  
+  
   /*
   Ce test a été généré par Metalang.
 */
-  
   static int result(int len, int[] tab)
   {
     boolean[] tab2 = new boolean[len];
@@ -32,8 +33,6 @@ public class aaa_missing
             return i2;
     return -1;
   }
-  
-  
   public static void main(String args[])
   {
     int len = Integer.parseInt(scanner.nextLine());

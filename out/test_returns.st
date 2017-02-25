@@ -26,7 +26,6 @@ Object subclass: test_returns [
     ].
     ^ (i rem: 2) = 0
   ]
-  
   main [
     
     ]

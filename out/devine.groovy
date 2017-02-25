@@ -19,7 +19,6 @@ boolean devine0(int nombre, int[] tab, int len)
   return true
 }
 
-
 @Field Scanner scanner = new Scanner(System.in)
 int nombre
 if (scanner.hasNext("^-")) {

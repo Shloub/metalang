@@ -6,7 +6,6 @@ def find(n, m, x, y, dx, dy):
         return 1
     else:
         return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy)
-
 directions = [None] * 8
 for i in range(0, 8):
     if i == 0:

@@ -80,7 +80,6 @@ End Function
     
   End Function
   
-  
   Sub Main()
     ' Programme principal 
     

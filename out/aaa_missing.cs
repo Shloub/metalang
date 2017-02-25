@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 public class aaa_missing
 {
+  
+  
   /*
   Ce test a été généré par Metalang.
 */
-  
   static int result(int len, int[] tab)
   {
     bool[] tab2 = new bool[len];
@@ -23,7 +24,6 @@ public class aaa_missing
             return i2;
     return -1;
   }
-  
   
   public static void Main(String[] args)
   {

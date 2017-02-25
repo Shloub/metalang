@@ -32,7 +32,6 @@ func devine0(nombre int, tab []int, len int) bool{
   }
   return true
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var len int

@@ -10,7 +10,6 @@ def result(len, tab):
         if not tab2[i2]:
             return i2
     return -1
-
 len = int(input())
 print("%d\n" % len, end='')
 tab = list(map(int, input().split()))

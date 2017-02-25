@@ -9,7 +9,6 @@ function programme_candidat(&$tableau, $taille) {
     echo "--\n";
     return $out0;
 }
-
 $taille = intval(trim(fgets(STDIN)));
 $tableau = fgets(STDIN);
 echo programme_candidat($tableau, $taille), "\n";

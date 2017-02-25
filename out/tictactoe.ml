@@ -8,13 +8,11 @@ type gamestate = {
   mutable note : int;
   mutable ended : bool;
 };;
-
 (* Un Mouvement *)
 type move = {
   mutable x : int;
   mutable y : int;
 };;
-
 (* On affiche l'état *)
 let print_state g =
   Printf.printf "\n|";
@@ -33,7 +31,6 @@ let print_state g =
       Printf.printf "\n|-|-|-|\n|"
   done;
   Printf.printf "\n"
-
 (* On dit qui gagne (info stoquées dans g.ended et g.note ) *)
 let eval0 g =
   let win = ref( 0 ) in
@@ -77,7 +74,6 @@ let eval0 g =
       g.note <- - 1000
     else
       g.note <- 0
-
 (* On applique un mouvement *)
 let apply_move_xy x y g =
   let player = ref( 2 ) in
@@ -85,24 +81,18 @@ let apply_move_xy x y g =
     player := 1;
   g.cases.(x).(y) <- (!player);
   g.firstToPlay <- not g.firstToPlay
-
 let apply_move m g =
   apply_move_xy m.x m.y g
-
 let cancel_move_xy x y g =
   g.cases.(x).(y) <- 0;
   g.firstToPlay <- not g.firstToPlay;
   g.ended <- false
-
 let cancel_move m g =
   cancel_move_xy m.x m.y g
-
 let can_move_xy x y g =
   g.cases.(x).(y) = 0
-
 let can_move m g =
   can_move_xy m.x m.y g
-
 (*
 Un minimax classique, renvoie la note du plateau
 *)
@@ -130,7 +120,6 @@ let rec minmax g =
        done;
        (!maxNote)
     end
-
 (*
 Renvoie le coup de l'IA
 *)
@@ -157,7 +146,6 @@ let play g =
   done;
   Printf.printf "%d%d\n" minMove.x minMove.y;
   minMove
-
 let init0 () =
   let cases = Array.init 3 (fun i ->
     let tab = Array.init 3 (fun j ->
@@ -167,12 +155,10 @@ let init0 () =
   firstToPlay=true;
   note=0;
   ended=false}
-
 let read_move () =
   let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   {x=x;
   y=y}
-
 let () =
  for i = 0 to 1 do
    let state = init0 () in

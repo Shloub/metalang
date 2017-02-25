@@ -4,10 +4,8 @@ let g i =
     0
   else
     j
-
 let h i =
   Printf.printf "%d\n" i
-
 let () =
  h 14;
   let a = 4 in

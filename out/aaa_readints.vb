@@ -4,6 +4,7 @@ Imports System.Collections.Generic
 Module aaa_readints
 
   
+  
   Sub Main()
     Dim len As Integer = Integer.Parse(Console.ReadLine())
     Console.Write(len & "=len" & Chr(10))

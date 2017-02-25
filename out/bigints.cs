@@ -33,6 +33,9 @@ static void stdin_sep(){
     }
   } while(true);
 }
+  
+  
+  
   public class bigint {
     public bool bigint_sign;
     public int bigint_len;
@@ -294,7 +297,6 @@ D'ou le nom de la fonction. */
 Division,
 Modulo
 */
-  
   static int log10(int a)
   {
     int out0 = 1;
@@ -347,7 +349,6 @@ Modulo
   }
   
   //  http://projecteuler.net/problem=20 
-  
   static int euler20()
   {
     bigint a = bigint_of_int(15);
@@ -461,7 +462,6 @@ Modulo
     }
     return n;
   }
-  
   
   public static void Main(String[] args)
   {

@@ -22,7 +22,6 @@ sub eratostene{
   }
   return $n;
 }
-
 my $maximumprimes = 1000001;
 my $era = [];
 foreach my $j (0 .. $maximumprimes - 1)

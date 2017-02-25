@@ -13,7 +13,6 @@ function &primesfactors($n) {
     $tab[$n]++;
     return $tab;
 }
-
 $lim = 20;
 $o = array_fill(0, $lim + 1, 0);
 for ($i = 1; $i <= $lim; $i++)

@@ -31,7 +31,6 @@ func montagnes0(tab []int, len int) int{
   }
   return max0
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   len := 0

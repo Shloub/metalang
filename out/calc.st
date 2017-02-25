@@ -15,7 +15,6 @@ La suite de fibonaci
     ].
     ^ out_
   ]
-  
   main [
     (self fibo: 1 b: 2 i: 4) display.
     ]

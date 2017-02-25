@@ -6,17 +6,14 @@ Object subclass: toto [
   v: b [ v := b. ] 
 ]
 Object subclass: aaa_10stringsarray [
-  
    idstring: s  [
     ^ s
   ]
-  
    printstring: s  [
     (self idstring: s) display.
     '
 ' display.
   ]
-  
    print_toto: t  [
     t s display.
     ' = ' display.
@@ -24,7 +21,6 @@ Object subclass: aaa_10stringsarray [
     '
 ' display.
   ]
-  
   main [
     |tab a|tab := Array new: 2.
     (0 to: 1) do: [:i| tab at: (i + 1) put: (self idstring: 'chaine de test').].

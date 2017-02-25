@@ -56,12 +56,10 @@ sub go0{
       return go0($tab, $m, $b);
   }
 }
-
 sub plus_petit0{
   my($tab, $len) = @_;
   return go0($tab, 0, $len);
 }
-
 my $len = 0;
 $len = readint();
 readspaces();

@@ -12,7 +12,6 @@ function programme_candidat(&$tableau, $taille_x, $taille_y) {
     }
     return $out0;
 }
-
 $taille_x = intval(trim(fgets(STDIN)));
 $taille_y = intval(trim(fgets(STDIN)));
 $a = array();

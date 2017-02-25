@@ -14,7 +14,6 @@ def primesfactors(n):
             d += 1
     tab[n] += 1
     return tab
-
 lim = 20
 o = [0] * (lim + 1)
 for i in range(1, lim + 1):

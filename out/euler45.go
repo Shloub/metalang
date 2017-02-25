@@ -7,7 +7,6 @@ func triangle(n int) int{
       return n * ((n + 1) / 2)
   }
 }
-
 func penta(n int) int{
   if n % 2 == 0 {
       return (n / 2) * (3 * n - 1)
@@ -15,11 +14,9 @@ func penta(n int) int{
       return ((3 * n - 1) / 2) * n
   }
 }
-
 func hexa(n int) int{
   return n * (2 * n - 1)
 }
-
 func findPenta2(n int, a int, b int) bool{
   if b == a + 1 {
       return penta(a) == n || penta(b) == n
@@ -34,7 +31,6 @@ func findPenta2(n int, a int, b int) bool{
       return findPenta2(n, a, c)
   }
 }
-
 func findHexa2(n int, a int, b int) bool{
   if b == a + 1 {
       return hexa(a) == n || hexa(b) == n
@@ -49,7 +45,6 @@ func findHexa2(n int, a int, b int) bool{
       return findHexa2(n, a, c)
   }
 }
-
 func main() {
   for n := 285; n < 55386; n++ {
       t := triangle(n)

@@ -11,18 +11,14 @@ public class aaa_10stringsarray
   {
     return s;
   }
-  
   static void printstring(String s)
   {
     System.out.printf("%s\n", idstring(s));
   }
-  
   static void print_toto(toto t)
   {
     System.out.printf("%s = %d\n", t.s, t.v);
   }
-  
-  
   public static void main(String args[])
   {
     String[] tab = new String[2];

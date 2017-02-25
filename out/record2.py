@@ -37,15 +37,12 @@ def readint():
             return out * sign
 
 
-
 def mktoto(v1):
     t = {"foo":v1, "bar":0, "blah":0}
     return t
-
 def result(t):
     t["blah"] += 1
     return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"]
-
 t = mktoto(4)
 t["bar"] = readint()
 stdinsep()

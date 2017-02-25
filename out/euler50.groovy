@@ -1,5 +1,6 @@
 import java.util.*
 
+
 int eratostene(int[] t, int max0)
 {
   int n = 0
@@ -19,7 +20,6 @@ int eratostene(int[] t, int max0)
       }
   return n
 }
-
 
 
 int maximumprimes = 1000001

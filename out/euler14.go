@@ -7,7 +7,6 @@ func next0(n int) int{
       return 3 * n + 1
   }
 }
-
 func find(n int, m []int) int{
   if n == 1 {
       return 1
@@ -20,7 +19,6 @@ func find(n int, m []int) int{
       return m[n]
   }
 }
-
 func main() {
   var m []int = make([]int, 1000000)
   for j := 0; j < 1000000; j++ {

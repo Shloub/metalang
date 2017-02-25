@@ -54,7 +54,6 @@ sub nbPassePartout{
       return 0;
   }
 }
-
 my $n = readint();
 readspaces();
 my $passepartout = [];

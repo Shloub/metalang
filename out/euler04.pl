@@ -24,7 +24,6 @@ sub remainder {
 #c * f * 10000
 #
 #
-
 sub chiffre{
   my($c, $m) = @_;
   if ($c eq 0)
@@ -36,7 +35,6 @@ sub chiffre{
       return chiffre($c - 1, int($m / 10));
   }
 }
-
 my $m = 1;
 foreach my $a (0 .. 9)
 {

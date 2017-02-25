@@ -49,9 +49,7 @@ static int readInt(){
   /*
 Tictactoe : un tictactoe avec une IA
 */
-  
   //  La structure de donnée 
-  
   public class gamestate {
     public int[][] cases;
     public bool firstToPlay;
@@ -59,13 +57,11 @@ Tictactoe : un tictactoe avec une IA
     public bool ended;
   }
   //  Un Mouvement 
-  
   public class move {
     public int x;
     public int y;
   }
   //  On affiche l'état 
-  
   static void print_state(gamestate g)
   {
     Console.Write("\n|");
@@ -88,7 +84,6 @@ Tictactoe : un tictactoe avec une IA
   }
   
   //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
-  
   static void eval0(gamestate g)
   {
     int win = 0;
@@ -134,7 +129,6 @@ Tictactoe : un tictactoe avec une IA
   }
   
   //  On applique un mouvement 
-  
   static void apply_move_xy(int x, int y, gamestate g)
   {
     int player = 2;
@@ -174,7 +168,6 @@ Tictactoe : un tictactoe avec une IA
   /*
 Un minimax classique, renvoie la note du plateau
 */
-  
   static int minmax(gamestate g)
   {
     eval0(g);
@@ -200,7 +193,6 @@ Un minimax classique, renvoie la note du plateau
   /*
 Renvoie le coup de l'IA
 */
-  
   static move play(gamestate g)
   {
     move minMove = new move();
@@ -255,7 +247,6 @@ Renvoie le coup de l'IA
     b.y = y;
     return b;
   }
-  
   
   public static void Main(String[] args)
   {

@@ -12,7 +12,6 @@ function palindrome2(&$pow2, $n) {
             return false;
     return true;
 }
-
 $p = 1;
 $pow2 = array();
 for ($i = 0; $i < 20; $i++)

@@ -17,7 +17,6 @@ public class euler28
 
 
 */
-  
   static int sumdiag(int n)
   {
     int nterms = n * 2 - 1;
@@ -32,7 +31,6 @@ public class euler28
     }
     return sum;
   }
-  
   
   public static void Main(String[] args)
   {

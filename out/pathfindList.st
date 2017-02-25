@@ -33,13 +33,11 @@ Object subclass: pathfindList [
         ^ out0
       ].].
   ]
-  
    pathfind: tab len: len [|cache|
     cache := Array new: len.
     (0 to: (len - 1)) do: [:i| cache at: (i + 1) put: (0 - 1).].
     ^ (self pathfind_aux: cache tab: tab len: len pos: 0)
   ]
-  
   main [
     |tmp tab result len|len := 0.
     len := self read_int.

@@ -38,9 +38,7 @@ Object subclass: tictactoe [
 Tictactoe : un tictactoe avec une IA
 "
   " La structure de donnée "
-  
   " Un Mouvement "
-  
   " On affiche l'état "
    print_state: g  [
     '
@@ -62,7 +60,6 @@ Tictactoe : un tictactoe avec une IA
     '
 ' display.
   ]
-  
   " On dit qui gagne (info stoquées dans g.ended et g.note ) "
    eval0: g  [|win linv lin freecase colv col|
     win := 0.
@@ -102,7 +99,6 @@ Tictactoe : un tictactoe avec une IA
       ifTrue:[g note: (0 - 1000).]
       ifFalse:[g note: 0.].].
   ]
-  
   " On applique un mouvement "
    apply_move_xy: x y: y g: g [|player|
     player := 2.
@@ -111,29 +107,23 @@ Tictactoe : un tictactoe avec une IA
     (g cases at: (x + 1)) at: (y + 1) put: player.
     g firstToPlay: (g firstToPlay not).
   ]
-  
    apply_move: m g: g [
     (self apply_move_xy:m x y:m y g:g).
   ]
-  
    cancel_move_xy: x y: y g: g [
     (g cases at: (x + 1)) at: (y + 1) put: 0.
     g firstToPlay: (g firstToPlay not).
     g ended: false.
   ]
-  
    cancel_move: m g: g [
     (self cancel_move_xy:m x y:m y g:g).
   ]
-  
    can_move_xy: x y: y g: g [
     ^ ((g cases at: (x + 1)) at: (y + 1)) = 0
   ]
-  
    can_move: m g: g [
     ^ (self can_move_xy: m x y: m y g: g)
   ]
-  
   "
 Un minimax classique, renvoie la note du plateau
 "
@@ -155,7 +145,6 @@ Un minimax classique, renvoie la note du plateau
                          ].].].
     ^ maxNote
   ]
-  
   "
 Renvoie le coup de l'IA
 "
@@ -189,7 +178,6 @@ Renvoie le coup de l'IA
 ' display.
     ^ minMove
   ]
-  
   init0 [|tab cases a|
     cases := Array new: 3.
     (0 to: 2) do: [:i|
@@ -204,7 +192,6 @@ Renvoie le coup de l'IA
     a ended: false.
     ^ a
   ]
-  
   read_move [|y x b|
     x := self read_int.
     self skip.
@@ -215,7 +202,6 @@ Renvoie le coup de l'IA
     b y: y.
     ^ b
   ]
-  
   main [
     |state d c|(0 to: 1) do: [:i|
                  state := (self init0).

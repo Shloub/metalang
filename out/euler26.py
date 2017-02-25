@@ -14,7 +14,6 @@ def periode(restes, len, a, b):
         len += 1
         a = reste * 10
     return 0
-
 t = [0] * 1000
 m = 0
 mi = 0

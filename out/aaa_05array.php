@@ -2,11 +2,9 @@
 function &id(&$b) {
     return $b;
 }
-
 function g(&$t, $index) {
     $t[$index] = false;
 }
-
 $j = 0;
 $a = array();
 for ($i = 0; $i < 5; $i++)

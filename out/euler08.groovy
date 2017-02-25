@@ -2,6 +2,7 @@ import groovy.transform.Field
 import java.util.*
 
 
+
 @Field Scanner scanner = new Scanner(System.in)
 int i = 1
 int[] last = new int[5]

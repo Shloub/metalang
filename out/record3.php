@@ -19,7 +19,6 @@ function scantrim(){
     stdin_();
   }
 }
-
 function &mktoto($v1) {
     $t = array(
         "foo" => $v1,
@@ -27,7 +26,6 @@ function &mktoto($v1) {
         "blah" => 0);
     return $t;
 }
-
 function result(&$t, $len) {
     $out0 = 0;
     for ($j = 0; $j < $len; $j++)
@@ -37,7 +35,6 @@ function result(&$t, $len) {
     }
     return $out0;
 }
-
 $t = array();
 for ($i = 0; $i < 4; $i++)
     $t[$i] = mktoto($i);

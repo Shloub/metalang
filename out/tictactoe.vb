@@ -258,7 +258,6 @@ End Function
       Return b
     End Function
     
-    
     Sub Main()
       For i As Integer = 0 To 1
           Dim state As gamestate = init0()

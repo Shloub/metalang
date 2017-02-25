@@ -11,7 +11,6 @@ void g(boolean[] t, int index)
 }
 
 
-
 int j = 0
 boolean[] a = new boolean[5]
 for (int i = 0; i < 5; i++)

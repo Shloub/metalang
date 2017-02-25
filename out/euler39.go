@@ -1,6 +1,7 @@
 package main
 import "fmt"
 import "math"
+
 func main() {
   var t []int = make([]int, 1001)
   for i := 0; i < 1001; i++ {

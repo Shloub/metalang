@@ -35,7 +35,6 @@ sub nth{
   }
   return $out0;
 }
-
 my $len = 0;
 $len = readint();
 readspaces();
