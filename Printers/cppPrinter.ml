@@ -170,7 +170,7 @@ class cppPrinter = object(self)
   inherit CPrinter.cPrinter as super
 
   method print_fun f funname t li instrs =
-    let li_fori, li_forc = self#collect_for instrs true in
+    let li_fori, li_forc = clike_collect_for instrs true in
     Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
       (self#declare_for "int") li_fori
@@ -215,7 +215,7 @@ class cppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method main f main =
-    let li_fori, li_forc = self#collect_for main true in
+    let li_fori, li_forc = clike_collect_for main true in
     Format.fprintf f "@[<v 4>int main() {@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
@@ -255,7 +255,7 @@ class proloCppPrinter = object(self)
   inherit CPrinter.cPrinter as super
 
   method print_fun f funname t li instrs =
-    let li_fori, li_forc = self#collect_for instrs true in
+    let li_fori, li_forc = clike_collect_for instrs true in
     Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
       (self#declare_for "int") li_fori
@@ -315,7 +315,7 @@ class proloCppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method main f main =
-    let li_fori, li_forc = self#collect_for main true in
+    let li_fori, li_forc = clike_collect_for main true in
     Format.fprintf f "@[<v 4>int main() {@\n%a%a%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc

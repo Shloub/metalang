@@ -62,12 +62,15 @@ let print_instr0 ptype c i f pend =
   | _ -> CPrinter.print_instr0 ptype c i f pend
 
 class objCPrinter = object(self)
-  inherit CPrinter.cPrinter as baseprinter
-  method lang () = "objc"
-    
-  method comment f str = Format.fprintf f "%a@\n" clike_comment str
+            
+  val mutable typerEnv : Typer.env = Typer.empty
+  method getTyperEnv () = typerEnv
+  method setTyperEnv t = typerEnv <- t
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  val mutable macros = StringMap.empty
 
-  method instr f t =
+  method instructions f li =
     let rewrite i = match Instr.unfix i with
       | Instr.ClikeLoop (init, cond, incr, li) ->
         let init = List.map (fun i -> match Instr.unfix i with
@@ -78,53 +81,73 @@ class objCPrinter = object(self)
         in Instr.ClikeLoop (init, cond, incr, li) |> Instr.fix
       | _ -> i
     in
-    let t = Instr.Fixed.Deep.map rewrite t in
+    let li = List.map (Instr.Fixed.Deep.map rewrite) li in
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "objc" li
         with Not_found -> List.assoc "" li) macros
-    in (CPrinter.print_instr print_instr0 (ptype (baseprinter#getTyperEnv ())) macros t) f
+    in print_list (fun f t -> CPrinter.print_instr print_instr0 (ptype typerEnv) macros t f) sep_nl f li
 
-  method prog f prog =
-    Format.fprintf f "#import <Foundation/Foundation.h>@\n#include<stdio.h>@\n#include<stdlib.h>@\n%a@\n%a%a@\n@\n"
+  method prog f (prog: Utils.prog) =
+    Format.fprintf f "#import <Foundation/Foundation.h>@\n#include<stdio.h>@\n#include<stdlib.h>@\n%a@\n%a@\n%a@\n@\n"
       (fun f () ->
          if Tags.is_taged "use_math"
          then Format.fprintf f "#include<math.h>@\n"
       ) ()
-      self#proglist prog.Prog.funs
+      (print_list (fun f t -> match t with
+           | Prog.Comment str -> clike_comment f str
+           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
+             let li_fori, li_forc = clike_collect_for liinstrs false in
+             Format.fprintf f "@\n@[<h>%a %s(%a)@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
+               self#ptype t funname
+               (print_list
+                  (fun t (binding, type_) ->
+                     Format.fprintf t "%a@ %a"
+                       self#ptype type_ print_varname binding
+                  ) sep_c
+               ) li        
+               (self#declare_for "int") li_fori
+               (self#declare_for "char") li_forc
+               self#instructions liinstrs
+           | Prog.DeclareType (name, t) ->
+             begin match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "@@interface %s : NSObject@\n{@\n@[<v 2>  %a@]@\n}@\n@@end@\n@@implementation %s @\n@@end@\n" name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "@@public %a %s;" self#ptype type_ name
+                      ) sep_nl
+                   ) li name
+               | Type.Enum li ->
+                 Format.fprintf f "typedef enum %s {@\n@[<v2>  %a@]@\n} %s;" name
+                   (print_list
+                      (fun t name -> Format.fprintf t "%s" name)
+                      (sep "%a,@\n%a")
+                   ) li name
+               | _ -> Format.fprintf f "typedef %a %s;" (ptype typerEnv) t name
+             end
+           | Prog.Macro (name, t, params, code) ->
+             macros <- StringMap.add
+                 name (t, params, code)
+                 macros
+           | _ -> ()
+         ) sep_nl)
+             prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
+  method declare_for s f li =
+    if li <> [] then
+      Format.fprintf f "%s %a;@\n"
+        s
+        (print_list print_varname sep_c) li
+        
   method main f main =
-    let li_fori, li_forc = self#collect_for main false in
+    let li_fori, li_forc = clike_collect_for main false in
     Format.fprintf f "@[<v 2>int main(void){@\nNSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];@\n%a%a%a@\n[pool drain];@\nreturn 0;@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
 
-  method ptype f t = ptype (baseprinter#getTyperEnv ()) f t
-
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "@@interface %a : NSObject@\n{@\n@[<v 2>  %a@]@\n}@\n@@end@\n@@implementation %a @\n@@end@\n"
-        self#typename name
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "@@public %a %a;" self#ptype type_ self#field name
-           ) sep_nl
-        ) li
-        self#typename name
-    | Type.Enum li ->
-      Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
-        self#typename name
-        (print_list
-           (fun t name -> Format.fprintf t "%s" name)
-           (sep "%a,@\n%a")
-        ) li
-        self#typename name
-    | _ ->
-      Format.fprintf f "typedef %a %a;"
-        baseprinter#ptype t
-        baseprinter#typename name
+  method ptype f t = ptype typerEnv f t
 
 end

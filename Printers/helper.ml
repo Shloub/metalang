@@ -407,6 +407,28 @@ let clike_print_instr c i =
       end
   in p
 
+let clike_collect_for instrs onlyread =
+  let open Ast.Instr in
+  let collect acc i =
+      Writer.Deep.fold (fun (acci, accc) i -> match unfix i with
+          | Read li -> List.fold_left (fun (acci, accc) -> function
+              | DeclRead (ty, i, _) ->
+                begin match Ast.Type.unfix ty with
+                  | Ast.Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
+                  | Ast.Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
+                  | _ -> assert false
+                end
+              | _ -> acci, accc ) (acci, accc) li
+          | ClikeLoop(init, _, _, _) when not onlyread ->
+            let acci = List.fold_left (fun acci i -> match unfix i with
+                | Declare (var,_, _, _) -> if List.mem var acci then acci else var::acci (* TODO : checker le type *)
+                | _ -> acci
+              ) acci init in acci, accc
+          | Loop (i, _, _, _) when not onlyread -> let acci = if List.mem i acci then acci else i::acci in acci, accc
+          | _ -> acci, accc
+        ) acc i
+    in
+    List.fold_left collect ([], []) instrs
 
 let jlike_prio_operator = -100
 
