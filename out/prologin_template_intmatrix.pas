@@ -62,7 +62,7 @@ begin
 end;
 
 type d = array of Longint;
-type e = array of array of Longint;
+type e = array of d;
 function programme_candidat(tableau : e; x : Longint; y : Longint) : Longint;
 var
   i : Longint;

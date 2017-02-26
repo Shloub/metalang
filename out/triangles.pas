@@ -67,7 +67,7 @@ end;
 on le retrouve ici : http://projecteuler.net/problem=18
 }
 type a = array of Longint;
-type b = array of array of Longint;
+type b = array of a;
 function find0(len : Longint; tab : b; cache : b; x : Longint; y : Longint) : Longint;
 var
   out0 : Longint;

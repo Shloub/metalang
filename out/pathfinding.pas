@@ -71,9 +71,9 @@ begin
 end;
 
 type e = array of Longint;
-type f = array of array of Longint;
+type f = array of e;
 type g = array of char;
-type h = array of array of char;
+type h = array of g;
 function pathfind_aux(cache : f; tab : h; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
   out0 : Longint;

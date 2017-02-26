@@ -336,7 +336,7 @@ begin
 end;
 
 type e = array of Longint;
-type f = array of array of Longint;
+type f = array of e;
 function init0() : gamestate;
 var
   a : gamestate;

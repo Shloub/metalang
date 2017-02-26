@@ -63,7 +63,7 @@ begin
 end;
 
 type s = array of Longint;
-type u = array of array of Longint;
+type u = array of s;
 function find(n : Longint; m : u; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;
 begin
   if (x < 0) or (x = 20) or (y < 0) or (y = 20) then
