@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 
+
 int nbPassePartout(int n, std::vector<std::vector<int>>& passepartout, int m, std::vector<std::vector<int>>& serrures) {
     int max_ancient = 0;
     int max_recent = 0;
@@ -27,7 +28,6 @@ int nbPassePartout(int n, std::vector<std::vector<int>>& passepartout, int m, st
     else
         return 0;
 }
-
 
 int main() {
     int out_, m, out01, n;

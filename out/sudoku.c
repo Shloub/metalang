@@ -90,7 +90,6 @@ int solve(int* sudoku0) {
         }
     return 0;
 }
-
 int main(void) {
     int* sudoku0 = read_sudoku();
     print_sudoku(sudoku0);

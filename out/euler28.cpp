@@ -16,7 +16,6 @@
 
 */
 
-
 int sumdiag(int n) {
     int nterms = n * 2 - 1;
     int un = 1;
@@ -30,7 +29,6 @@ int sumdiag(int n) {
     }
     return sum;
 }
-
 
 int main() {
     std::cout << sumdiag(1001);

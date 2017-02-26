@@ -33,7 +33,6 @@ int go0(int* tab, int a, int b) {
 int plus_petit0(int* tab, int len) {
     return go0(tab, 0, len);
 }
-
 int main(void) {
     int i;
     int len = 0;

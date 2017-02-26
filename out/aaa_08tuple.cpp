@@ -1,15 +1,14 @@
 #include <iostream>
 #include <vector>
-typedef struct tuple_int_int {
-  int tuple_int_int_field_0;
+struct tuple_int_int {
+    int tuple_int_int_field_0;
     int tuple_int_int_field_1;
-} tuple_int_int;
+};
 
-typedef struct toto {
-  tuple_int_int foo;
+struct toto {
+    tuple_int_int foo;
     int bar;
-} toto;
-
+};
 
 int main() {
     int d, c, bar_;

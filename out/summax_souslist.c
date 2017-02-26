@@ -16,7 +16,6 @@ int summax(int* lst, int len) {
     }
     return max0;
 }
-
 int main(void) {
     int i;
     int len = 0;

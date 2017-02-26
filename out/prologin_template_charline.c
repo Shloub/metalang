@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 
+
 int programme_candidat(char* tableau, int taille) {
     int i;
     int out0 = 0;
@@ -13,7 +14,6 @@ int programme_candidat(char* tableau, int taille) {
     printf("--\n");
     return out0;
 }
-
 int main(void) {
     int a, taille;
     scanf("%d ", &taille);

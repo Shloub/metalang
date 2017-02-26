@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
-typedef struct toto {
-  int foo;
+struct toto {
+    int foo;
     int bar;
     int blah;
-} toto;
+};
 
 
 toto mktoto(int v1) {
@@ -25,7 +25,6 @@ int result(std::vector<toto>& t, int len) {
     }
     return out0;
 }
-
 
 int main() {
     std::vector<toto> t( 4 );

@@ -1,10 +1,9 @@
 #include <iostream>
 #include <vector>
-typedef struct toto {
-  int foo;
+struct toto {
+    int foo;
     int bar;
-} toto;
-
+};
 
 int main() {
     toto param;

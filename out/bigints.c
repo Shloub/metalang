@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 
+
 int max2_(int a, int b) {
     if (a > b)
         return a;
@@ -459,7 +460,6 @@ int euler29() {
     }
     return n;
 }
-
 int main(void) {
     int i;
     printf("%d\n", euler29());

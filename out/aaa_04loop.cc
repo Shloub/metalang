@@ -15,7 +15,6 @@ bool h(int i) {
     return false;
 }
 
-
 int main() {
     int j = 0;
     for (int k = 0; k < 11; k++)

@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 
+
 int eratostene(std::vector<int>& t, int max0) {
     int n = 0;
     for (int i = 2; i < max0; i++)
@@ -20,7 +21,6 @@ int eratostene(std::vector<int>& t, int max0) {
         }
     return n;
 }
-
 
 int main() {
     int maximumprimes = 1000001;

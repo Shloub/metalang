@@ -45,7 +45,6 @@ int pathfind(char** tab, int x, int y) {
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
 }
-
 int main(void) {
     int i, j;
     int x = 0;

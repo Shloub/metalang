@@ -29,7 +29,6 @@ int pathfind(std::vector<int> * tab, int len) {
     return pathfind_aux(cache, tab, len, 0);
 }
 
-
 int main() {
     int len = 0;
     std::cin >> len;

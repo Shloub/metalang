@@ -23,7 +23,6 @@ int find(int n, int* m) {
         return m[n];
     }
 }
-
 int main(void) {
     int i, j;
     int *m = calloc(1000000, sizeof(int));

@@ -3,9 +3,7 @@
 /*
 Tictactoe : un tictactoe avec une IA
 */
-
 //  La structure de donnée 
-
 struct gamestate {
     std::vector<std::vector<int> *> * cases;
     bool firstToPlay;
@@ -14,14 +12,12 @@ struct gamestate {
 };
 
 //  Un Mouvement 
-
 struct move {
     int x;
     int y;
 };
 
 //  On affiche l'état 
-
 
 void print_state(gamestate * g) {
     std::cout << "\n|";
@@ -44,7 +40,6 @@ void print_state(gamestate * g) {
 }
 
 //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
-
 
 void eval0(gamestate * g) {
     int win = 0;
@@ -91,7 +86,6 @@ void eval0(gamestate * g) {
 
 //  On applique un mouvement 
 
-
 void apply_move_xy(int x, int y, gamestate * g) {
     int player = 2;
     if (g->firstToPlay)
@@ -131,7 +125,6 @@ bool can_move(move * m, gamestate * g) {
 Un minimax classique, renvoie la note du plateau
 */
 
-
 int minmax(gamestate * g) {
     eval0(g);
     if (g->ended)
@@ -156,7 +149,6 @@ int minmax(gamestate * g) {
 /*
 Renvoie le coup de l'IA
 */
-
 
 move * play(gamestate * g) {
     move * minMove = new move();
@@ -208,7 +200,6 @@ move * read_move() {
         b->y = y;;
     return b;
 }
-
 
 int main() {
     for (int i = 0; i < 2; i++)

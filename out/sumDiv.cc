@@ -42,7 +42,6 @@ int sumdiv(int n) {
     // On renvoie out
 }
 
-
 int main() {
     //  Programme principal 
     int n = 0;

@@ -54,7 +54,6 @@ int result(struct toto * t_, struct toto * t2_) {
     cache2 = cache0;
     return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
-
 int main(void) {
     struct toto * t = mktoto(4);
     struct toto * t2 = mktoto(5);

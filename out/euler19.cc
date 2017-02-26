@@ -37,7 +37,6 @@ int ndayinmonth(int month, int year) {
     return 0;
 }
 
-
 int main() {
     int month = 0;
     int year = 1901;

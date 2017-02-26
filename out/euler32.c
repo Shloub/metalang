@@ -43,7 +43,6 @@ int okdigits(int* ok, int n) {
             return 0;
     }
 }
-
 int main(void) {
     int e, b, a, c, d, j, i;
     int count = 0;

@@ -23,7 +23,6 @@ int find(int n, std::vector<int> * m) {
     }
 }
 
-
 int main() {
     std::vector<int> *m = new std::vector<int>( 1000000 );
     std::fill(m->begin(), m->end(), 0);

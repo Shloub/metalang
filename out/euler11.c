@@ -23,7 +23,6 @@ typedef struct tuple_int_int {
   int tuple_int_int_field_0;
     int tuple_int_int_field_1;
 } tuple_int_int;
-
 int main(void) {
     int j, x, y, o, q, i;
     struct tuple_int_int * *directions = calloc(8, sizeof(struct tuple_int_int *));

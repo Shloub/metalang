@@ -37,7 +37,6 @@ void show(int lim, int nth) {
     std::cout << "\n";
 }
 
-
 int main() {
     show(10, 999999);
 }

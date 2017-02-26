@@ -2,13 +2,13 @@
 #include <stdlib.h>
 
 
+
 int max2_(int a, int b) {
     if (a > b)
         return a;
     else
         return b;
 }
-
 int main(void) {
     int k, j;
     char e, c;

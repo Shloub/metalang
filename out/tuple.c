@@ -16,7 +16,6 @@ struct tuple_int_int * f(struct tuple_int_int * tuple0) {
     d->tuple_int_int_field_1 = b + 1;
     return d;
 }
-
 int main(void) {
     struct tuple_int_int * e = malloc(sizeof(tuple_int_int));
     e->tuple_int_int_field_0 = 0;

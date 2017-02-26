@@ -10,7 +10,6 @@ int programme_candidat(int** tableau, int x, int y) {
             out0 += tableau[i][j] * (i * 2 + j);
     return out0;
 }
-
 int main(void) {
     int a, c, taille_y, taille_x;
     scanf("%d %d ", &taille_x, &taille_y);

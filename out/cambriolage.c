@@ -36,7 +36,6 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures) {
     else
         return 0;
 }
-
 int main(void) {
     int k, l, out_, m, i, j, out01, n;
     scanf("%d ", &n);

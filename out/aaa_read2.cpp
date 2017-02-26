@@ -12,12 +12,13 @@ std::vector<char> getline() {
     std::cin >> std::skipws;
     return c;
 }
+
+
+
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-
-
 int main() {
     int strlen, len;
     std::cin >> len;

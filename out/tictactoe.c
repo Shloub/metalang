@@ -215,7 +215,6 @@ struct move * read_move() {
     b->y = y;
     return b;
 }
-
 int main(void) {
     int i;
     for (i = 0; i < 2; i++)

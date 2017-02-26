@@ -7,7 +7,6 @@ void test(std::vector<int>& tab, int len) {
     std::cout << "\n";
 }
 
-
 int main() {
     std::vector<int> t( 5, 1 );
     test(t, 5);

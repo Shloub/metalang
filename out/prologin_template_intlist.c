@@ -9,7 +9,6 @@ int programme_candidat(int* tableau, int taille) {
         out0 += tableau[i];
     return out0;
 }
-
 int main(void) {
     int a, taille;
     scanf("%d ", &taille);

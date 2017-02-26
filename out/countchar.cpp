@@ -9,7 +9,6 @@ int nth(std::vector<char>& tab, char tofind, int len) {
     return out0;
 }
 
-
 int main() {
     int len = 0;
     std::cin >> len;

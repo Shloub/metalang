@@ -9,7 +9,6 @@ int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y) 
     return out0;
 }
 
-
 int main() {
     int taille_y, taille_x;
     std::cin >> taille_x >> taille_y;

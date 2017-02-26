@@ -24,7 +24,6 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
 
-
 bool okdigits(std::vector<bool> * ok, int n) {
     if (n == 0)
         return true;
@@ -42,7 +41,6 @@ bool okdigits(std::vector<bool> * ok, int n) {
             return false;
     }
 }
-
 
 int main() {
     int count = 0;

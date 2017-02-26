@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+
+
 int position_alphabet(char c) {
     int i = (int)(c);
     if (i <= (int)('Z') && i >= (int)('A'))
@@ -29,7 +31,6 @@ void crypte(int taille_cle, std::vector<char>& cle, int taille, std::vector<char
         }
     }
 }
-
 
 int main() {
     int taille, taille_cle;

@@ -29,7 +29,6 @@ bool is_pair(int i) {
     return i % 2 == 0;
 }
 
-
 int main() {
     
 }

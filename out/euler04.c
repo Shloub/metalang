@@ -35,7 +35,6 @@ int chiffre(int c, int m) {
     else
         return chiffre(c - 1, m / 10);
 }
-
 int main(void) {
     int a, f, d, c, b, e;
     int m = 1;

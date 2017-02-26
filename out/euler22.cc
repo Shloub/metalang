@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+
 int score() {
     int len;
     char c;
@@ -14,7 +15,6 @@ int score() {
     }
     return sum;
 }
-
 
 int main() {
     int n;

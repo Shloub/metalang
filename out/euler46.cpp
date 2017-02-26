@@ -20,7 +20,6 @@ int eratostene(std::vector<int>& t, int max0) {
     return n;
 }
 
-
 int main() {
     int maximumprimes = 6000;
     std::vector<int> era( maximumprimes );

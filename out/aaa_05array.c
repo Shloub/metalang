@@ -10,7 +10,6 @@ int* id(int* b) {
 void g(int* t, int index) {
     t[index] = 0;
 }
-
 int main(void) {
     int i;
     int j = 0;

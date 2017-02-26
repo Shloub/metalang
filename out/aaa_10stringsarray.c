@@ -20,7 +20,6 @@ void printstring(char* s) {
 void print_toto(struct toto * t) {
     printf("%s = %d\n", t->s, t->v);
 }
-
 int main(void) {
     int j, i;
     char* *tab = calloc(2, sizeof(char*));

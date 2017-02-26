@@ -5,7 +5,6 @@
 void foo(int a) {
     a = 4;
 }
-
 int main(void) {
     int a = 0;
     foo(a);

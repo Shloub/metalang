@@ -18,7 +18,6 @@ bool devine0(int nombre, std::vector<int>& tab, int len) {
     return true;
 }
 
-
 int main() {
     int tmp, len, nombre;
     std::cin >> nombre >> len;

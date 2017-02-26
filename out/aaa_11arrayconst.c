@@ -8,7 +8,6 @@ void test(int* tab, int len) {
         printf("%d ", tab[i]);
     printf("\n");
 }
-
 int main(void) {
     int i;
     int *t = calloc(5, sizeof(int));

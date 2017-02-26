@@ -7,7 +7,6 @@ void test(std::vector<int> * tab, int len) {
     std::cout << "\n";
 }
 
-
 int main() {
     std::vector<int> *t = new std::vector<int>( 5 );
     std::fill(t->begin(), t->end(), 1);

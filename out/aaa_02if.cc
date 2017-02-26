@@ -7,7 +7,6 @@ bool f(int i) {
     return false;
 }
 
-
 int main() {
     if (f(4))
         std::cout << "true <-\n ->\n";

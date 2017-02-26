@@ -19,7 +19,6 @@ int montagnes0(int* tab, int len) {
     }
     return max0;
 }
-
 int main(void) {
     int i;
     int len = 0;

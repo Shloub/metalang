@@ -17,7 +17,6 @@ int result(int sum, std::vector<int> * t, int maxIndex, std::vector<std::vector<
     }
 }
 
-
 int main() {
     std::vector<int> *t = new std::vector<int>( 8 );
     std::fill(t->begin(), t->end(), 0);

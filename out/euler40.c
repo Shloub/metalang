@@ -24,7 +24,6 @@ int e(int* t, int n) {
         }
     return -1;
 }
-
 int main(void) {
     int l, k2, j2, k, j, i2, i;
     int *t = calloc(9, sizeof(int));

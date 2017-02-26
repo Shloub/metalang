@@ -20,7 +20,6 @@ int fibo0(int a, int b, int i) {
     }
     return out0;
 }
-
 int main(void) {
     int a = 0;
     int b = 0;

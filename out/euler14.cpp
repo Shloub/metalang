@@ -23,7 +23,6 @@ int find(int n, std::vector<int>& m) {
     }
 }
 
-
 int main() {
     std::vector<int> m( 1000000, 0 );
     int max0 = 0;

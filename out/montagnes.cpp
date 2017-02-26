@@ -19,7 +19,6 @@ int montagnes0(std::vector<int>& tab, int len) {
     return max0;
 }
 
-
 int main() {
     int len = 0;
     std::cin >> len;

@@ -22,7 +22,6 @@ int result(int len, int* tab) {
             return i2;
     return -1;
 }
-
 int main(void) {
     int a, len;
     scanf("%d ", &len);

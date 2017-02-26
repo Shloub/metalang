@@ -13,7 +13,6 @@ int exp0(int a, int b) {
         return a * exp0(a, b - 1);
 }
 
-
 int main() {
     int a = 0;
     int b = 0;

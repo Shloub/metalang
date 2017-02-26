@@ -13,6 +13,8 @@ std::vector<char> getline() {
     return c;
 }
 
+
+
 int programme_candidat(std::vector<char>& tableau, int taille) {
     int out0 = 0;
     for (int i = 0; i < taille; i++)
@@ -23,7 +25,6 @@ int programme_candidat(std::vector<char>& tableau, int taille) {
     std::cout << "--\n";
     return out0;
 }
-
 
 int main() {
     int taille;

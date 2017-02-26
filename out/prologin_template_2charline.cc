@@ -13,6 +13,8 @@ std::vector<char> *getline() {
     return c;
 }
 
+
+
 int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<char> * tableau2, int taille2) {
     int out0 = 0;
     for (int i = 0; i < taille1; i++)
@@ -29,7 +31,6 @@ int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<ch
     std::cout << "--\n";
     return out0;
 }
-
 
 int main() {
     int taille2, taille1;

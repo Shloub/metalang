@@ -73,7 +73,6 @@ int sumdiv(int nprimes, int* primes, int n) {
     int max0 = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
 }
-
 int main(void) {
     int n, k, o, j;
     int maximumprimes = 1001;

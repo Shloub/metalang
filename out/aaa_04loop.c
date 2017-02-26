@@ -15,7 +15,6 @@ int h(int i) {
     }
     return 0;
 }
-
 int main(void) {
     int k;
     int j = 0;

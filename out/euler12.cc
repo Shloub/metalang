@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 
+
 int eratostene(std::vector<int> * t, int max0) {
     int n = 0;
     for (int i = 2; i < max0; i++)
@@ -66,7 +67,6 @@ int find(int ndiv2) {
     }
     return 0;
 }
-
 
 int main() {
     std::cout << find(500) << "\n";

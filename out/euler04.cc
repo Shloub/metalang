@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -20,14 +21,12 @@ c * f * 10000
 
 */
 
-
 int chiffre(int c, int m) {
     if (c == 0)
         return m % 10;
     else
         return chiffre(c - 1, m / 10);
 }
-
 
 int main() {
     int m = 1;

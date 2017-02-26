@@ -21,7 +21,6 @@ int eratostene(int* t, int max0) {
         }
     return n;
 }
-
 int main(void) {
     int m, i, j, i_, k, o, j_;
     int maximumprimes = 6000;

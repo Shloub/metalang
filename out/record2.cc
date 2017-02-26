@@ -21,7 +21,6 @@ int result(toto * t) {
     return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
 
-
 int main() {
     toto * t = mktoto(4);
     std::cin >> t->bar >> t->blah >> std::noskipws;

@@ -18,7 +18,6 @@ int result(int sum, int* t, int maxIndex, int** cache) {
         return out0;
     }
 }
-
 int main(void) {
     int j, k, i;
     int *t = calloc(8, sizeof(int));

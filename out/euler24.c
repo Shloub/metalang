@@ -40,7 +40,6 @@ void show(int lim, int nth) {
             printf("%d", m);
     printf("\n");
 }
-
 int main(void) {
     show(10, 999999);
     return 0;

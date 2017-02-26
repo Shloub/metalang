@@ -15,7 +15,6 @@ int summax(std::vector<int> * lst, int len) {
     return max0;
 }
 
-
 int main() {
     int len = 0;
     std::cin >> len;
