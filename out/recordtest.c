@@ -5,7 +5,6 @@ typedef struct toto {
   int foo;
     int bar;
 } toto;
-
 int main(void) {
     struct toto * param = malloc(sizeof(toto));
     param->foo = 0;

@@ -42,7 +42,6 @@ int test(int a, int b, std::vector<int> * primes, int len) {
     return 200;
 }
 
-
 int main() {
     int maximumprimes = 1000;
     std::vector<int> *era = new std::vector<int>( maximumprimes );

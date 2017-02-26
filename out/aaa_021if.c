@@ -72,7 +72,6 @@ void test(int a, int b) {
     testE(a, b);
     printf("\n");
 }
-
 int main(void) {
     test(1, 1);
     test(1, 0);

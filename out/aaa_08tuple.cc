@@ -10,7 +10,6 @@ struct toto {
     int bar;
 };
 
-
 int main() {
     int d, c, bar_;
     std::cin >> bar_ >> c >> d;

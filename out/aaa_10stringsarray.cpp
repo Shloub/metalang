@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-typedef struct toto {
-  std::string s;
+struct toto {
+    std::string s;
     int v;
-} toto;
+};
 
 
 std::string idstring(std::string s) {
@@ -19,7 +19,6 @@ void printstring(std::string s) {
 void print_toto(toto& t) {
     std::cout << t.s << " = " << t.v << "\n";
 }
-
 
 int main() {
     std::vector<std::string> tab( 2 );

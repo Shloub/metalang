@@ -49,7 +49,6 @@ int findHexa2(int n, int a, int b) {
     else
         return findHexa2(n, a, c);
 }
-
 int main(void) {
     int n;
     for (n = 285; n < 55386; n++)

@@ -10,7 +10,6 @@ void g(std::vector<bool> * t, int index) {
     t->at(index) = false;
 }
 
-
 int main() {
     int j = 0;
     std::vector<bool> *a = new std::vector<bool>( 5 );

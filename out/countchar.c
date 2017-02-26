@@ -10,7 +10,6 @@ int nth(char* tab, char tofind, int len) {
             out0++;
     return out0;
 }
-
 int main(void) {
     int i;
     int len = 0;

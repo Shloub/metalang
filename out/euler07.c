@@ -23,7 +23,6 @@ int find(int n, int* t, int used, int nth) {
         }
     return t[used - 1];
 }
-
 int main(void) {
     int i;
     int n = 10001;

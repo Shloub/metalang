@@ -3,6 +3,8 @@
 #include <math.h>
 
 
+
+
 int is_triangular(int n) {
     /*
    n = k * (k + 1) / 2
@@ -29,7 +31,6 @@ int score() {
     else
         return 0;
 }
-
 int main(void) {
     int n, i;
     for (i = 1; i < 56; i++)

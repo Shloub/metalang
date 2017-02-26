@@ -10,6 +10,8 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     return matrix;
 }
 
+
+
 int find(int n, std::vector<std::vector<int>>& m, int x, int y, int dx, int dy) {
     if (x < 0 || x == 20 || y < 0 || y == 20)
         return -1;
@@ -19,11 +21,10 @@ int find(int n, std::vector<std::vector<int>>& m, int x, int y, int dx, int dy) 
         return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
 }
 
-typedef struct tuple_int_int {
-  int tuple_int_int_field_0;
+struct tuple_int_int {
+    int tuple_int_int_field_0;
     int tuple_int_int_field_1;
-} tuple_int_int;
-
+};
 
 int main() {
     std::vector<tuple_int_int> directions( 8 );

@@ -4,7 +4,6 @@
   Ce test a été généré par Metalang.
 */
 
-
 int result(int len, std::vector<int>& tab) {
     std::vector<bool> tab2( len, false );
     for (int i1 = 0; i1 < len; i1++)
@@ -18,7 +17,6 @@ int result(int len, std::vector<int>& tab) {
             return i2;
     return -1;
 }
-
 
 int main() {
     int len;

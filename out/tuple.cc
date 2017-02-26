@@ -16,7 +16,6 @@ tuple_int_int * f(tuple_int_int * tuple0) {
     return d;
 }
 
-
 int main() {
     tuple_int_int * e = new tuple_int_int();
         e->tuple_int_int_field_0 = 0;

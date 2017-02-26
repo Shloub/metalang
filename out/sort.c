@@ -55,7 +55,6 @@ void qsort0(int* tab, int len, int i, int j) {
         qsort0(tab, len, i + 1, j0);
     }
 }
-
 int main(void) {
     int i, i_;
     int len = 2;

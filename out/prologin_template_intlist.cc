@@ -8,7 +8,6 @@ int programme_candidat(std::vector<int> * tableau, int taille) {
     return out0;
 }
 
-
 int main() {
     int taille;
     std::cin >> taille;

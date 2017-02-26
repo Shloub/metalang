@@ -17,7 +17,6 @@ int result(int sum, std::vector<int>& t, int maxIndex, std::vector<std::vector<i
     }
 }
 
-
 int main() {
     std::vector<int> t( 8, 0 );
     t[0] = 1;

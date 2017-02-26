@@ -27,7 +27,6 @@ int pgcd(int a, int b) {
     else
         return pgcd(c, reste);
 }
-
 int main(void) {
     int i, j, k;
     int top = 1;

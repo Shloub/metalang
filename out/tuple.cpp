@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-typedef struct tuple_int_int {
-  int tuple_int_int_field_0;
+struct tuple_int_int {
+    int tuple_int_int_field_0;
     int tuple_int_int_field_1;
-} tuple_int_int;
+};
 
 
 tuple_int_int f(tuple_int_int& tuple0) {
@@ -15,7 +15,6 @@ tuple_int_int f(tuple_int_int& tuple0) {
         d.tuple_int_int_field_1 = b + 1;;
     return d;
 }
-
 
 int main() {
     tuple_int_int e;

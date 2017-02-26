@@ -13,7 +13,6 @@ int g(int i) {
 void h(int i) {
     printf("%d\n", i);
 }
-
 int main(void) {
     h(14);
     int a = 4;

@@ -22,7 +22,6 @@ int find(int n, std::vector<int> * t, int used, int nth) {
     return t->at(used - 1);
 }
 
-
 int main() {
     int n = 10001;
     std::vector<int> *t = new std::vector<int>( n );

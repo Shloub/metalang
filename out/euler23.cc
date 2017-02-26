@@ -68,7 +68,6 @@ int sumdiv(int nprimes, std::vector<int> * primes, int n) {
     return sumdivaux(t, max0, 0);
 }
 
-
 int main() {
     int maximumprimes = 30001;
     std::vector<int> *era = new std::vector<int>( maximumprimes );

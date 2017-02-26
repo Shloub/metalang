@@ -2,6 +2,8 @@
 #include <stdlib.h>
 
 
+
+
 int position_alphabet(char c) {
     int i = (int)(c);
     if (i <= (int)('Z') && i >= (int)('A'))
@@ -31,7 +33,6 @@ void crypte(int taille_cle, char* cle, int taille, char* message) {
         }
     }
 }
-
 int main(void) {
     int i, index2, taille, index, taille_cle;
     char out2, out0;

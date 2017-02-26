@@ -16,7 +16,6 @@ int palindrome2(int* pow2, int n) {
             return 0;
     return 1;
 }
-
 int main(void) {
     int a0, b, c, d, i;
     int p = 1;

@@ -3,7 +3,6 @@
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
-
 struct toto {
     int foo;
     int bar;
@@ -52,7 +51,6 @@ int result(toto * t_, toto * t2_) {
     cache2 = cache0;
     return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
-
 
 int main() {
     toto * t = mktoto(4);

@@ -26,7 +26,6 @@ int result(std::vector<toto *> * t, int len) {
     return out0;
 }
 
-
 int main() {
     std::vector<toto *> *t = new std::vector<toto *>( 4 );
     for (int i = 0; i < 4; i++)

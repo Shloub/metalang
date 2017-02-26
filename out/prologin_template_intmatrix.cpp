@@ -9,6 +9,7 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     return matrix;
 }
 
+
 int programme_candidat(std::vector<std::vector<int>>& tableau, int x, int y) {
     int out0 = 0;
     for (int i = 0; i < y; i++)
@@ -16,7 +17,6 @@ int programme_candidat(std::vector<std::vector<int>>& tableau, int x, int y) {
             out0 += tableau[i][j] * (i * 2 + j);
     return out0;
 }
-
 
 int main() {
     int taille_y, taille_x;

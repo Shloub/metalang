@@ -33,7 +33,6 @@ int plus_petit0(std::vector<int> * tab, int len) {
     return go0(tab, 0, len);
 }
 
-
 int main() {
     int len = 0;
     std::cin >> len;

@@ -53,7 +53,6 @@ void qsort0(std::vector<int>& tab, int len, int i, int j) {
     }
 }
 
-
 int main() {
     int len = 2;
     std::cin >> len;

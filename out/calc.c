@@ -21,7 +21,6 @@ int fibo(int a, int b, int i) {
     }
     return out_;
 }
-
 int main(void) {
     printf("%d", fibo(1, 2, 4));
     return 0;

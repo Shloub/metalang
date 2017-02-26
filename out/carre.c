@@ -8,7 +8,6 @@ int min2_(int a, int b) {
     else
         return b;
 }
-
 int main(void) {
     int jy, jx, ix, iy, d, f, y, x;
     scanf("%d %d ", &x, &y);

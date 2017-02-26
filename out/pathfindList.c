@@ -30,7 +30,6 @@ int pathfind(int* tab, int len) {
         cache[i] = -1;
     return pathfind_aux(cache, tab, len, 0);
 }
-
 int main(void) {
     int i;
     int len = 0;

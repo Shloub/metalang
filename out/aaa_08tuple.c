@@ -10,7 +10,6 @@ typedef struct toto {
   struct tuple_int_int * foo;
     int bar;
 } toto;
-
 int main(void) {
     int d, c, bar_;
     scanf("%d %d %d ", &bar_, &c, &d);

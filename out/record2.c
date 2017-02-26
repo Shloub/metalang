@@ -21,7 +21,6 @@ int result(struct toto * t) {
     t->blah++;
     return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
-
 int main(void) {
     struct toto * t = mktoto(4);
     scanf("%d %d", &t->bar, &t->blah);

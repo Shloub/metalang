@@ -13,7 +13,6 @@ void h(int i) {
     std::cout << i << "\n";
 }
 
-
 int main() {
     h(14);
     int a = 4;

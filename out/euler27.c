@@ -44,7 +44,6 @@ int test(int a, int b, int* primes, int len) {
     }
     return 200;
 }
-
 int main(void) {
     int b, a, k, o, j;
     int maximumprimes = 1000;

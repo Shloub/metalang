@@ -49,7 +49,6 @@ void test(struct intlist * empty) {
             list = cons(list, i);
     }
 }
-
 int main(void) {
     
     return 0;

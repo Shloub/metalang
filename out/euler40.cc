@@ -22,7 +22,6 @@ int e(std::vector<int> * t, int n) {
     return -1;
 }
 
-
 int main() {
     std::vector<int> *t = new std::vector<int>( 9 );
     for (int i = 0; i < 9; i++)

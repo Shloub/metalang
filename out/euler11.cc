@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 
+
 int find(int n, std::vector<std::vector<int> *> * m, int x, int y, int dx, int dy) {
     if (x < 0 || x == 20 || y < 0 || y == 20)
         return -1;
@@ -15,7 +16,6 @@ struct tuple_int_int {
     int tuple_int_int_field_0;
     int tuple_int_int_field_1;
 };
-
 
 int main() {
     std::vector<tuple_int_int *> *directions = new std::vector<tuple_int_int *>( 8 );

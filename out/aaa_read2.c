@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
 /* 
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
  */
-
 int main(void) {
     int j, i3, d, strlen, i_, b, i, a, len;
     scanf("%d ", &len);

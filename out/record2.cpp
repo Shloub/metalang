@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
-typedef struct toto {
-  int foo;
+struct toto {
+    int foo;
     int bar;
     int blah;
-} toto;
+};
 
 
 toto mktoto(int v1) {
@@ -20,7 +20,6 @@ int result(toto& t) {
     t.blah++;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
 }
-
 
 int main() {
     toto t = mktoto(4);

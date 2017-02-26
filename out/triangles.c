@@ -42,7 +42,6 @@ int find(int len, int** tab) {
     }
     return find0(len, tab, tab2, 0, 0);
 }
-
 int main(void) {
     int k, l, i, j;
     int len = 0;

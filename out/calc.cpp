@@ -4,7 +4,6 @@
 La suite de fibonaci
 */
 
-
 int fibo(int a, int b, int i) {
     int out_ = 0;
     int a2 = a;
@@ -19,7 +18,6 @@ int fibo(int a, int b, int i) {
     }
     return out_;
 }
-
 
 int main() {
     std::cout << fibo(1, 2, 4);

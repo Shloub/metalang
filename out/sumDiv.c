@@ -43,7 +43,6 @@ int sumdiv(int n) {
     return out0;
     /*On renvoie out*/
 }
-
 int main(void) {
     /* Programme principal */
     int n = 0;

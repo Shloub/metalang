@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 
+
+
 int pgcd(int a, int b) {
     int c = std::min(a, b);
     int d = std::max(a, b);
@@ -11,7 +13,6 @@ int pgcd(int a, int b) {
     else
         return pgcd(c, reste);
 }
-
 
 int main() {
     int top = 1;

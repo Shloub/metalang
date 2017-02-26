@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 
+
 int main() {
     char e, c;
     int i = 1;

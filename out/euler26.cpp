@@ -16,7 +16,6 @@ int periode(std::vector<int>& restes, int len, int a, int b) {
     return 0;
 }
 
-
 int main() {
     std::vector<int> t( 1000, 0 );
     int m = 0;

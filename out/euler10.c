@@ -21,7 +21,6 @@ int eratostene(int* t, int max0) {
         }
     return sum;
 }
-
 int main(void) {
     int i;
     int n = 100000;

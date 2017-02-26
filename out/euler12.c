@@ -79,7 +79,6 @@ int find(int ndiv2) {
     }
     return 0;
 }
-
 int main(void) {
     printf("%d\n", find(500));
     return 0;

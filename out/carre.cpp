@@ -10,6 +10,7 @@ template <typename T> std::vector<std::vector<T>> read_matrix(int l, int c) {
     return matrix;
 }
 
+
 int main() {
     int y, x;
     std::cin >> x >> y;

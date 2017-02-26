@@ -27,7 +27,6 @@ int* primesfactors(int n) {
     tab[n]++;
     return tab;
 }
-
 int main(void) {
     int k, l, i, j, m;
     int lim = 20;

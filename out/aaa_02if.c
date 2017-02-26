@@ -7,7 +7,6 @@ int f(int i) {
         return 1;
     return 0;
 }
-
 int main(void) {
     if (f(4))
         printf("true <-\n ->\n");

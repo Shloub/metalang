@@ -72,7 +72,6 @@ void test(bool a, bool b) {
     std::cout << "\n";
 }
 
-
 int main() {
     test(true, true);
     test(true, false);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 
+
 int is_number(char c) {
     return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
 }
@@ -40,7 +41,6 @@ int npi0(char* str, int len) {
         }
     return stack[0];
 }
-
 int main(void) {
     int i;
     int len = 0;

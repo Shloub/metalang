@@ -6,7 +6,6 @@
 on le retrouve ici : http://projecteuler.net/problem=18
 */
 
-
 int find0(int len, std::vector<std::vector<int> *> * tab, std::vector<std::vector<int> *> * cache, int x, int y) {
     /*
 	Cette fonction est récursive
@@ -39,7 +38,6 @@ int find(int len, std::vector<std::vector<int> *> * tab) {
     }
     return find0(len, tab, tab2, 0, 0);
 }
-
 
 int main() {
     int len = 0;

@@ -32,7 +32,6 @@ int sumdiag(int n) {
     }
     return sum;
 }
-
 int main(void) {
     printf("%d", sumdiag(1001));
     return 0;

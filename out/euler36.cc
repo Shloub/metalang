@@ -15,7 +15,6 @@ bool palindrome2(std::vector<int> * pow2, int n) {
     return true;
 }
 
-
 int main() {
     int p = 1;
     std::vector<int> *pow2 = new std::vector<int>( 20 );

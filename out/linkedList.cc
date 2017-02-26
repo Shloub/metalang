@@ -48,7 +48,6 @@ void test(intlist * empty) {
     }
 }
 
-
 int main() {
     
 }

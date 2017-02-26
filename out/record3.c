@@ -27,7 +27,6 @@ int result(struct toto ** t, int len) {
     }
     return out0;
 }
-
 int main(void) {
     int i;
     struct toto * *t = calloc(4, sizeof(struct toto *));

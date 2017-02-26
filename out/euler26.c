@@ -17,7 +17,6 @@ int periode(int* restes, int len, int a, int b) {
     }
     return 0;
 }
-
 int main(void) {
     int i, j;
     int *t = calloc(1000, sizeof(int));

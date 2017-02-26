@@ -5,7 +5,6 @@ typedef enum foo_t {
     Bar,
     Blah
 } foo_t;
-
 int main() {
     foo_t foo_val = Foo;
 }

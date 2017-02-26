@@ -5,7 +5,6 @@ struct toto {
     int bar;
 };
 
-
 int main() {
     toto * param = new toto();
         param->foo = 0;

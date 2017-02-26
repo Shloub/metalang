@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
+
+
 struct bigint {
     bool bigint_sign;
     int bigint_len;
@@ -264,7 +267,6 @@ Division,
 Modulo
 */
 
-
 int log10(int a) {
     int out0 = 1;
     while (a >= 10)
@@ -315,7 +317,6 @@ int sum_chiffres_bigint(bigint * a) {
 }
 
 //  http://projecteuler.net/problem=20 
-
 
 int euler20() {
     bigint * a = bigint_of_int(15);
@@ -428,7 +429,6 @@ int euler29() {
     }
     return n;
 }
-
 
 int main() {
     std::cout << euler29() << "\n";

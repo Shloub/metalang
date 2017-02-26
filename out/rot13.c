@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
 /* 
 Ce test effectue un rot13 sur une chaine lue en entrée
  */
-
 int main(void) {
     int j, toto, strlen;
     char tmpc;

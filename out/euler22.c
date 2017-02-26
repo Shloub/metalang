@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 
+
 int score() {
     int i, len;
     char c;
@@ -15,7 +16,6 @@ int score() {
     }
     return sum;
 }
-
 int main(void) {
     int i, n;
     int sum = 0;
