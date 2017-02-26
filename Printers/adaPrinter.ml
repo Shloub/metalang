@@ -207,8 +207,9 @@ let print_instr macros declared_types declared_types_assoc i =
   fold (print_instr macros declared_types declared_types_assoc) (mapg (print_expr macros) i)
 
 class adaPrinter = object(self)
-  inherit PasPrinter.pasPrinter as super
+  inherit Printer.printer as super
 
+  val mutable declared_types : string TypeMap.t = TypeMap.empty
   val mutable progname = ""
 
   method lang () = "ada"
@@ -316,7 +317,12 @@ end;
       instrs
 
   val mutable addondeclaredvars = BindingMap.empty
-
+      
+  method print_proto f (funname, t, li) =
+    match Type.unfix t with
+    | Type.Void -> self#decl_procedure f funname li
+    | _ -> self#decl_function f funname t li
+             
   method print_fun f funname t li instrs =
     let affected = List.fold_left
         (Instr.Writer.Deep.fold
@@ -342,7 +348,7 @@ end;
     let li_assoc = List.filter_map (fun x -> x) li_assoc in
     addondeclaredvars <- List.fold_left (fun acc (name, t, _) -> BindingMap.add name t acc) BindingMap.empty li_assoc;
     declared_types <- self#declare_type declared_types f t;
-    self#declare_types f instrs;
+    self #declare_types f instrs;
     declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
 
     let instrs = List.append
@@ -355,6 +361,7 @@ end;
       self#print_proto (funname, t, li)
       self#print_body instrs
 
+        
   method declarevars f instrs =
     let bindings = self#declaredvars addondeclaredvars instrs in
     if bindings = BindingMap.empty then ()
@@ -397,27 +404,26 @@ end;
         super#ptype t
         super#typename name
 
+  method main f main =
+    self#declare_types f main;
+    self#print_body f main
+
   method declare_type declared_types f t =
-    Type.Fixed.Deep.fold_acc (fun declared_types t -> self#declare_type0 declared_types f t) declared_types t
+    let a, b, c = pas_declare_type (fun n -> n ^ "_PTR") declared_types_assoc declared_types [] t
+    in self#out_declare_type f a b c
 
-  method settypes d = declared_types <- d
-
-  method declare_type0 declared_types f t =
-    match Type.unfix t with
-    | Type.Array _ ->
-      begin
-        match TypeMap.find_opt t declared_types with
-        | Some _ -> declared_types
-        | None ->
-          let name : string = Fresh.fresh_user () in
-          let name2 = name ^ "_PTR" in
-          self#settypes declared_types; (* hack pour informer ptype de la nouvelle map. *)
-          Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n"
-            name self#ptype t name2 name;
-          declared_types_assoc <- StringMap.add name2 name declared_types_assoc ;
-          TypeMap.add t name2 declared_types
-      end
-    | _ -> declared_types
+  method declare_types f instrs =
+    let a, b, c = pas_declare_types (fun n -> n ^ "_PTR") instrs declared_types_assoc declared_types
+    in self#out_declare_type f a b c
+    
+  method out_declare_type f a b c =
+    List.iter (fun (name, t, name2, decl, assoc) ->
+    declared_types_assoc <- assoc;
+    declared_types <- decl;
+        Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name self#ptype t name2 name;
+      ) (List.rev c);
+    declared_types_assoc <- a;
+    declared_types <- b; b
 
   method instr f t =
     let macros = StringMap.map (fun (ty, params, li) ->
