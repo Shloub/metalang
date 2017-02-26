@@ -1,7 +1,7 @@
 program euler15;
 
 type a = array of Longint;
-type b = array of array of Longint;
+type b = array of a;
 
 var
   i : Longint;

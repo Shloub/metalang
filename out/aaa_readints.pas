@@ -62,7 +62,7 @@ begin
 end;
 
 type e = array of Longint;
-type f = array of array of Longint;
+type f = array of e;
 
 var
   a : Longint;
