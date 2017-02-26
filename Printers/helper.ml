@@ -448,6 +448,46 @@ let cclike_decltype ptype f name t =
         ) li name
     | _ -> Format.fprintf f "typedef %a %s;" ptype t name
 
+  let pas_declare_type0 getname2 declared_types_assoc declared_types newtypes t =
+  let open Ast in
+    match Type.unfix t with
+    | Type.Array _ ->
+      begin
+        match TypeMap.find_opt t declared_types with
+        | Some _ -> declared_types_assoc, declared_types, newtypes
+        | None ->
+          let name : string = Fresh.fresh_user () in
+          let name2 = getname2 name in
+          let newtypes = (name, t, name2, declared_types, declared_types_assoc) :: newtypes in
+          StringMap.add name2 name declared_types_assoc, TypeMap.add t name2 declared_types, newtypes
+      end
+    | _ -> declared_types_assoc, declared_types, newtypes
+      
+let pas_declare_type getname2 declared_types_assoc declared_types newtypes t =
+  Ast.Type.Fixed.Deep.fold_acc (fun (declared_types_assoc, declared_types, newtypes) t ->
+      pas_declare_type0 getname2 declared_types_assoc declared_types newtypes t)
+    (declared_types_assoc, declared_types, newtypes) t
+      
+let pas_declare_types getname2 instrs declared_types_assoc declared_types =
+  let open Ast.Instr in
+  List.fold_left
+        (Writer.Deep.fold
+           (fun (declared_types_assoc, declared_types, newtypes)  i ->
+              match Fixed.unfix i with
+              | Declare (_, t, _, _) -> pas_declare_type getname2 declared_types_assoc declared_types newtypes t
+              | Read li ->
+                List.fold_left (fun (declared_types_assoc, declared_types, newtypes) -> function
+                    | DeclRead (t, _, _) -> pas_declare_type getname2 declared_types_assoc declared_types newtypes t
+                    | _ -> declared_types_assoc, declared_types, newtypes)
+                             (declared_types_assoc, declared_types, newtypes) li
+              | AllocArray (_, t, _, _, _) -> pas_declare_type getname2 declared_types_assoc declared_types newtypes (Ast.Type.array t)
+              | AllocRecord (_, t, _, _) -> pas_declare_type getname2 declared_types_assoc declared_types newtypes t
+              | _ -> declared_types_assoc, declared_types, newtypes
+                  ))
+        (declared_types_assoc, declared_types, [])
+        instrs
+  
+
 let jlike_prio_operator = -100
 
 let rec jlike_prefix_type ptype f t =

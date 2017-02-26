@@ -256,35 +256,20 @@ class pasPrinter = object(self)
       self#print_proto (funname, t, li)
       self#print_body instrs
 
+  method out_declare_type f a b c =
+    List.iter (fun (name, t, name2, decl, assoc) ->
+    declared_types <- decl;
+              Format.fprintf f "type %s = %a;@\n" name self#ptype t
+      ) (List.rev c);
+    declared_types <- b; b
+    
   method declare_type declared_types f t =
-    Type.Fixed.Deep.fold_acc (fun declared_types t ->
-        match Type.unfix t with
-        | Type.Array _ -> begin match TypeMap.find_opt t declared_types with
-            | Some _ -> declared_types
-            | None ->
-              let name = Fresh.fresh_user () in
-              Format.fprintf f "type %s = %a;@\n" name self#ptype t;
-              TypeMap.add t name declared_types
-          end
-        | _ -> declared_types
-      ) declared_types t
-
+    let a, b, c = pas_declare_type (fun n -> n) StringMap.empty declared_types [] t
+    in self#out_declare_type f a b c
+      
   method declare_types f instrs =
-    declared_types <- List.fold_left
-        (Instr.Writer.Deep.fold
-           (fun declared_types i ->
-              match Instr.Fixed.unfix i with
-              | Instr.Declare (_, t, _, _) -> self#declare_type declared_types f t
-              | Instr.Read li ->
-                List.fold_left (fun declared_types -> function
-                    | Instr.DeclRead (t, _, _) -> self#declare_type declared_types f t
-                    | _ -> declared_types ) declared_types li
-              | Instr.AllocArray (_, t, _, _, _) -> self#declare_type declared_types f (Type.array t)
-              | Instr.AllocRecord (_, t, _, _) -> self#declare_type declared_types f t
-              | _ -> declared_types
-           ))
-        declared_types
-        instrs
+    let a, b, c = pas_declare_types (fun n -> n) instrs StringMap.empty declared_types
+    in self#out_declare_type f a b c
 
   method declarevars f instrs =
     let bindings = self#declaredvars BindingMap.empty instrs
