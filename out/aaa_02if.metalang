@@ -1,0 +1,18 @@
+def bool f(int i)
+  if i == 0
+  then
+    return true
+  end
+  return false
+end
+
+main
+  if f(4)
+  then
+    print string "true <-\n ->\n"
+  else
+    print string "false <-\n ->\n"
+  end
+  print string "small test end\n"
+end
+

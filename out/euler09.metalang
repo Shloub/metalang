@@ -1,0 +1,26 @@
+main
+  /*
+	a + b + c = 1000 && a * a + b * b = c * c
+	*/
+  for a = 1 to  1000
+  do
+    for b = a + 1 to  1000
+    do
+      def int c = 1000 - a - b
+      def int a2b2 = a * a + b * b
+      def int cc = c * c
+      if cc == a2b2 && c > a
+      then
+        print int a
+        print string "\n"
+        print int b
+        print string "\n"
+        print int c
+        print string "\n"
+        print int a * b * c
+        print string "\n"
+      end
+    end
+  end
+end
+

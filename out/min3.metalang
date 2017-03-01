@@ -1,0 +1,32 @@
+def int min2_(int a, int b)
+  if a < b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int min2(int a, int b)
+  return min2_(a, b)
+end
+
+def int min3(int a, int b, int c)
+  return min2(min2(a, b), c)
+end
+
+main
+  print int min3(2, 3, 4)
+  print string " "
+  print int min3(2, 4, 3)
+  print string " "
+  print int min3(3, 2, 4)
+  print string " "
+  print int min3(3, 4, 2)
+  print string " "
+  print int min3(4, 2, 3)
+  print string " "
+  print int min3(4, 3, 2)
+  print string "\n"
+end
+

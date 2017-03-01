@@ -1,0 +1,48 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+/*
+  Ce test a été généré par Metalang.
+*/
+def int result(int len, array<int> tab)
+  def array<bool> tab2[len] with i do
+                                     return false
+  end
+  for i1 = 0 to  len - 1
+  do
+    print int tab[i1]
+    print string " "
+    tab2[tab[i1]] = true
+  end
+  print string "\n"
+  for i2 = 0 to  len - 1
+  do
+    if !tab2[i2]
+    then
+      return i2
+    end
+  end
+  return -1
+end
+
+main
+  def int len = read_int()
+  print int len
+  print string "\n"
+  def array<int> tab = read_int_line(len)
+  print int result(len, tab)
+  print string "\n"
+end
+

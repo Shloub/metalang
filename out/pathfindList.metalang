@@ -1,0 +1,46 @@
+def int pathfind_aux(array<int> cache, array<int> tab, int len, int pos)
+  if pos >= len - 1
+  then
+    return 0
+  else
+    if cache[pos] != -1
+    then
+      return cache[pos]
+    else
+      cache[pos] = len * 2
+      def int posval = pathfind_aux(cache, tab, len, tab[pos])
+      def int oneval = pathfind_aux(cache, tab, len, pos + 1)
+      def int out = 0
+      if posval < oneval
+      then
+        out = 1 + posval
+      else
+        out = 1 + oneval
+      end
+      cache[pos] = out
+      return out
+    end
+  end
+end
+
+def int pathfind(array<int> tab, int len)
+  def array<int> cache[len] with i do
+                                     return -1
+  end
+  return pathfind_aux(cache, tab, len, 0)
+end
+
+main
+  def int len = 0
+  read int len
+  skip
+  def array<int> tab[len] with i do
+                                   def int tmp = 0
+                                   read int tmp
+                                   skip
+                                   return tmp
+  end
+  def int result = pathfind(tab, len)
+  print int result
+end
+

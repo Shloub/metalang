@@ -1,0 +1,108 @@
+def int eratostene(array<int> t, int max)
+  def int n = 0
+  for i = 2 to  max - 1
+  do
+    if t[i] == i
+    then
+      n = n + 1
+      def int j = i * i
+      while j < max && j > 0
+      do
+        t[j] = 0
+        j = j + i
+      end
+    end
+  end
+  return n
+end
+
+def bool isPrime(int n, array<int> primes, int len)
+  def int i = 0
+  if n < 0
+  then
+    n = -n
+  end
+  while primes[i] * primes[i] < n
+  do
+    if n % primes[i] == 0
+    then
+      return false
+    end
+    i = i + 1
+  end
+  return true
+end
+
+def int test(int a, int b, array<int> primes, int len)
+  for n = 0 to  200
+  do
+    def int j = n * n + a * n + b
+    if !isPrime(j, primes, len)
+    then
+      return n
+    end
+  end
+  return 200
+end
+
+main
+  def int maximumprimes = 1000
+  def array<int> era[maximumprimes] with j do
+                                             return j
+  end
+  def int result = 0
+  def int max = 0
+  def int nprimes = eratostene(era, maximumprimes)
+  def array<int> primes[nprimes] with o do
+                                          return 0
+  end
+  def int l = 0
+  for k = 2 to  maximumprimes - 1
+  do
+    if era[k] == k
+    then
+      primes[l] = k
+      l = l + 1
+    end
+  end
+  print int l
+  print string " == "
+  print int nprimes
+  print string "\n"
+  def int ma = 0
+  def int mb = 0
+  for b = 3 to  999
+  do
+    if era[b] == b
+    then
+      for a = -999 to  999
+      do
+        def int n1 = test(a, b, primes, nprimes)
+        def int n2 = test(a, -b, primes, nprimes)
+        if n1 > max
+        then
+          max = n1
+          result = a * b
+          ma = a
+          mb = b
+        end
+        if n2 > max
+        then
+          max = n2
+          result = -a * b
+          ma = a
+          mb = -b
+        end
+      end
+    end
+  end
+  print int ma
+  print string " "
+  print int mb
+  print string "\n"
+  print int max
+  print string "\n"
+  print int result
+  print string "\n"
+end
+

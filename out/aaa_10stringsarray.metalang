@@ -1,0 +1,32 @@
+record toto string s;
+int v;
+
+end
+
+def string idstring(string s)
+  return s
+end
+
+def void printstring(string s)
+  print string idstring(s)
+  print string "\n"
+end
+
+def void print_toto(@toto t)
+  print string t.s
+  print string " = "
+  print int t.v
+  print string "\n"
+end
+
+main
+  def array<string> tab[2] with i do
+                                    return idstring("chaine de test")
+  end
+  for j = 0 to  1
+  do
+    printstring(idstring(tab[j]))
+  end
+  print_toto({"s":"one", "v":1})
+end
+

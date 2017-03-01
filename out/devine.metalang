@@ -1,0 +1,38 @@
+def bool devine(int nombre, array<int> tab, int len)
+  def int min = tab[0]
+  def int max = tab[1]
+  for i = 2 to  len - 1
+  do
+    if tab[i] > max || tab[i] < min
+    then
+      return false
+    end
+    if tab[i] < nombre
+    then
+      min = tab[i]
+    end
+    if tab[i] > nombre
+    then
+      max = tab[i]
+    end
+    if tab[i] == nombre && len != i + 1
+    then
+      return false
+    end
+  end
+  return true
+end
+
+main
+  def read int nombre
+  skip
+  def read int len
+  skip
+  def array<int> tab[len] with i do
+                                   def read int tmp
+                                   skip
+                                   return tmp
+  end
+  print bool devine(nombre, tab, len)
+end
+

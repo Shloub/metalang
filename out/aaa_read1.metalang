@@ -1,0 +1,17 @@
+def array<char> read_char_line(int n)
+  def array<char> tab[n] with i do
+                                  def read char t
+                                  return t
+  end
+  skip
+  return tab
+end
+
+main
+  def array<char> str = read_char_line(12)
+  for i = 0 to  11
+  do
+    print char str[i]
+  end
+end
+

@@ -1,0 +1,14 @@
+def (int, int) f((int, int) tuple)
+  (int a, int b) = tuple
+  return (a + 1, b + 1)
+end
+
+main
+  def (int, int) t = f((0, 1))
+  (int a, int b) = t
+  print int a
+  print string " -- "
+  print int b
+  print string "--\n"
+end
+

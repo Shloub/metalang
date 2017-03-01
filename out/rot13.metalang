@@ -1,0 +1,21 @@
+/*
+Ce test effectue un rot13 sur une chaine lue en entrée
+*/
+main
+  def read int strlen
+  skip
+  def array<char> tab4[strlen] with toto do
+                                           def read char tmpc
+                                           def int c = int_of_char(tmpc)
+                                           if tmpc != ' '
+                                           then
+                                             c = (c - int_of_char('a') + 13) % 26 + int_of_char('a')
+                                           end
+                                           return char_of_int(c)
+  end
+  for j = 0 to  strlen - 1
+  do
+    print char tab4[j]
+  end
+end
+

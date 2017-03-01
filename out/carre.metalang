@@ -1,0 +1,64 @@
+def int min2_(int a, int b)
+  if a < b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int min2(int a, int b)
+  return min2_(a, b)
+end
+
+def int min3(int a, int b, int c)
+  return min2(min2(a, b), c)
+end
+
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def array<array<int>> read_int_matrix(int x, int y)
+  def array<array<int>> tab[y] with z do
+                                        return read_int_line(x)
+  end
+  return tab
+end
+
+main
+  def int x = read_int()
+  def int y = read_int()
+  def array<array<int>> tab = read_int_matrix(x, y)
+  for ix = 1 to  x - 1
+  do
+    for iy = 1 to  y - 1
+    do
+      if tab[iy][ix] == 1
+      then
+        tab[iy][ix] = min3(tab[iy][ix - 1], tab[iy - 1][ix], tab[iy - 1][ix - 1]) + 1
+      end
+    end
+  end
+  for jy = 0 to  y - 1
+  do
+    for jx = 0 to  x - 1
+    do
+      print int tab[jy][jx]
+      print string " "
+    end
+    print string "\n"
+  end
+end
+

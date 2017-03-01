@@ -1,0 +1,24 @@
+def array<bool> id(array<bool> b)
+  return b
+end
+
+def void g(array<bool> t, int index)
+  t[index] = false
+end
+
+main
+  def int j = 0
+  def array<bool> a[5] with i do
+                                print int i
+                                j = j + i
+                                return i % 2 == 0
+  end
+  print int j
+  print string " "
+  print bool a[0]
+  print string "\n"
+  g(id(a), 0)
+  print bool a[0]
+  print string "\n"
+end
+

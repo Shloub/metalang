@@ -1,0 +1,23 @@
+/*
+Ce test permet de vérifier le comportement des macros
+Il effectue du loop unrolling
+*/
+main
+  def int j = 0
+  j = 0
+  print int j
+  print string "\n"
+  j = 1
+  print int j
+  print string "\n"
+  j = 2
+  print int j
+  print string "\n"
+  j = 3
+  print int j
+  print string "\n"
+  j = 4
+  print int j
+  print string "\n"
+end
+

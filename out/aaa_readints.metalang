@@ -1,0 +1,47 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def array<array<int>> read_int_matrix(int x, int y)
+  def array<array<int>> tab[y] with z do
+                                        return read_int_line(x)
+  end
+  return tab
+end
+
+main
+  def int len = read_int()
+  print int len
+  print string "=len\n"
+  def array<int> tab1 = read_int_line(len)
+  for i = 0 to  len - 1
+  do
+    print int i
+    print string "=>"
+    print int tab1[i]
+    print string "\n"
+  end
+  len = read_int()
+  def array<array<int>> tab2 = read_int_matrix(len, len - 1)
+  for i = 0 to  len - 2
+  do
+    for j = 0 to  len - 1
+    do
+      print int tab2[i][j]
+      print string " "
+    end
+    print string "\n"
+  end
+end
+

@@ -1,0 +1,48 @@
+def int max2_(int a, int b)
+  if a > b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int max2(int a, int b)
+  return max2_(a, b)
+end
+
+main
+  def int i = 1
+  def array<int> last[5] with j do
+                                  def read char c
+                                  def int d = int_of_char(c) - int_of_char('0')
+                                  i = i * d
+                                  return d
+  end
+  def int max = i
+  def int index = 0
+  def int nskipdiv = 0
+  for k = 1 to  995
+  do
+    def read char e
+    def int f = int_of_char(e) - int_of_char('0')
+    if f == 0
+    then
+      i = 1
+      nskipdiv = 4
+    else
+      i = i * f
+      if nskipdiv < 0
+      then
+        i = i / last[index]
+      end
+      nskipdiv = nskipdiv - 1
+    end
+    last[index] = f
+    index = (index + 1) % 5
+    max = max2(max, i)
+  end
+  print int max
+  print string "\n"
+end
+

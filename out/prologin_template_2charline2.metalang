@@ -1,0 +1,42 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def array<char> read_char_line(int n)
+  def array<char> tab[n] with i do
+                                  def read char t
+                                  return t
+  end
+  skip
+  return tab
+end
+
+def int programme_candidat(array<char> tableau1, int taille1, array<char>
+tableau2, int taille2)
+  def int out = 0
+  for i = 0 to  taille1 - 1
+  do
+    out = out + int_of_char(tableau1[i]) * i
+    print char tableau1[i]
+  end
+  print string "--\n"
+  for j = 0 to  taille2 - 1
+  do
+    out = out + int_of_char(tableau2[j]) * j * 100
+    print char tableau2[j]
+  end
+  print string "--\n"
+  return out
+end
+
+main
+  def int taille1 = read_int()
+  def int taille2 = read_int()
+  def array<char> tableau1 = read_char_line(taille1)
+  def array<char> tableau2 = read_char_line(taille2)
+  print int programme_candidat(tableau1, taille1, tableau2, taille2)
+  print string "\n"
+end
+

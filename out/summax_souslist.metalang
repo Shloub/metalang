@@ -1,0 +1,32 @@
+def int summax(array<int> lst, int len)
+  def int current = 0
+  def int max = 0
+  for i = 0 to  len - 1
+  do
+    current = current + lst[i]
+    if current < 0
+    then
+      current = 0
+    end
+    if max < current
+    then
+      max = current
+    end
+  end
+  return max
+end
+
+main
+  def int len = 0
+  read int len
+  skip
+  def array<int> tab[len] with i do
+                                   def int tmp = 0
+                                   read int tmp
+                                   skip
+                                   return tmp
+  end
+  def int result = summax(tab, len)
+  print int result
+end
+

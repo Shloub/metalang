@@ -1,0 +1,13 @@
+main
+  def array<int> c[2] with d do
+                               def read int out
+                               skip
+                               return out
+  end
+  def array<int> t = c
+  print int t[0]
+  print string " - "
+  print int t[1]
+  print string "\n"
+end
+

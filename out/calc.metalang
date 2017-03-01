@@ -1,0 +1,22 @@
+/*
+La suite de fibonaci
+*/
+def int fibo(int a, int b, int i)
+  def int out_ = 0
+  def int a2 = a
+  def int b2 = b
+  for j = 0 to  i + 1
+  do
+    print int j
+    out_ = out_ + a2
+    def int tmp = b2
+    b2 = b2 + a2
+    a2 = tmp
+  end
+  return out_
+end
+
+main
+  print int fibo(1, 2, 4)
+end
+
