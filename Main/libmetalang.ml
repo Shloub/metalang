@@ -155,6 +155,9 @@ let default_passes (prog : Typer.env * Utils.prog) =
       acc, ty, p
      )
 
+let justtype prog = prog |> typer_process |>
+                    (fun (ty, p) -> StringSet.empty, ty, p)
+
 (** passes for imperatives languages like C, C++, python, etc... *)
 let clike_passes
     ~tuple
@@ -244,6 +247,7 @@ let languages, printers =
   in let t = true and f = false
   in
   let ls = [
+    "metalang",(t, justtype) => new Printer.printer ;
     "c",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new CPrinter.cPrinter ;
     "fs",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:nselfaffect   ~clikeloop:f ~decrlooplimit:0) => new ForthPrinter.forthPrinter ;
     "m",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => new ObjCPrinter.objCPrinter ;
@@ -412,7 +416,7 @@ enum @target_language
   LANG_Scala
   LANG_St
   LANG_Vb
-  LANG_Metalang_parsed
+  LANG_Metalang
 end
 def @target_language current_language ()
   return LANG_%s
