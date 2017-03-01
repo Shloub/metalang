@@ -65,7 +65,6 @@ begin
   
 end;
 
-
   n : Integer;
 begin
   -- Programme principal 

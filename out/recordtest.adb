@@ -29,7 +29,6 @@ type toto is record
   bar : Integer;
 end record;
 
-
   param : toto_PTR;
 begin
   param := new toto;

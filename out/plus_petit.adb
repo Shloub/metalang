@@ -65,7 +65,6 @@ begin
   return go0(tab, 0, len);
 end;
 
-
   tmp : Integer;
   tab : c_PTR;
   len : Integer;

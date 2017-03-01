@@ -37,7 +37,6 @@ begin
   end loop;
   return n;
 end;
-
 type b is Array (Integer range <>) of Boolean;
 type b_PTR is access b;
 

@@ -38,7 +38,6 @@ begin
   return sum;
 end;
 
-
   t : a_PTR;
   n : Integer;
 begin

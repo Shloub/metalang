@@ -25,7 +25,6 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
 
-
   t : a_PTR;
 begin
   t := new a (0..5);

@@ -1,6 +1,7 @@
 program euler05;
 Uses math;
 
+
 type c = array of Longint;
 function primesfactors(n : Longint) : c;
 var

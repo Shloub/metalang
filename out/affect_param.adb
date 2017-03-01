@@ -22,7 +22,6 @@ begin
   a := 4;
 end;
 
-
   a : Integer;
 begin
   a := 0;

@@ -43,7 +43,6 @@ begin
   return max0;
 end;
 
-
   tmp : Integer;
   tab : a_PTR;
   result : Integer;

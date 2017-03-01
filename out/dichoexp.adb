@@ -37,7 +37,6 @@ begin
   end if;
 end;
 
-
   b : Integer;
   a : Integer;
 begin

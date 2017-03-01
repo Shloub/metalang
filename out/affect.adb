@@ -90,7 +90,6 @@ begin
   return t.foo + t.blah * t.bar + t.bar * t.foo;
 end;
 
-
   t2 : toto_PTR;
   t : toto_PTR;
 begin

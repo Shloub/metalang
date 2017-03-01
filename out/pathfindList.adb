@@ -62,7 +62,6 @@ begin
   return pathfind_aux(cache, tab, len, 0);
 end;
 
-
   tmp : Integer;
   tab : a_PTR;
   result : Integer;

@@ -53,7 +53,6 @@ begin
   return out0;
 end;
 
-
   titi : Integer;
   t : a_PTR;
 begin

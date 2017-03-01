@@ -45,7 +45,6 @@ begin
   return sum;
 end;
 
-
 begin
   PInt(sumdiag(1001));
 end;

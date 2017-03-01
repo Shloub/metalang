@@ -48,7 +48,6 @@ begin
   return max0;
 end;
 
-
   x : Integer;
   tab : a_PTR;
   len : Integer;

@@ -36,7 +36,6 @@ begin
   return out0;
 end;
 
-
   tofind : Character;
   tmp : Character;
   tab : a_PTR;

@@ -46,7 +46,6 @@ begin
   return t.foo + t.blah * t.bar + t.bar * t.foo;
 end;
 
-
   t : toto_PTR;
 begin
   t := mktoto(4);

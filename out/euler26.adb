@@ -40,7 +40,6 @@ begin
   return 0;
 end;
 
-
   t : e_PTR;
   p : Integer;
   mi : Integer;

@@ -19,7 +19,6 @@ end;
 --Il effectue du loop unrolling
 --
 
-
   j : Integer;
 begin
   j := 0;

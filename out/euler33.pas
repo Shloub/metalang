@@ -1,6 +1,8 @@
 program euler33;
 Uses math;
 
+
+
 function pgcd(a : Longint; b : Longint) : Longint;
 var
   c : Longint;

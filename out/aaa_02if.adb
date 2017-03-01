@@ -20,7 +20,6 @@ begin
   return FALSE;
 end;
 
-
 begin
   if f(4)
   then

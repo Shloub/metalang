@@ -61,7 +61,6 @@ begin
   end if;
 end;
 
-
   product2 : Integer;
   product : Integer;
   counted : f_PTR;

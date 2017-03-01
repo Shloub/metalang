@@ -27,6 +27,8 @@ begin
    skip_char();
    read_char_ := c;
 end;
+
+
 type g = array of Longint;
 
 var

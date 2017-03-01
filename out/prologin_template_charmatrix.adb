@@ -29,6 +29,7 @@ begin
     Get(C);
   end loop;
 end;
+
 type e is Array (Integer range <>) of Character;
 type e_PTR is access e;
 type f is Array (Integer range <>) of e_PTR;
@@ -46,7 +47,6 @@ begin
   end loop;
   return out0;
 end;
-
 
   taille_y : Integer;
   taille_x : Integer;

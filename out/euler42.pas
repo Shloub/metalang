@@ -70,6 +70,8 @@ begin
    until false;
 end;
 
+
+
 function is_triangular(n : Longint) : boolean;
 var
   a : Longint;

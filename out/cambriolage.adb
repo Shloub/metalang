@@ -73,7 +73,6 @@ begin
   end if;
 end;
 
-
   serrures : d_PTR;
   passepartout : d_PTR;
   out_0 : Integer;

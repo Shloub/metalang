@@ -1,5 +1,6 @@
 program euler30;
 
+
 type g = array of Longint;
 
 var

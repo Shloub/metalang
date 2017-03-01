@@ -24,7 +24,6 @@ begin
     return b;
   end if;
 end;
-
 type g is Array (Integer range <>) of Integer;
 type g_PTR is access g;
 

@@ -40,7 +40,6 @@ begin
   PInt(t.v);
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
-
 type b is Array (Integer range <>) of stringptr;
 type b_PTR is access b;
 

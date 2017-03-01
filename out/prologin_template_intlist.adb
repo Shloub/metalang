@@ -37,7 +37,6 @@ begin
   return out0;
 end;
 
-
   taille : Integer;
   tableau : b_PTR;
 begin

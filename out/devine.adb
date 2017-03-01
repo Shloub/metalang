@@ -50,7 +50,6 @@ begin
   return TRUE;
 end;
 
-
   tmp : Integer;
   tab : a_PTR;
   nombre : Integer;

@@ -43,6 +43,9 @@ begin
    skip_char();
    read_char_ := c;
 end;
+
+
+
 type
     bigint=^bigint_r;
     bigint_r = record

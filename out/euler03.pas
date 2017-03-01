@@ -2,6 +2,7 @@ program euler03;
 Uses math;
 
 
+
 var
   a : Longint;
   b : Longint;

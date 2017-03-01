@@ -55,7 +55,6 @@ begin
   return (-1);
 end;
 
-
   tab : c_PTR;
   len : Integer;
 begin

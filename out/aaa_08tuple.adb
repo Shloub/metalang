@@ -41,7 +41,6 @@ type toto is record
   bar : Integer;
 end record;
 
-
   t : toto_PTR;
   f : tuple_int_int_PTR;
   e : tuple_int_int_PTR;

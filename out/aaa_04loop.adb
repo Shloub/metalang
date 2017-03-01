@@ -33,7 +33,6 @@ begin
   return FALSE;
 end;
 
-
   j : Integer;
   i : Integer;
 begin

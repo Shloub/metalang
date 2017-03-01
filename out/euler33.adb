@@ -51,7 +51,6 @@ begin
   end if;
 end;
 
-
   top : Integer;
   p : Integer;
   bottom : Integer;

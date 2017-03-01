@@ -61,6 +61,7 @@ begin
    until false;
 end;
 
+
 type d = array of Longint;
 
 var

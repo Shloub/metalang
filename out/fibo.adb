@@ -43,7 +43,6 @@ begin
   return out0;
 end;
 
-
   i : Integer;
   b : Integer;
   a : Integer;

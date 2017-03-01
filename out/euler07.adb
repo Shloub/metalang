@@ -46,7 +46,6 @@ begin
   return t(used - 1);
 end;
 
-
   used : Integer;
   t : a_PTR;
   n : Integer;

@@ -11,7 +11,6 @@ Type foo_t is (
    Bar,
    Blah);
 
-
   foo_val : foo_t;
 begin
   foo_val := Foo;

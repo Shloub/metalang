@@ -69,6 +69,7 @@ begin
    until false;
 end;
 
+
 type e = array of char;
 type f = array of e;
 function programme_candidat(tableau : f; taille_x : Longint; taille_y : Longint) : Longint;

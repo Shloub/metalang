@@ -1,5 +1,6 @@
 program euler43;
 
+
 type a = array of boolean;
 
 var

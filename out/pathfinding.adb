@@ -91,7 +91,6 @@ begin
   return pathfind_aux(cache, tab, x, y, 0, 0);
 end;
 
-
   y : Integer;
   x : Integer;
   tmp : Character;

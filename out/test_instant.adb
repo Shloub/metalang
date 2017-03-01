@@ -16,7 +16,6 @@ begin
   return a + b;
 end;
 
-
 begin
   PInt(10);
 end;

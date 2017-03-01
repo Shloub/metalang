@@ -33,7 +33,6 @@ begin
   return out_0;
 end;
 
-
 begin
   PInt(fibo(1, 2, 4));
 end;

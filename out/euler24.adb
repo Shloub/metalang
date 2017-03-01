@@ -70,7 +70,6 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
 
-
   nth : Integer;
 begin
   show(10, 999999);

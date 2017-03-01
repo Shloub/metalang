@@ -42,7 +42,6 @@ begin
   return TRUE;
 end;
 
-
   sum : Integer;
   pow2 : f_PTR;
   p : Integer;

@@ -86,7 +86,6 @@ begin
   end if;
 end;
 
-
   t : Integer;
 begin
   for n in integer range 285..55385 loop

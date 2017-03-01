@@ -68,7 +68,6 @@ begin
   return 200;
 end;
 
-
   result : Integer;
   primes : c_PTR;
   nprimes : Integer;

@@ -38,7 +38,6 @@ begin
   return i rem 2 = 0;
 end;
 
-
 begin
   NULL;
   

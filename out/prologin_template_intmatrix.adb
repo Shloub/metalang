@@ -41,7 +41,6 @@ begin
   return out0;
 end;
 
-
   taille_y : Integer;
   taille_x : Integer;
   tableau : e_PTR;

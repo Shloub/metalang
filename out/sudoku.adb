@@ -132,7 +132,6 @@ begin
   return FALSE;
 end;
 
-
   sudoku0 : a_PTR;
 begin
   sudoku0 := read_sudoku;
