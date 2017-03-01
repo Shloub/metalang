@@ -1,0 +1,42 @@
+def int result(int sum, array<int> t, int maxIndex, array<array<int>> cache)
+  if cache[sum][maxIndex] != 0
+  then
+    return cache[sum][maxIndex]
+  else
+    if sum == 0 || maxIndex == 0
+    then
+      return 1
+    else
+      def int out = 0
+      def int div = sum / t[maxIndex]
+      for i = 0 to  div
+      do
+        out = out + result(sum - i * t[maxIndex], t, maxIndex - 1, cache)
+      end
+      cache[sum][maxIndex] = out
+      return out
+    end
+  end
+end
+
+main
+  def array<int> t[8] with i do
+                               return 0
+  end
+  t[0] = 1
+  t[1] = 2
+  t[2] = 5
+  t[3] = 10
+  t[4] = 20
+  t[5] = 50
+  t[6] = 100
+  t[7] = 200
+  def array<array<int>> cache[201] with j do
+                                            def array<int> o[8] with k do
+                                                                         return 0
+                                            end
+                                            return o
+  end
+  print int result(200, t, 7, cache)
+end
+

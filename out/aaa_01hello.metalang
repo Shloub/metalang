@@ -1,0 +1,22 @@
+main
+  print string "Hello World"
+  def int a = 5
+  print int (4 + 6) * 2
+  print string " "
+  print string "\n"
+  print int a
+  print string "foo"
+  print string ""
+  print bool 1 + (1 + 1) * 2 * (3 + 8) / 4 - (1 - 2) - 3 == 12 && true
+  print string "\n"
+  print bool (3 * (4 + 5 + 6) * 2 == 45) == false
+  print string " "
+  print bool (2 == 1) == false
+  print string " "
+  print int (4 + 1) / 3 / (2 + 1)
+  print int 4 * 1 / 3 / 2 * 1
+  print bool !(!(a == 0) && !(a == 4))
+  print bool true && !false && !(true && false)
+  print string "\n"
+end
+

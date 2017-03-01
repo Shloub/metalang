@@ -1,0 +1,42 @@
+def int chiffre_sort(int a)
+  if a < 10
+  then
+    return a
+  else
+    def int b = chiffre_sort(a / 10)
+    def int c = a % 10
+    def int d = b % 10
+    def int e = b / 10
+    if c < d
+    then
+      return c + b * 10
+    else
+      return d + chiffre_sort(c + e * 10) * 10
+    end
+  end
+end
+
+def bool same_numbers(int a, int b, int c, int d, int e, int f)
+  def int ca = chiffre_sort(a)
+  return ca == chiffre_sort(b) && ca == chiffre_sort(c) && ca == chiffre_sort(d) && ca == chiffre_sort(e) && ca == chiffre_sort(f)
+end
+
+main
+  def int num = 142857
+  if same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5)
+  then
+    print int num
+    print string " "
+    print int num * 2
+    print string " "
+    print int num * 3
+    print string " "
+    print int num * 4
+    print string " "
+    print int num * 5
+    print string " "
+    print int num * 6
+    print string "\n"
+  end
+end
+

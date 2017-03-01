@@ -1,0 +1,31 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def (int, int) read_int_couple()
+  def read int a
+  skip
+  def read int b
+  skip
+  return (a, b)
+end
+
+record toto (int, int) foo;
+int bar;
+
+end
+
+main
+  def int bar_ = read_int()
+  def @toto t = {"foo":read_int_couple(), "bar":bar_}
+  (int a, int b) = t.foo
+  print int a
+  print string " "
+  print int b
+  print string " "
+  print int t.bar
+  print string "\n"
+end
+

@@ -1,0 +1,42 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def array<array<int>> read_int_matrix(int x, int y)
+  def array<array<int>> tab[y] with z do
+                                        return read_int_line(x)
+  end
+  return tab
+end
+
+def int programme_candidat(array<array<int>> tableau, int x, int y)
+  def int out = 0
+  for i = 0 to  y - 1
+  do
+    for j = 0 to  x - 1
+    do
+      out = out + tableau[i][j] * (i * 2 + j)
+    end
+  end
+  return out
+end
+
+main
+  def int taille_x = read_int()
+  def int taille_y = read_int()
+  def array<array<int>> tableau = read_int_matrix(taille_x, taille_y)
+  print int programme_candidat(tableau, taille_x, taille_y)
+  print string "\n"
+end
+

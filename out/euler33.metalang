@@ -1,0 +1,76 @@
+def int max2_(int a, int b)
+  if a > b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int max2(int a, int b)
+  return max2_(a, b)
+end
+
+def int min2_(int a, int b)
+  if a < b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int min2(int a, int b)
+  return min2_(a, b)
+end
+
+def int pgcd(int a, int b)
+  def int c = min2(a, b)
+  def int d = max2(a, b)
+  def int reste = d % c
+  if reste == 0
+  then
+    return c
+  else
+    return pgcd(c, reste)
+  end
+end
+
+main
+  def int top = 1
+  def int bottom = 1
+  for i = 1 to  9
+  do
+    for j = 1 to  9
+    do
+      for k = 1 to  9
+      do
+        if i != j && j != k
+        then
+          def int a = i * 10 + j
+          def int b = j * 10 + k
+          if a * k == i * b
+          then
+            print int a
+            print string "/"
+            print int b
+            print string "\n"
+            top = top * a
+            bottom = bottom * b
+          end
+        end
+      end
+    end
+  end
+  print int top
+  print string "/"
+  print int bottom
+  print string "\n"
+  def int p = pgcd(top, bottom)
+  print string "pgcd="
+  print int p
+  print string "\n"
+  print int bottom / p
+  print string "\n"
+end
+

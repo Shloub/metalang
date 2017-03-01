@@ -1,0 +1,12 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+main
+  def int len = read_int()
+  print int len
+  print string "\n"
+end
+

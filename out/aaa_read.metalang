@@ -1,0 +1,56 @@
+/*
+Ce test permet de vérifier si les différents backends pour les langages implémentent bien
+read int, read char et skip
+*/
+main
+  def read int len
+  skip
+  print int len
+  print string "=len\n"
+  len = len * 2
+  print string "len*2="
+  print int len
+  print string "\n"
+  len = len / 2
+  def array<int> tab[len] with i do
+                                   def read int tmpi1
+                                   skip
+                                   print int i
+                                   print string "=>"
+                                   print int tmpi1
+                                   print string " "
+                                   return tmpi1
+  end
+  print string "\n"
+  def array<int> tab2[len] with i_ do
+                                     def read int tmpi2
+                                     skip
+                                     print int i_
+                                     print string "==>"
+                                     print int tmpi2
+                                     print string " "
+                                     return tmpi2
+  end
+  def read int strlen
+  skip
+  print int strlen
+  print string "=strlen\n"
+  def array<char> tab4[strlen] with toto do
+                                           def read char tmpc
+                                           def int c = int_of_char(tmpc)
+                                           print char tmpc
+                                           print string ":"
+                                           print int c
+                                           print string " "
+                                           if tmpc != ' '
+                                           then
+                                             c = (c - int_of_char('a') + 13) % 26 + int_of_char('a')
+                                           end
+                                           return char_of_int(c)
+  end
+  for j = 0 to  strlen - 1
+  do
+    print char tab4[j]
+  end
+end
+

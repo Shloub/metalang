@@ -1,0 +1,57 @@
+def int max2_(int a, int b)
+  if a > b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int max2(int a, int b)
+  return max2_(a, b)
+end
+
+def array<int> primesfactors(int n)
+  def array<int> tab[n + 1] with i do
+                                     return 0
+  end
+  def int d = 2
+  while n != 1 && d * d <= n
+  do
+    if n % d == 0
+    then
+      tab[d] = tab[d] + 1
+      n = n / d
+    else
+      d = d + 1
+    end
+  end
+  tab[n] = tab[n] + 1
+  return tab
+end
+
+main
+  def int lim = 20
+  def array<int> o[lim + 1] with m do
+                                     return 0
+  end
+  for i = 1 to  lim
+  do
+    def array<int> t = primesfactors(i)
+    for j = 1 to  i
+    do
+      o[j] = max2(o[j], t[j])
+    end
+  end
+  def int product = 1
+  for k = 1 to  lim
+  do
+    for l = 1 to  o[k]
+    do
+      product = product * k
+    end
+  end
+  print int product
+  print string "\n"
+end
+

@@ -1,0 +1,39 @@
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def (int, int, int) read_3ints()
+  def read int a
+  skip
+  def read int b
+  skip
+  def read int c
+  skip
+  return (a, b, c)
+end
+
+main
+  for i = 1 to  3
+  do
+    (int a, int b, int c) = read_3ints()
+    print string "a = "
+    print int a
+    print string " b = "
+    print int b
+    print string "c ="
+    print int c
+    print string "\n"
+  end
+  def array<int> l = read_int_line(10)
+  for j = 0 to  9
+  do
+    print int l[j]
+    print string "\n"
+  end
+end
+

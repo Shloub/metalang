@@ -1,0 +1,31 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def int programme_candidat(array<int> tableau, int taille)
+  def int out = 0
+  for i = 0 to  taille - 1
+  do
+    out = out + tableau[i]
+  end
+  return out
+end
+
+main
+  def int taille = read_int()
+  def array<int> tableau = read_int_line(taille)
+  print int programme_candidat(tableau, taille)
+  print string "\n"
+end
+

@@ -1,0 +1,73 @@
+def int read_int()
+  def read int out
+  skip
+  return out
+end
+
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def array<char> read_char_line(int n)
+  def array<char> tab[n] with i do
+                                  def read char t
+                                  return t
+  end
+  skip
+  return tab
+end
+
+/*
+Ce test permet de vérifier si les différents backends pour les langages implémentent bien
+read int, read char et skip
+*/
+main
+  def int len = read_int()
+  print int len
+  print string "=len\n"
+  def array<int> tab = read_int_line(len)
+  for i = 0 to  len - 1
+  do
+    print int i
+    print string "=>"
+    print int tab[i]
+    print string " "
+  end
+  print string "\n"
+  def array<int> tab2 = read_int_line(len)
+  for i_ = 0 to  len - 1
+  do
+    print int i_
+    print string "==>"
+    print int tab2[i_]
+    print string " "
+  end
+  def int strlen = read_int()
+  print int strlen
+  print string "=strlen\n"
+  def array<char> tab4 = read_char_line(strlen)
+  for i3 = 0 to  strlen - 1
+  do
+    def char tmpc = tab4[i3]
+    def int c = int_of_char(tmpc)
+    print char tmpc
+    print string ":"
+    print int c
+    print string " "
+    if tmpc != ' '
+    then
+      c = (c - int_of_char('a') + 13) % 26 + int_of_char('a')
+    end
+    tab4[i3] = char_of_int(c)
+  end
+  for j = 0 to  strlen - 1
+  do
+    print char tab4[j]
+  end
+end
+

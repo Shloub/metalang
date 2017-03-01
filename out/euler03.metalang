@@ -1,0 +1,35 @@
+def int isqrt(int c)
+  tag "use_math"
+  return sqrt_(c)
+end
+
+main
+  def int maximum = 1
+  def int b0 = 2
+  def int a = 408464633
+  def int sqrtia = isqrt(a)
+  while a != 1
+  do
+    def int b = b0
+    def bool found = false
+    while b <= sqrtia
+    do
+      if a % b == 0
+      then
+        a = a / b
+        b0 = b
+        b = a
+        sqrtia = isqrt(a)
+        found = true
+      end
+      b = b + 1
+    end
+    if !found
+    then
+      print int a
+      print string "\n"
+      a = 1
+    end
+  end
+end
+

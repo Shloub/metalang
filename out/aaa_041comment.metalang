@@ -1,0 +1,9 @@
+main
+  def int i = 4
+  // while i < 10 do 
+  print int i
+  i = i + 1
+  //   end 
+  print int i
+end
+

@@ -1,0 +1,55 @@
+def int position_alphabet(char c)
+  def int i = int_of_char(c)
+  if i <= int_of_char('Z') && i >= int_of_char('A')
+  then
+    return i - int_of_char('A')
+  else
+    if i <= int_of_char('z') && i >= int_of_char('a')
+    then
+      return i - int_of_char('a')
+    else
+      return -1
+    end
+  end
+end
+
+def char of_position_alphabet(int c)
+  return char_of_int(c + int_of_char('a'))
+end
+
+def void crypte(int taille_cle, array<char> cle, int taille, array<char>
+message)
+  for i = 0 to  taille - 1
+  do
+    def int lettre = position_alphabet(message[i])
+    if lettre != -1
+    then
+      def int addon = position_alphabet(cle[i % taille_cle])
+      def int new = (addon + lettre) % 26
+      message[i] = of_position_alphabet(new)
+    end
+  end
+end
+
+main
+  def read int taille_cle
+  skip
+  def array<char> cle[taille_cle] with index do
+                                               def read char out
+                                               return out
+  end
+  skip
+  def read int taille
+  skip
+  def array<char> message[taille] with index2 do
+                                                def read char out2
+                                                return out2
+  end
+  crypte(taille_cle, cle, taille, message)
+  for i = 0 to  taille - 1
+  do
+    print char message[i]
+  end
+  print string "\n"
+end
+

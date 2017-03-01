@@ -1,0 +1,83 @@
+def int min2_(int a, int b)
+  if a < b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int min2(int a, int b)
+  return min2_(a, b)
+end
+
+def int min3(int a, int b, int c)
+  return min2(min2(a, b), c)
+end
+
+def int min4(int a, int b, int c, int d)
+  return min3(min2(a, b), c, d)
+end
+
+def int pathfind_aux(array<array<int>> cache, array<array<char>> tab, int x, int
+y, int posX, int posY)
+  if posX == x - 1 && posY == y - 1
+  then
+    return 0
+  else
+    if posX < 0 || posY < 0 || posX >= x || posY >= y
+    then
+      return x * y * 10
+    else
+      if tab[posY][posX] == '#'
+      then
+        return x * y * 10
+      else
+        if cache[posY][posX] != -1
+        then
+          return cache[posY][posX]
+        else
+          cache[posY][posX] = x * y * 10
+          def int val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY)
+          def int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
+          def int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
+          def int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
+          def int out = 1 + min4(val1, val2, val3, val4)
+          cache[posY][posX] = out
+          return out
+        end
+      end
+    end
+  end
+end
+
+def int pathfind(array<array<char>> tab, int x, int y)
+  def array<array<int>> cache[y] with i do
+                                          def array<int> tmp[x] with j do
+                                                                         return -1
+                                          end
+                                          return tmp
+  end
+  return pathfind_aux(cache, tab, x, y, 0, 0)
+end
+
+main
+  def int x = 0
+  def int y = 0
+  read int x
+  skip
+  read int y
+  skip
+  def array<array<char>> tab[y] with i do
+                                         def array<char> tab2[x] with j do
+                                                                          def char tmp = '\000'
+                                                                          read char tmp
+                                                                          return tmp
+                                         end
+                                         skip
+                                         return tab2
+  end
+  def int result = pathfind(tab, x, y)
+  print int result
+end
+

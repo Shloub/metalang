@@ -1,0 +1,93 @@
+def int min2_(int a, int b)
+  if a < b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int min2(int a, int b)
+  return min2_(a, b)
+end
+
+def int eratostene(array<int> t, int max)
+  def int n = 0
+  for i = 2 to  max - 1
+  do
+    if t[i] == i
+    then
+      n = n + 1
+      if max / i > i
+      then
+        def int j = i * i
+        while j < max && j > 0
+        do
+          t[j] = 0
+          j = j + i
+        end
+      end
+    end
+  end
+  return n
+end
+
+main
+  def int maximumprimes = 1000001
+  def array<int> era[maximumprimes] with j do
+                                             return j
+  end
+  def int nprimes = eratostene(era, maximumprimes)
+  def array<int> primes[nprimes] with o do
+                                          return 0
+  end
+  def int l = 0
+  for k = 2 to  maximumprimes - 1
+  do
+    if era[k] == k
+    then
+      primes[l] = k
+      l = l + 1
+    end
+  end
+  print int l
+  print string " == "
+  print int nprimes
+  print string "\n"
+  def array<int> sum[nprimes] with i_ do
+                                        return primes[i_]
+  end
+  def int maxl = 0
+  def bool process = true
+  def int stop = maximumprimes - 1
+  def int len = 1
+  def int resp = 1
+  while process
+  do
+    process = false
+    for i = 0 to  stop
+    do
+      if i + len < nprimes
+      then
+        sum[i] = sum[i] + primes[i + len]
+        if maximumprimes > sum[i]
+        then
+          process = true
+          if era[sum[i]] == sum[i]
+          then
+            maxl = len
+            resp = sum[i]
+          end
+        else
+          stop = min2(stop, i)
+        end
+      end
+    end
+    len = len + 1
+  end
+  print int resp
+  print string "\n"
+  print int maxl
+  print string "\n"
+end
+

@@ -1,0 +1,35 @@
+def int montagnes(array<int> tab, int len)
+  def int max = 1
+  def int j = 1
+  def int i = len - 2
+  while i >= 0
+  do
+    def int x = tab[i]
+    while j >= 0 && x > tab[len - j]
+    do
+      j = j - 1
+    end
+    j = j + 1
+    tab[len - j] = x
+    if j > max
+    then
+      max = j
+    end
+    i = i - 1
+  end
+  return max
+end
+
+main
+  def int len = 0
+  read int len
+  skip
+  def array<int> tab[len] with i do
+                                   def int x = 0
+                                   read int x
+                                   skip
+                                   return x
+  end
+  print int montagnes(tab, len)
+end
+

@@ -1,0 +1,20 @@
+def int isqrt(int c)
+  tag "use_math"
+  return sqrt_(c)
+end
+
+main
+  print int isqrt(4)
+  print string " "
+  print int isqrt(16)
+  print string " "
+  print int isqrt(20)
+  print string " "
+  print int isqrt(1000)
+  print string " "
+  print int isqrt(500)
+  print string " "
+  print int isqrt(10)
+  print string " "
+end
+

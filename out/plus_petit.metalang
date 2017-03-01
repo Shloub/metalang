@@ -1,0 +1,50 @@
+def int go(array<int> tab, int a, int b)
+  def int m = (a + b) / 2
+  if a == m
+  then
+    if tab[a] == m
+    then
+      return b
+    else
+      return a
+    end
+  end
+  def int i = a
+  def int j = b
+  while i < j
+  do
+    def int e = tab[i]
+    if e < m
+    then
+      i = i + 1
+    else
+      j = j - 1
+      tab[i] = tab[j]
+      tab[j] = e
+    end
+  end
+  if i < m
+  then
+    return go(tab, a, m)
+  else
+    return go(tab, m, b)
+  end
+end
+
+def int plus_petit(array<int> tab, int len)
+  return go(tab, 0, len)
+end
+
+main
+  def int len = 0
+  read int len
+  skip
+  def array<int> tab[len] with i do
+                                   def int tmp = 0
+                                   read int tmp
+                                   skip
+                                   return tmp
+  end
+  print int plus_petit(tab, len)
+end
+

@@ -1,0 +1,99 @@
+def int max2_(int a, int b)
+  if a > b
+  then
+    return a
+  else
+    return b
+  end
+end
+
+def int max2(int a, int b)
+  return max2_(a, b)
+end
+
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def array<array<int>> read_int_matrix(int x, int y)
+  def array<array<int>> tab[y] with z do
+                                        return read_int_line(x)
+  end
+  return tab
+end
+
+def int find(int n, array<array<int>> m, int x, int y, int dx, int dy)
+  if x < 0 || x == 20 || y < 0 || y == 20
+  then
+    return -1
+  else
+    if n == 0
+    then
+      return 1
+    else
+      return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy)
+    end
+  end
+end
+
+main
+  def array<(int, int)> directions[8] with i do
+                                               if i == 0
+                                               then
+                                                 return (0, 1)
+                                               else
+                                                 if i == 1
+                                                 then
+                                                   return (1, 0)
+                                                 else
+                                                   if i == 2
+                                                   then
+                                                     return (0, -1)
+                                                   else
+                                                     if i == 3
+                                                     then
+                                                       return (-1, 0)
+                                                     else
+                                                       if i == 4
+                                                       then
+                                                         return (1, 1)
+                                                       else
+                                                         if i == 5
+                                                         then
+                                                           return (1, -1)
+                                                         else
+                                                           if i == 6
+                                                           then
+                                                             return (-1, 1)
+                                                           else
+                                                             return (-1, -1)
+                                                           end
+                                                         end
+                                                       end
+                                                     end
+                                                   end
+                                                 end
+                                               end
+  end
+  def int max = 0
+  def array<array<int>> m = read_int_matrix(20, 20)
+  for j = 0 to  7
+  do
+    (int dx, int dy) = directions[j]
+    for x = 0 to  19
+    do
+      for y = 0 to  19
+      do
+        max = max2(max, find(4, m, x, y, dx, dy))
+      end
+    end
+  end
+  print int max
+  print string "\n"
+end
+

@@ -1,0 +1,46 @@
+def void foo()
+  def int a = 0
+  //  test 
+  a = a + 1
+  //  test 2 
+end
+
+def void foo2()
+  
+end
+
+def void foo3()
+  if 1 == 1
+  then
+    
+  end
+end
+
+def int sumdiv(int n)
+  //  On désire renvoyer la somme des diviseurs 
+  def int out = 0
+  //  On déclare un entier qui contiendra la somme 
+  for i = 1 to  n
+  do
+    //  La boucle : i est le diviseur potentiel
+    if n % i == 0
+    then
+      //  Si i divise 
+      out = out + i
+      //  On incrémente 
+    else
+      //  nop 
+    end
+  end
+  return out
+  // On renvoie out
+end
+
+main
+  //  Programme principal 
+  def int n = 0
+  read int n
+  //  Lecture de l'entier 
+  print int sumdiv(n)
+end
+

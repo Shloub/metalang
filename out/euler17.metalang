@@ -1,0 +1,52 @@
+main
+  def int one = 3
+  def int two = 3
+  def int three = 5
+  def int four = 4
+  def int five = 4
+  def int six = 3
+  def int seven = 5
+  def int eight = 5
+  def int nine = 4
+  def int ten = 3
+  def int eleven = 6
+  def int twelve = 6
+  def int thirteen = 8
+  def int fourteen = 8
+  def int fifteen = 7
+  def int sixteen = 7
+  def int seventeen = 9
+  def int eighteen = 8
+  def int nineteen = 8
+  def int twenty = 6
+  def int thirty = 6
+  def int forty = 5
+  def int fifty = 5
+  def int sixty = 5
+  def int seventy = 7
+  def int eighty = 6
+  def int ninety = 6
+  def int hundred = 7
+  def int thousand = 8
+  print int one + two + three + four + five
+  print string "\n"
+  def int hundred_and = 10
+  def int one_to_nine = one + two + three + four + five + six + seven + eight + nine
+  print int one_to_nine
+  print string "\n"
+  def int one_to_ten = one_to_nine + ten
+  def int one_to_twenty = one_to_ten + eleven + twelve + thirteen + fourteen + fifteen + sixteen + seventeen + eighteen + nineteen + twenty
+  def int one_to_thirty = one_to_twenty + twenty * 9 + one_to_nine + thirty
+  def int one_to_forty = one_to_thirty + thirty * 9 + one_to_nine + forty
+  def int one_to_fifty = one_to_forty + forty * 9 + one_to_nine + fifty
+  def int one_to_sixty = one_to_fifty + fifty * 9 + one_to_nine + sixty
+  def int one_to_seventy = one_to_sixty + sixty * 9 + one_to_nine + seventy
+  def int one_to_eighty = one_to_seventy + seventy * 9 + one_to_nine + eighty
+  def int one_to_ninety = one_to_eighty + eighty * 9 + one_to_nine + ninety
+  def int one_to_ninety_nine = one_to_ninety + ninety * 9 + one_to_nine
+  print int one_to_ninety_nine
+  print string "\n"
+  print int 100 * one_to_nine + one_to_ninety_nine * 10 + hundred_and * 9 * 99 + hundred * 9 + one + thousand
+  print string "\n"
+end
+

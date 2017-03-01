@@ -1,0 +1,35 @@
+def array<int> read_int_line(int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def (int, int) read_int_couple()
+  def read int a
+  skip
+  def read int b
+  skip
+  return (a, b)
+end
+
+main
+  for i = 1 to  3
+  do
+    (int a, int b) = read_int_couple()
+    print string "a = "
+    print int a
+    print string " b = "
+    print int b
+    print string "\n"
+  end
+  def array<int> l = read_int_line(10)
+  for j = 0 to  9
+  do
+    print int l[j]
+    print string "\n"
+  end
+end
+
