@@ -7,7 +7,6 @@ ForthPrinter
 GoPrinter
 GroovyPrinter
 HaskellPrinter
-HtmlPrinter
 JavaPrinter
 JsPrinter
 LuaPrinter
