@@ -29,9 +29,9 @@ tests :
 
 supprimer les objets dans cette hiérarchie :
 
-Printer -> PasPrinter[OK]
-        -> AdaPrinter[OK]
-        -> HtmlPrinter
+Printer[OK]
+PasPrinter[OK]
+AdaPrinter[OK]
 CPrinter[OK]
 ccPrinter[OK]
 cppPrinter[OK]
