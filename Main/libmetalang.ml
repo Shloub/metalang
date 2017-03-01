@@ -379,40 +379,6 @@ let make_prog_helper progname (funs, main) stdlib =
     prog.Prog.funs tyenv in
   tyenv, prog
 
-(* coloration syntaxique *)
-let colore string =
-  try
-    let lexbuf = Lexing.from_string string in
-    let code, main = Parser.prog Lexer.token lexbuf in
-    let prog = {
-      Prog.progname = "";
-      Prog.funs = code;
-      Prog.main = main;
-      Prog.hasSkip = false;
-      Prog.reads = TypeSet.empty;
-    } in
-    let p = new HtmlPrinter.htmlPrinter in
-    let out = Format.str_formatter in
-    let () = p#prog out prog in
-    Format.flush_str_formatter ()
-  with Parser.Error ->
-    try
-      let lexbuf = Lexing.from_string string in
-      let instructions = Parser.toplvl_instrs Lexer.token lexbuf in
-      let p = new HtmlPrinter.htmlPrinter in
-      let out = Format.str_formatter in
-      let () = p#instructions out instructions in
-      Format.flush_str_formatter ()
-    with Parser.Error ->
-      try
-        let lexbuf = Lexing.from_string string in
-        let instructions = Parser.toplvls Lexer.token lexbuf in
-        let p = new HtmlPrinter.htmlPrinter in
-        let out = Format.str_formatter in
-        let () = p#proglist out instructions in
-        Format.flush_str_formatter ()
-      with Parser.Error -> string
-
 (**
    this string is added at the beginning of the stdlib
    It should be used (eg in macros) to know what's the target language
