@@ -25,6 +25,8 @@ begin
     Get(C);
   end loop;
 end;
+
+
 function position_alphabet(c : in Character) return Integer is
   i : Integer;
 begin
@@ -64,7 +66,6 @@ begin
     end if;
   end loop;
 end;
-
 
   taille_cle : Integer;
   taille : Integer;

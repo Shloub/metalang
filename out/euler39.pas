@@ -1,6 +1,7 @@
 program euler39;
 Uses math;
 
+
 type d = array of Longint;
 
 var

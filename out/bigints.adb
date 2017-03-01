@@ -29,6 +29,7 @@ begin
     Get(C);
   end loop;
 end;
+
 function max2_0(a : in Integer; b : in Integer) return Integer is
 begin
   if a > b
@@ -628,7 +629,6 @@ begin
   end loop;
   return n;
 end;
-
 
   tmp : bigint_PTR;
   sum : bigint_PTR;

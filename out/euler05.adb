@@ -51,7 +51,6 @@ begin
   return tab;
 end;
 
-
   t : e_PTR;
   product : Integer;
   o : e_PTR;

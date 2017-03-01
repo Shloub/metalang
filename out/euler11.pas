@@ -62,6 +62,7 @@ begin
    until false;
 end;
 
+
 type s = array of Longint;
 type u = array of s;
 function find(n : Longint; m : u; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;

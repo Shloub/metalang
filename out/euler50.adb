@@ -49,7 +49,6 @@ begin
   return n;
 end;
 
-
   sum : c_PTR;
   stop : Integer;
   resp : Integer;

@@ -37,7 +37,6 @@ begin
   return d;
 end;
 
-
   t : tuple_int_int_PTR;
   g : tuple_int_int_PTR;
   e : tuple_int_int_PTR;

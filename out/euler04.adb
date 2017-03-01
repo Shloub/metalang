@@ -54,7 +54,6 @@ begin
   end if;
 end;
 
-
   mul : Integer;
   m : Integer;
 begin

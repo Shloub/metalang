@@ -29,6 +29,7 @@ begin
     Get(C);
   end loop;
 end;
+
 type c is Array (Integer range <>) of Character;
 type c_PTR is access c;
 function programme_candidat(tableau1 : in c_PTR; taille1 : in Integer; tableau2 : in c_PTR; taille2 : in Integer) return Integer is
@@ -47,7 +48,6 @@ begin
   PString(new char_array'( To_C("--" & Character'Val(10))));
   return out0;
 end;
-
 
   taille2 : Integer;
   taille1 : Integer;

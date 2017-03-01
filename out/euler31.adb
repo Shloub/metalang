@@ -37,7 +37,6 @@ begin
   end if;
 end;
 
-
   t : a_PTR;
   o : a_PTR;
   cache : b_PTR;

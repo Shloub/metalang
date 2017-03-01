@@ -46,7 +46,6 @@ begin
   return (-1);
 end;
 
-
   v : Integer;
   t : c_PTR;
   puiss : Integer;

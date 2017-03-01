@@ -62,6 +62,7 @@ begin
    until false;
 end;
 
+
 type g = array of Longint;
 type h = array of g;
 

@@ -2,6 +2,7 @@ program min3;
 Uses math;
 
 
+
 begin
   Write(Min(Min(2, 3), 4));
   Write(' ');

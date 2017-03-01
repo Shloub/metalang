@@ -25,6 +25,7 @@ begin
     Get(C);
   end loop;
 end;
+
 function score return Integer is
   sum : Integer;
   len : Integer;
@@ -42,7 +43,6 @@ begin
   end loop;
   return sum;
 end;
-
 
   sum : Integer;
   n : Integer;

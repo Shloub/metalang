@@ -1,6 +1,7 @@
 program aaa_01hello;
 
 
+
 var
   a : Longint;
 begin

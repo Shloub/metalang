@@ -25,7 +25,6 @@ begin
   end if;
 end;
 
-
 begin
   PInt(min2_0(min2_0(min2_0(1, 2), 3), 4));
   PString(new char_array'( To_C(" ")));

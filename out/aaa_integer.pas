@@ -1,6 +1,7 @@
 program aaa_integer;
 
 
+
 var
   i : Longint;
 begin

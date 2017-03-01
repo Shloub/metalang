@@ -1,6 +1,7 @@
 program aaa_041comment;
 
 
+
 var
   i : Longint;
 begin

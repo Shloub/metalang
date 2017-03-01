@@ -96,7 +96,6 @@ begin
   end if;
 end;
 
-
   tmp : Integer;
   tab3 : a_PTR;
   tab2 : a_PTR;

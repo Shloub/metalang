@@ -2,6 +2,7 @@ program sqrttest;
 Uses math;
 
 
+
 begin
   Write(Floor(Sqrt(4)));
   Write(' ');

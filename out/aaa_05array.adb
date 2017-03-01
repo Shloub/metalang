@@ -26,7 +26,6 @@ begin
   t(index) := FALSE;
 end;
 
-
   j : Integer;
   a : c_PTR;
 begin

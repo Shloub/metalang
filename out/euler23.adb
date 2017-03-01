@@ -100,7 +100,6 @@ begin
   max0 := fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max0, 0);
 end;
-
 type e is Array (Integer range <>) of Boolean;
 type e_PTR is access e;
 

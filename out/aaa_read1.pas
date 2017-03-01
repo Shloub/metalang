@@ -42,6 +42,7 @@ begin
    skip_char();
    read_char_ := c;
 end;
+
 type b = array of char;
 
 var

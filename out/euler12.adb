@@ -117,7 +117,6 @@ begin
   return 0;
 end;
 
-
 begin
   PInt(find(500));
   PString(new char_array'( To_C("" & Character'Val(10))));

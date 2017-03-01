@@ -25,6 +25,8 @@ begin
     Get(C);
   end loop;
 end;
+
+
 function is_triangular(n : in Integer) return Boolean is
   a : Integer;
 begin
@@ -59,7 +61,6 @@ begin
     return 0;
   end if;
 end;
-
 
   sum : Integer;
   n : Integer;

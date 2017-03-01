@@ -86,7 +86,6 @@ begin
   return find0(len, tab, tab2, 0, 0);
 end;
 
-
   tmp : Integer;
   tab2 : a_PTR;
   tab : b_PTR;

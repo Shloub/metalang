@@ -1,6 +1,7 @@
 program euler04;
 Uses math;
 
+
 {
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =

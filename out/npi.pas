@@ -69,6 +69,7 @@ begin
    until false;
 end;
 
+
 function is_number(c : char) : boolean;
 begin
   exit((ord(c) <= ord(#57)) and (ord(c) >= ord(#48)));

@@ -1,6 +1,7 @@
 program euler17;
 
 
+
 var
   one_to_eighty : Longint;
   one_to_fifty : Longint;

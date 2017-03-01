@@ -103,7 +103,6 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
 
-
 begin
   test(TRUE, TRUE);
   test(TRUE, FALSE);

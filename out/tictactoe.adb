@@ -313,7 +313,6 @@ begin
   return b;
 end;
 
-
   state : gamestate_PTR;
   d : move_PTR;
   c : move_PTR;

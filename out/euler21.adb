@@ -101,7 +101,6 @@ begin
   return sumdivaux(t, max0, 0);
 end;
 
-
   sum : Integer;
   primes : a_PTR;
   othersum : Integer;

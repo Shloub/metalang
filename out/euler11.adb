@@ -61,7 +61,6 @@ type tuple_int_int is record
   tuple_int_int_field_0 : Integer;
   tuple_int_int_field_1 : Integer;
 end record;
-
 type v is Array (Integer range <>) of tuple_int_int_PTR;
 type v_PTR is access v;
 

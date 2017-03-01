@@ -45,7 +45,6 @@ begin
   return (((ca = chiffre_sort(b) and then ca = chiffre_sort(c)) and then ca = chiffre_sort(d)) and then ca = chiffre_sort(e)) and then ca = chiffre_sort(f);
 end;
 
-
   num : Integer;
 begin
   num := 142857;

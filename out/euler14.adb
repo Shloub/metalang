@@ -48,7 +48,6 @@ begin
   end if;
 end;
 
-
   n2 : Integer;
   maxi : Integer;
   max0 : Integer;
