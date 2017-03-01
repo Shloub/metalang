@@ -178,23 +178,24 @@ let print_instr macros i =
   fold (print_instr macros) (mapg (print_expr macros) i)
 
 class pasPrinter = object(self)
-  inherit Printer.printer as super
 
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  method is_rec funname = StringSet.mem funname recursives_definitions
+  val mutable typerEnv : Typer.env = Typer.empty
+  method setTyperEnv t = typerEnv <- t
+  val mutable macros = StringMap.empty
+                         
   val mutable declared_types : string TypeMap.t = TypeMap.empty
 
-  method instr f t =
+  method instructions f li =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
-        try List.assoc (self#lang ()) li
+        try List.assoc "pas" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instr macros t).p f ()
-
-  method lang () = "pas"
+    in print_list (fun f t -> (print_instr macros t).p f ()) sep_nl f li
 
   val mutable bindings = BindingSet.empty
-
-  method comment f str =
-    Format.fprintf f "{%s}" str
 
   method ptype f t =
     match TypeMap.find_opt t declared_types with
@@ -213,24 +214,20 @@ class pasPrinter = object(self)
       | Type.Lexems | Type.Auto | Type.Tuple _ -> assert false
 
   method decl_procedure f funname li =
-    Format.fprintf f "@[<h>procedure %a(%a);@]"
-      self#funname funname
+    Format.fprintf f "@[<h>procedure %s(%a);@]"  funname
       (print_list
          (fun t (binding, type_) ->
-            Format.fprintf t "%a : %a"
-              self#binding binding
+            Format.fprintf t "%a : %a" print_varname binding
               self#ptype type_
          )
          sep_dc
       ) li
 
   method decl_function f funname t li =
-    Format.fprintf f "@[<h>function %a(%a) : %a;@]"
-      self#funname funname
+    Format.fprintf f "@[<h>function %s(%a) : %a;@]" funname
       (print_list
          (fun t (binding, type_) ->
-            Format.fprintf t "%a : %a"
-              self#binding binding
+            Format.fprintf t "%a : %a" print_varname binding
               self#ptype type_
          )
          sep_dc
@@ -280,9 +277,7 @@ class pasPrinter = object(self)
         (BindingMap.fold
            (fun key value next f () ->
               Format.fprintf f "%a@\n%a : %a;"
-                next ()
-                self#binding key
-                self#ptype value
+                next () print_varname key self#ptype value
            )
            bindings
            (fun f () -> ())
@@ -313,12 +308,12 @@ class pasPrinter = object(self)
       bindings
       instrs
 
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "program %s;@\n%a%s%s%s%s%s@\n%a%a.@\n@\n"
+    Format.fprintf f "program %s;@\n%a%s%s%s%s%s@\n%a@\n%a.@\n@\n"
       prog.Prog.progname
       (fun f () ->
          if Tags.is_taged "use_math" ||
@@ -399,7 +394,18 @@ begin
    until false;
 end;
 " else "")
-      self#proglist prog.Prog.funs
+      (print_list
+         (fun f item -> match item with
+            | Prog.Comment s -> Format.fprintf f "{%s}" s
+            | Prog.DeclarFun (var, t, li, instrs, _opt) -> self#print_fun f var t li instrs;
+            | Prog.Macro (name, t, params, code) ->
+              macros <- StringMap.add
+                  name (t, params, code)
+                  macros
+            | Prog.Unquote _ -> assert false
+            | Prog.DeclareType (name, t) -> self#decl_type f name t
+         ) sep_nl)
+      prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   method main f main =
@@ -409,24 +415,17 @@ end;
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-      Format.fprintf f "type@[<v>@\n%a=^%a_r;@\n%a_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
-        self#typename name
-        self#typename name
-        self#typename name
+      Format.fprintf f "type@[<v>@\n%s=^%s_r;@\n%s_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
+        name name name
         (print_list
            (fun t (name, type_) ->
-              Format.fprintf t "%a : %a;" self#field name self#ptype type_
+              Format.fprintf t "%s : %a;" name self#ptype type_
            ) sep_nl
         ) li
     | Type.Enum li ->
-      Format.fprintf f "Type %a = (@\n@[<v2>  %a@]);@\n"
-        self#typename name
+      Format.fprintf f "Type %s = (@\n@[<v2>  %a@]);@\n" name
         (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li
 
-    | _ ->
-      Format.fprintf f "type %a = %a;"
-        super#ptype t
-        super#typename name
-
+    | _ -> assert false
 
 end
