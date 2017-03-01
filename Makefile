@@ -138,7 +138,7 @@ out/%.$1 : tests/prog/%.metalang tests/prog/%.in metalang Stdlib/stdlib.metalang
 	 ./metalang -quiet -o out -lang $1 $$< || exit 1; \
 	fi
 endef
-$(foreach i, fsscript groovy fs scala metalang st lua rkt php cc cpp c py rb hs ml pl fun.ml adb pas vb cs js java m cl go, $(eval $(call GENERATION,$(i))))
+$(foreach i, metalang fsscript groovy fs scala metalang st lua rkt php cc cpp c py rb hs ml pl fun.ml adb pas vb cs js java m cl go, $(eval $(call GENERATION,$(i))))
 
 # compilation dans les différents langages
 
@@ -319,6 +319,8 @@ $(foreach i, fsscript.exe groovy fs exeVB st adb.bin rkt fun.ml pl rkt m.bin ml 
 
 IGNORE=out/aaa_05array out/bigints out/linkedList out/tictactoe
 test_cpp.bin : $(addsuffix .test_cpp.bin, $(filter-out $(IGNORE),$(TESTS)))
+
+reprint : $(addsuffix .metalang, $(TESTS))
 
 # tests qui ne doivent pas compiler
 
