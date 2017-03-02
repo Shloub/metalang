@@ -1,4 +1,5 @@
 require "scanf.rb"
+
 i = 4
 #while i < 10 do 
 
@@ -7,4 +8,3 @@ i += 1
 #  end 
 
 printf "%d", i
-

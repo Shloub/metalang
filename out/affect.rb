@@ -1,19 +1,13 @@
 require "scanf.rb"
-#
-#Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
-#
-
-
+##Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement#
 def mktoto( v1 )
   t = {"foo" => v1, "bar" => v1, "blah" => v1}
   return t
 end
-
 def mktoto2( v1 )
   t = {"foo" => v1 + 3, "bar" => v1 + 2, "blah" => v1 + 1}
   return t
 end
-
 def result( t_, t2_ )
   t = t_
   t2 = t2_
@@ -46,4 +40,3 @@ t2["bar"] = scanf("%d")[0]
 scanf("%*\n")
 t2["blah"] = scanf("%d")[0]
 printf "%d%d", result(t, t2), t["blah"]
-

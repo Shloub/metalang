@@ -26,7 +26,6 @@ def go0( tab, a, b )
       return go0(tab, m, b)
   end
 end
-
 def plus_petit0( tab, len )
   return go0(tab, 0, len)
 end
@@ -41,4 +40,3 @@ tab = [*0..len-1].map { |i|
   next tmp
   }
 printf "%d", plus_petit0(tab, len)
-

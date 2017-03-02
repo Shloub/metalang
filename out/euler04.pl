@@ -24,6 +24,7 @@ sub remainder {
 #c * f * 10000
 #
 #
+
 sub chiffre{
   my($c, $m) = @_;
   if ($c eq 0)

@@ -22,6 +22,7 @@ sub mktoto{
   my $t = {"foo" => $v1, "bar" => 0, "blah" => 0};
   return $t;
 }
+
 sub result{
   my($t, $len) = @_;
   my $out0 = 0;

@@ -20,9 +20,13 @@ sub readspaces {
 #
 #Tictactoe : un tictactoe avec une IA
 #
+
 # La structure de donnée 
+
 # Un Mouvement 
+
 # On affiche l'état 
+
 sub print_state{
   my($g) = @_;
   print "\n|";
@@ -51,7 +55,9 @@ sub print_state{
   }
   print "\n";
 }
+
 # On dit qui gagne (info stoquées dans g.ended et g.note ) 
+
 sub eval0{
   my($g) = @_;
   my $win = 0;
@@ -119,7 +125,9 @@ sub eval0{
           $g->{"note"} = 0;
       }
 }
+
 # On applique un mouvement 
+
 sub apply_move_xy{
   my($x, $y, $g) = @_;
   my $player = 2;
@@ -130,31 +138,38 @@ sub apply_move_xy{
   $g->{"cases"}->[$x]->[$y] = $player;
   $g->{"firstToPlay"} = !$g->{"firstToPlay"};
 }
+
 sub apply_move{
   my($m, $g) = @_;
   apply_move_xy($m->{"x"}, $m->{"y"}, $g);
 }
+
 sub cancel_move_xy{
   my($x, $y, $g) = @_;
   $g->{"cases"}->[$x]->[$y] = 0;
   $g->{"firstToPlay"} = !$g->{"firstToPlay"};
   $g->{"ended"} = !(1);
 }
+
 sub cancel_move{
   my($m, $g) = @_;
   cancel_move_xy($m->{"x"}, $m->{"y"}, $g);
 }
+
 sub can_move_xy{
   my($x, $y, $g) = @_;
   return $g->{"cases"}->[$x]->[$y] eq 0;
 }
+
 sub can_move{
   my($m, $g) = @_;
   return can_move_xy($m->{"x"}, $m->{"y"}, $g);
 }
+
 #
 #Un minimax classique, renvoie la note du plateau
 #
+
 sub minmax{
   my($g) = @_;
   eval0($g);
@@ -187,9 +202,11 @@ sub minmax{
   }
   return $maxNote;
 }
+
 #
 #Renvoie le coup de l'IA
 #
+
 sub play{
   my($g) = @_;
   my $minMove = {"x" => 0, "y" => 0};
@@ -216,6 +233,7 @@ sub play{
   print($minMove->{"x"}, $minMove->{"y"}, "\n");
   return $minMove;
 }
+
 sub init0{
   my $cases = [];
   foreach my $i (0 .. 2)
@@ -229,6 +247,7 @@ sub init0{
   }
   return {"cases" => $cases, "firstToPlay" => !(0), "note" => 0, "ended" => !(1)};
 }
+
 sub read_move{
   my $x = readint();
   readspaces();

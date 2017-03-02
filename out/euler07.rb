@@ -10,7 +10,6 @@ def divisible( n, t, size )
       end
       return false
   end
-  
   def find( n, t, used, nth )
     while used != nth do
         if divisible(n, t, used) then
@@ -29,5 +28,4 @@ def divisible( n, t, size )
     next 2
     }
   printf "%d\n", find(3, t, 1, n)
-  
   

@@ -1,7 +1,4 @@
 require "scanf.rb"
-
-
-
 def programme_candidat( tableau1, taille1, tableau2, taille2 )
   out0 = 0
   for i in (0 ..  taille1 - 1) do
@@ -21,5 +18,4 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 )
       tableau1 = STDIN.readline.split(//)
       tableau2 = STDIN.readline.split(//)
       printf "%d\n", programme_candidat(tableau1, taille1, tableau2, taille2)
-      
       

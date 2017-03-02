@@ -33,4 +33,3 @@ for k in (1 ..  995) do
     end
     printf "%d\n", max0
     
-    

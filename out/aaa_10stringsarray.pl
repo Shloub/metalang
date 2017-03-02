@@ -4,10 +4,12 @@ sub idstring{
   my($s) = @_;
   return $s;
 }
+
 sub printstring{
   my($s) = @_;
   print(idstring($s), "\n");
 }
+
 sub print_toto{
   my($t) = @_;
   print($t->{"s"}, " = ", $t->{"v"}, "\n");

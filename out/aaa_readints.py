@@ -1,4 +1,5 @@
 
+
 len = int(input())
 print("%d=len\n" % len, end='')
 tab1 = list(map(int, input().split()))

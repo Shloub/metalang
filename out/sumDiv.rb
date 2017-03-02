@@ -10,17 +10,14 @@ def foo(  )
   # test 2 
   
 end
-
 def foo2(  )
   
 end
-
 def foo3(  )
   if 1 == 1 then
       
   end
 end
-
 def sumdiv( n )
   # On désire renvoyer la somme des diviseurs 
   
@@ -52,5 +49,4 @@ def sumdiv( n )
   # Lecture de l'entier 
   
   printf "%d", sumdiv(n)
-  
   

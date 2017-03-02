@@ -9,6 +9,7 @@ sub id{
   my($b) = @_;
   return $b;
 }
+
 sub g{
   my($t, $index) = @_;
   $t->[$index] = !(1);

@@ -14,6 +14,7 @@ function chiffre_sort($a) {
             return $d + chiffre_sort($c + $e * 10) * 10;
     }
 }
+
 function same_numbers($a, $b, $c, $d, $e, $f) {
     $ca = chiffre_sort($a);
     return $ca == chiffre_sort($b) && $ca == chiffre_sort($c) && $ca == chiffre_sort($d) && $ca == chiffre_sort($e) && $ca == chiffre_sort($f);

@@ -5,6 +5,7 @@ function g($i) {
         return 0;
     return $j;
 }
+
 function h($i) {
     echo $i, "\n";
 }

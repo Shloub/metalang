@@ -3,6 +3,7 @@ def mod(x, y):
     return x - y * math.trunc(x / y)
 
 
+
 sum = 0
 for i in range(0, 1000):
     if mod(i, 3) == 0 or mod(i, 5) == 0:

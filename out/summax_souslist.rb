@@ -26,4 +26,3 @@ def summax( lst, len )
   result = summax(tab, len)
   printf "%d", result
   
-  

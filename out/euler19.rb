@@ -5,7 +5,6 @@ end
 def is_leap( year )
   return mod(year, 400) == 0 || mod(year, 100) != 0 && mod(year, 4) == 0
 end
-
 def ndayinmonth( month, year )
   if month == 0 then
       return 31
@@ -57,4 +56,3 @@ while year != 2001 do
     end
 end
 printf "%d\n", count
-

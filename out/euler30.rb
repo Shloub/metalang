@@ -1,4 +1,5 @@
 require "scanf.rb"
+
 #
 #a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
 #  a ^ 5 +
@@ -32,5 +33,4 @@ for a in (0 ..  9) do
                         end
                         end
                         printf "%d", sum
-                        
                         

@@ -24,6 +24,7 @@ sub eratostene{
   }
   return $n;
 }
+
 sub fillPrimesFactors{
   my($t, $n, $primes, $nprimes) = @_;
   foreach my $i (0 .. $nprimes - 1)
@@ -41,6 +42,7 @@ sub fillPrimesFactors{
   }
   return $n;
 }
+
 sub find{
   my($ndiv2) = @_;
   my $maximumprimes = 110;

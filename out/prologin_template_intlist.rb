@@ -1,6 +1,4 @@
 require "scanf.rb"
-
-
 def programme_candidat( tableau, taille )
   out0 = 0
   for i in (0 ..  taille - 1) do
@@ -11,5 +9,4 @@ def programme_candidat( tableau, taille )
   taille = STDIN.readline.to_i(10)
   tableau = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
   printf "%d\n", programme_candidat(tableau, taille)
-  
   

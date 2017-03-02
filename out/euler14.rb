@@ -9,7 +9,6 @@ def next0( n )
       return 3 * n + 1
   end
 end
-
 def find( n, m )
   if n == 1 then
       return 1
@@ -38,5 +37,4 @@ for i in (1 ..  999) do
     end
     end
     printf "%d\n%d\n", max0, maxi
-    
     

@@ -29,4 +29,3 @@ for k in (0 ..  10) do
     end
     printf "%d%dFIN TEST\n", j, i
     
-    

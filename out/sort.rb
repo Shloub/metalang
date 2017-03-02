@@ -6,7 +6,6 @@ def copytab( tab, len )
     }
   return o
 end
-
 def bubblesort( tab, len )
   for i in (0 ..  len - 1) do
       for j in (i + 1 ..  len - 1) do
@@ -18,7 +17,6 @@ def bubblesort( tab, len )
           end
           end
       end
-      
       def qsort0( tab, len, i, j )
         if i < j then
             i0 = i
@@ -73,5 +71,4 @@ def bubblesort( tab, len )
               printf "%d ", tab3[i]
               end
               print "\n"
-              
               

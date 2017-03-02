@@ -25,4 +25,3 @@ def eratostene( t, max0 )
   t[1] = 0
   printf "%d\n", eratostene(t, n)
   
-  

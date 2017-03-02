@@ -52,4 +52,3 @@ def eratostene( t, max0 )
                   end
                   end
                   
-                  

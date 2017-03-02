@@ -9,7 +9,6 @@ def fact( n )
       end
       return prod
   end
-  
   def show( lim, nth )
     t = [*0..lim-1].map { |i|
       
@@ -41,5 +40,4 @@ def fact( n )
                 print "\n"
             end
             show(10, 999999)
-            
             

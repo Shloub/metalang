@@ -23,4 +23,3 @@ def nth( tab, tofind, len )
   result = nth(tab, tofind, len)
   printf "%d", result
   
-  

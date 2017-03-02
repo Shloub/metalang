@@ -5,6 +5,7 @@ function exp0($a, $e) {
         $o *= $a;
     return $o;
 }
+
 function e(&$t, $n) {
     for ($i = 1; $i < 9; $i++)
         if ($n >= $t[$i] * $i)

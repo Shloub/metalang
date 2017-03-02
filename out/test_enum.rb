@@ -1,3 +1,3 @@
 require "scanf.rb"
-foo_val = "Foo"
 
+foo_val = "Foo"

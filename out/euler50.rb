@@ -1,5 +1,4 @@
 require "scanf.rb"
-
 def eratostene( t, max0 )
   n = 0
   for i in (2 ..  max0 - 1) do
@@ -62,5 +61,4 @@ def eratostene( t, max0 )
               len += 1
           end
           printf "%d\n%d\n", resp, maxl
-          
           

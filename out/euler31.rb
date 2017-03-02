@@ -36,4 +36,3 @@ def result( sum, t, maxIndex, cache )
     }
   printf "%d", result(200, t, 7, cache)
   
-  

@@ -15,6 +15,7 @@
 #
 #
 #
+
 sub sumdiag{
   my($n) = @_;
   my $nterms = $n * 2 - 1;

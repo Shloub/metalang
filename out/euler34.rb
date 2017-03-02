@@ -1,4 +1,5 @@
 require "scanf.rb"
+
 f = [*0..10-1].map { |j|
   
   next 1
@@ -40,5 +41,4 @@ for i in (1 ..  9) do
                             end
                             end
                             printf "\n%d\n", out0
-                            
                             

@@ -9,7 +9,6 @@ def g( i )
   end
   return j
 end
-
 def h( i )
   printf "%d\n", i
 end
@@ -23,4 +22,3 @@ h(15)
 a = 2
 b = 1
 printf "%d", a + b
-

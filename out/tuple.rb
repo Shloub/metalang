@@ -6,4 +6,3 @@ end
 t = f([0, 1])
 (a, b) = t
 printf "%d -- %d--\n", a, b
-

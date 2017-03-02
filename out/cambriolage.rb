@@ -1,5 +1,4 @@
 require "scanf.rb"
-
 def nbPassePartout( n, passepartout, m, serrures )
   max_ancient = 0
   max_recent = 0
@@ -52,5 +51,4 @@ def nbPassePartout( n, passepartout, m, serrures )
         next out1
         }
       printf "%d", nbPassePartout(n, passepartout, m, serrures)
-      
       

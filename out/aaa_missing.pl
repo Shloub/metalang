@@ -3,6 +3,7 @@
 #
 #  Ce test a été généré par Metalang.
 #
+
 sub result{
   my($len, $tab) = @_;
   my $tab2 = [];

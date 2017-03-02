@@ -5,13 +5,11 @@ def foo(  )
       end
       return 0
   end
-  
   def bar(  )
     for i in (0 ..  10) do
         a = 0
         end
         return 0
     end
-    
     
     

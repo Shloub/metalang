@@ -66,4 +66,3 @@ def palindrome2( pow2, n )
                       end
                       printf "sum=%d\n", sum
                       
-                      

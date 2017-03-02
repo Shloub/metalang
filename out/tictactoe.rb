@@ -1,16 +1,8 @@
 require "scanf.rb"
-#
-#Tictactoe : un tictactoe avec une IA
-#
-
+##Tictactoe : un tictactoe avec une IA#
 # La structure de donnée 
-
-
 # Un Mouvement 
-
-
 # On affiche l'état 
-
 def print_state( g )
   print "\n|"
   for y in (0 ..  2) do
@@ -30,9 +22,7 @@ def print_state( g )
           end
           print "\n"
       end
-      
       # On dit qui gagne (info stoquées dans g.ended et g.note ) 
-      
       def eval0( g )
         win = 0
         freecase = 0
@@ -79,9 +69,7 @@ def print_state( g )
                         g["note"] = 0
                     end
                 end
-                
                 # On applique un mouvement 
-                
                 def apply_move_xy( x, y, g )
                   player = 2
                   if g["firstToPlay"] then
@@ -90,33 +78,24 @@ def print_state( g )
                   g["cases"][x][y] = player
                   g["firstToPlay"] = !g["firstToPlay"]
                 end
-                
                 def apply_move( m, g )
                   apply_move_xy(m["x"], m["y"], g)
                 end
-                
                 def cancel_move_xy( x, y, g )
                   g["cases"][x][y] = 0
                   g["firstToPlay"] = !g["firstToPlay"]
                   g["ended"] = false
                 end
-                
                 def cancel_move( m, g )
                   cancel_move_xy(m["x"], m["y"], g)
                 end
-                
                 def can_move_xy( x, y, g )
                   return g["cases"][x][y] == 0
                 end
-                
                 def can_move( m, g )
                   return can_move_xy(m["x"], m["y"], g)
                 end
-                
-                #
-                #Un minimax classique, renvoie la note du plateau
-                #
-                
+                ##Un minimax classique, renvoie la note du plateau#
                 def minmax( g )
                   eval0(g)
                   if g["ended"] then
@@ -142,11 +121,7 @@ def print_state( g )
                           end
                           return maxNote
                       end
-                      
-                      #
-                      #Renvoie le coup de l'IA
-                      #
-                      
+                      ##Renvoie le coup de l'IA#
                       def play( g )
                         minMove = {"x" => 0, "y" => 0}
                         minNote = 10000
@@ -168,7 +143,6 @@ def print_state( g )
                                 printf "%d%d\n", minMove["x"], minMove["y"]
                                 return minMove
                             end
-                            
                             def init0(  )
                               cases = [*0..3-1].map { |i|
                                 
@@ -180,7 +154,6 @@ def print_state( g )
                                 }
                               return {"cases" => cases, "firstToPlay" => true, "note" => 0, "ended" => false}
                             end
-                            
                             def read_move(  )
                               x = scanf("%d")[0]
                               scanf("%*\n")
@@ -205,5 +178,4 @@ def print_state( g )
                                 print_state(state)
                                 printf "%d\n", state["note"]
                                 end
-                                
                                 

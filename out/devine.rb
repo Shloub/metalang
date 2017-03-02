@@ -34,4 +34,3 @@ def devine0( nombre, tab, len )
       print "False"
   end
   
-  

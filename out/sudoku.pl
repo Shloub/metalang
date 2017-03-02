@@ -23,6 +23,7 @@ sub remainder {
 }
 
 # lit un sudoku sur l'entrée standard 
+
 sub read_sudoku{
   my $out0 = [];
   foreach my $i (0 .. 9 * 9 - 1)
@@ -33,7 +34,9 @@ sub read_sudoku{
   }
   return $out0;
 }
+
 # affiche un sudoku 
+
 sub print_sudoku{
   my($sudoku0) = @_;
   foreach my $y (0 .. 8)
@@ -54,9 +57,13 @@ sub print_sudoku{
   }
   print "\n";
 }
+
 # dit si les variables sont toutes différentes 
+
 # dit si les variables sont toutes différentes 
+
 # dit si le sudoku est terminé de remplir 
+
 sub sudoku_done{
   my($s) = @_;
   foreach my $i (0 .. 80)
@@ -68,7 +75,9 @@ sub sudoku_done{
   }
   return !(0);
 }
+
 # dit si il y a une erreur dans le sudoku 
+
 sub sudoku_error{
   my($s) = @_;
   my $out1 = !(1);
@@ -88,7 +97,9 @@ sub sudoku_error{
   }
   return $out1 || $out2 || $out3;
 }
+
 # résout le sudoku
+
 sub solve{
   my($sudoku0) = @_;
   if (sudoku_error($sudoku0))

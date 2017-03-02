@@ -25,6 +25,7 @@ function &copytab(&$tab, $len) {
         $o[$i] = $tab[$i];
     return $o;
 }
+
 function bubblesort(&$tab, $len) {
     for ($i = 0; $i < $len; $i++)
         for ($j = $i + 1; $j < $len; $j++)
@@ -35,6 +36,7 @@ function bubblesort(&$tab, $len) {
                 $tab[$j] = $tmp;
             }
 }
+
 function qsort0(&$tab, $len, $i, $j) {
     if ($i < $j)
     {

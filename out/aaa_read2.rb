@@ -2,15 +2,7 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
-
-
-
-
-#
-#Ce test permet de vérifier si les différents backends pour les langages implémentent bien
-#read int, read char et skip
-#
+##Ce test permet de vérifier si les différents backends pour les langages implémentent bien#read int, read char et skip#
 len = STDIN.readline.to_i(10)
 printf "%d=len\n", len
 tab = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
@@ -37,5 +29,4 @@ for i in (0 ..  len - 1) do
             for j in (0 ..  strlen - 1) do
                 printf "%c", tab4[j]
                 end
-                
                 

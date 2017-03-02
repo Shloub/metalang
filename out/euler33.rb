@@ -2,8 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
-
 def pgcd( a, b )
   c = [a, b].min
   d = [a, b].max
@@ -34,5 +32,4 @@ for i in (1 ..  9) do
             printf "%d/%d\n", top, bottom
             p = pgcd(top, bottom)
             printf "pgcd=%d\n%d\n", p, (bottom.to_f / p).to_i
-            
             

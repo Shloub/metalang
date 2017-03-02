@@ -27,6 +27,7 @@ sub chiffre_sort{
       }
   }
 }
+
 sub same_numbers{
   my($a, $b, $c, $d, $e, $f) = @_;
   my $ca = chiffre_sort($a);

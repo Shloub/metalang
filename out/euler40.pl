@@ -14,6 +14,7 @@ sub exp0{
   }
   return $o;
 }
+
 sub e{
   my($t, $n) = @_;
   foreach my $i (1 .. 8)

@@ -22,6 +22,7 @@ function scantrim(){
 /*
 La suite de fibonaci
 */
+
 function fibo0($a, $b, $i) {
     $out0 = 0;
     $a2 = $a;

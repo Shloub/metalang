@@ -1,3 +1,3 @@
 require "scanf.rb"
-print "Hello World\n"
 
+print "Hello World\n"

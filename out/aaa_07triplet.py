@@ -1,4 +1,5 @@
 
+
 for i in range(1, 4):
     (a, b, c) = list(map(int, input().split()))
     print("a = %d b = %dc =%d\n" % (a, b, c), end='')

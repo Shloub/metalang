@@ -1,10 +1,5 @@
 require "scanf.rb"
-
-#
-#Ce test permet de tester les macros
-#C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
-#et qui produit les macros metalang correspondante
-#
+##Ce test permet de tester les macros#C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation#et qui produit les macros metalang correspondante#
 input = " "
 current_pos = 500
 mem = [*0..1000-1].map { |i|
@@ -76,4 +71,3 @@ while mem[current_pos] != 0 do
     printf "%c", (mem[current_pos]).chr
     current_pos += 1
 end
-

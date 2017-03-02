@@ -37,6 +37,7 @@ def readint():
             return out * sign
 
 
+
 t = [None] * 2
 for d in range(0, 2):
     t[d] = readint()

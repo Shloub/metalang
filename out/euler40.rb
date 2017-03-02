@@ -9,7 +9,6 @@ def exp0( a, e )
       end
       return o
   end
-  
   def e( t, n )
     for i in (1 ..  8) do
         if n >= t[i] * i then
@@ -53,5 +52,4 @@ def exp0( a, e )
                             printf "10^%d=%d v=%d\n", l, puiss, v
                             end
                             printf "%d\n", out0
-                            
                             

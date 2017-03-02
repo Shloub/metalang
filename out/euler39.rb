@@ -1,4 +1,5 @@
 require "scanf.rb"
+
 t = [*0..1001-1].map { |i|
   
   next 0
@@ -22,5 +23,4 @@ for a in (1 ..  1000) do
             end
             end
             printf "%d", j
-            
             

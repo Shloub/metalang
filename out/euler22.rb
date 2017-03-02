@@ -1,5 +1,4 @@
 require "scanf.rb"
-
 def score(  )
   scanf("%*\n")
   len = scanf("%d")[0]
@@ -19,5 +18,4 @@ def score(  )
       sum += i * score()
       end
       printf "%d\n", sum
-      
       

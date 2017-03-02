@@ -12,7 +12,6 @@ def testA( a, b )
       print "D"
   end
 end
-
 def testB( a, b )
   if a then
       print "A"
@@ -22,7 +21,6 @@ def testB( a, b )
       print "C"
   end
 end
-
 def testC( a, b )
   if a then
       if b then
@@ -34,7 +32,6 @@ def testC( a, b )
       print "C"
   end
 end
-
 def testD( a, b )
   if a then
       if b then
@@ -47,7 +44,6 @@ def testD( a, b )
       print "D"
   end
 end
-
 def testE( a, b )
   if a then
       if b then
@@ -62,7 +58,6 @@ def testE( a, b )
       print "E"
   end
 end
-
 def test( a, b )
   testD(a, b)
   testE(a, b)
@@ -72,4 +67,3 @@ test(true, true)
 test(true, false)
 test(false, true)
 test(false, false)
-

@@ -44,10 +44,12 @@ sub position_alphabet{
           return -1;
       }
 }
+
 sub of_position_alphabet{
   my($c) = @_;
   return chr($c + ord("a"));
 }
+
 sub crypte{
   my($taille_cle, $cle, $taille, $message) = @_;
   foreach my $i (0 .. $taille - 1)

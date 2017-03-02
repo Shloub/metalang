@@ -14,6 +14,7 @@ function eratostene(&$t, $max0) {
         }
     return $n;
 }
+
 function isPrime($n, &$primes, $len) {
     $i = 0;
     if ($n < 0)
@@ -26,6 +27,7 @@ function isPrime($n, &$primes, $len) {
     }
     return true;
 }
+
 function test($a, $b, &$primes, $len) {
     for ($n = 0; $n < 201; $n++)
     {

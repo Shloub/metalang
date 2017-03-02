@@ -1,4 +1,5 @@
 require "scanf.rb"
+
 printf "%d\n", 3 + 16
 one_to_nine = 3 + 33
 printf "%d\n", one_to_nine
@@ -13,4 +14,3 @@ one_to_eighty = one_to_seventy + 7 * 9 + one_to_nine + 6
 one_to_ninety = one_to_eighty + 6 * 9 + one_to_nine + 6
 one_to_ninety_nine = one_to_ninety + 6 * 9 + one_to_nine
 printf "%d\n%d\n", one_to_ninety_nine, 100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 11
-
