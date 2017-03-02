@@ -16,6 +16,7 @@ sub divisible{
   }
   return !(1);
 }
+
 sub find{
   my($n, $t, $used, $nth) = @_;
   while ($used ne $nth)

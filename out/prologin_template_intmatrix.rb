@@ -1,6 +1,4 @@
 require "scanf.rb"
-
-
 def programme_candidat( tableau, x, y )
   out0 = 0
   for i in (0 ..  y - 1) do
@@ -14,5 +12,4 @@ def programme_candidat( tableau, x, y )
       taille_y = STDIN.readline.to_i(10)
       tableau = [*1..taille_y].map { |l| STDIN.readline.split(" ").map{ |x| x.to_i(10) } }
       printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
-      
       

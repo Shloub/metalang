@@ -2,9 +2,11 @@
 function idstring($s) {
     return $s;
 }
+
 function printstring($s) {
     echo idstring($s), "\n";
 }
+
 function print_toto(&$t) {
     echo $t["s"], " = ", $t["v"], "\n";
 }

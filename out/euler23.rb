@@ -16,7 +16,6 @@ def eratostene( t, max0 )
       end
       return n
   end
-  
   def fillPrimesFactors( t, n, primes, nprimes )
     for i in (0 ..  nprimes - 1) do
         d = primes[i]
@@ -30,14 +29,12 @@ def eratostene( t, max0 )
         end
         return n
     end
-    
     def sumdivaux2( t, n, i )
       while i < n && t[i] == 0 do
           i += 1
       end
       return i
     end
-    
     def sumdivaux( t, n, i )
       if i > n then
           return 1
@@ -54,7 +51,6 @@ def eratostene( t, max0 )
               return (out0 + 1) * o
           end
       end
-      
       def sumdiv( nprimes, primes, n )
         t = [*0..n + 1-1].map { |i|
           
@@ -111,5 +107,4 @@ def eratostene( t, max0 )
                           end
                           end
                           printf "\n%d\n", sum
-                          
                           

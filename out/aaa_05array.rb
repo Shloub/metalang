@@ -5,7 +5,6 @@ end
 def id( b )
   return b
 end
-
 def g( t, index )
   t[index] = false
 end
@@ -30,4 +29,3 @@ else
     print "False"
 end
 print "\n"
-

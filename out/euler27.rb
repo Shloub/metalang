@@ -16,7 +16,6 @@ def eratostene( t, max0 )
       end
       return n
   end
-  
   def isPrime( n, primes, len )
     i = 0
     if n < 0 then
@@ -30,7 +29,6 @@ def eratostene( t, max0 )
     end
     return true
   end
-  
   def test( a, b, primes, len )
     for n in (0 ..  200) do
         j = n * n + a * n + b
@@ -83,5 +81,4 @@ def eratostene( t, max0 )
                 end
                 end
                 printf "%d %d\n%d\n%d\n", ma, mb, max0, result
-                
                 

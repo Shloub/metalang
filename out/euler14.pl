@@ -16,6 +16,7 @@ sub next0{
       return 3 * $n + 1;
   }
 }
+
 sub find{
   my($n, $m) = @_;
   if ($n eq 1)

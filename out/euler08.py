@@ -22,6 +22,7 @@ def mod(x, y):
     return x - y * math.trunc(x / y)
 
 
+
 i = 1
 last = [None] * 5
 for j in range(0, 5):

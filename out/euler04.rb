@@ -2,26 +2,7 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
-#
-#
-#(a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
-#a * d + a * e * 10 + a * f * 100 +
-#10 * (b * d + b * e * 10 + b * f * 100)+
-#100 * (c * d + c * e * 10 + c * f * 100) =
-#
-#a * d       + a * e * 10   + a * f * 100 +
-#b * d * 10  + b * e * 100  + b * f * 1000 +
-#c * d * 100 + c * e * 1000 + c * f * 10000 =
-#
-#a * d +
-#10 * ( a * e + b * d) +
-#100 * (a * f + b * e + c * d) +
-#(c * e + b * f) * 1000 +
-#c * f * 10000
-#
-#
-
+###(a + b * 10 + c * 100) * (d + e * 10 + f * 100) =#a * d + a * e * 10 + a * f * 100 +#10 * (b * d + b * e * 10 + b * f * 100)+#100 * (c * d + c * e * 10 + c * f * 100) =##a * d       + a * e * 10   + a * f * 100 +#b * d * 10  + b * e * 100  + b * f * 1000 +#c * d * 100 + c * e * 1000 + c * f * 10000 =##a * d +#10 * ( a * e + b * d) +#100 * (a * f + b * e + c * d) +#(c * e + b * f) * 1000 +#c * f * 10000##
 def chiffre( c, m )
   if c == 0 then
       return mod(m, 10)
@@ -47,5 +28,4 @@ for a in (0 ..  9) do
                         end
                         end
                         printf "%d\n", m
-                        
                         

@@ -1,10 +1,5 @@
 require "scanf.rb"
-# Ce code a été généré par metalang
-#   Il gère les entrées sorties pour un programme dynamique classique
-#   dans les épreuves de prologin
-#on le retrouve ici : http://projecteuler.net/problem=18
-#
-
+# Ce code a été généré par metalang#   Il gère les entrées sorties pour un programme dynamique classique#   dans les épreuves de prologin#on le retrouve ici : http://projecteuler.net/problem=18#
 def find0( len, tab, cache, x, y )
   #
   #	Cette fonction est récursive
@@ -28,7 +23,6 @@ def find0( len, tab, cache, x, y )
   cache[y][x] = result
   return result
 end
-
 def find( len, tab )
   tab2 = [*0..len-1].map { |i|
     
@@ -61,5 +55,4 @@ for k in (0 ..  len - 1) do
         end
         print "\n"
         end
-        
         

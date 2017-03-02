@@ -34,6 +34,7 @@ function is_triangular($n) {
     $a = intval(sqrt($n * 2));
     return $a * ($a + 1) == $n * 2;
 }
+
 function score() {
     scantrim();
     list($len) = scan("%d");

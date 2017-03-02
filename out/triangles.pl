@@ -22,6 +22,7 @@ sub readspaces {
 #   dans les épreuves de prologin
 #on le retrouve ici : http://projecteuler.net/problem=18
 #
+
 sub find0{
   my($len, $tab, $cache, $x, $y) = @_;
   #
@@ -54,6 +55,7 @@ sub find0{
   $cache->[$y]->[$x] = $result;
   return $result;
 }
+
 sub find{
   my($len, $tab) = @_;
   my $tab2 = [];

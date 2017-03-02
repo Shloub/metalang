@@ -29,9 +29,11 @@ function nextChar(){
 function is_number($c) {
     return ord($c) <= ord("9") && ord($c) >= ord("0");
 }
+
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
+
 function npi0(&$str, $len) {
     $stack = array_fill(0, $len, 0);
     $ptrStack = 0;

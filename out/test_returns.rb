@@ -27,4 +27,3 @@ def is_pair( i )
   return mod(i, 2) == 0
 end
 
-

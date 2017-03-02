@@ -1,6 +1,5 @@
 require "scanf.rb"
 
-
 x = STDIN.readline.to_i(10)
 y = STDIN.readline.to_i(10)
 tab = [*1..y].map { |l| STDIN.readline.split(" ").map{ |x| x.to_i(10) } }
@@ -17,5 +16,4 @@ for ix in (1 ..  x - 1) do
                 end
                 print "\n"
                 end
-                
                 

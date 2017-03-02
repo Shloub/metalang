@@ -2,6 +2,7 @@
 function &id(&$b) {
     return $b;
 }
+
 function g(&$t, $index) {
     $t[$index] = false;
 }

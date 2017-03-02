@@ -14,6 +14,7 @@ function eratostene(&$t, $max0) {
         }
     return $n;
 }
+
 function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     for ($i = 0; $i < $nprimes; $i++)
     {
@@ -28,6 +29,7 @@ function fillPrimesFactors(&$t, $n, &$primes, $nprimes) {
     }
     return $n;
 }
+
 function find($ndiv2) {
     $maximumprimes = 110;
     $era = array();

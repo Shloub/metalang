@@ -18,7 +18,6 @@ def pathfind_aux( cache, tab, len, pos )
       return out0
   end
 end
-
 def pathfind( tab, len )
   cache = [*0..len-1].map { |i|
     
@@ -38,4 +37,3 @@ tab = [*0..len-1].map { |i|
   }
 result = pathfind(tab, len)
 printf "%d", result
-

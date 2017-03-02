@@ -2,6 +2,7 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
+
 #
 #The number, 1406357289, is a 0 to 9 pandigital number because it is made up of each of the digits 0 to 9 in some order, but it also has a rather interesting sub-string divisibility property.
 #
@@ -104,5 +105,4 @@ for i6 in (0 ..  1) do
                                         end
                                         end
                                         printf "%d\n", 0
-                                        
                                         

@@ -1,7 +1,4 @@
 require "scanf.rb"
-
-
-
 def programme_candidat( tableau, taille_x, taille_y )
   out0 = 0
   for i in (0 ..  taille_y - 1) do
@@ -21,5 +18,4 @@ def programme_candidat( tableau, taille_x, taille_y )
         }
       tableau = a
       printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
-      
       

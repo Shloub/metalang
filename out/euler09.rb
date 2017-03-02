@@ -1,4 +1,5 @@
 require "scanf.rb"
+
 #
 #	a + b + c = 1000 && a * a + b * b = c * c
 #	
@@ -13,5 +14,4 @@ for a in (1 ..  1000) do
         end
         end
         end
-        
         

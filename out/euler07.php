@@ -5,6 +5,7 @@ function divisible($n, &$t, $size) {
             return true;
     return false;
 }
+
 function find($n, &$t, $used, $nth) {
     while ($used != $nth)
         if (divisible($n, $t, $used))

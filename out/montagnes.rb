@@ -28,4 +28,3 @@ tab = [*0..len-1].map { |i|
   next x
   }
 printf "%d", montagnes0(tab, len)
-

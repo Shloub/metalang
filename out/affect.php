@@ -22,6 +22,7 @@ function scantrim(){
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
+
 function &mktoto($v1) {
     $t = array(
         "foo" => $v1,
@@ -29,6 +30,7 @@ function &mktoto($v1) {
         "blah" => $v1);
     return $t;
 }
+
 function &mktoto2($v1) {
     $t = array(
         "foo" => $v1 + 3,
@@ -36,6 +38,7 @@ function &mktoto2($v1) {
         "blah" => $v1 + 1);
     return $t;
 }
+
 function result(&$t_, &$t2_) {
     $t = $t_;
     $t2 = $t2_;

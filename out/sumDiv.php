@@ -17,15 +17,18 @@ function foo() {
     $a++;
     //  test 2 
 }
+
 function foo2() {
     
 }
+
 function foo3() {
     if (1 == 1)
     {
         
     }
 }
+
 function sumdiv($n) {
     //  On désire renvoyer la somme des diviseurs 
     $out0 = 0;

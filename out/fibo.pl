@@ -20,6 +20,7 @@ sub readspaces {
 #
 #La suite de fibonaci
 #
+
 sub fibo0{
   my($a, $b, $i) = @_;
   my $out0 = 0;

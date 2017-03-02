@@ -5,4 +5,3 @@ end
 a = 0
 foo(a)
 printf "%d\n", a
-

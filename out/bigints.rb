@@ -2,10 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
-
-
-
 def read_bigint( len )
   chiffres = [*0..len-1].map { |j|
     
@@ -19,7 +15,6 @@ def read_bigint( len )
       end
       return {"bigint_sign" => true, "bigint_len" => len, "bigint_chiffres" => chiffres}
   end
-  
   def print_bigint( a )
     if !a["bigint_sign"] then
         printf "%c", "-"
@@ -28,7 +23,6 @@ def read_bigint( len )
         printf "%d", a["bigint_chiffres"][a["bigint_len"] - 1 - i]
         end
     end
-    
     def bigint_eq( a, b )
       # Renvoie vrai si a = b 
       
@@ -45,7 +39,6 @@ def read_bigint( len )
               return true
           end
       end
-      
       def bigint_gt( a, b )
         # Renvoie vrai si a > b 
         
@@ -71,11 +64,9 @@ def read_bigint( len )
                 return true
             end
         end
-        
         def bigint_lt( a, b )
           return !bigint_gt(a, b)
         end
-        
         def add_bigint_positif( a, b )
           # Une addition ou on en a rien a faire des signes 
           
@@ -98,7 +89,6 @@ def read_bigint( len )
           end
           return {"bigint_sign" => true, "bigint_len" => len, "bigint_chiffres" => chiffres}
         end
-        
         def sub_bigint_positif( a, b )
           # Une soustraction ou on en a rien a faire des signes
           #Pré-requis : a > b
@@ -125,11 +115,9 @@ def read_bigint( len )
           end
           return {"bigint_sign" => true, "bigint_len" => len, "bigint_chiffres" => chiffres}
         end
-        
         def neg_bigint( a )
           return {"bigint_sign" => !a["bigint_sign"], "bigint_len" => a["bigint_len"], "bigint_chiffres" => a["bigint_chiffres"]}
         end
-        
         def add_bigint( a, b )
           if a["bigint_sign"] == b["bigint_sign"] then
               if a["bigint_sign"] then
@@ -155,11 +143,9 @@ def read_bigint( len )
               end
           end
         end
-        
         def sub_bigint( a, b )
           return add_bigint(a, neg_bigint(b))
         end
-        
         def mul_bigint_cp( a, b )
           # Cet algorithm est quadratique.
           #C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -188,7 +174,6 @@ def read_bigint( len )
                       end
                       return {"bigint_sign" => a["bigint_sign"] == b["bigint_sign"], "bigint_len" => len, "bigint_chiffres" => chiffres}
                   end
-                  
                   def bigint_premiers_chiffres( a, i )
                     len = [i, a["bigint_len"]].min
                     while len != 0 && a["bigint_chiffres"][len - 1] == 0 do
@@ -196,7 +181,6 @@ def read_bigint( len )
                     end
                     return {"bigint_sign" => a["bigint_sign"], "bigint_len" => len, "bigint_chiffres" => a["bigint_chiffres"]}
                   end
-                  
                   def bigint_shift( a, i )
                     chiffres = [*0..a["bigint_len"] + i-1].map { |k|
                       
@@ -208,7 +192,6 @@ def read_bigint( len )
                       }
                     return {"bigint_sign" => a["bigint_sign"], "bigint_len" => a["bigint_len"] + i, "bigint_chiffres" => chiffres}
                   end
-                  
                   def mul_bigint( aa, bb )
                     if aa["bigint_len"] == 0 then
                         return aa
@@ -234,12 +217,7 @@ def read_bigint( len )
                     # ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
                     
                   end
-                  
-                  #
-                  #Division,
-                  #Modulo
-                  #
-                  
+                  ##Division,#Modulo#
                   def log10( a )
                     out0 = 1
                     while a >= 10 do
@@ -248,7 +226,6 @@ def read_bigint( len )
                     end
                     return out0
                   end
-                  
                   def bigint_of_int( i )
                     size = log10(i)
                     if i == 0 then
@@ -264,7 +241,6 @@ def read_bigint( len )
                         end
                         return {"bigint_sign" => true, "bigint_len" => size, "bigint_chiffres" => t}
                     end
-                    
                     def fact_bigint( a )
                       one = bigint_of_int(1)
                       out0 = one
@@ -274,7 +250,6 @@ def read_bigint( len )
                       end
                       return out0
                     end
-                    
                     def sum_chiffres_bigint( a )
                       out0 = 0
                       for i in (0 ..  a["bigint_len"] - 1) do
@@ -282,9 +257,7 @@ def read_bigint( len )
                           end
                           return out0
                       end
-                      
                       # http://projecteuler.net/problem=20 
-                      
                       def euler20(  )
                         a = bigint_of_int(15)
                         # normalement c'est 100 
@@ -292,7 +265,6 @@ def read_bigint( len )
                         a = fact_bigint(a)
                         return sum_chiffres_bigint(a)
                       end
-                      
                       def bigint_exp( a, b )
                         if b == 1 then
                             return a
@@ -302,7 +274,6 @@ def read_bigint( len )
                             return mul_bigint(a, bigint_exp(a, b - 1))
                         end
                       end
-                      
                       def bigint_exp_10chiffres( a, b )
                         a = bigint_premiers_chiffres(a, 10)
                         if b == 1 then
@@ -313,7 +284,6 @@ def read_bigint( len )
                             return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
                         end
                       end
-                      
                       def euler48(  )
                         sum = bigint_of_int(0)
                         for i in (1 ..  100) do
@@ -328,7 +298,6 @@ def read_bigint( len )
                             print_bigint(sum)
                             print "\n"
                         end
-                        
                         def euler16(  )
                           a = bigint_of_int(2)
                           a = bigint_exp(a, 100)
@@ -336,7 +305,6 @@ def read_bigint( len )
                           
                           return sum_chiffres_bigint(a)
                         end
-                        
                         def euler25(  )
                           i = 2
                           a = bigint_of_int(1)
@@ -351,7 +319,6 @@ def read_bigint( len )
                           end
                           return i
                         end
-                        
                         def euler29(  )
                           maxA = 5
                           maxB = 5
@@ -454,5 +421,4 @@ def read_bigint( len )
                                       print "False"
                                   end
                                   print "\n"
-                                  
                                   

@@ -31,6 +31,7 @@ sub pathfind_aux{
                   return $out0;
               }
 }
+
 sub pathfind{
   my($tab, $x, $y) = @_;
   my $cache = [];

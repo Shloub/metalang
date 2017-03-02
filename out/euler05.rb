@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def primesfactors( n )
   tab = [*0..n + 1-1].map { |i|
     
@@ -38,5 +37,4 @@ for i in (1 ..  lim) do
                 end
                 end
                 printf "%d\n", product
-                
                 

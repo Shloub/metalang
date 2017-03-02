@@ -2,6 +2,7 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
+
 maximum = 1
 b0 = 2
 a = 408464633
@@ -24,4 +25,3 @@ while a != 1 do
         a = 1
     end
 end
-

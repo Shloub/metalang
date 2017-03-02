@@ -1,6 +1,4 @@
 require "scanf.rb"
-
-
 def find( n, m, x, y, dx, dy )
   if x < 0 || x == 20 || y < 0 || y == 20 then
       return -1
@@ -41,5 +39,4 @@ for j in (0 ..  7) do
             end
             end
             printf "%d\n", max0
-            
             

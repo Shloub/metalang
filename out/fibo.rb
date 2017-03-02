@@ -1,8 +1,5 @@
 require "scanf.rb"
-#
-#La suite de fibonaci
-#
-
+##La suite de fibonaci#
 def fibo0( a, b, i )
   out0 = 0
   a2 = a
@@ -24,5 +21,4 @@ def fibo0( a, b, i )
   scanf("%*\n")
   i = scanf("%d")[0]
   printf "%d", fibo0(a, b, i)
-  
   

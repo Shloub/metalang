@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def eratostene( t, max0 )
   n = 0
   for i in (2 ..  max0 - 1) do
@@ -17,7 +16,6 @@ def eratostene( t, max0 )
       end
       return n
   end
-  
   def fillPrimesFactors( t, n, primes, nprimes )
     for i in (0 ..  nprimes - 1) do
         d = primes[i]
@@ -31,7 +29,6 @@ def eratostene( t, max0 )
         end
         return n
     end
-    
     def find( ndiv2 )
       maximumprimes = 110
       era = [*0..maximumprimes-1].map { |j|
@@ -72,5 +69,4 @@ def eratostene( t, max0 )
                   return 0
               end
               printf "%d\n", find(500)
-              
               

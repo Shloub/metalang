@@ -1,13 +1,8 @@
 require "scanf.rb"
-
 def is_number( c )
   return c.ord <= "9".ord && c.ord >= "0".ord
 end
-
-#
-#Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
-#
-
+##Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI#
 def npi0( str, len )
   stack = [*0..len-1].map { |i|
     
@@ -45,4 +40,3 @@ tab = [*0..len-1].map { |i|
   }
 result = npi0(tab, len)
 printf "%d", result
-

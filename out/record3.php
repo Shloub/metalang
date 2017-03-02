@@ -26,6 +26,7 @@ function &mktoto($v1) {
         "blah" => 0);
     return $t;
 }
+
 function result(&$t, $len) {
     $out0 = 0;
     for ($j = 0; $j < $len; $j++)

@@ -7,6 +7,7 @@ sub foo{
   }
   return 0;
 }
+
 sub bar{
   foreach my $i (0 .. 10)
   {

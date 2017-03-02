@@ -2,8 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
-
 def position_alphabet( c )
   i = c.ord
   if i <= "Z".ord && i >= "A".ord then
@@ -14,11 +12,9 @@ def position_alphabet( c )
       return -1
   end
 end
-
 def of_position_alphabet( c )
   return (c + "a".ord).chr
 end
-
 def crypte( taille_cle, cle, taille, message )
   for i in (0 ..  taille - 1) do
       lettre = position_alphabet(message[i])
@@ -49,5 +45,4 @@ def crypte( taille_cle, cle, taille, message )
       printf "%c", message[i]
       end
       print "\n"
-      
       

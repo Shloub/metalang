@@ -19,4 +19,3 @@ a = scanf("%d")[0]
 scanf("%*\n")
 b = scanf("%d")[0]
 printf "%d", exp0(a, b)
-

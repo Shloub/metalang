@@ -1,10 +1,5 @@
 require "scanf.rb"
-
-
-#
-#  Ce test a été généré par Metalang.
-#
-
+##  Ce test a été généré par Metalang.#
 def result( len, tab )
   tab2 = [*0..len-1].map { |i|
     
@@ -26,5 +21,4 @@ def result( len, tab )
       printf "%d\n", len
       tab = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
       printf "%d\n", result(len, tab)
-      
       

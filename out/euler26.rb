@@ -32,4 +32,3 @@ def periode( restes, len, a, b )
       end
       printf "%d\n%d\n", mi, m
       
-      

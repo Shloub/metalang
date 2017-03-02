@@ -32,6 +32,7 @@ sub read_bigint{
   }
   return {"bigint_sign" => !(0), "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
+
 sub print_bigint{
   my($a) = @_;
   if (!$a->{"bigint_sign"})
@@ -43,6 +44,7 @@ sub print_bigint{
       print $a->{"bigint_chiffres"}->[$a->{"bigint_len"} - 1 - $i];
   }
 }
+
 sub bigint_eq{
   my($a, $b) = @_;
   # Renvoie vrai si a = b 
@@ -67,6 +69,7 @@ sub bigint_eq{
           return !(0);
       }
 }
+
 sub bigint_gt{
   my($a, $b) = @_;
   # Renvoie vrai si a > b 
@@ -107,10 +110,12 @@ sub bigint_gt{
           return !(0);
       }
 }
+
 sub bigint_lt{
   my($a, $b) = @_;
   return !bigint_gt($a, $b);
 }
+
 sub add_bigint_positif{
   my($a, $b) = @_;
   # Une addition ou on en a rien a faire des signes 
@@ -138,6 +143,7 @@ sub add_bigint_positif{
   }
   return {"bigint_sign" => !(0), "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
+
 sub sub_bigint_positif{
   my($a, $b) = @_;
   # Une soustraction ou on en a rien a faire des signes
@@ -171,10 +177,12 @@ sub sub_bigint_positif{
   }
   return {"bigint_sign" => !(0), "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
+
 sub neg_bigint{
   my($a) = @_;
   return {"bigint_sign" => !$a->{"bigint_sign"}, "bigint_len" => $a->{"bigint_len"}, "bigint_chiffres" => $a->{"bigint_chiffres"}};
 }
+
 sub add_bigint{
   my($a, $b) = @_;
   if ($a->{"bigint_sign"} eq $b->{"bigint_sign"})
@@ -215,10 +223,12 @@ sub add_bigint{
           }
       }
 }
+
 sub sub_bigint{
   my($a, $b) = @_;
   return add_bigint($a, neg_bigint($b));
 }
+
 sub mul_bigint_cp{
   my($a, $b) = @_;
   # Cet algorithm est quadratique.
@@ -253,6 +263,7 @@ sub mul_bigint_cp{
   }
   return {"bigint_sign" => $a->{"bigint_sign"} eq $b->{"bigint_sign"}, "bigint_len" => $len, "bigint_chiffres" => $chiffres};
 }
+
 sub bigint_premiers_chiffres{
   my($a, $i) = @_;
   my $len = min($i, $a->{"bigint_len"});
@@ -262,6 +273,7 @@ sub bigint_premiers_chiffres{
   }
   return {"bigint_sign" => $a->{"bigint_sign"}, "bigint_len" => $len, "bigint_chiffres" => $a->{"bigint_chiffres"}};
 }
+
 sub bigint_shift{
   my($a, $i) = @_;
   my $chiffres = [];
@@ -278,6 +290,7 @@ sub bigint_shift{
   }
   return {"bigint_sign" => $a->{"bigint_sign"}, "bigint_len" => $a->{"bigint_len"} + $i, "bigint_chiffres" => $chiffres};
 }
+
 sub mul_bigint{
   my($aa, $bb) = @_;
   if ($aa->{"bigint_len"} eq 0)
@@ -309,10 +322,12 @@ sub mul_bigint{
   # ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
   
 }
+
 #
 #Division,
 #Modulo
 #
+
 sub log10{
   my($a) = @_;
   my $out0 = 1;
@@ -323,6 +338,7 @@ sub log10{
   }
   return $out0;
 }
+
 sub bigint_of_int{
   my($i) = @_;
   my $size = log10($i);
@@ -342,6 +358,7 @@ sub bigint_of_int{
   }
   return {"bigint_sign" => !(0), "bigint_len" => $size, "bigint_chiffres" => $t};
 }
+
 sub fact_bigint{
   my($a) = @_;
   my $one = bigint_of_int(1);
@@ -353,6 +370,7 @@ sub fact_bigint{
   }
   return $out0;
 }
+
 sub sum_chiffres_bigint{
   my($a) = @_;
   my $out0 = 0;
@@ -362,7 +380,9 @@ sub sum_chiffres_bigint{
   }
   return $out0;
 }
+
 # http://projecteuler.net/problem=20 
+
 sub euler20{
   my $a = bigint_of_int(15);
   # normalement c'est 100 
@@ -370,6 +390,7 @@ sub euler20{
   $a = fact_bigint($a);
   return sum_chiffres_bigint($a);
 }
+
 sub bigint_exp{
   my($a, $b) = @_;
   if ($b eq 1)
@@ -385,6 +406,7 @@ sub bigint_exp{
           return mul_bigint($a, bigint_exp($a, $b - 1));
       }
 }
+
 sub bigint_exp_10chiffres{
   my($a, $b) = @_;
   $a = bigint_premiers_chiffres($a, 10);
@@ -401,6 +423,7 @@ sub bigint_exp_10chiffres{
           return mul_bigint($a, bigint_exp_10chiffres($a, $b - 1));
       }
 }
+
 sub euler48{
   my $sum = bigint_of_int(0);
   foreach my $i (1 .. 100)
@@ -416,6 +439,7 @@ sub euler48{
   print_bigint($sum);
   print "\n";
 }
+
 sub euler16{
   my $a = bigint_of_int(2);
   $a = bigint_exp($a, 100);
@@ -423,6 +447,7 @@ sub euler16{
   
   return sum_chiffres_bigint($a);
 }
+
 sub euler25{
   my $i = 2;
   my $a = bigint_of_int(1);
@@ -438,6 +463,7 @@ sub euler25{
   }
   return $i;
 }
+
 sub euler29{
   my $maxA = 5;
   my $maxB = 5;

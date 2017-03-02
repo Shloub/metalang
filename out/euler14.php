@@ -5,6 +5,7 @@ function next0($n) {
     else
         return 3 * $n + 1;
 }
+
 function find($n, &$m) {
     if ($n == 1)
         return 1;

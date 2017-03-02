@@ -3,6 +3,7 @@ def mod(x, y):
     return x - y * math.trunc(x / y)
 
 
+
 i = 0
 i -= 1
 print("%d\n" % i, end='')

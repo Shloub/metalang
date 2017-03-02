@@ -1,6 +1,4 @@
 require "scanf.rb"
-
-
 def is_triangular( n )
   #
   #   n = k * (k + 1) / 2
@@ -10,7 +8,6 @@ def is_triangular( n )
   a = Math.sqrt(n * 2).to_i
   return a * (a + 1) == n * 2
 end
-
 def score(  )
   scanf("%*\n")
   len = scanf("%d")[0]
@@ -40,5 +37,4 @@ def score(  )
           sum += score()
           end
           printf "%d\n", sum
-          
           

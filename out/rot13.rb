@@ -2,11 +2,7 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
-
-#
-#Ce test effectue un rot13 sur une chaine lue en entrée
-#
+##Ce test effectue un rot13 sur une chaine lue en entrée#
 strlen = scanf("%d")[0]
 scanf("%*\n")
 tab4 = [*0..strlen-1].map { |toto|
@@ -21,5 +17,4 @@ tab4 = [*0..strlen-1].map { |toto|
 for j in (0 ..  strlen - 1) do
     printf "%c", tab4[j]
     end
-    
     

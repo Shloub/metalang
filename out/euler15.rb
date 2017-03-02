@@ -1,4 +1,5 @@
 require "scanf.rb"
+
 n = 10
 # normalement on doit mettre 20 mais là on se tape un overflow 
 
@@ -29,5 +30,4 @@ for l in (0 ..  n - 1) do
                     print "\n"
                     end
                     printf "%d\n", tab[0][0]
-                    
                     

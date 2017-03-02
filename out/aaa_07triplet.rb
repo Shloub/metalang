@@ -9,4 +9,3 @@ for i in (1 ..  3) do
         printf "%d\n", l[j]
         end
         
-        

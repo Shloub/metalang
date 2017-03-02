@@ -1,5 +1,4 @@
 require "scanf.rb"
-
 def pathfind_aux( cache, tab, x, y, posX, posY )
   if posX == x - 1 && posY == y - 1 then
       return 0
@@ -20,7 +19,6 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
       return out0
   end
 end
-
 def pathfind( tab, x, y )
   cache = [*0..y-1].map { |i|
     
@@ -51,4 +49,3 @@ tab = [*0..y-1].map { |i|
   }
 result = pathfind(tab, x, y)
 printf "%d", result
-

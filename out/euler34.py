@@ -1,4 +1,5 @@
 
+
 f = [1] * 10
 for i in range(1, 10):
     f[i] *= i * f[i - 1]

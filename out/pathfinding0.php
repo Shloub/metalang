@@ -20,6 +20,7 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY) {
         return $out0;
     }
 }
+
 function pathfind(&$tab, $x, $y) {
     $cache = array();
     for ($i = 0; $i < $y; $i++)

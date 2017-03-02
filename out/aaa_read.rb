@@ -2,12 +2,7 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
-
-#
-#Ce test permet de vérifier si les différents backends pour les langages implémentent bien
-#read int, read char et skip
-#
+##Ce test permet de vérifier si les différents backends pour les langages implémentent bien#read int, read char et skip#
 len = scanf("%d")[0]
 scanf("%*\n")
 printf "%d=len\n", len
@@ -45,5 +40,4 @@ tab4 = [*0..strlen-1].map { |toto|
 for j in (0 ..  strlen - 1) do
     printf "%c", tab4[j]
     end
-    
     

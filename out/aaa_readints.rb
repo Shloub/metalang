@@ -1,6 +1,5 @@
 require "scanf.rb"
 
-
 len = STDIN.readline.to_i(10)
 printf "%d=len\n", len
 tab1 = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
@@ -15,5 +14,4 @@ for i in (0 ..  len - 1) do
             end
             print "\n"
             end
-            
             

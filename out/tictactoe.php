@@ -22,9 +22,13 @@ function scantrim(){
 /*
 Tictactoe : un tictactoe avec une IA
 */
+
 //  La structure de donnée 
+
 //  Un Mouvement 
+
 //  On affiche l'état 
+
 function print_state(&$g) {
     echo "\n|";
     for ($y = 0; $y < 3; $y++)
@@ -44,7 +48,9 @@ function print_state(&$g) {
     }
     echo "\n";
 }
+
 //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
+
 function eval0(&$g) {
     $win = 0;
     $freecase = 0;
@@ -87,7 +93,9 @@ function eval0(&$g) {
     else
         $g["note"] = 0;
 }
+
 //  On applique un mouvement 
+
 function apply_move_xy($x, $y, &$g) {
     $player = 2;
     if ($g["firstToPlay"])
@@ -95,26 +103,33 @@ function apply_move_xy($x, $y, &$g) {
     $g["cases"][$x][$y] = $player;
     $g["firstToPlay"] = !$g["firstToPlay"];
 }
+
 function apply_move(&$m, &$g) {
     apply_move_xy($m["x"], $m["y"], $g);
 }
+
 function cancel_move_xy($x, $y, &$g) {
     $g["cases"][$x][$y] = 0;
     $g["firstToPlay"] = !$g["firstToPlay"];
     $g["ended"] = false;
 }
+
 function cancel_move(&$m, &$g) {
     cancel_move_xy($m["x"], $m["y"], $g);
 }
+
 function can_move_xy($x, $y, &$g) {
     return $g["cases"][$x][$y] == 0;
 }
+
 function can_move(&$m, &$g) {
     return can_move_xy($m["x"], $m["y"], $g);
 }
+
 /*
 Un minimax classique, renvoie la note du plateau
 */
+
 function minmax(&$g) {
     eval0($g);
     if ($g["ended"])
@@ -135,9 +150,11 @@ function minmax(&$g) {
             }
     return $maxNote;
 }
+
 /*
 Renvoie le coup de l'IA
 */
+
 function &play(&$g) {
     $minMove = array(
         "x" => 0,
@@ -161,6 +178,7 @@ function &play(&$g) {
     echo $minMove["x"], $minMove["y"], "\n";
     return $minMove;
 }
+
 function &init0() {
     $cases = array();
     for ($i = 0; $i < 3; $i++)
@@ -175,6 +193,7 @@ function &init0() {
         "ended" => false);
     return $a;
 }
+
 function &read_move() {
     list($x) = scan("%d");
     scantrim();

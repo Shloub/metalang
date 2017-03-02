@@ -17,9 +17,11 @@ function &cons(&$list, $i) {
         "tail" => $list);
     return $out0;
 }
+
 function is_empty(&$foo) {
     return true;
 }
+
 function &rev2(&$acc, &$torev) {
     if (is_empty($torev))
         return $acc;
@@ -31,9 +33,11 @@ function &rev2(&$acc, &$torev) {
         return rev2($acc, $torev["tail"]);
     }
 }
+
 function &rev(&$empty, &$torev) {
     return rev2($empty, $torev);
 }
+
 function test(&$empty) {
     $list = $empty;
     $i = -1;

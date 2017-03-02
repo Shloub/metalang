@@ -38,6 +38,7 @@ function pathfind_aux(&$cache, &$tab, $len, $pos) {
         return $out0;
     }
 }
+
 function pathfind(&$tab, $len) {
     $cache = array();
     for ($i = 0; $i < $len; $i++)
