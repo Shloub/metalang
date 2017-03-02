@@ -151,71 +151,20 @@ let print_instr macros i =
   let i = (fold print_instr (mapg (print_expr c) i))
   in fun f -> i.p f i.default
 
-class printer = object(self)
-
-  (** used variables *)
-  val mutable used_variables = BindingSet.empty
-
-  method used_affect () = false
-  method calc_used_variables (instrs : Utils.instr list ) =
-    used_variables <- calc_used_variables (self#used_affect ()) instrs
-
-  val mutable typerEnv : Typer.env = Typer.empty
-
-  method typename_of_field field = Typer.typename_for_field field typerEnv
-
-  method getTyperEnv () = typerEnv
-
-  method setTyperEnv t = typerEnv <- t
-
-  val mutable macros = StringMap.empty
-  
-  method ptype f (t:Type.t) = ptype f t
-    
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "def@ %a %s(%a)"
-      self#ptype t funname
-      (print_list
-         (fun f (n, t) ->
-            Format.fprintf f "%a@ %a"
-              self#ptype t print_varname n) sep_c) li
-      
-  method instructions f t =
+let instructions macros f t =
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,
           try List.assoc "php" li
           with Not_found -> List.assoc "" li) macros
       in print_list (fun f t -> (print_instr macros t) f) sep_nl f t
 
-  method print_fun f funname t li instrs =
-    Format.fprintf f "@[<hov>%a@]@\n@[<v 2>  %a@]@\nend@\n"
-      self#print_proto (funname, t, li)
-      self#instructions instrs
-
-  method prog_item (f:Format.formatter) t =
-    match t with
-    | Prog.Comment s -> clike_comment f s;
-      Format.fprintf f "@\n"
-    | Prog.DeclarFun (var, t, li, instrs, _opt) ->
-      self#print_fun f var t li instrs;
-      Format.fprintf f "@\n"
-    | Prog.Macro (name, t, params, code) ->
-      macros <- StringMap.add
-          name (t, params, code)
-          macros;
-      ()
-    | Prog.Unquote _ -> assert false
-    | Prog.DeclareType (name, t) ->
-      self#decl_type f name t;
-      Format.fprintf f "@\n"
-
-  method decl_type f name t =
+let decl_type f name t =
     match (Type.unfix t) with
     | Type.Struct li ->
       Format.fprintf f "record %s %a@\nend@\n" name
         (print_list
            (fun t (name, type_) ->
-              Format.fprintf t "%a %s;@\n" self#ptype type_ name
+              Format.fprintf t "%a %s;@\n" ptype type_ name
            ) nosep
         ) li
     | Type.Enum li ->
@@ -223,21 +172,31 @@ class printer = object(self)
         (print_list
            (fun f name -> Format.fprintf f "%s" name) sep_nl
         ) li
-    | _ -> Format.fprintf f "type %s = %a;" name self#ptype t
+    | _ -> Format.fprintf f "type %s = %a;" name ptype t
 
-  method prog f (prog: Utils.prog) =
-    Format.fprintf f "%a%a@\n"
-      self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method proglist f funs =
-    Format.fprintf f "%a" (print_list self#prog_item nosep) funs
-
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  method is_rec funname = StringSet.mem funname recursives_definitions
-
-  method main f (main : Utils.instr list) =
-    Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
-      self#instructions main
-end
+let prog f (prog: Utils.prog) =
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Comment s ->
+             macros, (fun f -> clike_comment f s) :: li
+           | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
+             macros, (fun f ->
+                 Format.fprintf f "@[<hov>def %a %s (%a)@]@\n@[<v 2>  %a@]@\nend@\n"
+                   ptype t funname
+                   (print_list (fun f (n, t) ->
+                        Format.fprintf f "%a@ %a"
+                          ptype t print_varname n) sep_c) vars
+                   (instructions macros) instrs
+               ) :: li
+           | Prog.Macro (name, t, params, code) ->
+             let macros = StringMap.add name (t, params, code) macros in macros, li
+           | Prog.Unquote _ -> macros, li
+           | Prog.DeclareType (name, t) ->
+             macros, (fun f -> decl_type f name t) :: li
+        ) (StringMap.empty, []) prog.Prog.funs
+    in
+    Format.fprintf f "%a@\n%a@\n" (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (fun f main ->
+           Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
+             (instructions macros) main
+         )) prog.Prog.main
