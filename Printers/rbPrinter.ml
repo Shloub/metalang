@@ -179,39 +179,34 @@ let print_instr macros i =
   let i = (fold (print_instr c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
 
-class rbPrinter = object(self)
 
-  method setTyperEnv (t:Typer.env) = ()
-  val mutable macros = StringMap.empty
-  method setRecursive (b:StringSet.t) = ()
 
-  method instr f (t:Utils.instr) =
+  let instructions macros f instrs =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "ruby" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instr macros t) f
+    in print_list (fun f t -> print_instr macros t f ) sep_nl f instrs
 
-  method instructions f instrs = print_list self#instr sep_nl f instrs
-
-  method prog f prog =
-    Format.fprintf f "require \"scanf.rb\"@\n%s%a%a@\n"
-      (if Tags.is_taged "__internal__mod" then
-         "def mod(x, y)
+let prog f prog =
+  let macros, items = List.fold_left
+      (fun (macros, li) item -> match item with
+         | Prog.DeclarFun (funname, _t, vars, instrs, _opt) ->
+           macros, (fun f -> Format.fprintf f "@[<h>def %s( %a )@]@\n@[<v 2>  %a@]@\nend"
+                       funname (print_list print_varname sep_c) (List.map fst vars)
+                       (instructions macros) instrs) :: li
+         | Prog.Comment s ->
+           macros, (fun f -> let lic = String.split s '\n' in
+                     print_list (fun f s -> Format.fprintf f "#%s" s) nosep f lic) :: li
+         | Prog.Macro (name, t, params, code) ->
+           let macros = StringMap.add name (t, params, code) macros in macros, li
+         | _ -> macros, li
+      ) (StringMap.empty, []) prog.Prog.funs in
+  Format.fprintf f "require \"scanf.rb\"@\n%s%a@\n%a"
+    (if Tags.is_taged "__internal__mod" then
+       "def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 " else "")
-      (print_list (fun f -> function
-           | Prog.DeclarFun (funname, _t, li, instrs, _opt) ->
-             Format.fprintf f "@[<h>def %s( %a )@]@\n@[<v 2>  %a@]@\nend@\n"
-               funname (print_list print_varname sep_c) (List.map fst li)
-               self#instructions instrs
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add name (t, params, code) macros;
-           | Prog.Comment s ->
-             let lic = String.split s '\n' in
-             print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
-           | _ -> ()) sep_nl) prog.Prog.funs
-      (print_option self#instructions) prog.Prog.main
-
-end
+    (print_list (fun f g -> g f) sep_nl) (List.rev items)
+    (print_option (instructions macros)) prog.Prog.main
