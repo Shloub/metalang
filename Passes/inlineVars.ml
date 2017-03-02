@@ -275,8 +275,6 @@ let name_declared i = match Instr.unfix i with
 let remove_instruction li i =
   List.filter ((<>) i) li
 
-let printer = new Printer.printer
-
 let rec map_instrs (infos:infos) = function
   | [] -> false, []
   | hd::tl -> match Instr.unfix hd with
