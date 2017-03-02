@@ -1,4 +1,4 @@
-def bool f(int i)
+def bool f (int i)
   if i == 0
   then
     return true

@@ -4,12 +4,12 @@ int blah;
 
 end
 
-def @toto mktoto(int v1)
+def @toto mktoto (int v1)
   def @toto t = {"foo":v1, "bar":0, "blah":0}
   return t
 end
 
-def int result(@toto t)
+def int result (@toto t)
   t.blah = t.blah + 1
   return t.foo + t.blah * t.bar + t.bar * t.foo
 end

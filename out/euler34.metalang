@@ -1,3 +1,4 @@
+
 main
   def array<int> f[10] with j do
                                 return 1

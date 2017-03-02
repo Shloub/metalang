@@ -1,10 +1,10 @@
-def int read_int()
+def int read_int ()
   def read int out
   skip
   return out
 end
 
-def array<int> read_int_line(int n)
+def array<int> read_int_line (int n)
   def array<int> tab[n] with i do
                                  def read int t
                                  skip
@@ -13,7 +13,7 @@ def array<int> read_int_line(int n)
   return tab
 end
 
-def array<array<int>> read_int_matrix(int x, int y)
+def array<array<int>> read_int_matrix (int x, int y)
   def array<array<int>> tab[y] with z do
                                         return read_int_line(x)
   end

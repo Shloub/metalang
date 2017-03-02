@@ -1,4 +1,4 @@
-def void test(array<int> tab, int len)
+def void test (array<int> tab, int len)
   for i = 0 to  len - 1
   do
     print int tab[i]

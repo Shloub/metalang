@@ -1,4 +1,4 @@
-def int chiffre_sort(int a)
+def int chiffre_sort (int a)
   if a < 10
   then
     return a
@@ -16,7 +16,7 @@ def int chiffre_sort(int a)
   end
 end
 
-def bool same_numbers(int a, int b, int c, int d, int e, int f)
+def bool same_numbers (int a, int b, int c, int d, int e, int f)
   def int ca = chiffre_sort(a)
   return ca == chiffre_sort(b) && ca == chiffre_sort(c) && ca == chiffre_sort(d) && ca == chiffre_sort(e) && ca == chiffre_sort(f)
 end

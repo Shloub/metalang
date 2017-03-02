@@ -1,4 +1,4 @@
-def int triangle(int n)
+def int triangle (int n)
   if n % 2 == 0
   then
     return (n / 2) * (n + 1)
@@ -7,7 +7,7 @@ def int triangle(int n)
   end
 end
 
-def int penta(int n)
+def int penta (int n)
   if n % 2 == 0
   then
     return (n / 2) * (3 * n - 1)
@@ -16,11 +16,11 @@ def int penta(int n)
   end
 end
 
-def int hexa(int n)
+def int hexa (int n)
   return n * (2 * n - 1)
 end
 
-def bool findPenta2(int n, int a, int b)
+def bool findPenta2 (int n, int a, int b)
   if b == a + 1
   then
     return penta(a) == n || penta(b) == n
@@ -40,7 +40,7 @@ def bool findPenta2(int n, int a, int b)
   end
 end
 
-def bool findHexa2(int n, int a, int b)
+def bool findHexa2 (int n, int a, int b)
   if b == a + 1
   then
     return hexa(a) == n || hexa(b) == n

@@ -1,4 +1,4 @@
-def int isqrt(int c)
+def int isqrt (int c)
   tag "use_math"
   return sqrt_(c)
 end

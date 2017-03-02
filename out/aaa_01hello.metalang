@@ -1,3 +1,4 @@
+
 main
   print string "Hello World"
   def int a = 5

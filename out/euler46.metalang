@@ -1,4 +1,4 @@
-def int eratostene(array<int> t, int max)
+def int eratostene (array<int> t, int max)
   def int n = 0
   for i = 2 to  max - 1
   do

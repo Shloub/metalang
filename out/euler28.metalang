@@ -13,7 +13,7 @@
 
 
 */
-def int sumdiag(int n)
+def int sumdiag (int n)
   def int nterms = n * 2 - 1
   def int un = 1
   def int sum = 1

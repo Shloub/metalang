@@ -1,3 +1,4 @@
+
 main
   print string "Hello World\n"
 end

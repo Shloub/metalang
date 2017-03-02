@@ -1,4 +1,4 @@
-def int periode(array<int> restes, int len, int a, int b)
+def int periode (array<int> restes, int len, int a, int b)
   while a != 0
   do
     def int chiffre = a / b

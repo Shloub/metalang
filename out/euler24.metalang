@@ -1,4 +1,4 @@
-def int fact(int n)
+def int fact (int n)
   def int prod = 1
   for i = 2 to  n
   do
@@ -7,7 +7,7 @@ def int fact(int n)
   return prod
 end
 
-def void show(int lim, int nth)
+def void show (int lim, int nth)
   def array<int> t[lim] with i do
                                  return i
   end

@@ -3,16 +3,16 @@ int v;
 
 end
 
-def string idstring(string s)
+def string idstring (string s)
   return s
 end
 
-def void printstring(string s)
+def void printstring (string s)
   print string idstring(s)
   print string "\n"
 end
 
-def void print_toto(@toto t)
+def void print_toto (@toto t)
   print string t.s
   print string " = "
   print int t.v

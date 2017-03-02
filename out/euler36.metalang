@@ -1,4 +1,4 @@
-def bool palindrome2(array<int> pow2, int n)
+def bool palindrome2 (array<int> pow2, int n)
   def array<bool> t[20] with i do
                                  return n / pow2[i] % 2 == 1
   end

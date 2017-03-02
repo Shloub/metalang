@@ -1,4 +1,4 @@
-def int result(int sum, array<int> t, int maxIndex, array<array<int>> cache)
+def int result (int sum, array<int> t, int maxIndex, array<array<int>> cache)
   if cache[sum][maxIndex] != 0
   then
     return cache[sum][maxIndex]

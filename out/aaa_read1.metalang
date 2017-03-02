@@ -1,4 +1,4 @@
-def array<char> read_char_line(int n)
+def array<char> read_char_line (int n)
   def array<char> tab[n] with i do
                                   def read char t
                                   return t

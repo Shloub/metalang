@@ -1,4 +1,4 @@
-def int position_alphabet(char c)
+def int position_alphabet (char c)
   def int i = int_of_char(c)
   if i <= int_of_char('Z') && i >= int_of_char('A')
   then
@@ -13,11 +13,11 @@ def int position_alphabet(char c)
   end
 end
 
-def char of_position_alphabet(int c)
+def char of_position_alphabet (int c)
   return char_of_int(c + int_of_char('a'))
 end
 
-def void crypte(int taille_cle, array<char> cle, int taille, array<char>
+def void crypte (int taille_cle, array<char> cle, int taille, array<char>
 message)
   for i = 0 to  taille - 1
   do

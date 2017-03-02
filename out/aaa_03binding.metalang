@@ -1,4 +1,4 @@
-def int g(int i)
+def int g (int i)
   def int j = i * 4
   if j % 2 == 1
   then
@@ -7,7 +7,7 @@ def int g(int i)
   return j
 end
 
-def void h(int i)
+def void h (int i)
   print int i
   print string "\n"
 end

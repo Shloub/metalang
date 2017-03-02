@@ -1,4 +1,4 @@
-def int max2_(int a, int b)
+def int max2_ (int a, int b)
   if a > b
   then
     return a
@@ -7,11 +7,11 @@ def int max2_(int a, int b)
   end
 end
 
-def int max2(int a, int b)
+def int max2 (int a, int b)
   return max2_(a, b)
 end
 
-def array<int> primesfactors(int n)
+def array<int> primesfactors (int n)
   def array<int> tab[n + 1] with i do
                                      return 0
   end

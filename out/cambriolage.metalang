@@ -1,4 +1,4 @@
-def int max2_(int a, int b)
+def int max2_ (int a, int b)
   if a > b
   then
     return a
@@ -7,11 +7,11 @@ def int max2_(int a, int b)
   end
 end
 
-def int max2(int a, int b)
+def int max2 (int a, int b)
   return max2_(a, b)
 end
 
-def int nbPassePartout(int n, array<array<int>> passepartout, int
+def int nbPassePartout (int n, array<array<int>> passepartout, int
 m, array<array<int>> serrures)
   def int max_ancient = 0
   def int max_recent = 0

@@ -1,8 +1,8 @@
-def bool is_leap(int year)
+def bool is_leap (int year)
   return year % 400 == 0 || year % 100 != 0 && year % 4 == 0
 end
 
-def int ndayinmonth(int month, int year)
+def int ndayinmonth (int month, int year)
   if month == 0
   then
     return 31

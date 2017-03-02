@@ -1,4 +1,4 @@
-def int max2_(int a, int b)
+def int max2_ (int a, int b)
   if a > b
   then
     return a
@@ -7,11 +7,11 @@ def int max2_(int a, int b)
   end
 end
 
-def int max2(int a, int b)
+def int max2 (int a, int b)
   return max2_(a, b)
 end
 
-def array<int> read_int_line(int n)
+def array<int> read_int_line (int n)
   def array<int> tab[n] with i do
                                  def read int t
                                  skip
@@ -20,14 +20,14 @@ def array<int> read_int_line(int n)
   return tab
 end
 
-def array<array<int>> read_int_matrix(int x, int y)
+def array<array<int>> read_int_matrix (int x, int y)
   def array<array<int>> tab[y] with z do
                                         return read_int_line(x)
   end
   return tab
 end
 
-def int find(int n, array<array<int>> m, int x, int y, int dx, int dy)
+def int find (int n, array<array<int>> m, int x, int y, int dx, int dy)
   if x < 0 || x == 20 || y < 0 || y == 20
   then
     return -1

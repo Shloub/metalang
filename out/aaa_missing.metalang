@@ -1,10 +1,10 @@
-def int read_int()
+def int read_int ()
   def read int out
   skip
   return out
 end
 
-def array<int> read_int_line(int n)
+def array<int> read_int_line (int n)
   def array<int> tab[n] with i do
                                  def read int t
                                  skip
@@ -16,7 +16,7 @@ end
 /*
   Ce test a été généré par Metalang.
 */
-def int result(int len, array<int> tab)
+def int result (int len, array<int> tab)
   def array<bool> tab2[len] with i do
                                      return false
   end

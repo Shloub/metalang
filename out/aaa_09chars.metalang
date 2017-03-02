@@ -1,3 +1,4 @@
+
 main
   print int 1
   print string "=>"

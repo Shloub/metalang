@@ -1,4 +1,4 @@
-def int max2_(int a, int b)
+def int max2_ (int a, int b)
   if a > b
   then
     return a
@@ -7,11 +7,11 @@ def int max2_(int a, int b)
   end
 end
 
-def int max2(int a, int b)
+def int max2 (int a, int b)
   return max2_(a, b)
 end
 
-def int min2_(int a, int b)
+def int min2_ (int a, int b)
   if a < b
   then
     return a
@@ -20,11 +20,11 @@ def int min2_(int a, int b)
   end
 end
 
-def int min2(int a, int b)
+def int min2 (int a, int b)
   return min2_(a, b)
 end
 
-def int pgcd(int a, int b)
+def int pgcd (int a, int b)
   def int c = min2(a, b)
   def int d = max2(a, b)
   def int reste = d % c
