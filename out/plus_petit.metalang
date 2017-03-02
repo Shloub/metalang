@@ -1,4 +1,4 @@
-def int go(array<int> tab, int a, int b)
+def int go (array<int> tab, int a, int b)
   def int m = (a + b) / 2
   if a == m
   then
@@ -31,7 +31,7 @@ def int go(array<int> tab, int a, int b)
   end
 end
 
-def int plus_petit(array<int> tab, int len)
+def int plus_petit (array<int> tab, int len)
   return go(tab, 0, len)
 end
 

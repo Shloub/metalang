@@ -7,17 +7,17 @@ int blah;
 
 end
 
-def @toto mktoto(int v1)
+def @toto mktoto (int v1)
   def @toto t = {"foo":v1, "bar":v1, "blah":v1}
   return t
 end
 
-def @toto mktoto2(int v1)
+def @toto mktoto2 (int v1)
   def @toto t = {"foo":v1 + 3, "bar":v1 + 2, "blah":v1 + 1}
   return t
 end
 
-def int result(@toto t_, @toto t2_)
+def int result (@toto t_, @toto t2_)
   def @toto t = t_
   def @toto t2 = t2_
   def @toto t3 = {"foo":0, "bar":0, "blah":0}

@@ -1,4 +1,4 @@
-def void testA(bool a, bool b)
+def void testA (bool a, bool b)
   if a
   then
     if b
@@ -17,7 +17,7 @@ def void testA(bool a, bool b)
   end
 end
 
-def void testB(bool a, bool b)
+def void testB (bool a, bool b)
   if a
   then
     print string "A"
@@ -31,7 +31,7 @@ def void testB(bool a, bool b)
   end
 end
 
-def void testC(bool a, bool b)
+def void testC (bool a, bool b)
   if a
   then
     if b
@@ -45,7 +45,7 @@ def void testC(bool a, bool b)
   end
 end
 
-def void testD(bool a, bool b)
+def void testD (bool a, bool b)
   if a
   then
     if b
@@ -60,7 +60,7 @@ def void testD(bool a, bool b)
   end
 end
 
-def void testE(bool a, bool b)
+def void testE (bool a, bool b)
   if a
   then
     if b
@@ -78,7 +78,7 @@ def void testE(bool a, bool b)
   end
 end
 
-def void test(bool a, bool b)
+def void test (bool a, bool b)
   testD(a, b)
   testE(a, b)
   print string "\n"

@@ -1,4 +1,4 @@
-def int read_int()
+def int read_int ()
   def read int out
   skip
   return out

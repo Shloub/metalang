@@ -16,7 +16,7 @@ int y;
 end
 
 //  On affiche l'état 
-def void print_state(@gamestate g)
+def void print_state (@gamestate g)
   print string "\n|"
   for y = 0 to  2
   do
@@ -44,7 +44,7 @@ def void print_state(@gamestate g)
 end
 
 //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
-def void eval(@gamestate g)
+def void eval (@gamestate g)
   def int win = 0
   def int freecase = 0
   for y = 0 to  2
@@ -114,7 +114,7 @@ def void eval(@gamestate g)
 end
 
 //  On applique un mouvement 
-def void apply_move_xy(int x, int y, @gamestate g)
+def void apply_move_xy (int x, int y, @gamestate g)
   def int player = 2
   if g.firstToPlay
   then
@@ -124,32 +124,32 @@ def void apply_move_xy(int x, int y, @gamestate g)
   g.firstToPlay = !g.firstToPlay
 end
 
-def void apply_move(@move m, @gamestate g)
+def void apply_move (@move m, @gamestate g)
   apply_move_xy(m.x, m.y, g)
 end
 
-def void cancel_move_xy(int x, int y, @gamestate g)
+def void cancel_move_xy (int x, int y, @gamestate g)
   g.cases[x][y] = 0
   g.firstToPlay = !g.firstToPlay
   g.ended = false
 end
 
-def void cancel_move(@move m, @gamestate g)
+def void cancel_move (@move m, @gamestate g)
   cancel_move_xy(m.x, m.y, g)
 end
 
-def bool can_move_xy(int x, int y, @gamestate g)
+def bool can_move_xy (int x, int y, @gamestate g)
   return g.cases[x][y] == 0
 end
 
-def bool can_move(@move m, @gamestate g)
+def bool can_move (@move m, @gamestate g)
   return can_move_xy(m.x, m.y, g)
 end
 
 /*
 Un minimax classique, renvoie la note du plateau
 */
-def int minmax(@gamestate g)
+def int minmax (@gamestate g)
   eval(g)
   if g.ended
   then
@@ -183,7 +183,7 @@ end
 /*
 Renvoie le coup de l'IA
 */
-def @move play(@gamestate g)
+def @move play (@gamestate g)
   def @move minMove = {"x":0, "y":0}
   def int minNote = 10000
   for x = 0 to  2
@@ -216,7 +216,7 @@ def @move play(@gamestate g)
   return minMove
 end
 
-def @gamestate init()
+def @gamestate init ()
   def array<array<int>> cases[3] with i do
                                           def array<int> tab[3] with j do
                                                                          return 0
@@ -226,7 +226,7 @@ def @gamestate init()
   return {"cases":cases, "firstToPlay":true, "note":0, "ended":false}
 end
 
-def @move read_move()
+def @move read_move ()
   def read int x
   skip
   def read int y

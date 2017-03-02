@@ -1,3 +1,4 @@
+
 main
   print string "ma petite chaine"
   print string " en or"

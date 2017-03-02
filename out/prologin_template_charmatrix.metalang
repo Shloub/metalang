@@ -1,10 +1,10 @@
-def int read_int()
+def int read_int ()
   def read int out
   skip
   return out
 end
 
-def array<char> read_char_line(int n)
+def array<char> read_char_line (int n)
   def array<char> tab[n] with i do
                                   def read char t
                                   return t
@@ -13,14 +13,14 @@ def array<char> read_char_line(int n)
   return tab
 end
 
-def array<array<char>> read_char_matrix(int x, int y)
+def array<array<char>> read_char_matrix (int x, int y)
   def array<array<char>> tab[y] with z do
                                          return read_char_line(x)
   end
   return tab
 end
 
-def int programme_candidat(array<array<char>> tableau, int taille_x, int
+def int programme_candidat (array<array<char>> tableau, int taille_x, int
 taille_y)
   def int out = 0
   for i = 0 to  taille_y - 1

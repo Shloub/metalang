@@ -1,4 +1,4 @@
-def array<int> read_int_line(int n)
+def array<int> read_int_line (int n)
   def array<int> tab[n] with i do
                                  def read int t
                                  skip
@@ -7,7 +7,7 @@ def array<int> read_int_line(int n)
   return tab
 end
 
-def (int, int) read_int_couple()
+def (int, int) read_int_couple ()
   def read int a
   skip
   def read int b

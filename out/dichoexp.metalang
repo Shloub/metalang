@@ -1,4 +1,4 @@
-def int exp(int a, int b)
+def int exp (int a, int b)
   if b == 0
   then
     return 1

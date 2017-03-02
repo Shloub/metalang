@@ -1,4 +1,4 @@
-def int max2_(int a, int b)
+def int max2_ (int a, int b)
   if a > b
   then
     return a
@@ -7,7 +7,7 @@ def int max2_(int a, int b)
   end
 end
 
-def int max2(int a, int b)
+def int max2 (int a, int b)
   return max2_(a, b)
 end
 
@@ -29,7 +29,7 @@ a * d +
 c * f * 10000
 
 */
-def int chiffre(int c, int m)
+def int chiffre (int c, int m)
   if c == 0
   then
     return m % 10

@@ -1,3 +1,4 @@
+
 main
   def array<int> c[2] with d do
                                def read int out

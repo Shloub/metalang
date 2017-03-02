@@ -1,11 +1,11 @@
-def bool is_number(char c)
+def bool is_number (char c)
   return int_of_char(c) <= int_of_char('9') && int_of_char(c) >= int_of_char('0')
 end
 
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-def int npi(array<char> str, int len)
+def int npi (array<char> str, int len)
   def array<int> stack[len] with i do
                                      return 0
   end

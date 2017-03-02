@@ -1,11 +1,11 @@
-def array<int> copytab(array<int> tab, int len)
+def array<int> copytab (array<int> tab, int len)
   def array<int> o[len] with i do
                                  return tab[i]
   end
   return o
 end
 
-def void bubblesort(array<int> tab, int len)
+def void bubblesort (array<int> tab, int len)
   for i = 0 to  len - 1
   do
     for j = i + 1 to  len - 1
@@ -20,7 +20,7 @@ def void bubblesort(array<int> tab, int len)
   end
 end
 
-def void qsort(array<int> tab, int len, int i, int j)
+def void qsort (array<int> tab, int len, int i, int j)
   if i < j
   then
     def int i0 = i

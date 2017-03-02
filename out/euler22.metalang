@@ -1,4 +1,4 @@
-def int score()
+def int score ()
   skip
   def read int len
   skip

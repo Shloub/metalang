@@ -1,4 +1,4 @@
-def (int, int) f((int, int) tuple)
+def (int, int) f ((int, int) tuple)
   (int a, int b) = tuple
   return (a + 1, b + 1)
 end

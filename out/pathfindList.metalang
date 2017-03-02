@@ -1,4 +1,4 @@
-def int pathfind_aux(array<int> cache, array<int> tab, int len, int pos)
+def int pathfind_aux (array<int> cache, array<int> tab, int len, int pos)
   if pos >= len - 1
   then
     return 0
@@ -23,7 +23,7 @@ def int pathfind_aux(array<int> cache, array<int> tab, int len, int pos)
   end
 end
 
-def int pathfind(array<int> tab, int len)
+def int pathfind (array<int> tab, int len)
   def array<int> cache[len] with i do
                                      return -1
   end

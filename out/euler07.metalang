@@ -1,4 +1,4 @@
-def bool divisible(int n, array<int> t, int size)
+def bool divisible (int n, array<int> t, int size)
   for i = 0 to  size - 1
   do
     if n % t[i] == 0
@@ -9,7 +9,7 @@ def bool divisible(int n, array<int> t, int size)
   return false
 end
 
-def int find(int n, array<int> t, int used, int nth)
+def int find (int n, array<int> t, int used, int nth)
   while used != nth
   do
     if divisible(n, t, used)

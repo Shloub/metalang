@@ -1,4 +1,4 @@
-def int min2_(int a, int b)
+def int min2_ (int a, int b)
   if a < b
   then
     return a
@@ -7,11 +7,11 @@ def int min2_(int a, int b)
   end
 end
 
-def int min2(int a, int b)
+def int min2 (int a, int b)
   return min2_(a, b)
 end
 
-def int eratostene(array<int> t, int max)
+def int eratostene (array<int> t, int max)
   def int n = 0
   for i = 2 to  max - 1
   do

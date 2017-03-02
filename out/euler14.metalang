@@ -1,4 +1,4 @@
-def int next(int n)
+def int next (int n)
   if n % 2 == 0
   then
     return n / 2
@@ -7,7 +7,7 @@ def int next(int n)
   end
 end
 
-def int find(int n, array<int> m)
+def int find (int n, array<int> m)
   if n == 1
   then
     return 1

@@ -3,7 +3,7 @@
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-def int find0(int len, array<array<int>> tab, array<array<int>> cache, int
+def int find0 (int len, array<array<int>> tab, array<array<int>> cache, int
 x, int y)
   /*
 	Cette fonction est récursive
@@ -35,7 +35,7 @@ x, int y)
   return result
 end
 
-def int find(int len, array<array<int>> tab)
+def int find (int len, array<array<int>> tab)
   def array<array<int>> tab2[len] with i do
                                            def array<int> tab3[i + 1] with j do
                                                                                return 0

@@ -1,9 +1,9 @@
-def int isqrt(int c)
+def int isqrt (int c)
   tag "use_math"
   return sqrt_(c)
 end
 
-def bool is_triangular(int n)
+def bool is_triangular (int n)
   /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
@@ -12,7 +12,7 @@ def bool is_triangular(int n)
   return a * (a + 1) == n * 2
 end
 
-def int score()
+def int score ()
   skip
   def read int len
   skip

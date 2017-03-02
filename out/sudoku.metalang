@@ -1,5 +1,5 @@
 //  lit un sudoku sur l'entrée standard 
-def array<int> read_sudoku()
+def array<int> read_sudoku ()
   def array<int> out[9 * 9] with i do
                                      def read int k
                                      skip
@@ -9,7 +9,7 @@ def array<int> read_sudoku()
 end
 
 //  affiche un sudoku 
-def void print_sudoku(array<int> sudoku)
+def void print_sudoku (array<int> sudoku)
   for y = 0 to  8
   do
     for x = 0 to  8
@@ -33,7 +33,7 @@ end
 //  dit si les variables sont toutes différentes 
 //  dit si les variables sont toutes différentes 
 //  dit si le sudoku est terminé de remplir 
-def bool sudoku_done(array<int> s)
+def bool sudoku_done (array<int> s)
   for i = 0 to  80
   do
     if s[i] == 0
@@ -45,7 +45,7 @@ def bool sudoku_done(array<int> s)
 end
 
 //  dit si il y a une erreur dans le sudoku 
-def bool sudoku_error(array<int> s)
+def bool sudoku_error (array<int> s)
   def bool out1 = false
   for x = 0 to  8
   do
@@ -65,7 +65,7 @@ def bool sudoku_error(array<int> s)
 end
 
 //  résout le sudoku
-def bool solve(array<int> sudoku)
+def bool solve (array<int> sudoku)
   if sudoku_error(sudoku)
   then
     return false

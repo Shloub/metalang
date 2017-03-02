@@ -1,4 +1,4 @@
-def int max2_(int a, int b)
+def int max2_ (int a, int b)
   if a > b
   then
     return a
@@ -7,11 +7,11 @@ def int max2_(int a, int b)
   end
 end
 
-def int max2(int a, int b)
+def int max2 (int a, int b)
   return max2_(a, b)
 end
 
-def int min2_(int a, int b)
+def int min2_ (int a, int b)
   if a < b
   then
     return a
@@ -20,7 +20,7 @@ def int min2_(int a, int b)
   end
 end
 
-def int min2(int a, int b)
+def int min2 (int a, int b)
   return min2_(a, b)
 end
 
@@ -30,7 +30,7 @@ array<int> bigint_chiffres;
 
 end
 
-def @bigint read_bigint(int len)
+def @bigint read_bigint (int len)
   def array<int> chiffres[len] with j do
                                         def read char c
                                         return int_of_char(c)
@@ -44,7 +44,7 @@ def @bigint read_bigint(int len)
   return {"bigint_sign":true, "bigint_len":len, "bigint_chiffres":chiffres}
 end
 
-def void print_bigint(@bigint a)
+def void print_bigint (@bigint a)
   if !a.bigint_sign
   then
     print char '-'
@@ -55,7 +55,7 @@ def void print_bigint(@bigint a)
   end
 end
 
-def bool bigint_eq(@bigint a, @bigint b)
+def bool bigint_eq (@bigint a, @bigint b)
   //  Renvoie vrai si a = b 
   if a.bigint_sign != b.bigint_sign
   then
@@ -77,7 +77,7 @@ def bool bigint_eq(@bigint a, @bigint b)
   end
 end
 
-def bool bigint_gt(@bigint a, @bigint b)
+def bool bigint_gt (@bigint a, @bigint b)
   //  Renvoie vrai si a > b 
   if a.bigint_sign && !b.bigint_sign
   then
@@ -115,11 +115,11 @@ def bool bigint_gt(@bigint a, @bigint b)
   end
 end
 
-def bool bigint_lt(@bigint a, @bigint b)
+def bool bigint_lt (@bigint a, @bigint b)
   return !bigint_gt(a, b)
 end
 
-def @bigint add_bigint_positif(@bigint a, @bigint b)
+def @bigint add_bigint_positif (@bigint a, @bigint b)
   //  Une addition ou on en a rien a faire des signes 
   def int len = max2(a.bigint_len, b.bigint_len) + 1
   def int retenue = 0
@@ -143,7 +143,7 @@ def @bigint add_bigint_positif(@bigint a, @bigint b)
   return {"bigint_sign":true, "bigint_len":len, "bigint_chiffres":chiffres}
 end
 
-def @bigint sub_bigint_positif(@bigint a, @bigint b)
+def @bigint sub_bigint_positif (@bigint a, @bigint b)
   /* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
 */
@@ -171,11 +171,11 @@ Pré-requis : a > b
   return {"bigint_sign":true, "bigint_len":len, "bigint_chiffres":chiffres}
 end
 
-def @bigint neg_bigint(@bigint a)
+def @bigint neg_bigint (@bigint a)
   return {"bigint_sign":!a.bigint_sign, "bigint_len":a.bigint_len, "bigint_chiffres":a.bigint_chiffres}
 end
 
-def @bigint add_bigint(@bigint a, @bigint b)
+def @bigint add_bigint (@bigint a, @bigint b)
   if a.bigint_sign == b.bigint_sign
   then
     if a.bigint_sign
@@ -206,11 +206,11 @@ def @bigint add_bigint(@bigint a, @bigint b)
   end
 end
 
-def @bigint sub_bigint(@bigint a, @bigint b)
+def @bigint sub_bigint (@bigint a, @bigint b)
   return add_bigint(a, neg_bigint(b))
 end
 
-def @bigint mul_bigint_cp(@bigint a, @bigint b)
+def @bigint mul_bigint_cp (@bigint a, @bigint b)
   /* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
@@ -241,7 +241,7 @@ D'ou le nom de la fonction. */
   return {"bigint_sign":a.bigint_sign == b.bigint_sign, "bigint_len":len, "bigint_chiffres":chiffres}
 end
 
-def @bigint bigint_premiers_chiffres(@bigint a, int i)
+def @bigint bigint_premiers_chiffres (@bigint a, int i)
   def int len = min2(i, a.bigint_len)
   while len != 0 && a.bigint_chiffres[len - 1] == 0
   do
@@ -250,7 +250,7 @@ def @bigint bigint_premiers_chiffres(@bigint a, int i)
   return {"bigint_sign":a.bigint_sign, "bigint_len":len, "bigint_chiffres":a.bigint_chiffres}
 end
 
-def @bigint bigint_shift(@bigint a, int i)
+def @bigint bigint_shift (@bigint a, int i)
   def array<int> chiffres[a.bigint_len + i] with k do
                                                      if k >= i
                                                      then
@@ -262,7 +262,7 @@ def @bigint bigint_shift(@bigint a, int i)
   return {"bigint_sign":a.bigint_sign, "bigint_len":a.bigint_len + i, "bigint_chiffres":chiffres}
 end
 
-def @bigint mul_bigint(@bigint aa, @bigint bb)
+def @bigint mul_bigint (@bigint aa, @bigint bb)
   if aa.bigint_len == 0
   then
     return aa
@@ -297,7 +297,7 @@ end
 Division,
 Modulo
 */
-def int log10(int a)
+def int log10 (int a)
   def int out = 1
   while a >= 10
   do
@@ -307,7 +307,7 @@ def int log10(int a)
   return out
 end
 
-def @bigint bigint_of_int(int i)
+def @bigint bigint_of_int (int i)
   def int size = log10(i)
   if i == 0
   then
@@ -324,7 +324,7 @@ def @bigint bigint_of_int(int i)
   return {"bigint_sign":true, "bigint_len":size, "bigint_chiffres":t}
 end
 
-def @bigint fact_bigint(@bigint a)
+def @bigint fact_bigint (@bigint a)
   def @bigint one = bigint_of_int(1)
   def @bigint out = one
   while !bigint_eq(a, one)
@@ -335,7 +335,7 @@ def @bigint fact_bigint(@bigint a)
   return out
 end
 
-def int sum_chiffres_bigint(@bigint a)
+def int sum_chiffres_bigint (@bigint a)
   def int out = 0
   for i = 0 to  a.bigint_len - 1
   do
@@ -345,14 +345,14 @@ def int sum_chiffres_bigint(@bigint a)
 end
 
 //  http://projecteuler.net/problem=20 
-def int euler20()
+def int euler20 ()
   def @bigint a = bigint_of_int(15)
   //  normalement c'est 100 
   a = fact_bigint(a)
   return sum_chiffres_bigint(a)
 end
 
-def @bigint bigint_exp(@bigint a, int b)
+def @bigint bigint_exp (@bigint a, int b)
   if b == 1
   then
     return a
@@ -366,7 +366,7 @@ def @bigint bigint_exp(@bigint a, int b)
   end
 end
 
-def @bigint bigint_exp_10chiffres(@bigint a, int b)
+def @bigint bigint_exp_10chiffres (@bigint a, int b)
   a = bigint_premiers_chiffres(a, 10)
   if b == 1
   then
@@ -381,7 +381,7 @@ def @bigint bigint_exp_10chiffres(@bigint a, int b)
   end
 end
 
-def void euler48()
+def void euler48 ()
   def @bigint sum = bigint_of_int(0)
   for i = 1 to  100
   do
@@ -396,14 +396,14 @@ def void euler48()
   print string "\n"
 end
 
-def int euler16()
+def int euler16 ()
   def @bigint a = bigint_of_int(2)
   a = bigint_exp(a, 100)
   //  1000 normalement 
   return sum_chiffres_bigint(a)
 end
 
-def int euler25()
+def int euler25 ()
   def int i = 2
   def @bigint a = bigint_of_int(1)
   def @bigint b = bigint_of_int(1)
@@ -418,7 +418,7 @@ def int euler25()
   return i
 end
 
-def int euler29()
+def int euler29 ()
   def int maxA = 5
   def int maxB = 5
   def array<@bigint> a_bigint[maxA + 1] with j do

@@ -1,4 +1,4 @@
-def int exp(int a, int e)
+def int exp (int a, int e)
   def int o = 1
   for i = 1 to  e
   do
@@ -7,7 +7,7 @@ def int exp(int a, int e)
   return o
 end
 
-def int e(array<int> t, int n)
+def int e (array<int> t, int n)
   for i = 1 to  8
   do
     if n >= t[i] * i

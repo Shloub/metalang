@@ -1,3 +1,4 @@
+
 main
   def int lim = 100
   def int sum = lim * (lim + 1) / 2

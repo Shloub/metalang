@@ -1,4 +1,4 @@
-def bool is_pair(int i)
+def bool is_pair (int i)
   def int j = 1
   if i < 10
   then

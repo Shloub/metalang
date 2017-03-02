@@ -1,8 +1,8 @@
-def array<bool> id(array<bool> b)
+def array<bool> id (array<bool> b)
   return b
 end
 
-def void g(array<bool> t, int index)
+def void g (array<bool> t, int index)
   t[index] = false
 end
 

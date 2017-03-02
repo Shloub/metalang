@@ -1,4 +1,4 @@
-def int min2_(int a, int b)
+def int min2_ (int a, int b)
   if a < b
   then
     return a
@@ -7,11 +7,11 @@ def int min2_(int a, int b)
   end
 end
 
-def int min2(int a, int b)
+def int min2 (int a, int b)
   return min2_(a, b)
 end
 
-def int min3(int a, int b, int c)
+def int min3 (int a, int b, int c)
   return min2(min2(a, b), c)
 end
 
