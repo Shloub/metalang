@@ -199,18 +199,8 @@ let print_instr tyenv c i =
     default = (false, false);
     print_lief = c.print_lief;
   }
-
-class pyPrinter = object(self)
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-
-  method main f main = self#instructions f main
-
-  method instructions f li =
+  
+  let instructions macros typerEnv f li =
     let open Ast.Instr.Fixed.Deep in
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
@@ -223,7 +213,8 @@ class pyPrinter = object(self)
       Format.fprintf f "@[<h>pass@]"
     else p f ()
 
-  method header f prog =
+
+  let header f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -292,29 +283,28 @@ def skipchar():
 "
        else "")
 
-  method prog f (prog: Utils.prog)  =
-    Format.fprintf f "%a%a%a@\n"
-      self#header prog
-      (print_list (fun f t -> match t with
-           | Prog.Comment str -> 
-    let trimmed = String.trim str in
-    if not (String.starts_with trimmed "\"" || String.ends_with trimmed "\"") then
-      Format.fprintf f "\"\"\"%s\"\"\"@\n" trimmed
-    else if not (String.starts_with trimmed "'" || String.ends_with trimmed "'") then
-      Format.fprintf f "'''%s'''@\n" trimmed
-    else
-      Format.fprintf f "\"\"\"@\n%s@\n\"\"\"@\n" trimmed
-           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
-             Format.fprintf f "@[<v 4>@[<h>def %s(%a):@]@\n%a@]@\n" funname
-      (print_list print_varname sep_c) (List.map fst li)
-      self#instructions instrs
-          | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | _ -> ()
-         ) nosep)
-      prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-end
+let prog typerEnv f (prog: Utils.prog)  =
+  let open Format in
+  let macros, items = List.fold_left
+      (fun (macros, li) item -> match item with
+         | Prog.Comment str -> 
+           macros, (fun f -> let trimmed = String.trim str in
+           if not (String.starts_with trimmed "\"" || String.ends_with trimmed "\"") then
+             fprintf f "\"\"\"%s\"\"\"" trimmed
+           else if not (String.starts_with trimmed "'" || String.ends_with trimmed "'") then
+             fprintf f "'''%s'''" trimmed
+           else
+             fprintf f "\"\"\"@\n%s@\n\"\"\"" trimmed) :: li
+         | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
+           macros, (fun f -> fprintf f "@[<v 4>@[<h>def %s(%a):@]@\n%a@]" funname
+             (print_list print_varname sep_c) (List.map fst vars)
+             (instructions macros typerEnv) instrs) :: li
+         | Prog.Macro (name, t, params, code) ->
+           let macros = StringMap.add name (t, params, code) macros in macros, li
+         | _ -> macros, li
+      ) (StringMap.empty, []) prog.Prog.funs
+  in
+  fprintf f "%a%a@\n%a@\n"
+    header prog
+    (print_list (fun f g -> g f) sep_nl) (List.rev items)
+    (print_option (instructions macros typerEnv )) prog.Prog.main
