@@ -14,6 +14,7 @@ let montagnes0 tab len =
     i := (!i) - 1
   done;
   (!max0)
+
 let () =
  let len = 0 in
   let len = Scanf.scanf "%d " (fun len -> len) in

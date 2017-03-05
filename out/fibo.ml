@@ -12,6 +12,7 @@ let fibo0 a b i =
     a2 := tmp
   done;
   (!out0)
+
 let () =
  let a, b, i = Scanf.scanf "%d %d %d" (fun a b i -> a, b, i) in
   Printf.printf "%d" (fibo0 a b i) 

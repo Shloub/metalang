@@ -21,12 +21,14 @@ let rec pathfind_aux cache tab x y posX posY =
              cache.(posY).(posX) <- out0;
              out0
           end
+
 let pathfind tab x y =
   let cache = Array.init y (fun _i ->
     let tmp = Array.init x (fun _j ->
       - 1) in
     tmp) in
   pathfind_aux cache tab x y 0 0
+
 let () =
  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   let tab = Array.init y (fun _i ->

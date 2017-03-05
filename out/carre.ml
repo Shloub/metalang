@@ -1,3 +1,4 @@
+
 let () =
  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   let tab = Array.init y (fun _d ->

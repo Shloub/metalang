@@ -8,6 +8,7 @@ let divisible n t size =
   done;
   false
   with Found_1 (out) -> out
+
 let find n t used nth =
   let n = ref n in
   let used = ref used in
@@ -22,6 +23,7 @@ let find n t used nth =
       end
   done;
   t.((!used) - 1)
+
 let () =
  let n = 10001 in
   let t = Array.init n (fun _i ->

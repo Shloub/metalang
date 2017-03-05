@@ -3,6 +3,7 @@ let next0 n =
     n / 2
   else
     3 * n + 1
+
 let rec find n m =
   if n = 1 then
     1
@@ -17,6 +18,7 @@ let rec find n m =
            m.(n) <- 1 + find (next0 n) m;
            m.(n)
         end
+
 let () =
  let m = Array.init 1000000 (fun _j ->
    0) in

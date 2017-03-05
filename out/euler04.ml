@@ -21,6 +21,7 @@ let rec chiffre c m =
     m mod 10
   else
     chiffre (c - 1) (m / 10)
+
 let () =
  let m = ref( 1 ) in
   for a = 0 to 9 do

@@ -7,6 +7,7 @@ let score () =
     (*		print c print " " print sum print " " *)
   done;
   (!sum)
+
 let () =
  let sum = ref( 0 ) in
   let n = Scanf.scanf "%d" (fun n -> n) in

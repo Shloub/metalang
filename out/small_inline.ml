@@ -1,3 +1,4 @@
+
 let () =
  let t = Array.init 2 (fun _d ->
    let out0 = Scanf.scanf "%d " (fun out0 -> out0) in

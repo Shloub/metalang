@@ -18,6 +18,7 @@ let result len tab =
   done;
   - 1
   with Found_1 (out) -> out
+
 let () =
  let len = Scanf.scanf "%d " (fun len -> len) in
   Printf.printf "%d\n" len;
