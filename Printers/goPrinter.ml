@@ -193,25 +193,54 @@ let print_instr tyenv used_variables macros i =
   let i = (fold (print_instr tyenv used_variables c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
 
-class goPrinter = object(self)
+let print_proto typerEnv f (funname, t, li) =
+  Format.fprintf f "func %s(%a) %a" funname
+    (print_list
+       (fun t (binding, type_) ->
+          Format.fprintf t "%a@ %a" print_varname binding
+            (ptype typerEnv) type_
+       ) sep_c
+    ) li
+    (ptype typerEnv) t
 
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-
-  method prog f (prog: Utils.prog) =
-    let instrs f li =
+let prog typerEnv f prog =
+    let instrs macros f li =
       let used_variables =calc_used_variables false li in
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,
           try List.assoc "go" li
           with Not_found -> List.assoc "" li) macros
       in
-      print_list (fun f t -> print_instr (self#getTyperEnv ()) used_variables macros t f) sep_nl f li
-    in  
+      print_list (fun f t -> print_instr typerEnv used_variables macros t f) sep_nl f li
+    in
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li
+           | Prog.Comment str -> macros, (fun f -> clike_comment f str)::li
+           | Prog.DeclarFun (funname, t, vars, liinstrs, _opt) ->
+             macros, (fun f -> Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}"
+                         (print_proto typerEnv) (funname, t, vars) (instrs macros) liinstrs)::li
+           | Prog.DeclareType (name, t) ->
+             macros, (fun f -> begin match (Type.unfix t) with
+               | Type.Struct li ->
+                 Format.fprintf f "@\ntype %s struct {@\n@[<v 2>  %a@]@\n}" name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "%s %a;" name (ptype typerEnv) type_
+                      ) sep_nl
+                   ) li
+               | Type.Enum li ->
+                 Format.fprintf f "type %s int@\nconst (@\n@[<v2>  %a@]);" name
+                   (print_list
+                      (fun t fname ->
+                         Format.fprintf t "%s %s = iota" fname name
+                      ) sep_nl
+                   ) li
+               | _ -> Format.fprintf f "type %s %a;" name (ptype typerEnv) t
+             end)::li
+           | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
     let need li = List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
         | Instr.Print _ -> true
         | _ -> acc) false) li in
@@ -248,51 +277,11 @@ func skip() {
   }
 }
 ") ()
-      (print_list (fun f t -> match t with
-           | Prog.Comment str -> clike_comment f str
-           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
-             Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}"
-               self#print_proto (funname, t, li) instrs liinstrs
-           | Prog.DeclareType (name, t) ->
-             begin match (Type.unfix t) with
-               | Type.Struct li ->
-                 Format.fprintf f "@\ntype %s struct {@\n@[<v 2>  %a@]@\n}" name
-                   (print_list
-                      (fun t (name, type_) ->
-                         Format.fprintf t "%s %a;" name (ptype (self#getTyperEnv ())) type_
-                      ) sep_nl
-                   ) li
-               | Type.Enum li ->
-                 Format.fprintf f "type %s int@\nconst (@\n@[<v2>  %a@]);" name
-                   (print_list
-                      (fun t fname ->
-                         Format.fprintf t "%s %s = iota" fname name
-                      ) sep_nl
-                   ) li
-               | _ -> Format.fprintf f "type %s %a;" name (ptype (self#getTyperEnv ())) t
-             end
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | _ -> ()
-         ) sep_nl)
-      prog.Prog.funs
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
       (print_option (fun f main ->
            (if reader then
               Format.fprintf f "func main() {@\n  reader = bufio.NewReader(os.Stdin)@\n  @[<v>%a@]@\n}@\n"
             else
-              Format.fprintf f "func main() {@\n  @[<v>%a@]@\n}@\n") instrs main)) prog.Prog.main
-
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "func %s(%a) %a" funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a@ %a" print_varname binding
-              (ptype (self#getTyperEnv ())) type_
-         ) sep_c
-      ) li
-      (ptype (self#getTyperEnv ())) t
-
-end
+              Format.fprintf f "func main() {@\n  @[<v>%a@]@\n}@\n") (instrs macros) main)) prog.Prog.main
+ 
 

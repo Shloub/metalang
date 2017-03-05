@@ -216,22 +216,33 @@ let print_instr tyenv macros i =
   in fun f -> p f 0
 
 
-class forthPrinter = object(self)
+let decl_type f (name, t) =
+    match (Type.unfix t) with
+    | Type.Struct li ->
+      Format.fprintf f "@[<v 2>struct@\n%a@]@\nend-struct %s%%@\n"
+        (print_list
+           (fun t (name, type_) ->
+              match Type.unfix type_ with
+              | Type.String -> Format.fprintf t "double%% field ->%s" name
+              | _ -> Format.fprintf t "cell%% field ->%s" name
+           ) sep_nl
+        ) li name
+    | Type.Enum li ->
+      print_list_indexed
+        (fun t name index -> Format.fprintf t "%d constant %s" index name
+        ) sep_nl
+        f li
+    | _ -> ()
 
-  val mutable typerEnv : Typer.env = Typer.empty
-  val mutable macros = StringMap.empty
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  method setTyperEnv t = typerEnv <- t
 
-  method prog f (prog: Utils.prog) =
-    let instructions f li =
+let prog recursives_definitions typerEnv f (prog: Utils.prog) =
+    let instructions macros f li =
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,
           try List.assoc "fs" li
           with Not_found -> List.assoc "" li) macros
       in print_list (fun f t -> print_instr typerEnv macros t f) sep_nl f li in
-    let print_fun f funname li instrs =
+    let print_fun macros f funname li instrs =
       Format.fprintf f "@[<hov>: %s%a { %a }@]@\n@[<v 2>  %a@]@\n;@\n@\n" funname
         (fun f () -> if StringSet.mem funname recursives_definitions then
             Format.fprintf f " recursive") ()
@@ -240,8 +251,20 @@ class forthPrinter = object(self)
              | Type.String -> Format.fprintf f "D: %a" print_varname n
              | _ -> print_varname f n)
             sep_space) li
-        instructions instrs
+        (instructions macros) instrs
     in
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li
+           | Prog.Comment s ->
+             macros, (fun f -> let lic = String.split s '\n' in
+             print_list (fun f s -> Format.fprintf f "\\ %s@\n" s) nosep f lic) :: li
+           | Prog.DeclarFun (var, t, vars, instrs, _opt) ->
+             macros, (fun f -> print_fun macros f var vars instrs) :: li
+           | Prog.DeclareType (name, t) -> macros, (fun f -> Format.fprintf f "%a@\n" decl_type (name, t)) :: li
+           | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -285,38 +308,8 @@ class forthPrinter = object(self)
               "  WHILE 10 * current-char [char] 0 - + next-char REPEAT * ;"
             ]) ()
       (fun f () -> if need_readchar then Format.fprintf f ": read-char current-char next-char ;@\n") ()
-      (print_list (fun f item -> match item with
-           | Prog.Comment s ->
-             let lic = String.split s '\n' in
-             Format.fprintf f "%a@\n" 
-               (print_list (fun f s -> Format.fprintf f "\\ %s@\n" s) nosep) lic
-           | Prog.DeclarFun (var, t, li, instrs, _opt) ->
-             print_fun f var li instrs
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add name (t, params, code) macros
-           | Prog.Unquote _ -> assert false
-           | Prog.DeclareType (name, t) -> Format.fprintf f "%a@\n" self#decl_type (name, t)
-         ) nosep) prog.Prog.funs
-      (print_option (fun f main -> Format.fprintf f "@[<v 2>: main@\n%a@\n;@]" instructions main))
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (fun f main -> Format.fprintf f "@[<v 2>: main@\n%a@\n;@]" (instructions macros) main))
       prog.Prog.main
 
-  method decl_type f (name, t) =
-    match (Type.unfix t) with
-    | Type.Struct li ->
-      Format.fprintf f "@[<v 2>struct@\n%a@]@\nend-struct %s%%@\n"
-        (print_list
-           (fun t (name, type_) ->
-              match Type.unfix type_ with
-              | Type.String -> Format.fprintf t "double%% field ->%s" name
-              | _ -> Format.fprintf t "cell%% field ->%s" name
-           ) sep_nl
-        ) li name
-    | Type.Enum li ->
-      print_list_indexed
-        (fun t name index -> Format.fprintf t "%d constant %s" index name
-        ) sep_nl
-        f li
-    | _ -> ()
-
-end
 

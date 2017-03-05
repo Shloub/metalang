@@ -166,22 +166,44 @@ let print_instr tyenv macros i =
   let i = (fold (print_instr c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
 
-(** the main class : the ocaml printer *)
-class groovyPrinter = object(self)
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-    
-  method prog f (prog: Utils.prog) =
-    let instructions f li =
+
+let prog typerEnv f prog =
+    let instructions macros f li =
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,
           try List.assoc "groovy" li
           with Not_found -> List.assoc "" li) macros
-      in print_list (fun f t -> print_instr (self#getTyperEnv ()) macros t f) sep_nl f li in
+      in print_list (fun f t -> print_instr typerEnv macros t f) sep_nl f li in
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             let macros = StringMap.add name (t, params, code) macros in macros, li
+           | Prog.Comment str -> macros, (fun f -> clike_comment f str) :: li
+           | Prog.DeclarFun (funname, t, vars, liinstrs, _opt) ->
+             macros, (fun f -> Format.fprintf f "@[<h>%a %s(%a)@]@\n@[<v 2>{@\n%a@]@\n}"
+               ptype t funname
+               (print_list
+                  (fun t (binding, type_) ->
+                     Format.fprintf t "%a@ %a"
+                       ptype type_ print_varname binding
+                  ) sep_c
+               ) vars
+               (instructions macros) liinstrs) :: li
+           | Prog.DeclareType (name, t) ->
+             macros, (fun f ->
+               match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "@[<v 2>class %s {@\n%a@]@\n}" (String.capitalize name)
+                   (print_list
+                      (fun f (name, type_) -> Format.fprintf f "%a %s" ptype type_ name)
+                      sep_nl) li
+               | Type.Enum li ->
+                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}" (String.capitalize name)
+                   (print_list (fun f e -> Format.fprintf f "%s" e) (sep "%a,@\n %a")) li
+               | _ -> assert false
+             ) :: li
+           | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
     let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
     let datareader = Tags.is_taged "use_java_readline" in
     Format.fprintf f
@@ -197,40 +219,9 @@ class groovyPrinter = object(self)
     return out;
   }
 @]" else fun f () -> ()) ()
-      (print_list (fun f t -> match t with
-           | Prog.Comment str -> clike_comment f str
-           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
-             Format.fprintf f "@[<h>%a %s(%a)@]@\n@[<v 2>{@\n%a@]@\n}@\n"
-               ptype t funname
-               (print_list
-                  (fun t (binding, type_) ->
-                     Format.fprintf t "%a@ %a"
-                       ptype type_ print_varname binding
-                  ) sep_c
-               ) li
-               instructions liinstrs
-           | Prog.DeclareType (name, t) ->
-             begin
-               match (Type.unfix t) with
-                 Type.Struct li ->
-                 Format.fprintf f "@[<v 2>class %s {@\n%a@]@\n}" (String.capitalize name)
-                   (print_list
-                      (fun f (name, type_) -> Format.fprintf f "%a %s" ptype type_ name)
-                      sep_nl) li
-               | Type.Enum li ->
-                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}@\n" (String.capitalize name)
-                   (print_list (fun f e -> Format.fprintf f "%s" e) (sep "%a,@\n %a")) li
-               | _ -> assert false
-             end
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | _ -> ()
-         ) sep_nl)
-      prog.Prog.funs
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
       (if reader || datareader then fun f () ->
-    Format.fprintf f "@[<h>@@Field Scanner scanner = new Scanner(System.in)@]"
+          Format.fprintf f "@[<h>@@Field Scanner scanner = new Scanner(System.in)@]"
        else fun f () -> ()) ()
-      (print_option instructions) prog.Prog.main
-end
+      (print_option (instructions macros)) prog.Prog.main
+

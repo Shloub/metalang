@@ -277,30 +277,45 @@ let print_instrs tyenv macros i f funname =
     Format.fprintf f ")@\n@]";
   done
 
-class commonLispPrinter = object(self)
-
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-
-  
-  method lang () = "clisp"
-
-  method prog f (prog:Utils.prog) =
+let prog typerEnv f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    let instructions funname_ f li =
-    let macros = StringMap.map (fun (ty, params, li) ->
+    let instructions macros funname_ f li =
+      let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "clisp" li
         with Not_found -> List.assoc "" li) macros
-    in (print_instrs typerEnv macros li) f funname_ in
-    let bloc funname_ f li = Format.fprintf f "@[<v 2>(progn@\n%a@]@\n)" (instructions funname_) li in
+      in (print_instrs typerEnv macros li) f funname_ in
+    let bloc macros funname_ f li = Format.fprintf f "@[<v 2>(progn@\n%a@]@\n)" (instructions macros funname_) li in
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li
+           | Prog.Comment s -> macros, (fun f -> Format.fprintf f "#|%s|#@\n" s) :: li
+           | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
+             macros, (fun f -> Format.fprintf f "@[<h>(defun@ %s (%a)@\n%a)@]@\n"
+               funname
+               (print_list print_varname sep_space) (List.map fst vars)
+               (bloc macros funname) instrs) :: li
+           | Prog.DeclareType (name, t) ->
+             macros, (fun f ->
+               match (Type.unfix t) with
+               | Type.Struct li ->
+                 Format.fprintf f "(defstruct (%s (:type list) :named)@\n  @[<v>%a@])@\n"
+                   name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "%s@\n" name
+                      ) nosep
+                   ) li
+               | Type.Enum li -> ()
+               | _ -> assert false
+             ) :: li
+           | _ -> macros, li
+      ) (StringMap.empty, []) prog.Prog.funs in
+    
     Format.fprintf f "%s%s%s%s%s%s%s%a%a@\n"
       (if Tags.is_taged "__internal__allocArray" then "
 (defun array_init (len fun)
@@ -346,33 +361,6 @@ class commonLispPrinter = object(self)
   (loop while (or (eq last-char #\\NewLine) (eq last-char #\\Space) ) do (next-char))
 ))
 " else "")
-      (print_list (fun f t -> match t with
-           | Prog.Comment s -> Format.fprintf f "#|%s|#@\n" s
-           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
-             Format.fprintf f "@[<h>(defun@ %s (%a)@\n%a)@]@\n"
-               funname
-               (print_list print_varname sep_space) (List.map fst li)
-               (bloc funname) instrs
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | Prog.Unquote _ -> assert false
-           | Prog.DeclareType (name, t) ->
-             begin
-               match (Type.unfix t) with
-               | Type.Struct li ->
-                 Format.fprintf f "(defstruct (%s (:type list) :named)@\n  @[<v>%a@])@\n"
-                   name
-                   (print_list
-                      (fun t (name, type_) ->
-                         Format.fprintf t "%s@\n" name
-                      ) nosep
-                   ) li
-               | Type.Enum li -> ()
-               | _ -> assert false
-             end
-         ) nosep) prog.Prog.funs
-      (print_option (bloc "main")) prog.Prog.main
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (bloc macros "main")) prog.Prog.main
 
-end
