@@ -12,7 +12,7 @@ let rec rev2 acc torev =
   if is_empty torev then
     acc
   else
-    let acc2 = {head=torev.head;
+    let _acc2 = {head=torev.head;
     tail=acc} in
     rev2 acc torev.tail
 let rev empty torev =

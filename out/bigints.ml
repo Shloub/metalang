@@ -4,7 +4,7 @@ type bigint = {
   mutable bigint_chiffres : int array;
 };;
 let read_bigint len =
-  let chiffres = Array.init len (fun j ->
+  let chiffres = Array.init len (fun _j ->
     let c = Scanf.scanf "%c" (fun c -> c) in
     (int_of_char (c))) in
   for i = 0 to (len - 1) / 2 do
@@ -142,7 +142,7 @@ let mul_bigint_cp a b =
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. *)
   let len = ref( a.bigint_len + b.bigint_len + 1 ) in
-  let chiffres = Array.init (!len) (fun k ->
+  let chiffres = Array.init (!len) (fun _k ->
     0) in
   for i = 0 to a.bigint_len - 1 do
     let retenue = ref( 0 ) in
@@ -155,7 +155,7 @@ D'ou le nom de la fonction. *)
   done;
   chiffres.(a.bigint_len + b.bigint_len) <- chiffres.(a.bigint_len + b.bigint_len - 1) / 10;
   chiffres.(a.bigint_len + b.bigint_len - 1) <- chiffres.(a.bigint_len + b.bigint_len - 1) mod 10;
-  for l = 0 to 2 do
+  for _l = 0 to 2 do
     if (!len) <> 0 && chiffres.((!len) - 1) = 0 then
       len := (!len) - 1
   done;
@@ -220,7 +220,7 @@ let bigint_of_int i =
   let size = ref( log10 (!i) ) in
   if (!i) = 0 then
     size := 0;
-  let t = Array.init (!size) (fun j ->
+  let t = Array.init (!size) (fun _j ->
     0) in
   for k = 0 to (!size) - 1 do
     t.(k) <- (!i) mod 10;
@@ -303,7 +303,7 @@ let euler29 () =
     bigint_of_int (j * j)) in
   let a0_bigint = Array.init (maxA + 1) (fun j2 ->
     bigint_of_int j2) in
-  let b = Array.init (maxA + 1) (fun k ->
+  let b = Array.init (maxA + 1) (fun _k ->
     2) in
   let n = ref( 0 ) in
   let found = ref( true ) in
@@ -339,7 +339,7 @@ let euler29 () =
 let () =
  Printf.printf "%d\n" (euler29 ());
   let sum = ref( read_bigint 50 ) in
-  for i = 2 to 100 do
+  for _i = 2 to 100 do
     Scanf.scanf " " ();
     let tmp = read_bigint 50 in
     sum := add_bigint (!sum) tmp

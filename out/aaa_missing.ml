@@ -5,7 +5,7 @@ exception Found_1 of int
 
 let result len tab =
   try
-  let tab2 = Array.init len (fun i ->
+  let tab2 = Array.init len (fun _i ->
     false) in
   for i1 = 0 to len - 1 do
     Printf.printf "%d " tab.(i1);
@@ -21,7 +21,7 @@ let result len tab =
 let () =
  let len = Scanf.scanf "%d " (fun len -> len) in
   Printf.printf "%d\n" len;
-  let tab = Array.init len (fun a ->
+  let tab = Array.init len (fun _a ->
     let b = Scanf.scanf "%d " (fun b -> b) in
     b) in
   Printf.printf "%d\n" (result len tab) 

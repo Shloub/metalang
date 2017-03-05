@@ -8,7 +8,7 @@ let is_triangular n =
 let score () =
   let len = Scanf.scanf " %d " (fun len -> len) in
   let sum = ref( 0 ) in
-  for i = 1 to len do
+  for _i = 1 to len do
     let c = Scanf.scanf "%c" (fun c -> c) in
     sum := (!sum) + (int_of_char (c)) - (int_of_char ('A')) + 1
     (*		print c print " " print sum print " " *)

@@ -49,7 +49,7 @@ let rec qsort0 tab len i j =
 let () =
  let len = 2 in
   let len = Scanf.scanf "%d " (fun len -> len) in
-  let tab = Array.init len (fun i_ ->
+  let tab = Array.init len (fun _i_ ->
     let tmp = ref( 0 ) in
     Scanf.scanf "%d " (fun c -> tmp := c);
     (!tmp)) in

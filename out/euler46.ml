@@ -18,7 +18,7 @@ let () =
   let era = Array.init maximumprimes (fun j_ ->
     j_) in
   let nprimes = eratostene era maximumprimes in
-  let primes = Array.init nprimes (fun o ->
+  let primes = Array.init nprimes (fun _o ->
     0) in
   let l = ref( 0 ) in
   for k = 2 to maximumprimes - 1 do
@@ -29,7 +29,7 @@ let () =
       end
   done;
   Printf.printf "%d == %d\n" (!l) nprimes;
-  let canbe = Array.init maximumprimes (fun i_ ->
+  let canbe = Array.init maximumprimes (fun _i_ ->
     false) in
   for i = 0 to nprimes - 1 do
     for j = 0 to maximumprimes - 1 do

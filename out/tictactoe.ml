@@ -147,8 +147,8 @@ let play g =
   Printf.printf "%d%d\n" minMove.x minMove.y;
   minMove
 let init0 () =
-  let cases = Array.init 3 (fun i ->
-    let tab = Array.init 3 (fun j ->
+  let cases = Array.init 3 (fun _i ->
+    let tab = Array.init 3 (fun _j ->
       0) in
     tab) in
   {cases=cases;
@@ -160,7 +160,7 @@ let read_move () =
   {x=x;
   y=y}
 let () =
- for i = 0 to 1 do
+ for _i = 0 to 1 do
    let state = init0 () in
    apply_move {x=1;
    y=1} state;

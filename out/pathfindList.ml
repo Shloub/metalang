@@ -18,13 +18,13 @@ let rec pathfind_aux cache tab len pos =
          (!out0)
       end
 let pathfind tab len =
-  let cache = Array.init len (fun i ->
+  let cache = Array.init len (fun _i ->
     - 1) in
   pathfind_aux cache tab len 0
 let () =
  let len = 0 in
   let len = Scanf.scanf "%d " (fun len -> len) in
-  let tab = Array.init len (fun i ->
+  let tab = Array.init len (fun _i ->
     let tmp = ref( 0 ) in
     Scanf.scanf "%d " (fun c -> tmp := c);
     (!tmp)) in

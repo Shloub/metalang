@@ -1,5 +1,5 @@
 let () =
- let maximum = 1 in
+ let _maximum = 1 in
   let b0 = ref( 2 ) in
   let a = ref( 408464633 ) in
   let sqrtia = ref( ((int_of_float (sqrt (float_of_int ( (!a)))))) ) in

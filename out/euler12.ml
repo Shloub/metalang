@@ -35,7 +35,7 @@ let find ndiv2 =
   let era = Array.init maximumprimes (fun j ->
     j) in
   let nprimes = eratostene era maximumprimes in
-  let primes = Array.init nprimes (fun o ->
+  let primes = Array.init nprimes (fun _o ->
     0) in
   let l = ref( 0 ) in
   for k = 2 to maximumprimes - 1 do
@@ -46,7 +46,7 @@ let find ndiv2 =
       end
   done;
   for n = 1 to 10000 do
-    let primesFactors = Array.init (n + 2) (fun m ->
+    let primesFactors = Array.init (n + 2) (fun _m ->
       0) in
     let max0 = (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)) in
     primesFactors.(2) <- primesFactors.(2) - 1;

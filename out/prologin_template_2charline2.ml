@@ -13,11 +13,11 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
   (!out0)
 let () =
  let taille1, taille2 = Scanf.scanf "%d %d " (fun taille1 taille2 -> taille1, taille2) in
-  let tableau1 = Array.init taille1 (fun a ->
+  let tableau1 = Array.init taille1 (fun _a ->
     let b = Scanf.scanf "%c" (fun b -> b) in
     b) in
   Scanf.scanf " " ();
-  let tableau2 = Array.init taille2 (fun c ->
+  let tableau2 = Array.init taille2 (fun _c ->
     let d = Scanf.scanf "%c" (fun d -> d) in
     d) in
   Scanf.scanf " " ();

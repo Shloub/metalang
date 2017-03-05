@@ -1,6 +1,6 @@
 let exp0 a e =
   let o = ref( 1 ) in
-  for i = 1 to e do
+  for _i = 1 to e do
     o := (!o) * a
   done;
   (!o)

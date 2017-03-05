@@ -31,9 +31,9 @@ let result t_ t2_ =
     - i) in
   let cache1 = Array.init len (fun j ->
     j) in
-  let cache2 = cache0 in
+  let _cache2 = cache0 in
   let cache0 = cache1 in
-  let cache2 = cache0 in
+  let _cache2 = cache0 in
   t.foo + t.blah * t.bar + t.bar * t.foo
 let () =
  let t = mktoto 4 in

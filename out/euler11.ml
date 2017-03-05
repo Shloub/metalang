@@ -31,8 +31,8 @@ let () =
                else
                  (- 1, - 1)) in
   let max0 = ref( 0 ) in
-  let m = Array.init 20 (fun c ->
-    let e = Array.init 20 (fun f ->
+  let m = Array.init 20 (fun _c ->
+    let e = Array.init 20 (fun _f ->
       let d = Scanf.scanf "%d " (fun d -> d) in
       d) in
     e) in

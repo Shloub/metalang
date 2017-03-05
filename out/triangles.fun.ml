@@ -20,25 +20,21 @@ let find len tab =
   let tab2 = Array.init len (fun i -> Array.init (i + 1) (fun j -> 0)) in
   find0 len tab tab2 0 0
 let main =
-  let len = 0 in
   Scanf.scanf "%d"
-  (fun a -> let len = a in
-  ( Scanf.scanf "%[\n \010]" (fun _ -> ());
-    let tab = Array.init len (fun i -> Array.init (i + 1) (fun j -> let tmp = 0 in
-    Scanf.scanf "%d"
-    (fun d -> let tmp = d in
-    ( Scanf.scanf "%[\n \010]" (fun _ -> ());
-      tmp)))) in
-    ( Printf.printf "%d\n" (find len tab);
-      let rec b k =
-        if k <= len - 1
-        then let rec c l =
-               if l <= k
-               then ( Printf.printf "%d " tab.(k).(l);
-                      c (l + 1))
-               else ( Printf.printf "%s" "\n";
-                      b (k + 1)) in
-               c 0
-        else () in
-        b 0)))
+  (fun len -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
+                let tab = Array.init len (fun i -> Array.init (i + 1) (fun j -> Scanf.scanf "%d"
+                (fun tmp -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
+                              tmp)))) in
+                ( Printf.printf "%d\n" (find len tab);
+                  let rec a k =
+                    if k <= len - 1
+                    then let rec b l =
+                           if l <= k
+                           then ( Printf.printf "%d " tab.(k).(l);
+                                  b (l + 1))
+                           else ( Printf.printf "%s" "\n";
+                                  a (k + 1)) in
+                           b 0
+                    else () in
+                    a 0)))
 

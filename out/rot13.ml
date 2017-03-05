@@ -3,7 +3,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 *)
 let () =
  let strlen = Scanf.scanf "%d " (fun strlen -> strlen) in
-  let tab4 = Array.init strlen (fun toto ->
+  let tab4 = Array.init strlen (fun _toto ->
     let tmpc = Scanf.scanf "%c" (fun tmpc -> tmpc) in
     let c = ref( (int_of_char (tmpc)) ) in
     if tmpc <> ' ' then
