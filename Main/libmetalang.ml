@@ -256,7 +256,7 @@ let languages, printers =
     "metalang",(t, justtype) => justprog Printer.prog ;
     "c",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => typedp CPrinter.prog ;
     "fs",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:nselfaffect   ~clikeloop:f ~decrlooplimit:0) => typedrecp ForthPrinter.prog ;
-    "m",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => obj new ObjCPrinter.objCPrinter ;
+    "m",       (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => typedp ObjCPrinter.prog ;
     "pas",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:nselfaffect   ~clikeloop:f ~decrlooplimit:0) => obj new PasPrinter.pasPrinter ;
     "adb",     (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:nselfaffect   ~clikeloop:f ~decrlooplimit:0) => obj new AdaPrinter.adaPrinter ;
     "cc",      (t, clike_passes ~tuple:t ~record:t ~array:t ~mergeif:f ~arrayconst:t ~arrayindex1:f ~opselfaffect               ~clikeloop:t ~decrlooplimit:0) => typedp CppPrinter.cppPrinter ;
@@ -441,7 +441,7 @@ let make_prog stdlib filename lang =
 let process err c filename =
   try
     if c.eval then
-      let env, prog = make_prog c.stdlib filename "metalang_parsed" in
+      let env, prog = make_prog c.stdlib filename "metalang" in
       let _ = Eval.eval_prog env prog in ()
     else
       let go lang =
