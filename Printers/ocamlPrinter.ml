@@ -507,22 +507,13 @@ class camlPrinter = object(self)
          ) nosep) prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  (** print recursive prefix *)
-  method rec_ f b =
-    if b then Format.fprintf f "rec@ "
-
-  (** show the prototype of a recursive function *)
-  method print_rec_proto f triplet = self#print_proto_aux f true triplet
-
-  (** show the prototype of a function*)
-  method print_proto f triplet = self#print_proto_aux f false triplet
-
   (** util method to print a function prototype*)
   method print_proto_aux f rec_ ((funname:string), (t:Ast.Type.t), li) =
     match li with
-    | [] -> Format.fprintf f "let@ %a%s@ () =" self#rec_ rec_ funname
+    | [] -> Format.fprintf f (if rec_ then "let@ rec@ %s@ () =" else "let@ %s@ () =") funname
     | _ ->
-      Format.fprintf f "let@ %a%s@ %a =" self#rec_ rec_ funname
+      Format.fprintf f
+        (if rec_ then "let@ rec@ %s@ %a =" else "let@ %s@ %a =") funname
         (print_list self#binding sep_space) (List.map fst li)
 
   (** show an instruction *)
@@ -574,11 +565,7 @@ class camlPrinter = object(self)
         | _ -> tra acc i
     in refbindings <- List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs
 
-  method print_exnName f (t : unit Type.Fixed.t) =
-    try
-      Format.fprintf f "%s" (TypeMap.find t printed_exn)
-    with Not_found ->
-      Format.fprintf f "NOT_FOUND_%a" Mllike.ptype t
+  method print_exnName f (t : unit Type.Fixed.t) = Format.fprintf f "%s" (TypeMap.find t printed_exn)
 
   method print_exns f exns =
     TypeMap.iter (fun ty str ->
