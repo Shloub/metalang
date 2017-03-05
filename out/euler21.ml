@@ -45,14 +45,14 @@ let rec sumdivaux t n i =
          let o = sumdivaux t n (sumdivaux2 t n (i + 1)) in
          let out0 = ref( 0 ) in
          let p = ref( i ) in
-         for j = 1 to t.(i) do
+         for _j = 1 to t.(i) do
            out0 := (!out0) + (!p);
            p := (!p) * i
          done;
          ((!out0) + 1) * o
       end
 let sumdiv nprimes primes n =
-  let t = Array.init (n + 1) (fun i ->
+  let t = Array.init (n + 1) (fun _i ->
     0) in
   let max0 = fillPrimesFactors t n primes nprimes in
   sumdivaux t max0 0
@@ -61,7 +61,7 @@ let () =
   let era = Array.init maximumprimes (fun j ->
     j) in
   let nprimes = eratostene era maximumprimes in
-  let primes = Array.init nprimes (fun o ->
+  let primes = Array.init nprimes (fun _o ->
     0) in
   let l = ref( 0 ) in
   for k = 2 to maximumprimes - 1 do

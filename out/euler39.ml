@@ -1,5 +1,5 @@
 let () =
- let t = Array.init 1001 (fun i ->
+ let t = Array.init 1001 (fun _i ->
    0) in
   for a = 1 to 1000 do
     for b = 1 to 1000 do

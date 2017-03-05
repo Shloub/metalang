@@ -19,11 +19,11 @@ let crypte taille_cle cle taille message =
   done
 let () =
  let taille_cle = Scanf.scanf "%d " (fun taille_cle -> taille_cle) in
-  let cle = Array.init taille_cle (fun index ->
+  let cle = Array.init taille_cle (fun _index ->
     let out0 = Scanf.scanf "%c" (fun out0 -> out0) in
     out0) in
   let taille = Scanf.scanf " %d " (fun taille -> taille) in
-  let message = Array.init taille (fun index2 ->
+  let message = Array.init taille (fun _index2 ->
     let out2 = Scanf.scanf "%c" (fun out2 -> out2) in
     out2) in
   crypte taille_cle cle taille message;

@@ -9,7 +9,7 @@ let printstring s =
 let print_toto t =
   Printf.printf "%s = %d\n" t.s t.v
 let () =
- let tab = Array.init 2 (fun i ->
+ let tab = Array.init 2 (fun _i ->
    idstring "chaine de test") in
   for j = 0 to 1 do
     printstring (idstring tab.(j))

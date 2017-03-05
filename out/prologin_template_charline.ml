@@ -8,7 +8,7 @@ let programme_candidat tableau taille =
   (!out0)
 let () =
  let taille = Scanf.scanf "%d " (fun taille -> taille) in
-  let tableau = Array.init taille (fun a ->
+  let tableau = Array.init taille (fun _a ->
     let b = Scanf.scanf "%c" (fun b -> b) in
     b) in
   Scanf.scanf " " ();

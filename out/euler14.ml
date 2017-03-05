@@ -18,7 +18,7 @@ let rec find n m =
            m.(n)
         end
 let () =
- let m = Array.init 1000000 (fun j ->
+ let m = Array.init 1000000 (fun _j ->
    0) in
   let max0 = ref( 0 ) in
   let maxi = ref( 0 ) in

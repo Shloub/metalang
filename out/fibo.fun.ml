@@ -12,16 +12,10 @@ let fibo0 a b i =
     else out0 in
     c 0 a2 b2 out0
 let main =
-  let a = 0 in
-  let b = 0 in
-  let i = 0 in
   Scanf.scanf "%d"
-  (fun d -> let a = d in
-  ( Scanf.scanf "%[\n \010]" (fun _ -> ());
-    Scanf.scanf "%d"
-    (fun e -> let b = e in
-    ( Scanf.scanf "%[\n \010]" (fun _ -> ());
-      Scanf.scanf "%d"
-      (fun f -> let i = f in
-      Printf.printf "%d" (fibo0 a b i))))))
+  (fun a -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
+              Scanf.scanf "%d"
+              (fun b -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
+                          Scanf.scanf "%d"
+                          (fun i -> Printf.printf "%d" (fibo0 a b i))))))
 

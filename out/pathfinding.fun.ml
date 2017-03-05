@@ -19,19 +19,15 @@ let pathfind tab x y =
   let cache = Array.init y (fun i -> Array.init x (fun j -> - 1)) in
   pathfind_aux cache tab x y 0 0
 let main =
-  let x = 0 in
-  let y = 0 in
   Scanf.scanf "%d"
-  (fun e -> let x = e in
-  ( Scanf.scanf "%[\n \010]" (fun _ -> ());
-    Scanf.scanf "%d"
-    (fun f -> let y = f in
-    ( Scanf.scanf "%[\n \010]" (fun _ -> ());
-      let tab = Array.init y (fun i -> let tab2 = Array.init x (fun j -> let tmp = '\000' in
-      Scanf.scanf "%c"
-      (fun g -> g)) in
-      ( Scanf.scanf "%[\n \010]" (fun _ -> ());
-        tab2)) in
-      let result = pathfind tab x y in
-      Printf.printf "%d" result))))
+  (fun x -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
+              Scanf.scanf "%d"
+              (fun y -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
+                          let tab = Array.init y (fun i -> let tab2 = Array.init x (fun j -> let tmp = '\000' in
+                          Scanf.scanf "%c"
+                          (fun e -> e)) in
+                          ( Scanf.scanf "%[\n \010]" (fun _ -> ());
+                            tab2)) in
+                          let result = pathfind tab x y in
+                          Printf.printf "%d" result))))
 

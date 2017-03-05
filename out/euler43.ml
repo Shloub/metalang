@@ -28,7 +28,7 @@ d6 = 5 ou d6 = 0
 (d3 + d4 + d5) % 3 == 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 *)
-  let allowed = Array.init 10 (fun i ->
+  let allowed = Array.init 10 (fun _i ->
     true) in
   for i6 = 0 to 1 do
     let d6 = i6 * 5 in

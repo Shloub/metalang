@@ -17,7 +17,7 @@ let palindrome2 pow2 n =
   with Found_1 (out) -> out
 let () =
  let p = ref( 1 ) in
-  let pow2 = Array.init 20 (fun i ->
+  let pow2 = Array.init 20 (fun _i ->
     p := (!p) * 2;
     (!p) / 2) in
   let sum = ref( 0 ) in

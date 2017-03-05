@@ -45,7 +45,7 @@ let () =
   let result = ref( 0 ) in
   let max0 = ref( 0 ) in
   let nprimes = eratostene era maximumprimes in
-  let primes = Array.init nprimes (fun o ->
+  let primes = Array.init nprimes (fun _o ->
     0) in
   let l = ref( 0 ) in
   for k = 2 to maximumprimes - 1 do

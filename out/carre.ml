@@ -1,7 +1,7 @@
 let () =
  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
-  let tab = Array.init y (fun d ->
-    let f = Array.init x (fun g ->
+  let tab = Array.init y (fun _d ->
+    let f = Array.init x (fun _g ->
       let e = Scanf.scanf "%d " (fun e -> e) in
       e) in
     f) in

@@ -3,6 +3,6 @@ type foo_t =
   | Bar
   | Blah
 let () =
- let foo_val = Foo in
+ let _foo_val = Foo in
   () 
  

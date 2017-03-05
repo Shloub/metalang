@@ -5,7 +5,7 @@ let periode restes len a b =
   let a = ref a in
   try
   while (!a) <> 0 do
-    let chiffre = (!a) / b in
+    let _chiffre = (!a) / b in
     let reste = (!a) mod b in
     for i = 0 to (!len) - 1 do
       if restes.(i) = reste then
@@ -18,7 +18,7 @@ let periode restes len a b =
   0
   with Found_1 (out) -> out
 let () =
- let t = Array.init 1000 (fun j ->
+ let t = Array.init 1000 (fun _j ->
    0) in
   let m = ref( 0 ) in
   let mi = ref( 0 ) in

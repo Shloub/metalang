@@ -39,7 +39,7 @@ let () =
  let count = ref( 0 ) in
   let allowed = Array.init 10 (fun i ->
     i <> 0) in
-  let counted = Array.init 100000 (fun j ->
+  let counted = Array.init 100000 (fun _j ->
     false) in
   for e = 1 to 9 do
     allowed.(e) <- false;

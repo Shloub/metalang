@@ -6,9 +6,9 @@ let fact n =
   (!prod)
 let show lim nth =
   let nth = ref nth in
-  let t = Array.init lim (fun i ->
+  let _t = Array.init lim (fun i ->
     i) in
-  let pris = Array.init lim (fun j ->
+  let pris = Array.init lim (fun _j ->
     false) in
   for k = 1 to lim - 1 do
     let n = fact (lim - k) in

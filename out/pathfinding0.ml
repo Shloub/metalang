@@ -32,8 +32,8 @@ let pathfind tab x y =
 let () =
  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   Printf.printf "%d %d\n" x y;
-  let e = Array.init y (fun f ->
-    let h = Array.init x (fun k ->
+  let e = Array.init y (fun _f ->
+    let h = Array.init x (fun _k ->
       let g = Scanf.scanf "%c" (fun g -> g) in
       g) in
     Scanf.scanf " " ();

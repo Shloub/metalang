@@ -24,7 +24,7 @@ let find n t used nth =
   t.((!used) - 1)
 let () =
  let n = 10001 in
-  let t = Array.init n (fun i ->
+  let t = Array.init n (fun _i ->
     2) in
   Printf.printf "%d\n" (find 3 t 1 n) 
  
