@@ -6,16 +6,19 @@ type toto = {
   mutable bar : int;
   mutable blah : int;
 };;
+
 let mktoto v1 =
   let t = {foo=v1;
   bar=v1;
   blah=v1} in
   t
+
 let mktoto2 v1 =
   let t = {foo=v1 + 3;
   bar=v1 + 2;
   blah=v1 + 1} in
   t
+
 let result t_ t2_ =
   let t = t_ in
   let t2 = t2_ in

@@ -1,5 +1,6 @@
 let id b =
   b
+
 let g t index =
   t.(index) <- false
 let () =

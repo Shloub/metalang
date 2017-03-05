@@ -5,6 +5,7 @@ let is_triangular n =
    *)
   let a = ((int_of_float (sqrt (float_of_int ( n * 2))))) in
   a * (a + 1) = n * 2
+
 let score () =
   let len = Scanf.scanf " %d " (fun len -> len) in
   let sum = ref( 0 ) in

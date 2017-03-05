@@ -68,8 +68,6 @@ def pathfind(tab, x, y):
             tmp[j] = -1
         cache[i] = tmp
     return pathfind_aux(cache, tab, x, y, 0, 0)
-x = 0
-y = 0
 x = readint()
 stdinsep()
 y = readint()

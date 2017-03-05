@@ -12,9 +12,10 @@ let eratostene t max0 =
       end
   done;
   (!n)
+
 exception Found_1 of bool
 
-let isPrime n primes _len =
+let isPrime n primes len =
   let n = ref n in
   try
   let i = ref( 0 ) in
@@ -27,6 +28,7 @@ let isPrime n primes _len =
   done;
   true
   with Found_1 (out) -> out
+
 exception Found_2 of int
 
 let test a b primes len =

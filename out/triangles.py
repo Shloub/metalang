@@ -67,14 +67,12 @@ def find(len, tab):
         tab3 = [0] * (i + 1)
         tab2[i] = tab3
     return find0(len, tab, tab2, 0, 0)
-len = 0
 len = readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
     tab2 = [None] * (i + 1)
     for j in range(0, i + 1):
-        tmp = 0
         tmp = readint()
         stdinsep()
         tab2[j] = tmp

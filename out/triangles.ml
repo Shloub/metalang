@@ -27,6 +27,7 @@ let rec find0 len tab cache x y =
            cache.(y).(x) <- (!result);
            (!result)
         end
+
 let find len tab =
   let tab2 = Array.init len (fun i ->
     let tab3 = Array.init (i + 1) (fun _j ->

@@ -1,4 +1,4 @@
-let foo _a =
+let foo a =
   let _a = 4 in
   ()
 let () =

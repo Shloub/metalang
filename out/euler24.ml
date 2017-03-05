@@ -4,6 +4,7 @@ let fact n =
     prod := (!prod) * i
   done;
   (!prod)
+
 let show lim nth =
   let nth = ref nth in
   let _t = Array.init lim (fun i ->

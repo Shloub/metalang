@@ -17,6 +17,7 @@ let rec pathfind_aux cache tab len pos =
          cache.(pos) <- (!out0);
          (!out0)
       end
+
 let pathfind tab len =
   let cache = Array.init len (fun _i ->
     - 1) in

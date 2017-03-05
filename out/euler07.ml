@@ -8,6 +8,7 @@ let divisible n t size =
   done;
   false
   with Found_1 (out) -> out
+
 let find n t used nth =
   let n = ref n in
   let used = ref used in

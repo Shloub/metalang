@@ -7,8 +7,10 @@ let position_alphabet c =
       i - (int_of_char ('a'))
     else
       - 1
+
 let of_position_alphabet c =
   (char_of_int (c + (int_of_char ('a'))))
+
 let crypte taille_cle cle taille message =
   for i = 0 to taille - 1 do
     let lettre = position_alphabet message.(i) in

@@ -4,6 +4,7 @@ let exp0 a e =
     o := (!o) * a
   done;
   (!o)
+
 exception Found_1 of int
 
 let e t n =

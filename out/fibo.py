@@ -48,9 +48,6 @@ def fibo0(a, b, i):
         b2 += a2
         a2 = tmp
     return out0
-a = 0
-b = 0
-i = 0
 a = readint()
 stdinsep()
 b = readint()

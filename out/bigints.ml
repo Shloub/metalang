@@ -3,6 +3,7 @@ type bigint = {
   mutable bigint_len : int;
   mutable bigint_chiffres : int array;
 };;
+
 let read_bigint len =
   let chiffres = Array.init len (fun _j ->
     let c = Scanf.scanf "%c" (fun c -> c) in
@@ -15,12 +16,14 @@ let read_bigint len =
   {bigint_sign=true;
   bigint_len=len;
   bigint_chiffres=chiffres}
+
 let print_bigint a =
   if not a.bigint_sign then
     Printf.printf "%c" '-';
   for i = 0 to a.bigint_len - 1 do
     Printf.printf "%d" a.bigint_chiffres.(a.bigint_len - 1 - i)
   done
+
 exception Found_1 of bool
 
 let bigint_eq a b =
@@ -40,6 +43,7 @@ let bigint_eq a b =
          true
       end
   with Found_1 (out) -> out
+
 
 let bigint_gt a b =
   try
@@ -68,8 +72,10 @@ let bigint_gt a b =
          true
       end
   with Found_1 (out) -> out
+
 let bigint_lt a b =
   not (bigint_gt a b)
+
 let add_bigint_positif a b =
   (* Une addition ou on en a rien a faire des signes *)
   let len = ref( (max (a.bigint_len) (b.bigint_len)) + 1 ) in
@@ -88,6 +94,7 @@ let add_bigint_positif a b =
   {bigint_sign=true;
   bigint_len=(!len);
   bigint_chiffres=chiffres}
+
 let sub_bigint_positif a b =
   (* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -112,10 +119,12 @@ Pré-requis : a > b
   {bigint_sign=true;
   bigint_len=(!len);
   bigint_chiffres=chiffres}
+
 let neg_bigint a =
   {bigint_sign=not a.bigint_sign;
   bigint_len=a.bigint_len;
   bigint_chiffres=a.bigint_chiffres}
+
 let add_bigint a b =
   if a.bigint_sign = b.bigint_sign then
     if a.bigint_sign then
@@ -135,8 +144,10 @@ let add_bigint a b =
         neg_bigint (sub_bigint_positif a b)
       else
         sub_bigint_positif b a
+
 let sub_bigint a b =
   add_bigint a (neg_bigint b)
+
 let mul_bigint_cp a b =
   (* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -162,6 +173,7 @@ D'ou le nom de la fonction. *)
   {bigint_sign=a.bigint_sign = b.bigint_sign;
   bigint_len=(!len);
   bigint_chiffres=chiffres}
+
 let bigint_premiers_chiffres a i =
   let len = ref( (min (i) (a.bigint_len)) ) in
   while (!len) <> 0 && a.bigint_chiffres.((!len) - 1) = 0 do
@@ -170,6 +182,7 @@ let bigint_premiers_chiffres a i =
   {bigint_sign=a.bigint_sign;
   bigint_len=(!len);
   bigint_chiffres=a.bigint_chiffres}
+
 let bigint_shift a i =
   let chiffres = Array.init (a.bigint_len + i) (fun k ->
     if k >= i then
@@ -179,6 +192,7 @@ let bigint_shift a i =
   {bigint_sign=a.bigint_sign;
   bigint_len=a.bigint_len + i;
   bigint_chiffres=chiffres}
+
 let rec mul_bigint aa bb =
   if aa.bigint_len = 0 then
     aa
@@ -203,6 +217,7 @@ let rec mul_bigint aa bb =
         let acdec = bigint_shift ac (2 * split) in
         add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split)
         (* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd *)
+
 (*
 Division,
 Modulo
@@ -215,6 +230,7 @@ let log10 a =
     out0 := (!out0) + 1
   done;
   (!out0)
+
 let bigint_of_int i =
   let i = ref i in
   let size = ref( log10 (!i) ) in
@@ -229,6 +245,7 @@ let bigint_of_int i =
   {bigint_sign=true;
   bigint_len=(!size);
   bigint_chiffres=t}
+
 let fact_bigint a =
   let a = ref a in
   let one = bigint_of_int 1 in
@@ -238,18 +255,21 @@ let fact_bigint a =
     a := sub_bigint (!a) one
   done;
   (!out0)
+
 let sum_chiffres_bigint a =
   let out0 = ref( 0 ) in
   for i = 0 to a.bigint_len - 1 do
     out0 := (!out0) + a.bigint_chiffres.(i)
   done;
   (!out0)
+
 (* http://projecteuler.net/problem=20 *)
 let euler20 () =
   let a = bigint_of_int 15 in
   (* normalement c'est 100 *)
   let a = fact_bigint a in
   sum_chiffres_bigint a
+
 let rec bigint_exp a b =
   if b = 1 then
     a
@@ -258,6 +278,7 @@ let rec bigint_exp a b =
       bigint_exp (mul_bigint a a) (b / 2)
     else
       mul_bigint a (bigint_exp a (b - 1))
+
 let rec bigint_exp_10chiffres a b =
   let a = bigint_premiers_chiffres a 10 in
   if b = 1 then
@@ -267,6 +288,7 @@ let rec bigint_exp_10chiffres a b =
       bigint_exp_10chiffres (mul_bigint a a) (b / 2)
     else
       mul_bigint a (bigint_exp_10chiffres a (b - 1))
+
 let euler48 () =
   let sum = ref( bigint_of_int 0 ) in
   for i = 1 to 100 do
@@ -279,11 +301,13 @@ let euler48 () =
   Printf.printf "euler 48 = ";
   print_bigint (!sum);
   Printf.printf "\n"
+
 let euler16 () =
   let a = bigint_of_int 2 in
   let a = bigint_exp a 100 in
   (* 1000 normalement *)
   sum_chiffres_bigint a
+
 let euler25 () =
   let i = ref( 2 ) in
   let a = ref( bigint_of_int 1 ) in
@@ -296,6 +320,7 @@ let euler25 () =
     i := (!i) + 1
   done;
   (!i)
+
 let euler29 () =
   let maxA = 5 in
   let maxB = 5 in

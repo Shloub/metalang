@@ -3,6 +3,7 @@ let next0 n =
     n / 2
   else
     3 * n + 1
+
 let rec find n m =
   if n = 1 then
     1
