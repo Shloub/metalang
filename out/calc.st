@@ -2,6 +2,7 @@ Object subclass: calc [
   "
 La suite de fibonaci
 "
+  
    fibo: a b: b i: i [|tmp out_ b2 a2|
     out_ := 0.
     a2 := a.

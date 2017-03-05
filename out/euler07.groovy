@@ -7,7 +7,6 @@ boolean divisible(int n, int[] t, int size)
           return true
   return false
 }
-
 int find(int n, int[] t, int used, int nth)
 {
   while (used != nth)
@@ -21,7 +20,6 @@ int find(int n, int[] t, int used, int nth)
       }
   return t[used - 1]
 }
-
 
 int n = 10001
 int[] t = new int[n]

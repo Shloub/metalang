@@ -5,6 +5,7 @@ Object subclass: aaa_03binding [
     ifTrue:[^ 0].
     ^ j
   ]
+  
    h: i  [
     i display.
     '

@@ -24,6 +24,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
   => b != e != b * e % 10 ET
   a != d != (b * e / 10 + b * d + a * e ) % 10
 */
+  
   def okdigits(ok : Array[Boolean], n : Int): Boolean = {
     if (n == 0)
         return true;
@@ -41,7 +42,6 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
             return false;
     }
   }
-  
   
   def main(args : Array[String])
   {

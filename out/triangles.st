@@ -21,6 +21,7 @@ Object subclass: triangles [
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 "
+  
    find0: len tab: tab cache: cache x: x y: y [|result out1 out0|
     "
 	Cette fonction est récursive
@@ -40,6 +41,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     (cache at: (y + 1)) at: (x + 1) put: result.
     ^ result
   ]
+  
    find: len tab: tab [|tab3 tab2|
     tab2 := Array new: len.
     (0 to: (len - 1)) do: [:i|

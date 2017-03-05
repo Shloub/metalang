@@ -9,6 +9,7 @@ end
 --[[
   Ce test a été généré par Metalang.
 --]]
+
 function result (len, tab)
   local tab2 = {}
   for i = 0, len - 1 do

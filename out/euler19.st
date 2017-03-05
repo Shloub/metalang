@@ -2,6 +2,7 @@ Object subclass: euler19 [
    is_leap: year  [
     ^ ((year rem: 400) = 0) or: [((year rem: 100) ~= 0) and: [(year rem: 4) = 0]]
   ]
+  
    ndayinmonth: month year: year [
     (month = 0)
     ifTrue:[^ 31]

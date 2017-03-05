@@ -50,7 +50,6 @@ Function readInt() As Integer
     End If
   Loop
 End Function
-  
   Function nbPassePartout(ByVal n as Integer, ByRef passepartout as Integer()(), ByVal m as Integer, ByRef serrures as Integer()()) As Integer
     Dim max_ancient As Integer = 0
     Dim max_recent As Integer = 0
@@ -78,7 +77,6 @@ End Function
         Return 0
     End If
   End Function
-  
   Sub Main()
     Dim n As Integer = readInt
     stdin_sep

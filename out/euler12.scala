@@ -73,7 +73,6 @@ object euler12
     return 0;
   }
   
-  
   def main(args : Array[String])
   {
     printf("%d\n", find(500));

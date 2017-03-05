@@ -3,8 +3,6 @@ import java.util.*;
 public class euler33
 {
   
-  
-  
   static int pgcd(int a, int b)
   {
     int c = Math.min(a, b);

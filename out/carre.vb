@@ -4,8 +4,6 @@ Imports System.Collections.Generic
 Module carre
 
   
-  
-  
   Sub Main()
     Dim x As Integer = Integer.Parse(Console.ReadLine())
     Dim y As Integer = Integer.Parse(Console.ReadLine())

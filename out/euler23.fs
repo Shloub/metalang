@@ -18,6 +18,7 @@
   n exit
 ;
 
+
 : fillPrimesFactors { t n primes nprimes }
   nprimes 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     primes  i cells +  @ { d }
@@ -35,6 +36,7 @@
   n exit
 ;
 
+
 : sumdivaux2 { t n i }
   BEGIN
     i n < t  i cells +  @ 0 = AND
@@ -43,6 +45,7 @@
   REPEAT
   i exit
 ;
+
 
 : sumdivaux recursive { t n i }
   i n >
@@ -64,6 +67,7 @@
     THEN
   THEN
 ;
+
 
 : sumdiv { nprimes primes n }
   HERE n 1 + cells allot { t }

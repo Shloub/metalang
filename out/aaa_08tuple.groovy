@@ -10,8 +10,6 @@ import java.util.*
     return out;
   }
 
-
-
 class Tuple_int_int {
   int tuple_int_int_field_0
   int tuple_int_int_field_1

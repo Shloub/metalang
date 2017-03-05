@@ -1,4 +1,5 @@
 var util = require("util");
+
 var lim = 100;
 var sum = ~~(lim * (lim + 1) / 2);
 var carressum = sum * sum;

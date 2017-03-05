@@ -1,9 +1,11 @@
 function idstring (s)
   return s
 end
+
 function printstring (s)
   io.write(string.format("%s\n", idstring(s)))
 end
+
 function print_toto (t)
   io.write(string.format("%s = %d\n", t.s, t.v))
 end

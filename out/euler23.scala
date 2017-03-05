@@ -66,7 +66,6 @@ object euler23
     return sumdivaux(t, max0, 0);
   }
   
-  
   def main(args : Array[String])
   {
     var maximumprimes: Int = 30001;

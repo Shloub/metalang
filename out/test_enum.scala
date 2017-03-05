@@ -6,7 +6,6 @@ object test_enum
     val Foo, Bar, Blah = Value
   }
   import Foo_t._
-  
   def main(args : Array[String])
   {
     var foo_val: Foo_t = Foo;

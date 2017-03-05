@@ -16,6 +16,7 @@ function eratostene (t, max0)
       end
       return n
   end
+  
   function fillPrimesFactors (t, n, primes, nprimes)
     for i = 0, nprimes - 1 do
         local d = primes[i + 1]
@@ -29,12 +30,14 @@ function eratostene (t, max0)
         end
         return n
     end
+    
     function sumdivaux2 (t, n, i)
       while i < n and t[i + 1] == 0 do
           i = i + 1
       end
       return i
     end
+    
     function sumdivaux (t, n, i)
       if i > n then
           return 1
@@ -51,6 +54,7 @@ function eratostene (t, max0)
               return (out0 + 1) * o
           end
       end
+      
       function sumdiv (nprimes, primes, n)
         local t = {}
         for i = 0, n do

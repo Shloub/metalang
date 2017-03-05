@@ -8,6 +8,7 @@ Object subclass: aaa_021if [
       ifTrue:['C' display.]
       ifFalse:['D' display.].].
   ]
+  
    testB: a b: b [
     a
     ifTrue:['A' display.]
@@ -15,6 +16,7 @@ Object subclass: aaa_021if [
       ifTrue:['B' display.]
       ifFalse:['C' display.].].
   ]
+  
    testC: a b: b [
     a
     ifTrue:[b
@@ -22,6 +24,7 @@ Object subclass: aaa_021if [
       ifFalse:['B' display.].]
     ifFalse:['C' display.].
   ]
+  
    testD: a b: b [
     a
     ifTrue:[
@@ -32,6 +35,7 @@ Object subclass: aaa_021if [
     ]
     ifFalse:['D' display.].
   ]
+  
    testE: a b: b [
     a
     ifTrue:[b
@@ -43,6 +47,7 @@ Object subclass: aaa_021if [
       'E' display.
     ].
   ]
+  
    test: a b: b [
     (self testD:a b:b).
     (self testE:a b:b).

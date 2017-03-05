@@ -55,8 +55,6 @@ Function readInt() As Integer
     End If
   Loop
 End Function
-  
-  
   Function position_alphabet(ByVal c as Char) As Integer
     Dim i As Integer = Asc(c)
     If i <= Asc("Z"C) AndAlso i >= Asc("A"C) Then
@@ -67,11 +65,9 @@ End Function
         Return -1
     End If
   End Function
-  
   Function of_position_alphabet(ByVal c as Integer) As Char
     Return Chr(c + Asc("a"C))
   End Function
-  
   Sub crypte(ByVal taille_cle as Integer, ByRef cle as Char(), ByVal taille as Integer, ByRef message as Char())
     For i As Integer = 0 To taille - 1
         Dim lettre As Integer = position_alphabet(message(i))
@@ -82,7 +78,6 @@ End Function
         End If
     Next
   End Sub
-  
   Sub Main()
     Dim taille_cle As Integer = readInt
     stdin_sep

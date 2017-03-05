@@ -41,6 +41,7 @@ function go0 (tab, a, b)
       return go0(tab, m, b)
   end
 end
+
 function plus_petit0 (tab, len)
   return go0(tab, 0, len)
 end

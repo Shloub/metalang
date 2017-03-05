@@ -18,16 +18,19 @@
   head
   tail
   )
+
 (defun cons0 (list i)
 (progn
   (let ((out0 (make-intlist :head i :tail list)))
   (return-from cons0 out0))
   
 ))
+
 (defun is_empty (foo)
 (progn
   (return-from is_empty t)
 ))
+
 (defun rev2 (acc torev)
 (progn
   (if
@@ -38,10 +41,12 @@
       (return-from rev2 (rev2 acc (intlist-tail torev)))
     )))
 ))
+
 (defun rev (empty torev)
 (progn
   (return-from rev (rev2 empty torev))
 ))
+
 (defun test (empty)
 (progn
   (let ((list empty))

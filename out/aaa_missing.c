@@ -21,16 +21,15 @@ int result(int len, int* tab) {
         if (!tab2[i2])
             return i2;
     return -1;
-}
-int main(void) {
-    int a, len;
-    scanf("%d ", &len);
-    printf("%d\n", len);
-    int *tab = calloc(len, sizeof(int));
-    for (a = 0; a < len; a++)
-        scanf("%d ", &tab[a]);
-    printf("%d\n", result(len, tab));
-    return 0;
+}int main(void) {
+     int a, len;
+     scanf("%d ", &len);
+     printf("%d\n", len);
+     int *tab = calloc(len, sizeof(int));
+     for (a = 0; a < len; a++)
+         scanf("%d ", &tab[a]);
+     printf("%d\n", result(len, tab));
+     return 0;
 }
 
 

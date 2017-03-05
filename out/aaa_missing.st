@@ -19,6 +19,7 @@ Object subclass: aaa_missing [
   "
   Ce test a été généré par Metalang.
 "
+  
    result: len tab: tab [|tab2|
     tab2 := Array new: len.
     (0 to: (len - 1)) do: [:i| tab2 at: (i + 1) put: false.].

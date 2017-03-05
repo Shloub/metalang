@@ -32,6 +32,7 @@ Object subclass: record3 [
     t blah: 0.
     ^ t
   ]
+  
    result: t len: len [|out0|
     out0 := 0.
     (0 to: (len - 1)) do: [:j|

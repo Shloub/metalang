@@ -23,7 +23,6 @@ static char readChar(){
   return out_;
 }
   
-  
   public static void Main(String[] args)
   {
     int i = 1;

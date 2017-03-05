@@ -1,9 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-
-
 struct bigint {
     bool bigint_sign;
     int bigint_len;

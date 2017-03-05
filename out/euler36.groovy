@@ -15,7 +15,6 @@ boolean palindrome2(int[] pow2, int n)
   return true
 }
 
-
 int p = 1
 int[] pow2 = new int[20]
 for (int i = 0; i < 20; i++)

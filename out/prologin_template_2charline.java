@@ -3,9 +3,6 @@ import java.util.*;
 public class prologin_template_2charline
 {
   static Scanner scanner = new Scanner(System.in);
-  
-  
-  
   static int programme_candidat(char[] tableau1, int taille1, char[] tableau2, int taille2)
   {
     int out0 = 0;

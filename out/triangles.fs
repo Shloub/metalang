@@ -60,6 +60,7 @@ create bufferc 128 allot
   result exit
 ;
 
+
 : find01 { len tab }
   HERE len cells allot { tab2 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }

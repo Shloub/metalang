@@ -9,6 +9,7 @@ function exp0 (a, e)
       end
       return o
   end
+  
   function e (t, n)
     for i = 1, 8 do
         if n >= t[i + 1] * i then

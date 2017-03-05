@@ -15,6 +15,7 @@
 
 
 |#
+
 (defun sumdiag (n)
 (progn
   (let ((nterms (- (* n 2) 1)))

@@ -7,12 +7,10 @@ int g(int i)
       return 0
   return j
 }
-
 void h(int i)
 {
   System.out.printf("%d\n", i)
 }
-
 
 h(14)
 int a = 4

@@ -13,14 +13,12 @@ typedef struct gamestate {
     int note;
     int ended;
 } gamestate;
-
 /*  Un Mouvement  */
 
 typedef struct move {
   int x;
     int y;
 } move;
-
 /*  On affiche l'état  */
 
 
@@ -44,7 +42,6 @@ void print_state(struct gamestate * g) {
     }
     printf("\n");
 }
-
 /*  On dit qui gagne (info stoquées dans g.ended et g.note )  */
 
 
@@ -91,7 +88,6 @@ void eval0(struct gamestate * g) {
     else
         g->note = 0;
 }
-
 /*  On applique un mouvement  */
 
 
@@ -103,11 +99,9 @@ void apply_move_xy(int x, int y, struct gamestate * g) {
     g->firstToPlay = !g->firstToPlay;
 }
 
-
 void apply_move(struct move * m, struct gamestate * g) {
     apply_move_xy(m->x, m->y, g);
 }
-
 
 void cancel_move_xy(int x, int y, struct gamestate * g) {
     g->cases[x][y] = 0;
@@ -115,21 +109,17 @@ void cancel_move_xy(int x, int y, struct gamestate * g) {
     g->ended = 0;
 }
 
-
 void cancel_move(struct move * m, struct gamestate * g) {
     cancel_move_xy(m->x, m->y, g);
 }
-
 
 int can_move_xy(int x, int y, struct gamestate * g) {
     return g->cases[x][y] == 0;
 }
 
-
 int can_move(struct move * m, struct gamestate * g) {
     return can_move_xy(m->x, m->y, g);
 }
-
 /* 
 Un minimax classique, renvoie la note du plateau
  */
@@ -156,7 +146,6 @@ int minmax(struct gamestate * g) {
             }
     return maxNote;
 }
-
 /* 
 Renvoie le coup de l'IA
  */
@@ -187,7 +176,6 @@ struct move * play(struct gamestate * g) {
     return minMove;
 }
 
-
 struct gamestate * init0() {
     int i, j;
     int* *cases = calloc(3, sizeof(int*));
@@ -206,7 +194,6 @@ struct gamestate * init0() {
     return a;
 }
 
-
 struct move * read_move() {
     int y, x;
     scanf("%d %d ", &x, &y);
@@ -214,36 +201,35 @@ struct move * read_move() {
     b->x = x;
     b->y = y;
     return b;
-}
-int main(void) {
-    int i;
-    for (i = 0; i < 2; i++)
-    {
-        struct gamestate * state = init0();
-        struct move * c = malloc(sizeof(move));
-        c->x = 1;
-        c->y = 1;
-        apply_move(c, state);
-        struct move * d = malloc(sizeof(move));
-        d->x = 0;
-        d->y = 0;
-        apply_move(d, state);
-        while (!state->ended)
-        {
-            print_state(state);
-            apply_move(play(state), state);
-            eval0(state);
-            print_state(state);
-            if (!state->ended)
-            {
-                apply_move(play(state), state);
-                eval0(state);
-            }
-        }
-        print_state(state);
-        printf("%d\n", state->note);
-    }
-    return 0;
+}int main(void) {
+     int i;
+     for (i = 0; i < 2; i++)
+     {
+         struct gamestate * state = init0();
+         struct move * c = malloc(sizeof(move));
+         c->x = 1;
+         c->y = 1;
+         apply_move(c, state);
+         struct move * d = malloc(sizeof(move));
+         d->x = 0;
+         d->y = 0;
+         apply_move(d, state);
+         while (!state->ended)
+         {
+             print_state(state);
+             apply_move(play(state), state);
+             eval0(state);
+             print_state(state);
+             if (!state->ended)
+             {
+                 apply_move(play(state), state);
+                 eval0(state);
+             }
+         }
+         print_state(state);
+         printf("%d\n", state->note);
+     }
+     return 0;
 }
 
 

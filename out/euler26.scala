@@ -17,7 +17,6 @@ object euler26
     return 0;
   }
   
-  
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](1000);

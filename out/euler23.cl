@@ -30,6 +30,7 @@
     (return-from eratostene n))
     
 ))
+
 (defun fillPrimesFactors (t0 n primes nprimes)
 (progn
   (loop for i from 0 to (- nprimes 1) do
@@ -48,6 +49,7 @@
       )))
   (return-from fillPrimesFactors n)
 ))
+
 (defun sumdivaux2 (t0 n i)
 (progn
   (loop while (and (< i n) (= (aref t0 i) 0))
@@ -55,6 +57,7 @@
   )
   (return-from sumdivaux2 i)
 ))
+
 (defun sumdivaux (t0 n i)
 (progn
   (if
@@ -75,6 +78,7 @@
               (return-from sumdivaux (* (+ out0 1) o))
             ))))))
 ))
+
 (defun sumdiv (nprimes primes n)
 (progn
   (let

@@ -3,7 +3,6 @@
 \ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 \ et qui produit les macros metalang correspondante
 \ 
-
 : main
   32 { input }
   500 { current_pos }

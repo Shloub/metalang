@@ -46,7 +46,6 @@ static int readInt(){
     }
   } while(true);
 } 
-  
   static int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)
   {
     int max_ancient = 0;

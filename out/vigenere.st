@@ -32,9 +32,11 @@ Object subclass: vigenere [
       ifTrue:[^ i - (($a) asciiValue)]
       ifFalse:[^ 0 - 1].].
   ]
+  
    of_position_alphabet: c  [
     ^ ((c + (($a) asciiValue)) asCharacter)
   ]
+  
    crypte: taille_cle cle: cle taille: taille message: message [|new0 lettre addon|
     (0 to: (taille - 1)) do: [:i|
       lettre := (self position_alphabet: (message at: (i + 1))).

@@ -13,6 +13,7 @@ end
 --[[
 La suite de fibonaci
 --]]
+
 function fibo0 (a, b, i)
   local out0 = 0
   local a2 = a

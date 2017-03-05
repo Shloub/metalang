@@ -1,6 +1,5 @@
 import java.util.*
 
-
 /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -26,7 +25,6 @@ int chiffre(int c, int m)
   else
       return chiffre(c - 1, m.intdiv(10))
 }
-
 
 int m = 1
 for (int a = 0; a < 10; a++)

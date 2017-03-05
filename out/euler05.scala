@@ -25,7 +25,6 @@ object euler05
     return tab;
   }
   
-  
   def main(args : Array[String])
   {
     var lim: Int = 20;

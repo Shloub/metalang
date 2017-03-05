@@ -8,6 +8,7 @@
   prod exit
 ;
 
+
 : show { lim nth }
   HERE lim cells allot { t }
   lim 1 - 0 BEGIN 2dup >= WHILE DUP { i }

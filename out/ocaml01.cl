@@ -4,6 +4,7 @@
     '())
   (return-from foo 0)
 ))
+
 (defun bar ()
 (progn
   (loop for i from 0 to 10 do

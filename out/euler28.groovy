@@ -30,6 +30,5 @@ int sumdiag(int n)
   return sum
 }
 
-
 print(sumdiag(1001))
 

@@ -12,6 +12,7 @@
 (progn
   (return-from id b)
 ))
+
 (defun g (t0 index)
 (progn
   (setf (aref t0 index) nil)

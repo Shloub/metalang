@@ -4,14 +4,17 @@ Object subclass: euler45 [
     ifTrue:[^ (n quo: 2) * (n + 1)]
     ifFalse:[^ n * ((n + 1) quo: 2)].
   ]
+  
    penta: n  [
     ((n rem: 2) = 0)
     ifTrue:[^ (n quo: 2) * (3 * n - 1)]
     ifFalse:[^ ((3 * n - 1) quo: 2) * n].
   ]
+  
    hexa: n  [
     ^ n * (2 * n - 1)
   ]
+  
    findPenta2: n a: a b: b [|p c|
     (b = (a + 1))
     ifTrue:[^ ((self penta: a) = n) or: [(self penta: b) = n]].
@@ -23,6 +26,7 @@ Object subclass: euler45 [
       ifTrue:[^ (self findPenta2: n a: c b: b)]
       ifFalse:[^ (self findPenta2: n a: a b: c)].].
   ]
+  
    findHexa2: n a: a b: b [|p c|
     (b = (a + 1))
     ifTrue:[^ ((self hexa: a) = n) or: [(self hexa: b) = n]].

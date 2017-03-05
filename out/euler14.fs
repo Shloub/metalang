@@ -9,6 +9,7 @@
   THEN
 ;
 
+
 : find0 recursive { n m }
   n 1 =
   IF

@@ -3,7 +3,6 @@ import java.util.*;
 public class euler04
 {
   
-  
   /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =

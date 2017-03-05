@@ -9,11 +9,9 @@ void foo() {
     /* test 2 */
 }
 
-
 void foo2() {
     
 }
-
 
 void foo3() {
     if (1 == 1)
@@ -21,7 +19,6 @@ void foo3() {
         
     }
 }
-
 
 int sumdiv(int n) {
     int i;
@@ -42,14 +39,13 @@ int sumdiv(int n) {
         }
     return out0;
     /*On renvoie out*/
-}
-int main(void) {
-    /* Programme principal */
-    int n = 0;
-    scanf("%d", &n);
-    /* Lecture de l'entier */
-    printf("%d", sumdiv(n));
-    return 0;
+}int main(void) {
+     /* Programme principal */
+     int n = 0;
+     scanf("%d", &n);
+     /* Lecture de l'entier */
+     printf("%d", sumdiv(n));
+     return 0;
 }
 
 

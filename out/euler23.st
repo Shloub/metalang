@@ -12,6 +12,7 @@ Object subclass: euler23 [
       ].].
     ^ n
   ]
+  
    fillPrimesFactors: t a: a primes: primes nprimes: nprimes [|n d|
     n := a.
     (0 to: (nprimes - 1)) do: [:i|
@@ -25,11 +26,13 @@ Object subclass: euler23 [
     ].
     ^ n
   ]
+  
    sumdivaux2: t n: n b: b [|i|
     i := b.
     [(i < n) and: [(t at: (i + 1)) = 0]] whileTrue:[i := i + 1.].
     ^ i
   ]
+  
    sumdivaux: t n: n i: i [|p out0 o|
     (i > n)
     ifTrue:[^ 1]
@@ -46,6 +49,7 @@ Object subclass: euler23 [
         ^ out0 + 1 * o
       ].].
   ]
+  
    sumdiv: nprimes primes: primes n: n [|t max0|
     t := Array new: (n + 1).
     (0 to: n) do: [:i| t at: (i + 1) put: 0.].

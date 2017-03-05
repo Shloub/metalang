@@ -1,9 +1,6 @@
 import groovy.transform.Field
 import java.util.*
 
-
-
-
 int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
 {
   if (posX == x - 1 && posY == y - 1)
@@ -26,7 +23,6 @@ int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
       return out0
   }
 }
-
 int pathfind(char[][] tab, int x, int y)
 {
   int[][] cache = new int[y][]
@@ -43,7 +39,6 @@ int pathfind(char[][] tab, int x, int y)
   }
   return pathfind_aux(cache, tab, x, y, 0, 0)
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int x = Integer.parseInt(scanner.nextLine())
 int y = Integer.parseInt(scanner.nextLine())

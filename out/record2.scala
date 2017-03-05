@@ -38,7 +38,6 @@ def skip() {
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   
-  
   def main(args : Array[String])
   {
     var t: Toto = mktoto(4);

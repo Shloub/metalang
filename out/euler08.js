@@ -9,7 +9,8 @@ function read_char_(){
     var out = current_char;
     current_char = read_char0();
     return out;
-}var i = 1;
+}
+var i = 1;
 var last = new Array(5);
 for (var j = 0; j < 5; j++)
 {

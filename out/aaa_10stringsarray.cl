@@ -10,14 +10,17 @@
   s
   v
   )
+
 (defun idstring (s)
 (progn
   (return-from idstring s)
 ))
+
 (defun printstring (s)
 (progn
   (format t "~A~%" (idstring s))
 ))
+
 (defun print_toto (t0)
 (progn
   (format t "~A = ~D~%" (toto-s t0) (toto-v t0))

@@ -24,6 +24,7 @@ function is_triangular (n)
   local a = math.floor(math.sqrt(n * 2))
   return a * (a + 1) == n * 2
 end
+
 function score ()
   stdinsep()
   local len = readint()

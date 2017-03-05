@@ -44,6 +44,7 @@ Object subclass: pathfinding0 [
             ^ out0
           ].].].].
   ]
+  
    pathfind: tab x: x y: y [|tmp cache|
     cache := Array new: y.
     (0 to: (y - 1)) do: [:i|

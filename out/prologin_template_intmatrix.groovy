@@ -10,8 +10,6 @@ import java.util.*
     return out;
   }
 
-
-
 int programme_candidat(int[][] tableau, int x, int y)
 {
   int out0 = 0
@@ -20,7 +18,6 @@ int programme_candidat(int[][] tableau, int x, int y)
           out0 += tableau[i][j] * (i * 2 + j)
   return out0
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int taille_x = Integer.parseInt(scanner.nextLine())
 int taille_y = Integer.parseInt(scanner.nextLine())

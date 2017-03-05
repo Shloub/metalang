@@ -4,12 +4,10 @@ boolean[] id(boolean[] b)
 {
   return b
 }
-
 void g(boolean[] t, int index)
 {
   t[index] = false
 }
-
 
 int j = 0
 boolean[] a = new boolean[5]

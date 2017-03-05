@@ -3,8 +3,6 @@ import java.util.*;
 public class vigenere
 {
   static Scanner scanner = new Scanner(System.in);
-  
-  
   static int position_alphabet(char c)
   {
     int i = (int)(c);

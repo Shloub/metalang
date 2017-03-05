@@ -10,7 +10,6 @@ Module euler07
     Next
     Return false
   End Function
-  
   Function find(ByVal n as Integer, ByRef t as Integer(), ByVal used as Integer, ByVal nth as Integer) As Integer
     Do While used <> nth
         If divisible(n, t, used) Then
@@ -23,7 +22,6 @@ Module euler07
     Loop
     Return t(used - 1)
   End Function
-  
   Sub Main()
     Dim n As Integer = 10001
     Dim t(n) As Integer

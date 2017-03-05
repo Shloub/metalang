@@ -39,7 +39,6 @@ def skip() {
     return true;
   }
   
-  
   def main(args : Array[String])
   {
     var nombre = read_int();

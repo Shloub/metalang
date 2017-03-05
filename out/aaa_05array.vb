@@ -5,11 +5,9 @@ Module aaa_05array
   Function id(ByRef b as Boolean()) As Boolean()
     Return b
   End Function
-  
   Sub g(ByRef t as Boolean(), ByVal index as Integer)
     t(index) = false
   End Sub
-  
   Sub Main()
     Dim j As Integer = 0
     Dim a(5) As Boolean

@@ -33,9 +33,6 @@ static void stdin_sep(){
     }
   } while(true);
 }
-  
-  
-  
   public class bigint {
     public bool bigint_sign;
     public int bigint_len;

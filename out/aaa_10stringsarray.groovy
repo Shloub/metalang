@@ -8,17 +8,14 @@ String idstring(String s)
 {
   return s
 }
-
 void printstring(String s)
 {
   System.out.printf("%s\n", idstring(s))
 }
-
 void print_toto(Toto t)
 {
   System.out.printf("%s = %d\n", t.s, t.v)
 }
-
 
 String[] tab = new String[2]
 for (int i = 0; i < 2; i++)

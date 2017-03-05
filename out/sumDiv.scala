@@ -55,7 +55,6 @@ def read_int() : Int = {
     /*On renvoie out*/
   }
   
-  
   def main(args : Array[String])
   {
     /* Programme principal */

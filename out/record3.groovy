@@ -14,7 +14,6 @@ Toto mktoto(int v1)
   t.blah = 0
   return t
 }
-
 int result(Toto[] t, int len)
 {
   int out0 = 0
@@ -25,7 +24,6 @@ int result(Toto[] t, int len)
   }
   return out0
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 Toto[] t = new Toto[4]
 for (int i = 0; i < 4; i++)

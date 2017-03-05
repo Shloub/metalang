@@ -9,7 +9,6 @@ int triangle(int n) {
         return n * ((n + 1) / 2);
 }
 
-
 int penta(int n) {
     if (n % 2 == 0)
         return (n / 2) * (3 * n - 1);
@@ -17,11 +16,9 @@ int penta(int n) {
         return ((3 * n - 1) / 2) * n;
 }
 
-
 int hexa(int n) {
     return n * (2 * n - 1);
 }
-
 
 int findPenta2(int n, int a, int b) {
     if (b == a + 1)
@@ -36,7 +33,6 @@ int findPenta2(int n, int a, int b) {
         return findPenta2(n, a, c);
 }
 
-
 int findHexa2(int n, int a, int b) {
     if (b == a + 1)
         return hexa(a) == n || hexa(b) == n;
@@ -48,16 +44,15 @@ int findHexa2(int n, int a, int b) {
         return findHexa2(n, c, b);
     else
         return findHexa2(n, a, c);
-}
-int main(void) {
-    int n;
-    for (n = 285; n < 55386; n++)
-    {
-        int t = triangle(n);
-        if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))
-            printf("%d\n%d\n", n, t);
-    }
-    return 0;
+}int main(void) {
+     int n;
+     for (n = 285; n < 55386; n++)
+     {
+         int t = triangle(n);
+         if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))
+             printf("%d\n%d\n", n, t);
+     }
+     return 0;
 }
 
 

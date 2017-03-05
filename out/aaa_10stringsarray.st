@@ -9,11 +9,13 @@ Object subclass: aaa_10stringsarray [
    idstring: s  [
     ^ s
   ]
+  
    printstring: s  [
     (self idstring: s) display.
     '
 ' display.
   ]
+  
    print_toto: t  [
     t s display.
     ' = ' display.

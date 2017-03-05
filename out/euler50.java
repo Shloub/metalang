@@ -3,7 +3,6 @@ import java.util.*;
 public class euler50
 {
   
-  
   static int eratostene(int[] t, int max0)
   {
     int n = 0;

@@ -2,7 +2,6 @@ Imports System
 
 Module euler12
 
-  
   Function eratostene(ByRef t as Integer(), ByVal max0 as Integer) As Integer
     Dim n As Integer = 0
     For i As Integer = 2 To max0 - 1
@@ -17,7 +16,6 @@ Module euler12
     Next
     Return n
   End Function
-  
   Function fillPrimesFactors(ByRef t as Integer(), ByVal n as Integer, ByRef primes as Integer(), ByVal nprimes as Integer) As Integer
     For i As Integer = 0 To nprimes - 1
         Dim d As Integer = primes(i)
@@ -31,7 +29,6 @@ Module euler12
     Next
     Return n
   End Function
-  
   Function find(ByVal ndiv2 as Integer) As Integer
     Dim maximumprimes As Integer = 110
     Dim era(maximumprimes) As Integer
@@ -71,7 +68,6 @@ Module euler12
         Next
         Return 0
     End Function
-    
     Sub Main()
       Console.Write(find(500) & Chr(10))
     End Sub

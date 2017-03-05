@@ -16,7 +16,6 @@ Module aaa_04loop
     Loop
     Return false
   End Function
-  
   Sub Main()
     Dim j As Integer = 0
     For k As Integer = 0 To 10

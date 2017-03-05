@@ -30,6 +30,7 @@
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 |#
+
 (defun find0 (len tab cache x y)
 (progn
   #|
@@ -56,6 +57,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
                 (return-from find0 result)
               )))))))
 ))
+
 (defun find01 (len tab)
 (progn
   (let

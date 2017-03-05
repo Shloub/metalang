@@ -21,6 +21,7 @@ Object subclass: sort [
     (0 to: (len - 1)) do: [:i| o at: (i + 1) put: (tab at: (i + 1)).].
     ^ o
   ]
+  
    bubblesort: tab len: len [|tmp|
     (0 to: (len - 1)) do: [:i| ((i + 1) to: (len - 1)) do: [:j| ((tab at: (i + 1)) > (tab at: (j + 1)))
                                  ifTrue:[
@@ -29,6 +30,7 @@ Object subclass: sort [
                                    tab at: (j + 1) put: tmp.
                                  ].].].
   ]
+  
    qsort0: tab len: len a: a b: b [|tmp j0 j i0 i|
     i := a.
     j := b.

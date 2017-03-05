@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func score() int{
   var len int
   skip()

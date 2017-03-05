@@ -2,8 +2,6 @@ Imports System
 
 Module euler33
 
-  
-  
   Function pgcd(ByVal a as Integer, ByVal b as Integer) As Integer
     Dim c As Integer = Math.Min(a, b)
     Dim d As Integer = Math.Max(a, b)
@@ -14,7 +12,6 @@ Module euler33
         Return pgcd(c, reste)
     End If
   End Function
-  
   Sub Main()
     Dim top As Integer = 1
     Dim bottom As Integer = 1

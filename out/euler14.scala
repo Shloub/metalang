@@ -24,7 +24,6 @@ object euler14
             }
   }
   
-  
   def main(args : Array[String])
   {
     var m :Array[Int] = new Array[Int](1000000);

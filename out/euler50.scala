@@ -27,7 +27,6 @@ object euler50
     return n;
   }
   
-  
   def main(args : Array[String])
   {
     var maximumprimes: Int = 1000001;

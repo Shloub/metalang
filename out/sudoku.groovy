@@ -19,7 +19,6 @@ int[] read_sudoku()
   }
   return out0
 }
-
 //  affiche un sudoku 
 void print_sudoku(int[] sudoku0)
 {
@@ -37,7 +36,6 @@ void print_sudoku(int[] sudoku0)
   }
   print("\n")
 }
-
 //  dit si les variables sont toutes différentes 
 //  dit si les variables sont toutes différentes 
 //  dit si le sudoku est terminé de remplir 
@@ -48,7 +46,6 @@ boolean sudoku_done(int[] s)
           return false
   return true
 }
-
 //  dit si il y a une erreur dans le sudoku 
 boolean sudoku_error(int[] s)
 {
@@ -63,7 +60,6 @@ boolean sudoku_error(int[] s)
       out3 = out3 || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] == s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] || s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] != 0 && s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2] || s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] != 0 && s[(x % 3) * 3 * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2] || s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] != 0 && s[((x % 3) * 3 + 1) * 9 + x.intdiv(3) * 3 + 2] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2] || s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] != 0 && s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2] || s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] != 0 && s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 1] == s[((x % 3) * 3 + 2) * 9 + x.intdiv(3) * 3 + 2]
   return out1 || out2 || out3
 }
-
 //  résout le sudoku
 boolean solve(int[] sudoku0)
 {
@@ -85,7 +81,6 @@ boolean solve(int[] sudoku0)
       }
   return false
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int[] sudoku0 = read_sudoku()
 print_sudoku(sudoku0)

@@ -20,7 +20,6 @@ Module euler36
     Next
     Return true
     End Function
-    
     Sub Main()
       Dim p As Integer = 1
       Dim pow2(20) As Integer

@@ -29,6 +29,7 @@ function pathfind_aux (cache, tab, len, pos)
       return out0
   end
 end
+
 function pathfind (tab, len)
   local cache = {}
   for i = 0, len - 1 do

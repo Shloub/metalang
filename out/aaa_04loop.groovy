@@ -15,7 +15,6 @@ boolean h(int i)
   return false
 }
 
-
 int j = 0
 for (int k = 0; k < 11; k++)
 {

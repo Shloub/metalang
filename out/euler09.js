@@ -1,4 +1,5 @@
 var util = require("util");
+
 /*
 	a + b + c = 1000 && a * a + b * b = c * c
 	*/

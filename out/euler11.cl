@@ -33,6 +33,7 @@
     (return-from max2_ a)
     (return-from max2_ b))
 ))
+
 (defun find0 (n m x y dx dy)
 (progn
   (if
@@ -43,6 +44,7 @@
       (return-from find0 1)
       (return-from find0 (* (aref (aref m y) x) (find0 (- n 1) m (+ x dx) (+ y dy) dx dy)))))
 ))
+
 (defstruct (tuple_int_int (:type list) :named)
   tuple_int_int_field_0
   tuple_int_int_field_1

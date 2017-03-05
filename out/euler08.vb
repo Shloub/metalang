@@ -23,7 +23,6 @@ Function readChar() As Char
   Return out_
 End Function
   
-  
   Sub Main()
     Dim i As Integer = 1
     Dim last(5) As Integer

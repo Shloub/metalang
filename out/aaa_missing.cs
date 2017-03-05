@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class aaa_missing
 {
-  
-  
   /*
   Ce test a été généré par Metalang.
 */

@@ -9,15 +9,12 @@ Module aaa_10stringsarray
   Function idstring(ByRef s as String) As String
     Return s
   End Function
-  
   Sub printstring(ByRef s as String)
     Console.Write(idstring(s) & Chr(10))
   End Sub
-  
   Sub print_toto(ByRef t as toto)
     Console.Write(t.s & " = " & t.v & Chr(10))
   End Sub
-  
   Sub Main()
     Dim tab(2) As String
     For i As Integer = 0 To 1

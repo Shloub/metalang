@@ -1,4 +1,5 @@
 var util = require("util");
+
 /*
 a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   a ^ 5 +

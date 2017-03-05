@@ -9,7 +9,6 @@ Module euler24
     Next
     Return prod
   End Function
-  
   Sub show(ByVal lim as Integer, ByVal nth as Integer)
     Dim t(lim) As Integer
     For i As Integer = 0 To lim - 1
@@ -40,7 +39,6 @@ Module euler24
     Next
     Console.Write(Chr(10))
     End Sub
-    
     Sub Main()
       show(10, 999999)
     End Sub

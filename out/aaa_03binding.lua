@@ -5,6 +5,7 @@ function g (i)
   end
   return j
 end
+
 function h (i)
   io.write(string.format("%d\n", i))
 end

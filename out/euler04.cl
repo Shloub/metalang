@@ -9,6 +9,7 @@
     (return-from max2_ a)
     (return-from max2_ b))
 ))
+
 #|
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -27,6 +28,7 @@ a * d +
 c * f * 10000
 
 |#
+
 (defun chiffre (c m)
 (progn
   (if

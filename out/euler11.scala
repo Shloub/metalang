@@ -18,7 +18,6 @@ object euler11
             return m(y)(x) * find(n - 1, m, x + dx, y + dy, dx, dy);
   }
   
-  
   def main(args : Array[String])
   {
     var directions :Array[(Int, Int)] = new Array[(Int, Int)](8);

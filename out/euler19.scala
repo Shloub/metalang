@@ -47,7 +47,6 @@ object euler19
     return 0;
   }
   
-  
   def main(args : Array[String])
   {
     var month: Int = 0;

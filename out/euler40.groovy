@@ -7,7 +7,6 @@ int exp0(int a, int e)
       o *= a
   return o
 }
-
 int e(int[] t, int n)
 {
   for (int i = 1; i < 9; i++)
@@ -21,7 +20,6 @@ int e(int[] t, int n)
       }
   return -1
 }
-
 
 int[] t = new int[9]
 for (int i = 0; i < 9; i++)

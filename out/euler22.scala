@@ -42,7 +42,6 @@ def skip() {
     return sum;
   }
   
-  
   def main(args : Array[String])
   {
     var sum: Int = 0;

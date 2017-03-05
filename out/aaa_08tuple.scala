@@ -6,7 +6,6 @@ object aaa_08tuple
     var bar: Int=_bar;
   }
   
-  
   def main(args : Array[String])
   {
     var bar_0: Int = readInt().toInt;

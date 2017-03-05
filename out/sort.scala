@@ -73,7 +73,6 @@ def skip() {
     }
   }
   
-  
   def main(args : Array[String])
   {
     var len: Int = 2;

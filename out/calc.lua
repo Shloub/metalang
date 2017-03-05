@@ -1,6 +1,7 @@
 --[[
 La suite de fibonaci
 --]]
+
 function fibo (a, b, i)
   local out_ = 0
   local a2 = a

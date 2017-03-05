@@ -61,7 +61,6 @@ End Function
     Next
     Return out0
     End Function
-    
     ' affiche un sudoku 
     
     Sub print_sudoku(ByRef sudoku0 as Integer())
@@ -79,7 +78,6 @@ End Function
       Next
       Console.Write(Chr(10))
     End Sub
-    
     ' dit si les variables sont toutes différentes 
     
     ' dit si les variables sont toutes différentes 
@@ -94,7 +92,6 @@ End Function
       Next
       Return true
     End Function
-    
     ' dit si il y a une erreur dans le sudoku 
     
     Function sudoku_error(ByRef s as Integer()) As Boolean
@@ -112,7 +109,6 @@ End Function
       Next
       Return out1 OrElse out2 OrElse out3
     End Function
-    
     ' résout le sudoku
     
     Function solve(ByRef sudoku0 as Integer()) As Boolean
@@ -136,7 +132,6 @@ End Function
       Next
       Return false
     End Function
-    
     Sub Main()
       Dim sudoku0 As Integer() = read_sudoku()
       print_sudoku(sudoku0)

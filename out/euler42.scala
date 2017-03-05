@@ -54,7 +54,6 @@ def skip() {
         return 0;
   }
   
-  
   def main(args : Array[String])
   {
     for (i <- 1 to 55)

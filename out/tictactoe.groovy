@@ -37,7 +37,6 @@ void print_state(Gamestate g)
   }
   print("\n")
 }
-
 //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
 void eval0(Gamestate g)
 {
@@ -82,7 +81,6 @@ void eval0(Gamestate g)
   else
       g.note = 0
 }
-
 //  On applique un mouvement 
 void apply_move_xy(int x, int y, Gamestate g)
 {
@@ -92,34 +90,28 @@ void apply_move_xy(int x, int y, Gamestate g)
   g.cases[x][y] = player
   g.firstToPlay = !g.firstToPlay
 }
-
 void apply_move(Move m, Gamestate g)
 {
   apply_move_xy(m.x, m.y, g)
 }
-
 void cancel_move_xy(int x, int y, Gamestate g)
 {
   g.cases[x][y] = 0
   g.firstToPlay = !g.firstToPlay
   g.ended = false
 }
-
 void cancel_move(Move m, Gamestate g)
 {
   cancel_move_xy(m.x, m.y, g)
 }
-
 boolean can_move_xy(int x, int y, Gamestate g)
 {
   return g.cases[x][y] == 0
 }
-
 boolean can_move(Move m, Gamestate g)
 {
   return can_move_xy(m.x, m.y, g)
 }
-
 /*
 Un minimax classique, renvoie la note du plateau
 */
@@ -144,7 +136,6 @@ int minmax(Gamestate g)
           }
   return maxNote
 }
-
 /*
 Renvoie le coup de l'IA
 */
@@ -172,7 +163,6 @@ Move play(Gamestate g)
   System.out.printf("%d%d\n", minMove.x, minMove.y)
   return minMove
 }
-
 Gamestate init0()
 {
   int[][] cases = new int[3][]
@@ -190,7 +180,6 @@ Gamestate init0()
   a.ended = false
   return a
 }
-
 Move read_move()
 {
   int x
@@ -214,7 +203,6 @@ Move read_move()
   b.y = y
   return b
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 for (int i = 0; i < 2; i++)
 {

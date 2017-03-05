@@ -49,7 +49,6 @@ object pathfinding0
     return pathfind_aux(cache, tab, x, y, 0, 0);
   }
   
-  
   def main(args : Array[String])
   {
     var x: Int = readInt().toInt;

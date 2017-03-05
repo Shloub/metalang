@@ -69,7 +69,6 @@ End Function
         Return out0
     End If
   End Function
-  
   Function pathfind(ByRef tab as Integer(), ByVal len as Integer) As Integer
     Dim cache(len) As Integer
     For i As Integer = 0 To len - 1
@@ -77,7 +76,6 @@ End Function
     Next
     Return pathfind_aux(cache, tab, len, 0)
     End Function
-    
     Sub Main()
       Dim len As Integer = 0
       len = readInt

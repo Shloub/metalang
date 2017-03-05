@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class euler11
 {
-  
-  
   static int find(int n, int[][] m, int x, int y, int dx, int dy)
   {
     if (x < 0 || x == 20 || y < 0 || y == 20)

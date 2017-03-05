@@ -12,7 +12,6 @@ object prologin_template_charline
     return out0;
   }
   
-  
   def main(args : Array[String])
   {
     var taille: Int = readInt().toInt;

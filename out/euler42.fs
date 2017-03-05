@@ -33,6 +33,7 @@ create bufferc 128 allot
   a a 1 + * n 2 * = exit
 ;
 
+
 : score {  }
   skipspaces
   read-int { len }

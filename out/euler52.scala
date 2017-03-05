@@ -22,7 +22,6 @@ object euler52
     return ca == chiffre_sort(b) && ca == chiffre_sort(c) && ca == chiffre_sort(d) && ca == chiffre_sort(e) && ca == chiffre_sort(f);
   }
   
-  
   def main(args : Array[String])
   {
     var num: Int = 142857;

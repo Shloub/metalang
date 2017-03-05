@@ -25,7 +25,9 @@ def skip() {
   /*
 Tictactoe : un tictactoe avec une IA
 */
+  
   //  La structure de donnée 
+  
   class Gamestate(_cases: Array[Array[Int]], _firstToPlay: Boolean, _note: Int, _ended: Boolean){
     var cases: Array[Array[Int]]=_cases;
     var firstToPlay: Boolean=_firstToPlay;
@@ -34,12 +36,14 @@ Tictactoe : un tictactoe avec une IA
   }
   
   //  Un Mouvement 
+  
   class Move(_x: Int, _y: Int){
     var x: Int=_x;
     var y: Int=_y;
   }
   
   //  On affiche l'état 
+  
   def print_state(g : Gamestate){
     printf("\n|");
     for (y <- 0 to 2)
@@ -62,6 +66,7 @@ Tictactoe : un tictactoe avec une IA
   }
   
   //  On dit qui gagne (info stoquées dans g.ended et g.note ) 
+  
   def eval0(g : Gamestate){
     var win: Int = 0;
     var freecase: Int = 0;
@@ -110,6 +115,7 @@ Tictactoe : un tictactoe avec une IA
   }
   
   //  On applique un mouvement 
+  
   def apply_move_xy(x : Int, y : Int, g : Gamestate){
     var player: Int = 2;
     if (g.firstToPlay)
@@ -143,6 +149,7 @@ Tictactoe : un tictactoe avec une IA
   /*
 Un minimax classique, renvoie la note du plateau
 */
+  
   def minmax(g : Gamestate): Int = {
     eval0(g);
     if (g.ended)
@@ -167,6 +174,7 @@ Un minimax classique, renvoie la note du plateau
   /*
 Renvoie le coup de l'IA
 */
+  
   def play(g : Gamestate): Move = {
     var minMove: Move = new Move(0, 0);
     var minNote: Int = 10000;
@@ -208,7 +216,6 @@ Renvoie le coup de l'IA
     skip();
     return new Move(x, y);
   }
-  
   
   def main(args : Array[String])
   {

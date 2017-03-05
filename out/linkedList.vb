@@ -46,11 +46,9 @@ End Function
     out0.tail = list
     Return out0
   End Function
-  
   Function is_empty(ByRef foo as intlist) As Boolean
     Return true
   End Function
-  
   Function rev2(ByRef acc as intlist, ByRef torev as intlist) As intlist
     If is_empty(torev) Then
         Return acc
@@ -61,11 +59,9 @@ End Function
         Return rev2(acc, torev.tail)
     End If
   End Function
-  
   Function rev(ByRef empty as intlist, ByRef torev as intlist) As intlist
     Return rev2(empty, torev)
   End Function
-  
   Sub test(ByRef empty as intlist)
     Dim list As intlist = empty
     Dim i As Integer = -1
@@ -76,7 +72,6 @@ End Function
         End If
     Loop
   End Sub
-  
   Sub Main()
     
   End Sub

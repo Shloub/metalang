@@ -29,11 +29,13 @@
     (return-from max2_ a)
     (return-from max2_ b))
 ))
+
 (defstruct (bigint (:type list) :named)
   bigint_sign
   bigint_len
   bigint_chiffres
   )
+
 (defun read_bigint (len)
 (progn
   (let
@@ -56,6 +58,7 @@
   )
   
 ))
+
 (defun print_bigint (a)
 (progn
   (if
@@ -65,6 +68,7 @@
   (loop for i from 0 to (- (bigint-bigint_len a) 1) do
     (princ (aref (bigint-bigint_chiffres a) (- (- (bigint-bigint_len a) 1) i))))
 ))
+
 (defun bigint_eq (a b)
 (progn
   #| Renvoie vrai si a = b |#
@@ -83,6 +87,7 @@
         (return-from bigint_eq t)
       )))
 ))
+
 (defun bigint_gt (a b)
 (progn
   #| Renvoie vrai si a > b |#
@@ -113,10 +118,12 @@
         (return-from bigint_gt t)
       )))
 ))
+
 (defun bigint_lt (a b)
 (progn
   (return-from bigint_lt (not (bigint_gt a b)))
 ))
+
 (defun add_bigint_positif (a b)
 (progn
   #| Une addition ou on en a rien a faire des signes |#
@@ -150,6 +157,7 @@
     )
   
 ))
+
 (defun sub_bigint_positif (a b)
 (progn
   #| Une soustraction ou on en a rien a faire des signes
@@ -187,12 +195,14 @@ Pré-requis : a > b
     )
   
 ))
+
 (defun neg_bigint (a)
 (progn
   (let ((h (make-bigint :bigint_sign (not (bigint-bigint_sign a)) :bigint_len (bigint-bigint_len a) :bigint_chiffres (bigint-bigint_chiffres a))))
   (return-from neg_bigint h))
   
 ))
+
 (defun add_bigint (a b)
 (progn
   (if
@@ -218,10 +228,12 @@ Pré-requis : a > b
           (return-from add_bigint (sub_bigint_positif b a)))
       )))
 ))
+
 (defun sub_bigint (a b)
 (progn
   (return-from sub_bigint (add_bigint a (neg_bigint b)))
 ))
+
 (defun mul_bigint_cp (a b)
 (progn
   #| Cet algorithm est quadratique.
@@ -260,6 +272,7 @@ D'ou le nom de la fonction. |#
     )
   
 ))
+
 (defun bigint_premiers_chiffres (a i)
 (progn
   (let ((len (min i (bigint-bigint_len a))))
@@ -271,6 +284,7 @@ D'ou le nom de la fonction. |#
     )
   
 ))
+
 (defun bigint_shift (a i)
 (progn
   (let
@@ -289,6 +303,7 @@ D'ou le nom de la fonction. |#
   )
   
 ))
+
 (defun mul_bigint (aa bb)
 (progn
   (if
@@ -317,10 +332,12 @@ D'ou le nom de la fonction. |#
                                 #| ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd |#
                               )))))))))))))))
 ))
+
 #|
 Division,
 Modulo
 |#
+
 (defun log10 (a)
 (progn
   (let ((out0 1))
@@ -333,6 +350,7 @@ Modulo
     (return-from log10 out0))
     
 ))
+
 (defun bigint_of_int (i)
 (progn
   (let ((size (log10 i)))
@@ -359,6 +377,7 @@ Modulo
     )
   
 ))
+
 (defun fact_bigint (a)
 (progn
   (let ((one (bigint_of_int 1)))
@@ -373,6 +392,7 @@ Modulo
       )
     
 ))
+
 (defun sum_chiffres_bigint (a)
 (progn
   (let ((out0 0))
@@ -381,7 +401,9 @@ Modulo
     (return-from sum_chiffres_bigint out0))
     
 ))
+
 #| http://projecteuler.net/problem=20 |#
+
 (defun euler20 ()
 (progn
   (let ((a (bigint_of_int 15)))
@@ -390,6 +412,7 @@ Modulo
     (return-from euler20 (sum_chiffres_bigint a)))
     
 ))
+
 (defun bigint_exp (a b)
 (progn
   (if
@@ -400,6 +423,7 @@ Modulo
       (return-from bigint_exp (bigint_exp (mul_bigint a a) (quotient b 2)))
       (return-from bigint_exp (mul_bigint a (bigint_exp a (- b 1))))))
 ))
+
 (defun bigint_exp_10chiffres (a b)
 (progn
   (setq a (bigint_premiers_chiffres a 10))
@@ -411,6 +435,7 @@ Modulo
       (return-from bigint_exp_10chiffres (bigint_exp_10chiffres (mul_bigint a a) (quotient b 2)))
       (return-from bigint_exp_10chiffres (mul_bigint a (bigint_exp_10chiffres a (- b 1))))))
 ))
+
 (defun euler48 ()
 (progn
   (let ((sum (bigint_of_int 0)))
@@ -428,6 +453,7 @@ Modulo
 "))
     
 ))
+
 (defun euler16 ()
 (progn
   (let ((a (bigint_of_int 2)))
@@ -436,6 +462,7 @@ Modulo
     (return-from euler16 (sum_chiffres_bigint a)))
     
 ))
+
 (defun euler25 ()
 (progn
   (let ((i 2))
@@ -455,6 +482,7 @@ Modulo
       )
     
 ))
+
 (defun euler29 ()
 (progn
   (let ((maxA 5))

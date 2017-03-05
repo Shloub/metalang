@@ -7,7 +7,6 @@ typedef struct intlist {
     struct intlist * tail;
 } intlist;
 
-
 struct intlist * cons(struct intlist * list, int i) {
     struct intlist * out0 = malloc(sizeof(intlist));
     out0->head = i;
@@ -15,11 +14,9 @@ struct intlist * cons(struct intlist * list, int i) {
     return out0;
 }
 
-
 int is_empty(struct intlist * foo) {
     return 1;
 }
-
 
 struct intlist * rev2(struct intlist * acc, struct intlist * torev) {
     if (is_empty(torev))
@@ -33,11 +30,9 @@ struct intlist * rev2(struct intlist * acc, struct intlist * torev) {
     }
 }
 
-
 struct intlist * rev(struct intlist * empty, struct intlist * torev) {
     return rev2(empty, torev);
 }
-
 
 void test(struct intlist * empty) {
     struct intlist * list = empty;
@@ -48,10 +43,9 @@ void test(struct intlist * empty) {
         if (i != 0)
             list = cons(list, i);
     }
-}
-int main(void) {
-    
-    return 0;
+}int main(void) {
+     
+     return 0;
 }
 
 

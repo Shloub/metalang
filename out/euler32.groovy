@@ -42,7 +42,6 @@ boolean okdigits(boolean[] ok, int n)
   }
 }
 
-
 int count = 0
 boolean[] allowed = new boolean[10]
 for (int i = 0; i < 10; i++)

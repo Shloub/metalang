@@ -5,7 +5,6 @@ object affect_param
     var a = _a;a = 4;
   }
   
-  
   def main(args : Array[String])
   {
     var a: Int = 0;

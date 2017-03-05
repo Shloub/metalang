@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 public class prologin_template_charline
 {
-  
-  
-  
   static int programme_candidat(char[] tableau, int taille)
   {
     int out0 = 0;

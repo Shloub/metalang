@@ -50,7 +50,6 @@ def skip() {
     return pathfind_aux(cache, tab, len, 0);
   }
   
-  
   def main(args : Array[String])
   {
     var len: Int = 0;

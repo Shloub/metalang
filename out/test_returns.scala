@@ -29,7 +29,6 @@ object test_returns
     return i % 2 == 0;
   }
   
-  
   def main(args : Array[String])
   {
     

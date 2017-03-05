@@ -20,7 +20,6 @@ int eratostene(int[] t, int max0)
   return sum
 }
 
-
 int n = 100000
 //  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
 int[] t = new int[n]

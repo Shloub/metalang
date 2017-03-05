@@ -22,12 +22,14 @@
   bar
   blah
   )
+
 (defun mktoto (v1)
 (progn
   (let ((t0 (make-toto :foo v1 :bar 0 :blah 0)))
   (return-from mktoto t0))
   
 ))
+
 (defun result (t0)
 (progn
   (setf (toto-blah t0) (+ (toto-blah t0) 1))

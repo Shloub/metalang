@@ -26,13 +26,13 @@ a * d +
 c * f * 10000
 
 */
+  
   def chiffre(c : Int, m : Int): Int = {
     if (c == 0)
         return m % 10;
     else
         return chiffre(c - 1, m / 10);
   }
-  
   
   def main(args : Array[String])
   {

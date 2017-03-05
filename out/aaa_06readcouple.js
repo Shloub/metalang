@@ -26,6 +26,7 @@ function read_int_(){
     }
   }
 }
+
 for (var i = 1; i < 4; i++)
 {
     var a = read_int_();

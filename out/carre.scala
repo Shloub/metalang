@@ -8,7 +8,6 @@ object carre
         return b;
   }
   
-  
   def main(args : Array[String])
   {
     var x: Int = readInt().toInt;

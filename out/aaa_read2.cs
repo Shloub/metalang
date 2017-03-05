@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 public class aaa_read2
 {
-  
-  
-  
-  
-  
   /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip

@@ -3,7 +3,6 @@ import java.util.*;
 public class euler22
 {
   static Scanner scanner = new Scanner(System.in);
-  
   static int score()
   {
     scanner.findWithinHorizon("[\n\r ]*", 1);

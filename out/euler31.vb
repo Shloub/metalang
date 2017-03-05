@@ -17,7 +17,6 @@ Module euler31
         Return out0
     End If
   End Function
-  
   Sub Main()
     Dim t(8) As Integer
     For i As Integer = 0 To 7

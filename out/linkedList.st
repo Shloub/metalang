@@ -23,9 +23,11 @@ Object subclass: linkedList [
     out0 tail: list.
     ^ out0
   ]
+  
    is_empty: foo  [
     ^ true
   ]
+  
    rev2: acc torev: torev [|acc2|
     (self is_empty: torev)
     ifTrue:[^ acc]
@@ -36,9 +38,11 @@ Object subclass: linkedList [
       ^ (self rev2: acc torev: torev tail)
     ].
   ]
+  
    rev: empty torev: torev [
     ^ (self rev2: empty torev: torev)
   ]
+  
    test: empty  [|list i|
     list := empty.
     i := 0 - 1.

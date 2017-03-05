@@ -28,6 +28,7 @@ struct
   cell% field ->blah
 end-struct toto%
 
+
 : mktoto { v1 }
   toto% %allot { t }
   v1 t ->foo !
@@ -35,6 +36,7 @@ end-struct toto%
   0 t ->blah !
   t exit
 ;
+
 
 : result { t }
   t ->blah @ 1 + t ->blah !

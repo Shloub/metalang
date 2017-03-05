@@ -45,10 +45,12 @@
         (return-from position_alphabet (- 0 1)))))
     
 ))
+
 (defun of_position_alphabet (c)
 (progn
   (return-from of_position_alphabet (code-char (+ c (char-code #\a))))
 ))
+
 (defun crypte (taille_cle cle taille message)
 (progn
   (loop for i from 0 to (- taille 1) do

@@ -9,6 +9,7 @@
   THEN
 ;
 
+
 : penta { n }
   n 2 % 0 =
   IF
@@ -18,9 +19,11 @@
   THEN
 ;
 
+
 : hexa { n }
   n 2 n * 1 - * exit
 ;
+
 
 : findPenta2 recursive { n a b }
   b a 1 + =
@@ -41,6 +44,7 @@
     THEN
   THEN
 ;
+
 
 : findHexa2 recursive { n a b }
   b a 1 + =

@@ -18,7 +18,6 @@ object aaa_10stringsarray
     printf("%s = %d\n", t.s, t.v);
   }
   
-  
   def main(args : Array[String])
   {
     var tab :Array[String] = new Array[String](2);

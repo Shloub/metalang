@@ -2,8 +2,6 @@
 #include <vector>
 #include<cmath>
 
-
-
 bool is_triangular(int n) {
     /*
    n = k * (k + 1) / 2

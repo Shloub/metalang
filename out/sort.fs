@@ -30,6 +30,7 @@ create bufferc 128 allot
   o exit
 ;
 
+
 : bubblesort { tab len }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     len 1 - i 1 + BEGIN 2dup >= WHILE DUP { j }
@@ -42,6 +43,7 @@ create bufferc 128 allot
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP
 ;
+
 
 : qsort0 recursive { tab len i j }
   i j <

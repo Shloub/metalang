@@ -11,6 +11,7 @@ function testA (a, b)
       io.write("D")
   end
 end
+
 function testB (a, b)
   if a then
       io.write("A")
@@ -20,6 +21,7 @@ function testB (a, b)
       io.write("C")
   end
 end
+
 function testC (a, b)
   if a then
       if b then
@@ -31,6 +33,7 @@ function testC (a, b)
       io.write("C")
   end
 end
+
 function testD (a, b)
   if a then
       if b then
@@ -43,6 +46,7 @@ function testD (a, b)
       io.write("D")
   end
 end
+
 function testE (a, b)
   if a then
       if b then
@@ -57,6 +61,7 @@ function testE (a, b)
       io.write("E")
   end
 end
+
 function test (a, b)
   testD(a, b)
   testE(a, b)

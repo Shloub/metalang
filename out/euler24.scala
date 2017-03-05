@@ -37,7 +37,6 @@ object euler24
     printf("\n");
   }
   
-  
   def main(args : Array[String])
   {
     show(10, 999999);

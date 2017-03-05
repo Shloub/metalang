@@ -31,10 +31,9 @@ int sumdiag(int n) {
         sum += un;
     }
     return sum;
-}
-int main(void) {
-    printf("%d", sumdiag(1001));
-    return 0;
+}int main(void) {
+     printf("%d", sumdiag(1001));
+     return 0;
 }
 
 

@@ -14,24 +14,23 @@ int h(int i) {
         j++;
     }
     return 0;
-}
-int main(void) {
-    int k;
-    int j = 0;
-    for (k = 0; k < 11; k++)
-    {
-        j += k;
-        printf("%d\n", j);
-    }
-    int i = 4;
-    while (i < 10)
-    {
-        printf("%d", i);
-        i++;
-        j += i;
-    }
-    printf("%d%dFIN TEST\n", j, i);
-    return 0;
+}int main(void) {
+     int k;
+     int j = 0;
+     for (k = 0; k < 11; k++)
+     {
+         j += k;
+         printf("%d\n", j);
+     }
+     int i = 4;
+     while (i < 10)
+     {
+         printf("%d", i);
+         i++;
+         j += i;
+     }
+     printf("%d%dFIN TEST\n", j, i);
+     return 0;
 }
 
 

@@ -15,7 +15,6 @@ object aaa_04loop
     return false;
   }
   
-  
   def main(args : Array[String])
   {
     var j: Int = 0;

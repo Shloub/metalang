@@ -16,7 +16,6 @@ int eratostene(int[] t, int max0)
       }
   return n
 }
-
 int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
 {
   for (int i = 0; i < nprimes; i++)
@@ -32,14 +31,12 @@ int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
   }
   return n
 }
-
 int sumdivaux2(int[] t, int n, int i)
 {
   while (i < n && t[i] == 0)
       i++
   return i
 }
-
 int sumdivaux(int[] t, int n, int i)
 {
   if (i > n)
@@ -59,7 +56,6 @@ int sumdivaux(int[] t, int n, int i)
       return (out0 + 1) * o
   }
 }
-
 int sumdiv(int nprimes, int[] primes, int n)
 {
   int[] t = new int[n + 1]
@@ -68,7 +64,6 @@ int sumdiv(int nprimes, int[] primes, int n)
   int max0 = fillPrimesFactors(t, n, primes, nprimes)
   return sumdivaux(t, max0, 0)
 }
-
 
 int maximumprimes = 1001
 int[] era = new int[maximumprimes]

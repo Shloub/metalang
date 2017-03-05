@@ -18,7 +18,6 @@ object euler31
         }
   }
   
-  
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](8);

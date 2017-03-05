@@ -12,8 +12,6 @@ public class aaa_08tuple
     return out;
   }
 
-  
-  
   static class tuple_int_int {
     public int tuple_int_int_field_0;
     public int tuple_int_int_field_1;

@@ -8,7 +8,6 @@ Module aaa_11arrayconst
     Next
     Console.Write(Chr(10))
   End Sub
-  
   Sub Main()
     Dim t(5) As Integer
     For i As Integer = 0 To 4

@@ -2,7 +2,6 @@
 #include <vector>
 #include <algorithm>
 
-
 int nbPassePartout(int n, std::vector<std::vector<int> *> * passepartout, int m, std::vector<std::vector<int> *> * serrures) {
     int max_ancient = 0;
     int max_recent = 0;

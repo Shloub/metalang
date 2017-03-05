@@ -20,7 +20,6 @@ int eratostene(int[] t, int max0)
   return n
 }
 
-
 int maximumprimes = 6000
 int[] era = new int[maximumprimes]
 for (int j_ = 0; j_ < maximumprimes; j_++)

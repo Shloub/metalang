@@ -1,9 +1,6 @@
 import groovy.transform.Field
 import java.util.*
 
-
-
-
 class Bigint {
   boolean bigint_sign
   int bigint_len
@@ -29,7 +26,6 @@ Bigint read_bigint(int len)
   e.bigint_chiffres = chiffres
   return e
 }
-
 void print_bigint(Bigint a)
 {
   if (!a.bigint_sign)
@@ -37,7 +33,6 @@ void print_bigint(Bigint a)
   for (int i = 0; i < a.bigint_len; i++)
       print(a.bigint_chiffres[a.bigint_len - 1 - i])
 }
-
 boolean bigint_eq(Bigint a, Bigint b)
 {
   //  Renvoie vrai si a = b 
@@ -53,7 +48,6 @@ boolean bigint_eq(Bigint a, Bigint b)
       return true
   }
 }
-
 boolean bigint_gt(Bigint a, Bigint b)
 {
   //  Renvoie vrai si a > b 
@@ -79,12 +73,10 @@ boolean bigint_gt(Bigint a, Bigint b)
       return true
   }
 }
-
 boolean bigint_lt(Bigint a, Bigint b)
 {
   return !bigint_gt(a, b)
 }
-
 Bigint add_bigint_positif(Bigint a, Bigint b)
 {
   //  Une addition ou on en a rien a faire des signes 
@@ -109,7 +101,6 @@ Bigint add_bigint_positif(Bigint a, Bigint b)
   f.bigint_chiffres = chiffres
   return f
 }
-
 Bigint sub_bigint_positif(Bigint a, Bigint b)
 {
   /* Une soustraction ou on en a rien a faire des signes
@@ -140,7 +131,6 @@ Pré-requis : a > b
   g.bigint_chiffres = chiffres
   return g
 }
-
 Bigint neg_bigint(Bigint a)
 {
   Bigint h = new Bigint()
@@ -149,7 +139,6 @@ Bigint neg_bigint(Bigint a)
   h.bigint_chiffres = a.bigint_chiffres
   return h
 }
-
 Bigint add_bigint(Bigint a, Bigint b)
 {
   if (a.bigint_sign == b.bigint_sign)
@@ -172,12 +161,10 @@ Bigint add_bigint(Bigint a, Bigint b)
       else
           return sub_bigint_positif(b, a)
 }
-
 Bigint sub_bigint(Bigint a, Bigint b)
 {
   return add_bigint(a, neg_bigint(b))
 }
-
 Bigint mul_bigint_cp(Bigint a, Bigint b)
 {
   /* Cet algorithm est quadratique.
@@ -209,7 +196,6 @@ D'ou le nom de la fonction. */
   m.bigint_chiffres = chiffres
   return m
 }
-
 Bigint bigint_premiers_chiffres(Bigint a, int i)
 {
   int len = Math.min(i, a.bigint_len)
@@ -221,7 +207,6 @@ Bigint bigint_premiers_chiffres(Bigint a, int i)
   o.bigint_chiffres = a.bigint_chiffres
   return o
 }
-
 Bigint bigint_shift(Bigint a, int i)
 {
   int[] chiffres = new int[a.bigint_len + i]
@@ -236,7 +221,6 @@ Bigint bigint_shift(Bigint a, int i)
   p.bigint_chiffres = chiffres
   return p
 }
-
 Bigint mul_bigint(Bigint aa, Bigint bb)
 {
   if (aa.bigint_len == 0)
@@ -260,7 +244,6 @@ Bigint mul_bigint(Bigint aa, Bigint bb)
   return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
   //  ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
 }
-
 /*
 Division,
 Modulo
@@ -275,7 +258,6 @@ int log10(int a)
   }
   return out0
 }
-
 Bigint bigint_of_int(int i)
 {
   int size = log10(i)
@@ -295,7 +277,6 @@ Bigint bigint_of_int(int i)
   q.bigint_chiffres = t
   return q
 }
-
 Bigint fact_bigint(Bigint a)
 {
   Bigint one = bigint_of_int(1)
@@ -307,7 +288,6 @@ Bigint fact_bigint(Bigint a)
   }
   return out0
 }
-
 int sum_chiffres_bigint(Bigint a)
 {
   int out0 = 0
@@ -315,7 +295,6 @@ int sum_chiffres_bigint(Bigint a)
       out0 += a.bigint_chiffres[i]
   return out0
 }
-
 //  http://projecteuler.net/problem=20 
 int euler20()
 {
@@ -324,7 +303,6 @@ int euler20()
   a = fact_bigint(a)
   return sum_chiffres_bigint(a)
 }
-
 Bigint bigint_exp(Bigint a, int b)
 {
   if (b == 1)
@@ -334,7 +312,6 @@ Bigint bigint_exp(Bigint a, int b)
   else
       return mul_bigint(a, bigint_exp(a, b - 1))
 }
-
 Bigint bigint_exp_10chiffres(Bigint a, int b)
 {
   a = bigint_premiers_chiffres(a, 10)
@@ -345,7 +322,6 @@ Bigint bigint_exp_10chiffres(Bigint a, int b)
   else
       return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
 }
-
 void euler48()
 {
   Bigint sum = bigint_of_int(0)
@@ -361,7 +337,6 @@ void euler48()
   print_bigint(sum)
   print("\n")
 }
-
 int euler16()
 {
   Bigint a = bigint_of_int(2)
@@ -369,7 +344,6 @@ int euler16()
   //  1000 normalement 
   return sum_chiffres_bigint(a)
 }
-
 int euler25()
 {
   int i = 2
@@ -385,7 +359,6 @@ int euler25()
   }
   return i
 }
-
 int euler29()
 {
   int maxA = 5
@@ -430,7 +403,6 @@ int euler29()
   }
   return n
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 System.out.printf("%d\n", euler29())
 Bigint sum = read_bigint(50)

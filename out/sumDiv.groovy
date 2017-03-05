@@ -8,12 +8,10 @@ void foo()
   a++
   //  test 2 
 }
-
 void foo2()
 {
   
 }
-
 void foo3()
 {
   if (1 == 1)
@@ -21,7 +19,6 @@ void foo3()
       
   }
 }
-
 int sumdiv(int n)
 {
   //  On désire renvoyer la somme des diviseurs 
@@ -42,7 +39,6 @@ int sumdiv(int n)
   return out0
   // On renvoie out
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 //  Programme principal 
 int n = 0

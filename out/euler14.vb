@@ -9,7 +9,6 @@ Module euler14
         Return 3 * n + 1
     End If
   End Function
-  
   Function find(ByVal n as Integer, ByRef m as Integer()) As Integer
     If n = 1 Then
         Return 1
@@ -22,7 +21,6 @@ Module euler14
         Return m(n)
     End If
   End Function
-  
   Sub Main()
     Dim m(1000000) As Integer
     For j As Integer = 0 To 999999

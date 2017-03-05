@@ -2,7 +2,6 @@ using System;
 
 public class euler05
 {
-  
   static int[] primesfactors(int n)
   {
     int[] tab = new int[n + 1];

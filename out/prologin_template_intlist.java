@@ -12,8 +12,6 @@ public class prologin_template_intlist
     return out;
   }
 
-  
-  
   static int programme_candidat(int[] tableau, int taille)
   {
     int out0 = 0;

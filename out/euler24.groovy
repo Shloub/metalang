@@ -7,7 +7,6 @@ int fact(int n)
       prod *= i
   return prod
 }
-
 void show(int lim, int nth)
 {
   int[] t = new int[lim]
@@ -37,7 +36,6 @@ void show(int lim, int nth)
           print(m)
   print("\n")
 }
-
 
 show(10, 999999)
 

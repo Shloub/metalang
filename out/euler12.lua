@@ -16,6 +16,7 @@ function eratostene (t, max0)
       end
       return n
   end
+  
   function fillPrimesFactors (t, n, primes, nprimes)
     for i = 0, nprimes - 1 do
         local d = primes[i + 1]
@@ -29,6 +30,7 @@ function eratostene (t, max0)
         end
         return n
     end
+    
     function find (ndiv2)
       local maximumprimes = 110
       local era = {}

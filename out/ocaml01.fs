@@ -5,6 +5,7 @@
   0 exit
 ;
 
+
 : bar {  }
   10 0 BEGIN 2dup >= WHILE DUP { i }
     0 { a }

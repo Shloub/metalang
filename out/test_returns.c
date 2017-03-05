@@ -28,10 +28,9 @@ int is_pair(int i) {
         j = 8;
     }
     return i % 2 == 0;
-}
-int main(void) {
-    
-    return 0;
+}int main(void) {
+     
+     return 0;
 }
 
 

@@ -11,7 +11,6 @@ typedef struct toto {
     int blah;
 } toto;
 
-
 struct toto * mktoto(int v1) {
     struct toto * t = malloc(sizeof(toto));
     t->foo = v1;
@@ -20,7 +19,6 @@ struct toto * mktoto(int v1) {
     return t;
 }
 
-
 struct toto * mktoto2(int v1) {
     struct toto * t = malloc(sizeof(toto));
     t->foo = v1 + 3;
@@ -28,7 +26,6 @@ struct toto * mktoto2(int v1) {
     t->blah = v1 + 1;
     return t;
 }
-
 
 int result(struct toto * t_, struct toto * t2_) {
     int j, i;
@@ -53,13 +50,12 @@ int result(struct toto * t_, struct toto * t2_) {
     cache0 = cache1;
     cache2 = cache0;
     return t->foo + t->blah * t->bar + t->bar * t->foo;
-}
-int main(void) {
-    struct toto * t = mktoto(4);
-    struct toto * t2 = mktoto(5);
-    scanf("%d %d %d %d", &t->bar, &t->blah, &t2->bar, &t2->blah);
-    printf("%d%d", result(t, t2), t->blah);
-    return 0;
+}int main(void) {
+     struct toto * t = mktoto(4);
+     struct toto * t2 = mktoto(5);
+     scanf("%d %d %d %d", &t->bar, &t->blah, &t2->bar, &t2->blah);
+     printf("%d%d", result(t, t2), t->blah);
+     return 0;
 }
 
 

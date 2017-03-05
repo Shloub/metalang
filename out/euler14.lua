@@ -9,6 +9,7 @@ function next0 (n)
       return 3 * n + 1
   end
 end
+
 function find (n, m)
   if n == 1 then
       return 1

@@ -27,6 +27,7 @@ struct
   cell% field ->bigint_chiffres
 end-struct bigint%
 
+
 : read_bigint { len }
   HERE len cells allot { chiffres }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { j }
@@ -45,6 +46,7 @@ end-struct bigint%
   e exit
 ;
 
+
 : print_bigint { a }
   a ->bigint_sign @ INVERT
   IF
@@ -54,6 +56,7 @@ end-struct bigint%
     a ->bigint_chiffres @  a ->bigint_len @ 1 - i - cells +  @ s>d 0 d.r
    1 + REPEAT 2DROP
 ;
+
 
 : bigint_eq { a b }
   \  Renvoie vrai si a = b 
@@ -76,6 +79,7 @@ end-struct bigint%
     THEN
   THEN
 ;
+
 
 : bigint_gt { a b }
   \  Renvoie vrai si a > b 
@@ -115,9 +119,11 @@ end-struct bigint%
   THEN
 ;
 
+
 : bigint_lt { a b }
   a b bigint_gt INVERT exit
 ;
+
 
 : add_bigint_positif { a b }
   \  Une addition ou on en a rien a faire des signes 
@@ -149,6 +155,7 @@ end-struct bigint%
   chiffres f ->bigint_chiffres !
   f exit
 ;
+
 
 : sub_bigint_positif { a b }
   \  Une soustraction ou on en a rien a faire des signes
@@ -185,6 +192,7 @@ end-struct bigint%
   g exit
 ;
 
+
 : neg_bigint { a }
   bigint% %allot { h }
   a ->bigint_sign @ INVERT h ->bigint_sign !
@@ -192,6 +200,7 @@ end-struct bigint%
   a ->bigint_chiffres @ h ->bigint_chiffres !
   h exit
 ;
+
 
 : add_bigint { a b }
   a ->bigint_sign @ b ->bigint_sign @ =
@@ -226,9 +235,11 @@ end-struct bigint%
   THEN
 ;
 
+
 : sub_bigint { a b }
   a b neg_bigint add_bigint exit
 ;
+
 
 : mul_bigint_cp { a b }
   \  Cet algorithm est quadratique.
@@ -264,6 +275,7 @@ end-struct bigint%
   m exit
 ;
 
+
 : bigint_premiers_chiffres { a i }
   i a ->bigint_len @ min { len }
   BEGIN
@@ -277,6 +289,7 @@ end-struct bigint%
   a ->bigint_chiffres @ o ->bigint_chiffres !
   o exit
 ;
+
 
 : bigint_shift { a i }
   HERE a ->bigint_len @ i + cells allot { chiffres }
@@ -294,6 +307,7 @@ end-struct bigint%
   chiffres p ->bigint_chiffres !
   p exit
 ;
+
 
 : mul_bigint recursive { aa bb }
   aa ->bigint_len @ 0 =
@@ -328,6 +342,7 @@ end-struct bigint%
   
 ;
 
+
 \ 
 \ Division,
 \ Modulo
@@ -343,6 +358,7 @@ end-struct bigint%
   REPEAT
   out0 exit
 ;
+
 
 : bigint_of_int { i }
   i log10 { size }
@@ -365,6 +381,7 @@ end-struct bigint%
   q exit
 ;
 
+
 : fact_bigint { a }
   1 bigint_of_int { one }
   one { out0 }
@@ -377,6 +394,7 @@ end-struct bigint%
   out0 exit
 ;
 
+
 : sum_chiffres_bigint { a }
   0 { out0 }
   a ->bigint_len @ 1 - 0 BEGIN 2dup >= WHILE DUP { i }
@@ -384,6 +402,7 @@ end-struct bigint%
    1 + REPEAT 2DROP
   out0 exit
 ;
+
 
 \  http://projecteuler.net/problem=20 
 
@@ -394,6 +413,7 @@ end-struct bigint%
   a fact_bigint TO a
   a sum_chiffres_bigint exit
 ;
+
 
 : bigint_exp recursive { a b }
   b 1 =
@@ -408,6 +428,7 @@ end-struct bigint%
     THEN
   THEN
 ;
+
 
 : bigint_exp_10chiffres recursive { a b }
   a 10 bigint_premiers_chiffres TO a
@@ -424,6 +445,7 @@ end-struct bigint%
   THEN
 ;
 
+
 : euler48 {  }
   0 bigint_of_int { sum }
   100 1 BEGIN 2dup >= WHILE DUP { i }
@@ -439,6 +461,7 @@ end-struct bigint%
   S\" \n" TYPE
 ;
 
+
 : euler16 {  }
   2 bigint_of_int { a }
   a 100 bigint_exp TO a
@@ -446,6 +469,7 @@ end-struct bigint%
   
   a sum_chiffres_bigint exit
 ;
+
 
 : euler25 {  }
   2 { i }
@@ -463,6 +487,7 @@ end-struct bigint%
   REPEAT
   i exit
 ;
+
 
 : euler29 {  }
   5 { maxA }

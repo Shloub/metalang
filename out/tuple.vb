@@ -15,7 +15,6 @@ Module tuple
     d.tuple_int_int_field_1 = b + 1
     Return d
   End Function
-  
   Sub Main()
     Dim e As tuple_int_int = new tuple_int_int()
     e.tuple_int_int_field_0 = 0

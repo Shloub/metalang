@@ -1,4 +1,5 @@
 var util = require("util");
+
 var i = 0;
 i--;
 util.print(i, "\n");

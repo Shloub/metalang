@@ -32,6 +32,7 @@ Object subclass: euler42 [
     a := ((n * 2) sqrt floor).
     ^ a * (a + 1) = (n * 2)
   ]
+  
   score [|sum len c|
     self skip.
     len := self read_int.

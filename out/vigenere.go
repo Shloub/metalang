@@ -13,8 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
-
 func position_alphabet(c byte) int{
   i := (int)(c)
   if i <= (int)('Z') && i >= (int)('A') {

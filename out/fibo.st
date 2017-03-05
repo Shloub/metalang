@@ -19,6 +19,7 @@ Object subclass: fibo [
   "
 La suite de fibonaci
 "
+  
    fibo0: a b: b i: i [|tmp out0 b2 a2|
     out0 := 0.
     a2 := a.

@@ -16,7 +16,6 @@ int periode(int[] restes, int len, int a, int b)
   return 0
 }
 
-
 int[] t = new int[1000]
 for (int j = 0; j < 1000; j++)
     t[j] = 0

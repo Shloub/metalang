@@ -8,6 +8,7 @@
   o exit
 ;
 
+
 : e { t n }
   8 1 BEGIN 2dup >= WHILE DUP { i }
     n t  i cells +  @ i * >=

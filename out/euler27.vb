@@ -16,7 +16,6 @@ Module euler27
     Next
     Return n
   End Function
-  
   Function isPrime(ByVal n as Integer, ByRef primes as Integer(), ByVal len as Integer) As Boolean
     Dim i As Integer = 0
     If n < 0 Then
@@ -30,7 +29,6 @@ Module euler27
     Loop
     Return true
   End Function
-  
   Function test(ByVal a as Integer, ByVal b as Integer, ByRef primes as Integer(), ByVal len as Integer) As Integer
     For n As Integer = 0 To 200
         Dim j As Integer = n * n + a * n + b
@@ -40,7 +38,6 @@ Module euler27
     Next
     Return 200
   End Function
-  
   Sub Main()
     Dim maximumprimes As Integer = 1000
     Dim era(maximumprimes) As Integer

@@ -28,23 +28,27 @@
 #|
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 |#
+
 (defstruct (toto (:type list) :named)
   foo
   bar
   blah
   )
+
 (defun mktoto (v1)
 (progn
   (let ((t0 (make-toto :foo v1 :bar v1 :blah v1)))
   (return-from mktoto t0))
   
 ))
+
 (defun mktoto2 (v1)
 (progn
   (let ((t0 (make-toto :foo (+ v1 3) :bar (+ v1 2) :blah (+ v1 1))))
   (return-from mktoto2 t0))
   
 ))
+
 (defun result (t_ t2_)
 (progn
   (let ((t0 t_))

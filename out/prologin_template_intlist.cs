@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class prologin_template_intlist
 {
-  
-  
   static int programme_candidat(int[] tableau, int taille)
   {
     int out0 = 0;

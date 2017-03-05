@@ -1,6 +1,7 @@
 function id (b)
   return b
 end
+
 function g (t, index)
   t[index + 1] = false
 end

@@ -12,6 +12,7 @@ Object subclass: euler27 [
       ].].
     ^ n
   ]
+  
    isPrime: c primes: primes len: len [|n i|
     n := c.
     i := 0.
@@ -24,6 +25,7 @@ Object subclass: euler27 [
     ].
     ^ true
   ]
+  
    test: a b: b primes: primes len: len [|j|
     (0 to: 200) do: [:n|
       j := n * n + (a * n) + b.

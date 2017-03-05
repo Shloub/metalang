@@ -1,7 +1,5 @@
 import java.util.*
 
-
-
 int pgcd(int a, int b)
 {
   int c = Math.min(a, b)
@@ -12,7 +10,6 @@ int pgcd(int a, int b)
   else
       return pgcd(c, reste)
 }
-
 
 int top = 1
 int bottom = 1

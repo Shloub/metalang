@@ -25,7 +25,6 @@ object euler33
         return pgcd(c, reste);
   }
   
-  
   def main(args : Array[String])
   {
     var top: Int = 1;

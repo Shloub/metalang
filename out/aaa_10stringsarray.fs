@@ -3,14 +3,17 @@ struct
   cell% field ->v
 end-struct toto%
 
+
 : idstring { D: s }
   s exit
 ;
+
 
 : printstring { D: s }
   s idstring TYPE
   S\" \n" TYPE
 ;
+
 
 : print_toto { t }
   t ->s 2@ TYPE

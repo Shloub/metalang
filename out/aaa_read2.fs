@@ -28,7 +28,6 @@ create bufferc 128 allot
 \ Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 \ read int, read char et skip
 \ 
-
 : main
   read-int { len }
   skipspaces

@@ -9,7 +9,6 @@ Module euler40
     Next
     Return o
   End Function
-  
   Function e(ByRef t as Integer(), ByVal n as Integer) As Integer
     For i As Integer = 1 To 8
         If n >= t(i) * i Then
@@ -22,7 +21,6 @@ Module euler40
     Next
     Return -1
   End Function
-  
   Sub Main()
     Dim t(9) As Integer
     For i As Integer = 0 To 8

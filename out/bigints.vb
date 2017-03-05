@@ -36,9 +36,6 @@ Sub stdin_sep()
     End If
   Loop
 End Sub
-  
-  
-  
   Public Class bigint
     Public bigint_sign As Boolean
     Public bigint_len As Integer
@@ -61,7 +58,6 @@ End Sub
     e.bigint_chiffres = chiffres
     Return e
     End Function
-    
     Sub print_bigint(ByRef a as bigint)
       If Not a.bigint_sign Then
           Console.Write("-"C)
@@ -70,7 +66,6 @@ End Sub
           Console.Write(a.bigint_chiffres(a.bigint_len - 1 - i))
       Next
     End Sub
-    
     Function bigint_eq(ByRef a as bigint, ByRef b as bigint) As Boolean
       ' Renvoie vrai si a = b 
       
@@ -87,7 +82,6 @@ End Sub
           Return true
       End If
     End Function
-    
     Function bigint_gt(ByRef a as bigint, ByRef b as bigint) As Boolean
       ' Renvoie vrai si a > b 
       
@@ -113,11 +107,9 @@ End Sub
           Return true
       End If
     End Function
-    
     Function bigint_lt(ByRef a as bigint, ByRef b as bigint) As Boolean
       Return Not bigint_gt(a, b)
     End Function
-    
     Function add_bigint_positif(ByRef a as bigint, ByRef b as bigint) As bigint
       ' Une addition ou on en a rien a faire des signes 
       
@@ -144,7 +136,6 @@ End Sub
       f.bigint_chiffres = chiffres
       Return f
       End Function
-      
       Function sub_bigint_positif(ByRef a as bigint, ByRef b as bigint) As bigint
         ' Une soustraction ou on en a rien a faire des signes
         'Pré-requis : a > b
@@ -175,7 +166,6 @@ End Sub
         g.bigint_chiffres = chiffres
         Return g
         End Function
-        
         Function neg_bigint(ByRef a as bigint) As bigint
           Dim h As bigint = new bigint()
           h.bigint_sign = Not a.bigint_sign
@@ -183,7 +173,6 @@ End Sub
           h.bigint_chiffres = a.bigint_chiffres
           Return h
         End Function
-        
         Function add_bigint(ByRef a as bigint, ByRef b as bigint) As bigint
           If a.bigint_sign = b.bigint_sign Then
               If a.bigint_sign Then
@@ -209,11 +198,9 @@ End Sub
               End If
           End If
         End Function
-        
         Function sub_bigint(ByRef a as bigint, ByRef b as bigint) As bigint
           Return add_bigint(a, neg_bigint(b))
         End Function
-        
         Function mul_bigint_cp(ByRef a as bigint, ByRef b as bigint) As bigint
           ' Cet algorithm est quadratique.
           'C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -246,7 +233,6 @@ End Sub
           m.bigint_chiffres = chiffres
           Return m
           End Function
-          
           Function bigint_premiers_chiffres(ByRef a as bigint, ByVal i as Integer) As bigint
             Dim len As Integer = Math.Min(i, a.bigint_len)
             Do While len <> 0 AndAlso a.bigint_chiffres(len - 1) = 0
@@ -258,7 +244,6 @@ End Sub
             o.bigint_chiffres = a.bigint_chiffres
             Return o
           End Function
-          
           Function bigint_shift(ByRef a as bigint, ByVal i as Integer) As bigint
             Dim chiffres(a.bigint_len + i) As Integer
             For k As Integer = 0 To a.bigint_len + i - 1
@@ -274,7 +259,6 @@ End Sub
             p.bigint_chiffres = chiffres
             Return p
             End Function
-            
             Function mul_bigint(ByRef aa as bigint, ByRef bb as bigint) As bigint
               If aa.bigint_len = 0 Then
                   Return aa
@@ -300,7 +284,6 @@ End Sub
               ' ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
               
             End Function
-            
             '
             'Division,
             'Modulo
@@ -314,7 +297,6 @@ End Sub
               Loop
               Return out0
             End Function
-            
             Function bigint_of_int(ByVal i as Integer) As bigint
               Dim size As Integer = log10(i)
               If i = 0 Then
@@ -334,7 +316,6 @@ End Sub
               q.bigint_chiffres = t
               Return q
               End Function
-              
               Function fact_bigint(ByRef a as bigint) As bigint
                 Dim one As bigint = bigint_of_int(1)
                 Dim out0 As bigint = one
@@ -344,7 +325,6 @@ End Sub
                 Loop
                 Return out0
               End Function
-              
               Function sum_chiffres_bigint(ByRef a as bigint) As Integer
                 Dim out0 As Integer = 0
                 For i As Integer = 0 To a.bigint_len - 1
@@ -352,7 +332,6 @@ End Sub
                 Next
                 Return out0
               End Function
-              
               ' http://projecteuler.net/problem=20 
               
               Function euler20() As Integer
@@ -362,7 +341,6 @@ End Sub
                 a = fact_bigint(a)
                 Return sum_chiffres_bigint(a)
               End Function
-              
               Function bigint_exp(ByRef a as bigint, ByVal b as Integer) As bigint
                 If b = 1 Then
                     Return a
@@ -372,7 +350,6 @@ End Sub
                     Return mul_bigint(a, bigint_exp(a, b - 1))
                 End If
               End Function
-              
               Function bigint_exp_10chiffres(ByRef a as bigint, ByVal b as Integer) As bigint
                 a = bigint_premiers_chiffres(a, 10)
                 If b = 1 Then
@@ -383,7 +360,6 @@ End Sub
                     Return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
                 End If
               End Function
-              
               Sub euler48()
                 Dim sum As bigint = bigint_of_int(0)
                 For i As Integer = 1 To 100
@@ -398,7 +374,6 @@ End Sub
                 print_bigint(sum)
                 Console.Write(Chr(10))
               End Sub
-              
               Function euler16() As Integer
                 Dim a As bigint = bigint_of_int(2)
                 a = bigint_exp(a, 100)
@@ -406,7 +381,6 @@ End Sub
                 
                 Return sum_chiffres_bigint(a)
               End Function
-              
               Function euler25() As Integer
                 Dim i As Integer = 2
                 Dim a As bigint = bigint_of_int(1)
@@ -421,7 +395,6 @@ End Sub
                 Loop
                 Return i
               End Function
-              
               Function euler29() As Integer
                 Dim maxA As Integer = 5
                 Dim maxB As Integer = 5
@@ -466,7 +439,6 @@ End Sub
                 Loop
                 Return n
                 End Function
-                
                 Sub Main()
                   Console.Write(euler29() & Chr(10))
                   Dim sum As bigint = read_bigint(50)

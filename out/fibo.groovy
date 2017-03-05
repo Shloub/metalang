@@ -18,7 +18,6 @@ int fibo0(int a, int b, int i)
   }
   return out0
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int a = 0
 int b = 0

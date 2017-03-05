@@ -4,6 +4,7 @@ Object subclass: euler40 [
     (1 to: e) do: [:i| o := o * a.].
     ^ o
   ]
+  
    e: t b: b [|nombre n chiffre|
     n := b.
     (1 to: 8) do: [:i| (n >= ((t at: (i + 1)) * i))

@@ -4,6 +4,7 @@ Object subclass: euler14 [
     ifTrue:[^ n quo: 2]
     ifFalse:[^ 3 * n + 1].
   ]
+  
    find: n m: m [
     (n = 1)
     ifTrue:[^ 1]

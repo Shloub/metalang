@@ -25,6 +25,7 @@ def skip() {
   /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
+  
   class Toto(_foo: Int, _bar: Int, _blah: Int){
     var foo: Int=_foo;
     var bar: Int=_bar;
@@ -61,7 +62,6 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     cache2 = cache0;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
-  
   
   def main(args : Array[String])
   {

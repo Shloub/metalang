@@ -12,6 +12,7 @@ function eratostene (t, max0)
       end
       return n
   end
+  
   function isPrime (n, primes, len)
     local i = 0
     if n < 0 then
@@ -25,6 +26,7 @@ function eratostene (t, max0)
     end
     return true
   end
+  
   function test (a, b, primes, len)
     for n = 0, 200 do
         local j = n * n + a * n + b

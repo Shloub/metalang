@@ -17,6 +17,7 @@ a * d +
 c * f * 10000
 
 "
+  
    chiffre: c m: m [
     (c = 0)
     ifTrue:[^ m rem: 10]

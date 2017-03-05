@@ -5,7 +5,6 @@ Module euler19
   Function is_leap(ByVal year as Integer) As Boolean
     Return year Mod 400 = 0 OrElse year Mod 100 <> 0 AndAlso year Mod 4 = 0
   End Function
-  
   Function ndayinmonth(ByVal month as Integer, ByVal year as Integer) As Integer
     If month = 0 Then
         Return 31
@@ -38,7 +37,6 @@ Module euler19
     End If
     Return 0
   End Function
-  
   Sub Main()
     Dim month As Integer = 0
     Dim year As Integer = 1901

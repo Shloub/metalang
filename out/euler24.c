@@ -10,7 +10,6 @@ int fact(int n) {
     return prod;
 }
 
-
 void show(int lim, int nth) {
     int m, k, l, j, i;
     int *t = calloc(lim, sizeof(int));
@@ -39,10 +38,9 @@ void show(int lim, int nth) {
         if (!pris[m])
             printf("%d", m);
     printf("\n");
-}
-int main(void) {
-    show(10, 999999);
-    return 0;
+}int main(void) {
+     show(10, 999999);
+     return 0;
 }
 
 
