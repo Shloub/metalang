@@ -152,66 +152,20 @@ let print_instr tyenv macros i =
   in fun f -> i.p f i.default
 
 
-class javaPrinter = object(self)
-                          
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
+let instructions typerEnv macros f li =
+  let macros = StringMap.map (fun (ty, params, li) ->
+      ty, params,
+      try List.assoc "java" li
+      with Not_found -> List.assoc "" li) macros
+  in print_list (fun f t -> print_instr typerEnv macros t f) sep_nl f li
 
-  method instructions f li =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "java" li
-        with Not_found -> List.assoc "" li) macros
-    in print_list (fun f t -> print_instr (self#getTyperEnv ()) macros t f) sep_nl f li
+let main typerEnv macros f main =
+  Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@]@\n}@\n"
+    (instructions typerEnv macros) main
 
-  method prog f (prog: Utils.prog) =
-    let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
-    let datareader = Tags.is_taged "use_java_readline" in
-    Format.fprintf f
-      "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a%a@\n%a@\n%a@]@\n}@\n"
-      prog.Prog.progname
-      (if reader || datareader then self#print_scanner else fun f () -> ()) ()
-      (if datareader then self#print_datareader else fun f () -> ()) ()
-      (print_list (fun f t -> match t with
-           | Prog.Comment str -> clike_comment f str
-           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
-             Format.fprintf f "@[<h>static %a %s(%a)@]@\n@[<v 2>{@\n%a@]@\n}"
-               ptype t funname
-               (print_list
-                  (fun t (binding, type_) -> Format.fprintf t "%a@ %a" ptype type_ print_varname binding) sep_c
-               ) li
-               self#instructions liinstrs
-           | Prog.DeclareType (name, t) ->
-             begin match (Type.unfix t) with
-                 Type.Struct li ->
-                 Format.fprintf f "@[<v 2>static class %s {@\n%a@]@\n}" name
-                   (print_list (fun f (name, type_) -> Format.fprintf f "public %a %s;" ptype type_ name) sep_nl) li
-               | Type.Enum li ->
-                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}@\n" name
-                   (print_list (fun f e -> Format.fprintf f "%s" e) (sep "%a,@\n %a")) li
-               | _ -> assert false
-             end
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | _ -> ()
-         ) sep_nl)
-      prog.Prog.funs
-      (print_option self#main) prog.Prog.main
+let print_scanner f () = Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
 
-  method main f main =
-    Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@]@\n}@\n"
-      self#instructions main
-
-  method print_scanner f () =
-    Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
-
-  method print_datareader f () =
+let print_datareader f () =
     Format.fprintf f "@[<h>
   static int[] read_int_line()
   {
@@ -222,5 +176,38 @@ class javaPrinter = object(self)
     return out;
   }
 @]"
-      
-end
+
+let prog typerEnv f prog =
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li
+           | Prog.Comment str -> macros, (fun f -> clike_comment f str) :: li
+           | Prog.DeclarFun (funname, t, vars, liinstrs, _opt) ->
+             macros, (fun f -> Format.fprintf f "@[<h>static %a %s(%a)@]@\n@[<v 2>{@\n%a@]@\n}"
+                         ptype t funname
+                         (print_list
+                            (fun t (binding, type_) -> Format.fprintf t "%a@ %a" ptype type_ print_varname binding) sep_c
+                         ) vars
+                         (instructions typerEnv macros) liinstrs) :: li
+           | Prog.DeclareType (name, t) ->
+             macros, (fun f -> match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "@[<v 2>static class %s {@\n%a@]@\n}" name
+                   (print_list (fun f (name, type_) -> Format.fprintf f "public %a %s;" ptype type_ name) sep_nl) li
+               | Type.Enum li ->
+                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}@\n" name
+                   (print_list (fun f e -> Format.fprintf f "%s" e) (sep "%a,@\n %a")) li
+               | _ -> assert false
+             ) :: li
+           | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
+    let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
+    let datareader = Tags.is_taged "use_java_readline" in
+    Format.fprintf f
+      "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a%a@\n%a@\n%a@]@\n}@\n"
+      prog.Prog.progname
+      (if reader || datareader then print_scanner else fun f () -> ()) ()
+      (if datareader then print_datareader else fun f () -> ()) ()
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (main typerEnv macros)) prog.Prog.main

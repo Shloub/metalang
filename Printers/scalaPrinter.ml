@@ -214,25 +214,7 @@ let print_instr tyenv macros i =
   let i = (fold (print_instr c) (mapg (print_expr tyenv c) i))
   in fun f -> i.p f i.default
 
-class scalaPrinter = object(self)
-
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-                         
-  method instrs f t =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros
-    in print_list (fun f t -> (print_instr (self#getTyperEnv ()) macros t) f) sep_nl f t
-
-  method lang () = "scala"
-
-  method header f prog =
+let header f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -243,69 +225,7 @@ class scalaPrinter = object(self)
       (if need_readchar then readchar else "")
       (if need_stdinsep then skip else "")
 
-  method prog f (prog: Utils.prog) =
-    Format.fprintf f
-      "object %s@\n@[<v 2>{@\n%a%a@\n%a@]@\n}@\n"
-      prog.Prog.progname
-      self#header prog
-      (print_list (fun f t -> match t with
-           | Prog.Comment s -> Format.fprintf f "%a@\n" clike_comment s
-           | Prog.DeclarFun (var, t, li, instrs, _opt) ->
-             self#print_fun f var t li instrs;
-             Format.fprintf f "@\n"
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | Prog.DeclareType (name, t) ->
-             self#decl_type f name t;
-             Format.fprintf f "@\n"
-           | _ -> ()
-        ) nosep) 
-         prog.Prog.funs
-         (print_option (fun f instrs ->
-Format.fprintf f "def main(args : Array[String])@\n@[<v 2>{@\n%a@]@\n}@\n"
-      self#instrs instrs
-            )) prog.Prog.main
-
-  method print_fun f funname (t : unit Type.Fixed.t) li instrs =
-    let g acc i =
-      match Instr.unfix i with
-      | Instr.Read li ->
-        List.fold_left (fun acc -> function
-            | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-            | _ -> acc) acc li
-      | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _)
-      | Instr.SelfAffect (Mutable.Fixed.F (_, Mutable.Var varname), _, _) ->
-        BindingSet.add varname acc
-      | _ -> acc
-    in let g acc i = Instr.Writer.Deep.fold g (g acc i) i
-    in let refbindings = List.fold_left g BindingSet.empty instrs in
-    let linames = List.map fst li in
-    let linames = List.filter (fun name -> BindingSet.mem name refbindings ) linames in
-    Format.fprintf f "@[<h>def %s(%a)%a@]{@\n@[<v 2>  %a%a@]@\n}@\n"
-      funname
-      (print_list
-         (fun t (binding, type_) ->
-            if BindingSet.mem binding refbindings then
-              Format.fprintf t "_%a :@ %a" print_varname binding ptype type_
-            else
-              Format.fprintf t "%a :@ %a" print_varname binding ptype type_
-         ) sep_c
-      ) li
-      (fun f t ->
-         match Type.unfix t with
-         | Type.Void -> ()
-         | _ -> Format.fprintf f ": %a = " ptype t
-      ) t
-  
-      (print_list (fun f name -> 
-        Format.fprintf f "var %a = _%a;"
-          print_varname name
-          print_varname name) sep_nl) linames
-      self#instrs instrs
-
-  method decl_type f name t =
+  let decl_type f name t =
     let nameC = String.capitalize name in
     match (Type.unfix t) with
       Type.Struct li ->
@@ -324,4 +244,65 @@ Format.fprintf f "def main(args : Array[String])@\n@[<v 2>{@\n%a@]@\n}@\n"
       Format.fprintf f "object %s extends Enumeration {@\n  type %s = Value;@\n  val %a = Value@\n}@\nimport %s._" nameC nameC (print_list (fun f s -> Format.fprintf f "%s" s) sep_c) li nameC
     | _ -> assert false
 
-end
+let prog typerEnv f (prog: Utils.prog) =
+    let instrs macros f t =
+      let macros = StringMap.map (fun (ty, params, li) ->
+          ty, params,
+          try List.assoc "scala" li
+        with Not_found -> List.assoc "" li) macros
+      in print_list (fun f t -> (print_instr typerEnv macros t) f) sep_nl f t in
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+        | Prog.Macro (name, t, params, code) ->
+          StringMap.add name (t, params, code) macros, li
+        | Prog.DeclareType (name, t) ->
+          macros, (fun f -> decl_type f name t )::li
+        | Prog.Comment s -> macros, (fun f -> Format.fprintf f "%a@\n" clike_comment s )::li
+        | Prog.DeclarFun (funname, t, vars, liinstrs, _opt) ->
+          macros, (fun f ->
+              let g acc i =
+                match Instr.unfix i with
+                | Instr.Read li ->
+                  List.fold_left (fun acc -> function
+                      | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+                      | _ -> acc) acc li
+                | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _)
+                | Instr.SelfAffect (Mutable.Fixed.F (_, Mutable.Var varname), _, _) ->
+                  BindingSet.add varname acc
+                | _ -> acc
+              in let g acc i = Instr.Writer.Deep.fold g (g acc i) i
+              in let refbindings = List.fold_left g BindingSet.empty liinstrs in
+              let linames = List.map fst vars in
+              let linames = List.filter (fun name -> BindingSet.mem name refbindings ) linames in
+              Format.fprintf f "@[<h>def %s(%a)%a@]{@\n@[<v 2>  %a%a@]@\n}@\n"
+                funname
+                (print_list
+                   (fun t (binding, type_) ->
+            if BindingSet.mem binding refbindings then
+              Format.fprintf t "_%a :@ %a" print_varname binding ptype type_
+            else
+              Format.fprintf t "%a :@ %a" print_varname binding ptype type_
+                   ) sep_c
+                ) vars
+                (fun f t ->
+                   match Type.unfix t with
+                   | Type.Void -> ()
+                   | _ -> Format.fprintf f ": %a = " ptype t
+                ) t
+                
+                (print_list (fun f name -> 
+                     Format.fprintf f "var %a = _%a;"
+                       print_varname name
+                       print_varname name) sep_nl) linames
+                (instrs macros) liinstrs)::li
+        | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
+    Format.fprintf f
+      "object %s@\n@[<v 2>{@\n%a%a@\n%a@]@\n}@\n"
+      prog.Prog.progname
+      header prog
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (fun f liinstrs ->
+           Format.fprintf f "def main(args : Array[String])@\n@[<v 2>{@\n%a@]@\n}@\n"
+             (instrs macros) liinstrs
+         )) prog.Prog.main

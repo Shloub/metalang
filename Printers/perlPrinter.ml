@@ -193,7 +193,7 @@ let print_instr macros i =
   let i = (fold (print_instr c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
 
-let prog f (prog: Utils.prog) =
+let prog f prog =
     let instrs macros f t =
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,

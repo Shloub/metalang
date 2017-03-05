@@ -208,23 +208,80 @@ let print_instr tyenv macros i =
   let i = (fold (print_instr tyenv c) (mapg (print_expr tyenv c) i))
   in fun f -> i.p f i.default
 
-class vbDotNetPrinter = object(self)
-       
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty                       
-
-  method instrs f (t:Utils.instr list) =
+let instrs typerEnv macros f (t:Utils.instr list) =
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "vb" li
         with Not_found -> List.assoc "" li) macros
     in print_list (fun f t -> print_instr typerEnv macros t f) sep_nl f t
 
-  method prog f (prog: Utils.prog) =
+let main typerEnv macros f main =
+    Format.fprintf f "Sub Main()@\n  @[<v>%a@]@\nEnd Sub@\n"
+      (instrs typerEnv macros) main
+
+
+let val_or_ref f t = match Type.unfix t with
+    | Type.Integer
+    | Type.Void
+    | Type.Bool
+    | Type.Char
+    | Type.Enum _ ->  Format.fprintf f "ByVal"
+    | _ ->  Format.fprintf f "ByRef"
+
+let print_proto f (funname, t, li) =
+    Format.fprintf f "%s(%a)%a" funname
+      (print_list
+         (fun t (binding, type_) ->
+            Format.fprintf t "%a %a@ as@ %a"
+              val_or_ref type_ print_varname binding
+              ptype type_
+         ) sep_c
+      ) li
+      (fun f () -> match Type.unfix t with
+         | Type.Void -> ()
+         | _ ->
+           Format.fprintf f " As %a" ptype t) ()
+
+let prog typerEnv f (prog: Utils.prog) =
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li
+           | Prog.Comment str -> let lic = String.split str '\n' in
+             macros, (fun f -> print_list
+               (fun f s -> Format.fprintf f "'%s@\n" s) nosep
+               f
+               lic) :: li
+           | Prog.DeclarFun (funname, t, vars, liinstrs, _opt) ->
+             macros, (fun f ->
+               match Type.unfix t with
+               | Type.Void ->
+                 Format.fprintf f "Sub @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Sub"
+                   print_proto (funname, t, vars)
+                   (instrs typerEnv macros) liinstrs
+               | _ ->
+                 Format.fprintf f "Function @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Function"
+                   print_proto (funname, t, vars)
+                   (instrs typerEnv macros) liinstrs
+             ) :: li
+           | Prog.DeclareType (name, t) ->
+             macros, (fun f ->
+               match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "Public Class %s@\n  @[<v>%a@]@\nEnd Class" name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "Public %s As %a" name ptype type_ 
+                      ) sep_nl
+                   ) li
+               | Type.Enum li ->
+                 Format.fprintf f "Enum %s@\n  @[<v>%a@]@\nEnd Enum" name
+                   (print_list (fun f name -> Format.fprintf f "%s" name) sep_nl) li
+               | _ -> assert false
+             ) :: li
+         
+           | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -295,72 +352,5 @@ Function readInt() As Integer
     End If
   Loop
 End Function" else "")
-      (print_list (fun f t -> match t with
-           | Prog.Comment str -> let lic = String.split str '\n' in
-             print_list
-               (fun f s -> Format.fprintf f "'%s@\n" s) nosep
-               f
-               lic
-           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
-             begin
-               match Type.unfix t with
-               | Type.Void ->
-                 Format.fprintf f "Sub @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Sub@\n"
-                   self#print_proto (funname, t, li)
-                   self#instrs liinstrs
-               | _ ->
-                 Format.fprintf f "Function @[<h>%a@]@\n@[<v 2>  %a@]@\nEnd Function@\n"
-                   self#print_proto (funname, t, li)
-                   self#instrs liinstrs
-             end
-           | Prog.DeclareType (name, t) ->
-             begin
-               match (Type.unfix t) with
-                 Type.Struct li ->
-                 Format.fprintf f "Public Class %s@\n  @[<v>%a@]@\nEnd Class" name
-                   (print_list
-                      (fun t (name, type_) ->
-                         Format.fprintf t "Public %s As %a" name ptype type_ 
-                      ) sep_nl
-                   ) li
-               | Type.Enum li ->
-                 Format.fprintf f "Enum %s@\n  @[<v>%a@]@\nEnd Enum@\n" name
-                   (print_list (fun f name -> Format.fprintf f "%s" name) sep_nl) li
-               | _ -> assert false
-             end
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | _ -> ()
-         ) sep_nl)
-      prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method main f main =
-    Format.fprintf f "Sub Main()@\n  @[<v>%a@]@\nEnd Sub@\n"
-      self#instrs main
-
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "%s(%a)%a" funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a %a@ as@ %a"
-              self#val_or_ref type_ print_varname binding
-              ptype type_
-         ) sep_c
-      ) li
-      (fun f () -> match Type.unfix t with
-         | Type.Void -> ()
-         | _ ->
-           Format.fprintf f " As %a" ptype t) ()
-
-  method val_or_ref f t = match Type.unfix t with
-    | Type.Integer
-    | Type.Void
-    | Type.Bool
-    | Type.Char
-    | Type.Enum _ ->  Format.fprintf f "ByVal"
-    | _ ->  Format.fprintf f "ByRef"
-
-end
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (main typerEnv macros)) prog.Prog.main

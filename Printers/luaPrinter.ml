@@ -168,22 +168,25 @@ let print_instr macros i =
   let i = (fold (print_instr c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
 
-class luaPrinter = object(self)
-                         
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-
-  method prog f (prog: Utils.prog) =
-    let instructions f li =
+let prog f prog =
+    let instructions macros f li =
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,
           try List.assoc "lua" li
           with Not_found -> List.assoc "" li) macros in
       print_list (fun f i -> print_instr macros i f) sep_nl f li in
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Comment s -> macros, (fun f -> Format.fprintf f "--[[%s--]]@\n" s) :: li
+           | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
+             macros, (fun f -> Format.fprintf f "@[<v 2>@[function@ %s (%a)@]@\n%a@]@\nend@\n"
+                         funname
+                         (print_list print_varname sep_c) (List.map fst vars)
+                         (instructions macros) instrs) :: li
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li
+           | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -230,24 +233,5 @@ function stdinsep()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%%s*', \"\") end
 end@\n") ()
-(print_list (fun f t -> match t with
-           | Prog.Comment s -> Format.fprintf f "--[[%s--]]@\n" s
-           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
-             Format.fprintf f "@[<v 2>@[function@ %s (%a)@]@\n%a@]@\nend@\n"
-               funname
-               (print_list print_varname sep_c) (List.map fst li)
-               instructions instrs
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | Prog.Unquote _ -> assert false
-           | Prog.DeclareType (name, t) -> ()
-
-        ) nosep)
-
-      prog.Prog.funs
-      (print_option instructions) prog.Prog.main
-
-end
-
+    (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (instructions macros)) prog.Prog.main

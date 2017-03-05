@@ -228,19 +228,7 @@ let print_instr prototypes c i =
 
 
 
-
-class smalltalkPrinter = object(self)
-
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-
-  val mutable prototypes = StringMap.empty
-
-  method instructions f li =
+let instructions macros prototypes f li =
     let open Ast.Instr.Fixed.Deep in
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
@@ -250,7 +238,8 @@ class smalltalkPrinter = object(self)
     let li = List.map (fun i -> (fold (print_instr prototypes c) (mapg (print_expr prototypes c) i))) li in
     print_list (fun f i -> i.p f i.default) sep_nl f li
 
-  method declaredvars bindings instrs =
+
+let declaredvars bindings instrs =
     List.fold_left
       (Instr.Writer.Deep.fold
          (fun bindings i ->
@@ -270,11 +259,8 @@ class smalltalkPrinter = object(self)
       bindings
       instrs
 
-  (** bindings by reference *)
-  val mutable refbindings = BindingSet.empty
-
-  method declarevars li f instrs =
-    let bindings = self#declaredvars BindingMap.empty instrs in
+let declarevars refbindings li f instrs =
+    let bindings = declaredvars BindingMap.empty instrs in
     let bindings = List.fold_left (fun acc (n, t) ->
         if BindingSet.mem n refbindings
         then BindingMap.add n t acc
@@ -289,31 +275,24 @@ class smalltalkPrinter = object(self)
       in Format.fprintf f "@[|%a|@]"
         (print_list print_varname sep_space) li
 
-  method print_proto f (funname, t, li) =
-    prototypes <- StringMap.add funname (match li with
+let print_proto prototypes refbindings funname t li =
+    let prototypes = StringMap.add funname (match li with
         | [] -> []
-        | (hd, _)::tl -> (fun f () -> Format.fprintf f "%s" funname) :: (List.map (fun (n, _) f () -> print_varname f n) tl)) prototypes;
+        | (hd, _)::tl -> (fun f () -> Format.fprintf f "%s" funname) :: (List.map (fun (n, _) f () -> print_varname f n) tl)) prototypes in
     match li with
-    | [] -> begin
-        prototypes <- StringMap.add funname [] prototypes;
-        Format.fprintf f "%s" funname
-      end
-    | (hd, _)::tl -> begin
-        prototypes <- StringMap.add funname ((fun f () -> Format.fprintf f "%s" funname) :: (List.map (fun (n, _) f () -> print_varname f n) tl)) prototypes;
+    | [] -> StringMap.add funname [] prototypes, fun f () -> Format.fprintf f "%s" funname
+    | (hd, _)::tl ->
+        let prototypes = StringMap.add funname ((fun f () -> Format.fprintf f "%s" funname) :: (List.map (fun (n, _) f () -> print_varname f n) tl)) prototypes in
+        prototypes, fun f () ->
         Format.fprintf f " %s: %a %a" funname
-          (fun f () -> if BindingSet.mem hd refbindings
-            then Format.fprintf f "_%a" print_varname hd
-            else print_varname f hd
+          (fun f () -> print_varname f hd
           ) ()
           (print_list
-             (fun f (n, t) -> if BindingSet.mem n refbindings
-               then Format.fprintf f "%a: _%a" print_varname n print_varname n
-               else Format.fprintf f "%a: %a" print_varname n print_varname n
+             (fun f (n, t) -> Format.fprintf f "%a: %a" print_varname n print_varname n
              ) sep_space ) tl
-      end
 
   (** find references variables from a list of instructions *)
-  method calc_refs instrs =
+let calc_refs instrs =
     let g acc i =
       match Instr.unfix i with
       | Instr.Read li ->
@@ -324,30 +303,32 @@ class smalltalkPrinter = object(self)
         BindingSet.add varname acc
       | _ -> acc
     in let g acc i = Instr.Writer.Deep.fold g (g acc i) i
-    in refbindings <- List.fold_left g BindingSet.empty instrs
+    in List.fold_left g BindingSet.empty instrs
 
-  method ref_alias f li =
+  let ref_alias f li =
     print_list (fun f (a, b) ->
         Format.fprintf f "%a := %a.@\n"
           print_varname a
           print_varname b)
       nosep f li
 
-  method print_fun f funname t li instrs =
-    self#calc_refs instrs;
+let print_fun macros prototypes f funname t li instrs =
+    let refbindings = calc_refs instrs in
     let li2, liproto = List.map (fun (n, t) ->
         if BindingSet.mem n refbindings then
           let f = UserName ( Fresh.fresh_user () ) in
           Some (n, f), (f, t)
         else None, (n, t)) li |> List.unzip in
+    let prototypes, print_proto = print_proto prototypes refbindings funname t liproto in
     let li2 = List.filter_map id li2 in
-    Format.fprintf f "@[<v 2>@[<h>%a [%a@]@\n%a%a@]@\n]@\n"
-      self#print_proto (funname, t, liproto)
-      (self#declarevars li) instrs
-      self#ref_alias li2
-      self#instructions instrs
+    prototypes, fun f ->
+      Format.fprintf f "@[<v 2>@[<h>%a [%a@]@\n%a%a@]@\n]@\n"
+        print_proto ()
+        (declarevars refbindings li) instrs
+        ref_alias li2
+        (instructions macros prototypes) instrs
 
-  method header f prog =
+  let header f prog =
     let p f li = print_list (fun f s -> Format.fprintf f "%s" s) sep_nl f li
     in
     let pf bool name tmp f li =
@@ -390,7 +371,7 @@ class smalltalkPrinter = object(self)
       "^o.";
       "]"]
 
-  method structDeclarations f li =
+  let structDeclarations f li =
     print_list
       (fun f t -> match t with
          | Prog.DeclareType (name, t) -> begin match Type.unfix t with
@@ -415,36 +396,28 @@ class smalltalkPrinter = object(self)
          | _ -> ())
       nosep f li
 
-  method prog f (prog: Utils.prog) =
+let prog f (prog: Utils.prog) =
+  let macros, prototypes, items = List.fold_left
+      (fun (macros, prototypes, li) item -> match item with
+         | Prog.Macro (name, t, params, code) ->
+           StringMap.add name (t, params, code) macros, prototypes, li
+         | Prog.Comment str ->
+           macros, prototypes, (fun f ->
+             Format.fprintf f "\"%s\"@\n" (String.replace "\"" "\"\"" str)) :: li
+         | Prog.DeclarFun (funname, t, vars, liinstrs, _opt) ->
+           let prototypes, f = print_fun macros prototypes f funname t vars liinstrs
+           in macros, prototypes, f :: li
+  | _ -> macros, prototypes, li
+        ) (StringMap.empty, StringMap.empty, []) prog.Prog.funs in
     Format.fprintf f "%a@[<v2>Object subclass: %s [@\n%a%a%a@]@\n]@\nEval [ (%s new) main. ]@\n"
-      self#structDeclarations prog.Prog.funs
+      structDeclarations prog.Prog.funs
       prog.Prog.progname
-      self#header prog
-      (print_list (fun f t -> match t with
-           | Prog.Comment str -> Format.fprintf f "\"%s\"@\n" (String.replace "\"" "\"\"" str)
-           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) ->
-             self#calc_refs liinstrs;
-             let li2, liproto = List.map (fun (n, t) ->
-                 if BindingSet.mem n refbindings then
-                   let f = UserName ( Fresh.fresh_user () ) in
-                   Some (n, f), (f, t)
-                 else None, (n, t)) li |> List.unzip in
-             let li2 = List.filter_map id li2 in
-             Format.fprintf f "@[<v 2>@[<h>%a [%a@]@\n%a%a@]@\n]@\n"
-               self#print_proto (funname, t, liproto)
-               (self#declarevars li) liinstrs
-               self#ref_alias li2
-               self#instructions liinstrs
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | _ -> ()
-         ) nosep) prog.Prog.funs
+      header prog
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
       (print_option (fun f main ->
            Format.fprintf f "@[<v 2>main [@\n%a%a@\n@]]"
-             (self#declarevars []) main
-             self#instructions main
+             (declarevars BindingSet.empty []) main
+             (instructions macros prototypes) main
          )) prog.Prog.main
       prog.Prog.progname
-end
+      

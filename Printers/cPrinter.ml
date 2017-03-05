@@ -152,17 +152,23 @@ let print_instr print_instr0 ptype macros i =
   let i = (fold (mkprint_instr print_instr0 ptype c) (mapg (print_expr c) i))
   in fun f -> i.p f i.default
 
-class cPrinter = object(self)
+let declare_for s f li =
+    if li <> [] then
+      Format.fprintf f "%s %a;@\n"
+        s
+        (print_list print_varname sep_c) li
 
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  val mutable macros = StringMap.empty
-  
+let print_proto typerEnv f (funname, t, li) =
+    Format.fprintf f "%a %s(%a)"
+      (ptype typerEnv) t funname
+      (print_list
+         (fun t (binding, type_) ->
+            Format.fprintf t "%a@ %a"
+              (ptype typerEnv) type_ print_varname  binding
+         ) sep_c
+      ) li
 
-  method instructions f li =
+let instructions macros typerEnv f li =
     let rewrite i = match Instr.unfix i with
       | Instr.ClikeLoop (init, cond, incr, li) ->
         let init = List.map (fun i -> match Instr.unfix i with
@@ -180,60 +186,27 @@ class cPrinter = object(self)
         with Not_found -> List.assoc "" li) macros
     in print_list (fun f t -> print_instr print_instr0 (ptype typerEnv) macros t f) sep_nl f li
 
-  method ptype f t = ptype typerEnv f t
+let print_fun macros typerEnv f funname t li instrs =
+    let li_fori, li_forc = clike_collect_for instrs false in
+    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}"
+      (print_proto typerEnv) (funname, t, li)
+      (declare_for "int") li_fori
+      (declare_for "char") li_forc
+      (instructions macros typerEnv) instrs
 
-  method main f main =
-    let li_fori, li_forc = clike_collect_for main false in
-    Format.fprintf f "@[<v 4>int main(void) {@\n%a%a%a@\nreturn 0;@]@\n}"
-      (self#declare_for "int") li_fori
-      (self#declare_for "char") li_forc
-      self#instructions main
-
-  method prototype f t = self#ptype f t
-
-  method print_proto f (funname, t, li) =
-    Format.fprintf f "%a %s(%a)"
-      self#ptype t funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a@ %a"
-              self#prototype type_ print_varname  binding
-         ) sep_c
-      ) li
-
-  method prog f (prog: Utils.prog) =
-    Format.fprintf f "#include <stdio.h>@\n#include <stdlib.h>@\n%a@\n%a%a@\n@\n"
-      (fun f () ->
-         if Tags.is_taged "use_math"
-         then Format.fprintf f "#include <math.h>@\n"
-      ) ()
-(print_list (fun f t -> match t with
-           | Prog.Comment str -> Format.fprintf f "/* %s */@\n" str
-           | Prog.DeclarFun (funname, t, li, liinstrs, _opt) -> self#print_fun f funname t li liinstrs
-           | Prog.DeclareType (name, t) -> self#decl_type f name t
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | _ -> ()
-         ) sep_nl)
-             
-      prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method decl_type f name t =
+let decl_type typerEnv f name t =
     match (Type.unfix t) with
       Type.Struct li ->
       let b = List.exists (fun (n, t) -> match Type.unfix t with
           | Type.Named n -> n = name
           | _ -> false) li in
-      Format.fprintf f "%atypedef struct %s {@\n@[<v 4>  %a@]@\n} %s;@\n"
+      Format.fprintf f "%atypedef struct %s {@\n@[<v 4>  %a@]@\n} %s;"
         (fun f b ->
            if b then Format.fprintf f "struct %s;@\n" name
         ) b name
         (print_list
            (fun t (name, type_) ->
-              Format.fprintf t "%a %s;" self#ptype type_ name
+              Format.fprintf t "%a %s;" (ptype typerEnv) type_ name
            ) sep_nl
         ) li name
     | Type.Enum li ->
@@ -241,18 +214,26 @@ class cPrinter = object(self)
         (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li name
     | _ -> assert false
 
-  method declare_for s f li =
-    if li <> [] then
-      Format.fprintf f "%s %a;@\n"
-        s
-        (print_list print_varname sep_c) li
 
-  method print_fun f funname t li instrs =
-    let li_fori, li_forc = clike_collect_for instrs false in
-    Format.fprintf f "@\n@[<h>%a@] {@\n@[<v 4>    %a%a%a@]@\n}@\n"
-      self#print_proto (funname, t, li)
-      (self#declare_for "int") li_fori
-      (self#declare_for "char") li_forc
-      self#instructions instrs
-
-end
+let prog typerEnv f (prog: Utils.prog) =
+    let macros, items = List.fold_left
+        (fun (macros, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li
+           | Prog.Comment str -> macros, (fun f -> Format.fprintf f "/* %s */@\n" str) :: li
+           | Prog.DeclarFun (funname, t, vars, liinstrs, _opt) -> macros, (fun f -> print_fun macros typerEnv f funname t vars liinstrs) :: li
+           | Prog.DeclareType (name, t) -> macros, (fun f -> decl_type typerEnv f name t) :: li
+         | _ -> macros, li
+        ) (StringMap.empty, []) prog.Prog.funs in
+    Format.fprintf f "#include <stdio.h>@\n#include <stdlib.h>@\n%a@\n%a%a@\n@\n"
+      (fun f () ->
+         if Tags.is_taged "use_math"
+         then Format.fprintf f "#include <math.h>@\n") ()
+    (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (print_option (fun f main ->
+           let li_fori, li_forc = clike_collect_for main false in
+           Format.fprintf f "@[<v 4>int main(void) {@\n%a%a%a@\nreturn 0;@]@\n}"
+             (declare_for "int") li_fori
+             (declare_for "char") li_forc
+             (instructions macros typerEnv) main
+         )) prog.Prog.main
