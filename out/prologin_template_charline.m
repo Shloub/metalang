@@ -3,7 +3,6 @@
 #include<stdlib.h>
 
 
-
 int programme_candidat(char* tableau, int taille) {
     int i;
     int out0 = 0;
