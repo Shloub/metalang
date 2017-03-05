@@ -38,6 +38,7 @@ let result t_ t2_ =
   let cache0 = cache1 in
   let _cache2 = cache0 in
   t.foo + t.blah * t.bar + t.bar * t.foo
+
 let () =
  let t = mktoto 4 in
   let t2 = mktoto 5 in

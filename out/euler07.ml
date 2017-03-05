@@ -23,6 +23,7 @@ let find n t used nth =
       end
   done;
   t.((!used) - 1)
+
 let () =
  let n = 10001 in
   let t = Array.init n (fun _i ->

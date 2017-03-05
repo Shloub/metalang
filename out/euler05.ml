@@ -14,6 +14,7 @@ let primesfactors n =
   done;
   tab.((!n)) <- tab.((!n)) + 1;
   tab
+
 let () =
  let lim = 20 in
   let o = Array.init (lim + 1) (fun _m ->

@@ -1,3 +1,4 @@
+
 let () =
  let f = Array.init 10 (fun _j ->
    1) in

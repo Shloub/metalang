@@ -13,6 +13,7 @@ let mktoto v1 =
 let result t =
   t.blah <- t.blah + 1;
   t.foo + t.blah * t.bar + t.bar * t.foo
+
 let () =
  let t = mktoto 4 in
   Scanf.scanf "%d %d" (fun e f -> t.bar <- e;

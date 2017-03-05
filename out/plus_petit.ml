@@ -28,6 +28,7 @@ let rec go0 tab a b =
 
 let plus_petit0 tab len =
   go0 tab 0 len
+
 let () =
  let len = 0 in
   let len = Scanf.scanf "%d " (fun len -> len) in

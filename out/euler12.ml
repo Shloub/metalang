@@ -63,6 +63,7 @@ let find ndiv2 =
   done;
   0
   with Found_1 (out) -> out
+
 let () =
  Printf.printf "%d\n" (find 500) 
  

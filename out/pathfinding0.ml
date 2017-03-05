@@ -30,6 +30,7 @@ let pathfind tab x y =
     Printf.printf "\n";
     tmp) in
   pathfind_aux cache tab x y 0 0
+
 let () =
  let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   Printf.printf "%d %d\n" x y;

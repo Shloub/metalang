@@ -6,6 +6,7 @@ let programme_candidat tableau x y =
     done
   done;
   (!out0)
+
 let () =
  let taille_x, taille_y = Scanf.scanf "%d %d " (fun taille_x taille_y -> taille_x, taille_y) in
   let tableau = Array.init taille_y (fun _a ->

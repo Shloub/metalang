@@ -32,6 +32,7 @@ let show lim nth =
       Printf.printf "%d" m
   done;
   Printf.printf "\n"
+
 let () =
  show 10 999999 
  

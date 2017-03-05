@@ -172,6 +172,7 @@ let read_move () =
   let x, y = Scanf.scanf "%d %d " (fun x y -> x, y) in
   {x=x;
   y=y}
+
 let () =
  for _i = 0 to 1 do
    let state = init0 () in

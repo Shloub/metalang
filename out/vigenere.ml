@@ -19,6 +19,7 @@ let crypte taille_cle cle taille message =
       let new0 = (addon + lettre) mod 26 in
       message.(i) <- of_position_alphabet new0
   done
+
 let () =
  let taille_cle = Scanf.scanf "%d " (fun taille_cle -> taille_cle) in
   let cle = Array.init taille_cle (fun _index ->

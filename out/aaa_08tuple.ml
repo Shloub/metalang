@@ -2,6 +2,7 @@ type toto = {
   mutable foo : (int * int);
   mutable bar : int;
 };;
+
 let () =
  let bar_, c, d = Scanf.scanf "%d %d %d " (fun bar_ c d -> bar_, c, d) in
   let t = {foo=(c, d);

@@ -40,6 +40,7 @@ let rec findHexa2 n a b =
         findHexa2 n c b
       else
         findHexa2 n a c
+
 let () =
  for n = 285 to 55385 do
    let t = triangle n in

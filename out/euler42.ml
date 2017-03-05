@@ -18,6 +18,7 @@ let score () =
     1
   else
     0
+
 let () =
  for i = 1 to 55 do
    if is_triangular i then

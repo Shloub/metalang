@@ -1,6 +1,7 @@
 let foo a =
   let _a = 4 in
   ()
+
 let () =
  let a = 0 in
   foo a;

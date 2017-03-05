@@ -34,6 +34,7 @@ let find len tab =
       0) in
     tab3) in
   find0 len tab tab2 0 0
+
 let () =
  let len = Scanf.scanf "%d " (fun len -> len) in
   let tab = Array.init len (fun i ->

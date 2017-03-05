@@ -13,6 +13,7 @@ let eratostene t max0 =
       end
   done;
   (!sum)
+
 let () =
  let n = 100000 in
   (* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages *)

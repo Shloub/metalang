@@ -20,6 +20,7 @@ let e t n =
   done;
   - 1
   with Found_1 (out) -> out
+
 let () =
  let t = Array.init 9 (fun i ->
    exp0 10 i - exp0 10 (i - 1)) in

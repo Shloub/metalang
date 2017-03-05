@@ -17,6 +17,7 @@ let result t len =
     out0 := (!out0) + t.(j).foo + t.(j).blah * t.(j).bar + t.(j).bar * t.(j).foo
   done;
   (!out0)
+
 let () =
  let t = Array.init 4 (fun i ->
    mktoto i) in

@@ -1,3 +1,4 @@
+
 let () =
  let t = Array.init 1001 (fun _i ->
    0) in

@@ -1,3 +1,4 @@
+
 let () =
  Printf.printf "%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>" 1 '\001' (int_of_char ('\001')) (char_of_int (1)) 2 '\002' (int_of_char ('\002')) (char_of_int (2)) 3 '\003' (int_of_char ('\003')) (char_of_int (3)) 4 '\004' (int_of_char ('\004')) (char_of_int (4)) 5 '\005' (int_of_char ('\005')) (char_of_int (5)) 6 '\006' (int_of_char ('\006')) (char_of_int (6)) 7;
   Printf.printf "%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c %d %c\n%d=>%c " '\007' (int_of_char ('\007')) (char_of_int (7)) 8 '\b' (int_of_char ('\b')) (char_of_int (8)) 9 '\t' (int_of_char ('\t')) (char_of_int (9)) 10 '\n' (int_of_char ('\n')) (char_of_int (10)) 11 '\011' (int_of_char ('\011')) (char_of_int (11)) 12 '\012' (int_of_char ('\012')) (char_of_int (12)) 13 '\r';

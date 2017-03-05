@@ -14,6 +14,7 @@ let rec chiffre_sort a =
 let same_numbers a b c d e f =
   let ca = chiffre_sort a in
   ca = chiffre_sort b && ca = chiffre_sort c && ca = chiffre_sort d && ca = chiffre_sort e && ca = chiffre_sort f
+
 let () =
  let num = 142857 in
   if same_numbers num (num * 2) (num * 3) (num * 4) (num * 6) (num * 5) then

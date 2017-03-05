@@ -30,6 +30,7 @@ let sumdiv n =
   done;
   (!out0)
   (*On renvoie out*)
+
 let () =
  (* Programme principal *)
   let n = 0 in

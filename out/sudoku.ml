@@ -75,6 +75,7 @@ let rec solve sudoku0 =
          false
       end
   with Found_1 (out) -> out
+
 let () =
  let sudoku0 = read_sudoku () in
   print_sudoku sudoku0;

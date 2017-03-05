@@ -1,3 +1,4 @@
+
 let () =
  for _i = 1 to 3 do
    let a, b, c = Scanf.scanf "%d %d %d " (fun a b c -> a, b, c) in

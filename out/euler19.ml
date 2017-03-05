@@ -42,6 +42,7 @@ let ndayinmonth month year =
                           31
                         else
                           0
+
 let () =
  let month = ref( 0 ) in
   let year = ref( 1901 ) in

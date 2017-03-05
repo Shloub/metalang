@@ -24,6 +24,7 @@ let nbPassePartout n passepartout m serrures =
   else
     0
   with Found_1 (out) -> out
+
 let () =
  let n = Scanf.scanf "%d " (fun n -> n) in
   let passepartout = Array.init n (fun _i ->
