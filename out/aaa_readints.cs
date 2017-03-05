@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class aaa_readints
 {
   
-  
   public static void Main(String[] args)
   {
     int len = int.Parse(Console.ReadLine());

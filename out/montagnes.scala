@@ -40,7 +40,6 @@ def skip() {
     return max0;
   }
   
-  
   def main(args : Array[String])
   {
     var len: Int = 0;

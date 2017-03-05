@@ -4,6 +4,7 @@ Object subclass: euler07 [
       ifTrue:[^ true].].
     ^ false
   ]
+  
    find: a t: t b: b nth: nth [|used n|
     n := a.
     used := b.

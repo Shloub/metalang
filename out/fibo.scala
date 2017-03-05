@@ -25,6 +25,7 @@ def skip() {
   /*
 La suite de fibonaci
 */
+  
   def fibo0(a : Int, b : Int, i : Int): Int = {
     var out0: Int = 0;
     var a2: Int = a;
@@ -38,7 +39,6 @@ La suite de fibonaci
     }
     return out0;
   }
-  
   
   def main(args : Array[String])
   {

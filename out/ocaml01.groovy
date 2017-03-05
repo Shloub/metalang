@@ -8,7 +8,6 @@ int foo()
   }
   return 0
 }
-
 int bar()
 {
   for (int i = 0; i < 11; i++)
@@ -17,7 +16,6 @@ int bar()
   }
   return 0
 }
-
 
 
 

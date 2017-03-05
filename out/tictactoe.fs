@@ -35,12 +35,14 @@ struct
   cell% field ->ended
 end-struct gamestate%
 
+
 \  Un Mouvement 
 
 struct
   cell% field ->x
   cell% field ->y
 end-struct move%
+
 
 \  On affiche l'état 
 
@@ -68,6 +70,7 @@ end-struct move%
    1 + REPEAT 2DROP
   S\" \n" TYPE
 ;
+
 
 \  On dit qui gagne (info stoquées dans g.ended et g.note ) 
 
@@ -137,6 +140,7 @@ end-struct move%
   THEN
 ;
 
+
 \  On applique un mouvement 
 
 : apply_move_xy { x y g }
@@ -149,9 +153,11 @@ end-struct move%
   g ->firstToPlay @ INVERT g ->firstToPlay !
 ;
 
+
 : apply_move { m g }
   m ->x @ m ->y @ g apply_move_xy
 ;
+
 
 : cancel_move_xy { x y g }
   0 g ->cases @  x cells +  @  y cells +  !
@@ -159,17 +165,21 @@ end-struct move%
   false g ->ended !
 ;
 
+
 : cancel_move { m g }
   m ->x @ m ->y @ g cancel_move_xy
 ;
+
 
 : can_move_xy { x y g }
   g ->cases @  x cells +  @  y cells +  @ 0 = exit
 ;
 
+
 : can_move { m g }
   m ->x @ m ->y @ g can_move_xy exit
 ;
+
 
 \ 
 \ Un minimax classique, renvoie la note du plateau
@@ -204,6 +214,7 @@ end-struct move%
    1 + REPEAT 2DROP
   maxNote exit
 ;
+
 
 \ 
 \ Renvoie le coup de l'IA
@@ -242,6 +253,7 @@ end-struct move%
   minMove exit
 ;
 
+
 : init0 {  }
   HERE 3 cells allot { cases }
   2 0 BEGIN 2dup >= WHILE DUP { i }
@@ -258,6 +270,7 @@ end-struct move%
   false a ->ended !
   a exit
 ;
+
 
 : read_move {  }
   read-int { x }

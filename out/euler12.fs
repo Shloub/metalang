@@ -18,6 +18,7 @@
   n exit
 ;
 
+
 : fillPrimesFactors { t n primes nprimes }
   nprimes 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     primes  i cells +  @ { d }
@@ -34,6 +35,7 @@
    1 + REPEAT 2DROP
   n exit
 ;
+
 
 : find0 { ndiv2 }
   110 { maximumprimes }

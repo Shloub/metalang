@@ -21,7 +21,6 @@ int pathfind_aux(int[] cache, int[] tab, int len, int pos)
       return out0
   }
 }
-
 int pathfind(int[] tab, int len)
 {
   int[] cache = new int[len]
@@ -29,7 +28,6 @@ int pathfind(int[] tab, int len)
       cache[i] = -1
   return pathfind_aux(cache, tab, len, 0)
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 0
 if (scanner.hasNext("^-")) {

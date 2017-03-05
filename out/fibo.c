@@ -19,14 +19,13 @@ int fibo0(int a, int b, int i) {
         a2 = tmp;
     }
     return out0;
-}
-int main(void) {
-    int a = 0;
-    int b = 0;
-    int i = 0;
-    scanf("%d %d %d", &a, &b, &i);
-    printf("%d", fibo0(a, b, i));
-    return 0;
+}int main(void) {
+     int a = 0;
+     int b = 0;
+     int i = 0;
+     scanf("%d %d %d", &a, &b, &i);
+     printf("%d", fibo0(a, b, i));
+     return 0;
 }
 
 

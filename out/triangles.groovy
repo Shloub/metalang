@@ -27,7 +27,6 @@ int find0(int len, int[][] tab, int[][] cache, int x, int y)
   cache[y][x] = result
   return result
 }
-
 int find(int len, int[][] tab)
 {
   int[][] tab2 = new int[len][]
@@ -40,7 +39,6 @@ int find(int len, int[][] tab)
   }
   return find0(len, tab, tab2, 0, 0)
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 0
 if (scanner.hasNext("^-")) {

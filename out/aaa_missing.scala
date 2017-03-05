@@ -4,6 +4,7 @@ object aaa_missing
   /*
   Ce test a été généré par Metalang.
 */
+  
   def result(len : Int, tab : Array[Int]): Int = {
     var tab2 :Array[Boolean] = new Array[Boolean](len);
     for (i <- 0 to len - 1)
@@ -19,7 +20,6 @@ object aaa_missing
             return i2;
     return -1;
   }
-  
   
   def main(args : Array[String])
   {

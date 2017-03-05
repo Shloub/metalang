@@ -24,6 +24,7 @@ struct
   cell% field ->tail
 end-struct intlist%
 
+
 : cons { list i }
   intlist% %allot { out0 }
   i out0 ->head !
@@ -31,9 +32,11 @@ end-struct intlist%
   out0 exit
 ;
 
+
 : is_empty { foo }
   true exit
 ;
+
 
 : rev2 recursive { acc torev }
   torev is_empty
@@ -47,9 +50,11 @@ end-struct intlist%
   THEN
 ;
 
+
 : rev { empty torev }
   empty torev rev2 exit
 ;
+
 
 : test { empty }
   empty { list }

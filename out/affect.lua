@@ -13,14 +13,17 @@ end
 --[[
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 --]]
+
 function mktoto (v1)
   local t = {foo=v1, bar=v1, blah=v1}
   return t
 end
+
 function mktoto2 (v1)
   local t = {foo=v1 + 3, bar=v1 + 2, blah=v1 + 1}
   return t
 end
+
 function result (t_, t2_)
   local t = t_
   local t2 = t2_

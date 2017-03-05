@@ -6,7 +6,6 @@ object tuple
     return (a + 1, b + 1);
   }
   
-  
   def main(args : Array[String])
   {
     var t: (Int, Int) = f((0, 1));

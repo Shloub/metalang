@@ -31,7 +31,6 @@ Module euler28
     Next
     Return sum
   End Function
-  
   Sub Main()
     Console.Write(sumdiag(1001))
   End Sub

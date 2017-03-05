@@ -11,14 +11,17 @@ function foo ()
   a = a + 1
   --[[ test 2 --]]
 end
+
 function foo2 ()
   
 end
+
 function foo3 ()
   if 1 == 1 then
       
   end
 end
+
 function sumdiv (n)
   --[[ On désire renvoyer la somme des diviseurs --]]
   local out0 = 0

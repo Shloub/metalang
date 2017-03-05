@@ -3,6 +3,7 @@ struct
   cell% field ->tuple_int_int_field_1
 end-struct tuple_int_int%
 
+
 : f { tuple0 }
   tuple0 { c }
   c ->tuple_int_int_field_0 @ { a }

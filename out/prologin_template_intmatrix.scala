@@ -9,7 +9,6 @@ object prologin_template_intmatrix
     return out0;
   }
   
-  
   def main(args : Array[String])
   {
     var taille_x: Int = readInt().toInt;

@@ -29,9 +29,11 @@ create bufferc 128 allot
   
 ;
 
+
 : foo2 {  }
   
 ;
+
 
 : foo3 {  }
   1 1 =
@@ -39,6 +41,7 @@ create bufferc 128 allot
     
   THEN
 ;
+
 
 : sumdiv { n }
   \  On désire renvoyer la somme des diviseurs 

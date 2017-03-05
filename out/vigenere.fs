@@ -39,9 +39,11 @@ create bufferc 128 allot
   THEN
 ;
 
+
 : of_position_alphabet { c }
   c [char] a + exit
 ;
+
 
 : crypte { taille_cle cle taille message }
   taille 1 - 0 BEGIN 2dup >= WHILE DUP { i }

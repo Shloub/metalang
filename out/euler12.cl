@@ -17,6 +17,7 @@
     (return-from max2_ a)
     (return-from max2_ b))
 ))
+
 (defun eratostene (t0 max0)
 (progn
   (let ((n 0))
@@ -37,6 +38,7 @@
     (return-from eratostene n))
     
 ))
+
 (defun fillPrimesFactors (t0 n primes nprimes)
 (progn
   (loop for i from 0 to (- nprimes 1) do
@@ -55,6 +57,7 @@
       )))
   (return-from fillPrimesFactors n)
 ))
+
 (defun find0 (ndiv2)
 (progn
   (let ((maximumprimes 110))

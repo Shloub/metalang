@@ -54,6 +54,7 @@ create bufferc 128 allot
   THEN
 ;
 
+
 : pathfind { tab x y }
   HERE y cells allot { cache }
   y 1 - 0 BEGIN 2dup >= WHILE DUP { i }

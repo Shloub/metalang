@@ -27,6 +27,7 @@ create bufferc 128 allot
   c [char] 9 <= c [char] 0 >= AND exit
 ;
 
+
 \ 
 \ Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 \ 

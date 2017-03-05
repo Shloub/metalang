@@ -3,8 +3,6 @@ Imports System.Collections.Generic
 
 Module aaa_08tuple
 
-  
-  
   Public Class tuple_int_int
     Public tuple_int_int_field_0 As Integer
     Public tuple_int_int_field_1 As Integer

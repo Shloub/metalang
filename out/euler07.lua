@@ -6,6 +6,7 @@ function divisible (n, t, size)
       end
       return false
   end
+  
   function find (n, t, used, nth)
     while used ~= nth do
         if divisible(n, t, used) then

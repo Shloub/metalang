@@ -34,6 +34,7 @@
     (return-from is_triangular (= (* a (+ a 1)) (* n 2))))
     
 ))
+
 (defun score ()
 (progn
   (mread-blank)

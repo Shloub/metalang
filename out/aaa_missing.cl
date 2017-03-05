@@ -28,6 +28,7 @@
 #|
   Ce test a été généré par Metalang.
 |#
+
 (defun result (len tab)
 (progn
   (let

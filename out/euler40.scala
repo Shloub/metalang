@@ -21,7 +21,6 @@ object euler40
     return -1;
   }
   
-  
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](9);

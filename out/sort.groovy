@@ -8,7 +8,6 @@ int[] copytab(int[] tab, int len)
       o[i] = tab[i]
   return o
 }
-
 void bubblesort(int[] tab, int len)
 {
   for (int i = 0; i < len; i++)
@@ -20,7 +19,6 @@ void bubblesort(int[] tab, int len)
               tab[j] = tmp
           }
 }
-
 void qsort0(int[] tab, int len, int i, int j)
 {
   if (i < j)
@@ -53,7 +51,6 @@ void qsort0(int[] tab, int len, int i, int j)
       qsort0(tab, len, i + 1, j0)
   }
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 2
 if (scanner.hasNext("^-")) {

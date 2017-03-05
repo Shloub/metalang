@@ -12,12 +12,10 @@ Intlist cons(Intlist list, int i)
   out0.tail = list
   return out0
 }
-
 boolean is_empty(Intlist foo)
 {
   return true
 }
-
 Intlist rev2(Intlist acc, Intlist torev)
 {
   if (is_empty(torev))
@@ -30,12 +28,10 @@ Intlist rev2(Intlist acc, Intlist torev)
       return rev2(acc, torev.tail)
   }
 }
-
 Intlist rev(Intlist empty, Intlist torev)
 {
   return rev2(empty, torev)
 }
-
 void test(Intlist empty)
 {
   Intlist list = empty
@@ -52,7 +48,6 @@ void test(Intlist empty)
           list = cons(list, i)
   }
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 
 

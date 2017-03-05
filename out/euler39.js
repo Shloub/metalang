@@ -1,4 +1,5 @@
 var util = require("util");
+
 var t = new Array(1001);
 for (var i = 0; i < 1001; i++)
     t[i] = 0;

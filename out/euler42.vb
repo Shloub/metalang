@@ -55,8 +55,6 @@ Function readInt() As Integer
     End If
   Loop
 End Function
-  
-  
   Function is_triangular(ByVal n as Integer) As Boolean
     '
     '   n = k * (k + 1) / 2
@@ -66,7 +64,6 @@ End Function
     Dim a As Integer = Int(Math.Sqrt(n * 2))
     Return a * (a + 1) = n * 2
   End Function
-  
   Function score() As Integer
     stdin_sep
     Dim len As Integer = readInt
@@ -84,7 +81,6 @@ End Function
         Return 0
     End If
   End Function
-  
   Sub Main()
     For i As Integer = 1 To 55
         If is_triangular(i) Then

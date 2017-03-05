@@ -29,6 +29,7 @@
   (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #| lit un sudoku sur l'entrée standard |#
+
 (defun read_sudoku ()
 (progn
   (let
@@ -44,7 +45,9 @@
   (return-from read_sudoku out0))
   
 ))
+
 #| affiche un sudoku |#
+
 (defun print_sudoku (sudoku0)
 (progn
   (loop for y from 0 to 8 do
@@ -68,9 +71,13 @@
   (princ "
 ")
 ))
+
 #| dit si les variables sont toutes différentes |#
+
 #| dit si les variables sont toutes différentes |#
+
 #| dit si le sudoku est terminé de remplir |#
+
 (defun sudoku_done (s)
 (progn
   (loop for i from 0 to 80 do
@@ -80,7 +87,9 @@
       '()))
   (return-from sudoku_done t)
 ))
+
 #| dit si il y a une erreur dans le sudoku |#
+
 (defun sudoku_error (s)
 (progn
   (let ((out1 nil))
@@ -97,7 +106,9 @@
       )
     
 ))
+
 #| résout le sudoku|#
+
 (defun solve (sudoku0)
 (progn
   (if

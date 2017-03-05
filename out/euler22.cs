@@ -51,7 +51,6 @@ static int readInt(){
     }
   } while(true);
 } 
-  
   static int score()
   {
     stdin_sep();

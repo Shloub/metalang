@@ -1,6 +1,7 @@
 function is_leap (year)
   return math.mod(year, 400) == 0 or math.mod(year, 100) ~= 0 and math.mod(year, 4) == 0
 end
+
 function ndayinmonth (month, year)
   if month == 0 then
       return 31

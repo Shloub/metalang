@@ -53,7 +53,6 @@ def skip() {
     return go0(tab, 0, len);
   }
   
-  
   def main(args : Array[String])
   {
     var len: Int = 0;

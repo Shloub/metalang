@@ -6,7 +6,6 @@ int is_leap(int year) {
     return year % 400 == 0 || year % 100 != 0 && year % 4 == 0;
 }
 
-
 int ndayinmonth(int month, int year) {
     if (month == 0)
         return 31;
@@ -36,28 +35,27 @@ int ndayinmonth(int month, int year) {
     else if (month == 11)
         return 31;
     return 0;
-}
-int main(void) {
-    int month = 0;
-    int year = 1901;
-    int dayofweek = 1;
-    /* 01-01-1901 : mardi */
-    int count = 0;
-    while (year != 2001)
-    {
-        int ndays = ndayinmonth(month, year);
-        dayofweek = (dayofweek + ndays) % 7;
-        month++;
-        if (month == 12)
-        {
-            month = 0;
-            year++;
-        }
-        if (dayofweek % 7 == 6)
-            count++;
-    }
-    printf("%d\n", count);
-    return 0;
+}int main(void) {
+     int month = 0;
+     int year = 1901;
+     int dayofweek = 1;
+     /* 01-01-1901 : mardi */
+     int count = 0;
+     while (year != 2001)
+     {
+         int ndays = ndayinmonth(month, year);
+         dayofweek = (dayofweek + ndays) % 7;
+         month++;
+         if (month == 12)
+         {
+             month = 0;
+             year++;
+         }
+         if (dayofweek % 7 == 6)
+             count++;
+     }
+     printf("%d\n", count);
+     return 0;
 }
 
 

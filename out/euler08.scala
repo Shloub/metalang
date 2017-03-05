@@ -16,7 +16,6 @@ def read_char() : Char = {
         return b;
   }
   
-  
   def main(args : Array[String])
   {
     var i: Int = 1;

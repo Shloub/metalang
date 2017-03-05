@@ -9,7 +9,6 @@ int max2_(int a, int b) {
         return b;
 }
 
-
 int eratostene(int* t, int max0) {
     int i;
     int n = 0;
@@ -27,7 +26,6 @@ int eratostene(int* t, int max0) {
     return n;
 }
 
-
 int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
     int i;
     for (i = 0; i < nprimes; i++)
@@ -43,7 +41,6 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes) {
     }
     return n;
 }
-
 
 int find(int ndiv2) {
     int n, i, m, k, o, j;
@@ -78,10 +75,9 @@ int find(int ndiv2) {
         /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
     }
     return 0;
-}
-int main(void) {
-    printf("%d\n", find(500));
-    return 0;
+}int main(void) {
+     printf("%d\n", find(500));
+     return 0;
 }
 
 

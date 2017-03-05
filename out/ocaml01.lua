@@ -4,6 +4,7 @@ function foo ()
       end
       return 0
   end
+  
   function bar ()
     for i = 0, 10 do
         local a = 0

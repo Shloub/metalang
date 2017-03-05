@@ -26,7 +26,6 @@ Module test_returns
     End If
     Return i Mod 2 = 0
   End Function
-  
   Sub Main()
     
   End Sub

@@ -18,6 +18,7 @@
   THEN
 ;
 
+
 : same_numbers { a b c d e f }
   a chiffre_sort { ca }
   ca b chiffre_sort = ca c chiffre_sort = AND ca d chiffre_sort = AND ca e chiffre_sort = AND ca f chiffre_sort = AND exit

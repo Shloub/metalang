@@ -57,6 +57,7 @@ create bufferc 128 allot
   THEN
 ;
 
+
 : plus_petit0 { tab len }
   tab 0 len go0 exit
 ;

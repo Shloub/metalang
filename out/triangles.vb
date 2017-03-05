@@ -79,7 +79,6 @@ End Function
     cache(y)(x) = result
     Return result
   End Function
-  
   Function find(ByVal len as Integer, ByRef tab as Integer()()) As Integer
     Dim tab2(len)() As Integer
     For i As Integer = 0 To len - 1
@@ -91,7 +90,6 @@ End Function
         Next
         Return find0(len, tab, tab2, 0, 0)
     End Function
-    
     Sub Main()
       Dim len As Integer = 0
       len = readInt

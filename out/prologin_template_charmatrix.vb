@@ -3,9 +3,6 @@ Imports System.Collections.Generic
 
 Module prologin_template_charmatrix
 
-  
-  
-  
   Function programme_candidat(ByRef tableau as Char()(), ByVal taille_x as Integer, ByVal taille_y as Integer) As Integer
     Dim out0 As Integer = 0
     For i As Integer = 0 To taille_y - 1
@@ -17,7 +14,6 @@ Module prologin_template_charmatrix
     Next
     Return out0
   End Function
-  
   Sub Main()
     Dim taille_x As Integer = Integer.Parse(Console.ReadLine())
     Dim taille_y As Integer = Integer.Parse(Console.ReadLine())

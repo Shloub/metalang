@@ -3,9 +3,9 @@ Object subclass: bigint [
   bigint_sign [ ^bigint_sign ]
   bigint_len [ ^bigint_len ]
   bigint_chiffres [ ^bigint_chiffres ]
-  bigint_sign: r [ bigint_sign := r. ] 
-  bigint_len: r [ bigint_len := r. ] 
-  bigint_chiffres: r [ bigint_chiffres := r. ] 
+  bigint_sign: w [ bigint_sign := w. ] 
+  bigint_len: w [ bigint_len := w. ] 
+  bigint_chiffres: w [ bigint_chiffres := w. ] 
 ]
 Object subclass: bigints [
   |buffer|
@@ -40,11 +40,13 @@ Object subclass: bigints [
     e bigint_chiffres: chiffres.
     ^ e
   ]
+  
    print_bigint: a  [
     (a bigint_sign not)
     ifTrue:[$- display.].
     (0 to: (a bigint_len - 1)) do: [:i| (a bigint_chiffres at: (a bigint_len - 1 - i + 1)) display.].
   ]
+  
    bigint_eq: a b: b [
     " Renvoie vrai si a = b "
     (a bigint_sign ~= b bigint_sign)
@@ -57,6 +59,7 @@ Object subclass: bigints [
         ^ true
       ].].
   ]
+  
    bigint_gt: a b: b [|j|
     " Renvoie vrai si a > b "
     (a bigint_sign and: [b bigint_sign not])
@@ -78,9 +81,11 @@ Object subclass: bigints [
         ^ true
       ].].
   ]
+  
    bigint_lt: a b: b [
     ^ (self bigint_gt: a b: b) not
   ]
+  
    add_bigint_positif: a b: b [|tmp retenue len f chiffres|
     " Une addition ou on en a rien a faire des signes "
     len := ((a bigint_len) max: (b bigint_len)) + 1.
@@ -102,6 +107,7 @@ Object subclass: bigints [
     f bigint_chiffres: chiffres.
     ^ f
   ]
+  
    sub_bigint_positif: a b: b [|tmp retenue len g chiffres|
     " Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -128,6 +134,7 @@ Pré-requis : a > b
     g bigint_chiffres: chiffres.
     ^ g
   ]
+  
    neg_bigint: a  [|h|
     h := bigint new.
     h bigint_sign: (a bigint_sign not).
@@ -135,6 +142,7 @@ Pré-requis : a > b
     h bigint_chiffres: a bigint_chiffres.
     ^ h
   ]
+  
    add_bigint: a b: b [
     (a bigint_sign = b bigint_sign)
     ifTrue:[a bigint_sign
@@ -154,9 +162,11 @@ Pré-requis : a > b
         ifFalse:[^ (self sub_bigint_positif: b b: a)].
       ].].
   ]
+  
    sub_bigint: a b: b [
     ^ (self add_bigint: a b: (self neg_bigint: b))
   ]
+  
    mul_bigint_cp: a b: b [|retenue m len chiffres|
     " Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -183,6 +193,7 @@ D'ou le nom de la fonction. "
     m bigint_chiffres: chiffres.
     ^ m
   ]
+  
    bigint_premiers_chiffres: a i: i [|o len|
     len := ((i) min: (a bigint_len)).
     [(len ~= 0) and: [(a bigint_chiffres at: len) = 0]] whileTrue:[len := len - 1.].
@@ -192,6 +203,7 @@ D'ou le nom de la fonction. "
     o bigint_chiffres: a bigint_chiffres.
     ^ o
   ]
+  
    bigint_shift: a i: i [|p chiffres|
     chiffres := Array new: (a bigint_len + i).
     (0 to: (a bigint_len + i - 1)) do: [:k| (k >= i)
@@ -203,6 +215,7 @@ D'ou le nom de la fonction. "
     p bigint_chiffres: chiffres.
     ^ p
   ]
+  
    mul_bigint: aa bb: bb [|split d cmoinsd c bd b amoinsbcmoinsd amoinsb acdec ac a|
     (aa bigint_len = 0)
     ifTrue:[^ aa]
@@ -225,12 +238,14 @@ D'ou le nom de la fonction. "
     ^ (self add_bigint: (self add_bigint: acdec b: bd) b: (self bigint_shift: (self sub_bigint: (self add_bigint: ac b: bd) b: amoinsbcmoinsd) i: split))
     " ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd "
   ]
+  
   "
 Division,
 Modulo
 "
-   log10: s  [|out0 a|
-    a := s.
+  
+   log10: r  [|out0 a|
+    a := r.
     out0 := 1.
     [a >= 10] whileTrue:[
       a := a quo: 10.
@@ -238,8 +253,9 @@ Modulo
     ].
     ^ out0
   ]
-   bigint_of_int: u  [|t size q i|
-    i := u.
+  
+   bigint_of_int: s  [|t size q i|
+    i := s.
     size := (self log10: i).
     (i = 0)
     ifTrue:[size := 0.].
@@ -255,8 +271,9 @@ Modulo
     q bigint_chiffres: t.
     ^ q
   ]
-   fact_bigint: v  [|out0 one a|
-    a := v.
+  
+   fact_bigint: u  [|out0 one a|
+    a := u.
     one := (self bigint_of_int: 1).
     out0 := one.
     [(self bigint_eq: a b: one) not] whileTrue:[
@@ -265,18 +282,22 @@ Modulo
     ].
     ^ out0
   ]
+  
    sum_chiffres_bigint: a  [|out0|
     out0 := 0.
     (0 to: (a bigint_len - 1)) do: [:i| out0 := out0 + (a bigint_chiffres at: (i + 1)).].
     ^ out0
   ]
+  
   " http://projecteuler.net/problem=20 "
+  
   euler20 [|a|
     a := (self bigint_of_int: 15).
     " normalement c'est 100 "
     a := (self fact_bigint: a).
     ^ (self sum_chiffres_bigint: a)
   ]
+  
    bigint_exp: a b: b [
     (b = 1)
     ifTrue:[^ a]
@@ -284,8 +305,9 @@ Modulo
       ifTrue:[^ (self bigint_exp: (self mul_bigint: a bb: a) b: (b quo: 2))]
       ifFalse:[^ (self mul_bigint: a bb: (self bigint_exp: a b: (b - 1)))].].
   ]
-   bigint_exp_10chiffres: w b: b [|a|
-    a := w.
+  
+   bigint_exp_10chiffres: v b: b [|a|
+    a := v.
     a := (self bigint_premiers_chiffres: a i: 10).
     (b = 1)
     ifTrue:[^ a]
@@ -293,6 +315,7 @@ Modulo
       ifTrue:[^ (self bigint_exp_10chiffres: (self mul_bigint: a bb: a) b: (b quo: 2))]
       ifFalse:[^ (self mul_bigint: a bb: (self bigint_exp_10chiffres: a b: (b - 1)))].].
   ]
+  
   euler48 [|sum ibeib ib|
     sum := (self bigint_of_int: 0).
     (1 to: 100) do: [:i|
@@ -307,12 +330,14 @@ Modulo
     '
 ' display.
   ]
+  
   euler16 [|a|
     a := (self bigint_of_int: 2).
     a := (self bigint_exp: a b: 100).
     " 1000 normalement "
     ^ (self sum_chiffres_bigint: a)
   ]
+  
   euler25 [|i c b a|
     i := 2.
     a := (self bigint_of_int: 1).
@@ -326,6 +351,7 @@ Modulo
     ].
     ^ i
   ]
+  
   euler29 [|n min0 maxB maxA found b a_bigint a0_bigint|
     maxA := 5.
     maxB := 5.

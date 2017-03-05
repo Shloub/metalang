@@ -18,7 +18,6 @@ Module euler10
     Next
     Return sum
   End Function
-  
   Sub Main()
     Dim n As Integer = 100000
     ' normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 

@@ -18,6 +18,7 @@
                 (return-from chiffre_sort (+ d (* (chiffre_sort (+ c (* e 10))) 10))))
             ))))))
 ))
+
 (defun same_numbers (a b c d e f)
 (progn
   (let ((ca (chiffre_sort a)))

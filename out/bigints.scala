@@ -255,6 +255,7 @@ D'ou le nom de la fonction. */
 Division,
 Modulo
 */
+  
   def log10(_a : Int): Int = {
     var a = _a;var out0: Int = 1;
     while (a >= 10)
@@ -299,6 +300,7 @@ Modulo
   }
   
   //  http://projecteuler.net/problem=20 
+  
   def euler20(): Int = {
     var a: Bigint = bigint_of_int(15);
     /* normalement c'est 100 */
@@ -407,7 +409,6 @@ Modulo
     }
     return n;
   }
-  
   
   def main(args : Array[String])
   {

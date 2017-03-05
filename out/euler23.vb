@@ -16,7 +16,6 @@ Module euler23
     Next
     Return n
   End Function
-  
   Function fillPrimesFactors(ByRef t as Integer(), ByVal n as Integer, ByRef primes as Integer(), ByVal nprimes as Integer) As Integer
     For i As Integer = 0 To nprimes - 1
         Dim d As Integer = primes(i)
@@ -30,14 +29,12 @@ Module euler23
     Next
     Return n
   End Function
-  
   Function sumdivaux2(ByRef t as Integer(), ByVal n as Integer, ByVal i as Integer) As Integer
     Do While i < n AndAlso t(i) = 0
         i = i + 1
     Loop
     Return i
   End Function
-  
   Function sumdivaux(ByRef t as Integer(), ByVal n as Integer, ByVal i as Integer) As Integer
     If i > n Then
         Return 1
@@ -54,7 +51,6 @@ Module euler23
         Return (out0 + 1) * o
     End If
   End Function
-  
   Function sumdiv(ByVal nprimes as Integer, ByRef primes as Integer(), ByVal n as Integer) As Integer
     Dim t(n + 1) As Integer
     For i As Integer = 0 To n
@@ -63,7 +59,6 @@ Module euler23
     Dim max0 As Integer = fillPrimesFactors(t, n, primes, nprimes)
     Return sumdivaux(t, max0, 0)
     End Function
-    
     Sub Main()
       Dim maximumprimes As Integer = 30001
       Dim era(maximumprimes) As Integer

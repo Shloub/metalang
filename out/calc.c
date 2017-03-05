@@ -20,10 +20,9 @@ int fibo(int a, int b, int i) {
         a2 = tmp;
     }
     return out_;
-}
-int main(void) {
-    printf("%d", fibo(1, 2, 4));
-    return 0;
+}int main(void) {
+     printf("%d", fibo(1, 2, 4));
+     return 0;
 }
 
 

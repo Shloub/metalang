@@ -1,8 +1,6 @@
 import groovy.transform.Field
 import java.util.*
 
-
-
 boolean is_triangular(int n)
 {
   /*
@@ -12,7 +10,6 @@ boolean is_triangular(int n)
   int a = (int)Math.sqrt(n * 2)
   return a * (a + 1) == n * 2
 }
-
 int score()
 {
   scanner.findWithinHorizon("[\n\r ]*", 1)
@@ -36,7 +33,6 @@ int score()
   else
       return 0
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 for (int i = 1; i < 56; i++)
     if (is_triangular(i))

@@ -15,7 +15,6 @@ object euler36
     return true;
   }
   
-  
   def main(args : Array[String])
   {
     var p: Int = 1;

@@ -3,8 +3,6 @@ import java.util.*;
 public class euler42
 {
   static Scanner scanner = new Scanner(System.in);
-  
-  
   static boolean is_triangular(int n)
   {
     /*

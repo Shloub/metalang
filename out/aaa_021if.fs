@@ -17,6 +17,7 @@
   THEN
 ;
 
+
 : testB { a b }
   a
   IF
@@ -30,6 +31,7 @@
     THEN
   THEN
 ;
+
 
 : testC { a b }
   a
@@ -45,6 +47,7 @@
   THEN
 ;
 
+
 : testD { a b }
   a
   IF
@@ -59,6 +62,7 @@
     S" D" TYPE
   THEN
 ;
+
 
 : testE { a b }
   a
@@ -77,6 +81,7 @@
     S" E" TYPE
   THEN
 ;
+
 
 : test { a b }
   a b testD

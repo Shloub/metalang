@@ -3,7 +3,6 @@ import "fmt"
 import "os"
 import "bufio"
 var reader *bufio.Reader
-
 func max2_(a int, b int) int{
   if a > b {
       return a

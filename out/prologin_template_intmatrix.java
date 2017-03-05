@@ -12,8 +12,6 @@ public class prologin_template_intmatrix
     return out;
   }
 
-  
-  
   static int programme_candidat(int[][] tableau, int x, int y)
   {
     int out0 = 0;

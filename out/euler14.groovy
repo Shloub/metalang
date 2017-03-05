@@ -7,7 +7,6 @@ int next0(int n)
   else
       return 3 * n + 1
 }
-
 int find(int n, int[] m)
 {
   if (n == 1)
@@ -22,7 +21,6 @@ int find(int n, int[] m)
       return m[n]
   }
 }
-
 
 int[] m = new int[1000000]
 for (int j = 0; j < 1000000; j++)

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 
-
 int programme_candidat(char* tableau, int taille) {
     int i;
     int out0 = 0;
@@ -13,16 +12,15 @@ int programme_candidat(char* tableau, int taille) {
     }
     printf("--\n");
     return out0;
-}
-int main(void) {
-    int a, taille;
-    scanf("%d ", &taille);
-    char *tableau = calloc(taille, sizeof(char));
-    for (a = 0; a < taille; a++)
-        scanf("%c", &tableau[a]);
-    scanf(" ");
-    printf("%d\n", programme_candidat(tableau, taille));
-    return 0;
+}int main(void) {
+     int a, taille;
+     scanf("%d ", &taille);
+     char *tableau = calloc(taille, sizeof(char));
+     for (a = 0; a < taille; a++)
+         scanf("%c", &tableau[a]);
+     scanf(" ");
+     printf("%d\n", programme_candidat(tableau, taille));
+     return 0;
 }
 
 

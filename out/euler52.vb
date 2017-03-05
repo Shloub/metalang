@@ -17,12 +17,10 @@ Module euler52
         End If
     End If
   End Function
-  
   Function same_numbers(ByVal a as Integer, ByVal b as Integer, ByVal c as Integer, ByVal d as Integer, ByVal e as Integer, ByVal f as Integer) As Boolean
     Dim ca As Integer = chiffre_sort(a)
     Return ca = chiffre_sort(b) AndAlso ca = chiffre_sort(c) AndAlso ca = chiffre_sort(d) AndAlso ca = chiffre_sort(e) AndAlso ca = chiffre_sort(f)
   End Function
-  
   Sub Main()
     Dim num As Integer = 142857
     If same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5) Then

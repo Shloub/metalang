@@ -11,7 +11,6 @@ int foo() {
     return 0;
 }
 
-
 int bar() {
     int i;
     for (i = 0; i < 11; i++)
@@ -19,10 +18,9 @@ int bar() {
         int a = 0;
     }
     return 0;
-}
-int main(void) {
-    
-    return 0;
+}int main(void) {
+     
+     return 0;
 }
 
 

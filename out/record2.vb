@@ -62,12 +62,10 @@ End Function
     t.blah = 0
     Return t
   End Function
-  
   Function result(ByRef t as toto) As Integer
     t.blah = t.blah + 1
     Return t.foo + t.blah * t.bar + t.bar * t.foo
   End Function
-  
   Sub Main()
     Dim t As toto = mktoto(4)
     t.bar = readInt

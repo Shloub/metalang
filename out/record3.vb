@@ -62,7 +62,6 @@ End Function
     t.blah = 0
     Return t
   End Function
-  
   Function result(ByRef t as toto(), ByVal len as Integer) As Integer
     Dim out0 As Integer = 0
     For j As Integer = 0 To len - 1
@@ -71,7 +70,6 @@ End Function
     Next
     Return out0
   End Function
-  
   Sub Main()
     Dim t(4) As toto
     For i As Integer = 0 To 3

@@ -22,7 +22,6 @@ object euler07
     return t(used - 1);
   }
   
-  
   def main(args : Array[String])
   {
     var n: Int = 10001;

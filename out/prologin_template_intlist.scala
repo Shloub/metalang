@@ -8,7 +8,6 @@ object prologin_template_intlist
     return out0;
   }
   
-  
   def main(args : Array[String])
   {
     var taille: Int = readInt().toInt;

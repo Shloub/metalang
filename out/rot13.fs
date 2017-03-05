@@ -27,7 +27,6 @@ create bufferc 128 allot
 \ 
 \ Ce test effectue un rot13 sur une chaine lue en entrée
 \ 
-
 : main
   read-int { strlen }
   skipspaces

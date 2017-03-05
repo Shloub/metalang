@@ -56,7 +56,6 @@ def skip() {
     }
   }
   
-  
   def main(args : Array[String])
   {
     var taille_cle = read_int();

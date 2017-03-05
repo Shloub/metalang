@@ -17,6 +17,7 @@
   n exit
 ;
 
+
 : isPrime { n primes len }
   0 { i }
   n 0 <
@@ -34,6 +35,7 @@
   REPEAT
   true exit
 ;
+
 
 : test { a b primes len }
   200 0 BEGIN 2dup >= WHILE DUP { n }

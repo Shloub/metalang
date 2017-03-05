@@ -4,7 +4,6 @@ boolean is_leap(int year)
 {
   return year % 400 == 0 || year % 100 != 0 && year % 4 == 0
 }
-
 int ndayinmonth(int month, int year)
 {
   if (month == 0)
@@ -36,7 +35,6 @@ int ndayinmonth(int month, int year)
       return 31
   return 0
 }
-
 
 int month = 0
 int year = 1901

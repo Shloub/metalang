@@ -14,8 +14,6 @@ std::vector<char> *getline() {
     return c;
 }
 
-
-
 int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vector<char> *> * tab, int x, int y, int posX, int posY) {
     if (posX == x - 1 && posY == y - 1)
         return 0;

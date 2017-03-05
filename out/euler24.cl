@@ -18,6 +18,7 @@
     (return-from fact prod))
     
 ))
+
 (defun show (lim nth0)
 (progn
   (let

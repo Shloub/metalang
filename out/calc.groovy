@@ -19,6 +19,5 @@ int fibo(int a, int b, int i)
   return out_
 }
 
-
 print(fibo(1, 2, 4))
 

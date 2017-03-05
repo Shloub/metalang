@@ -12,7 +12,6 @@ object aaa_03binding
     printf("%d\n", i);
   }
   
-  
   def main(args : Array[String])
   {
     h(14);

@@ -51,7 +51,6 @@ static int readInt(){
     }
   } while(true);
 } 
-  
   static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)

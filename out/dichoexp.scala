@@ -34,7 +34,6 @@ def skip() {
         return a * exp0(a, b - 1);
   }
   
-  
   def main(args : Array[String])
   {
     var a: Int = 0;

@@ -9,6 +9,7 @@ function fact (n)
       end
       return prod
   end
+  
   function show (lim, nth)
     local t = {}
     for i = 0, lim - 1 do

@@ -12,8 +12,6 @@ public class aaa_missing
     return out;
   }
 
-  
-  
   /*
   Ce test a été généré par Metalang.
 */

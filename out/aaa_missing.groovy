@@ -10,8 +10,6 @@ import java.util.*
     return out;
   }
 
-
-
 /*
   Ce test a été généré par Metalang.
 */
@@ -31,7 +29,6 @@ int result(int len, int[] tab)
           return i2
   return -1
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = Integer.parseInt(scanner.nextLine())
 System.out.printf("%d\n", len)

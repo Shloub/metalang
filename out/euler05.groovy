@@ -1,6 +1,5 @@
 import java.util.*
 
-
 int[] primesfactors(int n)
 {
   int[] tab = new int[n + 1]
@@ -18,7 +17,6 @@ int[] primesfactors(int n)
   tab[n]++
   return tab
 }
-
 
 int lim = 20
 int[] o = new int[lim + 1]

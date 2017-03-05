@@ -7,7 +7,6 @@ boolean f(int i)
   return false
 }
 
-
 if (f(4))
     print("true <-\n ->\n")
 else

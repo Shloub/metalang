@@ -1,6 +1,5 @@
 import java.util.*
 
-
 int eratostene(int[] t, int max0)
 {
   int n = 0
@@ -17,7 +16,6 @@ int eratostene(int[] t, int max0)
       }
   return n
 }
-
 int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
 {
   for (int i = 0; i < nprimes; i++)
@@ -33,7 +31,6 @@ int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
   }
   return n
 }
-
 int find(int ndiv2)
 {
   int maximumprimes = 110
@@ -68,7 +65,6 @@ int find(int ndiv2)
   }
   return 0
 }
-
 
 System.out.printf("%d\n", find(500))
 

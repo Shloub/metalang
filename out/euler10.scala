@@ -20,7 +20,6 @@ object euler10
     return sum;
   }
   
-  
   def main(args : Array[String])
   {
     var n: Int = 100000;

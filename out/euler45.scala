@@ -47,7 +47,6 @@ object euler45
             return findHexa2(n, a, c);
   }
   
-  
   def main(args : Array[String])
   {
     for (n <- 285 to 55385)

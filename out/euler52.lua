@@ -17,6 +17,7 @@ function chiffre_sort (a)
       end
   end
 end
+
 function same_numbers (a, b, c, d, e, f)
   local ca = chiffre_sort(a)
   return ca == chiffre_sort(b) and ca == chiffre_sort(c) and ca == chiffre_sort(d) and ca == chiffre_sort(e) and ca == chiffre_sort(f)

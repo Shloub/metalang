@@ -66,7 +66,6 @@ End Function
     t.blah = v1
     Return t
   End Function
-  
   Function mktoto2(ByVal v1 as Integer) As toto
     Dim t As toto = new toto()
     t.foo = v1 + 3
@@ -74,7 +73,6 @@ End Function
     t.blah = v1 + 1
     Return t
   End Function
-  
   Function result(ByRef t_ as toto, ByRef t2_ as toto) As Integer
     Dim t As toto = t_
     Dim t2 As toto = t2_
@@ -100,7 +98,6 @@ End Function
     cache2 = cache0
     Return t.foo + t.blah * t.bar + t.bar * t.foo
     End Function
-    
     Sub Main()
       Dim t As toto = mktoto(4)
       Dim t2 As toto = mktoto(5)

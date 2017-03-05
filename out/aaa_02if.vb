@@ -8,7 +8,6 @@ Module aaa_02if
     End If
     Return false
   End Function
-  
   Sub Main()
     If f(4) Then
         Console.Write("true <-" & Chr(10) & " ->" & Chr(10))

@@ -12,7 +12,6 @@ void testA(boolean a, boolean b)
   else
       print("D")
 }
-
 void testB(boolean a, boolean b)
 {
   if (a)
@@ -22,7 +21,6 @@ void testB(boolean a, boolean b)
   else
       print("C")
 }
-
 void testC(boolean a, boolean b)
 {
   if (a)
@@ -33,7 +31,6 @@ void testC(boolean a, boolean b)
   else
       print("C")
 }
-
 void testD(boolean a, boolean b)
 {
   if (a)
@@ -47,7 +44,6 @@ void testD(boolean a, boolean b)
   else
       print("D")
 }
-
 void testE(boolean a, boolean b)
 {
   if (a)
@@ -64,14 +60,12 @@ void testE(boolean a, boolean b)
       print("E")
   }
 }
-
 void test(boolean a, boolean b)
 {
   testD(a, b)
   testE(a, b)
   print("\n")
 }
-
 
 test(true, true)
 test(true, false)

@@ -7,7 +7,6 @@ int triangle(int n)
   else
       return n * (n + 1).intdiv(2)
 }
-
 int penta(int n)
 {
   if (n % 2 == 0)
@@ -15,12 +14,10 @@ int penta(int n)
   else
       return (3 * n - 1).intdiv(2) * n
 }
-
 int hexa(int n)
 {
   return n * (2 * n - 1)
 }
-
 boolean findPenta2(int n, int a, int b)
 {
   if (b == a + 1)
@@ -34,7 +31,6 @@ boolean findPenta2(int n, int a, int b)
   else
       return findPenta2(n, a, c)
 }
-
 boolean findHexa2(int n, int a, int b)
 {
   if (b == a + 1)
@@ -48,7 +44,6 @@ boolean findHexa2(int n, int a, int b)
   else
       return findHexa2(n, a, c)
 }
-
 
 for (int n = 285; n < 55386; n++)
 {

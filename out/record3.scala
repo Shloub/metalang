@@ -43,7 +43,6 @@ def skip() {
     return out0;
   }
   
-  
   def main(args : Array[String])
   {
     var t :Array[Toto] = new Array[Toto](4);

@@ -9,6 +9,7 @@
     (return-from max2_ a)
     (return-from max2_ b))
 ))
+
 (defun pgcd (a b)
 (progn
   (let ((c (min a b)))

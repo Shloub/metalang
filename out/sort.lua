@@ -17,6 +17,7 @@ function copytab (tab, len)
       end
       return o
   end
+  
   function bubblesort (tab, len)
     for i = 0, len - 1 do
         for j = i + 1, len - 1 do
@@ -28,6 +29,7 @@ function copytab (tab, len)
             end
             end
         end
+        
         function qsort0 (tab, len, i, j)
           if i < j then
               local i0 = i

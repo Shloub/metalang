@@ -69,7 +69,6 @@ End Function
     Next
     Return true
   End Function
-  
   Sub Main()
     Dim nombre As Integer = readInt
     stdin_sep

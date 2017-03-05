@@ -44,17 +44,14 @@ End Function
     ' test 2 
     
   End Sub
-  
   Sub foo2()
     
   End Sub
-  
   Sub foo3()
     If 1 = 1 Then
         
     End If
   End Sub
-  
   Function sumdiv(ByVal n as Integer) As Integer
     ' On désire renvoyer la somme des diviseurs 
     
@@ -79,7 +76,6 @@ End Function
     'On renvoie out
     
   End Function
-  
   Sub Main()
     ' Programme principal 
     

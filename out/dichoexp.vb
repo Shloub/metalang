@@ -61,7 +61,6 @@ End Function
         Return a * exp0(a, b - 1)
     End If
   End Function
-  
   Sub Main()
     Dim a As Integer = 0
     Dim b As Integer = 0

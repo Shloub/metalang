@@ -35,6 +35,7 @@ def skip() {
   /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
+  
   def npi0(str : Array[Char], len : Int): Int = {
     var stack :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
@@ -65,7 +66,6 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
                 }
     return stack(0);
   }
-  
   
   def main(args : Array[String])
   {

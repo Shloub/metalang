@@ -38,6 +38,7 @@ Object subclass: plus_petit [
     ifTrue:[^ (self go0: tab a: a b: m)]
     ifFalse:[^ (self go0: tab a: m b: b)].
   ]
+  
    plus_petit0: tab len: len [
     ^ (self go0: tab a: 0 b: len)
   ]

@@ -41,7 +41,6 @@ Module euler32
         End If
     End If
   End Function
-  
   Sub Main()
     Dim count As Integer = 0
     Dim allowed(10) As Boolean

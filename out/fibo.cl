@@ -20,6 +20,7 @@
 #|
 La suite de fibonaci
 |#
+
 (defun fibo0 (a b i)
 (progn
   (let ((out0 0))

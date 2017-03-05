@@ -7,7 +7,6 @@ object aaa_02if
     return false;
   }
   
-  
   def main(args : Array[String])
   {
     if (f(4))

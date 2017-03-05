@@ -12,13 +12,12 @@ int exp0(int a, int b) {
     }
     else
         return a * exp0(a, b - 1);
-}
-int main(void) {
-    int a = 0;
-    int b = 0;
-    scanf("%d %d", &a, &b);
-    printf("%d", exp0(a, b));
-    return 0;
+}int main(void) {
+     int a = 0;
+     int b = 0;
+     scanf("%d %d", &a, &b);
+     printf("%d", exp0(a, b));
+     return 0;
 }
 
 

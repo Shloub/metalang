@@ -14,13 +14,11 @@ Toto mktoto(int v1)
   t.blah = 0
   return t
 }
-
 int result(Toto t)
 {
   t.blah++
   return t.foo + t.blah * t.bar + t.bar * t.foo
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 Toto t = mktoto(4)
 if (scanner.hasNext("^-")) {

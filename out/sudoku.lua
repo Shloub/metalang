@@ -15,6 +15,7 @@ function stdinsep()
     if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
 end
 --[[ lit un sudoku sur l'entrée standard --]]
+
 function read_sudoku ()
   local out0 = {}
   for i = 0, 9 * 9 - 1 do
@@ -24,7 +25,9 @@ function read_sudoku ()
       end
       return out0
   end
+  
   --[[ affiche un sudoku --]]
+  
   function print_sudoku (sudoku0)
     for y = 0, 8 do
         for x = 0, 8 do
@@ -40,9 +43,13 @@ function read_sudoku ()
             end
             io.write("\n")
         end
+        
         --[[ dit si les variables sont toutes différentes --]]
+        
         --[[ dit si les variables sont toutes différentes --]]
+        
         --[[ dit si le sudoku est terminé de remplir --]]
+        
         function sudoku_done (s)
           for i = 0, 80 do
               if s[i + 1] == 0 then
@@ -51,7 +58,9 @@ function read_sudoku ()
               end
               return true
           end
+          
           --[[ dit si il y a une erreur dans le sudoku --]]
+          
           function sudoku_error (s)
             local out1 = false
             for x = 0, 8 do
@@ -67,7 +76,9 @@ function read_sudoku ()
                         end
                         return out1 or out2 or out3
                     end
+                    
                     --[[ résout le sudoku--]]
+                    
                     function solve (sudoku0)
                       if sudoku_error(sudoku0) then
                           return false

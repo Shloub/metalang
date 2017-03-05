@@ -17,6 +17,7 @@ end
 
 
 --]]
+
 function sumdiag (n)
   local nterms = n * 2 - 1
   local un = 1

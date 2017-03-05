@@ -2,7 +2,6 @@ Imports System
 
 Module euler50
 
-  
   Function eratostene(ByRef t as Integer(), ByVal max0 as Integer) As Integer
     Dim n As Integer = 0
     For i As Integer = 2 To max0 - 1
@@ -19,7 +18,6 @@ Module euler50
     Next
     Return n
   End Function
-  
   Sub Main()
     Dim maximumprimes As Integer = 1000001
     Dim era(maximumprimes) As Integer

@@ -9,6 +9,7 @@ function triangle (n)
       return n * trunc((n + 1) / 2)
   end
 end
+
 function penta (n)
   if math.mod(n, 2) == 0 then
       return trunc(n / 2) * (3 * n - 1)
@@ -16,9 +17,11 @@ function penta (n)
       return trunc((3 * n - 1) / 2) * n
   end
 end
+
 function hexa (n)
   return n * (2 * n - 1)
 end
+
 function findPenta2 (n, a, b)
   if b == a + 1 then
       return penta(a) == n or penta(b) == n
@@ -33,6 +36,7 @@ function findPenta2 (n, a, b)
       return findPenta2(n, a, c)
   end
 end
+
 function findHexa2 (n, a, b)
   if b == a + 1 then
       return hexa(a) == n or hexa(b) == n

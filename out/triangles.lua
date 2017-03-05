@@ -15,6 +15,7 @@ end
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 --]]
+
 function find0 (len, tab, cache, x, y)
   --[[
 	Cette fonction est récursive
@@ -37,6 +38,7 @@ function find0 (len, tab, cache, x, y)
   cache[y + 1][x + 1] = result
   return result
 end
+
 function find (len, tab)
   local tab2 = {}
   for i = 0, len - 1 do

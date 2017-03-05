@@ -27,7 +27,6 @@ def skip() {
     var bar: Int=_bar;
   }
   
-  
   def main(args : Array[String])
   {
     var param: Toto = new Toto(0, 0);

@@ -2,6 +2,7 @@ Object subclass: aaa_05array [
    id: b  [
     ^ b
   ]
+  
    g: t index: index [
     t at: (index + 1) put: false.
   ]

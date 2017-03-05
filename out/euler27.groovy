@@ -16,7 +16,6 @@ int eratostene(int[] t, int max0)
       }
   return n
 }
-
 boolean isPrime(int n, int[] primes, int len)
 {
   int i = 0
@@ -30,7 +29,6 @@ boolean isPrime(int n, int[] primes, int len)
   }
   return true
 }
-
 int test(int a, int b, int[] primes, int len)
 {
   for (int n = 0; n < 201; n++)
@@ -41,7 +39,6 @@ int test(int a, int b, int[] primes, int len)
   }
   return 200
 }
-
 
 int maximumprimes = 1000
 int[] era = new int[maximumprimes]

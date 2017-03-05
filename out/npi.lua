@@ -19,9 +19,11 @@ end
 function is_number (c)
   return c <= 57 and c >= 48
 end
+
 --[[
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 --]]
+
 function npi0 (str, len)
   local stack = {}
   for i = 0, len - 1 do

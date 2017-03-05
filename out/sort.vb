@@ -57,7 +57,6 @@ End Function
     Next
     Return o
     End Function
-    
     Sub bubblesort(ByRef tab as Integer(), ByVal len as Integer)
       For i As Integer = 0 To len - 1
           For j As Integer = i + 1 To len - 1
@@ -69,7 +68,6 @@ End Function
           Next
       Next
     End Sub
-    
     Sub qsort0(ByRef tab as Integer(), ByVal len as Integer, ByVal i as Integer, ByVal j as Integer)
       If i < j Then
           Dim i0 As Integer = i
@@ -102,7 +100,6 @@ End Function
           qsort0(tab, len, i + 1, j0)
       End If
     End Sub
-    
     Sub Main()
       Dim len As Integer = 2
       len = readInt

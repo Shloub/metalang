@@ -17,7 +17,6 @@ object ocaml01
     return 0;
   }
   
-  
   def main(args : Array[String])
   {
     

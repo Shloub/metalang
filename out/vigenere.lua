@@ -26,9 +26,11 @@ function position_alphabet (c)
       return -1
   end
 end
+
 function of_position_alphabet (c)
   return c + 97
 end
+
 function crypte (taille_cle, cle, taille, message)
   for i = 0, taille - 1 do
       local lettre = position_alphabet(message[i + 1])

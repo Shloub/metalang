@@ -1,12 +1,10 @@
 import groovy.transform.Field
 import java.util.*
 
-
 boolean is_number(char c)
 {
   return (0+c) <= (0+(char)'9') && (0+c) >= (0+(char)'0')
 }
-
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
@@ -39,7 +37,6 @@ int npi0(char[] str, int len)
       }
   return stack[0]
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int len = 0
 if (scanner.hasNext("^-")) {

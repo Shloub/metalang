@@ -7,7 +7,6 @@ object aaa_11arrayconst
     printf("\n");
   }
   
-  
   def main(args : Array[String])
   {
     var t :Array[Int] = new Array[Int](5);

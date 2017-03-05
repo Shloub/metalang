@@ -14,6 +14,7 @@ function mktoto (v1)
   local t = {foo=v1, bar=0, blah=0}
   return t
 end
+
 function result (t, len)
   local out0 = 0
   for j = 0, len - 1 do

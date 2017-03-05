@@ -36,6 +36,7 @@ create bufferc 128 allot
   out0 exit
 ;
 
+
 \  affiche un sudoku 
 
 : print_sudoku { sudoku0 }
@@ -57,6 +58,7 @@ create bufferc 128 allot
   S\" \n" TYPE
 ;
 
+
 \  dit si les variables sont toutes différentes 
 
 \  dit si les variables sont toutes différentes 
@@ -72,6 +74,7 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   true exit
 ;
+
 
 \  dit si il y a une erreur dans le sudoku 
 
@@ -90,6 +93,7 @@ create bufferc 128 allot
    1 + REPEAT 2DROP
   out1 out2 OR out3 OR exit
 ;
+
 
 \  résout le sudoku
 

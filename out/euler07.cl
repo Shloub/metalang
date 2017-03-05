@@ -17,6 +17,7 @@
       '()))
   (return-from divisible nil)
 ))
+
 (defun find0 (n t0 used nth0)
 (progn
   (loop while (not (= used nth0))

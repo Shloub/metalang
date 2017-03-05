@@ -2,7 +2,6 @@
 #include <vector>
 #include <algorithm>
 
-
 std::vector<int> * primesfactors(int n) {
     std::vector<int> *tab = new std::vector<int>( n + 1 );
     std::fill(tab->begin(), tab->end(), 0);

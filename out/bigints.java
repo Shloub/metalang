@@ -3,9 +3,6 @@ import java.util.*;
 public class bigints
 {
   static Scanner scanner = new Scanner(System.in);
-  
-  
-  
   static class bigint {
     public boolean bigint_sign;
     public int bigint_len;

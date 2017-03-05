@@ -17,7 +17,6 @@ Toto mktoto(int v1)
   t.blah = v1
   return t
 }
-
 Toto mktoto2(int v1)
 {
   Toto t = new Toto()
@@ -26,7 +25,6 @@ Toto mktoto2(int v1)
   t.blah = v1 + 1
   return t
 }
-
 int result(Toto t_, Toto t2_)
 {
   Toto t = t_
@@ -51,7 +49,6 @@ int result(Toto t_, Toto t2_)
   cache2 = cache0
   return t.foo + t.blah * t.bar + t.bar * t.foo
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 Toto t = mktoto(4)
 Toto t2 = mktoto(5)

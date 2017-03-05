@@ -3,6 +3,7 @@
   year 400 % 0 = year 100 % 0 <> year 4 % 0 = AND OR exit
 ;
 
+
 : ndayinmonth { month year }
   month 0 =
   IF

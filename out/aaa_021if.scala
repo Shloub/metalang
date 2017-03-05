@@ -69,7 +69,6 @@ object aaa_021if
     printf("\n");
   }
   
-  
   def main(args : Array[String])
   {
     test(true, true);

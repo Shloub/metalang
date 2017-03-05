@@ -3,8 +3,6 @@ Imports System.Collections.Generic
 
 Module prologin_template_intmatrix
 
-  
-  
   Function programme_candidat(ByRef tableau as Integer()(), ByVal x as Integer, ByVal y as Integer) As Integer
     Dim out0 As Integer = 0
     For i As Integer = 0 To y - 1
@@ -14,7 +12,6 @@ Module prologin_template_intmatrix
     Next
     Return out0
   End Function
-  
   Sub Main()
     Dim taille_x As Integer = Integer.Parse(Console.ReadLine())
     Dim taille_y As Integer = Integer.Parse(Console.ReadLine())

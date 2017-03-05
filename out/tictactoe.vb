@@ -89,7 +89,6 @@ End Function
     Next
     Console.Write(Chr(10))
   End Sub
-  
   ' On dit qui gagne (info stoquées dans g.ended et g.note ) 
   
   Sub eval0(ByRef g as gamestate)
@@ -138,7 +137,6 @@ End Function
         g.note = 0
     End If
   End Sub
-  
   ' On applique un mouvement 
   
   Sub apply_move_xy(ByVal x as Integer, ByVal y as Integer, ByRef g as gamestate)
@@ -149,29 +147,23 @@ End Function
     g.cases(x)(y) = player
     g.firstToPlay = Not g.firstToPlay
   End Sub
-  
   Sub apply_move(ByRef m as move, ByRef g as gamestate)
     apply_move_xy(m.x, m.y, g)
   End Sub
-  
   Sub cancel_move_xy(ByVal x as Integer, ByVal y as Integer, ByRef g as gamestate)
     g.cases(x)(y) = 0
     g.firstToPlay = Not g.firstToPlay
     g.ended = false
   End Sub
-  
   Sub cancel_move(ByRef m as move, ByRef g as gamestate)
     cancel_move_xy(m.x, m.y, g)
   End Sub
-  
   Function can_move_xy(ByVal x as Integer, ByVal y as Integer, ByRef g as gamestate) As Boolean
     Return g.cases(x)(y) = 0
   End Function
-  
   Function can_move(ByRef m as move, ByRef g as gamestate) As Boolean
     Return can_move_xy(m.x, m.y, g)
   End Function
-  
   '
   'Un minimax classique, renvoie la note du plateau
   '
@@ -201,7 +193,6 @@ End Function
     Next
     Return maxNote
   End Function
-  
   '
   'Renvoie le coup de l'IA
   '
@@ -229,7 +220,6 @@ End Function
     Console.Write(minMove.x & minMove.y & Chr(10))
     Return minMove
   End Function
-  
   Function init0() As gamestate
     Dim cases(3)() As Integer
     For i As Integer = 0 To 2
@@ -246,7 +236,6 @@ End Function
         a.ended = false
         Return a
     End Function
-    
     Function read_move() As move
       Dim x As Integer = readInt
       stdin_sep
@@ -257,7 +246,6 @@ End Function
       b.y = y
       Return b
     End Function
-    
     Sub Main()
       For i As Integer = 0 To 1
           Dim state As gamestate = init0()

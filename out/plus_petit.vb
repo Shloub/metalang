@@ -77,11 +77,9 @@ End Function
         Return go0(tab, m, b)
     End If
   End Function
-  
   Function plus_petit0(ByRef tab as Integer(), ByVal len as Integer) As Integer
     Return go0(tab, 0, len)
   End Function
-  
   Sub Main()
     Dim len As Integer = 0
     len = readInt

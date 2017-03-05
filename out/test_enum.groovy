@@ -5,6 +5,5 @@ enum Foo_t {
    Bar,
    Blah}
 
-
 Foo_t foo_val = Foo_t.Foo
 

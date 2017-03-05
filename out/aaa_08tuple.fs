@@ -27,6 +27,7 @@ struct
   cell% field ->tuple_int_int_field_1
 end-struct tuple_int_int%
 
+
 struct
   cell% field ->foo
   cell% field ->bar

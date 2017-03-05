@@ -10,8 +10,6 @@ import java.util.*
     return out;
   }
 
-
-
 int find(int n, int[][] m, int x, int y, int dx, int dy)
 {
   if (x < 0 || x == 20 || y < 0 || y == 20)
@@ -21,7 +19,6 @@ int find(int n, int[][] m, int x, int y, int dx, int dy)
   else
       return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy)
 }
-
 class Tuple_int_int {
   int tuple_int_int_field_0
   int tuple_int_int_field_1

@@ -18,7 +18,6 @@ object prologin_template_2charline2
     return out0;
   }
   
-  
   def main(args : Array[String])
   {
     var taille1: Int = readInt().toInt;

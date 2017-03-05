@@ -1,6 +1,7 @@
 #|
 La suite de fibonaci
 |#
+
 (defun fibo (a b i)
 (progn
   (let ((out_ 0))

@@ -1,7 +1,6 @@
 import groovy.transform.Field
 import java.util.*
 
-
 int score()
 {
   scanner.findWithinHorizon("[\n\r ]*", 1)
@@ -22,7 +21,6 @@ int score()
   }
   return sum
 }
-
 @Field Scanner scanner = new Scanner(System.in)
 int sum = 0
 int n

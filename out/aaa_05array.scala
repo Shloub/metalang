@@ -9,7 +9,6 @@ object aaa_05array
     t(index) = false;
   }
   
-  
   def main(args : Array[String])
   {
     var j: Int = 0;

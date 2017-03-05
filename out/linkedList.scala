@@ -56,7 +56,6 @@ def read_int() : Int = {
     }
   }
   
-  
   def main(args : Array[String])
   {
     

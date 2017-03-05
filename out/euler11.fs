@@ -36,6 +36,7 @@ create bufferc 128 allot
   THEN
 ;
 
+
 struct
   cell% field ->tuple_int_int_field_0
   cell% field ->tuple_int_int_field_1

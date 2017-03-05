@@ -51,8 +51,6 @@ static int readInt(){
     }
   } while(true);
 } 
-  
-  
   static bool is_triangular(int n)
   {
     /*

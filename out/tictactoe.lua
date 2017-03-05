@@ -13,9 +13,13 @@ end
 --[[
 Tictactoe : un tictactoe avec une IA
 --]]
+
 --[[ La structure de donnée --]]
+
 --[[ Un Mouvement --]]
+
 --[[ On affiche l'état --]]
+
 function print_state (g)
   io.write("\n|")
   for y = 0, 2 do
@@ -35,7 +39,9 @@ function print_state (g)
           end
           io.write("\n")
       end
+      
       --[[ On dit qui gagne (info stoquées dans g.ended et g.note ) --]]
+      
       function eval0 (g)
         local win = 0
         local freecase = 0
@@ -82,7 +88,9 @@ function print_state (g)
                         g.note = 0
                     end
                 end
+                
                 --[[ On applique un mouvement --]]
+                
                 function apply_move_xy (x, y, g)
                   local player = 2
                   if g.firstToPlay then
@@ -91,26 +99,33 @@ function print_state (g)
                   g.cases[x + 1][y + 1] = player
                   g.firstToPlay = not(g.firstToPlay)
                 end
+                
                 function apply_move (m, g)
                   apply_move_xy(m.x, m.y, g)
                 end
+                
                 function cancel_move_xy (x, y, g)
                   g.cases[x + 1][y + 1] = 0
                   g.firstToPlay = not(g.firstToPlay)
                   g.ended = false
                 end
+                
                 function cancel_move (m, g)
                   cancel_move_xy(m.x, m.y, g)
                 end
+                
                 function can_move_xy (x, y, g)
                   return g.cases[x + 1][y + 1] == 0
                 end
+                
                 function can_move (m, g)
                   return can_move_xy(m.x, m.y, g)
                 end
+                
                 --[[
 Un minimax classique, renvoie la note du plateau
 --]]
+                
                 function minmax (g)
                   eval0(g)
                   if g.ended then
@@ -135,9 +150,11 @@ Un minimax classique, renvoie la note du plateau
                           end
                           return maxNote
                       end
+                      
                       --[[
 Renvoie le coup de l'IA
 --]]
+                      
                       function play (g)
                         local minMove = {x=0, y=0}
                         local minNote = 10000
@@ -159,6 +176,7 @@ Renvoie le coup de l'IA
                                 io.write(string.format("%d%d\n", minMove.x, minMove.y))
                                 return minMove
                             end
+                            
                             function init0 ()
                               local cases = {}
                               for i = 0, 2 do
@@ -170,6 +188,7 @@ Renvoie le coup de l'IA
                                       end
                                       return {cases=cases, firstToPlay=true, note=0, ended=false}
                                   end
+                                  
                                   function read_move ()
                                     local x = readint()
                                     stdinsep()
