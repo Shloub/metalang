@@ -449,31 +449,14 @@ let print_exns f exns =
           Mllike.ptype ty
       ) exns
 
-(** the main class : the ocaml printer *)
-class camlPrinter = object(self)
-
-  val mutable current_etype = Ast.Type.void
-  method setTyperEnv (t:Typer.env) = ()
-  val mutable macros = StringMap.empty
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  method is_rec funname = StringSet.mem funname recursives_definitions
-  (** bindings by reference *)
-  val mutable refbindings = BindingSet.empty
-  val mutable printed_exn = TypeMap.empty
-  (** true if we are processing an expression *)
-  val mutable exn_count = 0
-
-  method prog f (prog: Utils.prog) =
-    let calc_addons sad_types = TypeSet.fold (fun t (acc: string TypeMap.t) ->
-      if TypeMap.mem t printed_exn then acc else
-        begin
-          exn_count <- exn_count + 1;
+let prog recursives_definitions f (prog: Utils.prog) =
+    let calc_addons sad_types exn_count printed_exn = TypeSet.fold
+        (fun t (acc, exn_count, printed_exn) ->
+      if TypeMap.mem t printed_exn then acc, exn_count, printed_exn else
+          let exn_count = exn_count + 1 in
           let s = "Found_"^(string_of_int exn_count) in
-          printed_exn <- TypeMap.add t s printed_exn;
-          TypeMap.add t s acc
-        end
-      ) sad_types TypeMap.empty in
+          TypeMap.add t s acc, exn_count, TypeMap.add t s printed_exn
+      ) sad_types (TypeMap.empty, exn_count, printed_exn) in
     let calc_refs instrs =
     let g acc i = Instr.Writer.Deep.fold
         (fun acc i ->
@@ -495,9 +478,9 @@ class camlPrinter = object(self)
           let acc = List.fold_left g acc li1 in
           List.fold_left g acc li2
         | _ -> tra acc i
-    in refbindings <- List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs in
-    let instructions instrs =
-      calc_refs instrs;
+    in List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs in
+    let instructions macros current_etype instrs =
+      let refbindings = calc_refs instrs in
       let used_variables = calc_used_variables false instrs in
       let macros = StringMap.map (fun (ty, params, li) ->
           ty, params,
@@ -511,43 +494,33 @@ class camlPrinter = object(self)
         | [] -> false in
       let sad_returns = if sad_return_current then TypeSet.add current_etype sad_returns
         else sad_returns in
-      sad_return_current, sad_returns, fun f () -> instructions BlockBody printed_exn false current_etype f instrs in
-    let main f main =
-      current_etype <- Ast.Type.void;
-      let _, sad_types, pinstrs = instructions main in
-      let printed_exns_addon = calc_addons sad_types in
-      Format.fprintf f "%a@[<v 2>@[<h>let () =@\n@[<v 2> %a@] @\n"
-        print_exns printed_exns_addon pinstrs () in
-
-    
-    Format.fprintf f "%a%a"
-      (print_list (fun f -> function
-           | Prog.Comment s -> Format.fprintf f "(*%s*)@\n" s
-           | Prog.DeclarFun (funname, t, li, instrs, _opt) ->
-             current_etype <- t;
-             let proto f = print_proto_aux f (self#is_rec funname) in
-             let sad_return_current, sad_types, pinstrs = instructions instrs in
-             let printed_exns_addon = calc_addons sad_types in
+      refbindings, sad_return_current, sad_returns, fun f printed_exn -> instructions BlockBody printed_exn false current_etype f instrs in
+    let macros, exn_count, printed_exn, items = List.fold_left
+        (fun (macros, exn_count, printed_exn, li) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, exn_count, printed_exn, li
+           | Prog.Comment s -> macros, exn_count, printed_exn, (fun f -> Format.fprintf f "(*%s*)" s)::li
+           | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
+             let is_rec = StringSet.mem funname recursives_definitions in
+             let refbindings, sad_return_current, sad_types, pinstrs = instructions macros t instrs in
+             let printed_exns_addon, exn_count, printed_exn = calc_addons sad_types exn_count printed_exn in
+             macros, exn_count, printed_exn, (fun f ->
+             let proto f = print_proto_aux f is_rec in
              if not sad_return_current then
                Format.fprintf f "%a@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
                  print_exns printed_exns_addon
-                 proto (funname, t, li)
-                 (ref_alias refbindings) li
-                 pinstrs ()
+                 proto (funname, t, vars)
+                 (ref_alias refbindings) vars
+                 pinstrs printed_exn
              else
                Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
                  print_exns printed_exns_addon
-                 proto (funname, t, li)
-                 (ref_alias refbindings) li
-                 pinstrs ()
-                 (print_exnName printed_exn) t
-           | Prog.Macro (name, t, params, code) ->
-             macros <- StringMap.add
-                 name (t, params, code)
-                 macros
-           | Prog.Unquote _ -> assert false
+                 proto (funname, t, vars)
+                 (ref_alias refbindings) vars
+                 pinstrs printed_exn
+                 (print_exnName printed_exn) t)::li
            | Prog.DeclareType (name, t) ->
-             begin match (Type.unfix t) with
+             macros, exn_count, printed_exn, (fun f -> match (Type.unfix t) with
                  Type.Struct li ->
                  Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
                    name
@@ -563,8 +536,14 @@ class camlPrinter = object(self)
                    name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
                | _ ->
                  Format.fprintf f "type %s = %a;;" name ptype t
-             end
-         ) nosep) prog.Prog.funs
+             )::li
+           | _ -> macros, exn_count, printed_exn, li
+        ) (StringMap.empty, 0,TypeMap.empty, []) prog.Prog.funs in
+    let main f main =
+      let _, _, sad_types, pinstrs = instructions macros Ast.Type.void main in
+      let printed_exns_addon, exn_count, printed_exn = calc_addons sad_types exn_count printed_exn in
+      Format.fprintf f "%a@[<v 2>@[<h>let () =@\n@[<v 2> %a@] @\n"
+        print_exns printed_exns_addon pinstrs printed_exn in
+    Format.fprintf f "%a%a"
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
       (print_option main) prog.Prog.main
-
-end
