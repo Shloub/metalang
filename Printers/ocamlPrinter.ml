@@ -544,6 +544,6 @@ let prog recursives_definitions f (prog: Utils.prog) =
       let printed_exns_addon, exn_count, printed_exn = calc_addons sad_types exn_count printed_exn in
       Format.fprintf f "%a@[<v 2>@[<h>let () =@\n@[<v 2> %a@] @\n"
         print_exns printed_exns_addon pinstrs printed_exn in
-    Format.fprintf f "%a%a"
+    Format.fprintf f "%a@\n%a"
       (print_list (fun f g -> g f) sep_nl) (List.rev items)
       (print_option main) prog.Prog.main
