@@ -46,20 +46,24 @@ type pinstr_acc = { p: Format.formatter -> string Ast.TypeMap.t ->  bool -> Ast.
                     is_if_without_else : bool;
                   }
 
-let print_mut0 refbindings m f () =
+let print_varname used_variables f i =
+    Format.fprintf f (if BindingSet.mem i used_variables then
+                        "%a" else "_%a") print_varname i
+
+let print_mut0 used_variables refbindings m f () =
   let open Format in
   let open Mutable in match m with
   | Var v ->
     if BindingSet.mem v refbindings
-    then fprintf f "(!%a)" print_varname v
-    else print_varname f v
+    then fprintf f "(!%a)" (print_varname used_variables) v
+    else (print_varname used_variables) f v
   | Array (m, fi) -> fprintf f "%a%a" m ()
                        (print_list (fun f a -> fprintf f ".(%a)" a nop) (sep "%a%a")) fi
   | Dot (m, field) -> fprintf f "%a.%s" m () field
 
-let print_mut refbindings f m = Mutable.Fixed.Deep.fold (print_mut0 refbindings) m f ()
+let print_mut used_variables refbindings f m = Mutable.Fixed.Deep.fold (print_mut0 used_variables refbindings) m f ()
 
-let print_expr refbindings macros e f p =
+let print_expr used_variables refbindings macros e f p =
   let open Format in
   let open Ast.Expr in
   let print_op f op = fprintf f "%s" (OcamlFunPrinter.binopstr op) in
@@ -69,7 +73,7 @@ let print_expr refbindings macros e f p =
       parens prio_parent prio f "%a %a %a" a priol print_op op b prior
     | UnOp (a, op) -> parens prio_parent prio_apply f "%s %a" (OcamlFunPrinter.unopstr op) a prio_arg
     | Lief l -> print_lief f l
-    | Access m -> print_mut refbindings f m
+    | Access m -> print_mut used_variables refbindings f m
     | Call (func, li) -> pcall macros f prio_parent func li
     | Lexems li -> assert false
     | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f nop) sep_c) li
@@ -176,7 +180,7 @@ let instructions context printed_exn sad_returns current_etype f li0 =
         not i.is_comment && i.need_semicolon) (false, false) li0)) in
   Format.fprintf f (if multi then "@[<v3>begin@\n%a@]@\nend" else "%a") p ()
 
-let print_instr refbindings macros i =
+let print_instr used_variables refbindings macros i =
   let open Ast.Instr in
   let open Format in
   let print_exnName printed_exn f (t : unit Type.Fixed.t) =
@@ -185,12 +189,12 @@ let print_instr refbindings macros i =
     with Not_found ->
       Format.fprintf f "NOT_FOUND_%a" ptype t
   in
-  let print_mut f m = print_mut refbindings f m in
+  let print_mut f m = print_mut used_variables refbindings f m in
   let print_mut_set f m e arge = match Mutable.Fixed.unfix m with
     | Mutable.Var var ->
       if BindingSet.mem var refbindings
-      then fprintf f "@[<h>%a@ := %a@]" print_varname var e arge
-      else fprintf f "@[<h>let %a@ = %a in@]" print_varname var e arge
+      then fprintf f "@[<h>%a@ := %a@]" (print_varname used_variables) var e arge
+      else fprintf f "@[<h>let %a@ = %a in@]" (print_varname used_variables) var e arge
     | _ -> Format.fprintf f "@[<h>%a@ <- %a@]" print_mut m e arge
   in
   let is_list_return li =
@@ -247,19 +251,18 @@ let print_instr refbindings macros i =
     | Declare (var, ty, e, _) ->
       fprintf f (if BindingSet.mem var refbindings then "@[<h>let %a@ =@ ref(@ %a ) in@]"
                  else "@[<h>let %a@ =@ %a in@]")
-        print_varname var e nop
-
+        (print_varname used_variables) var e nop
     | AllocArray (name, t, e, None, opt) -> assert false
     | AllocArray (name, t, len, Some (var, lambda), opt) ->
       let b = BindingSet.mem name refbindings in
       Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a in@]"
-        print_varname name
+        (print_varname used_variables) name
         (fun t () ->
            if b then
              Format.fprintf t "ref(@ "
         ) ()
         len prio_arg
-        print_varname var
+        (print_varname used_variables) var
         (fun f () ->
            if sad_returns_list lambda then Format.fprintf f "@\n@[<v 2>  try"
         ) ()
@@ -277,7 +280,7 @@ let print_instr refbindings macros i =
       let b = BindingSet.mem name refbindings in
       Format.fprintf f (if b then "let %a = ref {@\n@[<v 2>  %a@]@\n} in"
                         else "let %a = {@\n@[<v 2>  %a@]@\n} in")
-        print_varname name
+        (print_varname used_variables) name
         (print_list
            (fun f (fieldname, expr) -> fprintf f "@[<h>%s=%a;@]" fieldname expr nop) sep_nl) list
     | Print li->
@@ -348,7 +351,7 @@ let print_instr refbindings macros i =
       end
     | Affect (m, e) -> print_mut_set f m e nop
     | Untuple (li, expr, opt) -> fprintf f "@[<h>let (%a) = %a in@]"
-                                   (print_list print_varname sep_c) (List.map snd li)
+                                   (print_list (print_varname used_variables) sep_c) (List.map snd li)
                                    expr nop
     | If (e, iftrue, []) ->
       fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]" e nop (instructions BlockIfNoElse printed_exn true current_etype) iftrue
@@ -359,7 +362,7 @@ let print_instr refbindings macros i =
         (instructions BlockElse printed_exn sad_returns current_etype) iffalse
     | Loop (var, begin_, end_, li) ->
       fprintf f "@[<v 2>@[<h>for@ %a@ =@ %a@ to@ %a@ do@]@\n%a@]@\ndone"
-        print_varname var
+        (print_varname used_variables) var
         begin_ nop end_ nop
         (instructions BlockLoop printed_exn true current_etype) li
     | Comment str -> fprintf f "(*%s*)" str
@@ -416,10 +419,10 @@ let print_instr refbindings macros i =
       | _ -> false;
   }
 
-let print_instr refbindings macros i =
+let print_instr used_variables refbindings macros i =
   let open Ast.Instr.Fixed.Deep in
-  fold (print_instr refbindings macros)
-    (mapg (print_expr refbindings macros) i)
+  fold (print_instr used_variables refbindings macros)
+    (mapg (print_expr used_variables refbindings macros) i)
 
 (** the main class : the ocaml printer *)
 class camlPrinter = object(self)
@@ -514,7 +517,7 @@ class camlPrinter = object(self)
     | _ ->
       Format.fprintf f
         (if rec_ then "let@ rec@ %s@ %a =" else "let@ %s@ %a =") funname
-        (print_list self#binding sep_space) (List.map fst li)
+        (print_list (print_varname used_variables) sep_space) (List.map fst li)
 
   (** show an instruction *)
   method instructions instrs =
@@ -524,7 +527,7 @@ class camlPrinter = object(self)
         ty, params,
         try List.assoc "ml" li
         with Not_found -> List.assoc "" li) macros in
-    let instrs = List.map (print_instr refbindings macros) instrs in
+    let instrs = List.map (print_instr used_variables refbindings macros) instrs in
     let sad_returns = List.fold_left (fun acc i -> TypeSet.union acc i.sad_returned_types) TypeSet.empty instrs in
     let sad_return_current = 
       match List.filter (fun i -> not i.is_comment) instrs |> List.rev with
@@ -533,13 +536,6 @@ class camlPrinter = object(self)
     let sad_returns = if sad_return_current then TypeSet.add current_etype sad_returns
       else sad_returns in
     sad_return_current, sad_returns, fun f () -> instructions BlockBody printed_exn false current_etype f instrs
-
-  (** show a binding *)
-  method binding f i =
-    if BindingSet.mem i used_variables then
-      Format.fprintf f "%a" print_varname i
-    else
-      Format.fprintf f "_%a" print_varname i
 
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
@@ -580,8 +576,8 @@ class camlPrinter = object(self)
       let b = BindingSet.mem name refbindings in
       if b then
         Format.fprintf f "let %a = ref %a in@\n%a"
-          self#binding name
-          self#binding name
+          (print_varname used_variables) name
+          (print_varname used_variables) name
           self#ref_alias tl
       else
         self#ref_alias f tl

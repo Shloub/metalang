@@ -510,9 +510,11 @@ let calc_used_variables used_affect instrs =
     | _ -> acc
   and fold_mut acc m = match Ast.Mutable.unfix m with
     | Ast.Mutable.Var varname -> Ast.BindingSet.add varname acc
-    | Ast.Mutable.Array (_, lie) -> List.fold_left
-                                      dfold_expr acc lie
-    | _ -> acc
+    | Ast.Mutable.Array (m, lie) ->
+      let acc = List.fold_left dfold_expr acc lie in
+      if used_affect then fold_mut acc m else acc
+    | Ast.Mutable.Dot (m, _) ->
+      if used_affect then fold_mut acc m else acc
   and dfold_expr acc e =
     Ast.Expr.Writer.Deep.fold fold_expr
       (fold_expr acc e) e
