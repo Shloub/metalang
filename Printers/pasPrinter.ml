@@ -177,114 +177,25 @@ let print_instr macros i =
   let open Ast.Instr.Fixed.Deep in
   fold (print_instr macros) (mapg (print_expr macros) i)
 
-class pasPrinter = object(self)
 
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  method is_rec funname = StringSet.mem funname recursives_definitions
-  val mutable typerEnv : Typer.env = Typer.empty
-  method setTyperEnv t = typerEnv <- t
-  val mutable macros = StringMap.empty
-                         
-  val mutable declared_types : string TypeMap.t = TypeMap.empty
-
-  method instructions f li =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "pas" li
-        with Not_found -> List.assoc "" li) macros
-    in print_list (fun f t -> (print_instr macros t).p f ()) sep_nl f li
-
-  val mutable bindings = BindingSet.empty
-
-  method ptype f t =
-    match TypeMap.find_opt t declared_types with
-    | Some s -> Format.fprintf f "%s" s
-    | None ->
-      match Type.unfix t with
-      | Type.Integer -> Format.fprintf f "Longint"
-      | Type.String -> Format.fprintf f "string"
-      | Type.Array a -> Format.fprintf f "array of %a" self#ptype a
-      | Type.Void ->  Format.fprintf f "void"
-      | Type.Bool -> Format.fprintf f "boolean"
-      | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s" n
-      | Type.Struct li -> Format.fprintf f "a struct"
-      | Type.Enum _ -> Format.fprintf f "an enum"
-      | Type.Lexems | Type.Auto | Type.Tuple _ -> assert false
-
-  method decl_procedure f funname li =
-    Format.fprintf f "@[<h>procedure %s(%a);@]"  funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a : %a" print_varname binding
-              self#ptype type_
-         )
-         sep_dc
-      ) li
-
-  method decl_function f funname t li =
-    Format.fprintf f "@[<h>function %s(%a) : %a;@]" funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a : %a" print_varname binding
-              self#ptype type_
-         )
-         sep_dc
-      ) li
-      self#ptype t
-
-  method print_proto f (funname, t, li) =
+let rec ptype declared_types f t =
+  match TypeMap.find_opt t declared_types with
+  | Some s -> Format.fprintf f "%s" s
+  | None ->
     match Type.unfix t with
-    | Type.Void -> self#decl_procedure f funname li
-    | _ -> self#decl_function f funname t li
+    | Type.Integer -> Format.fprintf f "Longint"
+    | Type.String -> Format.fprintf f "string"
+    | Type.Array a -> Format.fprintf f "array of %a"  (ptype declared_types) a
+    | Type.Void ->  Format.fprintf f "void"
+    | Type.Bool -> Format.fprintf f "boolean"
+    | Type.Char -> Format.fprintf f "char"
+    | Type.Named n -> Format.fprintf f "%s" n
+    | Type.Struct li -> Format.fprintf f "a struct"
+    | Type.Enum _ -> Format.fprintf f "an enum"
+    | Type.Lexems | Type.Auto | Type.Tuple _ -> assert false
 
-  method print_body f instrs =
-    Format.fprintf f "%a@\nbegin@\n@[<v 2>  %a@]@\nend"
-      self#declarevars instrs
-      self#instructions instrs
 
-  method print_fun f funname t li instrs =
-    declared_types <- self#declare_type declared_types f t;
-    List.iter (fun (_, t) -> declared_types <- self#declare_type declared_types f t) li;
-    self#declare_types f instrs;
-    declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
-    Format.fprintf f "%a%a;@\n"
-      self#print_proto (funname, t, li)
-      self#print_body instrs
-
-  method out_declare_type f a b c =
-    List.iter (fun (name, t, name2, decl, assoc) ->
-    declared_types <- decl;
-              Format.fprintf f "type %s = %a;@\n" name self#ptype t
-      ) (List.rev c);
-    declared_types <- b; b
-    
-  method declare_type declared_types f t =
-    let a, b, c = pas_declare_type (fun n -> n) StringMap.empty declared_types [] t
-    in self#out_declare_type f a b c
-      
-  method declare_types f instrs =
-    let a, b, c = pas_declare_types (fun n -> n) instrs StringMap.empty declared_types
-    in self#out_declare_type f a b c
-
-  method declarevars f instrs =
-    let bindings = self#declaredvars BindingMap.empty instrs
-    in
-    if bindings = BindingMap.empty then ()
-    else
-      Format.fprintf f "@\n@[<v 2>var%a@]"
-        (BindingMap.fold
-           (fun key value next f () ->
-              Format.fprintf f "%a@\n%a : %a;"
-                next () print_varname key self#ptype value
-           )
-           bindings
-           (fun f () -> ())
-        )
-        ()
-
-  method declaredvars bindings instrs =
+let declaredvars bindings instrs =
     List.fold_left
       (Instr.Writer.Deep.fold
          (fun bindings i ->
@@ -307,6 +218,98 @@ class pasPrinter = object(self)
       )
       bindings
       instrs
+
+
+  let declarevars declared_types f instrs =
+    let bindings = declaredvars BindingMap.empty instrs
+    in
+    if bindings = BindingMap.empty then ()
+    else
+      Format.fprintf f "@\n@[<v 2>var%a@]"
+        (BindingMap.fold
+           (fun key value next f () ->
+              Format.fprintf f "%a@\n%a : %a;"
+                next () print_varname key (ptype declared_types) value
+           )
+           bindings
+           (fun f () -> ())
+        )
+        ()
+        
+class pasPrinter = object(self)
+
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  method is_rec funname = StringSet.mem funname recursives_definitions
+  val mutable typerEnv : Typer.env = Typer.empty
+  method setTyperEnv t = typerEnv <- t
+  val mutable macros = StringMap.empty
+                         
+  val mutable declared_types : string TypeMap.t = TypeMap.empty
+
+  method instructions f li =
+    let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc "pas" li
+        with Not_found -> List.assoc "" li) macros
+    in print_list (fun f t -> (print_instr macros t).p f ()) sep_nl f li
+
+  val mutable bindings = BindingSet.empty
+
+  method decl_procedure f funname li =
+    Format.fprintf f "@[<h>procedure %s(%a);@]"  funname
+      (print_list
+         (fun t (binding, type_) ->
+            Format.fprintf t "%a : %a" print_varname binding
+              (ptype declared_types) type_
+         )
+         sep_dc
+      ) li
+
+  method decl_function f funname t li =
+    Format.fprintf f "@[<h>function %s(%a) : %a;@]" funname
+      (print_list
+         (fun t (binding, type_) ->
+            Format.fprintf t "%a : %a" print_varname binding
+              (ptype declared_types) type_
+         )
+         sep_dc
+      ) li
+      (ptype declared_types) t
+
+  method print_proto f (funname, t, li) =
+    match Type.unfix t with
+    | Type.Void -> self#decl_procedure f funname li
+    | _ -> self#decl_function f funname t li
+
+  method print_body f instrs =
+    Format.fprintf f "%a@\nbegin@\n@[<v 2>  %a@]@\nend"
+      (declarevars declared_types) instrs
+      self#instructions instrs
+
+  method print_fun f funname t li instrs =
+    declared_types <- self#declare_type declared_types f t;
+    List.iter (fun (_, t) -> declared_types <- self#declare_type declared_types f t) li;
+    self#declare_types f instrs;
+    declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
+    Format.fprintf f "%a%a;@\n"
+      self#print_proto (funname, t, li)
+      self#print_body instrs
+
+  method out_declare_type f a b c =
+    List.iter (fun (name, t, name2, decl, assoc) ->
+        declared_types <- decl;
+        Format.fprintf f "type %s = %a;@\n" name (ptype declared_types) t
+      ) (List.rev c);
+    declared_types <- b; b
+    
+  method declare_type declared_types f t =
+    let a, b, c = pas_declare_type (fun n -> n) StringMap.empty declared_types [] t
+    in self#out_declare_type f a b c
+      
+  method declare_types f instrs =
+    let a, b, c = pas_declare_types (fun n -> n) instrs StringMap.empty declared_types
+    in self#out_declare_type f a b c
 
   method prog f (prog: Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -406,11 +409,10 @@ end;
             | Prog.DeclareType (name, t) -> self#decl_type f name t
          ) sep_nl)
       prog.Prog.funs
-      (print_option self#main) prog.Prog.main
-
-  method main f main =
-    self#declare_types f main;
-    self#print_body f main
+      (print_option (fun f main ->
+           self#declare_types f main;
+           self#print_body f main
+         )) prog.Prog.main
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -419,7 +421,7 @@ end;
         name name name
         (print_list
            (fun t (name, type_) ->
-              Format.fprintf t "%s : %a;" name self#ptype type_
+              Format.fprintf t "%s : %a;" name (ptype declared_types) type_
            ) sep_nl
         ) li
     | Type.Enum li ->
