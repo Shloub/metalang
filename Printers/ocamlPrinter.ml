@@ -420,17 +420,16 @@ let print_instr used_variables refbindings macros i =
   fold (print_instr used_variables refbindings macros)
     (mapg (print_expr used_variables refbindings macros) i)
 
-let print_proto_aux f rec_ ((funname:string), (t:Ast.Type.t), li) =
+let print_proto_aux used_variables f rec_ ((funname:string), (t:Ast.Type.t), li) =
   let li = List.map fst li in
-  let bag = List.fold_left (fun acc item -> BindingSet.add item acc) BindingSet.empty li in
     match li with
     | [] -> Format.fprintf f (if rec_ then "let@ rec@ %s@ () =" else "let@ %s@ () =") funname
     | _ ->
       Format.fprintf f
         (if rec_ then "let@ rec@ %s@ %a =" else "let@ %s@ %a =") funname
-        (print_list (print_varname bag) sep_space) li
+        (print_list (print_varname used_variables) sep_space) li
 
-let ref_alias refbindings f li =
+let ref_alias0 format refbindings f li =
   let li = List.map fst li in
   let bag = List.fold_left (fun acc item -> BindingSet.add item acc) BindingSet.empty li in
   let li = List.filter (fun name -> BindingSet.mem name refbindings) li in
@@ -438,17 +437,42 @@ let ref_alias refbindings f li =
   | [] -> ()
   | _ -> Format.fprintf f "%a@\n"
            (print_list (fun f name ->
-                Format.fprintf f "let %a = ref %a in"
+                Format.fprintf f format
                   (print_varname bag) name
                   (print_varname bag) name) sep_nl) li
-           
+
+let ref_alias refbindings f li = ref_alias0 "let %a = ref %a in" refbindings f li
+
 let print_exns f exns =
     TypeMap.iter (fun ty str ->
         Format.fprintf f "exception %s of %a@\n"
           str
           Mllike.ptype ty
-      ) exns
-
+    ) exns
+      
+let calc_refs instrs =
+  let g acc i = Instr.Writer.Deep.fold
+      (fun acc i ->
+         match Instr.unfix i with
+         | Instr.Read li ->
+           List.fold_left (fun acc -> function
+               | Instr.Separation -> acc
+               | Instr.DeclRead _ -> acc
+               | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+               | Instr.ReadExpr _ -> acc) acc li
+         | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
+         | _ -> acc
+      ) acc i
+  in let f tra acc i = match Instr.unfix i with
+      | Instr.Loop (_, _, _, li)
+      | Instr.While (_, li) -> List.fold_left g acc li
+      | Instr.AllocArray (_, _, _, Some (_, li), _) -> List.fold_left g acc li
+      | Instr.If (_, li1, li2) ->
+        let acc = List.fold_left g acc li1 in
+        List.fold_left g acc li2
+      | _ -> tra acc i
+  in List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs
+      
 let prog recursives_definitions f (prog: Utils.prog) =
     let calc_addons sad_types exn_count printed_exn = TypeSet.fold
         (fun t (acc, exn_count, printed_exn) ->
@@ -457,28 +481,6 @@ let prog recursives_definitions f (prog: Utils.prog) =
           let s = "Found_"^(string_of_int exn_count) in
           TypeMap.add t s acc, exn_count, TypeMap.add t s printed_exn
       ) sad_types (TypeMap.empty, exn_count, printed_exn) in
-    let calc_refs instrs =
-    let g acc i = Instr.Writer.Deep.fold
-        (fun acc i ->
-           match Instr.unfix i with
-           | Instr.Read li ->
-             List.fold_left (fun acc -> function
-                 | Instr.Separation -> acc
-                 | Instr.DeclRead _ -> acc
-                 | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-                 | Instr.ReadExpr _ -> acc) acc li
-           | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
-           | _ -> acc
-        ) acc i
-    in let f tra acc i = match Instr.unfix i with
-        | Instr.Loop (_, _, _, li)
-        | Instr.While (_, li) -> List.fold_left g acc li
-        | Instr.AllocArray (_, _, _, Some (_, li), _) -> List.fold_left g acc li
-        | Instr.If (_, li1, li2) ->
-          let acc = List.fold_left g acc li1 in
-          List.fold_left g acc li2
-        | _ -> tra acc i
-    in List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs in
     let instructions macros current_etype instrs =
       let refbindings = calc_refs instrs in
       let used_variables = calc_used_variables false instrs in
@@ -494,7 +496,7 @@ let prog recursives_definitions f (prog: Utils.prog) =
         | [] -> false in
       let sad_returns = if sad_return_current then TypeSet.add current_etype sad_returns
         else sad_returns in
-      refbindings, sad_return_current, sad_returns, fun f printed_exn -> instructions BlockBody printed_exn false current_etype f instrs in
+      used_variables, refbindings, sad_return_current, sad_returns, fun f printed_exn -> instructions BlockBody printed_exn false current_etype f instrs in
     let macros, exn_count, printed_exn, items = List.fold_left
         (fun (macros, exn_count, printed_exn, li) item -> match item with
            | Prog.Macro (name, t, params, code) ->
@@ -502,10 +504,10 @@ let prog recursives_definitions f (prog: Utils.prog) =
            | Prog.Comment s -> macros, exn_count, printed_exn, (fun f -> Format.fprintf f "(*%s*)" s)::li
            | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
              let is_rec = StringSet.mem funname recursives_definitions in
-             let refbindings, sad_return_current, sad_types, pinstrs = instructions macros t instrs in
+             let used_variables, refbindings, sad_return_current, sad_types, pinstrs = instructions macros t instrs in
              let printed_exns_addon, exn_count, printed_exn = calc_addons sad_types exn_count printed_exn in
              macros, exn_count, printed_exn, (fun f ->
-             let proto f = print_proto_aux f is_rec in
+             let proto f = print_proto_aux used_variables f is_rec in
              if not sad_return_current then
                Format.fprintf f "%a@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
                  print_exns printed_exns_addon
@@ -540,7 +542,7 @@ let prog recursives_definitions f (prog: Utils.prog) =
            | _ -> macros, exn_count, printed_exn, li
         ) (StringMap.empty, 0,TypeMap.empty, []) prog.Prog.funs in
     let main f main =
-      let _, _, sad_types, pinstrs = instructions macros Ast.Type.void main in
+      let _, _, _, sad_types, pinstrs = instructions macros Ast.Type.void main in
       let printed_exns_addon, exn_count, printed_exn = calc_addons sad_types exn_count printed_exn in
       Format.fprintf f "%a@[<v 2>@[<h>let () =@\n@[<v 2> %a@] @\n"
         print_exns printed_exns_addon pinstrs printed_exn in

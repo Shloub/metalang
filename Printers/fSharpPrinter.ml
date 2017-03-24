@@ -57,10 +57,11 @@ let print_op f op =
       | Eq -> "="
       | Diff -> "<>")
 
-let print_mut0 refbindings m f () =
+let print_mut0 used_variables refbindings m f () =
   let open Format in
   let open Ast.Expr in
   let open Mutable in
+  let print_varname = OcamlPrinter.print_varname used_variables in
   match m with
   | Var v ->
     if BindingSet.mem v refbindings
@@ -69,9 +70,9 @@ let print_mut0 refbindings m f () =
   | Array (m, fi) -> fprintf f "%a%a" m () (print_list (fun f a -> fprintf f ".[%a]" a nop) (sep "%a%a")) fi
   | Dot (m, field) -> fprintf f "%a.%s" m () field
 
-let print_mut refbindings f m = Mutable.Fixed.Deep.fold (print_mut0 refbindings) m f ()
+let print_mut used_variables refbindings f m = Mutable.Fixed.Deep.fold (print_mut0 used_variables refbindings) m f ()
 
-let print_expr refbindings macros e f p =
+let print_expr used_variables refbindings macros e f p =
   let open Format in
   let open Ast.Expr in
   let print_expr0 e f prio_parent = match e with
@@ -81,7 +82,7 @@ let print_expr refbindings macros e f p =
     | UnOp (a, op) ->
       parens prio_arg prio_apply f "%s %a" (OcamlFunPrinter.unopstr op) a prio_arg
     | Lief l -> print_lief f l
-    | Access m -> print_mut refbindings f m
+    | Access m -> print_mut used_variables refbindings f m
     | Call (func, li) -> pcall macros f prio_parent func li
     | Lexems li -> assert false
     | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f nop) sep_c) li
@@ -98,24 +99,24 @@ let instructions printed_exn sad_returns current_etype f li =
     ) ([], sad_returns, false, true) (List.rev li) in
   Format.fprintf f (if united then "%a" else "%a@\n()") (print_list (fun f i -> i f) sep_nl) li
 
-let print_instr refbindings macros i =
+let print_instr used_variables refbindings macros i =
   let open Ast.Instr in
   let open Format in
+  let print_varname = OcamlPrinter.print_varname used_variables in
   let print_exnName printed_exn f (t : unit Type.Fixed.t) =
     try
       Format.fprintf f "%s" (TypeMap.find t printed_exn)
     with Not_found ->
       Format.fprintf f "NOT_FOUND_%a" ptype t
   in
-  let print_mut f m = print_mut refbindings f m in
+  let print_mut f m = print_mut used_variables refbindings f m in
   let print_mut_set f m = match Mutable.Fixed.unfix m with
     | Mutable.Var var ->
       if BindingSet.mem var refbindings
       then fprintf f "@[<h>%a@ :=@]" print_varname var
       else fprintf f "@[<h>let %a@ =@]" print_varname var
     | _ ->
-      Format.fprintf f "@[<h>%a@ <-@]"
-        print_mut m
+      Format.fprintf f "@[<h>%a@ <-@]" print_mut m
   in
   let read_ty f t =
     match Type.unfix t with
@@ -246,59 +247,71 @@ let print_instr refbindings macros i =
       | _ -> false;
   }
 
-let print_instr refbindings macros i =
+let print_instr used_variables refbindings macros i =
   let open Ast.Instr.Fixed.Deep in
-  fold (print_instr refbindings macros)
-    (mapg (print_expr refbindings macros) i)
+  fold (print_instr used_variables refbindings macros)
+    (mapg (print_expr used_variables refbindings macros) i)
 
 
-(** the main class : the ocaml printer *)
+let calc_addons exn_count printed_exn sad_types =
+  TypeSet.fold (fun t (exn_count, printed_exn, acc) ->
+    if TypeMap.mem t printed_exn then exn_count, printed_exn, acc else
+      begin
+        let exn_count = exn_count + 1 in
+        let s = "Found_"^(string_of_int exn_count) in
+        let printed_exn = TypeMap.add t s printed_exn in
+        exn_count, printed_exn, TypeMap.add t s acc
+      end
+  ) sad_types (exn_count, printed_exn, TypeMap.empty)
+
+let print_exns f exns =
+  TypeMap.iter (fun ty str ->
+      Format.fprintf f "exception %s of %a@\n"
+        str
+        ptype ty
+    ) exns
+
+let print_exnName printed_exn f (t : unit Type.Fixed.t) =
+  try
+    Format.fprintf f "%s" (TypeMap.find t printed_exn)
+  with Not_found ->
+    Format.fprintf f "NOT_FOUND_%a" ptype t
+
+let ref_alias refbindings f li = OcamlPrinter.ref_alias0 "let %a = ref %a" refbindings f li 
+
+
+
 class fsharpPrinter = object(self)
 
   method setTyperEnv (t:Typer.env) = ()
   val mutable macros = StringMap.empty
   (** used variables *)
-  val mutable used_variables = BindingSet.empty
-  method calc_used_variables (instrs : Utils.instr list ) =
-    used_variables <- calc_used_variables false instrs
   val mutable recursives_definitions = StringSet.empty
   method setRecursive b = recursives_definitions <- b
-  method is_rec funname = StringSet.mem funname recursives_definitions
 
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
   (** sad return in the current function *)
   val mutable printed_exn = TypeMap.empty
-  (** true if we are processing an expression *)
-  val mutable current_etype = Ast.Type.void
   val mutable exn_count = 0
-
-  method calc_addons sad_types = TypeSet.fold (fun t (acc: string TypeMap.t) ->
-      if TypeMap.mem t printed_exn then acc else
-        begin
-          exn_count <- exn_count + 1;
-          let s = "Found_"^(string_of_int exn_count) in
-          printed_exn <- TypeMap.add t s printed_exn;
-          TypeMap.add t s acc
-        end
-    ) sad_types TypeMap.empty
 
   (** show the main *)
   method main f main =
-    current_etype <- Ast.Type.void;
-    let _, sad_types, pinstrs = self#instructions main in
-    let printed_exns_addon = self#calc_addons sad_types in
+    let _, _, _, sad_types, pinstrs = self#instructions Ast.Type.void main in
+    let exn_count_, printed_exn_, printed_exns_addon = calc_addons exn_count printed_exn sad_types in
+    exn_count <- exn_count_;
+    printed_exn <- printed_exn_;
     Format.fprintf f "%a@[<v 2>@[<h>let () =@\n@[<v 2>  %a@]@\n"
-      self#print_exns printed_exns_addon pinstrs ()
+      print_exns printed_exns_addon pinstrs ()
 
   (** show all the programm *)
-  method prog f prog =
+  method prog f (prog: Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     let op = need || Tags.is_taged "use_readline" in
-    Format.fprintf f "%s%s%s%s%s%a%a"
+    Format.fprintf f "%s%s%s%s%s%a@\n%a"
       (if op then "open System
 " else "" )
       (if need then "
@@ -351,12 +364,8 @@ let readInt () =
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  (** print recursive prefix *)
-  method rec_ f b =
-    if b then Format.fprintf f "rec@ "
-
   (** util method to print a function prototype*)
-  method print_proto_aux f rec_ ((funname:string), (t:Ast.Type.t), li) =
+  method print_proto_aux used_variables f rec_ ((funname:string), (t:Ast.Type.t), li) =
     let otype f ty =
       match Type.unfix ty with
       | Type.Void
@@ -364,28 +373,25 @@ let readInt () =
       | _ -> Format.fprintf f ": %a " ptype ty
     in
     match li with
-    | [] -> Format.fprintf f "let@ %a%s@ () %a="
-              self#rec_ rec_ funname
-              otype t
+    | [] -> Format.fprintf f (if rec_ then "let@ rec %s@ () %a=" else "let@ %s@ () %a=") funname otype t
     | _ ->
-      Format.fprintf f "let@ %a%s@ %a %a="
-        self#rec_ rec_ funname
+      Format.fprintf f (if rec_ then "let@ rec %s@ %a %a=" else "let@ %s@ %a %a=") funname
         (print_list (fun f (name, ty) ->
              match Type.unfix ty with
-             | Type.Integer -> self#binding f name
-             | _ -> Format.fprintf f "(%a:%a)" self#binding name ptype ty
+             | Type.Integer -> OcamlPrinter.print_varname used_variables f name
+             | _ -> Format.fprintf f "(%a:%a)" (OcamlPrinter.print_varname used_variables) name ptype ty
            ) sep_space) li
         otype t
 
   (** show an instruction *)
-  method instructions instrs =
-    self#calc_refs instrs;
-    self#calc_used_variables instrs;
+  method instructions current_etype instrs =
+    let refbindings = OcamlPrinter.calc_refs instrs in
+    let used_variables = calc_used_variables false instrs in
     let macros = StringMap.map (fun (ty, params, li) ->
         ty, params,
         try List.assoc "fsharp" li
         with Not_found -> List.assoc "" li) macros in
-    let instrs = List.map (print_instr refbindings macros) instrs in
+    let instrs = List.map (print_instr used_variables refbindings macros) instrs in
     let sad_returns = List.fold_left (fun acc i -> TypeSet.union acc i.sad_returned_types) TypeSet.empty instrs in
     let sad_return_current = 
       match List.filter (fun i -> not i.is_comment) instrs |> List.rev with
@@ -393,88 +399,28 @@ let readInt () =
       | [] -> false in
     let sad_returns = if sad_return_current then TypeSet.add current_etype sad_returns
       else sad_returns in
-    sad_return_current, sad_returns, fun f () -> instructions printed_exn false current_etype f instrs
-
-  (** show a binding *)
-  method binding f i =
-    if BindingSet.mem i used_variables then
-      Format.fprintf f "%a" print_varname i
-    else
-      Format.fprintf f "_%a" print_varname i
-
-  (** find references variables from a list of instructions *)
-  method calc_refs instrs =
-    let g acc i = Instr.Writer.Deep.fold
-        (fun acc i ->
-           match Instr.unfix i with
-           | Instr.Read li ->
-             List.fold_left (fun acc -> function
-                 | Instr.Separation -> acc
-                 | Instr.DeclRead _ -> acc
-                 | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-                 | Instr.ReadExpr _ -> acc) acc li
-           | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
-           | _ -> acc
-        ) acc i
-    in let f tra acc i = match Instr.unfix i with
-        | Instr.Read li ->
-          List.fold_left (fun acc -> function
-              | Instr.ReadExpr (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-              | _ -> acc) acc li
-        | Instr.Loop (_, _, _, li)
-        | Instr.While (_, li) -> List.fold_left g acc li
-        | Instr.AllocArray (_, _, _, Some (_, li), _) -> List.fold_left g acc li
-        | Instr.If (_, li1, li2) ->
-          let acc = List.fold_left g acc li1 in
-          List.fold_left g acc li2
-        | _ -> tra acc i
-    in refbindings <- List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs
-
-  method print_exns f exns =
-    TypeMap.iter (fun ty str ->
-        Format.fprintf f "exception %s of %a@\n"
-          str
-          ptype ty
-      ) exns
+    used_variables, refbindings, sad_return_current, sad_returns, fun f () -> instructions printed_exn false current_etype f instrs
 
   method print_fun f funname (t : unit Type.Fixed.t) li instrs =
-    current_etype <- t;
-    let proto f = self#print_proto_aux f (self#is_rec funname) in
-    let sad_return_current, sad_types, pinstrs = self#instructions instrs in
-    Printf.printf "in function %S, there is %d exceptions delcarations\n%!" funname (Ast.TypeSet.cardinal sad_types);
-    let printed_exns_addon = self#calc_addons sad_types in
+    let is_rec = StringSet.mem funname recursives_definitions in
+    let used_variables, refbindings, sad_return_current, sad_types, pinstrs = self#instructions t instrs in
+    let exn_count_, printed_exn_, printed_exns_addon = calc_addons exn_count printed_exn sad_types in
+    let proto used_variables f = self#print_proto_aux used_variables f is_rec in
+    exn_count <- exn_count_;
+    printed_exn <- printed_exn_;
     if not sad_return_current then
       Format.fprintf f "%a@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
-        self#print_exns printed_exns_addon
-        proto (funname, t, li)
-        self#ref_alias li
+        print_exns printed_exns_addon
+        (proto used_variables) (funname, t, li)
+        (ref_alias refbindings) li
         pinstrs ()
     else
       Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
-        self#print_exns printed_exns_addon
-        proto (funname, t, li)
-        self#ref_alias li
+        print_exns printed_exns_addon
+        (proto used_variables) (funname, t, li)
+        (ref_alias refbindings) li
         pinstrs ()
-        self#print_exnName t
-  method print_exnName f (t : unit Type.Fixed.t) =
-    try
-      Format.fprintf f "%s" (TypeMap.find t printed_exn)
-    with Not_found ->
-      Format.fprintf f "NOT_FOUND_%a" ptype t
-  method ref_alias f li = match li with
-    | [] -> ()
-    | (name, _) :: tl ->
-      let b = BindingSet.mem name refbindings in
-      if b then
-        Format.fprintf f "let %a = ref %a@\n%a"
-          self#binding name
-          self#binding name
-          self#ref_alias tl
-      else
-        self#ref_alias f tl
-
-  method comment f str =
-    Format.fprintf f "(*%s*)" str
+        (print_exnName printed_exn) t
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -495,22 +441,18 @@ let readInt () =
       Format.fprintf f "type %s = %a;;" name ptype t
 
   method proglist f funs =
-    Format.fprintf f "%a" (print_list self#prog_item nosep) funs
+    Format.fprintf f "%a" (print_list self#prog_item sep_nl) funs
+      
   method prog_item (f:Format.formatter) t =
     match t with
-    | Prog.Comment s -> self#comment f s;
-      Format.fprintf f "@\n"
-    | Prog.DeclarFun (var, t, li, instrs, _opt) ->
-      self#print_fun f var t li instrs;
-      Format.fprintf f "@\n"
+    | Prog.Comment s -> Format.fprintf f "(*%s*)" s
+    | Prog.DeclarFun (var, t, li, instrs, _opt) -> self#print_fun f var t li instrs
     | Prog.Macro (name, t, params, code) ->
       macros <- StringMap.add
           name (t, params, code)
           macros;
       ()
     | Prog.Unquote _ -> assert false
-    | Prog.DeclareType (name, t) ->
-      self#decl_type f name t;
-      Format.fprintf f "@\n"
+    | Prog.DeclareType (name, t) -> self#decl_type f name t
 
 end
