@@ -279,33 +279,94 @@ let print_exnName printed_exn f (t : unit Type.Fixed.t) =
 
 let ref_alias refbindings f li = OcamlPrinter.ref_alias0 "let %a = ref %a" refbindings f li 
 
+let instructions macros current_etype instrs =
+    let refbindings = OcamlPrinter.calc_refs instrs in
+    let used_variables = calc_used_variables false instrs in
+    let macros = StringMap.map (fun (ty, params, li) ->
+        ty, params,
+        try List.assoc "fsharp" li
+        with Not_found -> List.assoc "" li) macros in
+    let instrs = List.map (print_instr used_variables refbindings macros) instrs in
+    let sad_returns = List.fold_left (fun acc i -> TypeSet.union acc i.sad_returned_types) TypeSet.empty instrs in
+    let sad_return_current = 
+      match List.filter (fun i -> not i.is_comment) instrs |> List.rev with
+      | i::tl -> i.is_sad_return || List.exists (fun i -> i.is_return || i.is_sad_return) tl
+      | [] -> false in
+    let sad_returns = if sad_return_current then TypeSet.add current_etype sad_returns
+      else sad_returns in
+    used_variables, refbindings, sad_return_current, sad_returns, fun f printed_exn -> instructions printed_exn false current_etype f instrs
 
+let print_proto_aux used_variables f rec_ ((funname:string), (t:Ast.Type.t), li) =
+    let otype f ty =
+      match Type.unfix ty with
+      | Type.Void
+      | Type.Integer -> ()
+      | _ -> Format.fprintf f ": %a " ptype ty
+    in
+    match li with
+    | [] -> Format.fprintf f (if rec_ then "let@ rec %s@ () %a=" else "let@ %s@ () %a=") funname otype t
+    | _ ->
+      Format.fprintf f (if rec_ then "let@ rec %s@ %a %a=" else "let@ %s@ %a %a=") funname
+        (print_list (fun f (name, ty) ->
+             match Type.unfix ty with
+             | Type.Integer -> OcamlPrinter.print_varname used_variables f name
+             | _ -> Format.fprintf f "(%a:%a)" (OcamlPrinter.print_varname used_variables) name ptype ty
+           ) sep_space) li
+        otype t
 
-class fsharpPrinter = object(self)
+let decl_type f name t =
+    match (Type.unfix t) with
+      Type.Struct li ->
+      Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n}@\n"
+        name
+        (print_list
+           (fun t (name, type_) ->
+              Format.fprintf t "@[<h>mutable %s : %a;@]"
+                name
+                ptype type_
+           ) sep_nl
+        ) li
+    | Type.Enum li ->
+      Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
+        name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
+    | _ ->
+      Format.fprintf f "type %s = %a" name ptype t
 
-  method setTyperEnv (t:Typer.env) = ()
-  val mutable macros = StringMap.empty
-  (** used variables *)
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-
-  (** bindings by reference *)
-  val mutable refbindings = BindingSet.empty
-  (** sad return in the current function *)
-  val mutable printed_exn = TypeMap.empty
-  val mutable exn_count = 0
-
-  (** show the main *)
-  method main f main =
-    let _, _, _, sad_types, pinstrs = self#instructions Ast.Type.void main in
+let  main macros exn_count printed_exn f main =
+    let _, _, _, sad_types, pinstrs = instructions macros Ast.Type.void main in
     let exn_count_, printed_exn_, printed_exns_addon = calc_addons exn_count printed_exn sad_types in
-    exn_count <- exn_count_;
-    printed_exn <- printed_exn_;
     Format.fprintf f "%a@[<v 2>@[<h>let () =@\n@[<v 2>  %a@]@\n"
-      print_exns printed_exns_addon pinstrs ()
+      print_exns printed_exns_addon pinstrs printed_exn
 
-  (** show all the programm *)
-  method prog f (prog: Utils.prog) =
+let prog recursives_definitions f (prog: Utils.prog) =
+  let macros, exn_count, printed_exn, items = List.fold_left
+        (fun (macros, exn_count, printed_exn, li) item -> match item with
+        | Prog.Macro (name, t, params, code) ->
+          StringMap.add name (t, params, code) macros, exn_count, printed_exn, li
+        | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
+          let is_rec = StringSet.mem funname recursives_definitions in
+          let used_variables, refbindings, sad_return_current, sad_types, pinstrs = instructions macros t instrs in
+          let exn_count, printed_exn, printed_exns_addon = calc_addons exn_count printed_exn sad_types in
+          let proto used_variables f = print_proto_aux used_variables f is_rec in
+          macros, exn_count, printed_exn, (fun f ->
+              if not sad_return_current then
+                Format.fprintf f "%a@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
+                  print_exns printed_exns_addon
+                  (proto used_variables) (funname, t, vars)
+                  (ref_alias refbindings) vars
+                  pinstrs printed_exn
+              else
+                Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
+                  print_exns printed_exns_addon
+                  (proto used_variables) (funname, t, vars)
+                  (ref_alias refbindings) vars
+                  pinstrs printed_exn
+                  (print_exnName printed_exn) t
+            )::li
+        | Prog.DeclareType (name, t) -> macros, exn_count, printed_exn, (fun f -> decl_type f name t)::li
+        | Prog.Comment s -> macros, exn_count, printed_exn, (fun f -> Format.fprintf f "(*%s*)" s)::li
+        | _ -> macros, exn_count, printed_exn, li
+      ) (StringMap.empty, 0,TypeMap.empty, []) prog.Prog.funs in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -361,98 +422,7 @@ let readInt () =
       i * sign
   loop 0
 " else "")
-      self#proglist prog.Prog.funs
-      (print_option self#main) prog.Prog.main
 
-  (** util method to print a function prototype*)
-  method print_proto_aux used_variables f rec_ ((funname:string), (t:Ast.Type.t), li) =
-    let otype f ty =
-      match Type.unfix ty with
-      | Type.Void
-      | Type.Integer -> ()
-      | _ -> Format.fprintf f ": %a " ptype ty
-    in
-    match li with
-    | [] -> Format.fprintf f (if rec_ then "let@ rec %s@ () %a=" else "let@ %s@ () %a=") funname otype t
-    | _ ->
-      Format.fprintf f (if rec_ then "let@ rec %s@ %a %a=" else "let@ %s@ %a %a=") funname
-        (print_list (fun f (name, ty) ->
-             match Type.unfix ty with
-             | Type.Integer -> OcamlPrinter.print_varname used_variables f name
-             | _ -> Format.fprintf f "(%a:%a)" (OcamlPrinter.print_varname used_variables) name ptype ty
-           ) sep_space) li
-        otype t
-
-  (** show an instruction *)
-  method instructions current_etype instrs =
-    let refbindings = OcamlPrinter.calc_refs instrs in
-    let used_variables = calc_used_variables false instrs in
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "fsharp" li
-        with Not_found -> List.assoc "" li) macros in
-    let instrs = List.map (print_instr used_variables refbindings macros) instrs in
-    let sad_returns = List.fold_left (fun acc i -> TypeSet.union acc i.sad_returned_types) TypeSet.empty instrs in
-    let sad_return_current = 
-      match List.filter (fun i -> not i.is_comment) instrs |> List.rev with
-      | i::tl -> i.is_sad_return || List.exists (fun i -> i.is_return || i.is_sad_return) tl
-      | [] -> false in
-    let sad_returns = if sad_return_current then TypeSet.add current_etype sad_returns
-      else sad_returns in
-    used_variables, refbindings, sad_return_current, sad_returns, fun f () -> instructions printed_exn false current_etype f instrs
-
-  method print_fun f funname (t : unit Type.Fixed.t) li instrs =
-    let is_rec = StringSet.mem funname recursives_definitions in
-    let used_variables, refbindings, sad_return_current, sad_types, pinstrs = self#instructions t instrs in
-    let exn_count_, printed_exn_, printed_exns_addon = calc_addons exn_count printed_exn sad_types in
-    let proto used_variables f = self#print_proto_aux used_variables f is_rec in
-    exn_count <- exn_count_;
-    printed_exn <- printed_exn_;
-    if not sad_return_current then
-      Format.fprintf f "%a@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
-        print_exns printed_exns_addon
-        (proto used_variables) (funname, t, li)
-        (ref_alias refbindings) li
-        pinstrs ()
-    else
-      Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
-        print_exns printed_exns_addon
-        (proto used_variables) (funname, t, li)
-        (ref_alias refbindings) li
-        pinstrs ()
-        (print_exnName printed_exn) t
-
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
-        name
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "@[<h>mutable %s : %a;@]"
-                name
-                ptype type_
-           ) sep_nl
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
-        name (print_list (fun f s -> Format.fprintf f "%s" s) (sep "%a@\n| %a")) li
-    | _ ->
-      Format.fprintf f "type %s = %a;;" name ptype t
-
-  method proglist f funs =
-    Format.fprintf f "%a" (print_list self#prog_item sep_nl) funs
-      
-  method prog_item (f:Format.formatter) t =
-    match t with
-    | Prog.Comment s -> Format.fprintf f "(*%s*)" s
-    | Prog.DeclarFun (var, t, li, instrs, _opt) -> self#print_fun f var t li instrs
-    | Prog.Macro (name, t, params, code) ->
-      macros <- StringMap.add
-          name (t, params, code)
-          macros;
-      ()
-    | Prog.Unquote _ -> assert false
-    | Prog.DeclareType (name, t) -> self#decl_type f name t
-
-end
+      (print_list (fun f g -> g f) sep_nl) (List.rev items)
+  
+      (print_option (main macros exn_count printed_exn)) prog.Prog.main
