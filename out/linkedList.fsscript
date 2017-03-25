@@ -30,7 +30,7 @@ let readInt () =
 type intlist = {
   mutable head : int;
   mutable tail : intlist;
-};;
+}
 
 let cons (list:intlist) i : intlist =
   let out0 = {head=i;
@@ -44,7 +44,7 @@ let rec rev2 (acc:intlist) (torev:intlist) : intlist =
   if is_empty torev then
     acc
   else
-    let acc2 = {head=torev.head;
+    let _acc2 = {head=torev.head;
     tail=acc}
     rev2 acc torev.tail
 

@@ -40,7 +40,7 @@ let readInt () =
 type toto = {
   mutable foo : int;
   mutable bar : int;
-};;
+}
 
 let () =
   let param = {foo=0;

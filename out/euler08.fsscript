@@ -26,7 +26,7 @@ let max2_ a b =
 
 let () =
   let i = ref( 1 )
-  let last = Array.init 5 (fun j ->
+  let last = Array.init 5 (fun _j ->
     let c = readChar()
     let d = (int (c)) - (int ('0'))
     i := (!i) * d
@@ -34,7 +34,7 @@ let () =
   let max0 = ref( (!i) )
   let index = ref( 0 )
   let nskipdiv = ref( 0 )
-  for k = 1 to 995 do
+  for _k = 1 to 995 do
     let e = readChar()
     let f = (int (e)) - (int ('0'))
     if f = 0 then

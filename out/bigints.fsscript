@@ -44,10 +44,10 @@ type bigint = {
   mutable bigint_sign : bool;
   mutable bigint_len : int;
   mutable bigint_chiffres : int array;
-};;
+}
 
 let read_bigint len : bigint =
-  let chiffres = Array.init len (fun j ->
+  let chiffres = Array.init len (fun _j ->
     let c = readChar()
     (int (c)))
   for i = 0 to (len - 1) / 2 do
@@ -183,7 +183,7 @@ let mul_bigint_cp (a:bigint) (b:bigint) : bigint =
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. *)
   let len = ref( a.bigint_len + b.bigint_len + 1 )
-  let chiffres = Array.init (!len) (fun k ->
+  let chiffres = Array.init (!len) (fun _k ->
     0)
   for i = 0 to a.bigint_len - 1 do
     let retenue = ref( 0 )
@@ -194,7 +194,7 @@ D'ou le nom de la fonction. *)
     chiffres.[i + b.bigint_len] <- chiffres.[i + b.bigint_len] + (!retenue)
   chiffres.[a.bigint_len + b.bigint_len] <- chiffres.[a.bigint_len + b.bigint_len - 1] / 10
   chiffres.[a.bigint_len + b.bigint_len - 1] <- chiffres.[a.bigint_len + b.bigint_len - 1] % 10
-  for l = 0 to 2 do
+  for _l = 0 to 2 do
     if (!len) <> 0 && chiffres.[(!len) - 1] = 0 then
       len := (!len) - 1
   {bigint_sign=a.bigint_sign = b.bigint_sign;
@@ -261,7 +261,7 @@ let bigint_of_int i : bigint =
   let size = ref( log10 (!i) )
   if (!i) = 0 then
     size := 0
-  let t = Array.init (!size) (fun j ->
+  let t = Array.init (!size) (fun _j ->
     0)
   for k = 0 to (!size) - 1 do
     t.[k] <- (!i) % 10
@@ -348,7 +348,7 @@ let euler29 () =
     bigint_of_int (j * j))
   let a0_bigint = Array.init (maxA + 1) (fun j2 ->
     bigint_of_int j2)
-  let b = Array.init (maxA + 1) (fun k ->
+  let b = Array.init (maxA + 1) (fun _k ->
     2)
   let n = ref( 0 )
   let found = ref( true )
@@ -374,7 +374,7 @@ let euler29 () =
 let () =
   Printf.printf "%d\n" (euler29 ())
   let sum = ref( read_bigint 50 )
-  for i = 2 to 100 do
+  for _i = 2 to 100 do
     stdin_sep()
     let tmp = read_bigint 50
     sum := add_bigint (!sum) tmp

@@ -49,10 +49,10 @@ let rec exp0 a b =
       a * exp0 a (b - 1)
 
 let () =
-  let a = ref( 0 )
-  let b = ref( 0 )
-  a := readInt()
+  let a = 0
+  let b = 0
+  let a = readInt()
   stdin_sep()
-  b := readInt()
-  Printf.printf "%d" (exp0 (!a) (!b))
+  let b = readInt()
+  Printf.printf "%d" (exp0 a b)
  

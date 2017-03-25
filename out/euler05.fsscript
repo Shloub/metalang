@@ -6,7 +6,7 @@ let max2_ a b =
 
 let primesfactors n : int array =
   let n = ref n
-  let tab = Array.init ((!n) + 1) (fun i ->
+  let tab = Array.init ((!n) + 1) (fun _i ->
     0)
   let d = ref( 2 )
   while (!n) <> 1 && (!d) * (!d) <= (!n) do
@@ -20,7 +20,7 @@ let primesfactors n : int array =
 
 let () =
   let lim = 20
-  let o = Array.init (lim + 1) (fun m ->
+  let o = Array.init (lim + 1) (fun _m ->
     0)
   for i = 1 to lim do
     let t = primesfactors i
@@ -28,7 +28,7 @@ let () =
       o.[j] <- max2_ o.[j] t.[j]
   let product = ref( 1 )
   for k = 1 to lim do
-    for l = 1 to o.[k] do
+    for _l = 1 to o.[k] do
       product := (!product) * k
   Printf.printf "%d\n" (!product)
  

@@ -91,9 +91,6 @@ var
   b : Longint;
   i : Longint;
 begin
-  a := 0;
-  b := 0;
-  i := 0;
   a := read_int_();
   skip();
   b := read_int_();

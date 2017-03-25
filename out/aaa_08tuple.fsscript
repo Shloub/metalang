@@ -2,7 +2,7 @@ open System
 type toto = {
   mutable foo : (int * int);
   mutable bar : int;
-};;
+}
 
 let () =
   let bar_ = (Console.ReadLine () |> Int32.Parse)

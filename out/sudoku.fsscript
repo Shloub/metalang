@@ -39,7 +39,7 @@ let readInt () =
   loop 0
 (* lit un sudoku sur l'entrée standard *)
 let read_sudoku () : int array =
-  let out0 = Array.init (9 * 9) (fun i ->
+  let out0 = Array.init (9 * 9) (fun _i ->
     let k = readInt()
     stdin_sep()
     k)

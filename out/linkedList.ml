@@ -8,7 +8,7 @@ let cons list i =
   tail=list} in
   out0
 
-let is_empty foo =
+let is_empty _foo =
   true
 
 let rec rev2 acc torev =

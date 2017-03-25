@@ -137,7 +137,6 @@ var
   tab2 : a;
   tmp : Longint;
 begin
-  len := 0;
   len := read_int_();
   skip();
   SetLength(tab, len);
@@ -146,7 +145,6 @@ begin
     SetLength(tab2, i + 1);
     for j := 0 to  i do
     begin
-      tmp := 0;
       tmp := read_int_();
       skip();
       tab2[j] := tmp;

@@ -1,5 +1,5 @@
 let foo _a =
-  let a = 4
+  let _a = 4
   ()
 
 let () =

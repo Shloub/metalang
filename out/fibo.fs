@@ -40,14 +40,11 @@ create bufferc 128 allot
 ;
 
 : main
-  0 { a }
-  0 { b }
-  0 { i }
-  read-int TO a
+  read-int { a }
   skipspaces
-  read-int TO b
+  read-int { b }
   skipspaces
-  read-int TO i
+  read-int { i }
   a b i fibo0 s>d 0 d.r
   ;
 main

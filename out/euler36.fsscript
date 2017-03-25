@@ -16,7 +16,7 @@ let palindrome2 (pow2:int array) n : bool =
 
 let () =
   let p = ref( 1 )
-  let pow2 = Array.init 20 (fun i ->
+  let pow2 = Array.init 20 (fun _i ->
     p := (!p) * 2
     (!p) / 2)
   let sum = ref( 0 )

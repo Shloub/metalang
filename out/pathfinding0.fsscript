@@ -40,7 +40,7 @@ let () =
   let x = (Console.ReadLine () |> Int32.Parse)
   let y = (Console.ReadLine () |> Int32.Parse)
   Printf.printf "%d %d\n" x y
-  let e = Array.init y (fun f ->
+  let e = Array.init y (fun _f ->
     ((Console.ReadLine ()).ToCharArray ()))
   let tab = e
   let result = pathfind tab x y

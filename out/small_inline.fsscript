@@ -39,7 +39,7 @@ let readInt () =
   loop 0
 
 let () =
-  let t = Array.init 2 (fun d ->
+  let t = Array.init 2 (fun _d ->
     let out0 = readInt()
     stdin_sep()
     out0)

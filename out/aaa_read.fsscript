@@ -53,13 +53,13 @@ let () =
   let len = len * 2
   Printf.printf "len*2=%d\n" len
   let len = len / 2
-  let tab = Array.init len (fun i ->
+  let _tab = Array.init len (fun i ->
     let tmpi1 = readInt()
     stdin_sep()
     Printf.printf "%d=>%d " i tmpi1
     tmpi1)
   Printf.printf "\n"
-  let tab2 = Array.init len (fun i_ ->
+  let _tab2 = Array.init len (fun i_ ->
     let tmpi2 = readInt()
     stdin_sep()
     Printf.printf "%d==>%d " i_ tmpi2
@@ -67,7 +67,7 @@ let () =
   let strlen = readInt()
   stdin_sep()
   Printf.printf "%d=strlen\n" strlen
-  let tab4 = Array.init strlen (fun toto ->
+  let tab4 = Array.init strlen (fun _toto ->
     let tmpc = readChar()
     let c = ref( (int (tmpc)) )
     Printf.printf "%c:%d " tmpc (!c)

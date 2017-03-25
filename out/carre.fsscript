@@ -8,7 +8,7 @@ let min2_ a b =
 let () =
   let x = (Console.ReadLine () |> Int32.Parse)
   let y = (Console.ReadLine () |> Int32.Parse)
-  let tab = Array.init y (fun d ->
+  let tab = Array.init y (fun _d ->
     ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse))
   for ix = 1 to x - 1 do
     for iy = 1 to y - 1 do

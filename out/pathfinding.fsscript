@@ -72,26 +72,24 @@ let rec pathfind_aux (cache:int array array) (tab:char array array) x y posX pos
           out0
 
 let pathfind (tab:char array array) x y =
-  let cache = Array.init y (fun i ->
-    let tmp = Array.init x (fun j ->
+  let cache = Array.init y (fun _i ->
+    let tmp = Array.init x (fun _j ->
       (- 1))
     tmp)
   pathfind_aux cache tab x y 0 0
 
 let () =
-  let x = ref( 0 )
-  let y = ref( 0 )
-  x := readInt()
+  let x = readInt()
   stdin_sep()
-  y := readInt()
+  let y = readInt()
   stdin_sep()
-  let tab = Array.init (!y) (fun i ->
-    let tab2 = Array.init (!x) (fun j ->
+  let tab = Array.init y (fun _i ->
+    let tab2 = Array.init x (fun _j ->
       let tmp = ref( '\000' )
       tmp := readChar()
       (!tmp))
     stdin_sep()
     tab2)
-  let result = pathfind tab (!x) (!y)
+  let result = pathfind tab x y
   Printf.printf "%d" result
  

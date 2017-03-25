@@ -46,13 +46,13 @@ type gamestate = {
   mutable firstToPlay : bool;
   mutable note : int;
   mutable ended : bool;
-};;
+}
 
 (* Un Mouvement *)
 type move = {
   mutable x : int;
   mutable y : int;
-};;
+}
 
 (* On affiche l'état *)
 let print_state (g:gamestate) =
@@ -181,8 +181,8 @@ let play (g:gamestate) : move =
   minMove
 
 let init0 () : gamestate =
-  let cases = Array.init 3 (fun i ->
-    let tab = Array.init 3 (fun j ->
+  let cases = Array.init 3 (fun _i ->
+    let tab = Array.init 3 (fun _j ->
       0)
     tab)
   {cases=cases;
@@ -199,7 +199,7 @@ let read_move () : move =
   y=y}
 
 let () =
-  for i = 0 to 1 do
+  for _i = 0 to 1 do
     let state = init0 ()
     apply_move {x=1;
     y=1} state

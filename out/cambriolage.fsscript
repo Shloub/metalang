@@ -72,16 +72,16 @@ let nbPassePartout n (passepartout:int array array) m (serrures:int array array)
 let () =
   let n = readInt()
   stdin_sep()
-  let passepartout = Array.init n (fun i ->
-    let out0 = Array.init 2 (fun j ->
+  let passepartout = Array.init n (fun _i ->
+    let out0 = Array.init 2 (fun _j ->
       let out01 = readInt()
       stdin_sep()
       out01)
     out0)
   let m = readInt()
   stdin_sep()
-  let serrures = Array.init m (fun k ->
-    let out1 = Array.init 2 (fun l ->
+  let serrures = Array.init m (fun _k ->
+    let out1 = Array.init 2 (fun _l ->
       let out_ = readInt()
       stdin_sep()
       out_)

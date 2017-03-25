@@ -67,13 +67,13 @@ let crypte taille_cle (cle:char array) taille (message:char array) =
 let () =
   let taille_cle = readInt()
   stdin_sep()
-  let cle = Array.init taille_cle (fun index ->
+  let cle = Array.init taille_cle (fun _index ->
     let out0 = readChar()
     out0)
   stdin_sep()
   let taille = readInt()
   stdin_sep()
-  let message = Array.init taille (fun index2 ->
+  let message = Array.init taille (fun _index2 ->
     let out2 = readChar()
     out2)
   crypte taille_cle cle taille message

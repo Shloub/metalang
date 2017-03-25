@@ -65,13 +65,13 @@ let plus_petit0 (tab:int array) len =
   go0 tab 0 len
 
 let () =
-  let len = ref( 0 )
-  len := readInt()
+  let len = 0
+  let len = readInt()
   stdin_sep()
-  let tab = Array.init (!len) (fun i ->
+  let tab = Array.init len (fun _i ->
     let tmp = ref( 0 )
     tmp := readInt()
     stdin_sep()
     (!tmp))
-  Printf.printf "%d" (plus_petit0 tab (!len))
+  Printf.printf "%d" (plus_petit0 tab len)
  

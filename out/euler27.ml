@@ -15,7 +15,7 @@ let eratostene t max0 =
 
 exception Found_1 of bool
 
-let isPrime n primes len =
+let isPrime n primes _len =
   let n = ref n in
   try
   let i = ref( 0 ) in

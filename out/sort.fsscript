@@ -79,22 +79,22 @@ let rec qsort0 (tab:int array) len i j =
     qsort0 tab len ((!i) + 1) j0
 
 let () =
-  let len = ref( 2 )
-  len := readInt()
+  let len = 2
+  let len = readInt()
   stdin_sep()
-  let tab = Array.init (!len) (fun i_ ->
+  let tab = Array.init len (fun _i_ ->
     let tmp = ref( 0 )
     tmp := readInt()
     stdin_sep()
     (!tmp))
-  let tab2 = copytab tab (!len)
-  bubblesort tab2 (!len)
-  for i = 0 to (!len) - 1 do
+  let tab2 = copytab tab len
+  bubblesort tab2 len
+  for i = 0 to len - 1 do
     Printf.printf "%d " tab2.[i]
   Printf.printf "\n"
-  let tab3 = copytab tab (!len)
-  qsort0 tab3 (!len) 0 ((!len) - 1)
-  for i = 0 to (!len) - 1 do
+  let tab3 = copytab tab len
+  qsort0 tab3 len 0 (len - 1)
+  for i = 0 to len - 1 do
     Printf.printf "%d " tab3.[i]
   Printf.printf "\n"
  

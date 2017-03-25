@@ -9,7 +9,7 @@ let programme_candidat (tableau:int array array) x y =
 let () =
   let taille_x = (Console.ReadLine () |> Int32.Parse)
   let taille_y = (Console.ReadLine () |> Int32.Parse)
-  let tableau = Array.init taille_y (fun a ->
+  let tableau = Array.init taille_y (fun _a ->
     ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse))
   Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
  

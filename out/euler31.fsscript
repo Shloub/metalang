@@ -13,7 +13,7 @@ let rec result sum (t:int array) maxIndex (cache:int array array) =
       (!out0)
 
 let () =
-  let t = Array.init 8 (fun i ->
+  let t = Array.init 8 (fun _i ->
     0)
   t.[0] <- 1
   t.[1] <- 2
@@ -23,8 +23,8 @@ let () =
   t.[5] <- 50
   t.[6] <- 100
   t.[7] <- 200
-  let cache = Array.init 201 (fun j ->
-    let o = Array.init 8 (fun k ->
+  let cache = Array.init 201 (fun _j ->
+    let o = Array.init 8 (fun _k ->
       0)
     o)
   Printf.printf "%d" (result 200 t 7 cache)

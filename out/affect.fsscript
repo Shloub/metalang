@@ -44,7 +44,7 @@ type toto = {
   mutable foo : int;
   mutable bar : int;
   mutable blah : int;
-};;
+}
 
 let mktoto v1 : toto =
   let t = {foo=v1;
@@ -73,9 +73,9 @@ let result (t_:toto) (t2_:toto) =
     (- i))
   let cache1 = Array.init len (fun j ->
     j)
-  let cache2 = cache0
+  let _cache2 = cache0
   let cache0 = cache1
-  let cache2 = cache0
+  let _cache2 = cache0
   t.foo + t.blah * t.bar + t.bar * t.foo
 
 let () =

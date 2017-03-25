@@ -1,3 +1,4 @@
+
 let () =
   (*
 The number, 1406357289, is a 0 to 9 pandigital number because it is made up of each of the digits 0 to 9 in some order, but it also has a rather interesting sub-string divisibility property.
@@ -28,7 +29,7 @@ d6 = 5 ou d6 = 0
 (d3 + d4 + d5) % 3 == 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 *)
-  let allowed = Array.init 10 (fun i ->
+  let allowed = Array.init 10 (fun _i ->
     true)
   for i6 = 0 to 1 do
     let d6 = i6 * 5

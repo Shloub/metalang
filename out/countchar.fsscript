@@ -51,16 +51,16 @@ let nth (tab:char array) (tofind:char) len =
   (!out0)
 
 let () =
-  let len = ref( 0 )
-  len := readInt()
+  let len = 0
+  let len = readInt()
   stdin_sep()
-  let tofind = ref( '\000' )
-  tofind := readChar()
+  let tofind = '\000'
+  let tofind = readChar()
   stdin_sep()
-  let tab = Array.init (!len) (fun i ->
+  let tab = Array.init len (fun _i ->
     let tmp = ref( '\000' )
     tmp := readChar()
     (!tmp))
-  let result = nth tab (!tofind) (!len)
+  let result = nth tab tofind len
   Printf.printf "%d" result
  
