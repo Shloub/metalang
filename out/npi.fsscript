@@ -50,7 +50,7 @@ let is_number (c:char) : bool =
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 *)
 let npi0 (str:char array) len =
-  let stack = Array.init len (fun i ->
+  let stack = Array.init len (fun _i ->
     0)
   let ptrStack = ref( 0 )
   let ptrStr = ref( 0 )
@@ -73,13 +73,13 @@ let npi0 (str:char array) len =
   stack.[0]
 
 let () =
-  let len = ref( 0 )
-  len := readInt()
+  let len = 0
+  let len = readInt()
   stdin_sep()
-  let tab = Array.init (!len) (fun i ->
+  let tab = Array.init len (fun _i ->
     let tmp = ref( '\000' )
     tmp := readChar()
     (!tmp))
-  let result = npi0 tab (!len)
+  let result = npi0 tab len
   Printf.printf "%d" result
  

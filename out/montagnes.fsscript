@@ -54,13 +54,13 @@ let montagnes0 (tab:int array) len =
   (!max0)
 
 let () =
-  let len = ref( 0 )
-  len := readInt()
+  let len = 0
+  let len = readInt()
   stdin_sep()
-  let tab = Array.init (!len) (fun i ->
+  let tab = Array.init len (fun _i ->
     let x = ref( 0 )
     x := readInt()
     stdin_sep()
     (!x))
-  Printf.printf "%d" (montagnes0 tab (!len))
+  Printf.printf "%d" (montagnes0 tab len)
  

@@ -69,7 +69,6 @@ begin
    until false;
 end;
 
-
 function is_number(c : char) : boolean;
 begin
   exit((ord(c) <= ord(#57)) and (ord(c) >= ord(#48)));
@@ -78,15 +77,15 @@ end;
 {
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 }
-type a = array of char;
-type b = array of Longint;
-function npi0(str : a; len : Longint) : Longint;
+type a = array of Longint;
+type b = array of char;
+function npi0(str : b; len : Longint) : Longint;
 var
   i : Longint;
   num : Longint;
   ptrStack : Longint;
   ptrStr : Longint;
-  stack : b;
+  stack : a;
 begin
   SetLength(stack, len);
   for i := 0 to  len - 1 do
@@ -128,7 +127,7 @@ var
   i : Longint;
   len : Longint;
   result : Longint;
-  tab : a;
+  tab : b;
   tmp : char;
 begin
   len := 0;

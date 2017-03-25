@@ -41,7 +41,7 @@ type toto = {
   mutable foo : int;
   mutable bar : int;
   mutable blah : int;
-};;
+}
 
 let mktoto v1 : toto =
   let t = {foo=v1;

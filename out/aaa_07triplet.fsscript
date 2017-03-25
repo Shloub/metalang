@@ -1,12 +1,13 @@
 open System
+
 let () =
-              for i = 1 to 3 do
-                let d = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
-                let a = d.[0]
-                let b = d.[1]
-                let c = d.[2]
-                Printf.printf "a = %d b = %dc =%d\n" a b c
-              let l = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
-              for j = 0 to 9 do
-                Printf.printf "%d\n" l.[j]
-             
+  for _i = 1 to 3 do
+    let d = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
+    let a = d.[0]
+    let b = d.[1]
+    let c = d.[2]
+    Printf.printf "a = %d b = %dc =%d\n" a b c
+  let l = ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse)
+  for j = 0 to 9 do
+    Printf.printf "%d\n" l.[j]
+ 

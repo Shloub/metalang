@@ -39,7 +39,7 @@ let () =
                 else
                   ((- 1), (- 1)))
   let max0 = ref( 0 )
-  let m = Array.init 20 (fun c ->
+  let m = Array.init 20 (fun _c ->
     ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse))
   for j = 0 to 7 do
     let (dx, dy) = directions.[j]

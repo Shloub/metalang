@@ -62,8 +62,8 @@ let sumdiv n =
 
 let () =
   (* Programme principal *)
-  let n = ref( 0 )
-  n := readInt()
+  let n = 0
+  let n = readInt()
   (* Lecture de l'entier *)
-  Printf.printf "%d" (sumdiv (!n))
+  Printf.printf "%d" (sumdiv n)
  

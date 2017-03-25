@@ -1,9 +1,10 @@
+
 let () =
   let n = 10
   (* normalement on doit mettre 20 mais là on se tape un overflow *)
   let n = n + 1
-  let tab = Array.init n (fun i ->
-    let tab2 = Array.init n (fun j ->
+  let tab = Array.init n (fun _i ->
+    let tab2 = Array.init n (fun _j ->
       0)
     tab2)
   for l = 0 to n - 1 do

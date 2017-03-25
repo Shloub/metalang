@@ -11,7 +11,7 @@ let programme_candidat (tableau:char array array) taille_x taille_y =
 let () =
   let taille_x = (Console.ReadLine () |> Int32.Parse)
   let taille_y = (Console.ReadLine () |> Int32.Parse)
-  let a = Array.init taille_y (fun b ->
+  let a = Array.init taille_y (fun _b ->
     ((Console.ReadLine ()).ToCharArray ()))
   let tableau = a
   Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)

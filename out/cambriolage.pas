@@ -62,7 +62,6 @@ begin
    until false;
 end;
 
-
 type c = array of Longint;
 type d = array of c;
 function nbPassePartout(n : Longint; passepartout : d; m : Longint; serrures : d) : Longint;

@@ -1,5 +1,6 @@
+
 let () =
-  let f = Array.init 10 (fun j ->
+  let f = Array.init 10 (fun _j ->
     1)
   for i = 1 to 9 do
     f.[i] <- f.[i] * i * f.[i - 1]

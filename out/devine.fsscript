@@ -60,7 +60,7 @@ let () =
   stdin_sep()
   let len = readInt()
   stdin_sep()
-  let tab = Array.init len (fun i ->
+  let tab = Array.init len (fun _i ->
     let tmp = readInt()
     stdin_sep()
     tmp)

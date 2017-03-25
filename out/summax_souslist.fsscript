@@ -50,14 +50,14 @@ let summax (lst:int array) len =
   (!max0)
 
 let () =
-  let len = ref( 0 )
-  len := readInt()
+  let len = 0
+  let len = readInt()
   stdin_sep()
-  let tab = Array.init (!len) (fun i ->
+  let tab = Array.init len (fun _i ->
     let tmp = ref( 0 )
     tmp := readInt()
     stdin_sep()
     (!tmp))
-  let result = summax tab (!len)
+  let result = summax tab len
   Printf.printf "%d" result
  

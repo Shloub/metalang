@@ -21,7 +21,7 @@ let () =
   let era = Array.init maximumprimes (fun j ->
     j)
   let nprimes = eratostene era maximumprimes
-  let primes = Array.init nprimes (fun o ->
+  let primes = Array.init nprimes (fun _o ->
     0)
   let l = ref( 0 )
   for k = 2 to maximumprimes - 1 do

@@ -2,7 +2,6 @@ program aaa_09chars;
 
 
 
-
 begin
   Write(1);
   Write('=>');

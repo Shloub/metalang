@@ -4,9 +4,9 @@ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compila
 et qui produit les macros metalang correspondante
 *)
 let () =
-  let input = ' '
+  let _input = ' '
   let current_pos = ref( 500 )
-  let mem = Array.init 1000 (fun i ->
+  let mem = Array.init 1000 (fun _i ->
     0)
   mem.[(!current_pos)] <- mem.[(!current_pos)] + 1
   mem.[(!current_pos)] <- mem.[(!current_pos)] + 1

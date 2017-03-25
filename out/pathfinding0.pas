@@ -70,7 +70,6 @@ begin
    until false;
 end;
 
-
 type k = array of Longint;
 type l = array of k;
 type m = array of char;

@@ -48,7 +48,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 let () =
   let strlen = readInt()
   stdin_sep()
-  let tab4 = Array.init strlen (fun toto ->
+  let tab4 = Array.init strlen (fun _toto ->
     let tmpc = readChar()
     let c = ref( (int (tmpc)) )
     if tmpc <> ' ' then

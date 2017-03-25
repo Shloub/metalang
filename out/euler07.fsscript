@@ -22,7 +22,7 @@ let find n (t:int array) used nth =
 
 let () =
   let n = 10001
-  let t = Array.init n (fun i ->
+  let t = Array.init n (fun _i ->
     2)
   Printf.printf "%d\n" (find 3 t 1 n)
  

@@ -6,7 +6,7 @@ exception Found_1 of int
 
 let result len (tab:int array) =
   try
-  let tab2 = Array.init len (fun i ->
+  let tab2 = Array.init len (fun _i ->
     false)
   for i1 = 0 to len - 1 do
     Printf.printf "%d " tab.[i1]
