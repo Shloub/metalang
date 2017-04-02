@@ -206,6 +206,62 @@ let print_instr macros declared_types declared_types_assoc i =
   let open Ast.Instr.Fixed.Deep in
   fold (print_instr macros declared_types declared_types_assoc) (mapg (print_expr macros) i)
 
+let rec ptype declared_types typerEnv f t =
+    match TypeMap.find_opt t declared_types with
+    | Some s -> Format.fprintf f "%s" s
+    | None ->
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "Integer"
+      | Type.String -> Format.fprintf f "stringptr"
+      | Type.Array a -> Format.fprintf f "Array (Integer range <>) of %a" (ptype declared_types typerEnv) a
+      | Type.Void -> assert false
+      | Type.Bool -> Format.fprintf f "Boolean"
+      | Type.Char -> Format.fprintf f "Character"
+      | Type.Named n ->
+        begin match Typer.byname n typerEnv |> Type.unfix with
+          | Type.Enum _ -> Format.fprintf f "%s" n
+          | Type.Struct _ -> Format.fprintf f "%s_PTR" n
+          | _ -> assert false
+        end
+      | Type.Struct li -> Format.fprintf f "a struct"
+      | Type.Enum _ -> Format.fprintf f "an enum"
+      | Type.Tuple _ | Type.Lexems | Type.Auto -> assert false
+
+  let declaredvars bindings instrs =
+    List.fold_left
+      (Instr.Writer.Deep.fold
+         (fun bindings i ->
+            match Instr.Fixed.unfix i with
+            | Instr.Read li -> List.fold_left (fun bindings -> function
+                | Instr.DeclRead (t, b, _) -> BindingMap.add b t bindings
+                | _ -> bindings ) bindings li
+            | Instr.Declare (b, t, _, _) ->
+              BindingMap.add b t bindings
+            | Instr.AllocArray (b, t, _, _, _) ->
+              BindingMap.add b (Type.array t) bindings
+            | Instr.AllocRecord (b, t, _, _) ->
+              BindingMap.add b t bindings
+            | _ -> bindings
+         )
+      )
+      bindings
+      instrs
+
+let declarevars declared_types typerEnv f instrs =
+    let bindings = declaredvars BindingMap.empty instrs in
+    if bindings = BindingMap.empty then ()
+    else
+      let li = BindingMap.fold
+          (fun key value acc ->
+             (fun f () ->
+                Format.fprintf f "%a : %a;" print_varname key
+                  (ptype declared_types typerEnv) value) :: acc
+          )
+          bindings
+          []
+      in Format.fprintf f "@\n  @[<v>%a@]" (print_list (fun p f -> f p ()) sep_nl) li
+
+      
 class adaPrinter = object(self)
 
   val mutable recursives_definitions = StringSet.empty
@@ -214,7 +270,8 @@ class adaPrinter = object(self)
   val mutable typerEnv : Typer.env = Typer.empty
   method setTyperEnv t = typerEnv <- t
   val mutable macros = StringMap.empty
-      
+                         
+  val mutable declared_types_assoc = StringMap.empty
   val mutable declared_types : string TypeMap.t = TypeMap.empty
   val mutable progname = ""
 
@@ -232,7 +289,7 @@ class adaPrinter = object(self)
                   (print_list
                      (fun t (binding, type_) ->
                         Format.fprintf t "%a : in %a" print_varname binding
-                          self#ptype type_
+                          (ptype declared_types typerEnv) type_
                      ) sep_dc
                   ) li) li
 
@@ -240,16 +297,16 @@ class adaPrinter = object(self)
     match li with
     | [] ->
       Format.fprintf f "@[<hov>function %s return %a is@]" funname
-        self#ptype t
+        (ptype declared_types typerEnv) t
     | _ ->
       Format.fprintf f "@[<hov>function %s(%a) return %a is@]" funname
         (print_list
            (fun t (binding, type_) ->
               Format.fprintf t "%a : in %a" print_varname binding
-                self#ptype type_
+                (ptype declared_types typerEnv) type_
            ) sep_dc
         ) li
-        self#ptype t
+        (ptype declared_types typerEnv) t
 
   method prog f (prog: Utils.prog) =
     let contains t0 =
@@ -307,28 +364,6 @@ end;
          ) sep_nl)
       prog.Prog.funs
       (print_option self#main) prog.Prog.main
-
-  method declaredvars bindings instrs =
-    List.fold_left
-      (Instr.Writer.Deep.fold
-         (fun bindings i ->
-            match Instr.Fixed.unfix i with
-            | Instr.Read li -> List.fold_left (fun bindings -> function
-                | Instr.DeclRead (t, b, _) -> BindingMap.add b t bindings
-                | _ -> bindings ) bindings li
-            | Instr.Declare (b, t, _, _) ->
-              BindingMap.add b t bindings
-            | Instr.AllocArray (b, t, _, _, _) ->
-              BindingMap.add b (Type.array t) bindings
-            | Instr.AllocRecord (b, t, _, _) ->
-              BindingMap.add b t bindings
-            | _ -> bindings
-         )
-      )
-      bindings
-      instrs
-
-  val mutable addondeclaredvars = BindingMap.empty
       
   method print_proto f (funname, t, li) =
     match Type.unfix t with
@@ -358,10 +393,16 @@ end;
                             else None, (name, t) ) li
     in
     let li_assoc = List.filter_map (fun x -> x) li_assoc in
-    addondeclaredvars <- List.fold_left (fun acc (name, t, _) -> BindingMap.add name t acc) BindingMap.empty li_assoc;
-    declared_types <- self#declare_type declared_types f t;
-    self #declare_types f instrs;
-    declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
+    let declared_types_assoc', declared_types' = self#declare_type declared_types_assoc declared_types f t in
+    declared_types <- declared_types';
+    declared_types_assoc <- declared_types_assoc';
+    let declared_types_assoc', declared_types' =self#declare_types f instrs in
+    declared_types <- declared_types';
+    declared_types_assoc <- declared_types_assoc';
+    let declared_types_assoc', declared_types' =
+      List.fold_left (fun (declared_types_assoc, declared_types) (_, t) -> self#declare_type declared_types_assoc declared_types f t) (declared_types_assoc, declared_types) li in
+    declared_types <- declared_types';
+    declared_types_assoc <- declared_types_assoc';
 
     let instrs = List.append
         (List.map (fun (name, t, name2) ->
@@ -373,32 +414,17 @@ end;
       self#print_proto (funname, t, li)
       self#print_body instrs
 
-        
-  method declarevars f instrs =
-    let bindings = self#declaredvars addondeclaredvars instrs in
-    if bindings = BindingMap.empty then ()
-    else
-      let li = BindingMap.fold
-          (fun key value acc ->
-             (fun f () ->
-                Format.fprintf f "%a : %a;" print_varname key
-                  self#ptype value) :: acc
-          )
-          bindings
-          []
-      in Format.fprintf f "@\n  @[<v>%a@]" (print_list (fun p f -> f p ()) sep_nl) li;
-
-  val mutable declared_types_assoc = StringMap.empty
-
   method decl_type f name t =
-    declared_types <- self#declare_type declared_types f t;
+    let declared_types_assoc', declared_types' = self#declare_type declared_types_assoc declared_types f t in
+    declared_types <- declared_types';
+    declared_types_assoc <- declared_types_assoc';  
     match (Type.unfix t) with
       Type.Struct li ->
       let name2 = name ^ "_PTR" in
       Format.fprintf f "@\ntype %s;@\ntype %s is access %s;@\ntype %s is record@\n@[<v 2>  %a@]@\nend record;@]@\n" name name2 name name
         (print_list
            (fun t (name, type_) ->
-              Format.fprintf t "%s : %a;" name self#ptype type_
+              Format.fprintf t "%s : %a;" name (ptype declared_types typerEnv) type_
            ) sep_nl
         ) li;
 
@@ -408,10 +434,12 @@ end;
     | _ -> assert false
 
   method main f main =
-    self#declare_types f main;
+    let declared_types_assoc', declared_types' = self#declare_types f main in
+    declared_types <- declared_types';
+    declared_types_assoc <- declared_types_assoc';
     self#print_body f main
 
-  method declare_type declared_types f t =
+  method declare_type declared_types_assoc declared_types f t =
     let a, b, c = pas_declare_type (fun n -> n ^ "_PTR") declared_types_assoc declared_types [] t
     in self#out_declare_type f a b c
 
@@ -421,51 +449,30 @@ end;
     
   method out_declare_type f a b c =
     List.iter (fun (name, t, name2, decl, assoc) ->
-    declared_types_assoc <- assoc;
-    declared_types <- decl;
-        Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name self#ptype t name2 name;
+        Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name (ptype decl typerEnv) t name2 name;
       ) (List.rev c);
+    a, b
+    (*
     declared_types_assoc <- a;
-    declared_types <- b; b
-
-  method instr f t =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc (self#lang ()) li
-        with Not_found -> List.assoc "" li) macros
-    in (print_instr macros declared_types declared_types_assoc t).p f ()
-
-  method instructions f li =
-    if
-      List.filter (fun i -> match Instr.unfix i with
-          | Instr.Comment _ -> false
-          | _ -> true) li = [] then (* en ada, un bloc vide ne compile pas...*)
-      Format.fprintf f "NULL;@\n"
-    else print_list self#instr sep_nl f li
+    declared_types <- b; b *)
 
   method print_body f instrs =
+    let instructions f li =
+      if
+        List.filter (fun i -> match Instr.unfix i with
+            | Instr.Comment _ -> false
+            | _ -> true) li = [] then (* en ada, un bloc vide ne compile pas...*)
+        Format.fprintf f "NULL;@\n"
+      else
+        let macros = StringMap.map (fun (ty, params, li) ->
+            ty, params,
+            try List.assoc (self#lang ()) li
+            with Not_found -> List.assoc "" li) macros in
+        print_list (fun f i ->
+            (print_instr macros declared_types declared_types_assoc i).p f ()
+          ) sep_nl f li
+    in
     Format.fprintf f "%a@\nbegin@\n@[<v 2>  %a@]@\nend;"
-      self#declarevars instrs
-      self#instructions instrs
-
-  method ptype f t =
-    match TypeMap.find_opt t declared_types with
-    | Some s -> Format.fprintf f "%s" s
-    | None ->
-      match Type.unfix t with
-      | Type.Integer -> Format.fprintf f "Integer"
-      | Type.String -> Format.fprintf f "stringptr"
-      | Type.Array a -> Format.fprintf f "Array (Integer range <>) of %a" self#ptype a
-      | Type.Void -> assert false
-      | Type.Bool -> Format.fprintf f "Boolean"
-      | Type.Char -> Format.fprintf f "Character"
-      | Type.Named n ->
-        begin match Typer.byname n typerEnv |> Type.unfix with
-          | Type.Enum _ -> Format.fprintf f "%s" n
-          | Type.Struct _ -> Format.fprintf f "%s_PTR" n
-          | _ -> assert false
-        end
-      | Type.Struct li -> Format.fprintf f "a struct"
-      | Type.Enum _ -> Format.fprintf f "an enum"
-      | Type.Tuple _ | Type.Lexems | Type.Auto -> assert false
+      (declarevars declared_types typerEnv) instrs
+      instructions instrs
 end
