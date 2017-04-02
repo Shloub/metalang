@@ -64,14 +64,14 @@ end;
 {
   Ce test a été généré par Metalang.
 }
-type b = array of Longint;
-type c = array of boolean;
-function result(len : Longint; tab : b) : Longint;
+type b = array of boolean;
+type c = array of Longint;
+function result(len : Longint; tab : c) : Longint;
 var
   i : Longint;
   i1 : Longint;
   i2 : Longint;
-  tab2 : c;
+  tab2 : b;
 begin
   SetLength(tab2, len);
   for i := 0 to  len - 1 do
@@ -100,7 +100,7 @@ end;
 var
   a : Longint;
   len : Longint;
-  tab : b;
+  tab : c;
 begin
   len := read_int_();
   skip();

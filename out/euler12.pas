@@ -1,7 +1,6 @@
 program euler12;
 Uses math;
 
-
 type c = array of Longint;
 function eratostene(t : c; max0 : Longint) : Longint;
 var
