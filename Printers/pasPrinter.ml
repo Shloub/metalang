@@ -220,98 +220,98 @@ let declaredvars bindings instrs =
       instrs
 
 
-  let declarevars declared_types f instrs =
-    let bindings = declaredvars BindingMap.empty instrs
-    in
-    if bindings = BindingMap.empty then ()
-    else
-      Format.fprintf f "@\n@[<v 2>var%a@]"
-        (BindingMap.fold
-           (fun key value next f () ->
-              Format.fprintf f "%a@\n%a : %a;"
-                next () print_varname key (ptype declared_types) value
-           )
-           bindings
-           (fun f () -> ())
-        )
-        ()
-        
-class pasPrinter = object(self)
-
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-  method is_rec funname = StringSet.mem funname recursives_definitions
-  val mutable typerEnv : Typer.env = Typer.empty
-  method setTyperEnv t = typerEnv <- t
-  val mutable macros = StringMap.empty
-                         
-  val mutable declared_types : string TypeMap.t = TypeMap.empty
-
-  method instructions f li =
-    let macros = StringMap.map (fun (ty, params, li) ->
-        ty, params,
-        try List.assoc "pas" li
-        with Not_found -> List.assoc "" li) macros
-    in print_list (fun f t -> (print_instr macros t).p f ()) sep_nl f li
-
-  val mutable bindings = BindingSet.empty
-
-  method decl_procedure f funname li =
-    Format.fprintf f "@[<h>procedure %s(%a);@]"  funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a : %a" print_varname binding
-              (ptype declared_types) type_
+let declarevars declared_types f instrs =
+  let bindings = declaredvars BindingMap.empty instrs
+  in
+  if bindings = BindingMap.empty then ()
+  else
+    Format.fprintf f "@\n@[<v 2>var%a@]"
+      (BindingMap.fold
+         (fun key value next f () ->
+            Format.fprintf f "%a@\n%a : %a;"
+              next () print_varname key (ptype declared_types) value
          )
-         sep_dc
-      ) li
+         bindings
+         (fun f () -> ())
+      )
+      ()
 
-  method decl_function f funname t li =
-    Format.fprintf f "@[<h>function %s(%a) : %a;@]" funname
-      (print_list
-         (fun t (binding, type_) ->
-            Format.fprintf t "%a : %a" print_varname binding
-              (ptype declared_types) type_
-         )
-         sep_dc
-      ) li
-      (ptype declared_types) t
+let out_declare_type f a c =
+  List.iter (fun (name, t, name2, decl, assoc) ->
+      Format.fprintf f "type %s = %a;@\n" name (ptype decl) t
+    ) (List.rev c)
 
-  method print_proto f (funname, t, li) =
-    match Type.unfix t with
-    | Type.Void -> self#decl_procedure f funname li
-    | _ -> self#decl_function f funname t li
+let declare_type declared_types f t =
+  let a, b, c = pas_declare_type (fun n -> n) StringMap.empty declared_types [] t
+  in (fun f () -> out_declare_type f a c), b
 
-  method print_body f instrs =
-    Format.fprintf f "%a@\nbegin@\n@[<v 2>  %a@]@\nend"
-      (declarevars declared_types) instrs
-      self#instructions instrs
+let  declare_types declared_types f instrs =
+  let a, b, c = pas_declare_types (fun n -> n) instrs StringMap.empty declared_types
+  in (fun f () -> out_declare_type f a c), b
 
-  method print_fun f funname t li instrs =
-    declared_types <- self#declare_type declared_types f t;
-    List.iter (fun (_, t) -> declared_types <- self#declare_type declared_types f t) li;
-    self#declare_types f instrs;
-    declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
-    Format.fprintf f "%a%a;@\n"
-      self#print_proto (funname, t, li)
-      self#print_body instrs
-
-  method out_declare_type f a b c =
-    List.iter (fun (name, t, name2, decl, assoc) ->
-        declared_types <- decl;
-        Format.fprintf f "type %s = %a;@\n" name (ptype declared_types) t
-      ) (List.rev c);
-    declared_types <- b; b
-    
-  method declare_type declared_types f t =
-    let a, b, c = pas_declare_type (fun n -> n) StringMap.empty declared_types [] t
-    in self#out_declare_type f a b c
-      
-  method declare_types f instrs =
-    let a, b, c = pas_declare_types (fun n -> n) instrs StringMap.empty declared_types
-    in self#out_declare_type f a b c
-
-  method prog f (prog: Utils.prog) =
+let prog f prog =
+    let instructions macros f li =
+      let macros = StringMap.map (fun (ty, params, li) ->
+          ty, params,
+          try List.assoc "pas" li
+          with Not_found -> List.assoc "" li) macros
+      in print_list (fun f t -> (print_instr macros t).p f ()) sep_nl f li in
+    let macros, items, declared_types = List.fold_left
+        (fun (macros, li, declared_types) item -> match item with
+           | Prog.Macro (name, t, params, code) ->
+             StringMap.add name (t, params, code) macros, li, declared_types
+           | Prog.Comment s -> macros, (fun f -> Format.fprintf f "{%s}" s) :: li, declared_types
+           | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
+             let pr0, declared_types = declare_type declared_types f t in
+             let pr1, declared_types = declare_types declared_types f instrs in
+             let pr, declared_types = List.fold_left
+                 (fun (pr, declared_types) (_, t) ->
+                    let pr', declared_types = declare_type declared_types f t
+                    in (fun f () -> Format.fprintf f "%a%a" pr () pr' ()), declared_types
+                 )
+                 ((fun f () -> Format.fprintf f "%a%a" pr0 () pr1 ()), declared_types) vars in
+             macros, (fun f ->
+                 Format.fprintf f "%a%a%a@\nbegin@\n@[<v 2>  %a@]@\nend;@\n"
+                   pr ()
+                   (fun f () ->
+                      match Type.unfix t with
+                      | Type.Void -> Format.fprintf f "@[<h>procedure %s(%a);@]"  funname
+                                       (print_list
+                                          (fun t (binding, type_) ->
+                                             Format.fprintf t "%a : %a" print_varname binding
+                                               (ptype declared_types) type_
+                                          )
+                                          sep_dc
+                                       ) vars
+                      | _ -> Format.fprintf f "@[<h>function %s(%a) : %a;@]" funname
+                               (print_list
+                                  (fun t (binding, type_) ->
+                                     Format.fprintf t "%a : %a" print_varname binding
+                                       (ptype declared_types) type_
+                                  )
+                                  sep_dc
+                               ) vars
+                               (ptype declared_types) t
+                   ) ()
+                   (declarevars declared_types) instrs
+                   (instructions macros) instrs
+               ) :: li, declared_types
+           | Prog.DeclareType (name, t) -> macros, (fun f ->
+               match (Type.unfix t) with
+                 Type.Struct li ->
+                 Format.fprintf f "type@[<v>@\n%s=^%s_r;@\n%s_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
+                   name name name
+                   (print_list
+                      (fun t (name, type_) ->
+                         Format.fprintf t "%s : %a;" name (ptype declared_types) type_
+                      ) sep_nl
+                   ) li
+               | Type.Enum li ->
+                 Format.fprintf f "Type %s = (@\n@[<v2>  %a@]);@\n" name
+                   (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li
+               | _ -> assert false) :: li, declared_types
+           | _ -> macros, li, declared_types
+        ) (StringMap.empty, [], TypeMap.empty) prog.Prog.funs in
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
@@ -397,7 +397,9 @@ begin
    until false;
 end;
 " else "")
-      (print_list
+    (print_list (fun f g -> g f) sep_nl) (List.rev items)
+      (*
+(print_list
          (fun f item -> match item with
             | Prog.Comment s -> Format.fprintf f "{%s}" s
             | Prog.DeclarFun (var, t, li, instrs, _opt) -> self#print_fun f var t li instrs;
@@ -409,25 +411,10 @@ end;
             | Prog.DeclareType (name, t) -> self#decl_type f name t
          ) sep_nl)
       prog.Prog.funs
+*)
       (print_option (fun f main ->
-           self#declare_types f main;
-           self#print_body f main
+           let pr, declared_types = declare_types declared_types f main in
+           Format.fprintf f "%a%a@\nbegin@\n@[<v 2>  %a@]@\nend" pr ()
+           (declarevars declared_types) main
+           (instructions macros) main
          )) prog.Prog.main
-
-  method decl_type f name t =
-    match (Type.unfix t) with
-      Type.Struct li ->
-      Format.fprintf f "type@[<v>@\n%s=^%s_r;@\n%s_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
-        name name name
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "%s : %a;" name (ptype declared_types) type_
-           ) sep_nl
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "Type %s = (@\n@[<v2>  %a@]);@\n" name
-        (print_list (fun t name -> Format.fprintf t "%s" name) sep_c) li
-
-    | _ -> assert false
-
-end
