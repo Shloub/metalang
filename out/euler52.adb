@@ -37,7 +37,6 @@ begin
     end if;
   end if;
 end;
-
 function same_numbers(a : in Integer; b : in Integer; c : in Integer; d : in Integer; e : in Integer; f : in Integer) return Boolean is
   ca : Integer;
 begin

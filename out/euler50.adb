@@ -24,7 +24,6 @@ begin
     return b;
   end if;
 end;
-
 type c is Array (Integer range <>) of Integer;
 type c_PTR is access c;
 function eratostene(t : in c_PTR; max0 : in Integer) return Integer is

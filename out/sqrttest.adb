@@ -15,6 +15,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
 
+
 begin
   PInt(Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float(4)))));
   PString(new char_array'( To_C(" ")));

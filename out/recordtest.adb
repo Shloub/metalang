@@ -21,7 +21,6 @@ begin
     Get(C);
   end loop;
 end;
-
 type toto;
 type toto_PTR is access toto;
 type toto is record

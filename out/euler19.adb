@@ -19,7 +19,6 @@ function is_leap(year : in Integer) return Boolean is
 begin
   return year rem 400 = 0 or else (year rem 100 /= 0 and then year rem 4 = 0);
 end;
-
 function ndayinmonth(month : in Integer; year : in Integer) return Integer is
 begin
   if month = 0

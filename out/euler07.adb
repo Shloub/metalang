@@ -26,7 +26,6 @@ begin
   end loop;
   return FALSE;
 end;
-
 function find(b : in Integer; t : in a_PTR; c : in Integer; nth : in Integer) return Integer is
   used : Integer;
   n : Integer;
@@ -46,7 +45,6 @@ begin
   return t(used - 1);
 end;
 
-  used : Integer;
   t : a_PTR;
   n : Integer;
 begin

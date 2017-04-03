@@ -11,6 +11,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
 
+
   i : Integer;
 begin
   i := 4;

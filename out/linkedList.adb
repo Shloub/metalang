@@ -6,14 +6,12 @@ procedure linkedList is
 
 
 type stringptr is access all char_array;
-
 type intlist;
 type intlist_PTR is access intlist;
 type intlist is record
   head : Integer;
   tail : intlist_PTR;
 end record;
-
 function cons(list : in intlist_PTR; i : in Integer) return intlist_PTR is
   out0 : intlist_PTR;
 begin
@@ -22,12 +20,10 @@ begin
   out0.tail := list;
   return out0;
 end;
-
 function is_empty(foo : in intlist_PTR) return Boolean is
 begin
   return TRUE;
 end;
-
 function rev2(acc : in intlist_PTR; torev : in intlist_PTR) return intlist_PTR is
   acc2 : intlist_PTR;
 begin
@@ -41,12 +37,10 @@ begin
     return rev2(acc, torev.tail);
   end if;
 end;
-
 function rev(empty : in intlist_PTR; torev : in intlist_PTR) return intlist_PTR is
 begin
   return rev2(empty, torev);
 end;
-
 procedure test(empty : in intlist_PTR) is
   list : intlist_PTR;
   i : Integer;

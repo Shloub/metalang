@@ -14,25 +14,21 @@ procedure PInt(i : in Integer) is
 begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
-
 type toto;
 type toto_PTR is access toto;
 type toto is record
   s : stringptr;
   v : Integer;
 end record;
-
 function idstring(s : in stringptr) return stringptr is
 begin
   return s;
 end;
-
 procedure printstring(s : in stringptr) is
 begin
   PString(idstring(s));
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
-
 procedure print_toto(t : in toto_PTR) is
 begin
   PString(t.s);

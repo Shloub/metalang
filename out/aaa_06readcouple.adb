@@ -25,6 +25,7 @@ begin
     Get(C);
   end loop;
 end;
+
 type d is Array (Integer range <>) of Integer;
 type d_PTR is access d;
 

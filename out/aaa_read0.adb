@@ -26,6 +26,7 @@ begin
   end loop;
 end;
 
+
   len : Integer;
 begin
   Get(len);

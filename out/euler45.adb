@@ -24,7 +24,6 @@ begin
     return n * ((n + 1) / 2);
   end if;
 end;
-
 function penta(n : in Integer) return Integer is
 begin
   if n rem 2 = 0
@@ -34,12 +33,10 @@ begin
     return ((3 * n - 1) / 2) * n;
   end if;
 end;
-
 function hexa(n : in Integer) return Integer is
 begin
   return n * (2 * n - 1);
 end;
-
 function findPenta2(n : in Integer; a : in Integer; b : in Integer) return Boolean is
   p : Integer;
   c : Integer;
@@ -62,7 +59,6 @@ begin
     end if;
   end if;
 end;
-
 function findHexa2(n : in Integer; a : in Integer; b : in Integer) return Boolean is
   p : Integer;
   c : Integer;

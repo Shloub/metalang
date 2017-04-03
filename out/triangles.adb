@@ -70,7 +70,6 @@ begin
   cache(y)(x) := result;
   return result;
 end;
-
 function find(len : in Integer; tab : in b_PTR) return Integer is
   tab3 : a_PTR;
   tab2 : b_PTR;
@@ -91,14 +90,12 @@ end;
   tab : b_PTR;
   len : Integer;
 begin
-  len := 0;
   Get(len);
   SkipSpaces;
   tab := new b (0..len);
   for i in integer range 0..len - 1 loop
     tab2 := new a (0..i + 1);
     for j in integer range 0..i loop
-      tmp := 0;
       Get(tmp);
       SkipSpaces;
       tab2(j) := tmp;

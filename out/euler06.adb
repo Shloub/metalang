@@ -11,6 +11,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
 
+
   sumcarres : Integer;
   sum : Integer;
   lim : Integer;

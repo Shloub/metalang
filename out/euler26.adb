@@ -44,8 +44,6 @@ end;
   p : Integer;
   mi : Integer;
   m : Integer;
-  len : Integer;
-  a : Integer;
 begin
   t := new e (0..1000);
   for j in integer range 0..999 loop

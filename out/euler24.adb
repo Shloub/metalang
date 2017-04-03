@@ -24,7 +24,6 @@ begin
   end loop;
   return prod;
 end;
-
 type b is Array (Integer range <>) of Integer;
 type b_PTR is access b;
 type c is Array (Integer range <>) of Boolean;
@@ -70,7 +69,6 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
 
-  nth : Integer;
 begin
   show(10, 999999);
 end;

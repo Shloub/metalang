@@ -59,7 +59,6 @@ begin
     return go0(tab, m, b);
   end if;
 end;
-
 function plus_petit0(tab : in c_PTR; len : in Integer) return Integer is
 begin
   return go0(tab, 0, len);

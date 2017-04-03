@@ -24,7 +24,6 @@ begin
     return b;
   end if;
 end;
-
 function min2_0(a : in Integer; b : in Integer) return Integer is
 begin
   if a < b
@@ -34,7 +33,6 @@ begin
     return b;
   end if;
 end;
-
 function pgcd(a : in Integer; b : in Integer) return Integer is
   reste : Integer;
   d : Integer;

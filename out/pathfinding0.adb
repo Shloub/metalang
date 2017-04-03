@@ -38,7 +38,6 @@ begin
     return b;
   end if;
 end;
-
 type k is Array (Integer range <>) of Integer;
 type k_PTR is access k;
 type l is Array (Integer range <>) of k_PTR;
@@ -83,7 +82,6 @@ begin
     end if;
   end if;
 end;
-
 function pathfind(tab : in o_PTR; x : in Integer; y : in Integer) return Integer is
   tmp : k_PTR;
   cache : l_PTR;

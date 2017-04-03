@@ -30,7 +30,6 @@ begin
     return b;
   end if;
 end;
-
 type c is Array (Integer range <>) of Integer;
 type c_PTR is access c;
 type d is Array (Integer range <>) of c_PTR;

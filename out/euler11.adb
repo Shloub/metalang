@@ -34,7 +34,6 @@ begin
     return b;
   end if;
 end;
-
 type s is Array (Integer range <>) of Integer;
 type s_PTR is access s;
 type u is Array (Integer range <>) of s_PTR;
@@ -53,8 +52,6 @@ begin
     end if;
   end if;
 end;
-
-
 type tuple_int_int;
 type tuple_int_int_PTR is access tuple_int_int;
 type tuple_int_int is record

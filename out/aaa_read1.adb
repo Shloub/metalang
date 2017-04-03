@@ -21,6 +21,7 @@ begin
     Get(C);
   end loop;
 end;
+
 type b is Array (Integer range <>) of Character;
 type b_PTR is access b;
 

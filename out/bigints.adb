@@ -29,7 +29,6 @@ begin
     Get(C);
   end loop;
 end;
-
 function max2_0(a : in Integer; b : in Integer) return Integer is
 begin
   if a > b
@@ -39,7 +38,6 @@ begin
     return b;
   end if;
 end;
-
 function min2_0(a : in Integer; b : in Integer) return Integer is
 begin
   if a < b
@@ -49,10 +47,8 @@ begin
     return b;
   end if;
 end;
-
 type r is Array (Integer range <>) of Integer;
 type r_PTR is access r;
-
 type bigint;
 type bigint_PTR is access bigint;
 type bigint is record
@@ -60,7 +56,6 @@ type bigint is record
   bigint_len : Integer;
   bigint_chiffres : r_PTR;
 end record;
-
 function read_bigint(len : in Integer) return bigint_PTR is
   tmp : Integer;
   e : bigint_PTR;
@@ -83,7 +78,6 @@ begin
   e.bigint_chiffres := chiffres;
   return e;
 end;
-
 procedure print_bigint(a : in bigint_PTR) is
 begin
   if not a.bigint_sign
@@ -94,7 +88,6 @@ begin
     PInt(a.bigint_chiffres(a.bigint_len - 1 - i));
   end loop;
 end;
-
 function bigint_eq(a : in bigint_PTR; b : in bigint_PTR) return Boolean is
 begin
   -- Renvoie vrai si a = b 
@@ -117,7 +110,6 @@ begin
     end if;
   end if;
 end;
-
 function bigint_gt(a : in bigint_PTR; b : in bigint_PTR) return Boolean is
   j : Integer;
 begin
@@ -157,12 +149,10 @@ begin
     end if;
   end if;
 end;
-
 function bigint_lt(a : in bigint_PTR; b : in bigint_PTR) return Boolean is
 begin
   return not bigint_gt(a, b);
 end;
-
 function add_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
   tmp : Integer;
   retenue : Integer;
@@ -197,7 +187,6 @@ begin
   f.bigint_chiffres := chiffres;
   return f;
 end;
-
 function sub_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
   tmp : Integer;
   retenue : Integer;
@@ -236,7 +225,6 @@ begin
   g.bigint_chiffres := chiffres;
   return g;
 end;
-
 function neg_bigint(a : in bigint_PTR) return bigint_PTR is
   h : bigint_PTR;
 begin
@@ -246,7 +234,6 @@ begin
   h.bigint_chiffres := a.bigint_chiffres;
   return h;
 end;
-
 function add_bigint(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
 begin
   if a.bigint_sign = b.bigint_sign
@@ -280,12 +267,10 @@ begin
     end if;
   end if;
 end;
-
 function sub_bigint(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
 begin
   return add_bigint(a, neg_bigint(b));
 end;
-
 function mul_bigint_cp(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
   retenue : Integer;
   m : bigint_PTR;
@@ -324,7 +309,6 @@ begin
   m.bigint_chiffres := chiffres;
   return m;
 end;
-
 function bigint_premiers_chiffres(a : in bigint_PTR; i : in Integer) return bigint_PTR is
   o : bigint_PTR;
   len : Integer;
@@ -339,7 +323,6 @@ begin
   o.bigint_chiffres := a.bigint_chiffres;
   return o;
 end;
-
 function bigint_shift(a : in bigint_PTR; i : in Integer) return bigint_PTR is
   p : bigint_PTR;
   chiffres : r_PTR;
@@ -359,7 +342,6 @@ begin
   p.bigint_chiffres := chiffres;
   return p;
 end;
-
 function mul_bigint(aa : in bigint_PTR; bb : in bigint_PTR) return bigint_PTR is
   split : Integer;
   d : bigint_PTR;
@@ -404,7 +386,6 @@ begin
   -- ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
   
 end;
-
 --
 --Division,
 --Modulo
@@ -422,7 +403,6 @@ begin
   end loop;
   return out0;
 end;
-
 function bigint_of_int(u : in Integer) return bigint_PTR is
   t : r_PTR;
   size : Integer;
@@ -449,7 +429,6 @@ begin
   q.bigint_chiffres := t;
   return q;
 end;
-
 function fact_bigint(v : in bigint_PTR) return bigint_PTR is
   out0 : bigint_PTR;
   one : bigint_PTR;
@@ -464,7 +443,6 @@ begin
   end loop;
   return out0;
 end;
-
 function sum_chiffres_bigint(a : in bigint_PTR) return Integer is
   out0 : Integer;
 begin
@@ -474,7 +452,6 @@ begin
   end loop;
   return out0;
 end;
-
 -- http://projecteuler.net/problem=20 
 
 function euler20 return Integer is
@@ -486,7 +463,6 @@ begin
   a := fact_bigint(a);
   return sum_chiffres_bigint(a);
 end;
-
 function bigint_exp(a : in bigint_PTR; b : in Integer) return bigint_PTR is
 begin
   if b = 1
@@ -501,7 +477,6 @@ begin
     end if;
   end if;
 end;
-
 function bigint_exp_10chiffres(w : in bigint_PTR; b : in Integer) return bigint_PTR is
   a : bigint_PTR;
 begin
@@ -519,7 +494,6 @@ begin
     end if;
   end if;
 end;
-
 procedure euler48 is
   sum : bigint_PTR;
   ibeib : bigint_PTR;
@@ -538,7 +512,6 @@ begin
   print_bigint(sum);
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
-
 function euler16 return Integer is
   a : bigint_PTR;
 begin
@@ -548,7 +521,6 @@ begin
   
   return sum_chiffres_bigint(a);
 end;
-
 function euler25 return Integer is
   i : Integer;
   c : bigint_PTR;
@@ -568,7 +540,6 @@ begin
   end loop;
   return i;
 end;
-
 type x is Array (Integer range <>) of bigint_PTR;
 type x_PTR is access x;
 function euler29 return Integer is

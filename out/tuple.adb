@@ -14,14 +14,12 @@ procedure PInt(i : in Integer) is
 begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
-
 type tuple_int_int;
 type tuple_int_int_PTR is access tuple_int_int;
 type tuple_int_int is record
   tuple_int_int_field_0 : Integer;
   tuple_int_int_field_1 : Integer;
 end record;
-
 function f(tuple0 : in tuple_int_int_PTR) return tuple_int_int_PTR is
   d : tuple_int_int_PTR;
   c : tuple_int_int_PTR;

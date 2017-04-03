@@ -34,7 +34,6 @@ begin
   end loop;
   return n;
 end;
-
 function isPrime(d : in Integer; primes : in c_PTR; len : in Integer) return Boolean is
   n : Integer;
   i : Integer;
@@ -54,7 +53,6 @@ begin
   end loop;
   return TRUE;
 end;
-
 function test(a : in Integer; b : in Integer; primes : in c_PTR; len : in Integer) return Integer is
   j : Integer;
 begin
