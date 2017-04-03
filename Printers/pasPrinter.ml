@@ -398,20 +398,6 @@ begin
 end;
 " else "")
     (print_list (fun f g -> g f) sep_nl) (List.rev items)
-      (*
-(print_list
-         (fun f item -> match item with
-            | Prog.Comment s -> Format.fprintf f "{%s}" s
-            | Prog.DeclarFun (var, t, li, instrs, _opt) -> self#print_fun f var t li instrs;
-            | Prog.Macro (name, t, params, code) ->
-              macros <- StringMap.add
-                  name (t, params, code)
-                  macros
-            | Prog.Unquote _ -> assert false
-            | Prog.DeclareType (name, t) -> self#decl_type f name t
-         ) sep_nl)
-      prog.Prog.funs
-*)
       (print_option (fun f main ->
            let pr, declared_types = declare_types declared_types f main in
            Format.fprintf f "%a%a@\nbegin@\n@[<v 2>  %a@]@\nend" pr ()
