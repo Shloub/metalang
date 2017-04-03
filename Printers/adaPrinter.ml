@@ -261,21 +261,31 @@ let declarevars declared_types typerEnv f instrs =
           []
       in Format.fprintf f "@\n  @[<v>%a@]" (print_list (fun p f -> f p ()) sep_nl) li
 
+let out_declare_type typerEnv f a b c =
+  List.iter (fun (name, t, name2, decl, assoc) ->
+      Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name (ptype decl typerEnv) t name2 name;
+    ) (List.rev c);
+  a, b
+    
+let declare_type typerEnv declared_types_assoc declared_types f t =
+  let a, b, c = pas_declare_type (fun n -> n ^ "_PTR") declared_types_assoc declared_types [] t
+  in out_declare_type typerEnv f a b c
+
+let declare_types typerEnv declared_types_assoc declared_types f instrs =
+  let a, b, c = pas_declare_types (fun n -> n ^ "_PTR") instrs declared_types_assoc declared_types
+  in out_declare_type typerEnv f a b c
       
 class adaPrinter = object(self)
 
   val mutable recursives_definitions = StringSet.empty
   method setRecursive b = recursives_definitions <- b
-  method is_rec funname = StringSet.mem funname recursives_definitions
   val mutable typerEnv : Typer.env = Typer.empty
   method setTyperEnv t = typerEnv <- t
   val mutable macros = StringMap.empty
                          
   val mutable declared_types_assoc = StringMap.empty
   val mutable declared_types : string TypeMap.t = TypeMap.empty
-  val mutable progname = ""
 
-  method lang () = "ada"
   method comment f s =
     let lic = String.split s '\n' in
     print_list
@@ -393,14 +403,10 @@ end;
                             else None, (name, t) ) li
     in
     let li_assoc = List.filter_map (fun x -> x) li_assoc in
-    let declared_types_assoc', declared_types' = self#declare_type declared_types_assoc declared_types f t in
-    declared_types <- declared_types';
-    declared_types_assoc <- declared_types_assoc';
-    let declared_types_assoc', declared_types' =self#declare_types f instrs in
-    declared_types <- declared_types';
-    declared_types_assoc <- declared_types_assoc';
+    let declared_types_assoc', declared_types' = declare_type typerEnv declared_types_assoc declared_types f t in
+    let declared_types_assoc', declared_types' = declare_types typerEnv declared_types_assoc' declared_types' f instrs in
     let declared_types_assoc', declared_types' =
-      List.fold_left (fun (declared_types_assoc, declared_types) (_, t) -> self#declare_type declared_types_assoc declared_types f t) (declared_types_assoc, declared_types) li in
+      List.fold_left (fun (declared_types_assoc, declared_types) (_, t) -> declare_type typerEnv declared_types_assoc declared_types f t) (declared_types_assoc', declared_types') li in
     declared_types <- declared_types';
     declared_types_assoc <- declared_types_assoc';
 
@@ -415,7 +421,7 @@ end;
       self#print_body instrs
 
   method decl_type f name t =
-    let declared_types_assoc', declared_types' = self#declare_type declared_types_assoc declared_types f t in
+    let declared_types_assoc', declared_types' = declare_type typerEnv declared_types_assoc declared_types f t in
     declared_types <- declared_types';
     declared_types_assoc <- declared_types_assoc';  
     match (Type.unfix t) with
@@ -434,27 +440,10 @@ end;
     | _ -> assert false
 
   method main f main =
-    let declared_types_assoc', declared_types' = self#declare_types f main in
+    let declared_types_assoc', declared_types' = declare_types typerEnv declared_types_assoc declared_types f main in
     declared_types <- declared_types';
     declared_types_assoc <- declared_types_assoc';
     self#print_body f main
-
-  method declare_type declared_types_assoc declared_types f t =
-    let a, b, c = pas_declare_type (fun n -> n ^ "_PTR") declared_types_assoc declared_types [] t
-    in self#out_declare_type f a b c
-
-  method declare_types f instrs =
-    let a, b, c = pas_declare_types (fun n -> n ^ "_PTR") instrs declared_types_assoc declared_types
-    in self#out_declare_type f a b c
-    
-  method out_declare_type f a b c =
-    List.iter (fun (name, t, name2, decl, assoc) ->
-        Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name (ptype decl typerEnv) t name2 name;
-      ) (List.rev c);
-    a, b
-    (*
-    declared_types_assoc <- a;
-    declared_types <- b; b *)
 
   method print_body f instrs =
     let instructions f li =
@@ -466,7 +455,7 @@ end;
       else
         let macros = StringMap.map (fun (ty, params, li) ->
             ty, params,
-            try List.assoc (self#lang ()) li
+            try List.assoc "ada" li
             with Not_found -> List.assoc "" li) macros in
         print_list (fun f i ->
             (print_instr macros declared_types declared_types_assoc i).p f ()
