@@ -30,7 +30,6 @@ begin
     end if;
   end if;
 end;
-
 procedure testB(a : in Boolean; b : in Boolean) is
 begin
   if a
@@ -45,7 +44,6 @@ begin
     end if;
   end if;
 end;
-
 procedure testC(a : in Boolean; b : in Boolean) is
 begin
   if a
@@ -60,7 +58,6 @@ begin
     PString(new char_array'( To_C("C")));
   end if;
 end;
-
 procedure testD(a : in Boolean; b : in Boolean) is
 begin
   if a
@@ -76,7 +73,6 @@ begin
     PString(new char_array'( To_C("D")));
   end if;
 end;
-
 procedure testE(a : in Boolean; b : in Boolean) is
 begin
   if a
@@ -95,7 +91,6 @@ begin
     PString(new char_array'( To_C("E")));
   end if;
 end;
-
 procedure test(a : in Boolean; b : in Boolean) is
 begin
   testD(a, b);

@@ -24,7 +24,6 @@ begin
     return 3 * n + 1;
   end if;
 end;
-
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 function find(n : in Integer; m : in a_PTR) return Integer is

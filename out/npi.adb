@@ -21,12 +21,10 @@ begin
     Get(C);
   end loop;
 end;
-
 function is_number(c : in Character) return Boolean is
 begin
   return Character'Pos(c) <= Character'Pos('9') and then Character'Pos(c) >= Character'Pos('0');
 end;
-
 --
 --Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 --

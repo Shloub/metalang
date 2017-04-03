@@ -11,6 +11,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 
+
 begin
   PString(new char_array'( To_C("Hello World" & Character'Val(10))));
 end;

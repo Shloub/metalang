@@ -15,6 +15,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
 
+
   a : Integer;
 begin
   PString(new char_array'( To_C("Hello World")));

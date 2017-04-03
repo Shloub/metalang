@@ -14,7 +14,6 @@ begin
   end loop;
   return 0;
 end;
-
 function bar return Integer is
   a : Integer;
 begin

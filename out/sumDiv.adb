@@ -21,13 +21,11 @@ begin
   -- test 2 
   
 end;
-
 procedure foo2 is
 begin
   NULL;
   
 end;
-
 procedure foo3 is
 begin
   if 1 = 1
@@ -36,7 +34,6 @@ begin
     
   end if;
 end;
-
 function sumdiv(n : in Integer) return Integer is
   out0 : Integer;
 begin

@@ -25,8 +25,6 @@ begin
     Get(C);
   end loop;
 end;
-
-
 function is_triangular(n : in Integer) return Boolean is
   a : Integer;
 begin
@@ -38,7 +36,6 @@ begin
   a := Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float(n * 2))));
   return a * (a + 1) = n * 2;
 end;
-
 function score return Integer is
   sum : Integer;
   len : Integer;

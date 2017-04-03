@@ -24,7 +24,6 @@ begin
     return b;
   end if;
 end;
-
 --
 --
 --(a + b * 10 + c * 100) * (d + e * 10 + f * 100) =

@@ -29,12 +29,11 @@ begin
     Get(C);
   end loop;
 end;
-
-
 --
 --Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 --read int, read char et skip
 --
+
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 type b is Array (Integer range <>) of Character;

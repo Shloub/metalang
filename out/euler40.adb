@@ -24,7 +24,6 @@ begin
   end loop;
   return o;
 end;
-
 type c is Array (Integer range <>) of Integer;
 type c_PTR is access c;
 function e(t : in c_PTR; b : in Integer) return Integer is
@@ -50,7 +49,6 @@ end;
   t : c_PTR;
   puiss : Integer;
   out0 : Integer;
-  n : Integer;
 begin
   t := new c (0..9);
   for i in integer range 0..8 loop

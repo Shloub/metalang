@@ -47,9 +47,6 @@ end;
   b : Integer;
   a : Integer;
 begin
-  a := 0;
-  b := 0;
-  i := 0;
   Get(a);
   SkipSpaces;
   Get(b);

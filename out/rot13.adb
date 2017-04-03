@@ -21,11 +21,10 @@ begin
     Get(C);
   end loop;
 end;
-
-
 --
 --Ce test effectue un rot13 sur une chaine lue en entrée
 --
+
 type a is Array (Integer range <>) of Character;
 type a_PTR is access a;
 

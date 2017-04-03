@@ -35,7 +35,6 @@ type e is Array (Integer range <>) of Integer;
 type e_PTR is access e;
 type f is Array (Integer range <>) of e_PTR;
 type f_PTR is access f;
-
 type gamestate;
 type gamestate_PTR is access gamestate;
 type gamestate is record
@@ -44,9 +43,7 @@ type gamestate is record
   note : Integer;
   ended : Boolean;
 end record;
-
 -- Un Mouvement 
-
 
 type move;
 type move_PTR is access move;
@@ -54,7 +51,6 @@ type move is record
   x : Integer;
   y : Integer;
 end record;
-
 -- On affiche l'état 
 
 procedure print_state(g : in gamestate_PTR) is
@@ -82,7 +78,6 @@ begin
   end loop;
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
-
 -- On dit qui gagne (info stoquées dans g.ended et g.note ) 
 
 procedure eval0(g : in gamestate_PTR) is
@@ -157,7 +152,6 @@ begin
     end if;
   end if;
 end;
-
 -- On applique un mouvement 
 
 procedure apply_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) is
@@ -171,34 +165,28 @@ begin
   g.cases(x)(y) := player;
   g.firstToPlay := not g.firstToPlay;
 end;
-
 procedure apply_move(m : in move_PTR; g : in gamestate_PTR) is
 begin
   apply_move_xy(m.x, m.y, g);
 end;
-
 procedure cancel_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) is
 begin
   g.cases(x)(y) := 0;
   g.firstToPlay := not g.firstToPlay;
   g.ended := FALSE;
 end;
-
 procedure cancel_move(m : in move_PTR; g : in gamestate_PTR) is
 begin
   cancel_move_xy(m.x, m.y, g);
 end;
-
 function can_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) return Boolean is
 begin
   return g.cases(x)(y) = 0;
 end;
-
 function can_move(m : in move_PTR; g : in gamestate_PTR) return Boolean is
 begin
   return can_move_xy(m.x, m.y, g);
 end;
-
 --
 --Un minimax classique, renvoie la note du plateau
 --
@@ -235,7 +223,6 @@ begin
   end loop;
   return maxNote;
 end;
-
 --
 --Renvoie le coup de l'IA
 --
@@ -276,7 +263,6 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
   return minMove;
 end;
-
 function init0 return gamestate_PTR is
   tab : e_PTR;
   cases : f_PTR;
@@ -297,7 +283,6 @@ begin
   a.ended := FALSE;
   return a;
 end;
-
 function read_move return move_PTR is
   y : Integer;
   x : Integer;

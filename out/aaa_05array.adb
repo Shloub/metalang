@@ -20,7 +20,6 @@ function id(b : in c_PTR) return c_PTR is
 begin
   return b;
 end;
-
 procedure g(t : in c_PTR; index : in Integer) is
 begin
   t(index) := FALSE;

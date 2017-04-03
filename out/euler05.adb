@@ -24,7 +24,6 @@ begin
     return b;
   end if;
 end;
-
 type e is Array (Integer range <>) of Integer;
 type e_PTR is access e;
 function primesfactors(c : in Integer) return e_PTR is
@@ -54,7 +53,6 @@ end;
   t : e_PTR;
   product : Integer;
   o : e_PTR;
-  n : Integer;
   lim : Integer;
 begin
   lim := 20;

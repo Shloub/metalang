@@ -15,6 +15,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
 
+
   one_to_twenty : Integer;
   one_to_thirty : Integer;
   one_to_ten : Integer;

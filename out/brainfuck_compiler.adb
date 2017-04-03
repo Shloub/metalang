@@ -10,12 +10,12 @@ procedure PChar(c : in Character) is
 begin
   Character'Write (Text_Streams.Stream (Current_Output), c);
 end;
-
 --
 --Ce test permet de tester les macros
 --C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 --et qui produit les macros metalang correspondante
 --
+
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 

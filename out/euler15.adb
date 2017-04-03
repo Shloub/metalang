@@ -14,6 +14,7 @@ procedure PInt(i : in Integer) is
 begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
 end;
+
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 type b is Array (Integer range <>) of a_PTR;

@@ -51,7 +51,6 @@ begin
     end if;
   end if;
 end;
-
 function pathfind(tab : in a_PTR; len : in Integer) return Integer is
   cache : a_PTR;
 begin

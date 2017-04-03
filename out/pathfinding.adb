@@ -30,7 +30,6 @@ begin
     return b;
   end if;
 end;
-
 type e is Array (Integer range <>) of Integer;
 type e_PTR is access e;
 type f is Array (Integer range <>) of e_PTR;
@@ -75,7 +74,6 @@ begin
     end if;
   end if;
 end;
-
 function pathfind(tab : in h_PTR; x : in Integer; y : in Integer) return Integer is
   tmp : e_PTR;
   cache : f_PTR;
@@ -98,8 +96,6 @@ end;
   tab : h_PTR;
   result : Integer;
 begin
-  x := 0;
-  y := 0;
   Get(x);
   SkipSpaces;
   Get(y);

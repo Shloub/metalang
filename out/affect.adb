@@ -25,7 +25,6 @@ end;
 --Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 --
 
-
 type toto;
 type toto_PTR is access toto;
 type toto is record
@@ -33,7 +32,6 @@ type toto is record
   bar : Integer;
   blah : Integer;
 end record;
-
 function mktoto(v1 : in Integer) return toto_PTR is
   t : toto_PTR;
 begin
@@ -43,7 +41,6 @@ begin
   t.blah := v1;
   return t;
 end;
-
 function mktoto2(v1 : in Integer) return toto_PTR is
   t : toto_PTR;
 begin
@@ -53,7 +50,6 @@ begin
   t.blah := v1 + 1;
   return t;
 end;
-
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 function result(t_0 : in toto_PTR; t2_0 : in toto_PTR) return Integer is

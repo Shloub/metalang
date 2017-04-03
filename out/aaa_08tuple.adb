@@ -25,15 +25,12 @@ begin
     Get(C);
   end loop;
 end;
-
 type tuple_int_int;
 type tuple_int_int_PTR is access tuple_int_int;
 type tuple_int_int is record
   tuple_int_int_field_0 : Integer;
   tuple_int_int_field_1 : Integer;
 end record;
-
-
 type toto;
 type toto_PTR is access toto;
 type toto is record

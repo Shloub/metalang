@@ -25,8 +25,6 @@ begin
     Get(C);
   end loop;
 end;
-
-
 function position_alphabet(c : in Character) return Integer is
   i : Integer;
 begin
@@ -43,12 +41,10 @@ begin
     end if;
   end if;
 end;
-
 function of_position_alphabet(c : in Integer) return Character is
 begin
   return Character'Val(c + Character'Pos('a'));
 end;
-
 type a is Array (Integer range <>) of Character;
 type a_PTR is access a;
 procedure crypte(taille_cle : in Integer; cle : in a_PTR; taille : in Integer; message : in a_PTR) is

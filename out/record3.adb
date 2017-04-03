@@ -21,7 +21,6 @@ begin
     Get(C);
   end loop;
 end;
-
 type toto;
 type toto_PTR is access toto;
 type toto is record
@@ -29,7 +28,6 @@ type toto is record
   bar : Integer;
   blah : Integer;
 end record;
-
 function mktoto(v1 : in Integer) return toto_PTR is
   t : toto_PTR;
 begin
@@ -39,7 +37,6 @@ begin
   t.blah := 0;
   return t;
 end;
-
 type a is Array (Integer range <>) of toto_PTR;
 type a_PTR is access a;
 function result(t : in a_PTR; len : in Integer) return Integer is

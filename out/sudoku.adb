@@ -41,7 +41,6 @@ begin
   end loop;
   return out0;
 end;
-
 -- affiche un sudoku 
 
 procedure print_sudoku(sudoku0 : in a_PTR) is
@@ -63,7 +62,6 @@ begin
   end loop;
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
-
 -- dit si les variables sont toutes différentes 
 
 -- dit si les variables sont toutes différentes 
@@ -80,7 +78,6 @@ begin
   end loop;
   return TRUE;
 end;
-
 -- dit si il y a une erreur dans le sudoku 
 
 function sudoku_error(s : in a_PTR) return Boolean is
@@ -102,7 +99,6 @@ begin
   end loop;
   return (out1 or else out2) or else out3;
 end;
-
 -- résout le sudoku
 
 function solve(sudoku0 : in a_PTR) return Boolean is

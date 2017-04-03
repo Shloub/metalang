@@ -36,7 +36,6 @@ begin
   end loop;
   return o;
 end;
-
 procedure bubblesort(tab : in a_PTR; len : in Integer) is
   tmp : Integer;
 begin
@@ -51,7 +50,6 @@ begin
     end loop;
   end loop;
 end;
-
 procedure qsort0(tab : in a_PTR; len : in Integer; b : in Integer; c : in Integer) is
   tmp : Integer;
   j0 : Integer;
@@ -101,8 +99,6 @@ end;
   tab2 : a_PTR;
   tab : a_PTR;
   len : Integer;
-  j : Integer;
-  i : Integer;
 begin
   len := 2;
   Get(len);
