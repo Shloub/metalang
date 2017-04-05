@@ -37,6 +37,7 @@
                                        max0))])
     (a 0 current max0))))
 )
+
 (define main
   (let ([len 0])
   ((lambda (b) 

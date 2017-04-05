@@ -66,14 +66,11 @@ La suite de fibonaci
   
   public static void Main(String[] args)
   {
-    int a = 0;
-    int b = 0;
-    int i = 0;
-    a = readInt();
+    int a = readInt();
     stdin_sep();
-    b = readInt();
+    int b = readInt();
     stdin_sep();
-    i = readInt();
+    int i = readInt();
     Console.Write(fibo0(a, b, i));
   }
   

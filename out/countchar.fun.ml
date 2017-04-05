@@ -8,6 +8,7 @@ let nth tab tofind len =
          else a (i + 1) out0
     else out0 in
     a 0 out0
+
 let main =
   let len = 0 in
   Scanf.scanf "%d"

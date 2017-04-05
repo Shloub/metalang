@@ -88,8 +88,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
   
   public static void Main(String[] args)
   {
-    int len = 0;
-    len = readInt();
+    int len = readInt();
     stdin_sep();
     int[][] tab = new int[len][];
     for (int i = 0; i < len; i++)
@@ -97,8 +96,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
         int[] tab2 = new int[i + 1];
         for (int j = 0; j <= i; j++)
         {
-            int tmp = 0;
-            tmp = readInt();
+            int tmp = readInt();
             stdin_sep();
             tab2[j] = tmp;
         }

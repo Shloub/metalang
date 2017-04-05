@@ -5,8 +5,10 @@ let position_alphabet c =
   else if i <= (int_of_char ('z')) && i >= (int_of_char ('a'))
        then i - (int_of_char ('a'))
        else - 1
+
 let of_position_alphabet c =
   (char_of_int (c + (int_of_char ('a'))))
+
 let crypte taille_cle cle taille message =
   let rec a i =
     if i <= taille - 1
@@ -19,6 +21,7 @@ let crypte taille_cle cle taille message =
     else a (i + 1)
     else () in
     a 0
+
 let main =
   Scanf.scanf "%d"
   (fun taille_cle -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());

@@ -46,13 +46,11 @@ def int find (int len, array<array<int>> tab)
 end
 
 main
-  def int len = 0
-  read int len
+  def read int len
   skip
   def array<array<int>> tab[len] with i do
                                           def array<int> tab2[i + 1] with j do
-                                                                              def int tmp = 0
-                                                                              read int tmp
+                                                                              def read int tmp
                                                                               skip
                                                                               return tmp
                                           end

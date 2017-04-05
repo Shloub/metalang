@@ -5,6 +5,7 @@ let is_triangular n =
     *)
   let a = ((int_of_float (sqrt (float_of_int ( n * 2))))) in
   a * (a + 1) = n * 2
+
 let score () =
   ( Scanf.scanf "%[\n \010]" (fun _ -> ());
     Scanf.scanf "%d"
@@ -20,6 +21,7 @@ let score () =
                          then 1
                          else 0 in
                     b 1 sum)))
+
 let main =
   let rec d i =
     if i <= 55

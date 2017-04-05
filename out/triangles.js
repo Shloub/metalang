@@ -62,8 +62,7 @@ function find(len, tab){
     }
     return find0(len, tab, tab2, 0, 0);
 }
-var len = 0;
-len = read_int_();
+var len = read_int_();
 stdinsep();
 var tab = new Array(len);
 for (var i = 0; i < len; i++)
@@ -71,8 +70,7 @@ for (var i = 0; i < len; i++)
     var tab2 = new Array(i + 1);
     for (var j = 0; j <= i; j++)
     {
-        var tmp = 0;
-        tmp = read_int_();
+        var tmp = read_int_();
         stdinsep();
         tab2[j] = tmp;
     }

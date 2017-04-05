@@ -17,6 +17,7 @@ let eratostene t max0 =
          else c (i + 1) n
     else n in
     c 2 n
+
 let main =
   let maximumprimes = 1000001 in
   let era = Array.init maximumprimes (fun j -> j) in

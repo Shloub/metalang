@@ -62,11 +62,9 @@ def int pathfind (array<array<char>> tab, int x, int y)
 end
 
 main
-  def int x = 0
-  def int y = 0
-  read int x
+  def read int x
   skip
-  read int y
+  def read int y
   skip
   def array<array<char>> tab[y] with i do
                                          def array<char> tab2[x] with j do

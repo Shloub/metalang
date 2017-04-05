@@ -15,6 +15,7 @@ let eratostene t max0 =
          else c (i + 1) n
     else n in
     c 2 n
+
 let fillPrimesFactors t n primes nprimes =
   let rec f i n =
     if i <= nprimes - 1
@@ -30,6 +31,7 @@ let fillPrimesFactors t n primes nprimes =
       g n
     else n in
     f 0 n
+
 let find ndiv2 =
   let maximumprimes = 110 in
   let era = Array.init maximumprimes (fun j -> j) in
@@ -63,6 +65,7 @@ let find ndiv2 =
            else 0 in
            p 1 in
     h 2 l
+
 let main =
   Printf.printf "%d\n" (find 500)
 

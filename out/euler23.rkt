@@ -19,6 +19,7 @@
                             n))])
     (a 2 n)))
 )
+
 (define (fillPrimesFactors t0 n primes nprimes)
   (letrec ([c (lambda (i n) (if (<= i (- nprimes 1))
                             (let ([d (vector-ref primes i)])
@@ -35,6 +36,7 @@
                             n))])
     (c 0 n))
 )
+
 (define (sumdivaux2 t0 n i)
   (letrec ([f (lambda (i) (if (and (< i n) (eq? (vector-ref t0 i) 0))
                           (let ([i (+ i 1)])
@@ -42,6 +44,7 @@
                           i))])
     (f i))
 )
+
 (define (sumdivaux t0 n i)
   (if (> i n)
   1
@@ -58,12 +61,14 @@
                                  (* (+ out0 1) o)))])
     (h 1 out0 p))))))))
 )
+
 (define (sumdiv nprimes primes n)
   (let ([t0 (build-vector (+ n 1) (lambda (i) 
                                     0))])
   (let ([max0 (fillPrimesFactors t0 n primes nprimes)])
   (sumdivaux t0 max0 0)))
 )
+
 (define main
   (let ([maximumprimes 30001])
   (let ([era (build-vector maximumprimes (lambda (s) 

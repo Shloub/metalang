@@ -35,14 +35,11 @@ sub fibo0{
   }
   return $out0;
 }
-my $a = 0;
-my $b = 0;
-my $i = 0;
-$a = readint();
+my $a = readint();
 readspaces();
-$b = readint();
+my $b = readint();
 readspaces();
-$i = readint();
+my $i = readint();
 print fibo0($a, $b, $i);
 
 

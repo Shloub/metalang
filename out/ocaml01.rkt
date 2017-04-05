@@ -7,6 +7,7 @@
                           0))])
     (b 0))
 )
+
 (define (bar _)
   (letrec ([c (lambda (i) (if (<= i 10)
                           (let ([a 0])
@@ -14,6 +15,7 @@
                           0))])
     (c 0))
 )
+
 (define main
   '()
 )

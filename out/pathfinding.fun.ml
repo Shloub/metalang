@@ -15,9 +15,11 @@ let rec pathfind_aux cache tab x y posX posY =
                         let out0 = 1 + (min ((min ((min (val1) (val2))) (val3))) (val4)) in
                         ( cache.(posY).(posX) <- out0;
                           out0))
+
 let pathfind tab x y =
   let cache = Array.init y (fun i -> Array.init x (fun j -> - 1)) in
   pathfind_aux cache tab x y 0 0
+
 let main =
   Scanf.scanf "%d"
   (fun x -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());

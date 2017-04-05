@@ -12,6 +12,7 @@ let primesfactors n =
     else ( tab.(n) <- tab.(n) + 1;
            tab) in
     c d n
+
 let main =
   let lim = 20 in
   let o = Array.init (lim + 1) (fun m -> 0) in

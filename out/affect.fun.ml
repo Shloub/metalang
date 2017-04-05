@@ -1,12 +1,15 @@
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;}
+
 let mktoto v1 =
   {foo=v1;
    bar=v1;
    blah=v1}
+
 let mktoto2 v1 =
   {foo=v1 + 3;
    bar=v1 + 2;
    blah=v1 + 1}
+
 let result t_ t2_ =
   let t = t_ in
   let t2 = t2_ in
@@ -24,6 +27,7 @@ let result t_ t2_ =
     let cache0 = cache1 in
     let cache2 = cache0 in
     t.foo + t.blah * t.bar + t.bar * t.foo)
+
 let main =
   let t = mktoto 4 in
   let t2 = mktoto 5 in

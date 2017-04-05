@@ -49,9 +49,7 @@ int pathfind(char** tab, int x, int y) {
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int i, j;
-  int x = 0;
-  int y = 0;
+  int i, j, y, x;
   scanf("%d %d ", &x, &y);
   char* *tab = calloc(y, sizeof(char*));
   for (i = 0; i < y; i++)

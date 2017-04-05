@@ -31,6 +31,7 @@
 (define (is_number c)
   (and (<= (char->integer c) (char->integer #\9)) (>= (char->integer c) (char->integer #\0)))
 )
+
 (define (npi0 str len)
   (let ([stack (build-vector len (lambda (i) 
                                    0))])
@@ -63,6 +64,7 @@
                                         (vector-ref stack 0)))])
     (a ptrStack ptrStr)))))
 )
+
 (define main
   (let ([len 0])
   ((lambda (d) 

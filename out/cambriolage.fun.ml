@@ -25,6 +25,7 @@ let nbPassePartout n passepartout m serrures =
            else 0 in
       d 0 max_ancient_pp max_recent_pp in
     c 0 max_ancient max_recent
+
 let main =
   Scanf.scanf "%d"
   (fun n -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());

@@ -43,11 +43,11 @@ on le retrouve ici : http://projecteuler.net/problem=18
   }
   public static void main(String args[])
   {
-    int len = 0;
+    int len;
     if (scanner.hasNext("^-")) {
       scanner.next("^-");
-      len = -scanner.nextInt();
-    }else{
+      len = scanner.nextInt();
+    } else {
       len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
@@ -57,11 +57,11 @@ on le retrouve ici : http://projecteuler.net/problem=18
         int[] tab2 = new int[i + 1];
         for (int j = 0; j <= i; j++)
         {
-            int tmp = 0;
+            int tmp;
             if (scanner.hasNext("^-")) {
               scanner.next("^-");
-              tmp = -scanner.nextInt();
-            }else{
+              tmp = scanner.nextInt();
+            } else {
               tmp = scanner.nextInt();
             }
             scanner.findWithinHorizon("[\n\r ]*", 1);

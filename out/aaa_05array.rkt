@@ -12,9 +12,11 @@
 (define (id b)
   b
 )
+
 (define (g t0 index)
   (vector-set! t0 index #f)
 )
+
 (define main
   (let ([j 0])
   ((lambda (internal_env) (apply (lambda (j a) 

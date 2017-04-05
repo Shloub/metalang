@@ -30,9 +30,9 @@ func fibo0(a int, b int, i int) int{
 }
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  a := 0
-  b := 0
-  i := 0
+  var i int
+  var b int
+  var a int
   fmt.Fscanf(reader, "%d", &a)
   skip()
   fmt.Fscanf(reader, "%d", &b)

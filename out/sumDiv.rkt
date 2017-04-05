@@ -26,14 +26,17 @@
   ; test 2 
   '()))
 )
+
 (define (foo2 _)
   '()
 )
+
 (define (foo3 _)
   (if (eq? 1 1)
   '()
   '())
 )
+
 (define (sumdiv n)
   ; On désire renvoyer la somme des diviseurs 
   (let ([out0 0])
@@ -50,6 +53,7 @@
                                out0))])
     (b 1 out0)))
 )
+
 (define main
   ; Programme principal 
   (let ([n 0])

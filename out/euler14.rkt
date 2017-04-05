@@ -6,6 +6,7 @@
   (quotient n 2)
   (+ (* 3 n) 1))
 )
+
 (define (find0 n m)
   (if (eq? n 1)
   1
@@ -18,6 +19,7 @@
     (vector-ref m n)
     ))))
 )
+
 (define main
   (let ([m (build-vector 1000000 (lambda (j) 
                                    0))])

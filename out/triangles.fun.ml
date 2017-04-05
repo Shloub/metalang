@@ -16,9 +16,11 @@ let rec find0 len tab cache x y =
                          else out1 + tab.(y).(x) in
             ( cache.(y).(x) <- result;
               result)
+
 let find len tab =
   let tab2 = Array.init len (fun i -> Array.init (i + 1) (fun j -> 0)) in
   find0 len tab tab2 0 0
+
 let main =
   Scanf.scanf "%d"
   (fun len -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());

@@ -26,6 +26,7 @@ let palindrome2 pow2 n =
            else true in
            f 0 in
     e 1 nnum
+
 let main =
   let p = 1 in
   (fun (p, pow2) ->let sum = 0 in

@@ -15,6 +15,7 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
                     out0) in
              f 0 out0) in
     e 0 out0
+
 let main =
   let taille1 = (Scanf.scanf "%d " (fun x -> x)) in
   let taille2 = (Scanf.scanf "%d " (fun x -> x)) in

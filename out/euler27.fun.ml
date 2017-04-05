@@ -15,6 +15,7 @@ let eratostene t max0 =
          else c (i + 1) n
     else n in
     c 2 n
+
 let isPrime n primes len =
   let i = 0 in
   let n = if n < 0
@@ -28,6 +29,7 @@ let isPrime n primes len =
          e i
     else true in
     e i
+
 let test a b primes len =
   let rec f n =
     if n <= 200
@@ -37,6 +39,7 @@ let test a b primes len =
     else f (n + 1)
     else 200 in
     f 0
+
 let main =
   let maximumprimes = 1000 in
   let era = Array.init maximumprimes (fun j -> j) in

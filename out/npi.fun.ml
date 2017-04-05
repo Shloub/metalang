@@ -1,5 +1,6 @@
 let is_number c =
   (int_of_char (c)) <= (int_of_char ('9')) && (int_of_char (c)) >= (int_of_char ('0'))
+
 let npi0 str len =
   let stack = Array.init len (fun i -> 0) in
   let ptrStack = 0 in
@@ -28,6 +29,7 @@ let npi0 str len =
                    else a ptrStack ptrStr
     else stack.(0) in
     a ptrStack ptrStr
+
 let main =
   let len = 0 in
   Scanf.scanf "%d"

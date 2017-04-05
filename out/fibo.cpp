@@ -19,9 +19,7 @@ int fibo0(int a, int b, int i) {
 }
 
 int main() {
-    int a = 0;
-    int b = 0;
-    int i = 0;
+    int i, b, a;
     std::cin >> a >> b >> i >> std::noskipws;
     std::cout << fibo0(a, b, i);
 }

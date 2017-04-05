@@ -9,6 +9,7 @@
                           #f))])
     (a 0))
 )
+
 (define (find0 n t0 used nth0)
   (letrec ([b (lambda (n used) (if (not (eq? used nth0))
                                (if (divisible n t0 used)
@@ -23,6 +24,7 @@
                                (vector-ref t0 (- used 1))))])
     (b n used))
 )
+
 (define main
   (let ([n 10001])
   (let ([t0 (build-vector n (lambda (i) 

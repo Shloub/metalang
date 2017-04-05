@@ -74,11 +74,9 @@ def skip() {
   
   def main(args : Array[String])
   {
-    var x: Int = 0;
-    var y: Int = 0;
-    x = read_int();
+    var x = read_int();
     skip();
-    y = read_int();
+    var y = read_int();
     skip();
     var tab :Array[Array[Char]] = new Array[Array[Char]](y);
     for (i <- 0 to y - 1)

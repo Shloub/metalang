@@ -82,24 +82,24 @@ find len tab =
      find0 len tab tab2 0 0
 
 main =
-  do b <- read_int
+  do len <- read_int
      skip_whitespaces
-     tab <- array_init b (\ i ->
-                            array_init (i + 1) (\ j ->
-                                                  do e <- read_int
-                                                     skip_whitespaces
-                                                     return e))
-     printf "%d\n" =<< ((find b tab)::IO Int)
-     let c k =
-           if k <= b - 1
-           then let d l =
+     tab <- array_init len (\ i ->
+                              array_init (i + 1) (\ j ->
+                                                    do tmp <- read_int
+                                                       skip_whitespaces
+                                                       return tmp))
+     printf "%d\n" =<< ((find len tab)::IO Int)
+     let b k =
+           if k <= len - 1
+           then let c l =
                       if l <= k
                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab k) <*> return l)::IO Int)
-                              d (l + 1)
+                              c (l + 1)
                       else do printf "\n" :: IO ()
-                              c (k + 1) in
-                      d 0
+                              b (k + 1) in
+                      c 0
            else return () in
-           c 0
+           b 0
 
 

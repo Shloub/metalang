@@ -17,6 +17,7 @@ let eratostene t max0 =
          else a (i + 1) sum
     else sum in
     a 2 sum
+
 let main =
   let n = 100000 in
   (*  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages  *)

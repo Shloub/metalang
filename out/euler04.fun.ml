@@ -2,6 +2,7 @@ let rec chiffre c m =
   if c = 0
   then m mod 10
   else chiffre (c - 1) (m / 10)
+
 let main =
   let m = 1 in
   let rec g a m =

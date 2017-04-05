@@ -30,8 +30,6 @@ def pathfind( tab, x, y )
     }
   return pathfind_aux(cache, tab, x, y, 0, 0)
 end
-x = 0
-y = 0
 x = scanf("%d")[0]
 scanf("%*\n")
 y = scanf("%d")[0]

@@ -39,19 +39,19 @@ public class pathfinding
   }
   public static void main(String args[])
   {
-    int x = 0;
-    int y = 0;
+    int x;
     if (scanner.hasNext("^-")) {
       scanner.next("^-");
-      x = -scanner.nextInt();
-    }else{
+      x = scanner.nextInt();
+    } else {
       x = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
+    int y;
     if (scanner.hasNext("^-")) {
       scanner.next("^-");
-      y = -scanner.nextInt();
-    }else{
+      y = scanner.nextInt();
+    } else {
       y = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);

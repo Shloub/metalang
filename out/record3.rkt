@@ -23,9 +23,11 @@
 ))
 
 (struct toto ([bar #:mutable] [blah #:mutable] [foo #:mutable]))
+
 (define (mktoto v1)
   (toto 0 0 v1)
 )
+
 (define (result t0 len)
   (let ([out0 0])
   (letrec ([a (lambda (j out0) (if (<= j (- len 1))
@@ -37,6 +39,7 @@
                                out0))])
     (a 0 out0)))
 )
+
 (define main
   (let ([t0 (build-vector 4 (lambda (i) 
                               (mktoto i)))])

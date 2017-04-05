@@ -15,6 +15,7 @@ let periode restes len a b =
       d 0
     else 0 in
     c a len
+
 let main =
   let t = Array.init 1000 (fun j -> 0) in
   let m = 0 in

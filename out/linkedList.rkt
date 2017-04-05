@@ -20,21 +20,26 @@
       )))]) (w 0)))))
 
 (struct intlist ([head #:mutable] [tail #:mutable]))
+
 (define (cons0 list i)
   (intlist i list)
 )
+
 (define (is_empty foo)
   #t
 )
+
 (define (rev2 acc torev)
   (if (is_empty torev)
   acc
   (let ([acc2 (intlist (intlist-head torev) acc)])
   (rev2 acc (intlist-tail torev))))
 )
+
 (define (rev empty torev)
   (rev2 empty torev)
 )
+
 (define (test empty)
   (let ([list empty])
   (let ([i (- 1)])
@@ -48,6 +53,7 @@
     '()))])
   (a i list))))
 )
+
 (define main
   '()
 )

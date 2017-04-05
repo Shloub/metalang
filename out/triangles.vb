@@ -91,15 +91,13 @@ End Function
         Return find0(len, tab, tab2, 0, 0)
     End Function
     Sub Main()
-      Dim len As Integer = 0
-      len = readInt
+      Dim len As Integer = readInt
       stdin_sep
       Dim tab(len)() As Integer
       For i As Integer = 0 To len - 1
           Dim tab2(i + 1) As Integer
           For j As Integer = 0 To i
-              Dim tmp As Integer = 0
-              tmp = readInt
+              Dim tmp As Integer = readInt
               stdin_sep
               tab2(j) = tmp
           Next

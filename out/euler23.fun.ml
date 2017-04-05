@@ -15,6 +15,7 @@ let eratostene t max0 =
          else a (i + 1) n
     else n in
     a 2 n
+
 let fillPrimesFactors t n primes nprimes =
   let rec c i n =
     if i <= nprimes - 1
@@ -30,6 +31,7 @@ let fillPrimesFactors t n primes nprimes =
       e n
     else n in
     c 0 n
+
 let sumdivaux2 t n i =
   let rec f i =
     if i < n && t.(i) = 0
@@ -37,6 +39,7 @@ let sumdivaux2 t n i =
     f i
     else i in
     f i
+
 let rec sumdivaux t n i =
   if i > n
   then 1
@@ -53,10 +56,12 @@ let rec sumdivaux t n i =
          h (j + 1) out0 p
          else (out0 + 1) * o in
          h 1 out0 p
+
 let sumdiv nprimes primes n =
   let t = Array.init (n + 1) (fun i -> 0) in
   let max0 = fillPrimesFactors t n primes nprimes in
   sumdivaux t max0 0
+
 let main =
   let maximumprimes = 30001 in
   let era = Array.init maximumprimes (fun s -> s) in

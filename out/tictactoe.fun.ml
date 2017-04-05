@@ -1,5 +1,7 @@
 type gamestate = {mutable cases : int array array; mutable firstToPlay : bool; mutable note : int; mutable ended : bool;}
+
 type move = {mutable x : int; mutable y : int;}
+
 let print_state g =
   ( Printf.printf "%s" "\n|";
     let rec a y =
@@ -20,6 +22,7 @@ let print_state g =
              b 0
       else Printf.printf "%s" "\n" in
       a 0)
+
 let eval0 g =
   let win = 0 in
   let freecase = 0 in
@@ -71,6 +74,7 @@ let eval0 g =
                        else g.note <- 0) in
            d 1 win in
     c 0 freecase win
+
 let apply_move_xy x y g =
   let player = 2 in
   let player = if g.firstToPlay
@@ -78,20 +82,26 @@ let apply_move_xy x y g =
                else player in
   ( g.cases.(x).(y) <- player;
     g.firstToPlay <- not g.firstToPlay)
+
 let apply_move m g =
   ( apply_move_xy m.x m.y g;
     ())
+
 let cancel_move_xy x y g =
   ( g.cases.(x).(y) <- 0;
     g.firstToPlay <- not g.firstToPlay;
     g.ended <- false)
+
 let cancel_move m g =
   ( cancel_move_xy m.x m.y g;
     ())
+
 let can_move_xy x y g =
   g.cases.(x).(y) = 0
+
 let can_move m g =
   can_move_xy m.x m.y g
+
 let rec minmax g =
   ( eval0 g;
     if g.ended
@@ -118,6 +128,7 @@ let rec minmax g =
              h 0 maxNote
       else maxNote in
       f 0 maxNote)
+
 let play g =
   let minMove = {x=0;
                  y=0} in
@@ -143,12 +154,14 @@ let play g =
     else ( Printf.printf "%d%d\n" minMove.x minMove.y;
            minMove) in
     k 0 minNote
+
 let init0 () =
   let cases = Array.init 3 (fun i -> Array.init 3 (fun j -> 0)) in
   {cases=cases;
    firstToPlay=true;
    note=0;
    ended=false}
+
 let read_move () =
   Scanf.scanf "%d"
   (fun x -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
@@ -156,6 +169,7 @@ let read_move () =
               (fun y -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
                           {x=x;
                            y=y}))))
+
 let main =
   let rec n i =
     if i <= 1

@@ -2,12 +2,15 @@ let triangle n =
   if n mod 2 = 0
   then (n / 2) * (n + 1)
   else n * ((n + 1) / 2)
+
 let penta n =
   if n mod 2 = 0
   then (n / 2) * (3 * n - 1)
   else ((3 * n - 1) / 2) * n
+
 let hexa n =
   n * (2 * n - 1)
+
 let rec findPenta2 n a b =
   if b = a + 1
   then penta a = n || penta b = n
@@ -18,6 +21,7 @@ let rec findPenta2 n a b =
   else if p < n
        then findPenta2 n c b
        else findPenta2 n a c
+
 let rec findHexa2 n a b =
   if b = a + 1
   then hexa a = n || hexa b = n
@@ -28,6 +32,7 @@ let rec findHexa2 n a b =
   else if p < n
        then findHexa2 n c b
        else findHexa2 n a c
+
 let main =
   let rec d n =
     if n <= 55385

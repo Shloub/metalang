@@ -5,6 +5,7 @@
   (let ([a 4])
   '())
 )
+
 (define main
   (let ([a 0])
   (block

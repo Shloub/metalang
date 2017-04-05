@@ -9,6 +9,7 @@
                             o))])
     (b 1 o)))
 )
+
 (define (e t0 n)
   (letrec ([c (lambda (i n) (if (<= i 8)
                             (if (>= n (* (vector-ref t0 i) i))
@@ -20,6 +21,7 @@
                             (- 1)))])
     (c 1 n))
 )
+
 (define main
   (let ([t0 (build-vector 9 (lambda (i) 
                               (- (exp0 10 i) (exp0 10 (- i 1)))))])

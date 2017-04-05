@@ -3,8 +3,10 @@ let g i =
   if j mod 2 = 1
   then 0
   else j
+
 let h i =
   Printf.printf "%d\n" i
+
 let main =
   ( h 14;
     let a = 4 in

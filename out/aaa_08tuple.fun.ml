@@ -1,4 +1,5 @@
 type toto = {mutable foo : (int * int); mutable bar : int;}
+
 let main =
   let bar_ = (Scanf.scanf "%d " (fun x -> x)) in
   Scanf.scanf "%d"

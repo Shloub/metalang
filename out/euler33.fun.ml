@@ -5,6 +5,7 @@ let rec pgcd a b =
   if reste = 0
   then c
   else pgcd c reste
+
 let main =
   let top = 1 in
   let bottom = 1 in

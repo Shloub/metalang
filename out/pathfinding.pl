@@ -69,11 +69,9 @@ sub pathfind{
   }
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
-my $x = 0;
-my $y = 0;
-$x = readint();
+my $x = readint();
 readspaces();
-$y = readint();
+my $y = readint();
 readspaces();
 my $tab = [];
 foreach my $i (0 .. $y - 1)

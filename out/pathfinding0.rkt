@@ -23,6 +23,7 @@
       ))))))
     )))))
 )
+
 (define (pathfind tab x y)
   (let ([cache (build-vector y (lambda (i) 
                                  (let ([tmp (build-vector x (lambda (j) 
@@ -36,6 +37,7 @@
                                    ))))])
 (pathfind_aux cache tab x y 0 0))
 )
+
 (define main
   (let ([x (string->number (read-line))])
   (let ([y (string->number (read-line))])

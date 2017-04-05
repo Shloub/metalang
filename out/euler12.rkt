@@ -19,6 +19,7 @@
                             n))])
     (c 2 n)))
 )
+
 (define (fillPrimesFactors t0 n primes nprimes)
   (letrec ([f (lambda (i n) (if (<= i (- nprimes 1))
                             (let ([d (vector-ref primes i)])
@@ -35,6 +36,7 @@
                             n))])
     (f 0 n))
 )
+
 (define (find0 ndiv2)
   (let ([maximumprimes 110])
   (let ([era (build-vector maximumprimes (lambda (j) 
@@ -75,6 +77,7 @@
                             (p 1))))])
   (h 2 l)))))))
 )
+
 (define main
   (printf "~a\n" (find0 500))
 )

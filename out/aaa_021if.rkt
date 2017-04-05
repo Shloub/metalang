@@ -10,6 +10,7 @@
   (display "C")
   (display "D")))
 )
+
 (define (testB a b)
   (if a
   (display "A")
@@ -17,6 +18,7 @@
   (display "B")
   (display "C")))
 )
+
 (define (testC a b)
   (if a
   (if b
@@ -24,6 +26,7 @@
   (display "B"))
   (display "C"))
 )
+
 (define (testD a b)
   (if a
   (block
@@ -34,6 +37,7 @@
     )
   (display "D"))
 )
+
 (define (testE a b)
   (if a
   (if b
@@ -46,6 +50,7 @@
     (display "E")
     ))
 )
+
 (define (test a b)
   (block
     (testD a b)
@@ -53,6 +58,7 @@
     (display "\n")
     )
 )
+
 (define main
   (block
     (test #t #t)

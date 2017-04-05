@@ -59,8 +59,6 @@ function pathfind(&$tab, $x, $y) {
     }
     return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
-$x = 0;
-$y = 0;
 list($x) = scan("%d");
 scantrim();
 list($y) = scan("%d");

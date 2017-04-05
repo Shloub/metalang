@@ -10,6 +10,7 @@ let programme_candidat tableau x y =
            f 0 out0
     else out0 in
     e 0 out0
+
 let main =
   let taille_x = (Scanf.scanf "%d " (fun x -> x)) in
   let taille_y = (Scanf.scanf "%d " (fun x -> x)) in

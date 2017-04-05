@@ -6,14 +6,17 @@
   (* (quotient n 2) (+ n 1))
   (* n (quotient (+ n 1) 2)))
 )
+
 (define (penta n)
   (if (eq? (remainder n 2) 0)
   (* (quotient n 2) (- (* 3 n) 1))
   (* (quotient (- (* 3 n) 1) 2) n))
 )
+
 (define (hexa n)
   (* n (- (* 2 n) 1))
 )
+
 (define (findPenta2 n a b)
   (if (eq? b (+ a 1))
   (or (eq? (penta a) n) (eq? (penta b) n))
@@ -25,6 +28,7 @@
   (findPenta2 n c b)
   (findPenta2 n a c))))))
 )
+
 (define (findHexa2 n a b)
   (if (eq? b (+ a 1))
   (or (eq? (hexa a) n) (eq? (hexa b) n))
@@ -36,6 +40,7 @@
   (findHexa2 n c b)
   (findHexa2 n a c))))))
 )
+
 (define main
   (letrec ([d (lambda (n) (if (<= n 55385)
                           (let ([t0 (triangle n)])

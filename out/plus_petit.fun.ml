@@ -20,8 +20,10 @@ let rec go0 tab a b =
          then go0 tab a m
          else go0 tab m b in
     c i j
+
 let plus_petit0 tab len =
   go0 tab 0 len
+
 let main =
   let len = 0 in
   Scanf.scanf "%d"

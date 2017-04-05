@@ -16,14 +16,11 @@ def int fibo (int a, int b, int i)
 end
 
 main
-  def int a = 0
-  def int b = 0
-  def int i = 0
-  read int a
+  def read int a
   skip
-  read int b
+  def read int b
   skip
-  read int i
+  def read int i
   print int fibo(a, b, i)
 end
 

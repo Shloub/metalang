@@ -80,11 +80,9 @@
   
 ))
 (progn
-  (let ((x 0))
-    (let ((y 0))
-      (setq x (mread-int))
-      (mread-blank)
-      (setq y (mread-int))
+  (let ((x (mread-int)))
+    (mread-blank)
+    (let ((y (mread-int)))
       (mread-blank)
       (let
        ((tab (array_init

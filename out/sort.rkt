@@ -26,6 +26,7 @@
   (build-vector len (lambda (i) 
                       (vector-ref tab i)))
 )
+
 (define (bubblesort tab len)
   (letrec ([a (lambda (i) (if (<= i (- len 1))
                           (letrec ([b (lambda (j) (if (<= j (- len 1))
@@ -42,6 +43,7 @@
                           '()))])
     (a 0))
 )
+
 (define (qsort0 tab len i j)
   (if (< i j)
   (let ([i0 i])
@@ -77,6 +79,7 @@
     (c i j))))
   '())
 )
+
 (define main
   (let ([len 2])
   ((lambda (d) 

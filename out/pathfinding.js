@@ -65,11 +65,9 @@ function pathfind(tab, x, y){
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
 }
-var x = 0;
-var y = 0;
-x = read_int_();
+var x = read_int_();
 stdinsep();
-y = read_int_();
+var y = read_int_();
 stdinsep();
 var tab = new Array(y);
 for (var i = 0; i < y; i++)

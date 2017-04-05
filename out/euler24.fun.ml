@@ -6,6 +6,7 @@ let fact n =
     a (i + 1) prod
     else prod in
     a 2 prod
+
 let show lim nth =
   let t = Array.init lim (fun i -> i) in
   let pris = Array.init lim (fun j -> false) in
@@ -35,6 +36,7 @@ let show lim nth =
            else Printf.printf "%s" "\n" in
            c 0 in
     b 1 nth
+
 let main =
   ( show 10 999999;
     ())

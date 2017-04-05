@@ -1,5 +1,6 @@
 let copytab tab len =
   Array.init len (fun i -> tab.(i))
+
 let bubblesort tab len =
   let rec a i =
     if i <= len - 1
@@ -15,6 +16,7 @@ let bubblesort tab len =
            b (i + 1)
     else () in
     a 0
+
 let rec qsort0 tab len i j =
   if i < j
   then let i0 = i in
@@ -44,6 +46,7 @@ let rec qsort0 tab len i j =
            ()) in
     c i j
   else ()
+
 let main =
   let len = 2 in
   Scanf.scanf "%d"

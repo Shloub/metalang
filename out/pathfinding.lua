@@ -49,11 +49,9 @@ function pathfind (tab, x, y)
           return pathfind_aux(cache, tab, x, y, 0, 0)
       end
       
-      local x = 0
-      local y = 0
-      x = readint()
+      local x = readint()
       stdinsep()
-      y = readint()
+      local y = readint()
       stdinsep()
       local tab = {}
       for i = 0, y - 1 do

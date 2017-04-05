@@ -23,7 +23,9 @@
 ))
 
 (struct gamestate ([cases #:mutable] [ended #:mutable] [firstToPlay #:mutable] [note #:mutable]))
+
 (struct move ([x #:mutable] [y #:mutable]))
+
 (define (print_state g)
   (block
     (display "\n|")
@@ -49,6 +51,7 @@
       (a 0))
     )
 )
+
 (define (eval0 g)
   (let ([win 0])
   (let ([freecase 0])
@@ -102,6 +105,7 @@
                                          (d 1 win))))])
     (c 0 freecase win))))
 )
+
 (define (apply_move_xy x y g)
   (let ([player 2])
   (let ([player (if (gamestate-firstToPlay g)
@@ -112,12 +116,14 @@
     (set-gamestate-firstToPlay! g (not (gamestate-firstToPlay g)))
     )))
 )
+
 (define (apply_move m g)
   (block
     (apply_move_xy (move-x m) (move-y m) g)
     '()
     )
 )
+
 (define (cancel_move_xy x y g)
   (block
     (vector-set! (vector-ref (gamestate-cases g) x) y 0)
@@ -125,18 +131,22 @@
     (set-gamestate-ended! g #f)
     )
 )
+
 (define (cancel_move m g)
   (block
     (cancel_move_xy (move-x m) (move-y m) g)
     '()
     )
 )
+
 (define (can_move_xy x y g)
   (eq? (vector-ref (vector-ref (gamestate-cases g) x) y) 0)
 )
+
 (define (can_move m g)
   (can_move_xy (move-x m) (move-y m) g)
 )
+
 (define (minmax g)
   (block
     (eval0 g)
@@ -168,6 +178,7 @@
       (f 0 maxNote)))))
     )
 )
+
 (define (play g)
   (let ([minMove (move 0 0)])
   (let ([minNote 10000])
@@ -199,12 +210,14 @@
                                     )))])
     (k 0 minNote))))
 )
+
 (define (init0 _)
   (let ([cases (build-vector 3 (lambda (i) 
                                  (build-vector 3 (lambda (j) 
                                                    0))))])
 (gamestate cases #f #t 0))
 )
+
 (define (read_move _)
   ((lambda (x) 
      (block
@@ -216,6 +229,7 @@
             )) (mread-int))
      )) (mread-int))
 )
+
 (define main
   (letrec ([n (lambda (i) (if (<= i 1)
                           (let ([state (init0 'nil)])

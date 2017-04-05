@@ -11,6 +11,7 @@ let fibo0 a b i =
     c (j + 1) a2 b2 out0
     else out0 in
     c 0 a2 b2 out0
+
 let main =
   Scanf.scanf "%d"
   (fun a -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());

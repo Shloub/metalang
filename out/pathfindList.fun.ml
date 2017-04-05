@@ -12,9 +12,11 @@ let rec pathfind_aux cache tab len pos =
                          else 1 + oneval in
               ( cache.(pos) <- out0;
                 out0))
+
 let pathfind tab len =
   let cache = Array.init len (fun i -> - 1) in
   pathfind_aux cache tab len 0
+
 let main =
   let len = 0 in
   Scanf.scanf "%d"

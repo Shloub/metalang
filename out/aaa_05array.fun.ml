@@ -11,8 +11,10 @@ end
 
 let id b =
   b
+
 let g t index =
   t.(index) <- false
+
 let main =
   let j = 0 in
   (fun (j, a) ->( Printf.printf "%d " j;
