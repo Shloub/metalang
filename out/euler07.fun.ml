@@ -6,6 +6,7 @@ let divisible n t size =
          else a (i + 1)
     else false in
     a 0
+
 let find n t used nth =
   let rec b n used =
     if used <> nth
@@ -18,6 +19,7 @@ let find n t used nth =
                 b n used)
     else t.(used - 1) in
     b n used
+
 let main =
   let n = 10001 in
   let t = Array.init n (fun i -> 2) in

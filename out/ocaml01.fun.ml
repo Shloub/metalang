@@ -4,6 +4,7 @@ let foo () =
     then b (i + 1)
     else 0 in
     b 0
+
 let bar () =
   let rec c i =
     if i <= 10
@@ -11,6 +12,7 @@ let bar () =
     c (i + 1)
     else 0 in
     c 0
+
 let main =
   ()
 

@@ -12,6 +12,7 @@ let rec result sum t maxIndex cache =
          else ( cache.(sum).(maxIndex) <- out0;
                 out0) in
          a 0 out0
+
 let main =
   let t = Array.init 8 (fun i -> 0) in
   ( t.(0) <- 1;

@@ -19,6 +19,7 @@ let montagnes0 tab len =
       b j
     else max0 in
     a i j max0
+
 let main =
   let len = 0 in
   Scanf.scanf "%d"

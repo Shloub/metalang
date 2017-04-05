@@ -11,6 +11,7 @@ let sumdiag n =
     a (i + 1) sum un
     else sum in
     a 0 sum un
+
 let main =
   Printf.printf "%d" (sumdiag 1001)
 

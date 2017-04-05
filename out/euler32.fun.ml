@@ -8,6 +8,7 @@ let rec okdigits ok n =
          ( ok.(digit) <- true;
            o))
   else false
+
 let main =
   let count = 0 in
   let allowed = Array.init 10 (fun i -> i <> 0) in

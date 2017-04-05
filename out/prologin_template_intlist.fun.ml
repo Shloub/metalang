@@ -6,6 +6,7 @@ let programme_candidat tableau taille =
     c (i + 1) out0
     else out0 in
     c 0 out0
+
 let main =
   let taille = (Scanf.scanf "%d " (fun x -> x)) in
   let tableau = Array.init taille (fun a -> Scanf.scanf "%d"

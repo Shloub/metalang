@@ -2,6 +2,7 @@ let next0 n =
   if n mod 2 = 0
   then n / 2
   else 3 * n + 1
+
 let rec find n m =
   if n = 1
   then 1
@@ -11,6 +12,7 @@ let rec find n m =
             then m.(n)
             else ( m.(n) <- 1 + find (next0 n) m;
                    m.(n))
+
 let main =
   let m = Array.init 1000000 (fun j -> 0) in
   let max0 = 0 in

@@ -2,6 +2,7 @@ let read_sudoku () =
   Array.init (9 * 9) (fun i -> Scanf.scanf "%d"
   (fun k -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());
               k)))
+
 let print_sudoku sudoku0 =
   let rec a y =
     if y <= 8
@@ -20,6 +21,7 @@ let print_sudoku sudoku0 =
            b 0
     else Printf.printf "%s" "\n" in
     a 0
+
 let sudoku_done s =
   let rec c i =
     if i <= 80
@@ -28,6 +30,7 @@ let sudoku_done s =
          else c (i + 1)
     else true in
     c 0
+
 let sudoku_error s =
   let out1 = false in
   let rec d x out1 =
@@ -48,6 +51,7 @@ let sudoku_error s =
         f 0 out3 in
       e 0 out2 in
     d 0 out1
+
 let rec solve sudoku0 =
   if sudoku_error sudoku0
   then false
@@ -68,6 +72,7 @@ let rec solve sudoku0 =
                    else g (i + 1)
               else false in
               g 0
+
 let main =
   let sudoku0 = read_sudoku () in
   ( print_sudoku sudoku0;

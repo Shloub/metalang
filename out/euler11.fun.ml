@@ -4,6 +4,7 @@ let rec find n m x y dx dy =
   else if n = 0
        then 1
        else m.(y).(x) * find (n - 1) m (x + dx) (y + dy) dx dy
+
 let main =
   let directions = Array.init 8 (fun i -> if i = 0
                                           then 0, 1

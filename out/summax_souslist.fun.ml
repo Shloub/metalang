@@ -13,6 +13,7 @@ let summax lst len =
     else a (i + 1) current max0
     else max0 in
     a 0 current max0
+
 let main =
   let len = 0 in
   Scanf.scanf "%d"

@@ -11,6 +11,7 @@ let score () =
                     a (i + 1) sum)
                     else sum in
                     a 1 sum)))
+
 let main =
   let sum = 0 in
   Scanf.scanf "%d"

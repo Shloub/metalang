@@ -8,6 +8,7 @@ let programme_candidat tableau taille =
     else ( Printf.printf "%s" "--\n";
            out0) in
     c 0 out0
+
 let main =
   let taille = (Scanf.scanf "%d " (fun x -> x)) in
   let tableau = Array.init taille (fun a -> Scanf.scanf "%c"

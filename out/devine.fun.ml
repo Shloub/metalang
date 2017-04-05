@@ -16,6 +16,7 @@ let devine0 nombre tab len =
          else a (i + 1) max0 min0
     else true in
     a 2 max0 min0
+
 let main =
   Scanf.scanf "%d"
   (fun nombre -> ( Scanf.scanf "%[\n \010]" (fun _ -> ());

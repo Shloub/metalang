@@ -1,5 +1,6 @@
 let is_leap year =
   year mod 400 = 0 || year mod 100 <> 0 && year mod 4 = 0
+
 let ndayinmonth month year =
   if month = 0
   then 31
@@ -28,6 +29,7 @@ let ndayinmonth month year =
                                                     else if month = 11
                                                          then 31
                                                          else 0
+
 let main =
   let month = 0 in
   let year = 1901 in

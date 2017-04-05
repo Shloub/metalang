@@ -1,8 +1,10 @@
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;}
+
 let mktoto v1 =
   {foo=v1;
    bar=0;
    blah=0}
+
 let result t len =
   let out0 = 0 in
   let rec a j out0 =
@@ -12,6 +14,7 @@ let result t len =
            a (j + 1) out0)
     else out0 in
     a 0 out0
+
 let main =
   let t = Array.init 4 (fun i -> mktoto i) in
   Scanf.scanf "%d"

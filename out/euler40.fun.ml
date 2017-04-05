@@ -6,6 +6,7 @@ let exp0 a e =
     b (i + 1) o
     else o in
     b 1 o
+
 let e t n =
   let rec c i n =
     if i <= 8
@@ -17,6 +18,7 @@ let e t n =
          nombre / exp0 10 chiffre mod 10
     else - 1 in
     c 1 n
+
 let main =
   let t = Array.init 9 (fun i -> exp0 10 i - exp0 10 (i - 1)) in
   let rec d i2 =

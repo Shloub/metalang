@@ -2,6 +2,7 @@ let f i =
   if i = 0
   then true
   else false
+
 let main =
   ( if f 4
     then Printf.printf "%s" "true <-\n ->\n"
