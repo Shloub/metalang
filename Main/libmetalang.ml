@@ -72,7 +72,8 @@ let keywords lang=
   | "vb" -> "stop" :: li
   | "hs" -> "id" :: "show" :: "head" :: "tail" :: li
   | "fs" -> "find" :: "rot" :: "over" :: "dup" :: li
-  | "fsharp" -> "process"::li
+  | "fsscript" -> "process"::li
+  | "js" -> "process"::li
   | _ -> li
 
 let conf_rename lang prog =
