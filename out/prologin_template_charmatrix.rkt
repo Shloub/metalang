@@ -18,6 +18,7 @@
                                out0))])
     (c 0 out0)))
 )
+
 (define main
   (let ([taille_x (string->number (read-line))])
   (let ([taille_y (string->number (read-line))])

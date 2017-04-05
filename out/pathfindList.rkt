@@ -41,11 +41,13 @@
       )))))
     )))
 )
+
 (define (pathfind tab len)
   (let ([cache (build-vector len (lambda (i) 
                                    (- 1)))])
   (pathfind_aux cache tab len 0))
 )
+
 (define main
   (let ([len 0])
   ((lambda (a) 

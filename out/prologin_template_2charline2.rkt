@@ -25,6 +25,7 @@
                                  )))])
     (a 0 out0)))
 )
+
 (define main
   (let ([taille1 (string->number (read-line))])
   (let ([taille2 (string->number (read-line))])

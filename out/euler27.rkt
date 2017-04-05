@@ -19,6 +19,7 @@
                             n))])
     (c 2 n)))
 )
+
 (define (isPrime n primes len)
   (let ([i 0])
   (let ([n (if (< n 0)
@@ -32,6 +33,7 @@
                           #t))])
     (e i))))
 )
+
 (define (test a b primes len)
   (letrec ([f (lambda (n) (if (<= n 200)
                           (let ([j (+ (* n n) (* a n) b)])
@@ -41,6 +43,7 @@
                           200))])
     (f 0))
 )
+
 (define main
   (let ([maximumprimes 1000])
   (let ([era (build-vector maximumprimes (lambda (j) 

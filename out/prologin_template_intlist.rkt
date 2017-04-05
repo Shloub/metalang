@@ -9,6 +9,7 @@
                                out0))])
     (a 0 out0)))
 )
+
 (define main
   (let ([taille (string->number (read-line))])
   (let ([tableau (list->vector (map string->number (regexp-split " " (read-line))))])

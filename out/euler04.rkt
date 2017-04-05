@@ -6,6 +6,7 @@
   (remainder m 10)
   (chiffre (- c 1) (quotient m 10)))
 )
+
 (define main
   (let ([m 1])
   (letrec ([g (lambda (a m) (if (<= a 9)

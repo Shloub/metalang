@@ -12,10 +12,12 @@
   (+ c (* b 10))
   (+ d (* (chiffre_sort (+ c (* e 10))) 10))))))))
 )
+
 (define (same_numbers a b c d e f)
   (let ([ca (chiffre_sort a)])
   (and (eq? ca (chiffre_sort b)) (eq? ca (chiffre_sort c)) (eq? ca (chiffre_sort d)) (eq? ca (chiffre_sort e)) (eq? ca (chiffre_sort f))))
 )
+
 (define main
   (let ([num 142857])
   (if (same_numbers num (* num 2) (* num 3) (* num 4) (* num 6) (* num 5))

@@ -35,22 +35,17 @@
                                      out0))])
     (c 0 a2 b2 out0)))))
 )
+
 (define main
-  (let ([a 0])
-  (let ([b 0])
-  (let ([i 0])
-  ((lambda (d) 
-     (let ([a d])
+  ((lambda (a) 
      (block
        (mread-blank)
-       ((lambda (e) 
-          (let ([b e])
+       ((lambda (b) 
           (block
             (mread-blank)
-            ((lambda (f) 
-               (let ([i f])
-               (display (fibo0 a b i)))) (mread-int))
-          ))) (mread-int))
-     ))) (mread-int)))))
+            ((lambda (i) 
+               (display (fibo0 a b i))) (mread-int))
+          )) (mread-int))
+  )) (mread-int))
 )
 

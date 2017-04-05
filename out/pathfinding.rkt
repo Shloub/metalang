@@ -50,35 +50,33 @@
       ))))))
     )))))
 )
+
 (define (pathfind tab x y)
   (let ([cache (build-vector y (lambda (i) 
                                  (build-vector x (lambda (j) 
                                                    (- 1)))))])
 (pathfind_aux cache tab x y 0 0))
 )
+
 (define main
-  (let ([x 0])
-  (let ([y 0])
-  ((lambda (e) 
-     (let ([x e])
+  ((lambda (x) 
      (block
        (mread-blank)
-       ((lambda (f) 
-          (let ([y f])
+       ((lambda (y) 
           (block
             (mread-blank)
             (let ([tab (build-vector y (lambda (i) 
                                          (let ([tab2 (build-vector x (lambda (j) 
                                                                        (let ([tmp (integer->char 0)])
-                                                                       ((lambda (g) 
-                                                                          g) (mread-char)))))])
+                                                                       ((lambda (e) 
+                                                                          e) (mread-char)))))])
             (block
               (mread-blank)
               tab2
               ))))])
-          (let ([result (pathfind tab x y)])
-          (display result)))
-       ))) (mread-int))
-  ))) (mread-int))))
+       (let ([result (pathfind tab x y)])
+       (display result)))
+     )) (mread-int))
+)) (mread-int))
 )
 

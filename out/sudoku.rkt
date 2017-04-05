@@ -30,6 +30,7 @@
                                k
                                )) (mread-int))))
 )
+
 (define (print_sudoku sudoku0)
   (letrec ([a (lambda (y) (if (<= y 8)
                           (letrec ([b (lambda (x) (if (<= x 8)
@@ -55,6 +56,7 @@
                           (display "\n")))])
     (a 0))
 )
+
 (define (sudoku_done s)
   (letrec ([c (lambda (i) (if (<= i 80)
                           (if (eq? (vector-ref s i) 0)
@@ -63,6 +65,7 @@
                           #t))])
     (c 0))
 )
+
 (define (sudoku_error s)
   (let ([out1 #f])
   (letrec ([d (lambda (x out1) (if (<= x 8)
@@ -82,6 +85,7 @@
                                  (e 0 out2)))))])
     (d 0 out1)))
 )
+
 (define (solve sudoku0)
   (if (sudoku_error sudoku0)
   #f
@@ -105,6 +109,7 @@
                           #f))])
     (g 0))))
 )
+
 (define main
   (let ([sudoku0 (read_sudoku 'nil)])
   (block

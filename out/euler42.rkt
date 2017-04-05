@@ -36,6 +36,7 @@
   (let ([a (integer-sqrt (* n 2))])
   (eq? (* a (+ a 1)) (* n 2)))
 )
+
 (define (score _)
   (block
     (mread-blank)
@@ -55,6 +56,7 @@
        )) (mread-int))
 )
 )
+
 (define main
   (letrec ([d (lambda (i) (if (<= i 55)
                           (if (is_triangular i)

@@ -17,6 +17,7 @@
                                  )))])
     (a 0 out0))))))
 )
+
 (define main
   (let ([t0 (build-vector 8 (lambda (i) 
                               0))])

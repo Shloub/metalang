@@ -21,6 +21,7 @@
                              )))])
     (a 0)))
 )
+
 (define main
   (let ([len (string->number (read-line))])
   (block

@@ -15,6 +15,7 @@
                                  )))])
     (a 0 out0)))
 )
+
 (define main
   (let ([taille (string->number (read-line))])
   (let ([tableau (list->vector (string->list (read-line)))])

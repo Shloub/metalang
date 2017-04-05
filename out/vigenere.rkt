@@ -36,9 +36,11 @@
   (- i (char->integer #\a))
   (- 1))))
 )
+
 (define (of_position_alphabet c)
   (integer->char (+ c (char->integer #\a)))
 )
+
 (define (crypte taille_cle cle taille message)
   (letrec ([a (lambda (i) (if (<= i (- taille 1))
                           (let ([lettre (position_alphabet (vector-ref message i))])
@@ -53,6 +55,7 @@
                           '()))])
     (a 0))
 )
+
 (define main
   ((lambda (taille_cle) 
      (block

@@ -23,15 +23,18 @@
 ))
 
 (struct toto ([bar #:mutable] [blah #:mutable] [foo #:mutable]))
+
 (define (mktoto v1)
   (toto 0 0 v1)
 )
+
 (define (result t0)
   (block
     (set-toto-blah! t0 (+ (toto-blah t0) 1))
     (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0)) (* (toto-bar t0) (toto-foo t0)))
     )
 )
+
 (define main
   (let ([t0 (mktoto 4)])
   ((lambda (a) 

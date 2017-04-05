@@ -9,6 +9,7 @@
                                prod))])
     (a 2 prod)))
 )
+
 (define (show lim nth0)
   (let ([t0 (build-vector lim (lambda (i) 
                                 i))])
@@ -44,6 +45,7 @@
                                  (c 0))))])
     (b 1 nth0))))
 )
+
 (define main
   (block
     (show 10 999999)

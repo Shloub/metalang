@@ -46,9 +46,11 @@
                             (go0 tab m b))))])
     (c i j))))))
 )
+
 (define (plus_petit0 tab len)
   (go0 tab 0 len)
 )
+
 (define main
   (let ([len 0])
   ((lambda (d) 

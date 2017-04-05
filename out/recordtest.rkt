@@ -23,6 +23,7 @@
 ))
 
 (struct toto ([bar #:mutable] [foo #:mutable]))
+
 (define main
   (let ([param (toto 0 0)])
   ((lambda (a) 

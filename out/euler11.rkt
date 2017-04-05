@@ -8,6 +8,7 @@
   1
   (* (vector-ref (vector-ref m y) x) (find0 (- n 1) m (+ x dx) (+ y dy) dx dy))))
 )
+
 (define main
   (let ([directions (build-vector 8 (lambda (i) 
                                       (if (eq? i 0)

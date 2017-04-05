@@ -4,6 +4,7 @@
 (define (is_leap year)
   (or (eq? (remainder year 400) 0) (and (not (eq? (remainder year 100) 0)) (eq? (remainder year 4) 0)))
 )
+
 (define (ndayinmonth month year)
   (if (eq? month 0)
   31
@@ -33,6 +34,7 @@
   31
   0))))))))))))
 )
+
 (define main
   (let ([month 0])
   (let ([year 1901])

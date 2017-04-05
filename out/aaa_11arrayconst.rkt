@@ -10,6 +10,7 @@
                           (display "\n")))])
     (a 0))
 )
+
 (define main
   (let ([t0 (build-vector 5 (lambda (i) 
                               1))])

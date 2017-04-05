@@ -2,6 +2,7 @@
 (require racket/block)
 
 (struct toto ([bar #:mutable] [foo #:mutable]))
+
 (define main
   (let ([bar_ (string->number (read-line))])
   (let ([t0 (toto bar_ (map string->number (regexp-split " " (read-line))))])

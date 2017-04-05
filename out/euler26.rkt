@@ -19,6 +19,7 @@
                               0))])
     (c a len))
 )
+
 (define main
   (let ([t0 (build-vector 1000 (lambda (j) 
                                  0))])

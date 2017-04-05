@@ -16,6 +16,7 @@
     )
   #f)))
 )
+
 (define main
   (let ([count 0])
   (let ([allowed (build-vector 10 (lambda (i) 
