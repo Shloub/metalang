@@ -168,23 +168,12 @@ let print_expr macros tyEnv f e =
       with Not_found -> List.assoc "" li) macros
   in AstFun.Expr.Fixed.Deep.fold (print_expr macros tyEnv) e f None
 
-class racketPrinter = object(self)
-
-  val mutable macros = Ast.BindingMap.empty
-
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-
-  val mutable typerEnv : Typer.env = Typer.empty
-  method setTyperEnv t = typerEnv <- t
-  method typename_of_field field = Typer.typename_for_field field typerEnv
-
-  method header array_make f opts =
-    let need_stdinsep = opts.AstFun.hasSkip in
-    let need_readint = TypeSet.mem (Type.integer) opts.AstFun.reads in
-    let need_readchar = TypeSet.mem (Type.char) opts.AstFun.reads in
-    let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "#lang racket
+let header array_make f opts =
+  let need_stdinsep = opts.AstFun.hasSkip in
+  let need_readint = TypeSet.mem (Type.integer) opts.AstFun.reads in
+  let need_readchar = TypeSet.mem (Type.char) opts.AstFun.reads in
+  let need = need_stdinsep || need_readint || need_readchar in
+  Format.fprintf f "#lang racket
 (require racket/block)
 %a%a%a%a%a@\n"
       (fun f () -> if array_make then Format.fprintf f
@@ -233,9 +222,9 @@ class racketPrinter = object(self)
   (if (or (eq? last-char #\\NewLine) (eq? last-char #\\Space) ) (block (next-char) (mread-blank)) '())
 ))
 ") ()
-  
-  method prog (f:Format.formatter) (prog:AstFun.prog) =
-    let toplvl_declare f name e =
+
+let prog typerEnv (f:Format.formatter) (prog:AstFun.prog) =
+    let toplvl_declare macros f name e =
       match E.unfix e with
       | E.Fun (params, e) ->
         let params = if params = [] then [Ast.UserName "_"] else params in
@@ -251,16 +240,16 @@ class racketPrinter = object(self)
         (print_list (fun f name -> Format.fprintf f "[%s #:mutable]" name)
            sep_space) fields
     | _ -> () in
-    let decl f d = match d with
-      | AstFun.Declaration (name, e) -> toplvl_declare f name e
-      | AstFun.DeclareType (name, ty) -> toplvl_declarety f name ty
-      | AstFun.Macro (name, t, params, code) ->
-        macros <- Ast.BindingMap.add
-            name (t, params, code)
-            macros in
+    let macros, liitems = List.fold_left (fun (macros, liitems) -> function
+        | AstFun.Declaration (name, e) -> macros, (fun f -> toplvl_declare macros f name e) :: liitems
+        | AstFun.DeclareType (name, ty) -> macros, (fun f -> toplvl_declarety f name ty) :: liitems
+        | AstFun.Macro (name, t, params, code) ->
+          let macros = Ast.BindingMap.add name (t, params, code) macros in
+          macros, liitems
+      ) (Ast.BindingMap.empty, []) prog.AstFun.declarations
+    in
     let array_make = AstFun.existsExpr (fun e ->match E.unfix e with
         | E.ArrayMake _ -> true
         | _ -> false ) prog.AstFun.declarations in
-    self#header array_make f prog.AstFun.options;
-    print_list decl nosep f prog.AstFun.declarations
-end
+    Format.fprintf f "%a%a" (header array_make) prog.AstFun.options
+      (print_list (fun f g -> g f) sep_nl) (List.rev liitems)
