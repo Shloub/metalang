@@ -141,48 +141,19 @@ let print_expr macros e f prio_parent =
 let print_expr macros f e =
   AstFun.Expr.Fixed.Deep.fold (print_expr macros) e f nop
 
-class camlFunPrinter = object(self)
-
-  val mutable macros = Ast.BindingMap.empty
-
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-
-  val mutable typerEnv : Typer.env = Typer.empty
-  method setTyperEnv t = typerEnv <- t
-
-  method extract_fun_params e acc = match E.unfix e with
+let rec extract_fun_params e acc = match E.unfix e with
     | E.Fun ([], e) ->
       let acc f () = Format.fprintf f "%a ()" acc ()
-      in self#extract_fun_params e acc
+      in extract_fun_params e acc
     | E.Fun (params, e) ->
       let acc f () = Format.fprintf f "%a %a" acc () (print_list print_varname sep_space) params
-      in self#extract_fun_params e acc
+      in extract_fun_params e acc
     | E.FunTuple (params, e) ->
       let acc f () = Format.fprintf f "%a (%a)" acc () (print_list print_varname sep_c) params
-      in self#extract_fun_params e acc
+      in extract_fun_params e acc
     | _ -> acc, e
 
-  method decl f d = match d with
-    | AstFun.Declaration (name, e) ->
-      let is_rec =
-        E.Fixed.Deep.exists (fun e -> match E.unfix e with
-            | E.Lief (E.Binding n) -> n = name
-            | _ -> false) e in
-      let pparams, e = self#extract_fun_params e (fun f () -> ()) in
-      Format.fprintf f "@[<v 2>let%s %a%a =@\n%a@]@\n" (if is_rec then " rec" else "")
-        print_varname name pparams () (print_expr (Ast.BindingMap.map (fun (ty, params, li) ->
-            ty, params,
-            try List.assoc lang li with Not_found -> List.assoc "" li) macros))
-        e
-    | AstFun.DeclareType (name, ty) -> Format.fprintf f "@[<v 2>type %s = %a@]@\n" name Mllike.ptype ty
-    | AstFun.Macro (name, t, params, code) ->
-      macros <- Ast.BindingMap.add
-          name (t, params, code)
-          macros;
-      ()
-
-  method header array_init array_make f _ =
+let header array_init array_make f _ =
     if array_make then
       Format.fprintf f
         "module Array = struct
@@ -197,17 +168,30 @@ class camlFunPrinter = object(self)
 end
 "
 
-  method prog (f:Format.formatter) (prog:AstFun.prog) =
+  let prog (f:Format.formatter) (prog:AstFun.prog) =
+    let macros, liitems = List.fold_left (fun (macros, liitems) -> function
+        | AstFun.Declaration (name, e) ->
+          macros, (fun f -> let is_rec =
+                              E.Fixed.Deep.exists (fun e -> match E.unfix e with
+                                  | E.Lief (E.Binding n) -> n = name
+                                  | _ -> false) e in
+                    let pparams, e = extract_fun_params e (fun f () -> ()) in
+                    Format.fprintf f "@[<v 2>let%s %a%a =@\n%a@]@\n" (if is_rec then " rec" else "")
+                      print_varname name pparams () (print_expr (Ast.BindingMap.map (fun (ty, params, li) ->
+                          ty, params,
+                          try List.assoc lang li with Not_found -> List.assoc "" li) macros))
+                      e) :: liitems
+        | AstFun.DeclareType (name, ty) -> macros, (fun f -> Format.fprintf f "@[<v 2>type %s = %a@]@\n" name Mllike.ptype ty)::liitems
+        | AstFun.Macro (name, t, params, code) ->
+          let macros = Ast.BindingMap.add name (t, params, code) macros in
+          macros, liitems
+      ) (Ast.BindingMap.empty, []) prog.AstFun.declarations
+    in
     let array_init = AstFun.existsExpr (fun e ->match E.unfix e with
         | E.ArrayInit _ -> true
         | _ -> false ) prog.AstFun.declarations in
     let array_make = AstFun.existsExpr (fun e ->match E.unfix e with
         | E.ArrayMake _ -> true
         | _ -> false ) prog.AstFun.declarations in
-    self#header array_init array_make f prog.AstFun.options;
-    List.iter (self#decl f) prog.AstFun.declarations
-
-end
-
-let camlFunPrinter = new camlFunPrinter
-
+    Format.fprintf f "%a%a" (header array_init array_make) prog.AstFun.options
+      (print_list (fun f g -> g f) sep_nl) (List.rev liitems)
