@@ -145,6 +145,48 @@ let commutative = function
   | Ast.Expr.Mod
   | Ast.Expr.Sub -> None
 
+
+  let binopstr = function
+    | Ast.Expr.Add -> "+"
+    | Ast.Expr.Sub -> "-"
+    | Ast.Expr.Mul -> "*"
+    | Ast.Expr.Div -> "quot"
+    | Ast.Expr.Mod -> "rem"
+    | Ast.Expr.Or -> "||"
+    | Ast.Expr.And -> "&&"
+    | Ast.Expr.Lower -> "<"
+    | Ast.Expr.LowerEq -> "<="
+    | Ast.Expr.Higher -> ">"
+    | Ast.Expr.HigherEq -> ">="
+    | Ast.Expr.Eq -> "=="
+    | Ast.Expr.Diff -> "/="
+
+  let binop_priority = function
+    | Ast.Expr.Add -> -1, -2, -2
+    | Ast.Expr.Sub -> -1, -2, -1
+    | Ast.Expr.Mul -> 0, -1, -1
+    | Ast.Expr.Div -> -10, 15, 15
+    | Ast.Expr.Mod -> -10, 15, 15
+    | Ast.Expr.Or -> -8, -8, -8
+    | Ast.Expr.And -> -10, -10, -10
+    | Ast.Expr.Lower -> -5, -5, -5
+    | Ast.Expr.LowerEq -> -5, -5, -5
+    | Ast.Expr.Higher -> -5, -5, -5
+    | Ast.Expr.HigherEq -> -5, -5, -5
+    | Ast.Expr.Eq -> -6, -5, -5
+    | Ast.Expr.Diff -> -5, -5, -5
+
+  let binopShortCut = function
+    | Ast.Expr.And -> Some "<&&>"
+    | Ast.Expr.Or -> Some "<||>"
+    | _ -> None
+
+  let binopf = function
+    | Ast.Expr.Div
+    | Ast.Expr.Mod -> true
+    | _ -> false
+
+
 (*
   if p1 >= p2 then
     Format.fprintf f "(%a)" f e else p f e
@@ -165,55 +207,15 @@ class haskellPrinter = object(self)
 
   method tname f name = Format.fprintf f "%s" (String.capitalize name)
 
-  method binopstr = function
-    | Ast.Expr.Add -> "+"
-    | Ast.Expr.Sub -> "-"
-    | Ast.Expr.Mul -> "*"
-    | Ast.Expr.Div -> "quot"
-    | Ast.Expr.Mod -> "rem"
-    | Ast.Expr.Or -> "||"
-    | Ast.Expr.And -> "&&"
-    | Ast.Expr.Lower -> "<"
-    | Ast.Expr.LowerEq -> "<="
-    | Ast.Expr.Higher -> ">"
-    | Ast.Expr.HigherEq -> ">="
-    | Ast.Expr.Eq -> "=="
-    | Ast.Expr.Diff -> "/="
-
-  method binop_priority = function
-    | Ast.Expr.Add -> -1, -2, -2
-    | Ast.Expr.Sub -> -1, -2, -1
-    | Ast.Expr.Mul -> 0, -1, -1
-    | Ast.Expr.Div -> -10, 15, 15
-    | Ast.Expr.Mod -> -10, 15, 15
-    | Ast.Expr.Or -> -8, -8, -8
-    | Ast.Expr.And -> -10, -10, -10
-    | Ast.Expr.Lower -> -5, -5, -5
-    | Ast.Expr.LowerEq -> -5, -5, -5
-    | Ast.Expr.Higher -> -5, -5, -5
-    | Ast.Expr.HigherEq -> -5, -5, -5
-    | Ast.Expr.Eq -> -6, -5, -5
-    | Ast.Expr.Diff -> -5, -5, -5
-
-  method binopShortCut = function
-    | Ast.Expr.And -> Some "<&&>"
-    | Ast.Expr.Or -> Some "<||>"
-    | _ -> None
-
-  method binopf = function
-    | Ast.Expr.Div
-    | Ast.Expr.Mod -> true
-    | _ -> false
-
   method pbinopf f op =
-    if self#binopf op
-    then Format.fprintf f "%s" (self#binopstr op)
-    else Format.fprintf f "(%s)" (self#binopstr op)
+    if binopf op
+    then Format.fprintf f "%s" (binopstr op)
+    else Format.fprintf f "(%s)" (binopstr op)
 
   method pbinop f op =
-    if self#binopf op
-    then Format.fprintf f "`%s`" (self#binopstr op)
-    else Format.fprintf f "%s" (self#binopstr op)
+    if binopf op
+    then Format.fprintf f "`%s`" (binopstr op)
+    else Format.fprintf f "%s" (binopstr op)
 
   method unopstr = function
     | Ast.Expr.Neg -> "-"
@@ -227,8 +229,8 @@ class haskellPrinter = object(self)
   method punopf f op = Format.fprintf f "%s" (self#unopstrf op)
 
   method binop ~p f a op b = 
-    let cq, q1, q2 = self#binop_priority op in
-    match self#isPure a, self#isPure b, self#binopShortCut op, commutative op with
+    let cq, q1, q2 = binop_priority op in
+    match self#isPure a, self#isPure b, binopShortCut op, commutative op with
     | true, true, _, _ -> parens ~p cq f "%a %a %a" (self#expr' ~p:q1) a self#pbinop op (self#expr' ~p:q2)  b
     | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op self#expr_ a self#expr_ b
     | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op2 self#expr_ b self#expr_ a
