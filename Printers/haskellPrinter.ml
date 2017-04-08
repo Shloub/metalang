@@ -186,6 +186,40 @@ let commutative = function
     | Ast.Expr.Mod -> true
     | _ -> false
 
+let tname f name = Format.fprintf f "%s" (String.capitalize name)
+let ptype f t =
+  let open Type in
+  let open Format in
+  let ptype ty f () = match ty with
+    | Integer -> fprintf f "Int"
+    | String -> fprintf f "String"
+    | Array a -> fprintf f "(IOArray Int %a)" a ()
+    | Void ->  fprintf f "()"
+    | Bool -> fprintf f "Bool"
+    | Char -> fprintf f "Char"
+    | Named n -> tname f n
+    | Struct li ->
+      fprintf f "{@[<v 2>@\n%a@\n}@]"
+        (print_list
+           (fun t (name, type_) ->
+              fprintf t "_%s :: IORef %a" name type_ ()
+           )
+           (sep "%a,@\n%a")
+        ) li
+    | Enum li ->
+      fprintf f "%a"
+        (print_list
+           (fun t name ->
+              Format.fprintf t "%s" name
+           )
+           (sep "%a@\n| %a")
+        ) li
+    | Lexems -> assert false
+    | Auto -> assert false
+    | Tuple li ->
+      fprintf f "(%a)"
+        (print_list (fun f g -> g f ()) sep_c) li
+  in Fixed.Deep.fold ptype t f ()
 
 (*
   if p1 >= p2 then
@@ -204,8 +238,6 @@ class haskellPrinter = object(self)
 
   val mutable recursives_definitions = StringSet.empty
   method setRecursive b = recursives_definitions <- b
-
-  method tname f name = Format.fprintf f "%s" (String.capitalize name)
 
   method pbinopf f op =
     if binopf op
@@ -410,8 +442,8 @@ class haskellPrinter = object(self)
         let pure = self#isPure e in
         pure, (fun ~p f () ->
             if pure then
-              Format.fprintf f "(%a::%a)" (self#expr' ~p) e self#ptype ty
-            else Format.fprintf f "(%a::IO %a)" (self#expr' ~p) e self#ptype ty
+              Format.fprintf f "(%a::%a)" (self#expr' ~p) e ptype ty
+            else Format.fprintf f "(%a::IO %a)" (self#expr' ~p) e ptype ty
           ), ()
       ) exprs in
     let params = (true, (fun ~p f () -> self#print_format f formats), ()) :: exprs in
@@ -427,13 +459,13 @@ class haskellPrinter = object(self)
           self#printf ()
           self#format_type t
           (self#expr' ~p:nop) expr
-          self#ptype t
+          ptype t
       else
         parens ~p fun_priority f "@[%a %a =<< (%a :: IO %a)@]"
           self#printf ()
           self#format_type t
           (self#expr' ~p:nop) expr
-          self#ptype t
+          ptype t
 
   method expr f e = self#expr' ~p:nop f e
   method expr_ f e = self#expr' ~p:fun_priority f e
@@ -489,7 +521,7 @@ class haskellPrinter = object(self)
   method record f li = (* TODO trier les champs dans le bon ordre et parentheser correctement *)
     let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
     Format.fprintf f "@[<v>(%a <$> %a)@]"
-      self#tname t
+      tname t
       (print_list
          (fun f (expr, field) ->
             hsapply ~p:fun_priority f (fun f () -> Format.fprintf f "newIORef") true
@@ -544,38 +576,6 @@ class haskellPrinter = object(self)
          self#isPure hd, (fun ~p f () -> self#expr' ~p  f hd), (); 
          self#isPure v, (fun ~p f () -> self#expr' ~p  f v), ()]
 
-  (** show a type *)
-  method ptype f (t : Type.t ) =
-    match Type.Fixed.unfix t with
-    | Type.Integer -> Format.fprintf f "Int"
-    | Type.String -> Format.fprintf f "String"
-    | Type.Array a -> Format.fprintf f "(IOArray Int %a)" self#ptype a
-    | Type.Void ->  Format.fprintf f "()"
-    | Type.Bool -> Format.fprintf f "Bool"
-    | Type.Char -> Format.fprintf f "Char"
-    | Type.Named n -> self#tname f n
-    | Type.Struct li ->
-      Format.fprintf f "{@[<v 2>@\n%a@\n}@]"
-        (print_list
-           (fun t (name, type_) ->
-              Format.fprintf t "_%s :: IORef %a" name self#ptype type_
-           )
-           (sep "%a,@\n%a")
-        ) li
-    | Type.Enum li ->
-      Format.fprintf f "%a"
-        (print_list
-           (fun t name ->
-              Format.fprintf t "%s" name
-           )
-           (sep "%a@\n| %a")
-        ) li
-    | Type.Lexems -> assert false
-    | Type.Auto -> assert false
-    | Type.Tuple li ->
-      Format.fprintf f "(%a)"
-        (print_list self#ptype sep_c) li
-
   method extract_fun_params e acc = snd @$ self#extract_fun_params' e acc
 
   method extract_fun_params' e acc = match E.unfix e with
@@ -597,17 +597,17 @@ class haskellPrinter = object(self)
   method toplvl_declarety f name ty = match Type.unfix ty with
     | Type.Struct _ ->
       Format.fprintf f "@[<v 2>data %a = %a %a@]@\n  deriving Eq@\n@\n"
-        self#tname name
-        self#tname name 
-        self#ptype ty
+        tname name
+        tname name 
+        ptype ty
     | Type.Enum _ ->
       Format.fprintf f "@[<v 2>data %a = %a@]@\n  deriving Eq@\n@\n"
-        self#tname name 
-        self#ptype ty
+        tname name 
+        ptype ty
     | _ ->
       Format.fprintf f "@[<v 2>type %a = %a@]@\n@\n"
-        self#tname name 
-        self#ptype ty
+        tname name 
+        ptype ty
 
   method decl f d = match d with
     | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
