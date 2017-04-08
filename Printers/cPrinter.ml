@@ -63,24 +63,27 @@ let print_expr config e f p =
     | _ -> print_expr0 config e f prio_parent in
   Fixed.Deep.fold (print_expr0 config) e f p
 
-let rec ptype tyenv f t =
-  match Type.unfix t with
-  | Type.Integer -> Format.fprintf f "int"
-  | Type.String -> Format.fprintf f "char*"
-  | Type.Array a -> Format.fprintf f "%a*" (ptype tyenv) a
-  | Type.Void ->  Format.fprintf f "void"
-  | Type.Bool -> Format.fprintf f "int"
-  | Type.Char -> Format.fprintf f "char"
-  | Type.Named n -> begin match Typer.expand tyenv t
-                                  default_location |> Type.unfix with
-    | Type.Struct _ ->
-      Format.fprintf f "struct %s *" n
-    | Type.Enum _ ->
-      Format.fprintf f "%s" n
+let ptype tyenv f t =
+  let open Type in
+  let open Format in
+  let ptype ty f () = match ty with
+  | Integer -> fprintf f "int"
+  | String -> fprintf f "char*"
+  | Array a -> fprintf f "%a*" a ()
+  | Void ->  fprintf f "void"
+  | Bool -> fprintf f "int"
+  | Char -> fprintf f "char"
+  | Named n -> begin match Typer.expand tyenv (Typer.byname n tyenv)
+                                  default_location |> unfix with
+    | Struct _ ->
+      fprintf f "struct %s *" n
+    | Enum _ ->
+      fprintf f "%s" n
     | _ -> assert false
     end
-  | Type.Enum _ | Type.Struct _ | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
-
+  | Enum _ | Struct _ | Auto | Tuple _ | Lexems -> assert false
+  in Fixed.Deep.fold ptype t f ()
+    
 let def_fields c name f li =
   let open Format in
   print_list
