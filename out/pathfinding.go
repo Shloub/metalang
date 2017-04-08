@@ -53,8 +53,8 @@ func pathfind(tab [][]byte, x int, y int) int{
 }
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  x := 0
-  y := 0
+  var y int
+  var x int
   fmt.Fscanf(reader, "%d", &x)
   skip()
   fmt.Fscanf(reader, "%d", &y)

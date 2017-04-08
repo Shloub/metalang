@@ -70,8 +70,7 @@ sub find{
   }
   return find0($len, $tab, $tab2, 0, 0);
 }
-my $len = 0;
-$len = readint();
+my $len = readint();
 readspaces();
 my $tab = [];
 foreach my $i (0 .. $len - 1)
@@ -79,8 +78,7 @@ foreach my $i (0 .. $len - 1)
     my $tab2 = [];
     foreach my $j (0 .. $i)
     {
-        my $tmp = 0;
-        $tmp = readint();
+        my $tmp = readint();
         readspaces();
         $tab2->[$j] = $tmp;
     }

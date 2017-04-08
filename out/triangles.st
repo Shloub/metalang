@@ -52,14 +52,12 @@ on le retrouve ici : http://projecteuler.net/problem=18
     ^ (self find0: len tab: tab cache: tab2 x: 0 y: 0)
   ]
   main [
-    |tmp tab2 tab len|len := 0.
-    len := self read_int.
+    |tmp tab2 tab len|len := self read_int.
     self skip.
     tab := Array new: len.
     (0 to: (len - 1)) do: [:i|
       tab2 := Array new: (i + 1).
       (0 to: i) do: [:j|
-        tmp := 0.
         tmp := self read_int.
         self skip.
         tab2 at: (j + 1) put: tmp.

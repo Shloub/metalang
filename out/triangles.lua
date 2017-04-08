@@ -51,15 +51,13 @@ function find (len, tab)
           return find0(len, tab, tab2, 0, 0)
       end
       
-      local len = 0
-      len = readint()
+      local len = readint()
       stdinsep()
       local tab = {}
       for i = 0, len - 1 do
           local tab2 = {}
           for j = 0, i do
-              local tmp = 0
-              tmp = readint()
+              local tmp = readint()
               stdinsep()
               tab2[j + 1] = tmp
               end

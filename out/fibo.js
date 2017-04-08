@@ -42,13 +42,10 @@ function fibo0(a, b, i){
     }
     return out0;
 }
-var a = 0;
-var b = 0;
-var i = 0;
-a = read_int_();
+var a = read_int_();
 stdinsep();
-b = read_int_();
+var b = read_int_();
 stdinsep();
-i = read_int_();
+var i = read_int_();
 util.print(fibo0(a, b, i));
 

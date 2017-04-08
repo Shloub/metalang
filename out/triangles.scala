@@ -65,8 +65,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
   
   def main(args : Array[String])
   {
-    var len: Int = 0;
-    len = read_int();
+    var len = read_int();
     skip();
     var tab :Array[Array[Int]] = new Array[Array[Int]](len);
     for (i <- 0 to len - 1)
@@ -74,8 +73,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
         var tab2 :Array[Int] = new Array[Int](i + 1);
         for (j <- 0 to i)
         {
-            var tmp: Int = 0;
-            tmp = read_int();
+            var tmp = read_int();
             skip();
             tab2(j) = tmp;
         }

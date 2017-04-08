@@ -89,11 +89,9 @@ static int readInt(){
   
   public static void Main(String[] args)
   {
-    int x = 0;
-    int y = 0;
-    x = readInt();
+    int x = readInt();
     stdin_sep();
-    y = readInt();
+    int y = readInt();
     stdin_sep();
     char[][] tab = new char[y][];
     for (int i = 0; i < y; i++)

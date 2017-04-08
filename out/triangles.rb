@@ -34,14 +34,12 @@ def find( len, tab )
     }
   return find0(len, tab, tab2, 0, 0)
 end
-len = 0
 len = scanf("%d")[0]
 scanf("%*\n")
 tab = [*0..len-1].map { |i|
   
   tab2 = [*0..i + 1-1].map { |j|
     
-    tmp = 0
     tmp = scanf("%d")[0]
     scanf("%*\n")
     next tmp

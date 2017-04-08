@@ -27,13 +27,10 @@ function fibo0 (a, b, i)
       return out0
   end
   
-  local a = 0
-  local b = 0
-  local i = 0
-  a = readint()
+  local a = readint()
   stdinsep()
-  b = readint()
+  local b = readint()
   stdinsep()
-  i = readint()
+  local i = readint()
   io.write(fibo0(a, b, i))
   

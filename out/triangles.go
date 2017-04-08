@@ -53,14 +53,14 @@ func find(len int, tab [][]int) int{
 }
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  len := 0
+  var len int
   fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab [][]int = make([][]int, len)
   for i := 0; i < len; i++ {
       var tab2 []int = make([]int, i + 1)
       for j := 0; j <= i; j++ {
-          tmp := 0
+          var tmp int
           fmt.Fscanf(reader, "%d", &tmp)
           skip()
           tab2[j] = tmp

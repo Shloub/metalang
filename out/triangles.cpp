@@ -39,7 +39,7 @@ int find(int len, std::vector<std::vector<int>>& tab) {
 }
 
 int main() {
-    int len = 0;
+    int tmp, len;
     std::cin >> len;
     std::vector<std::vector<int>> tab( len );
     for (int i = 0; i < len; i++)
@@ -47,7 +47,6 @@ int main() {
         std::vector<int> tab2( i + 1 );
         for (int j = 0; j <= i; j++)
         {
-            int tmp = 0;
             std::cin >> tmp;
             tab2[j] = tmp;
         }

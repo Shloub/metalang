@@ -42,14 +42,11 @@ La suite de fibonaci
   
   def main(args : Array[String])
   {
-    var a: Int = 0;
-    var b: Int = 0;
-    var i: Int = 0;
-    a = read_int();
+    var a = read_int();
     skip();
-    b = read_int();
+    var b = read_int();
     skip();
-    i = read_int();
+    var i = read_int();
     printf("%d", fibo0(a, b, i));
   }
   

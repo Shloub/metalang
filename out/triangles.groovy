@@ -40,11 +40,11 @@ int find(int len, int[][] tab)
   return find0(len, tab, tab2, 0, 0)
 }
 @Field Scanner scanner = new Scanner(System.in)
-int len = 0
+int len
 if (scanner.hasNext("^-")) {
   scanner.next("^-")
-  len = -scanner.nextInt()
-}else{
+  len = scanner.nextInt()
+} else {
   len = scanner.nextInt()
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
@@ -54,11 +54,11 @@ for (int i = 0; i < len; i++)
     int[] tab2 = new int[i + 1]
     for (int j = 0; j <= i; j++)
     {
-        int tmp = 0
+        int tmp
         if (scanner.hasNext("^-")) {
           scanner.next("^-")
-          tmp = -scanner.nextInt()
-        }else{
+          tmp = scanner.nextInt()
+        } else {
           tmp = scanner.nextInt()
         }
         scanner.findWithinHorizon("[\n\r ]*", 1)

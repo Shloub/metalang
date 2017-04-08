@@ -48,11 +48,11 @@ fibo0 a b i =
         c 0 a b 0
 
 main =
-  do k <- read_int
+  do a <- read_int
      skip_whitespaces
-     l <- read_int
+     b <- read_int
      skip_whitespaces
-     m <- read_int
-     printf "%d" =<< (fibo0 k l m :: IO Int)
+     i <- read_int
+     printf "%d" =<< (fibo0 a b i :: IO Int)
 
 

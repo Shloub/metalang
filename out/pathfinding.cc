@@ -38,8 +38,7 @@ int pathfind(std::vector<std::vector<char> *> * tab, int x, int y) {
 }
 
 int main() {
-    int x = 0;
-    int y = 0;
+    int y, x;
     std::cin >> x >> y;
     std::vector<std::vector<char> *> *tab = new std::vector<std::vector<char> *>( y );
     for (int i = 0; i < y; i++)

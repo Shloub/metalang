@@ -45,8 +45,7 @@ int find(int len, int** tab) {
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int k, l, i, j;
-  int len = 0;
+  int k, l, i, j, tmp, len;
   scanf("%d ", &len);
   int* *tab = calloc(len, sizeof(int*));
   for (i = 0; i < len; i++)
@@ -54,7 +53,6 @@ int main(void){
       int *tab2 = calloc(i + 1, sizeof(int));
       for (j = 0; j <= i; j++)
       {
-          int tmp = 0;
           scanf("%d ", &tmp);
           tab2[j] = tmp;
       }

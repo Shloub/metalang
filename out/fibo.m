@@ -23,9 +23,7 @@ int fibo0(int a, int b, int i) {
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int a = 0;
-  int b = 0;
-  int i = 0;
+  int i, b, a;
   scanf("%d %d %d", &a, &b, &i);
   printf("%d", fibo0(a, b, i));
   [pool drain];

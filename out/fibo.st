@@ -33,10 +33,7 @@ La suite de fibonaci
     ^ out0
   ]
   main [
-    |i b a|a := 0.
-    b := 0.
-    i := 0.
-    a := self read_int.
+    |i b a|a := self read_int.
     self skip.
     b := self read_int.
     self skip.

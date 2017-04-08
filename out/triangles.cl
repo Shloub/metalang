@@ -80,8 +80,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
   
 ))
 (progn
-  (let ((len 0))
-    (setq len (mread-int))
+  (let ((len (mread-int)))
     (mread-blank)
     (let
      ((tab (array_init
@@ -93,8 +92,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
                            (+ i 1)
                            (function (lambda (j)
                            (block lambda_4
-                             (let ((tmp 0))
-                               (setq tmp (mread-int))
+                             (let ((tmp (mread-int)))
                                (mread-blank)
                                (return-from lambda_4 tmp)
                              )))

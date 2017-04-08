@@ -19,27 +19,27 @@ int fibo0(int a, int b, int i)
   return out0
 }
 @Field Scanner scanner = new Scanner(System.in)
-int a = 0
-int b = 0
-int i = 0
+int a
 if (scanner.hasNext("^-")) {
   scanner.next("^-")
-  a = -scanner.nextInt()
-}else{
+  a = scanner.nextInt()
+} else {
   a = scanner.nextInt()
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
+int b
 if (scanner.hasNext("^-")) {
   scanner.next("^-")
-  b = -scanner.nextInt()
-}else{
+  b = scanner.nextInt()
+} else {
   b = scanner.nextInt()
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
+int i
 if (scanner.hasNext("^-")) {
   scanner.next("^-")
-  i = -scanner.nextInt()
-}else{
+  i = scanner.nextInt()
+} else {
   i = scanner.nextInt()
 }
 print(fibo0(a, b, i))

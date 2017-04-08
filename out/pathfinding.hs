@@ -83,16 +83,16 @@ pathfind tab x y =
      pathfind_aux cache tab x y 0 0
 
 main =
-  do e <- read_int
+  do x <- read_int
      skip_whitespaces
-     f <- read_int
+     y <- read_int
      skip_whitespaces
-     tab <- array_init f (\ i ->
-                            do tab2 <- array_init e (\ j ->
+     tab <- array_init y (\ i ->
+                            do tab2 <- array_init x (\ j ->
                                                        getChar)
                                skip_whitespaces
                                return tab2)
-     result <- pathfind tab e f
+     result <- pathfind tab x y
      printf "%d" (result :: Int) :: IO ()
 
 

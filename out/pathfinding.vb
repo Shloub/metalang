@@ -87,11 +87,9 @@ End Function
         Return pathfind_aux(cache, tab, x, y, 0, 0)
     End Function
     Sub Main()
-      Dim x As Integer = 0
-      Dim y As Integer = 0
-      x = readInt
+      Dim x As Integer = readInt
       stdin_sep
-      y = readInt
+      Dim y As Integer = readInt
       stdin_sep
       Dim tab(y)() As Char
       For i As Integer = 0 To y - 1

@@ -43,9 +43,7 @@ int pathfind(char** tab, int x, int y) {
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);
 }int main(void) {
-     int i, j;
-     int x = 0;
-     int y = 0;
+     int i, j, y, x;
      scanf("%d %d ", &x, &y);
      char* *tab = calloc(y, sizeof(char*));
      for (i = 0; i < y; i++)

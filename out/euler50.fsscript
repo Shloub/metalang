@@ -32,17 +32,17 @@ let () =
   let sum = Array.init nprimes (fun i_ ->
     primes.[i_])
   let maxl = ref( 0 )
-  let process = ref( true )
+  let process0 = ref( true )
   let stop = ref( maximumprimes - 1 )
   let len = ref( 1 )
   let resp = ref( 1 )
-  while (!process) do
-    process := false
+  while (!process0) do
+    process0 := false
     for i = 0 to (!stop) do
       if i + (!len) < nprimes then
         sum.[i] <- sum.[i] + primes.[i + (!len)]
         if maximumprimes > sum.[i] then
-          process := true
+          process0 := true
           if era.[sum.[i]] = sum.[i] then
             maxl := (!len)
             resp := sum.[i]

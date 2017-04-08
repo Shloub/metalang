@@ -36,9 +36,6 @@ function fibo0($a, $b, $i) {
     }
     return $out0;
 }
-$a = 0;
-$b = 0;
-$i = 0;
 list($a) = scan("%d");
 scantrim();
 list($b) = scan("%d");
