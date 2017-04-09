@@ -281,7 +281,7 @@ let languages, printers =
     "rb",      (f, clike_passes ~tuple:f ~record:f ~array:f ~mergeif:f ~arrayconst:f ~arrayindex1:f ~opselfaffect:noincr        ~clikeloop:f ~decrlooplimit:0) => justprog RbPrinter.prog ;
     "fun.ml",  (t, fun_passes ~rename:f ~fun_inline:f ~detect_effects:f ~curry:t  ~macrotize:t) => justprog OcamlFunPrinter.prog;
     "rkt",     (t, fun_passes ~rename:f ~fun_inline:f ~detect_effects:f ~curry:f ~macrotize:t ) => typedp RacketPrinter.prog;
-    "hs",      (f, fun_passes ~rename:t  ~fun_inline:t  ~detect_effects:t  ~curry:t  ~macrotize:t) => obj new HaskellPrinter.haskellPrinter ;
+    "hs",      (f, fun_passes ~rename:t  ~fun_inline:t  ~detect_effects:t  ~curry:t  ~macrotize:t) => typedp HaskellPrinter.prog
   ] in
   let langs : string list = List.map fst ls |> List.sort String.compare in
   let map = L.from_list ls
