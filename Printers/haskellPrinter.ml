@@ -317,8 +317,8 @@ class haskellPrinter = object(self)
     | true, true, _, _ -> parens p cq f "%a %a %a" (self#expr q1) a pbinop op (self#expr q2)  b
     | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op (self#expr fun_priority) a (self#expr fun_priority) b
     | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op2 (self#expr fun_priority) b (self#expr fun_priority) a
-    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" pbinopf op self#eM_ a self#eM_ b
-    | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" self#eM_ a s self#eM_ b
+    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" pbinopf op (self#eM fun_priority) a (self#eM fun_priority) b
+    | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" (self#eM fun_priority) a s (self#eM fun_priority) b
 
   method unop p f a op =
     let pr = match op with
@@ -332,11 +332,11 @@ class haskellPrinter = object(self)
 
   method fun_ p f params e =
     let pparams, e = extract_fun_params (E.fun_ params e) (fun f () -> ()) in
-    parens p lambda_priority f "@[<v 2>\\%a ->@\n%a@]" pparams () self#eM e
+    parens p lambda_priority f "@[<v 2>\\%a ->@\n%a@]" pparams () (self#eM nop) e
 
   method funtuple p f params e =
     let pparams, e = extract_fun_params (E.funtuple params e) (fun f () -> ()) in
-    parens p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () self#eM e
+    parens p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () (self#eM nop) e
 
   method letrecin p f name params e1 e2 = match params with
     | [] -> parens p (fun_priority -1) f "let %a @[<v>() =@\n%a in@\n%a@]"
@@ -357,14 +357,12 @@ class haskellPrinter = object(self)
 
   method isPure expr = not (self#isSideEffect expr)
 
-  method eM_ f expr = self#eM' fun_priority f expr
-  method eM f expr = self#eM' nop f expr
-  method eM' p f expr =
+  method eM p f expr =
     match E.unfix expr with
-    | E.Comment (s, c) -> self#comment (self#eM' p) f s c
+    | E.Comment (s, c) -> self#comment (self#eM p) f s c
     | E.Block _ -> self#expr p f expr
     | E.LetIn (name, v, e) ->
-      if self#isPure expr then self#letin p f name v e self#eM
+      if self#isPure expr then self#letin p f name v e (self#eM nop)
       else self#expr p f expr
     | _ ->
       if self#isSideEffect expr then self#expr p f expr
@@ -378,7 +376,7 @@ class haskellPrinter = object(self)
     let code_to_expand = List.fold_left
         (fun acc (clang, expantion) ->
            if clang = "" || clang = lang then
-             if acc = None then Some (self#eM, expantion) else acc
+             if acc = None then Some (self#eM nop, expantion) else acc
            else if canBePure && ( clang = "" || clang = lang  ^ "_pure") then
              Some ((self#expr fun_priority), expantion)
            else acc
@@ -421,12 +419,12 @@ class haskellPrinter = object(self)
            let isfun, (pparams, a) = extract_fun_params' v (fun f () -> ()) in
            if self#isPure v then
              Format.fprintf f "@[<h>let %a%a = @[<v>%a@]@]@\n%a" binding s pparams ()
-               (if isfun then self#eM else (self#expr nop)) a
+               (if isfun then self#eM nop else self#expr nop) a
                self#blockContent [e]
            else
              Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" binding s pparams () (self#expr nop) a
                self#blockContent [e]
-         | _ -> self#eM f e
+         | _ -> self#eM nop f e
       ) sep_nl f li
 
   method block p f li =
@@ -494,9 +492,9 @@ class haskellPrinter = object(self)
       end
     | E.Comment (s, c) -> self#comment (self#expr p) f s c
     | E.If (e1, e2, e3) ->
-      let pr = if self#isPure e2 && self#isPure e3 then (self#expr nop) else self#eM in
+      let pr = if self#isPure e2 && self#isPure e3 then self#expr nop else self#eM nop in
       if self#isPure e1 then parens p (-1) f "@[<v>if %a@\nthen %a@\nelse %a@]" (self#expr nop) e1 pr e2 pr e3
-      else parens p (fun_priority - 1) f "@[<h>ifM @[<v>%a@\n%a@\n%a@]@]" self#eM_ e1 self#eM_ e2 self#eM_ e3
+      else parens p (fun_priority - 1) f "@[<h>ifM @[<v>%a@\n%a@\n%a@]@]" (self#eM fun_priority) e1 (self#eM fun_priority) e2 (self#eM fun_priority) e3
     | E.Print (expr, t) ->
       begin
         match E.unfix expr with
@@ -590,7 +588,7 @@ class haskellPrinter = object(self)
   method decl f d = match d with
     | AstFun.Declaration (name, e) ->
       let pparams, e = extract_fun_params e (fun f () -> ()) in
-      Format.fprintf f "@[<v 2>%a%a =@\n%a@]@\n" binding name pparams () self#eM e
+      Format.fprintf f "@[<v 2>%a%a =@\n%a@]@\n" binding name pparams () (self#eM nop) e
     | AstFun.DeclareType (name, ty) ->
       begin match Type.unfix ty with
         | Type.Struct _ ->
