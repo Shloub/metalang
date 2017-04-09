@@ -293,6 +293,12 @@ let header binand binor array_init array_make ifm read_array write_array f opts 
       ) ()
 
 
+let isSideEffect side_effects expr = match IntMap.find (E.Fixed.annot expr) side_effects with
+  | AstFun.EMacro -> false
+  | AstFun.EPure -> false
+  | AstFun.EEffect -> true
+
+
 (*
   if p1 >= p2 then
     Format.fprintf f "(%a)" f e else p f e
@@ -311,32 +317,11 @@ class haskellPrinter = object(self)
   val mutable recursives_definitions = StringSet.empty
   method setRecursive b = recursives_definitions <- b
 
-  method binop p f a op b = 
-    let cq, q1, q2 = binop_priority op in
-    match self#isPure a, self#isPure b, binopShortCut op, commutative op with
-    | true, true, _, _ -> parens p cq f "%a %a %a" (self#expr q1) a pbinop op (self#expr q2)  b
-    | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op (self#expr fun_priority) a (self#expr fun_priority) b
-    | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op2 (self#expr fun_priority) b (self#expr fun_priority) a
-    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" pbinopf op (self#eM fun_priority) a (self#eM fun_priority) b
-    | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" (self#eM fun_priority) a s (self#eM fun_priority) b
-
-  method unop p f a op =
-    let pr = match op with
-      | Ast.Expr.Neg -> 2
-      | Ast.Expr.Not -> fun_priority
-    in
-    if self#isPure a then parens p pr f "%a %a" punop op (self#expr pr) a
-    else parens p (fun_priority - 1) f "fmap %a %a"punopf op (self#expr fun_priority) a
-
   method comment fe f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str fe c
 
   method fun_ p f params e =
     let pparams, e = extract_fun_params (E.fun_ params e) (fun f () -> ()) in
     parens p lambda_priority f "@[<v 2>\\%a ->@\n%a@]" pparams () (self#eM nop) e
-
-  method funtuple p f params e =
-    let pparams, e = extract_fun_params (E.funtuple params e) (fun f () -> ()) in
-    parens p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () (self#eM nop) e
 
   method letrecin p f name params e1 e2 = match params with
     | [] -> parens p (fun_priority -1) f "let %a @[<v>() =@\n%a in@\n%a@]"
@@ -350,12 +335,7 @@ class haskellPrinter = object(self)
         (self#expr nop) e1
         (self#expr nop) e2
 
-  method isSideEffect expr = match IntMap.find (E.Fixed.annot expr) side_effects with
-    | AstFun.EMacro -> false
-    | AstFun.EPure -> false
-    | AstFun.EEffect -> true
-
-  method isPure expr = not (self#isSideEffect expr)
+  method isPure expr = not (isSideEffect side_effects expr)
 
   method eM p f expr =
     match E.unfix expr with
@@ -365,10 +345,8 @@ class haskellPrinter = object(self)
       if self#isPure expr then self#letin p f name v e (self#eM nop)
       else self#expr p f expr
     | _ ->
-      if self#isSideEffect expr then self#expr p f expr
+      if isSideEffect side_effects expr then self#expr p f expr
       else parens p (fun_priority - 1) f "return %a" (self#expr fun_priority) expr
-
-  method typename f s = Format.fprintf f "%s" s
 
   method expand_macro_call f name t params code li =
     let lang = self#lang () in
@@ -430,36 +408,47 @@ class haskellPrinter = object(self)
   method block p f li =
     parens p (fun_priority -1) f "do @[<v>%a@]" self#blockContent li
 
-  method print_format f formats =
-    Format.fprintf f "%S" (format_to_string formats)
-
-  method printf f () = Format.fprintf f "printf"
-  method multiprint p f formats exprs =
-    let side_effect =  List.exists (fun (e, _) -> self#isSideEffect e) exprs in
-    let exprs = List.map (fun (e, ty) ->
-        let pure = self#isPure e in
-        pure, (fun p f () ->
-            if pure then
-              Format.fprintf f "(%a::%a)" (self#expr p) e ptype ty
-            else Format.fprintf f "(%a::IO %a)" (self#expr p) e ptype ty
-          ), ()
-      ) exprs in
-    let params = (true, (fun p f () -> self#print_format f formats), ()) :: exprs in
-    parens p fun_priority f (if side_effect then "%a" else "%a :: IO()")
-      (fun f () -> hsapply p f self#printf true params) ()
-
   method expr p f e = match E.unfix e with
     | E.ApplyMacro (fun_, li) ->
       begin match Ast.BindingMap.find_opt fun_ macros with
         | None -> assert false
         | Some ((t, params, code)) -> self#expand_macro_call f fun_ t params code li
       end
-    | E.MultiPrint (formats, exprs) -> self#multiprint p f formats exprs
+    | E.MultiPrint (formats, exprs) ->
+      let side_effect =  List.exists (fun (e, _) -> isSideEffect side_effects e) exprs in
+      let exprs = List.map (fun (e, ty) ->
+          let pure = self#isPure e in
+          pure, (fun p f () ->
+              if pure then
+                Format.fprintf f "(%a::%a)" (self#expr p) e ptype ty
+              else Format.fprintf f "(%a::IO %a)" (self#expr p) e ptype ty
+            ), ()
+        ) exprs in
+      let params = (true, (fun p f () -> 
+          Format.fprintf f "%S" (format_to_string formats)), ()) :: exprs in
+      parens p fun_priority f (if side_effect then "%a" else "%a :: IO()")
+        (fun f () -> hsapply p f (fun f () -> Format.fprintf f "printf") true params) ()      
     | E.LetRecIn (name, params, e1, e2) -> self#letrecin p f name params e1 e2
-    | E.BinOp (a, op, b) -> self#binop p f a op b
-    | E.UnOp (a, op) -> self#unop p f a op
+    | E.BinOp (a, op, b) ->
+      let cq, q1, q2 = binop_priority op in
+      begin match self#isPure a, self#isPure b, binopShortCut op, commutative op with
+        | true, true, _, _ -> parens p cq f "%a %a %a" (self#expr q1) a pbinop op (self#expr q2)  b
+        | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op (self#expr fun_priority) a (self#expr fun_priority) b
+        | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op2 (self#expr fun_priority) b (self#expr fun_priority) a
+        | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" pbinopf op (self#eM fun_priority) a (self#eM fun_priority) b
+        | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" (self#eM fun_priority) a s (self#eM fun_priority) b
+      end
+    | E.UnOp (a, op) ->
+      let pr = match op with
+        | Ast.Expr.Neg -> 2
+        | Ast.Expr.Not -> fun_priority
+      in
+      if self#isPure a then parens p pr f "%a %a" punop op (self#expr pr) a
+      else parens p (fun_priority - 1) f "fmap %a %a"punopf op (self#expr fun_priority) a
     | E.Fun (params, e) -> self#fun_ p f params e
-    | E.FunTuple (params, e) -> self#funtuple p f params e
+    | E.FunTuple (params, e) ->
+      let pparams, e = extract_fun_params (E.funtuple params e) (fun f () -> ()) in
+      parens p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () (self#eM nop) e
     | E.Apply (e, li) ->
       let default () = let li = List.map (fun e -> self#isPure e, self#expr, e) li in
         hsapply p f (fun f () -> (self#expr nop)f e) true li in
@@ -498,20 +487,31 @@ class haskellPrinter = object(self)
     | E.Print (expr, t) ->
       begin
         match E.unfix expr with
-        | E.Lief (E.String s) -> parens p fun_priority f "%a %S :: IO ()" self#printf () s
+        | E.Lief (E.String s) -> parens p fun_priority f "printf %S :: IO ()"  s
         | _ ->
           if self#isPure expr then
-            parens p fun_priority f "@[%a %S (%a :: %a) :: IO ()@]"
-              self#printf () (format_type t)
+            parens p fun_priority f "@[printf %S (%a :: %a) :: IO ()@]" (format_type t)
               (self#expr nop) expr
               ptype t
           else
-            parens p fun_priority f "@[%a %S =<< (%a :: IO %a)@]"
-              self#printf () (format_type t)
+            parens p fun_priority f "@[printf %S =<< (%a :: IO %a)@]" (format_type t)
               (self#expr nop) expr
               ptype t
       end
-    | E.ReadIn (ty, next) -> self#read p f ty next
+    | E.ReadIn (ty, next) ->
+      begin
+        match Type.unfix ty, E.unfix next with
+        | t, E.Fun ([o], E.Fixed.F(_, E.Lief (E.Binding o2) )) when o = o2 ->
+          begin match t with
+            | Type.Char -> Format.fprintf f "getChar"
+            | Type.Integer -> Format.fprintf f "read_int"
+            | _ -> assert false
+          end
+        | _, E.Fun ([_], _ ) -> self#block p f [ E.readin next ty]
+        | Type.Integer, _ ->  parens p (fun_priority-1) f "@[<h>read_int >>=@[<v> (%a)@]@]" (self#expr nop) next
+        | Type.Char, _ -> parens p (fun_priority-1) f "@[<h>getChar >>=@[<v> (%a)@]@]" (self#expr nop) next
+        | _ -> assert false
+      end
     | E.Skip ->  Format.fprintf f "skip_whitespaces"
     | E.Block [e] -> self#expr p f e
     | E.Block li -> self#block p f li
@@ -562,20 +562,6 @@ class haskellPrinter = object(self)
     parens p (fun_priority -1) f "@[<h>let %a%a = @[<v>%a@\nin %a@]@]"
       binding name pparams () (self#expr nop) v pexpr e
 
-  method read p f ty next =
-    match Type.unfix ty, E.unfix next with
-
-    | t, E.Fun ([o], E.Fixed.F(_, E.Lief (E.Binding o2) )) when o = o2 ->
-      begin match t with
-        | Type.Char -> Format.fprintf f "getChar"
-        | Type.Integer -> Format.fprintf f "read_int"
-        | _ -> assert false
-      end
-    | _, E.Fun ([_], _ ) -> self#block p f [ E.readin next ty]
-    | Type.Integer, _ ->  parens p (fun_priority-1) f "@[<h>read_int >>=@[<v> (%a)@]@]" (self#expr nop) next
-    | Type.Char, _ -> parens p (fun_priority-1) f "@[<h>getChar >>=@[<v> (%a)@]@]" (self#expr nop) next
-    | _ -> assert false
-
   method arrayindex p f tab indexes =
     match List.rev indexes with
     | [] -> self#expr p f tab
@@ -615,14 +601,14 @@ class haskellPrinter = object(self)
     side_effects <- prog.AstFun.side_effects;
     let unsafeop op = AstFun.existsExpr (fun e ->
         match E.unfix e with
-        | E.BinOp (a, op, b) -> self#isSideEffect a || self#isSideEffect b
+        | E.BinOp (a, op, b) -> isSideEffect side_effects a || isSideEffect side_effects b
         | _ -> false
       ) prog.AstFun.declarations
     in
     let need_readint = Ast.TypeSet.mem (Type.integer) prog.AstFun.options.AstFun.reads in
     let ifm = prog.AstFun.options.AstFun.hasSkip || need_readint || AstFun.existsExpr (fun e ->
         match E.unfix e with
-        | E.If (a, b, c) -> self#isSideEffect a || self#isSideEffect b || self#isSideEffect c
+        | E.If (a, b, c) -> isSideEffect side_effects a || isSideEffect side_effects b || isSideEffect side_effects c
         | _ -> false
       ) prog.AstFun.declarations in
     let read_array = AstFun.existsExpr (fun e ->match E.unfix e with
