@@ -186,6 +186,30 @@ let commutative = function
     | Ast.Expr.Mod -> true
     | _ -> false
 
+
+let unopstr = function
+  | Ast.Expr.Neg -> "-"
+  | Ast.Expr.Not -> "not"
+
+let unopstrf = function
+  | Ast.Expr.Neg -> "(-)"
+  | Ast.Expr.Not -> "not"
+
+
+let pbinopf f op =
+  if binopf op
+  then Format.fprintf f "%s" (binopstr op)
+  else Format.fprintf f "(%s)" (binopstr op)
+
+let pbinop f op =
+  if binopf op
+  then Format.fprintf f "`%s`" (binopstr op)
+  else Format.fprintf f "%s" (binopstr op)
+
+let punop f op = Format.fprintf f "%s" (unopstr op)
+let punopf f op = Format.fprintf f "%s" (unopstrf op)
+
+
 let tname f name = Format.fprintf f "%s" (String.capitalize name)
 let ptype f t =
   let open Type in
@@ -221,6 +245,54 @@ let ptype f t =
         (print_list (fun f g -> g f ()) sep_c) li
   in Fixed.Deep.fold ptype t f ()
 
+let binding f s = match s with
+  | Ast.UserName s -> Format.fprintf f "%s" s
+  | Ast.InternalName i -> Format.fprintf f "internal_%d" i
+
+let rec extract_fun_params' e acc = match E.unfix e with
+    | E.Fun ([], e) ->
+      let acc f () = Format.fprintf f "%a ()" acc ()
+      in true, extract_fun_params e acc
+    | E.Fun (params, e) ->
+      let acc f () = Format.fprintf f "%a %a" acc () (print_list binding sep_space) params
+      in true, extract_fun_params e acc
+    | E.FunTuple (params, e) ->
+      let acc f () = Format.fprintf f "%a (%a)" acc () (print_list binding sep_c) params
+      in true, extract_fun_params e acc
+    | _ -> false, (acc, e)
+and extract_fun_params e acc = snd @$ extract_fun_params' e acc
+
+let header binand binor array_init array_make ifm read_array write_array f opts =
+    let need_stdinsep = opts.AstFun.hasSkip in
+    let need_readint = Ast.TypeSet.mem (Type.integer) opts.AstFun.reads in
+    let imports = [
+      "Text.Printf";
+      "Control.Applicative";
+      "Control.Monad";
+      "Data.Array.MArray";
+      "Data.Array.IO";
+      "Data.Char";
+      "System.IO";
+      "Data.IORef"
+    ] in
+    Format.fprintf f "@[%a@]@\n%a%a%a%a%a%a%a%a@\nmain :: IO ()"
+      (print_list (fun f s -> Format.fprintf f "import %s" s) sep_nl) imports
+      (fun f () -> if binand then Format.fprintf f "%s@\n" prelude_and) ()
+      (fun f () -> if binor then Format.fprintf f "%s@\n" prelude_or) ()
+      (fun f () -> if ifm then Format.fprintf f "%s@\n" prelude_ifm) ()
+      (fun f () -> if need_stdinsep then Format.fprintf f "%s@\n" prelude_skip) ()
+      (fun f () -> if need_readint then Format.fprintf f "%s@\n" prelude_readint) ()
+      (fun f () -> if write_array then Format.fprintf f "%s@\n" prelude_writeIOA) ()
+      (fun f () -> if read_array then Format.fprintf f "%s@\n" prelude_readIOA) ()
+      (fun f () ->
+         match array_init, array_make with
+         | (true, true) -> Format.fprintf f "%s@\n%s@\n" array_init_withenv array_init1
+         | true, false -> Format.fprintf f "%s@\n" array_init2
+         | false, true -> Format.fprintf f "%s@\n" array_init_withenv
+         | false, false -> ()
+      ) ()
+
+
 (*
   if p1 >= p2 then
     Format.fprintf f "(%a)" f e else p f e
@@ -239,34 +311,13 @@ class haskellPrinter = object(self)
   val mutable recursives_definitions = StringSet.empty
   method setRecursive b = recursives_definitions <- b
 
-  method pbinopf f op =
-    if binopf op
-    then Format.fprintf f "%s" (binopstr op)
-    else Format.fprintf f "(%s)" (binopstr op)
-
-  method pbinop f op =
-    if binopf op
-    then Format.fprintf f "`%s`" (binopstr op)
-    else Format.fprintf f "%s" (binopstr op)
-
-  method unopstr = function
-    | Ast.Expr.Neg -> "-"
-    | Ast.Expr.Not -> "not"
-
-  method unopstrf = function
-    | Ast.Expr.Neg -> "(-)"
-    | Ast.Expr.Not -> "not"
-
-  method punop f op = Format.fprintf f "%s" (self#unopstr op)
-  method punopf f op = Format.fprintf f "%s" (self#unopstrf op)
-
   method binop p f a op b = 
     let cq, q1, q2 = binop_priority op in
     match self#isPure a, self#isPure b, binopShortCut op, commutative op with
-    | true, true, _, _ -> parens p cq f "%a %a %a" (self#expr q1) a self#pbinop op (self#expr q2)  b
-    | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op (self#expr fun_priority) a (self#expr fun_priority) b
-    | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op2 (self#expr fun_priority) b (self#expr fun_priority) a
-    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" self#pbinopf op self#eM_ a self#eM_ b
+    | true, true, _, _ -> parens p cq f "%a %a %a" (self#expr q1) a pbinop op (self#expr q2)  b
+    | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op (self#expr fun_priority) a (self#expr fun_priority) b
+    | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op2 (self#expr fun_priority) b (self#expr fun_priority) a
+    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" pbinopf op self#eM_ a self#eM_ b
     | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" self#eM_ a s self#eM_ b
 
   method unop p f a op =
@@ -274,28 +325,28 @@ class haskellPrinter = object(self)
       | Ast.Expr.Neg -> 2
       | Ast.Expr.Not -> fun_priority
     in
-    if self#isPure a then parens p pr f "%a %a" self#punop op (self#expr pr) a
-    else parens p (fun_priority - 1) f "fmap %a %a"self#punopf op (self#expr fun_priority) a
+    if self#isPure a then parens p pr f "%a %a" punop op (self#expr pr) a
+    else parens p (fun_priority - 1) f "fmap %a %a"punopf op (self#expr fun_priority) a
 
   method comment fe f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str fe c
 
   method fun_ p f params e =
-    let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
+    let pparams, e = extract_fun_params (E.fun_ params e) (fun f () -> ()) in
     parens p lambda_priority f "@[<v 2>\\%a ->@\n%a@]" pparams () self#eM e
 
   method funtuple p f params e =
-    let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
+    let pparams, e = extract_fun_params (E.funtuple params e) (fun f () -> ()) in
     parens p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () self#eM e
 
   method letrecin p f name params e1 e2 = match params with
     | [] -> parens p (fun_priority -1) f "let %a @[<v>() =@\n%a in@\n%a@]"
-              self#binding name
+              binding name
               (self#expr nop) e1
               (self#expr nop) e2
     | _ ->
       parens p (fun_priority -1) f "let %a @[<v>%a =@\n%a in@\n%a@]"
-        self#binding name
-        (print_list self#binding sep_space) params
+        binding name
+        (print_list binding sep_space) params
         (self#expr nop) e1
         (self#expr nop) e2
 
@@ -320,10 +371,6 @@ class haskellPrinter = object(self)
       else parens p (fun_priority - 1) f "return %a" (self#expr fun_priority) expr
 
   method typename f s = Format.fprintf f "%s" s
-
-  method binding f s = match s with
-    | Ast.UserName s -> Format.fprintf f "%s" s
-    | Ast.InternalName i -> Format.fprintf f "internal_%d" i
 
   method expand_macro_call f name t params code li =
     let lang = self#lang () in
@@ -362,22 +409,22 @@ class haskellPrinter = object(self)
          | E.ReadIn( Type.Fixed.F(_, Type.Integer),
                      E.Fixed.F(_, E.Fun ( [name], next))
                    ) ->
-           Format.fprintf f "@[<h>%a <- read_int@]@\n%a" self#binding name
+           Format.fprintf f "@[<h>%a <- read_int@]@\n%a" binding name
              self#blockContent [next]
          | E.ReadIn( Type.Fixed.F(_, Type.Char),
                      E.Fixed.F(_, E.Fun ( [name], next))
                    ) ->
-           Format.fprintf f "@[<h>%a <- getChar@]@\n%a" self#binding name
+           Format.fprintf f "@[<h>%a <- getChar@]@\n%a" binding name
              self#blockContent [next]
          | E.Block li -> self#blockContent f li
          | E.LetIn (s, v, e) ->
-           let isfun, (pparams, a) = self#extract_fun_params' v (fun f () -> ()) in
+           let isfun, (pparams, a) = extract_fun_params' v (fun f () -> ()) in
            if self#isPure v then
-             Format.fprintf f "@[<h>let %a%a = @[<v>%a@]@]@\n%a" self#binding s pparams ()
+             Format.fprintf f "@[<h>let %a%a = @[<v>%a@]@]@\n%a" binding s pparams ()
                (if isfun then self#eM else (self#expr nop)) a
                self#blockContent [e]
            else
-             Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" self#binding s pparams () (self#expr nop) a
+             Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" binding s pparams () (self#expr nop) a
                self#blockContent [e]
          | _ -> self#eM f e
       ) sep_nl f li
@@ -402,21 +449,6 @@ class haskellPrinter = object(self)
     let params = (true, (fun p f () -> self#print_format f formats), ()) :: exprs in
     parens p fun_priority f (if side_effect then "%a" else "%a :: IO()")
       (fun f () -> hsapply p f self#printf true params) ()
-
-  method print p f expr t =
-    match E.unfix expr with
-    | E.Lief (E.String s) -> parens p fun_priority f "%a %S :: IO ()" self#printf () s
-    | _ ->
-      if self#isPure expr then
-        parens p fun_priority f "@[%a %S (%a :: %a) :: IO ()@]"
-          self#printf () (format_type t)
-          (self#expr nop) expr
-          ptype t
-      else
-        parens p fun_priority f "@[%a %S =<< (%a :: IO %a)@]"
-          self#printf () (format_type t)
-          (self#expr nop) expr
-          ptype t
 
   method expr p f e = match E.unfix e with
     | E.ApplyMacro (fun_, li) ->
@@ -458,19 +490,42 @@ class haskellPrinter = object(self)
         | E.Bool true -> Format.fprintf f "True"
         | E.Bool false -> Format.fprintf f "False"
         | E.Enum s -> Format.fprintf f "%s" s
-        | E.Binding s -> self#binding f s
+        | E.Binding s -> binding f s
       end
     | E.Comment (s, c) -> self#comment (self#expr p) f s c
     | E.If (e1, e2, e3) ->
       let pr = if self#isPure e2 && self#isPure e3 then (self#expr nop) else self#eM in
       if self#isPure e1 then parens p (-1) f "@[<v>if %a@\nthen %a@\nelse %a@]" (self#expr nop) e1 pr e2 pr e3
       else parens p (fun_priority - 1) f "@[<h>ifM @[<v>%a@\n%a@\n%a@]@]" self#eM_ e1 self#eM_ e2 self#eM_ e3
-    | E.Print (e, ty) -> self#print p f e ty
+    | E.Print (expr, t) ->
+      begin
+        match E.unfix expr with
+        | E.Lief (E.String s) -> parens p fun_priority f "%a %S :: IO ()" self#printf () s
+        | _ ->
+          if self#isPure expr then
+            parens p fun_priority f "@[%a %S (%a :: %a) :: IO ()@]"
+              self#printf () (format_type t)
+              (self#expr nop) expr
+              ptype t
+          else
+            parens p fun_priority f "@[%a %S =<< (%a :: IO %a)@]"
+              self#printf () (format_type t)
+              (self#expr nop) expr
+              ptype t
+      end
     | E.ReadIn (ty, next) -> self#read p f ty next
     | E.Skip ->  Format.fprintf f "skip_whitespaces"
     | E.Block [e] -> self#expr p f e
     | E.Block li -> self#block p f li
-    | E.Record li -> self#record f li
+    | E.Record li -> (* TODO trier les champs dans le bon ordre et parentheser correctement *)
+      let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
+      Format.fprintf f "@[<v>(%a <$> %a)@]"
+        tname t
+        (print_list
+           (fun f (expr, field) ->
+              hsapply fun_priority f (fun f () -> Format.fprintf f "newIORef") true
+                [self#isPure expr, self#expr, expr])
+           (sep "%a <*> %a")) li
     | E.RecordAccess (record, field) ->
       hsapply p f (fun f () -> Format.fprintf f "readIORef") true
         [self#isPure record, (fun p f () ->
@@ -482,29 +537,32 @@ class haskellPrinter = object(self)
              [self#isPure record, self#expr, record]), ();
        self#isPure value, (fun p f () -> self#expr p f value), ()
       ]
-    | E.ArrayMake (len, lambda, env) -> self#arraymake p f len lambda env
-    | E.ArrayInit (len, lambda) -> self#arrayinit p f len lambda
+    | E.ArrayMake (len, lambda, env) ->
+      let f' e = self#isPure e, self#expr, e in    
+      hsapply p f (fun f () -> Format.fprintf f "array_init_withenv") true [f' len; f' lambda; f' env]
+    | E.ArrayInit (len, lambda) ->
+      let f' e = self#isPure e, self#expr, e in    
+      hsapply p f (fun f () -> Format.fprintf f "array_init") true [f' len; f' lambda]      
     | E.ArrayAccess (tab, indexes) -> self#arrayindex p f tab indexes
-    | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect p f tab indexes v
+    | E.ArrayAffect (tab, indexes, v) ->
+      begin match List.rev indexes with
+        | [] -> assert false
+        | hd::tl -> let tl = List.rev tl in
+          let array_pure = self#isPure tab && List.for_all self#isPure tl in
+          hsapply p f (fun f () -> Format.fprintf f "writeIOA") true
+            [array_pure, (fun p f () -> self#arrayindex p f tab tl), ();
+             self#isPure hd, (fun p f () -> self#expr p  f hd), (); 
+             self#isPure v, (fun p f () -> self#expr p  f v), ()]
+      end
     | E.LetIn (name, v, e') ->
       if self#isPure e then
         self#letin p f name v e' (self#expr nop)
       else self#block p f [e]
 
   method letin p f name v e pexpr =
-    let pparams, v = self#extract_fun_params v (fun f () -> ()) in
+    let pparams, v = extract_fun_params v (fun f () -> ()) in
     parens p (fun_priority -1) f "@[<h>let %a%a = @[<v>%a@\nin %a@]@]"
-      self#binding name pparams () (self#expr nop) v pexpr e
-
-  method record f li = (* TODO trier les champs dans le bon ordre et parentheser correctement *)
-    let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
-    Format.fprintf f "@[<v>(%a <$> %a)@]"
-      tname t
-      (print_list
-         (fun f (expr, field) ->
-            hsapply fun_priority f (fun f () -> Format.fprintf f "newIORef") true
-              [self#isPure expr, self#expr, expr])
-         (sep "%a <*> %a")) li
+      binding name pparams () (self#expr nop) v pexpr e
 
   method read p f ty next =
     match Type.unfix ty, E.unfix next with
@@ -520,14 +578,6 @@ class haskellPrinter = object(self)
     | Type.Char, _ -> parens p (fun_priority-1) f "@[<h>getChar >>=@[<v> (%a)@]@]" (self#expr nop) next
     | _ -> assert false
 
-  method arraymake p f len lambda env =
-    let f' e = self#isPure e, self#expr, e in    
-    hsapply p f (fun f () -> Format.fprintf f "array_init_withenv") true [f' len; f' lambda; f' env]
-
-  method arrayinit p f len lambda =
-    let f' e = self#isPure e, self#expr, e in    
-    hsapply p f (fun f () -> Format.fprintf f "array_init") true [f' len; f' lambda]
-
   method arrayindex p f tab indexes =
     match List.rev indexes with
     | [] -> self#expr p f tab
@@ -537,87 +587,31 @@ class haskellPrinter = object(self)
         [array_pure, (fun p f () -> self#arrayindex p f tab tl), ();
          self#isPure hd, (fun p f () -> self#expr p f hd), ();]
 
-  method arrayaffect p f tab indexes v =			
-    match List.rev indexes with
-    | [] -> assert false
-    | hd::tl -> let tl = List.rev tl in
-      let array_pure = self#isPure tab && List.for_all self#isPure tl in
-      hsapply p f (fun f () -> Format.fprintf f "writeIOA") true
-        [array_pure, (fun p f () -> self#arrayindex p f tab tl), ();
-         self#isPure hd, (fun p f () -> self#expr p  f hd), (); 
-         self#isPure v, (fun p f () -> self#expr p  f v), ()]
-
-  method extract_fun_params e acc = snd @$ self#extract_fun_params' e acc
-
-  method extract_fun_params' e acc = match E.unfix e with
-    | E.Fun ([], e) ->
-      let acc f () = Format.fprintf f "%a ()" acc ()
-      in true, self#extract_fun_params e acc
-    | E.Fun (params, e) ->
-      let acc f () = Format.fprintf f "%a %a" acc () (print_list self#binding sep_space) params
-      in true, self#extract_fun_params e acc
-    | E.FunTuple (params, e) ->
-      let acc f () = Format.fprintf f "%a (%a)" acc () (print_list self#binding sep_c) params
-      in true, self#extract_fun_params e acc
-    | _ -> false, (acc, e)
-
-  method toplvl_declare f name e = 
-    let pparams, e = self#extract_fun_params e (fun f () -> ()) in
-    Format.fprintf f "@[<v 2>%a%a =@\n%a@]@\n" self#binding name pparams () self#eM e
-
-  method toplvl_declarety f name ty = match Type.unfix ty with
-    | Type.Struct _ ->
-      Format.fprintf f "@[<v 2>data %a = %a %a@]@\n  deriving Eq@\n@\n"
-        tname name
-        tname name 
-        ptype ty
-    | Type.Enum _ ->
-      Format.fprintf f "@[<v 2>data %a = %a@]@\n  deriving Eq@\n@\n"
-        tname name 
-        ptype ty
-    | _ ->
-      Format.fprintf f "@[<v 2>type %a = %a@]@\n@\n"
-        tname name 
-        ptype ty
-
   method decl f d = match d with
-    | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
-    | AstFun.DeclareType (name, ty) -> self#toplvl_declarety f name ty
+    | AstFun.Declaration (name, e) ->
+      let pparams, e = extract_fun_params e (fun f () -> ()) in
+      Format.fprintf f "@[<v 2>%a%a =@\n%a@]@\n" binding name pparams () self#eM e
+    | AstFun.DeclareType (name, ty) ->
+      begin match Type.unfix ty with
+        | Type.Struct _ ->
+          Format.fprintf f "@[<v 2>data %a = %a %a@]@\n  deriving Eq@\n@\n"
+            tname name
+            tname name 
+            ptype ty
+        | Type.Enum _ ->
+          Format.fprintf f "@[<v 2>data %a = %a@]@\n  deriving Eq@\n@\n"
+            tname name 
+            ptype ty
+        | _ ->
+          Format.fprintf f "@[<v 2>type %a = %a@]@\n@\n"
+            tname name 
+            ptype ty
+      end
     | AstFun.Macro (name, t, params, code) ->
       macros <- Ast.BindingMap.add
           name (t, params, code)
           macros;
       ()
-
-  method header binand binor array_init array_make ifm read_array write_array f opts =
-    let need_stdinsep = opts.AstFun.hasSkip in
-    let need_readint = Ast.TypeSet.mem (Type.integer) opts.AstFun.reads in
-    let imports = [
-      "Text.Printf";
-      "Control.Applicative";
-      "Control.Monad";
-      "Data.Array.MArray";
-      "Data.Array.IO";
-      "Data.Char";
-      "System.IO";
-      "Data.IORef"
-    ] in
-    Format.fprintf f "@[%a@]@\n%a%a%a%a%a%a%a%a@\nmain :: IO ()"
-      (print_list (fun f s -> Format.fprintf f "import %s" s) sep_nl) imports
-      (fun f () -> if binand then Format.fprintf f "%s@\n" prelude_and) ()
-      (fun f () -> if binor then Format.fprintf f "%s@\n" prelude_or) ()
-      (fun f () -> if ifm then Format.fprintf f "%s@\n" prelude_ifm) ()
-      (fun f () -> if need_stdinsep then Format.fprintf f "%s@\n" prelude_skip) ()
-      (fun f () -> if need_readint then Format.fprintf f "%s@\n" prelude_readint) ()
-      (fun f () -> if write_array then Format.fprintf f "%s@\n" prelude_writeIOA) ()
-      (fun f () -> if read_array then Format.fprintf f "%s@\n" prelude_readIOA) ()
-      (fun f () ->
-         match array_init, array_make with
-         | (true, true) -> Format.fprintf f "%s@\n%s@\n" array_init_withenv array_init1
-         | true, false -> Format.fprintf f "%s@\n" array_init2
-         | false, true -> Format.fprintf f "%s@\n" array_init_withenv
-         | false, false -> ()
-      ) ()
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
     side_effects <- prog.AstFun.side_effects;
@@ -646,7 +640,7 @@ class haskellPrinter = object(self)
         | E.ArrayMake _ -> true
         | _ -> false ) prog.AstFun.declarations in
     Format.fprintf f "%a@\n@[%a@]@\n"
-      (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) array_init array_make ifm read_array write_array) prog.AstFun.options
+      (header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) array_init array_make ifm read_array write_array) prog.AstFun.options
       (print_list self#decl sep_nl)
       prog.AstFun.declarations
 
