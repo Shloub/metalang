@@ -12,7 +12,6 @@ ifM c i e =
      if b then i else e
 
 main :: IO ()
-
 main =
   do let sqrtia = ((floor . sqrt . fromIntegral) 408464633)
      let d e f g =

@@ -20,8 +20,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
-
 main =
   do len <- (fmap read getLine)
      printf "%d=len\n" (len::Int) :: IO()

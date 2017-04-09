@@ -57,7 +57,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
 pathfind_aux cache tab x y posX posY =
   if posX == x - 1 && posY == y - 1
   then return 0

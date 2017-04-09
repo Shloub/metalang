@@ -21,7 +21,6 @@ ifM c i e =
      if b then i else e
 
 main :: IO ()
-
 chiffre c m =
   if c == 0
   then return (m `rem` 10)

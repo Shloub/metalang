@@ -23,9 +23,6 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 main :: IO ()
-
-
-
 programme_candidat tableau1 taille1 tableau2 taille2 =
   let a i b =
         if i <= taille1 - 1

@@ -57,7 +57,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
 is_number c =
   return ((ord c) <= (ord '9') && (ord c) >= (ord '0'))
 

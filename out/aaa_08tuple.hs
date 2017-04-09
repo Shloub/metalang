@@ -8,8 +8,6 @@ import System.IO
 import Data.IORef
 
 main :: IO ()
-
-
 data Toto = Toto {
                     _foo :: IORef (Int, Int),
                     _bar :: IORef Int

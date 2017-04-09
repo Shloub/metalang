@@ -14,7 +14,6 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 main :: IO ()
-
 main =
   do str <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return 12)) <*> getLine))
      let a i =

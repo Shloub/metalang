@@ -16,11 +16,6 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 main :: IO ()
-
-
-
-
-
 main =
   do len <- (fmap read getLine)
      printf "%d=len\n" (len::Int) :: IO()
