@@ -224,11 +224,6 @@ let no_passes prog = prog
 
 module L = StringMap
 let languages, printers =
-  let obj pr rec_ typerEnv out processed =
-    pr#setRecursive rec_;
-    pr#setTyperEnv typerEnv;
-    pr#prog out processed
-  in
   let justprog pr _rec_ _typerEnv out processed = pr out processed in
   let typedp pr _rec_ typerEnv out processed = pr typerEnv out processed in
   let typedrecp pr rec_ typerEnv out processed = pr rec_ typerEnv out processed in
