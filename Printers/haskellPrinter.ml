@@ -299,51 +299,27 @@ let isSideEffect side_effects expr = match IntMap.find (E.Fixed.annot expr) side
   | AstFun.EEffect -> true
 
 let isPure side_effects expr = not (isSideEffect side_effects expr)
+let comment fe f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str fe c
 
-
-(*
-  if p1 >= p2 then
-    Format.fprintf f "(%a)" f e else p f e
-*)
-class haskellPrinter = object(self)
-
-  method lang () = "hs"
-
-  val mutable side_effects = IntMap.empty
-  val mutable typerEnv : Typer.env = Typer.empty
-  method getTyperEnv () = typerEnv
-  method setTyperEnv t = typerEnv <- t
-  method typename_of_field field = Typer.typename_for_field field typerEnv
-
-  val mutable recursives_definitions = StringSet.empty
-  method setRecursive b = recursives_definitions <- b
-
-  method comment fe f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str fe c
-
-  method fun_ macros p f params e =
-    let pparams, e = extract_fun_params (E.fun_ params e) (fun f () -> ()) in
-    parens p lambda_priority f "@[<v 2>\\%a ->@\n%a@]" pparams () (self#eM macros nop) e
-
-  method eM macros p f expr =
-    match E.unfix expr with
-    | E.Comment (s, c) -> self#comment (self#eM macros p) f s c
-    | E.Block _ -> self#expr macros p f expr
-    | E.LetIn (name, v, e) ->
-      if isPure side_effects expr then self#letin macros p f name v e (self#eM macros nop)
-      else self#expr macros p f expr
+let rec eM typerEnv side_effects macros p f e =
+    match E.unfix e with
+    | E.Comment (s, c) -> comment (eM typerEnv side_effects macros p) f s c
+    | E.Block _ -> expr typerEnv side_effects macros p f e
+    | E.LetIn (name, v, e2) ->
+      if isPure side_effects e then letin typerEnv side_effects macros p f name v e2 (eM typerEnv side_effects macros nop)
+      else expr typerEnv side_effects macros p f e
     | _ ->
-      if isSideEffect side_effects expr then self#expr macros p f expr
-      else parens p (fun_priority - 1) f "return %a" (self#expr macros fun_priority) expr
-
-  method expand_macro_call macros f name params code li =
-    let lang = self#lang () in
+      if isSideEffect side_effects e then expr typerEnv side_effects macros p f e
+      else parens p (fun_priority - 1) f "return %a" (expr typerEnv side_effects macros fun_priority) e
+and expand_macro_call typerEnv side_effects macros f name params code li =
+    let lang = "hs" in
     let canBePure = List.for_all (isPure side_effects) li in
     let code_to_expand = List.fold_left
         (fun acc (clang, expantion) ->
            if clang = "" || clang = lang then
-             if acc = None then Some (self#eM macros nop, expantion) else acc
+             if acc = None then Some (eM typerEnv side_effects macros nop, expantion) else acc
            else if canBePure && ( clang = "" || clang = lang  ^ "_pure") then
-             Some ((self#expr macros fun_priority), expantion)
+             Some ((expr typerEnv side_effects macros fun_priority), expantion)
            else acc
         ) None
         code
@@ -364,9 +340,7 @@ class haskellPrinter = object(self)
           s
           (List.combine params listr)
       in Format.fprintf f "(%s)" expanded
-
-          
-  method blockContent macros f li =
+and blockContent typerEnv side_effects macros f li =
     print_list
       (fun f e ->
          match E.unfix e with
@@ -374,33 +348,31 @@ class haskellPrinter = object(self)
                      E.Fixed.F(_, E.Fun ( [name], next))
                    ) ->
            Format.fprintf f "@[<h>%a <- read_int@]@\n%a" binding name
-             (self#blockContent macros) [next]
+             (blockContent typerEnv side_effects macros) [next]
          | E.ReadIn( Type.Fixed.F(_, Type.Char),
                      E.Fixed.F(_, E.Fun ( [name], next))
                    ) ->
            Format.fprintf f "@[<h>%a <- getChar@]@\n%a" binding name
-             (self#blockContent macros) [next]
-         | E.Block li -> self#blockContent macros f li
+             (blockContent typerEnv side_effects macros) [next]
+         | E.Block li -> blockContent typerEnv side_effects macros f li
          | E.LetIn (s, v, e) ->
            let isfun, (pparams, a) = extract_fun_params' v (fun f () -> ()) in
            if isPure side_effects v then
              Format.fprintf f "@[<h>let %a%a = @[<v>%a@]@]@\n%a" binding s pparams ()
-               (if isfun then self#eM macros nop else self#expr macros nop) a
-               (self#blockContent macros) [e]
+               (if isfun then eM typerEnv side_effects macros nop else expr typerEnv side_effects macros nop) a
+               (blockContent typerEnv side_effects macros) [e]
            else
-             Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" binding s pparams () (self#expr macros nop) a
-               (self#blockContent macros) [e]
-         | _ -> self#eM macros nop f e
+             Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" binding s pparams () (expr typerEnv side_effects macros nop) a
+               (blockContent typerEnv side_effects macros) [e]
+         | _ -> eM typerEnv side_effects macros nop f e
       ) sep_nl f li
-
-  method block macros p f li =
-    parens p (fun_priority -1) f "do @[<v>%a@]" (self#blockContent macros) li
-
-  method expr macros p f e = match E.unfix e with
+and block typerEnv side_effects macros p f li =
+    parens p (fun_priority -1) f "do @[<v>%a@]" (blockContent typerEnv side_effects macros) li
+and expr typerEnv side_effects macros p f e = match E.unfix e with
     | E.ApplyMacro (fun_, li) ->
       begin match Ast.BindingMap.find_opt fun_ macros with
         | None -> assert false
-        | Some ((t, params, code)) -> self#expand_macro_call macros f fun_ params code li
+        | Some ((t, params, code)) -> expand_macro_call typerEnv side_effects macros f fun_ params code li
       end
     | E.MultiPrint (formats, exprs) ->
       let side_effect =  List.exists (fun (e, _) -> isSideEffect side_effects e) exprs in
@@ -408,8 +380,8 @@ class haskellPrinter = object(self)
           let pure = isPure side_effects e in
           pure, (fun p f () ->
               if pure then
-                Format.fprintf f "(%a::%a)" (self#expr macros p) e ptype ty
-              else Format.fprintf f "(%a::IO %a)" (self#expr macros p) e ptype ty
+                Format.fprintf f "(%a::%a)" (expr typerEnv side_effects macros p) e ptype ty
+              else Format.fprintf f "(%a::IO %a)" (expr typerEnv side_effects macros p) e ptype ty
             ), ()
         ) exprs in
       let params = (true, (fun p f () -> 
@@ -420,50 +392,52 @@ class haskellPrinter = object(self)
       begin match params with
         | [] -> parens p (fun_priority -1) f "let %a @[<v>() =@\n%a in@\n%a@]"
                   binding name
-                  (self#expr macros nop) e1
-                  (self#expr macros nop) e2
+                  (expr typerEnv side_effects macros nop) e1
+                  (expr typerEnv side_effects macros nop) e2
         | _ ->
           parens p (fun_priority -1) f "let %a @[<v>%a =@\n%a in@\n%a@]"
             binding name
             (print_list binding sep_space) params
-            (self#expr macros nop) e1
-            (self#expr macros nop) e2
+            (expr typerEnv side_effects macros nop) e1
+            (expr typerEnv side_effects macros nop) e2
       end
     | E.BinOp (a, op, b) ->
       let cq, q1, q2 = binop_priority op in
       begin match isPure side_effects a, isPure side_effects b, binopShortCut op, commutative op with
-        | true, true, _, _ -> parens p cq f "%a %a %a" (self#expr macros q1) a pbinop op (self#expr macros q2)  b
-        | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op (self#expr macros fun_priority) a (self#expr macros fun_priority) b
-        | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op2 (self#expr macros fun_priority) b (self#expr macros fun_priority) a
-        | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" pbinopf op (self#eM macros fun_priority) a (self#eM macros fun_priority) b
-        | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" (self#eM macros fun_priority) a s (self#eM macros fun_priority) b
+        | true, true, _, _ -> parens p cq f "%a %a %a" (expr typerEnv side_effects macros q1) a pbinop op (expr typerEnv side_effects macros q2)  b
+        | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op (expr typerEnv side_effects macros fun_priority) a (expr typerEnv side_effects macros fun_priority) b
+        | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" pbinopf op2 (expr typerEnv side_effects macros fun_priority) b (expr typerEnv side_effects macros fun_priority) a
+        | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" pbinopf op (eM typerEnv side_effects macros fun_priority) a (eM typerEnv side_effects macros fun_priority) b
+        | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" (eM typerEnv side_effects macros fun_priority) a s (eM typerEnv side_effects macros fun_priority) b
       end
     | E.UnOp (a, op) ->
       let pr = match op with
         | Ast.Expr.Neg -> 2
         | Ast.Expr.Not -> fun_priority
       in
-      if isPure side_effects a then parens p pr f "%a %a" punop op (self#expr macros pr) a
-      else parens p (fun_priority - 1) f "fmap %a %a"punopf op (self#expr macros fun_priority) a
-    | E.Fun (params, e) -> self#fun_ macros p f params e
+      if isPure side_effects a then parens p pr f "%a %a" punop op (expr typerEnv side_effects macros pr) a
+      else parens p (fun_priority - 1) f "fmap %a %a"punopf op (expr typerEnv side_effects macros fun_priority) a
+    | E.Fun (params, e) ->
+      let pparams, e = extract_fun_params (E.fun_ params e) (fun f () -> ()) in
+      parens p lambda_priority f "@[<v 2>\\%a ->@\n%a@]" pparams () (eM typerEnv side_effects macros nop) e
     | E.FunTuple (params, e) ->
       let pparams, e = extract_fun_params (E.funtuple params e) (fun f () -> ()) in
-      parens p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () (self#eM macros nop) e
+      parens p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () (eM typerEnv side_effects macros nop) e
     | E.Apply (e, li) ->
-      let default () = let li = List.map (fun e -> isPure side_effects e, self#expr macros, e) li in
-        hsapply p f (fun f () -> (self#expr macros nop)f e) true li in
+      let default () = let li = List.map (fun e -> isPure side_effects e, expr typerEnv side_effects macros, e) li in
+        hsapply p f (fun f () -> (expr typerEnv side_effects macros nop)f e) true li in
       begin match E.unfix e with
         | E.Lief ( E.Binding binding ) ->
           begin match Ast.BindingMap.find_opt binding macros with
             | None -> default ()
-            | Some ((t, params, code)) -> self#expand_macro_call macros f binding params code li
+            | Some ((t, params, code)) -> expand_macro_call typerEnv side_effects macros f binding params code li
           end
         | _ -> default ()
       end
     | E.Tuple li -> if List.for_all (isPure side_effects) li then
-        Format.fprintf f "(%a)" (print_list (self#expr macros nop) sep_c) li
+        Format.fprintf f "(%a)" (print_list (expr typerEnv side_effects macros nop) sep_c) li
       else
-        let li = List.map (fun e -> (isPure side_effects) e, self#expr macros, e) li in
+        let li = List.map (fun e -> (isPure side_effects) e, expr typerEnv side_effects macros, e) li in
         hsapply nop f (fun f () -> Format.fprintf f "(%a)" (print_list (fun _ _ -> ()) sep_c) li)
           false li
     | E.Lief l ->
@@ -479,23 +453,23 @@ class haskellPrinter = object(self)
         | E.Enum s -> Format.fprintf f "%s" s
         | E.Binding s -> binding f s
       end
-    | E.Comment (s, c) -> self#comment (self#expr macros p) f s c
+    | E.Comment (s, c) -> comment (expr typerEnv side_effects macros p) f s c
     | E.If (e1, e2, e3) ->
-      let pr = if isPure side_effects e2 && isPure side_effects e3 then self#expr macros nop else self#eM macros nop in
-      if isPure side_effects e1 then parens p (-1) f "@[<v>if %a@\nthen %a@\nelse %a@]" (self#expr macros nop) e1 pr e2 pr e3
-      else parens p (fun_priority - 1) f "@[<h>ifM @[<v>%a@\n%a@\n%a@]@]" (self#eM macros fun_priority) e1 (self#eM macros fun_priority) e2 (self#eM macros fun_priority) e3
-    | E.Print (expr, t) ->
+      let pr = if isPure side_effects e2 && isPure side_effects e3 then expr typerEnv side_effects macros nop else eM typerEnv side_effects macros nop in
+      if isPure side_effects e1 then parens p (-1) f "@[<v>if %a@\nthen %a@\nelse %a@]" (expr typerEnv side_effects macros nop) e1 pr e2 pr e3
+      else parens p (fun_priority - 1) f "@[<h>ifM @[<v>%a@\n%a@\n%a@]@]" (eM typerEnv side_effects macros fun_priority) e1 (eM typerEnv side_effects macros fun_priority) e2 (eM typerEnv side_effects macros fun_priority) e3
+    | E.Print (e, t) ->
       begin
-        match E.unfix expr with
+        match E.unfix e with
         | E.Lief (E.String s) -> parens p fun_priority f "printf %S :: IO ()"  s
         | _ ->
-          if isPure side_effects expr then
+          if isPure side_effects e then
             parens p fun_priority f "@[printf %S (%a :: %a) :: IO ()@]" (format_type t)
-              (self#expr macros nop) expr
+              (expr typerEnv side_effects macros nop) e
               ptype t
           else
             parens p fun_priority f "@[printf %S =<< (%a :: IO %a)@]" (format_type t)
-              (self#expr macros nop) expr
+              (expr typerEnv side_effects macros nop) e
               ptype t
       end
     | E.ReadIn (ty, next) ->
@@ -507,79 +481,77 @@ class haskellPrinter = object(self)
             | Type.Integer -> Format.fprintf f "read_int"
             | _ -> assert false
           end
-        | _, E.Fun ([_], _ ) -> self#block macros p f [ E.readin next ty]
-        | Type.Integer, _ ->  parens p (fun_priority-1) f "@[<h>read_int >>=@[<v> (%a)@]@]" (self#expr macros nop) next
-        | Type.Char, _ -> parens p (fun_priority-1) f "@[<h>getChar >>=@[<v> (%a)@]@]" (self#expr macros nop) next
+        | _, E.Fun ([_], _ ) -> block typerEnv side_effects macros p f [ E.readin next ty]
+        | Type.Integer, _ ->  parens p (fun_priority-1) f "@[<h>read_int >>=@[<v> (%a)@]@]" (expr typerEnv side_effects macros nop) next
+        | Type.Char, _ -> parens p (fun_priority-1) f "@[<h>getChar >>=@[<v> (%a)@]@]" (expr typerEnv side_effects macros nop) next
         | _ -> assert false
       end
     | E.Skip ->  Format.fprintf f "skip_whitespaces"
-    | E.Block [e] -> self#expr macros p f e
-    | E.Block li -> self#block macros p f li
+    | E.Block [e] -> expr typerEnv side_effects macros p f e
+    | E.Block li -> block typerEnv side_effects macros p f li
     | E.Record li -> (* TODO trier les champs dans le bon ordre et parentheser correctement *)
       let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
       Format.fprintf f "@[<v>(%a <$> %a)@]"
         tname t
         (print_list
-           (fun f (expr, field) ->
+           (fun f (e, field) ->
               hsapply fun_priority f (fun f () -> Format.fprintf f "newIORef") true
-                [isPure side_effects expr, self#expr macros, expr])
+                [isPure side_effects e, expr typerEnv side_effects macros, e])
            (sep "%a <*> %a")) li
     | E.RecordAccess (record, field) ->
       hsapply p f (fun f () -> Format.fprintf f "readIORef") true
         [isPure side_effects record, (fun p f () ->
              hsapply p f (fun f () -> Format.fprintf f "_%s" field) false
-               [isPure side_effects record, self#expr macros, record]), ()]
+               [isPure side_effects record, expr typerEnv side_effects macros, record]), ()]
     | E.RecordAffect (record, field, value) ->    hsapply p f (fun f () -> Format.fprintf f "writeIORef") true
       [isPure side_effects record, (fun p f () ->
            hsapply p f (fun f () -> Format.fprintf f "_%s" field) false
-             [isPure side_effects record, self#expr macros, record]), ();
-       isPure side_effects value, (fun p f () -> self#expr macros p f value), ()
+             [isPure side_effects record, expr typerEnv side_effects macros, record]), ();
+       isPure side_effects value, (fun p f () -> expr typerEnv side_effects macros p f value), ()
       ]
     | E.ArrayMake (len, lambda, env) ->
-      let f' e = isPure side_effects e, self#expr macros, e in    
+      let f' e = isPure side_effects e, expr typerEnv side_effects macros, e in    
       hsapply p f (fun f () -> Format.fprintf f "array_init_withenv") true [f' len; f' lambda; f' env]
     | E.ArrayInit (len, lambda) ->
-      let f' e = isPure side_effects e, self#expr macros, e in    
+      let f' e = isPure side_effects e, expr typerEnv side_effects macros, e in    
       hsapply p f (fun f () -> Format.fprintf f "array_init") true [f' len; f' lambda]      
-    | E.ArrayAccess (tab, indexes) -> self#arrayindex macros p f tab indexes
+    | E.ArrayAccess (tab, indexes) -> arrayindex typerEnv side_effects macros p f tab indexes
     | E.ArrayAffect (tab, indexes, v) ->
       begin match List.rev indexes with
         | [] -> assert false
         | hd::tl -> let tl = List.rev tl in
           let array_pure = isPure side_effects tab && List.for_all (isPure side_effects) tl in
           hsapply p f (fun f () -> Format.fprintf f "writeIOA") true
-            [array_pure, (fun p f () -> self#arrayindex macros p f tab tl), ();
-             isPure side_effects hd, (fun p f () -> self#expr macros p  f hd), (); 
-             isPure side_effects v, (fun p f () -> self#expr macros p  f v), ()]
+            [array_pure, (fun p f () -> arrayindex typerEnv side_effects macros p f tab tl), ();
+             isPure side_effects hd, (fun p f () -> expr typerEnv side_effects macros p  f hd), (); 
+             isPure side_effects v, (fun p f () -> expr typerEnv side_effects macros p  f v), ()]
       end
     | E.LetIn (name, v, e') ->
       if isPure side_effects e then
-        self#letin macros p f name v e' (self#expr macros nop)
-      else self#block macros p f [e]
-
-  method letin macros p f name v e pexpr =
+        letin typerEnv side_effects macros p f name v e' (expr typerEnv side_effects macros nop)
+      else block typerEnv side_effects macros p f [e]
+and letin typerEnv side_effects macros p f name v e pexpr =
     let pparams, v = extract_fun_params v (fun f () -> ()) in
     parens p (fun_priority -1) f "@[<h>let %a%a = @[<v>%a@\nin %a@]@]"
-      binding name pparams () (self#expr macros nop) v pexpr e
-
-  method arrayindex macros p f tab indexes =
+      binding name pparams () (expr typerEnv side_effects macros nop) v pexpr e
+and arrayindex typerEnv side_effects macros p f tab indexes =
     match List.rev indexes with
-    | [] -> self#expr macros p f tab
+    | [] -> expr typerEnv side_effects macros p f tab
     | hd::tl -> let tl = List.rev tl in
       let array_pure = isPure side_effects tab && List.for_all (isPure side_effects) tl in
       hsapply p f (fun f () -> Format.fprintf f "readIOA") true
-        [array_pure, (fun p f () -> self#arrayindex macros p f tab tl), ();
-         isPure side_effects hd, (fun p f () -> self#expr macros p f hd), ();]
+        [array_pure, (fun p f () -> arrayindex typerEnv side_effects macros p f tab tl), ();
+         isPure side_effects hd, (fun p f () -> expr typerEnv side_effects macros p f hd), ();]
 
-  method prog (f:Format.formatter) (prog:AstFun.prog) =
-    side_effects <- prog.AstFun.side_effects;
+  let prog typerEnv (f:Format.formatter) (prog:AstFun.prog) =
+    let side_effects = prog.AstFun.side_effects in
     let macros, liitems = List.fold_left (fun (macros, liitems) -> function
         | AstFun.Macro (name, t, params, code) ->
           Ast.BindingMap.add name (t, List.map fst params, code) macros, liitems
         | AstFun.Declaration (name, e) ->
           let pparams, e = extract_fun_params e (fun f () -> ()) in
           macros, (fun f -> Format.fprintf f "@[<v 2>%a%a =@\n%a@]@\n" binding name pparams ()
-                      (self#eM macros nop) e):: liitems
+                      (eM typerEnv side_effects macros nop) e):: liitems
         | AstFun.DeclareType (name, ty) ->
           macros, (fun f -> match Type.unfix ty with
             | Type.Struct _ ->
@@ -625,8 +597,3 @@ class haskellPrinter = object(self)
     Format.fprintf f "%a@\n@[%a@]@\n"
       (header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) array_init array_make ifm read_array write_array) prog.AstFun.options
       (print_list (fun f g -> g f) sep_nl) (List.rev liitems)
-
-end
-
-let haskellPrinter = new haskellPrinter
-
