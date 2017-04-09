@@ -12,8 +12,6 @@ ifM c i e =
      if b then i else e
 
 main :: IO ()
-
-
 pgcd a b =
   do let c = (min a b)
      let d = (max a b)

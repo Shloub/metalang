@@ -35,8 +35,6 @@ array_init_withenv len f env =
                    return (env'', item:li)
 
 main :: IO ()
-
-
 main =
   (array_init_withenv 5 (\ j g ->
                            do c <- getChar

@@ -31,7 +31,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
 primesfactors n =
   do tab <- array_init (n + 1) (\ i ->
                                   return 0)

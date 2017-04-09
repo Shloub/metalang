@@ -48,8 +48,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
-
 position_alphabet c =
   let i = (ord c)
           in return (if i <= (ord 'Z') && i >= (ord 'A')

@@ -29,9 +29,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
-
-
 programme_candidat tableau taille_x taille_y =
   let c i d =
         if i <= taille_y - 1

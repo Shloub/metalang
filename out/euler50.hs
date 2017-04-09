@@ -31,7 +31,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
 eratostene t max0 =
   let c i d =
         if i <= max0 - 1

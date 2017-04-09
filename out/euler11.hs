@@ -29,8 +29,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
-
 find n m x y dx dy =
   if ((x < 0 || x == 20) || y < 0) || y == 20
   then return (- 1)

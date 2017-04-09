@@ -14,8 +14,6 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 main :: IO ()
-
-
 main =
   let c i =
         if i <= 3

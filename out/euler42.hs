@@ -47,8 +47,6 @@ read_int =
       (* sign) <$> read_int_a 0
 
 main :: IO ()
-
-
 is_triangular n =
   {-
    n = k * (k + 1) / 2

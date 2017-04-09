@@ -47,7 +47,6 @@ read_int =
       (* sign) <$> read_int_a 0
 
 main :: IO ()
-
 score () =
   do skip_whitespaces
      len <- read_int

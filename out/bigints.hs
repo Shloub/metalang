@@ -45,9 +45,6 @@ array_init_withenv len f env =
 array_init len f = fmap snd (array_init_withenv len (\x () -> fmap ((,) ()) (f x)) ())
 
 main :: IO ()
-
-
-
 data Bigint = Bigint {
                         _bigint_sign :: IORef Bool,
                         _bigint_len :: IORef Int,

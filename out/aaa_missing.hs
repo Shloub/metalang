@@ -22,8 +22,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-
-
 result len tab =
   do tab2 <- array_init len (\ i ->
                                return False)
