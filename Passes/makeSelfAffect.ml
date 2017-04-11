@@ -51,6 +51,7 @@ let process acc li =
             let i0 = match op with
               | Expr.Add -> Instr.Incr m
               | Expr.Sub -> Instr.Decr m
+              | _ -> assert false
             in acc, Instr.Fixed.fixa (Instr.Fixed.annot i) i0
           | Instr.Affect (m, Expr.Fixed.F(_, Expr.BinOp (
               Expr.Fixed.F (_, Expr.Access m2),

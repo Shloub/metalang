@@ -193,7 +193,7 @@ let print_instr c i =
              end
         ) sep_nl f li
     | Untuple (li, expr, opt) -> fprintf f "var (%a) = %a%a" (print_list c.print_varname sep_c) (List.map snd li) expr nop pend ()
-    | Unquote e -> assert false in
+    | Incr _ | Decr _ | Unquote _ -> assert false in
   let is_multi_instr = match i with
     | Read (hd::tl) -> true
     | Declare _ -> true

@@ -102,6 +102,13 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
     let name = name_of_mut mut in
     let infos = addinfos infos name {instruction=hd; expression=None; affected=true; declaration=false; dad=dad} in
     infos
+  | Instr.ClikeLoop (init, cond, incr, li) ->
+    let infos = getinfos infos (Some hd) init in
+    let infos = getinfos_expr hd dad infos cond in
+        let infos = getinfos infos (Some hd) incr in
+    let infos = getinfos infos (Some hd) li in
+    infos
+  | Instr.Incr m | Instr.Decr m -> getinfos_mut hd dad infos m
   | Instr.Loop (varname, e1, e2, li) ->
     let infos = getinfos_expr hd dad infos e1 in
     let infos = getinfos_expr hd dad infos e2 in

@@ -38,7 +38,8 @@ open Ast
 type acc0 = unit
 type 'a acc = unit
 let init_acc () = ()
-let apply op i1 i2 = (match op with Expr.Add -> (+) | Expr.Sub -> (-)) i1 i2
+let apply op i1 i2 = (match op with Expr.Add -> (+) | Expr.Sub -> (-)
+                                  | _ -> assert false) i1 i2
 
 let rewrite_expr0 annot e = match e with
   | Expr.BinOp ( (_, e1), Expr.LowerEq,

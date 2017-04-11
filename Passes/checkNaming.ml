@@ -165,54 +165,58 @@ let rec check_instr funname acc instr =
   match Instr.unfix instr with
   | Instr.Tag _ -> acc
   | Instr.Declare (var, t, e, _) ->
-    let () = check_expr funname acc e in
+    check_expr funname acc e;
     add_local_in_acc funname var acc loc
   | Instr.SelfAffect (mut, _, e)
   | Instr.Affect (mut, e) ->
-    let () = check_mutable funname acc mut in
-    let () = check_expr funname acc e in
+    check_mutable funname acc mut;
+    check_expr funname acc e;
     acc
+  | Instr.Incr m | Instr.Decr m -> check_mutable funname acc m; acc
   | Instr.Loop (v, e1, e2, li) ->
-    let () = check_expr funname acc e1 in
-    let () = check_expr funname acc e2 in
+    check_expr funname acc e1;
+    check_expr funname acc e2;
     let acc2 = add_param_in_acc funname v acc loc in
     let _acc2 = List.fold_left (check_instr funname) acc2 li
     in acc
+  | Instr.ClikeLoop (init, cond, incr, li) ->
+    let acc_in = List.fold_left (check_instr funname) acc init in
+    let _ = List.fold_left (check_instr funname) acc incr in
+    let _ = List.fold_left (check_instr funname) acc li in
+    check_expr funname acc_in cond;
+    acc
   | Instr.While (e, li) ->
-    let () = check_expr funname acc e in
+    check_expr funname acc e;
     let _ = List.fold_left (check_instr funname) acc li
     in acc
   | Instr.Comment _ -> acc
-  | Instr.Return e ->
-    let () = check_expr funname acc e in acc
+  | Instr.Return e -> check_expr funname acc e; acc
   | Instr.AllocArrayConst (v, _t, e, _l, _opt) ->
-    let () = check_expr funname acc e in
+    check_expr funname acc e;
     add_array_in_acc funname v acc loc
   | Instr.AllocArray (v, t, e, liopt, _) ->
     let () = check_expr funname acc e in
     let acc = match liopt with
       | None -> acc
       | Some (varname, li) ->
-        let () = check_nameb funname acc varname loc in
+        check_nameb funname acc varname loc;
         let acc = add_param_in_acc funname varname acc loc in
         List.fold_left (check_instr funname) acc li
     in add_array_in_acc funname v acc loc
   | Instr.AllocRecord (varname, t, li, _) ->
-    let () = check_nameb funname acc varname loc in
-    let () = List.iter (fun (_field, expr) ->
-        check_expr funname acc expr) li
-    in
+    check_nameb funname acc varname loc;
+    List.iter (fun (_field, expr) -> check_expr funname acc expr) li;
     let acc = add_local_in_acc funname varname acc loc in
     acc
   | Instr.If (e, li1, li2) ->
-    let () = check_expr funname acc e in
+    check_expr funname acc e;
     let _ = List.fold_left (check_instr funname) acc li1 in
     let _ = List.fold_left (check_instr funname) acc li2
     in acc
   | Instr.Call (name, li) ->
-    let () = is_fun funname acc name loc in
-    let () = List.iter (check_expr funname acc) li
-    in acc
+    is_fun funname acc name loc;
+    List.iter (check_expr funname acc) li;
+    acc
   | Instr.Print li ->
     List.iter (function
         | Instr.PrintExpr (_, e) -> check_expr funname acc e
@@ -225,10 +229,9 @@ let rec check_instr funname acc instr =
         | Instr.DeclRead (t, v, _) -> add_local_in_acc funname v acc loc
         | Instr.ReadExpr (ty, mut) -> check_mutable funname acc mut; acc)
       acc li
-  | Instr.Unquote e ->
-    let () = check_expr funname acc e in acc
+  | Instr.Unquote e -> check_expr funname acc e; acc
   | Instr.Untuple (li, e, _) ->
-    let () = check_expr funname acc e in
+    check_expr funname acc e;
     List.fold_left (fun acc (_, name) ->
         add_local_in_acc funname name acc loc) acc li
 

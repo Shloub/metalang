@@ -111,6 +111,14 @@ let rec rename_instr acc (instr:Utils.instr) =
     let acc = BindingMap.add var newname acc in
     let li = rename_instrs acc li in
     acc, Instr.Loop (newname, e1, e2, li) |> Instr.fixa annot
+  | Instr.ClikeLoop (init, cond, incr, li) ->
+    let cond = rename_e acc cond in
+    let init = rename_instrs acc init in
+    let incr = rename_instrs acc incr in
+    let li = rename_instrs acc li in
+    acc, Instr.ClikeLoop (init, cond, incr, li) |> Instr.fixa annot
+  | Instr.Incr mut -> acc, Instr.Incr (rename_mut acc mut) |> Instr.fixa annot
+  | Instr.Decr mut -> acc, Instr.Decr (rename_mut acc mut) |> Instr.fixa annot
   | Instr.While (e, li) ->
     let e = rename_e acc e in
     let li = rename_instrs acc li in
@@ -274,11 +282,23 @@ and map_instr acc instr =
     let addon1, mut = map_mut acc mut in
     let addon2, e = map_e acc e in
     List.append addon1 (List.append addon2 [Instr.SelfAffect (mut, op, e) |> Instr.fixa annot ])
+  | Instr.Incr mut ->
+    let addon1, mut = map_mut acc mut in
+    List.append addon1 [Instr.Incr mut |> Instr.fixa annot ]
+  | Instr.Decr mut ->
+    let addon1, mut = map_mut acc mut in
+    List.append addon1 [Instr.Decr mut |> Instr.fixa annot ]
   | Instr.Loop (v, e1, e2, li) ->
     let addon1, e1 = map_e acc e1 in
     let addon2, e2 = map_e acc e2 in
     let li = map_instrs acc li in
     List.append addon1 (List.append addon2 [Instr.Loop (v, e1, e2, li) |> Instr.fixa annot ])
+  | Instr.ClikeLoop (init, cond, incr, li) ->
+    let addon, cond = map_e acc cond in
+    let init = map_instrs acc init in
+    let incr = map_instrs acc incr in
+    let li = map_instrs acc li in
+    List.append addon [Instr.ClikeLoop (init, cond, incr, li) |> Instr.fixa annot ]
   | Instr.While (e, li) ->
     let addon, e = map_e acc e in
     let li = map_instrs acc li in

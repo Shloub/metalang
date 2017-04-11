@@ -190,7 +190,8 @@ let print_instr macros declared_types declared_types_assoc i =
       let li = List.map (function
           | StringConst str -> fun f -> print f Type.string (fun f prio -> config.print_lief prio f (Expr.String str))
           | PrintExpr (t, expr) -> fun f -> print f t expr ) li
-      in print_list (fun f e -> e f) sep_nl f li      
+      in print_list (fun f e -> e f) sep_nl f li  
+    | Incr _ | Decr _ -> assert false    
   in
   {
     is_multi_instr = false;
