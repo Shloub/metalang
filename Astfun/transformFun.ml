@@ -149,9 +149,6 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
         | Some v -> affect_mutable (F.Expr.fun_ [v] tl) m (F.Expr.binop accesm op e)
         | None -> affect_mutable tl m e
       end
-
-
-
     | A.Instr.Read li ->
       let rec continue env = function
         | [] -> instrs suite contsuite contreturn env tl
@@ -288,9 +285,10 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let vars = List.map (function (_, u) -> u ) vars in
       let tl = instrs suite contsuite contreturn (List.append vars env) tl in
       F.Expr.apply (F.Expr.funtuple vars tl) [e]
-    | A.Instr.Tag s -> assert false
-    | A.Instr.Unquote e -> assert false
-
+    | A.Instr.Tag _ -> assert false      
+    | A.Instr.Incr _ | A.Instr.Decr _ -> assert false
+    | A.Instr.Unquote _ -> assert false
+    | A.Instr.ClikeLoop _ -> assert false
 let rec expr e =
   let e = A.Expr.Fixed.Surface.map expr (A.Expr.unfix e) in
   match e with

@@ -148,6 +148,15 @@ let rec process_instr map i =
       in Instr.Read li
     | Instr.Untuple (li, e, opt)->
       Instr.Untuple (List.map (fun (t, n) -> mapty map t, mapname map n) li, process_expr map e, opt)
+    | Instr.Incr m -> Instr.Incr (mapmutable map m)
+    | Instr.Decr m -> Instr.Decr (mapmutable map m)
+    | Instr.ClikeLoop (init, cond, incr, li) ->
+      Instr.ClikeLoop (List.map (process_instr map) init,
+                       process_expr map cond,
+                       List.map (process_instr map) incr,
+                       List.map (process_instr map) li)
+
+
   in Instr.Fixed.fixa (Instr.Fixed.annot i) i2
 
 let process_main acc m = acc, List.map (process_instr acc) m

@@ -188,7 +188,7 @@ let print_instr tyenv c i =
       in
       fprintf f "%a" (print_list (fun f g -> g f) sep_nl) li
     | Untuple (li, expr, opt) -> assert false
-    | Unquote e -> assert false in
+    | Unquote _ | Incr _ | Decr _ -> assert false in
   let is_multi_instr = match i with
     | Read (hd::tl) -> true
     | _ -> false in

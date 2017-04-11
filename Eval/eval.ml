@@ -753,6 +753,7 @@ module EvalF (IO : EvalIO) = struct
                 f execenv;
                 read t (fun value -> mut execenv value))) (env, (fun _ -> ())) li
       in env, f
+    | Instr.Incr _ | Instr.Decr _ | Instr.ClikeLoop _ -> assert false
     | Instr.Tag _ -> env, (fun _ -> ())
     | Instr.Unquote li -> assert false
   and print ty e =

@@ -56,9 +56,7 @@ let config macros = {
 
 let print_expr config e f p =
   let open Format in
-  let open Ast.Expr in 
-  let print_mut conf priority f m = Mutable.Fixed.Deep.fold
-      (print_mut0 "%a%a" "[%a]" "%a.%s" conf) m f priority in
+  let open Ast.Expr in
   let print_expr0 config e f prio_parent = match e with
     | BinOp (a, ((Div | Mod) as op), b) ->
       let prio, priol, prior = prio_binop op in

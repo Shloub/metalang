@@ -211,7 +211,7 @@ let print_instr prototypes c i =
           | ReadExpr (t, m) -> read t (fun f () -> print_mut_set c nop f m)) li
       in print_list (fun f e -> e f) sep_nl f li
     | Untuple (li, expr, opt) -> fprintf f "(%a) = %a" (print_list c.print_varname sep_c) (List.map snd li) expr nop
-    | Unquote e -> assert false in
+    | Incr _ | Decr _ | Unquote _ -> assert false in
   let is_multi_instr = match i with
     | Read (hd::tl) -> true
     | _ -> false in

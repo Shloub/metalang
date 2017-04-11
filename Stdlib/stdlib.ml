@@ -315,14 +315,10 @@ module String = struct
   let exists f s = fold_left (fun acc c -> acc || f c) false s
 
   let of_list li =
-    let len = List.length li in
-    let s = String.create len in
-    List.iteri (String.set s) li ;
-    s
+    let t = Array.of_list li in
+    String.init (Array.length t) (fun i -> t.(i))
 
-  let of_char c =
-    let s = String.create 1 in
-    String.set s 0 c; s
+  let of_char c = String.make 1 c
 
   let list_of_fold_map f s a =
     fold_left (fun (a, xs) -> map_snd (snoc xs) @* f a) (a, []) s

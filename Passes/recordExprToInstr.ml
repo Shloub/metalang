@@ -98,6 +98,10 @@ let expand tyenv i = match Instr.unfix i with
   | Instr.If (e, l1, l2) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.If (e, l1, l2))  ) :: instrs)
+  | Instr.ClikeLoop (init, cond, incr, li) ->
+    let instrs_cond, cond = process tyenv [] cond in
+    [Instr.fixa (Instr.Fixed.annot i)
+       (Instr.ClikeLoop (init, cond, incr, List.append instrs_cond li))]
   | Instr.Call (funname, lie) ->
     let instrs, lie = List.fold_left_map (process tyenv) [] lie in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Call (funname, lie))  ) :: instrs)
@@ -118,6 +122,12 @@ let expand tyenv i = match Instr.unfix i with
           instrs, Instr.ReadExpr (t, mut) ) [] li
     in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Read li)  ) :: instrs)
+  | Instr.Incr mut ->
+    let instrs, mut = process_mut tyenv [] mut in
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Incr mut)  ) :: instrs)
+  | Instr.Decr mut ->
+    let instrs, mut = process_mut tyenv [] mut in
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Decr mut)  ) :: instrs) 
   | Instr.Untuple(li, e, opt) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Untuple (li, e, opt))  ) :: instrs)
