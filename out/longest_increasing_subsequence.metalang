@@ -1,0 +1,73 @@
+def int read_int ()
+  def read int out
+  skip
+  return out
+end
+
+def array<int> read_int_line (int n)
+  def array<int> tab[n] with i do
+                                 def read int t
+                                 skip
+                                 return t
+  end
+  return tab
+end
+
+def int dichofind (int len, array<int> tab, int tofind, int a, int b)
+  if a >= b - 1
+  then
+    return a
+  else
+    def int c = (a + b) / 2
+    if tab[c] < tofind
+    then
+      return dichofind(len, tab, tofind, c, b)
+    else
+      return dichofind(len, tab, tofind, a, c)
+    end
+  end
+end
+
+def int process (int len, array<int> tab)
+  def array<int> size[len] with j do
+                                    if j == 0
+                                    then
+                                      return 0
+                                    else
+                                      return len * 2
+                                    end
+  end
+  for i = 0 to  len - 1
+  do
+    def int k = dichofind(len, size, tab[i], 0, len - 1)
+    if size[k + 1] > tab[i]
+    then
+      size[k + 1] = tab[i]
+    end
+  end
+  for l = 0 to  len - 1
+  do
+    print int size[l]
+    print string " "
+  end
+  for m = 0 to  len - 1
+  do
+    def int k = len - 1 - m
+    if size[k] != len * 2
+    then
+      return k
+    end
+  end
+  return 0
+end
+
+main
+  def int n = read_int()
+  for i = 1 to  n
+  do
+    def int len = read_int()
+    print int process(len, read_int_line(len))
+    print string "\n"
+  end
+end
+

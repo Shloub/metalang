@@ -1,0 +1,39 @@
+open System
+let rec dichofind len (tab:int array) tofind a b =
+  if a >= b - 1 then
+    a
+  else
+    let c = (a + b) / 2
+    if tab.[c] < tofind then
+      dichofind len tab tofind c b
+    else
+      dichofind len tab tofind a c
+
+exception Found_1 of int
+
+let process0 len (tab:int array) =
+  try
+  let size = Array.init len (fun j ->
+    if j = 0 then
+      0
+    else
+      len * 2)
+  for i = 0 to len - 1 do
+    let k = dichofind len size tab.[i] 0 (len - 1)
+    if size.[k + 1] > tab.[i] then
+      size.[k + 1] <- tab.[i]
+  for l = 0 to len - 1 do
+    Printf.printf "%d " size.[l]
+  for m = 0 to len - 1 do
+    let k = len - 1 - m
+    if size.[k] <> len * 2 then
+      raise (Found_1(k))
+  0
+  with Found_1 (out) -> out
+
+let () =
+  let n = (Console.ReadLine () |> Int32.Parse)
+  for _i = 1 to n do
+    let len = (Console.ReadLine () |> Int32.Parse)
+    Printf.printf "%d\n" (process0 len ((Console.ReadLine ()).Split [|' '|] |> Array.map Int32.Parse))
+ 
