@@ -81,12 +81,11 @@ begin
     end;;
 end;
 
-type
-    tuple_int_int=^tuple_int_int_r;
-    tuple_int_int_r = record
-      tuple_int_int_field_0 : Longint;
-      tuple_int_int_field_1 : Longint;
-    end;
+type tuple_int_int=^tuple_int_int_r;
+  tuple_int_int_r = record
+    tuple_int_int_field_0 : Longint;
+    tuple_int_int_field_1 : Longint;
+  end;
 
 type v = array of tuple_int_int;
 

@@ -469,7 +469,9 @@ type pascal_ty_decl =
     in
   match Type.unfix t with
   | Type.Option t2 ->
- begin
+    begin match Type.unfix t2 with
+      | Type.Named _ -> declared_types_assoc, declared_types, newtypes
+      | _ ->
         match TypeMap.find_opt t declared_types with
         | Some _ -> declared_types_assoc, declared_types, newtypes
         | None ->

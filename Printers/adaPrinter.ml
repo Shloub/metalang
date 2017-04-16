@@ -267,7 +267,7 @@ let declarevars declared_types typerEnv f instrs =
           []
       in Format.fprintf f "@\n  @[<v>%a@]" (print_list (fun p f -> f p ()) sep_nl) li
 
-let out_declare_type typerEnv f a b c =
+let out_declare_type typerEnv a b c =
   (fun f () -> List.iter (function
        | DeclArray (name, t, name2, decl) ->
          Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name (ptype decl typerEnv) t name2 name
@@ -275,13 +275,13 @@ let out_declare_type typerEnv f a b c =
          Format.fprintf f "@\ntype %s is access %a;@\n" name (ptype decl typerEnv) t
     ) (List.rev c)), a, b
     
-let declare_type typerEnv declared_types_assoc declared_types f t =
+let declare_type typerEnv declared_types_assoc declared_types t =
   let a, b, c = pas_declare_type (fun n -> n ^ "_PTR") declared_types_assoc declared_types [] t
-  in out_declare_type typerEnv f a b c
+  in out_declare_type typerEnv a b c
 
-let declare_types typerEnv declared_types_assoc declared_types f instrs =
+let declare_types typerEnv declared_types_assoc declared_types instrs =
   let a, b, c = pas_declare_types (fun n -> n ^ "_PTR") instrs declared_types_assoc declared_types
-  in out_declare_type typerEnv f a b c
+  in out_declare_type typerEnv a b c
 
 let print_body typerEnv macros declared_types_assoc declared_types f instrs =
     let instructions f li =
@@ -333,11 +333,11 @@ let prog typerEnv f (prog: Utils.prog) =
                                        Some (name, t, name2), (name2, t)
                                      else None, (name, t) ) vars in
              let li_assoc = List.filter_map (fun x -> x) li_assoc in
-             let pr0, declared_types_assoc, declared_types = declare_type typerEnv declared_types_assoc declared_types f t in
-             let pr1, declared_types_assoc, declared_types = declare_types typerEnv declared_types_assoc declared_types f instrs in
+             let pr0, declared_types_assoc, declared_types = declare_type typerEnv declared_types_assoc declared_types t in
+             let pr1, declared_types_assoc, declared_types = declare_types typerEnv declared_types_assoc declared_types instrs in
              let pr, declared_types_assoc, declared_types =
                List.fold_left (fun (pr, declared_types_assoc, declared_types) (_, t) ->
-                   let pr', a, b = declare_type typerEnv declared_types_assoc declared_types f t in
+                   let pr', a, b = declare_type typerEnv declared_types_assoc declared_types t in
                    (fun f () -> Format.fprintf f "%a%a" pr () pr' ()), a, b
                  ) ((fun f () -> Format.fprintf f "%a%a" pr0 () pr1 ()), declared_types_assoc, declared_types) vars in
              let instrs = List.append
@@ -377,12 +377,14 @@ let prog typerEnv f (prog: Utils.prog) =
                        (print_body typerEnv macros declared_types_assoc declared_types) instrs
                ) :: li, declared_types, declared_types_assoc
            | Prog.DeclareType (name, t) ->
-             let pr, declared_types_assoc, declared_types = declare_type typerEnv declared_types_assoc declared_types f t in
+             let pr, declared_types_assoc, declared_types = declare_type typerEnv declared_types_assoc declared_types t in
              macros, (fun f ->
                  match (Type.unfix t) with
                    Type.Struct li ->
                    let name2 = name ^ "_PTR" in
-                   Format.fprintf f "%atype %s;@\ntype %s is access %s;@\ntype %s is record@\n@[<v 2>  %a@]@\nend record;@]" pr () name name2 name name
+                   Format.fprintf f "type %s;@\ntype %s is access %s;@\n%atype %s is record@\n@[<v 2>  %a@]@\nend record;@]" name name2 name
+                     pr ()
+                     name
                      (print_list
                         (fun t (name, type_) ->
                            Format.fprintf t "%s : %a;" name (ptype declared_types typerEnv) type_
@@ -437,7 +439,7 @@ end;
       (print_list (fun f g -> g f) sep_nl) (List.rev items)
       (print_option
          (fun f main ->
-            let pr, declared_types_assoc, declared_types = declare_types typerEnv declared_types_assoc declared_types f main in
+            let pr, declared_types_assoc, declared_types = declare_types typerEnv declared_types_assoc declared_types main in
             pr f ();
             print_body typerEnv macros declared_types_assoc declared_types f main
          )) prog.Prog.main

@@ -47,10 +47,10 @@ begin
     return b;
   end if;
 end;
-type r is Array (Integer range <>) of Integer;
-type r_PTR is access r;
 type bigint;
 type bigint_PTR is access bigint;
+type r is Array (Integer range <>) of Integer;
+type r_PTR is access r;
 type bigint is record
   bigint_sign : Boolean;
   bigint_len : Integer;

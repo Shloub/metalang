@@ -178,24 +178,24 @@ let print_instr macros i =
   let open Ast.Instr.Fixed.Deep in
   fold (print_instr macros) (mapg (print_expr macros) i)
 
-
-let rec ptype declared_types f t =
+let rec ptype declared_types options f t =
   match TypeMap.find_opt t declared_types with
-  | Some s -> Format.fprintf f "%s" s
+  | Some s -> Format.fprintf f (if options then "^%s" else"%s") s
   | None ->
     match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "Longint"
-    | Type.String -> Format.fprintf f "string"
-    | Type.Array a -> Format.fprintf f "array of %a"  (ptype declared_types) a
-    | Type.Option a -> Format.fprintf f "^%a" (ptype declared_types) a
+    | Type.Integer -> Format.fprintf f (if options then "^Longint" else "Longint")
+    | Type.String -> Format.fprintf f (if options then "^string" else "string")
+    | Type.Array a -> Format.fprintf f "array of %a"  (ptype declared_types false) a
+    | Type.Option a -> ptype declared_types true f a
     | Type.Void ->  Format.fprintf f "void"
-    | Type.Bool -> Format.fprintf f "boolean"
-    | Type.Char -> Format.fprintf f "char"
+    | Type.Bool -> Format.fprintf f (if options then "^boolean" else "boolean")
+    | Type.Char -> Format.fprintf f (if options then "^char" else "char")
     | Type.Named n -> Format.fprintf f "%s" n
     | Type.Struct li -> Format.fprintf f "a struct"
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Lexems | Type.Auto | Type.Tuple _ -> assert false
-
+      
+let ptype declared_types f t = ptype declared_types false f t
 
 let declaredvars bindings instrs =
     List.fold_left
@@ -238,20 +238,21 @@ let declarevars declared_types f instrs =
       )
       ()
 
-let out_declare_type f a c =
+let out_declare_type prefix f a c =
   List.iter (function
-      | DeclArray (name, t, name2, decl) -> Format.fprintf f "type %s = %a;@\n" name (ptype decl) t
+      | DeclArray (name, t, name2, decl) ->
+        Format.fprintf f (if prefix then "type %s = %a;@\n"  else "%s = %a;@\n") name (ptype decl) t
       | DeclPtr (name, t, decl) ->
-        Format.fprintf f "type %s = %a;@\n" name (ptype decl) t
+        Format.fprintf f (if prefix then "type %s = %a;@\n" else "%s = %a;@\n") name (ptype decl) t
     ) (List.rev c)
 
-let declare_type declared_types f t =
+let declare_type declared_types t =
   let a, b, c = pas_declare_type (fun n -> n) StringMap.empty declared_types [] t
-  in (fun f () -> out_declare_type f a c), b
+  in (fun f prefix -> out_declare_type prefix f a c), b
 
-let declare_types declared_types f instrs =
+let declare_types declared_types instrs =
   let a, b, c = pas_declare_types (fun n -> n) instrs StringMap.empty declared_types
-  in (fun f () -> out_declare_type f a c), b
+  in (fun f prefix -> out_declare_type prefix f a c), b
 
 let prog f prog =
     let instructions macros f li =
@@ -266,14 +267,16 @@ let prog f prog =
              StringMap.add name (t, params, code) macros, li, declared_types
            | Prog.Comment s -> macros, (fun f -> Format.fprintf f "{%s}" s) :: li, declared_types
            | Prog.DeclarFun (funname, t, vars, instrs, _opt) ->
-             let pr0, declared_types = declare_type declared_types f t in
-             let pr1, declared_types = declare_types declared_types f instrs in
+             let pr0, declared_types = declare_type declared_types t in
+             let pr1, declared_types = declare_types declared_types instrs in
              let pr, declared_types = List.fold_left
                  (fun (pr, declared_types) (_, t) ->
-                    let pr', declared_types = declare_type declared_types f t
-                    in (fun f () -> Format.fprintf f "%a%a" pr () pr' ()), declared_types
+                    let pr', declared_types = declare_type declared_types t
+                    in (fun f () -> Format.fprintf f "%a%a" pr () pr' true), declared_types
                  )
-                 ((fun f () -> Format.fprintf f "%a%a" pr0 () pr1 ()), declared_types) vars in
+                 ((fun f () ->
+                     (* TODO chercher à merger pr0 et pr1 en évitant de réécrire "type"*)
+                     Format.fprintf f "%a%a" pr0 true pr1 true), declared_types) vars in
              macros, (fun f ->
                  Format.fprintf f "%a%a%a@\nbegin@\n@[<v 2>  %a@]@\nend;@\n"
                    pr ()
@@ -301,13 +304,14 @@ let prog f prog =
                    (instructions macros) instrs
                ) :: li, declared_types
            | Prog.DeclareType (name, t) ->
-             let pr, declared_types = declare_type declared_types f t in
+             let pr, declared_types = declare_type declared_types t in
              macros, (fun f ->
                match (Type.unfix t) with
                  Type.Struct li ->
-                 Format.fprintf f "%atype@[<v>@\n%s=^%s_r;@\n%s_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
-                   pr ()
-                   name name name
+                 Format.fprintf f "@[<v2>type %s=^%s_r;@\n%a%s_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
+                   name name
+                   pr false
+                   name
                    (print_list
                       (fun t (name, type_) ->
                          Format.fprintf t "%s : %a;" name (ptype declared_types) type_
@@ -406,8 +410,8 @@ end;
 " else "")
     (print_list (fun f g -> g f) sep_nl) (List.rev items)
       (print_option (fun f main ->
-           let pr, declared_types = declare_types declared_types f main in
-           Format.fprintf f "%a%a@\nbegin@\n@[<v 2>  %a@]@\nend" pr ()
+           let pr, declared_types = declare_types declared_types main in
+           Format.fprintf f "%a%a@\nbegin@\n@[<v 2>  %a@]@\nend" pr true
            (declarevars declared_types) main
            (instructions macros) main
          )) prog.Prog.main

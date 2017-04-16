@@ -64,13 +64,12 @@ end;
 {
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 }
-type
-    toto=^toto_r;
-    toto_r = record
-      foo : Longint;
-      bar : Longint;
-      blah : Longint;
-    end;
+type toto=^toto_r;
+  toto_r = record
+    foo : Longint;
+    bar : Longint;
+    blah : Longint;
+  end;
 
 function mktoto(v1 : Longint) : toto;
 var

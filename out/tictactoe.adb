@@ -31,12 +31,12 @@ end;
 
 -- La structure de donnée 
 
+type gamestate;
+type gamestate_PTR is access gamestate;
 type e is Array (Integer range <>) of Integer;
 type e_PTR is access e;
 type f is Array (Integer range <>) of e_PTR;
 type f_PTR is access f;
-type gamestate;
-type gamestate_PTR is access gamestate;
 type gamestate is record
   cases : f_PTR;
   firstToPlay : Boolean;

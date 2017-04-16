@@ -45,12 +45,11 @@ begin
    until false;
 end;
 
-type
-    intlist=^intlist_r;
-    intlist_r = record
-      head : Longint;
-      tail : intlist;
-    end;
+type intlist=^intlist_r;
+  intlist_r = record
+    head : Longint;
+    tail : intlist;
+  end;
 
 function cons(list : intlist; i : Longint) : intlist;
 var

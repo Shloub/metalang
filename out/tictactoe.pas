@@ -65,22 +65,22 @@ end;
 Tictactoe : un tictactoe avec une IA
 }
 { La structure de donnée }
-type
-    gamestate=^gamestate_r;
-    gamestate_r = record
-      cases : array of array of Longint;
-      firstToPlay : boolean;
-      note : Longint;
-      ended : boolean;
-    end;
+type gamestate=^gamestate_r;
+  e = array of Longint;
+  f = array of e;
+  gamestate_r = record
+    cases : f;
+    firstToPlay : boolean;
+    note : Longint;
+    ended : boolean;
+  end;
 
 { Un Mouvement }
-type
-    move=^move_r;
-    move_r = record
-      x : Longint;
-      y : Longint;
-    end;
+type move=^move_r;
+  move_r = record
+    x : Longint;
+    y : Longint;
+  end;
 
 { On affiche l'état }
 procedure print_state(g : gamestate);
@@ -335,8 +335,6 @@ begin
   exit(minMove);
 end;
 
-type e = array of Longint;
-type f = array of e;
 function init0() : gamestate;
 var
   a : gamestate;

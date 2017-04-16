@@ -1,11 +1,10 @@
 program aaa_10stringsarray;
 
-type
-    toto=^toto_r;
-    toto_r = record
-      s : string;
-      v : Longint;
-    end;
+type toto=^toto_r;
+  toto_r = record
+    s : string;
+    v : Longint;
+  end;
 
 function idstring(s : string) : string;
 begin

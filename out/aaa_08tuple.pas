@@ -61,19 +61,17 @@ begin
    until false;
 end;
 
-type
-    tuple_int_int=^tuple_int_int_r;
-    tuple_int_int_r = record
-      tuple_int_int_field_0 : Longint;
-      tuple_int_int_field_1 : Longint;
-    end;
+type tuple_int_int=^tuple_int_int_r;
+  tuple_int_int_r = record
+    tuple_int_int_field_0 : Longint;
+    tuple_int_int_field_1 : Longint;
+  end;
 
-type
-    toto=^toto_r;
-    toto_r = record
-      foo : tuple_int_int;
-      bar : Longint;
-    end;
+type toto=^toto_r;
+  toto_r = record
+    foo : tuple_int_int;
+    bar : Longint;
+  end;
 
 
 var

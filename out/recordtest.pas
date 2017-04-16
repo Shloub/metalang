@@ -61,12 +61,11 @@ begin
    until false;
 end;
 
-type
-    toto=^toto_r;
-    toto_r = record
-      foo : Longint;
-      bar : Longint;
-    end;
+type toto=^toto_r;
+  toto_r = record
+    foo : Longint;
+    bar : Longint;
+  end;
 
 
 var
