@@ -51,25 +51,28 @@ let config print_mut macros = {
 
 let print_expr config e f p = Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
-let rec ptype star tyenv f t =
+let ptype star tyenv f t =
   let open Ast.Type in
-  let open Format in match unfix t with
-  | Integer -> fprintf f "int"
-  | String -> fprintf f "std::string"
-  | Array a -> fprintf f (if star then "std::vector<%a> *" else "std::vector<%a>") (ptype star tyenv) a
+  let open Format in
+  let ptype ty f option = match ty with
+  | Integer -> fprintf f (if option then "int*" else "int")
+  | String -> fprintf f (if option then "std::string*" else "std::string")
+  | Array a -> fprintf f (if star || option then "std::vector<%a> *" else "std::vector<%a>") a false
   | Void ->  fprintf f "void"
-  | Bool -> fprintf f "bool"
-  | Char -> fprintf f "char"
-  | Named n -> if star then match Typer.expand tyenv t
+  | Option a -> a f true
+  | Bool -> fprintf f (if option then "bool*" else "bool")
+  | Char -> fprintf f (if option then "char*" else "char")
+  | Named n -> if star then match Typer.expand tyenv (Typer.byname n tyenv)
                                     default_location |> unfix with
     | Struct _ -> fprintf f "%s *" n
-    | Enum _ -> fprintf f "%s" n
+    | Enum _ -> fprintf f (if option then "%s*" else "%s") n
     | _ -> assert false
     else fprintf f "%s" n
   | Enum _ -> fprintf f "an enum"
   | Struct li -> fprintf f "a struct"
   | Auto | Lexems | Tuple _ -> assert false
-
+  in Fixed.Deep.fold ptype t f false
+    
 let rec ptypename f t =
   let open Ast.Type in match unfix t with
   | Named n -> Format.fprintf f "%s" n

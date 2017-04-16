@@ -187,6 +187,7 @@ let rec ptype declared_types f t =
     | Type.Integer -> Format.fprintf f "Longint"
     | Type.String -> Format.fprintf f "string"
     | Type.Array a -> Format.fprintf f "array of %a"  (ptype declared_types) a
+    | Type.Option a -> Format.fprintf f "^%a" (ptype declared_types) a
     | Type.Void ->  Format.fprintf f "void"
     | Type.Bool -> Format.fprintf f "boolean"
     | Type.Char -> Format.fprintf f "char"
@@ -238,15 +239,17 @@ let declarevars declared_types f instrs =
       ()
 
 let out_declare_type f a c =
-  List.iter (fun (name, t, name2, decl, assoc) ->
-      Format.fprintf f "type %s = %a;@\n" name (ptype decl) t
+  List.iter (function
+      | DeclArray (name, t, name2, decl) -> Format.fprintf f "type %s = %a;@\n" name (ptype decl) t
+      | DeclPtr (name, t, decl) ->
+        Format.fprintf f "type %s = %a;@\n" name (ptype decl) t
     ) (List.rev c)
 
 let declare_type declared_types f t =
   let a, b, c = pas_declare_type (fun n -> n) StringMap.empty declared_types [] t
   in (fun f () -> out_declare_type f a c), b
 
-let  declare_types declared_types f instrs =
+let declare_types declared_types f instrs =
   let a, b, c = pas_declare_types (fun n -> n) instrs StringMap.empty declared_types
   in (fun f () -> out_declare_type f a c), b
 
@@ -297,10 +300,13 @@ let prog f prog =
                    (declarevars declared_types) instrs
                    (instructions macros) instrs
                ) :: li, declared_types
-           | Prog.DeclareType (name, t) -> macros, (fun f ->
+           | Prog.DeclareType (name, t) ->
+             let pr, declared_types = declare_type declared_types f t in
+             macros, (fun f ->
                match (Type.unfix t) with
                  Type.Struct li ->
-                 Format.fprintf f "type@[<v>@\n%s=^%s_r;@\n%s_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
+                 Format.fprintf f "%atype@[<v>@\n%s=^%s_r;@\n%s_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
+                   pr ()
                    name name name
                    (print_list
                       (fun t (name, type_) ->

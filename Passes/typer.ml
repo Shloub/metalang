@@ -230,8 +230,8 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
     check_types env t1 (expand env t2 loc2) loc1 loc2
   | Type.Named n, _ ->
     check_types env (expand env t1 loc1) t2 loc1 loc2
-  | Type.Array t, Type.Array t2 ->
-    check_types env t t2 loc1 loc2
+  | Type.Array t, Type.Array t2 -> check_types env t t2 loc1 loc2
+  | Type.Option t, Type.Option t2 -> check_types env t t2 loc1 loc2
   | Type.Tuple li1, Type.Tuple li2 ->
     let len1 = List.length li1
     and len2 = List.length li2 in
@@ -270,6 +270,7 @@ let rec tyall t = match !t with
   | PreTyped ( Type.Enum li, loc ) -> t := Typed ((Type.Fixed.fix (Type.Enum li)), loc); true
   | PreTyped ( Type.Named n, loc ) -> t := Typed ((Type.named n), loc); true
   | PreTyped ( Type.Array a1, loc ) -> if tyall a1 then begin t := Typed (extract_typed t, loc); true end else false
+  | PreTyped ( Type.Option a1, loc ) -> if tyall a1 then begin t := Typed (extract_typed t, loc); true end else false
   | PreTyped ( Type.Struct li, loc) ->
     let all = List.fold_left (fun acc (_, t) -> (tyall t) && acc) true li in
     if all then begin t := Typed (extract_typed t, loc); true end else false

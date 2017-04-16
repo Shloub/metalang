@@ -448,18 +448,47 @@ let cclike_decltype ptype f name t =
         ) li name
     | _ -> Format.fprintf f "typedef %a %s;" ptype t name
 
+type pascal_ty_decl =
+  | DeclArray of string * Ast.Type.t * string * string Ast.TypeMap.t
+  | DeclPtr of string * Ast.Type.t * string Ast.TypeMap.t
+                   
+
   let pas_declare_type0 getname2 declared_types_assoc declared_types newtypes t =
-  let open Ast in
-    match Type.unfix t with
-    | Type.Array _ ->
+    let open Ast in
+    let makealias ty declared_types_assoc declared_types newtypes =
+      match TypeMap.find_opt ty declared_types with
+        | Some _ -> None, declared_types_assoc, declared_types, newtypes
+        | None -> match Type.unfix ty with
+          | Type.Integer | Type.Char | Type.Bool | Type.String | Type.Void -> None, declared_types_assoc, declared_types, newtypes
+          | Type.Named n -> Some n, declared_types_assoc, declared_types, newtypes
+          | _ ->
+            let name : string = Fresh.fresh_user () in
+            let name2 = getname2 name in
+            let newtypes = DeclArray (name, t, name2, declared_types) :: newtypes in
+            Some name, StringMap.add name2 (Some name) declared_types_assoc, TypeMap.add t name2 declared_types, newtypes
+    in
+  match Type.unfix t with
+  | Type.Option t2 ->
+ begin
+        match TypeMap.find_opt t declared_types with
+        | Some _ -> declared_types_assoc, declared_types, newtypes
+        | None ->
+          let name, declared_types_assoc, declared_types, newtypes = makealias t2 declared_types_assoc declared_types newtypes in
+          let name2 = Fresh.fresh_user () in
+          let newtypes = DeclPtr (name2, t, declared_types) :: newtypes in
+          StringMap.add name2 name declared_types_assoc, TypeMap.add t name2 declared_types, newtypes
+      end
+
+    
+  | Type.Array _ ->
       begin
         match TypeMap.find_opt t declared_types with
         | Some _ -> declared_types_assoc, declared_types, newtypes
         | None ->
           let name : string = Fresh.fresh_user () in
           let name2 = getname2 name in
-          let newtypes = (name, t, name2, declared_types, declared_types_assoc) :: newtypes in
-          StringMap.add name2 name declared_types_assoc, TypeMap.add t name2 declared_types, newtypes
+          let newtypes = DeclArray (name, t, name2, declared_types) :: newtypes in
+          StringMap.add name2 (Some name) declared_types_assoc, TypeMap.add t name2 declared_types, newtypes
       end
     | _ -> declared_types_assoc, declared_types, newtypes
       

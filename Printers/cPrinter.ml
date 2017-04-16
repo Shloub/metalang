@@ -66,23 +66,24 @@ let print_expr config e f p =
 let ptype tyenv f t =
   let open Type in
   let open Format in
-  let ptype ty f () = match ty with
-  | Integer -> fprintf f "int"
+  let ptype ty f option = match ty with
+  | Integer -> fprintf f (if option then "int*" else "int")
   | String -> fprintf f "char*"
-  | Array a -> fprintf f "%a*" a ()
+  | Array a -> fprintf f "%a*" a false
   | Void ->  fprintf f "void"
-  | Bool -> fprintf f "int"
-  | Char -> fprintf f "char"
+  | Bool -> fprintf f (if option then "int*" else "int")
+  | Char -> fprintf f (if option then "char*" else "char")
   | Named n -> begin match Typer.expand tyenv (Typer.byname n tyenv)
                                   default_location |> unfix with
     | Struct _ ->
       fprintf f "struct %s *" n
     | Enum _ ->
-      fprintf f "%s" n
+      fprintf f (if option then "%s*" else "%s") n
     | _ -> assert false
     end
+  | Option a -> a f true
   | Enum _ | Struct _ | Auto | Tuple _ | Lexems -> assert false
-  in Fixed.Deep.fold ptype t f ()
+  in Fixed.Deep.fold ptype t f false
     
 let def_fields c name f li =
   let open Format in

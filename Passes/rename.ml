@@ -70,14 +70,26 @@ let mapname map = function
   | UserName username -> UserName (mapname map username)
   | InternalName i -> InternalName i
 
-let rec mapty map t = match Type.unfix t with
-  | Type.Integer | Type.String | Type.Char | Type.Void | Type.Bool | Type.Lexems | Type.Auto -> t
-  | Type.Array t2 -> Type.array (mapty map t2)
-  | Type.Struct li -> Type.struct_ (List.map (fun (name, t) -> mapname_field map name, mapty map t) li)
-  | Type.Enum li -> Type.enum (List.map (mapname_enum map) li)
-  | Type.Named n -> Type.named (mapname_ty map n)
-  | Type.Tuple li -> Type.tuple (List.map (mapty map) li)
+let mapty map annot t =
+  let u = match t with
+  | Type.Integer -> Type.Integer
+  | Type.String -> Type.String
+  | Type.Char -> Type.Char
+  | Type.Void -> Type.Void
+  | Type.Bool -> Type.Bool
+  | Type.Lexems -> Type.Lexems
+  | Type.Auto -> Type.Auto
+  | Type.Array t2 -> Type.Array t2
+  | Type.Struct li -> Type.Struct (List.map (fun (name, t) -> mapname_field map name, t) li)
+  | Type.Enum li -> Type.Enum (List.map (mapname_enum map) li)
+  | Type.Named n -> Type.Named (mapname_ty map n)
+  | Type.Tuple li -> Type.Tuple li
+  | Type.Option t2 -> Type.Option t2
+  in Type.Fixed.fixa annot u
 
+let mapty map t = Type.Fixed.Deep.folda (mapty map) t
+
+                        
 let rec mapmutable map m =
   match m |> Mutable.unfix with
   | Mutable.Var v -> Mutable.Var (mapname map v) |> Mutable.fix

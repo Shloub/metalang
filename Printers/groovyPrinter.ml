@@ -70,18 +70,19 @@ let print_expr config e f p =
 let ptype f t =
   let open Type in
   let open Format in
-  let ptype ty f () = match ty with
-    | Integer -> fprintf f "int"
+  let ptype ty f option = match ty with
+    | Option a -> a f true
+    | Integer -> fprintf f (if option then "Integer" else "int")
     | String -> fprintf f "String"
-    | Array a -> fprintf f "%a[]" a ()
+    | Array a -> fprintf f "%a[]" a false
     | Void ->  fprintf f "void"
-    | Bool -> fprintf f "boolean"
-    | Char -> fprintf f "char"
+    | Bool -> fprintf f (if option then "Boolean" else "boolean")
+    | Char -> fprintf f (if option then "Char" else "char")
     | Named n -> fprintf f "%s" (String.capitalize n)
     | Enum _ -> fprintf f "an enum"
     | Struct li -> fprintf f "a struct"
     | Auto | Tuple _ | Lexems -> assert false
-  in Fixed.Deep.fold ptype t f ()
+  in Fixed.Deep.fold ptype t f false
 
 let print_instr c i =
   let open Ast.Instr in

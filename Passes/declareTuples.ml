@@ -42,6 +42,7 @@ let freshname = function
   | Type.Integer -> "int"
   | Type.String -> "string"
   | Type.Char -> "char"
+  | Type.Option x -> "option_"^x^"_"
   | Type.Array x -> "array_"^x^"_"
   | Type.Void -> "void"
   | Type.Bool -> "bool"

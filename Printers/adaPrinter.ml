@@ -31,7 +31,6 @@
 open Stdlib
 open Helper
 open Ast
-open Printer
 
 let print_lief prio f =
   let open Expr in
@@ -112,7 +111,32 @@ let print_expr macros e f p =
     | _ -> print_expr0 config e f prio_parent
   in Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
-let print_instr macros declared_types declared_types_assoc i =
+
+let rec ptype declared_types typerEnv f t =
+    match TypeMap.find_opt t declared_types with
+    | Some s -> Format.fprintf f "%s" s
+    | None ->
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "Integer"
+      | Type.String -> Format.fprintf f "stringptr"
+      | Type.Array a -> Format.fprintf f "Array (Integer range <>) of %a" (ptype declared_types typerEnv) a
+      | Type.Void -> assert false
+      | Type.Bool -> Format.fprintf f "Boolean"
+      | Type.Char -> Format.fprintf f "Character"
+      | Type.Named n ->
+        begin match Typer.byname n typerEnv |> Type.unfix with
+          | Type.Enum _ -> Format.fprintf f "%s" n
+          | Type.Struct _ -> Format.fprintf f "%s_PTR" n
+          | _ -> assert false
+        end
+      | Type.Struct li -> Format.fprintf f "a struct"
+      | Type.Enum _ -> Format.fprintf f "an enum"
+      | Type.Tuple _ | Type.Lexems | Type.Auto -> assert false
+      | Type.Option t -> ptype declared_types typerEnv f t (* déclaré avec un access *)
+        
+
+
+let print_instr typerEnv macros declared_types declared_types_assoc i =
   let open Ast.Instr in
   let open Format in
   let config = config macros in
@@ -161,8 +185,10 @@ let print_instr macros declared_types declared_types_assoc i =
         print_varname name typename_aux t (def_fields name) el
     | AllocArray (binding, type_, len, None, u) ->
       begin match TypeMap.find_opt (Type.array type_) declared_types with
-        | Some s -> fprintf f "@[<hov>%a := new %s (0..%a);@]"
-                      print_varname binding (StringMap.find s declared_types_assoc) len nop
+        | Some s -> begin match StringMap.find s declared_types_assoc with
+            | Some s -> fprintf f "@[<hov>%a := new %s (0..%a);@]" print_varname binding s len nop
+            | None -> assert false
+          end
         | None -> fprintf f "(no-type)"
       end
     | AllocArray (binding, type_, len, Some ( (b, l) ), u) -> assert false
@@ -203,30 +229,9 @@ let print_instr macros declared_types declared_types_assoc i =
     print_lief = print_lief;
   }
 
-let print_instr macros declared_types declared_types_assoc i =
+let print_instr typerEnv macros declared_types declared_types_assoc i =
   let open Ast.Instr.Fixed.Deep in
-  fold (print_instr macros declared_types declared_types_assoc) (mapg (print_expr macros) i)
-
-let rec ptype declared_types typerEnv f t =
-    match TypeMap.find_opt t declared_types with
-    | Some s -> Format.fprintf f "%s" s
-    | None ->
-      match Type.unfix t with
-      | Type.Integer -> Format.fprintf f "Integer"
-      | Type.String -> Format.fprintf f "stringptr"
-      | Type.Array a -> Format.fprintf f "Array (Integer range <>) of %a" (ptype declared_types typerEnv) a
-      | Type.Void -> assert false
-      | Type.Bool -> Format.fprintf f "Boolean"
-      | Type.Char -> Format.fprintf f "Character"
-      | Type.Named n ->
-        begin match Typer.byname n typerEnv |> Type.unfix with
-          | Type.Enum _ -> Format.fprintf f "%s" n
-          | Type.Struct _ -> Format.fprintf f "%s_PTR" n
-          | _ -> assert false
-        end
-      | Type.Struct li -> Format.fprintf f "a struct"
-      | Type.Enum _ -> Format.fprintf f "an enum"
-      | Type.Tuple _ | Type.Lexems | Type.Auto -> assert false
+  fold (print_instr typerEnv macros declared_types declared_types_assoc) (mapg (print_expr macros) i)
 
   let declaredvars bindings instrs =
     List.fold_left
@@ -263,8 +268,11 @@ let declarevars declared_types typerEnv f instrs =
       in Format.fprintf f "@\n  @[<v>%a@]" (print_list (fun p f -> f p ()) sep_nl) li
 
 let out_declare_type typerEnv f a b c =
-  (fun f () -> List.iter (fun (name, t, name2, decl, assoc) ->
-      Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name (ptype decl typerEnv) t name2 name;
+  (fun f () -> List.iter (function
+       | DeclArray (name, t, name2, decl) ->
+         Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name (ptype decl typerEnv) t name2 name
+       | DeclPtr (name, t, decl) ->
+         Format.fprintf f "@\ntype %s is access %a;@\n" name (ptype decl typerEnv) t
     ) (List.rev c)), a, b
     
 let declare_type typerEnv declared_types_assoc declared_types f t =
@@ -288,7 +296,7 @@ let print_body typerEnv macros declared_types_assoc declared_types f instrs =
             try List.assoc "ada" li
             with Not_found -> List.assoc "" li) macros in
         print_list (fun f i ->
-            (print_instr macros declared_types declared_types_assoc i).p f ()
+            (print_instr typerEnv macros declared_types declared_types_assoc i).p f ()
           ) sep_nl f li
     in
     Format.fprintf f "%a@\nbegin@\n@[<v 2>  %a@]@\nend;"

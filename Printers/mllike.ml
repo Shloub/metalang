@@ -39,6 +39,7 @@ let ptype ty f () =
   | String -> fprintf f "string"
   | Array a -> fprintf f "%a array" a ()
   | Void ->  fprintf f "unit"
+  | Option a -> fprintf f "%a option" a ()
   | Bool -> fprintf f "bool"
   | Char -> fprintf f "char"
   | Named n -> fprintf f "%s" n

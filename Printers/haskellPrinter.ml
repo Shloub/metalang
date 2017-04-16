@@ -214,10 +214,11 @@ let tname f name = Format.fprintf f "%s" (String.capitalize name)
 let ptype f t =
   let open Type in
   let open Format in
-  let ptype ty f () = match ty with
+  let ptype ty f () = match ty with (* TODO gérer ici le parenthésage *)
     | Integer -> fprintf f "Int"
     | String -> fprintf f "String"
     | Array a -> fprintf f "(IOArray Int %a)" a ()
+    | Option a -> fprintf f "(Maybe %a)" a ()
     | Void ->  fprintf f "()"
     | Bool -> fprintf f "Bool"
     | Char -> fprintf f "Char"

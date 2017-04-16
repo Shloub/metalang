@@ -94,6 +94,7 @@ rule token = parse
 | "char"   { TYPE_CHAR }
 | "bool"   { TYPE_BOOL }
 | "array"  { TYPE_ARRAY }
+| "option"  { TYPE_OPTION }
 | "void"  { TYPE_VOID }
 
 (* punctuation *)

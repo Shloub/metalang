@@ -94,19 +94,21 @@ let config tyenv macros = {
 }
 
 let print_expr tyenv config e f p = Ast.Expr.Fixed.Deep.fold (print_expr0 config) e f p
-let rec ptype f t =
+let ptype f t =
   let open Type in let open Format in
-  match Type.unfix t with
-  | Integer -> fprintf f "Integer"
+  let ptype ty f option = match ty with
+  | Integer -> fprintf f (if option then "Integer?" else "Integer")
   | String -> fprintf f "String"
-  | Array a -> fprintf f "%a()" ptype a
+  | Array a -> fprintf f "%a()" a false
+  | Option a -> a f true
   | Void ->  fprintf f "Void"
-  | Bool -> fprintf f "Boolean"
-  | Char -> fprintf f "Char"
+  | Bool -> fprintf f (if option then "Boolean?" else "Boolean")
+  | Char -> fprintf f (if option then "Char?" else "Char")
   | Named n -> fprintf f "%s" n
   | Struct li -> fprintf f "a struct"
   | Enum _ -> fprintf f "an enum"
   | Auto | Lexems | Tuple _ -> assert false
+  in Fixed.Deep.fold ptype t f false
 
 let print_instr tyenv c i =
   let open Ast.Instr in

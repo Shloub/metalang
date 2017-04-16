@@ -61,20 +61,22 @@ let config tyenv macros = {
 let print_expr config e f p =
   Expr.Fixed.Deep.fold (print_expr0 config) e f p
 
-let ptype t f () =
+let ptype t f opt =
   let open Type in let open Format in
   match t with
-  | Integer -> fprintf f "int"
+  | Integer -> fprintf f (if opt then "int?" else "int")
   | String -> fprintf f "String"
-  | Array a -> fprintf f "%a[]" a ()
+  | Array a -> fprintf f "%a[]" a false
+  | Option t -> t f true
   | Void ->  fprintf f "void"
-  | Bool -> fprintf f "bool"
-  | Char -> fprintf f "char"
+  | Bool -> fprintf f (if opt then "bool?" else "bool")
+  | Char -> fprintf f (if opt then "char?" else "char")
   | Named n -> fprintf f "%s" n
   | Struct li -> fprintf f "a struct"
   | Enum _ -> fprintf f "an enum"
   | Auto | Tuple _ | Lexems -> assert false
-let ptype f t = Ast.Type.Fixed.Deep.fold ptype t f ()
+    
+let ptype f t = Ast.Type.Fixed.Deep.fold ptype t f false
 
 let print_instr c i =
   let open Ast.Instr in

@@ -33,23 +33,26 @@ open Ast
 open Helper
 open Stdlib
 
-let rec ptype tyenv f t =
+let ptype tyenv f t =
   let open Ast.Type in
-  let open Format in match unfix t with
-  | Integer -> fprintf f "int"
+  let open Format in 
+  let ptype ty f option = match ty with
+  | Integer -> fprintf f (if option then "int*" else "int")
   | String -> fprintf f "char*"
-  | Array a -> fprintf f "%a*" (ptype tyenv) a
+  | Array a -> fprintf f "%a*" a false
   | Void ->  fprintf f "void"
-  | Bool -> fprintf f "int"
-  | Char -> fprintf f "char"
-  | Named n -> begin match Typer.expand tyenv t
+  | Bool -> fprintf f (if option then "int*" else "int")
+  | Char -> fprintf f (if option then "char*" else "char")
+  | Option a -> a f true
+  | Named n -> begin match Typer.expand tyenv (Typer.byname n tyenv)
                              default_location |> Type.unfix with
     | Type.Struct _ -> Format.fprintf f "%s *" n
-    | Type.Enum _ -> Format.fprintf f "%s" n
+    | Type.Enum _ -> Format.fprintf f (if option then "%s*" else "%s") n
     | _ -> assert false
     end
   | Enum _ | Struct _ | Auto | Lexems | Tuple _ -> assert false
-
+  in Fixed.Deep.fold ptype t f false
+    
 let print_instr0 ptype c i f pend =
   let open Ast.Instr in
   let open Format in

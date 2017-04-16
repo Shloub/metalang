@@ -64,13 +64,14 @@ let print_expr config e f p = Expr.Fixed.Deep.fold (print_expr0 config) e f p
 let ptype tyenv f ty =
   let open Type in
   let open Format in
-  let ptype ty f () = match ty with
-    | Integer -> fprintf f "int"
+  let ptype ty f option = match ty with
+    | Integer -> fprintf f (if option then "*int" else "int")
     | String -> fprintf f "string"
-    | Array a -> fprintf f "[]%a" a ()
+    | Array a -> fprintf f "[]%a" a false
+    | Option a -> a f true
     | Void ->  fprintf f ""
-    | Bool -> fprintf f "bool"
-    | Char -> fprintf f "byte"
+    | Bool -> fprintf f (if option then "*bool" else "bool")
+    | Char -> fprintf f (if option then "*byte" else "byte")
     | Named n -> begin match Typer.expand tyenv (Type.named n)
                                default_location |> Type.unfix with
       | Type.Struct _ -> Format.fprintf f "* %s" n
@@ -78,7 +79,7 @@ let ptype tyenv f ty =
       | _ -> assert false
       end
     | Enum _ | Struct _ | Tuple _ | Auto | Lexems -> assert false
-  in Fixed.Deep.fold ptype ty f ()
+  in Fixed.Deep.fold ptype ty f false
 
 let ptypename f t = match Type.unfix t with
   | Type.Named n -> Format.fprintf f "%s" n

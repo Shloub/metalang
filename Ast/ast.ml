@@ -246,6 +246,7 @@ module Type = struct
     | Enum of fieldname list
     | Named of typename
     | Tuple of 'a list
+    | Option of 'a
     | Auto
 
   module Fixed = Fix2(struct
@@ -267,6 +268,7 @@ module Type = struct
           | Named n -> ret (Named n)
           | Enum e -> ret (Enum e)
           | Char -> ret Char
+          | Option t -> ret (fun x -> Option x) <*> f t
           | Array t -> ret (fun x -> Array x) <*> f t
           | Tuple li -> ret (fun li -> Tuple li) <*> fold_left_map f li
           | Struct li -> ret (fun li -> Struct li) <*>  fold_left_map f' li
@@ -297,6 +299,9 @@ module Type = struct
     | Array ca, Array cb -> compare ca cb
     | Array _, (Char | Auto | Lexems | Integer | String) -> 1
     | Array _, _ -> -1
+    | Option ca, Option cb -> compare ca cb
+    | Option _, (Array _ | Char | Auto | Lexems | Integer | String) -> 1
+    | Option _, _ -> -1
     | Void, Void -> 0
     | Void, (Array _ | Char | Auto | Lexems | Integer | String) -> 1
     | Void, _ -> -1
@@ -341,7 +346,7 @@ module Type = struct
     | Struct _, _ -> -1
     | Named n1, Named n2 -> String.compare n1 n2
     | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
-                Auto | Lexems | Integer | String | Tuple _) -> 1
+                Auto | Lexems | Integer | String | Tuple _ | Option _) -> 1
 
   let type2String = function
     | Auto -> "Auto"
@@ -352,6 +357,7 @@ module Type = struct
     | Void -> "Void"
     | Bool -> "Bool"
     | Lexems -> "Lexems"
+    | Option t -> "Option("^t^")"
     | Tuple li ->
       let str = List.fold_left
           (fun acc t ->
@@ -379,6 +385,7 @@ module Type = struct
   let string:t = String |> fix
   let char:t = Char |> fix
   let array t = Array t |> fix
+  let option t = Option t |> fix
   let enum s = Enum (s) |> fix
   let struct_ s = Struct s |> fix
   let named n = Named n |> fix

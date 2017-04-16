@@ -117,6 +117,7 @@ let ptype f ty =
     | Integer -> fprintf f "Int"
     | String -> fprintf f "String"
     | Array a -> fprintf f "Array[%a]" a ()
+    | Option a -> fprintf f "Option[%a]" a ()
     | Void ->  fprintf f "Unit"
     | Bool -> fprintf f "Boolean"
     | Char -> fprintf f "Char"

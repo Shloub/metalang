@@ -78,6 +78,7 @@ let rec mutable_type tyenv t = match A.Type.unfix t with
   | A.Type.Char -> false
   | A.Type.Array _ -> true
   | A.Type.Void -> false
+  | A.Type.Option t -> mutable_type tyenv t
   | A.Type.Bool -> false
   | A.Type.Lexems -> false
   | A.Type.Struct _ -> true
