@@ -228,7 +228,7 @@ let prog typerEnv f (prog: Utils.prog) =
            | Prog.DeclareType (name, t) -> macros, (fun f -> decl_type typerEnv f name t) :: li
          | _ -> macros, li
         ) (StringMap.empty, []) prog.Prog.funs in
-    Format.fprintf f "#include <stdio.h>@\n#include <stdlib.h>@\n%a@\n%a%a@\n@\n"
+    Format.fprintf f "#include <stdio.h>@\n#include <stdlib.h>@\n%a@\n%a@\n%a@\n@\n"
       (fun f () ->
          if Tags.is_taged "use_math"
          then Format.fprintf f "#include <math.h>@\n") ()
