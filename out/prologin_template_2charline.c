@@ -18,19 +18,20 @@ int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2)
     }
     printf("--\n");
     return out0;
-}int main(void) {
-     int b, taille2, a, taille1;
-     scanf("%d ", &taille1);
-     char *tableau1 = calloc(taille1, sizeof(char));
-     for (a = 0; a < taille1; a++)
-         scanf("%c", &tableau1[a]);
-     scanf(" %d ", &taille2);
-     char *tableau2 = calloc(taille2, sizeof(char));
-     for (b = 0; b < taille2; b++)
-         scanf("%c", &tableau2[b]);
-     scanf(" ");
-     printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
-     return 0;
+}
+int main(void) {
+    int b, taille2, a, taille1;
+    scanf("%d ", &taille1);
+    char *tableau1 = calloc(taille1, sizeof(char));
+    for (a = 0; a < taille1; a++)
+        scanf("%c", &tableau1[a]);
+    scanf(" %d ", &taille2);
+    char *tableau2 = calloc(taille2, sizeof(char));
+    for (b = 0; b < taille2; b++)
+        scanf("%c", &tableau2[b]);
+    scanf(" ");
+    printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
+    return 0;
 }
 
 

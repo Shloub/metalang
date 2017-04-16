@@ -18,11 +18,12 @@ struct toto * mktoto(int v1) {
 int result(struct toto * t) {
     t->blah++;
     return t->foo + t->blah * t->bar + t->bar * t->foo;
-}int main(void) {
-     struct toto * t = mktoto(4);
-     scanf("%d %d", &t->bar, &t->blah);
-     printf("%d", result(t));
-     return 0;
+}
+int main(void) {
+    struct toto * t = mktoto(4);
+    scanf("%d %d", &t->bar, &t->blah);
+    printf("%d", result(t));
+    return 0;
 }
 
 

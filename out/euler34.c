@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int main(void) {
     int a, b, c, d, e, g, i, j;
     int *f = calloc(10, sizeof(int));

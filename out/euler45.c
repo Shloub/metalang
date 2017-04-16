@@ -44,15 +44,16 @@ int findHexa2(int n, int a, int b) {
         return findHexa2(n, c, b);
     else
         return findHexa2(n, a, c);
-}int main(void) {
-     int n;
-     for (n = 285; n < 55386; n++)
-     {
-         int t = triangle(n);
-         if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))
-             printf("%d\n%d\n", n, t);
-     }
-     return 0;
+}
+int main(void) {
+    int n;
+    for (n = 285; n < 55386; n++)
+    {
+        int t = triangle(n);
+        if (findPenta2(t, n / 5, n) && findHexa2(t, n / 5, n / 2 + 10))
+            printf("%d\n%d\n", n, t);
+    }
+    return 0;
 }
 
 

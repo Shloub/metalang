@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int main(void) {
     int j, b, d, i, a, len;
     scanf("%d ", &len);

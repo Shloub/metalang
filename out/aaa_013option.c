@@ -2,10 +2,11 @@
 #include <stdlib.h>
 
 
+int default0(int* opt) {
+    return 0;
+}
 int main(void) {
-    int len;
-    scanf("%d ", &len);
-    printf("%d\n", len);
+    printf("___\n");
     return 0;
 }
 

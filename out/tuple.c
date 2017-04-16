@@ -14,16 +14,17 @@ struct tuple_int_int * f(struct tuple_int_int * tuple0) {
     d->tuple_int_int_field_0 = a + 1;
     d->tuple_int_int_field_1 = b + 1;
     return d;
-}int main(void) {
-     struct tuple_int_int * e = malloc(sizeof(tuple_int_int));
-     e->tuple_int_int_field_0 = 0;
-     e->tuple_int_int_field_1 = 1;
-     struct tuple_int_int * t = f(e);
-     struct tuple_int_int * g = t;
-     int a = g->tuple_int_int_field_0;
-     int b = g->tuple_int_int_field_1;
-     printf("%d -- %d--\n", a, b);
-     return 0;
+}
+int main(void) {
+    struct tuple_int_int * e = malloc(sizeof(tuple_int_int));
+    e->tuple_int_int_field_0 = 0;
+    e->tuple_int_int_field_1 = 1;
+    struct tuple_int_int * t = f(e);
+    struct tuple_int_int * g = t;
+    int a = g->tuple_int_int_field_0;
+    int b = g->tuple_int_int_field_1;
+    printf("%d -- %d--\n", a, b);
+    return 0;
 }
 
 

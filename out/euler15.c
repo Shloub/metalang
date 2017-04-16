@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int main(void) {
     int m, k, o, p, l, i, j;
     int n = 10;

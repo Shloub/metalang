@@ -201,35 +201,36 @@ struct move * read_move() {
     b->x = x;
     b->y = y;
     return b;
-}int main(void) {
-     int i;
-     for (i = 0; i < 2; i++)
-     {
-         struct gamestate * state = init0();
-         struct move * c = malloc(sizeof(move));
-         c->x = 1;
-         c->y = 1;
-         apply_move(c, state);
-         struct move * d = malloc(sizeof(move));
-         d->x = 0;
-         d->y = 0;
-         apply_move(d, state);
-         while (!state->ended)
-         {
-             print_state(state);
-             apply_move(play(state), state);
-             eval0(state);
-             print_state(state);
-             if (!state->ended)
-             {
-                 apply_move(play(state), state);
-                 eval0(state);
-             }
-         }
-         print_state(state);
-         printf("%d\n", state->note);
-     }
-     return 0;
+}
+int main(void) {
+    int i;
+    for (i = 0; i < 2; i++)
+    {
+        struct gamestate * state = init0();
+        struct move * c = malloc(sizeof(move));
+        c->x = 1;
+        c->y = 1;
+        apply_move(c, state);
+        struct move * d = malloc(sizeof(move));
+        d->x = 0;
+        d->y = 0;
+        apply_move(d, state);
+        while (!state->ended)
+        {
+            print_state(state);
+            apply_move(play(state), state);
+            eval0(state);
+            print_state(state);
+            if (!state->ended)
+            {
+                apply_move(play(state), state);
+                eval0(state);
+            }
+        }
+        print_state(state);
+        printf("%d\n", state->note);
+    }
+    return 0;
 }
 
 

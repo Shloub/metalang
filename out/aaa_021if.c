@@ -66,12 +66,13 @@ void test(int a, int b) {
     testD(a, b);
     testE(a, b);
     printf("\n");
-}int main(void) {
-     test(1, 1);
-     test(1, 0);
-     test(0, 1);
-     test(0, 0);
-     return 0;
+}
+int main(void) {
+    test(1, 1);
+    test(1, 0);
+    test(0, 1);
+    test(0, 0);
+    return 0;
 }
 
 

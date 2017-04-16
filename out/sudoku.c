@@ -85,14 +85,15 @@ int solve(int* sudoku0) {
             return 0;
         }
     return 0;
-}int main(void) {
-     int* sudoku0 = read_sudoku();
-     print_sudoku(sudoku0);
-     if (solve(sudoku0))
-         print_sudoku(sudoku0);
-     else
-         printf("no solution\n");
-     return 0;
+}
+int main(void) {
+    int* sudoku0 = read_sudoku();
+    print_sudoku(sudoku0);
+    if (solve(sudoku0))
+        print_sudoku(sudoku0);
+    else
+        printf("no solution\n");
+    return 0;
 }
 
 

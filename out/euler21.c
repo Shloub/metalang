@@ -68,40 +68,41 @@ int sumdiv(int nprimes, int* primes, int n) {
         t[i] = 0;
     int max0 = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max0, 0);
-}int main(void) {
-     int n, k, o, j;
-     int maximumprimes = 1001;
-     int *era = calloc(maximumprimes, sizeof(int));
-     for (j = 0; j < maximumprimes; j++)
-         era[j] = j;
-     int nprimes = eratostene(era, maximumprimes);
-     int *primes = calloc(nprimes, sizeof(int));
-     for (o = 0; o < nprimes; o++)
-         primes[o] = 0;
-     int l = 0;
-     for (k = 2; k < maximumprimes; k++)
-         if (era[k] == k)
-         {
-             primes[l] = k;
-             l++;
-         }
-     printf("%d == %d\n", l, nprimes);
-     int sum = 0;
-     for (n = 2; n < 1001; n++)
-     {
-         int other = sumdiv(nprimes, primes, n) - n;
-         if (other > n)
-         {
-             int othersum = sumdiv(nprimes, primes, other) - other;
-             if (othersum == n)
-             {
-                 printf("%d & %d\n", other, n);
-                 sum += other + n;
-             }
-         }
-     }
-     printf("\n%d\n", sum);
-     return 0;
+}
+int main(void) {
+    int n, k, o, j;
+    int maximumprimes = 1001;
+    int *era = calloc(maximumprimes, sizeof(int));
+    for (j = 0; j < maximumprimes; j++)
+        era[j] = j;
+    int nprimes = eratostene(era, maximumprimes);
+    int *primes = calloc(nprimes, sizeof(int));
+    for (o = 0; o < nprimes; o++)
+        primes[o] = 0;
+    int l = 0;
+    for (k = 2; k < maximumprimes; k++)
+        if (era[k] == k)
+        {
+            primes[l] = k;
+            l++;
+        }
+    printf("%d == %d\n", l, nprimes);
+    int sum = 0;
+    for (n = 2; n < 1001; n++)
+    {
+        int other = sumdiv(nprimes, primes, n) - n;
+        if (other > n)
+        {
+            int othersum = sumdiv(nprimes, primes, other) - other;
+            if (othersum == n)
+            {
+                printf("%d & %d\n", other, n);
+                sum += other + n;
+            }
+        }
+    }
+    printf("\n%d\n", sum);
+    return 0;
 }
 
 

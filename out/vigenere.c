@@ -28,28 +28,29 @@ void crypte(int taille_cle, char* cle, int taille, char* message) {
             message[i] = of_position_alphabet(new0);
         }
     }
-}int main(void) {
-     int i, index2, taille, index, taille_cle;
-     char out2, out0;
-     scanf("%d ", &taille_cle);
-     char *cle = calloc(taille_cle, sizeof(char));
-     for (index = 0; index < taille_cle; index++)
-     {
-         scanf("%c", &out0);
-         cle[index] = out0;
-     }
-     scanf(" %d ", &taille);
-     char *message = calloc(taille, sizeof(char));
-     for (index2 = 0; index2 < taille; index2++)
-     {
-         scanf("%c", &out2);
-         message[index2] = out2;
-     }
-     crypte(taille_cle, cle, taille, message);
-     for (i = 0; i < taille; i++)
-         printf("%c", message[i]);
-     printf("\n");
-     return 0;
+}
+int main(void) {
+    int i, index2, taille, index, taille_cle;
+    char out2, out0;
+    scanf("%d ", &taille_cle);
+    char *cle = calloc(taille_cle, sizeof(char));
+    for (index = 0; index < taille_cle; index++)
+    {
+        scanf("%c", &out0);
+        cle[index] = out0;
+    }
+    scanf(" %d ", &taille);
+    char *message = calloc(taille, sizeof(char));
+    for (index2 = 0; index2 < taille; index2++)
+    {
+        scanf("%c", &out2);
+        message[index2] = out2;
+    }
+    crypte(taille_cle, cle, taille, message);
+    for (i = 0; i < taille; i++)
+        printf("%c", message[i]);
+    printf("\n");
+    return 0;
 }
 
 

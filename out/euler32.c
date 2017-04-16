@@ -42,68 +42,69 @@ int okdigits(int* ok, int n) {
         else
             return 0;
     }
-}int main(void) {
-     int e, b, a, c, d, j, i;
-     int count = 0;
-     int *allowed = calloc(10, sizeof(int));
-     for (i = 0; i < 10; i++)
-         allowed[i] = i != 0;
-     int *counted = calloc(100000, sizeof(int));
-     for (j = 0; j < 100000; j++)
-         counted[j] = 0;
-     for (e = 1; e < 10; e++)
-     {
-         allowed[e] = 0;
-         for (b = 1; b < 10; b++)
-             if (allowed[b])
-             {
-                 allowed[b] = 0;
-                 int be = b * e % 10;
-                 if (allowed[be])
-                 {
-                     allowed[be] = 0;
-                     for (a = 1; a < 10; a++)
-                         if (allowed[a])
-                         {
-                             allowed[a] = 0;
-                             for (c = 1; c < 10; c++)
-                                 if (allowed[c])
-                                 {
-                                     allowed[c] = 0;
-                                     for (d = 1; d < 10; d++)
-                                         if (allowed[d])
-                                         {
-                                             allowed[d] = 0;
-                                             /* 2 * 3 digits */
-                                             int product = (a * 10 + b) * (c * 100 + d * 10 + e);
-                                             if (!counted[product] && okdigits(allowed, product / 10))
-                                             {
-                                                 counted[product] = 1;
-                                                 count += product;
-                                                 printf("%d ", product);
-                                             }
-                                             /* 1  * 4 digits */
-                                             int product2 = b * (a * 1000 + c * 100 + d * 10 + e);
-                                             if (!counted[product2] && okdigits(allowed, product2 / 10))
-                                             {
-                                                 counted[product2] = 1;
-                                                 count += product2;
-                                                 printf("%d ", product2);
-                                             }
-                                             allowed[d] = 1;
-                                         }
-                                     allowed[c] = 1;
-                                 }
-                             allowed[a] = 1;
-                         }
-                     allowed[be] = 1;
-                 }
-                 allowed[b] = 1;
-             }
-         allowed[e] = 1;
-     }
-     printf("%d\n", count);
-     return 0;
+}
+int main(void) {
+    int e, b, a, c, d, j, i;
+    int count = 0;
+    int *allowed = calloc(10, sizeof(int));
+    for (i = 0; i < 10; i++)
+        allowed[i] = i != 0;
+    int *counted = calloc(100000, sizeof(int));
+    for (j = 0; j < 100000; j++)
+        counted[j] = 0;
+    for (e = 1; e < 10; e++)
+    {
+        allowed[e] = 0;
+        for (b = 1; b < 10; b++)
+            if (allowed[b])
+            {
+                allowed[b] = 0;
+                int be = b * e % 10;
+                if (allowed[be])
+                {
+                    allowed[be] = 0;
+                    for (a = 1; a < 10; a++)
+                        if (allowed[a])
+                        {
+                            allowed[a] = 0;
+                            for (c = 1; c < 10; c++)
+                                if (allowed[c])
+                                {
+                                    allowed[c] = 0;
+                                    for (d = 1; d < 10; d++)
+                                        if (allowed[d])
+                                        {
+                                            allowed[d] = 0;
+                                            /* 2 * 3 digits */
+                                            int product = (a * 10 + b) * (c * 100 + d * 10 + e);
+                                            if (!counted[product] && okdigits(allowed, product / 10))
+                                            {
+                                                counted[product] = 1;
+                                                count += product;
+                                                printf("%d ", product);
+                                            }
+                                            /* 1  * 4 digits */
+                                            int product2 = b * (a * 1000 + c * 100 + d * 10 + e);
+                                            if (!counted[product2] && okdigits(allowed, product2 / 10))
+                                            {
+                                                counted[product2] = 1;
+                                                count += product2;
+                                                printf("%d ", product2);
+                                            }
+                                            allowed[d] = 1;
+                                        }
+                                    allowed[c] = 1;
+                                }
+                            allowed[a] = 1;
+                        }
+                    allowed[be] = 1;
+                }
+                allowed[b] = 1;
+            }
+        allowed[e] = 1;
+    }
+    printf("%d\n", count);
+    return 0;
 }
 
 

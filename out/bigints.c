@@ -431,67 +431,68 @@ int euler29() {
         }
     }
     return n;
-}int main(void) {
-     int i;
-     printf("%d\n", euler29());
-     struct bigint * sum = read_bigint(50);
-     for (i = 2; i < 101; i++)
-     {
-         scanf(" ");
-         struct bigint * tmp = read_bigint(50);
-         sum = add_bigint(sum, tmp);
-     }
-     printf("euler13 = ");
-     print_bigint(sum);
-     printf("\neuler25 = %d\neuler16 = %d\n", euler25(), euler16());
-     euler48();
-     printf("euler20 = %d\n", euler20());
-     struct bigint * a = bigint_of_int(999999);
-     struct bigint * b = bigint_of_int(9951263);
-     print_bigint(a);
-     printf(">>1=");
-     print_bigint(bigint_shift(a, -1));
-     printf("\n");
-     print_bigint(a);
-     printf("*");
-     print_bigint(b);
-     printf("=");
-     print_bigint(mul_bigint(a, b));
-     printf("\n");
-     print_bigint(a);
-     printf("*");
-     print_bigint(b);
-     printf("=");
-     print_bigint(mul_bigint_cp(a, b));
-     printf("\n");
-     print_bigint(a);
-     printf("+");
-     print_bigint(b);
-     printf("=");
-     print_bigint(add_bigint(a, b));
-     printf("\n");
-     print_bigint(b);
-     printf("-");
-     print_bigint(a);
-     printf("=");
-     print_bigint(sub_bigint(b, a));
-     printf("\n");
-     print_bigint(a);
-     printf("-");
-     print_bigint(b);
-     printf("=");
-     print_bigint(sub_bigint(a, b));
-     printf("\n");
-     print_bigint(a);
-     printf(">");
-     print_bigint(b);
-     printf("=");
-     if (bigint_gt(a, b))
-         printf("True");
-     else
-         printf("False");
-     printf("\n");
-     return 0;
+}
+int main(void) {
+    int i;
+    printf("%d\n", euler29());
+    struct bigint * sum = read_bigint(50);
+    for (i = 2; i < 101; i++)
+    {
+        scanf(" ");
+        struct bigint * tmp = read_bigint(50);
+        sum = add_bigint(sum, tmp);
+    }
+    printf("euler13 = ");
+    print_bigint(sum);
+    printf("\neuler25 = %d\neuler16 = %d\n", euler25(), euler16());
+    euler48();
+    printf("euler20 = %d\n", euler20());
+    struct bigint * a = bigint_of_int(999999);
+    struct bigint * b = bigint_of_int(9951263);
+    print_bigint(a);
+    printf(">>1=");
+    print_bigint(bigint_shift(a, -1));
+    printf("\n");
+    print_bigint(a);
+    printf("*");
+    print_bigint(b);
+    printf("=");
+    print_bigint(mul_bigint(a, b));
+    printf("\n");
+    print_bigint(a);
+    printf("*");
+    print_bigint(b);
+    printf("=");
+    print_bigint(mul_bigint_cp(a, b));
+    printf("\n");
+    print_bigint(a);
+    printf("+");
+    print_bigint(b);
+    printf("=");
+    print_bigint(add_bigint(a, b));
+    printf("\n");
+    print_bigint(b);
+    printf("-");
+    print_bigint(a);
+    printf("=");
+    print_bigint(sub_bigint(b, a));
+    printf("\n");
+    print_bigint(a);
+    printf("-");
+    print_bigint(b);
+    printf("=");
+    print_bigint(sub_bigint(a, b));
+    printf("\n");
+    print_bigint(a);
+    printf(">");
+    print_bigint(b);
+    printf("=");
+    if (bigint_gt(a, b))
+        printf("True");
+    else
+        printf("False");
+    printf("\n");
+    return 0;
 }
 
 

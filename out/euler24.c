@@ -38,9 +38,10 @@ void show(int lim, int nth) {
         if (!pris[m])
             printf("%d", m);
     printf("\n");
-}int main(void) {
-     show(10, 999999);
-     return 0;
+}
+int main(void) {
+    show(10, 999999);
+    return 0;
 }
 
 

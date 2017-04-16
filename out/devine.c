@@ -18,20 +18,21 @@ int devine0(int nombre, int* tab, int len) {
             return 0;
     }
     return 1;
-}int main(void) {
-     int i, tmp, len, nombre;
-     scanf("%d %d ", &nombre, &len);
-     int *tab = calloc(len, sizeof(int));
-     for (i = 0; i < len; i++)
-     {
-         scanf("%d ", &tmp);
-         tab[i] = tmp;
-     }
-     if (devine0(nombre, tab, len))
-         printf("True");
-     else
-         printf("False");
-     return 0;
+}
+int main(void) {
+    int i, tmp, len, nombre;
+    scanf("%d %d ", &nombre, &len);
+    int *tab = calloc(len, sizeof(int));
+    for (i = 0; i < len; i++)
+    {
+        scanf("%d ", &tmp);
+        tab[i] = tmp;
+    }
+    if (devine0(nombre, tab, len))
+        printf("True");
+    else
+        printf("False");
+    return 0;
 }
 
 

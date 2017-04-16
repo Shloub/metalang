@@ -38,20 +38,21 @@ int npi0(char* str, int len) {
             ptrStr++;
         }
     return stack[0];
-}int main(void) {
-     int i;
-     int len = 0;
-     scanf("%d ", &len);
-     char *tab = calloc(len, sizeof(char));
-     for (i = 0; i < len; i++)
-     {
-         char tmp = '\x00';
-         scanf("%c", &tmp);
-         tab[i] = tmp;
-     }
-     int result = npi0(tab, len);
-     printf("%d", result);
-     return 0;
+}
+int main(void) {
+    int i;
+    int len = 0;
+    scanf("%d ", &len);
+    char *tab = calloc(len, sizeof(char));
+    for (i = 0; i < len; i++)
+    {
+        char tmp = '\x00';
+        scanf("%c", &tmp);
+        tab[i] = tmp;
+    }
+    int result = npi0(tab, len);
+    printf("%d", result);
+    return 0;
 }
 
 

@@ -75,9 +75,10 @@ int find(int ndiv2) {
         /* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
     }
     return 0;
-}int main(void) {
-     printf("%d\n", find(500));
-     return 0;
+}
+int main(void) {
+    printf("%d\n", find(500));
+    return 0;
 }
 
 

@@ -27,18 +27,19 @@ int score() {
         return 1;
     else
         return 0;
-}int main(void) {
-     int n, i;
-     for (i = 1; i < 56; i++)
-         if (is_triangular(i))
-             printf("%d ", i);
-     printf("\n");
-     int sum = 0;
-     scanf("%d", &n);
-     for (i = 1; i <= n; i++)
-         sum += score();
-     printf("%d\n", sum);
-     return 0;
+}
+int main(void) {
+    int n, i;
+    for (i = 1; i < 56; i++)
+        if (is_triangular(i))
+            printf("%d ", i);
+    printf("\n");
+    int sum = 0;
+    scanf("%d", &n);
+    for (i = 1; i <= n; i++)
+        sum += score();
+    printf("%d\n", sum);
+    return 0;
 }
 
 

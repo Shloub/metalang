@@ -39,13 +39,14 @@ int sumdiv(int n) {
         }
     return out0;
     /*On renvoie out*/
-}int main(void) {
-     /* Programme principal */
-     int n = 0;
-     scanf("%d", &n);
-     /* Lecture de l'entier */
-     printf("%d", sumdiv(n));
-     return 0;
+}
+int main(void) {
+    /* Programme principal */
+    int n = 0;
+    scanf("%d", &n);
+    /* Lecture de l'entier */
+    printf("%d", sumdiv(n));
+    return 0;
 }
 
 

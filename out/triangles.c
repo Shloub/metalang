@@ -40,28 +40,29 @@ int find(int len, int** tab) {
         tab2[i] = tab3;
     }
     return find0(len, tab, tab2, 0, 0);
-}int main(void) {
-     int k, l, i, j, tmp, len;
-     scanf("%d ", &len);
-     int* *tab = calloc(len, sizeof(int*));
-     for (i = 0; i < len; i++)
-     {
-         int *tab2 = calloc(i + 1, sizeof(int));
-         for (j = 0; j <= i; j++)
-         {
-             scanf("%d ", &tmp);
-             tab2[j] = tmp;
-         }
-         tab[i] = tab2;
-     }
-     printf("%d\n", find(len, tab));
-     for (k = 0; k < len; k++)
-     {
-         for (l = 0; l <= k; l++)
-             printf("%d ", tab[k][l]);
-         printf("\n");
-     }
-     return 0;
+}
+int main(void) {
+    int k, l, i, j, tmp, len;
+    scanf("%d ", &len);
+    int* *tab = calloc(len, sizeof(int*));
+    for (i = 0; i < len; i++)
+    {
+        int *tab2 = calloc(i + 1, sizeof(int));
+        for (j = 0; j <= i; j++)
+        {
+            scanf("%d ", &tmp);
+            tab2[j] = tmp;
+        }
+        tab[i] = tab2;
+    }
+    printf("%d\n", find(len, tab));
+    for (k = 0; k < len; k++)
+    {
+        for (l = 0; l <= k; l++)
+            printf("%d ", tab[k][l]);
+        printf("\n");
+    }
+    return 0;
 }
 
 

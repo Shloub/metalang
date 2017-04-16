@@ -11,17 +11,18 @@ int g(int i) {
 
 void h(int i) {
     printf("%d\n", i);
-}int main(void) {
-     h(14);
-     int a = 4;
-     int b = 5;
-     printf("%d", a + b);
-     /* main */
-     h(15);
-     a = 2;
-     b = 1;
-     printf("%d", a + b);
-     return 0;
+}
+int main(void) {
+    h(14);
+    int a = 4;
+    int b = 5;
+    printf("%d", a + b);
+    /* main */
+    h(15);
+    a = 2;
+    b = 1;
+    printf("%d", a + b);
+    return 0;
 }
 
 

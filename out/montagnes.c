@@ -18,19 +18,20 @@ int montagnes0(int* tab, int len) {
         i--;
     }
     return max0;
-}int main(void) {
-     int i;
-     int len = 0;
-     scanf("%d ", &len);
-     int *tab = calloc(len, sizeof(int));
-     for (i = 0; i < len; i++)
-     {
-         int x = 0;
-         scanf("%d ", &x);
-         tab[i] = x;
-     }
-     printf("%d", montagnes0(tab, len));
-     return 0;
+}
+int main(void) {
+    int i;
+    int len = 0;
+    scanf("%d ", &len);
+    int *tab = calloc(len, sizeof(int));
+    for (i = 0; i < len; i++)
+    {
+        int x = 0;
+        scanf("%d ", &x);
+        tab[i] = x;
+    }
+    printf("%d", montagnes0(tab, len));
+    return 0;
 }
 
 

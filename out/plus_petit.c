@@ -31,19 +31,20 @@ int go0(int* tab, int a, int b) {
 
 int plus_petit0(int* tab, int len) {
     return go0(tab, 0, len);
-}int main(void) {
-     int i;
-     int len = 0;
-     scanf("%d ", &len);
-     int *tab = calloc(len, sizeof(int));
-     for (i = 0; i < len; i++)
-     {
-         int tmp = 0;
-         scanf("%d ", &tmp);
-         tab[i] = tmp;
-     }
-     printf("%d", plus_petit0(tab, len));
-     return 0;
+}
+int main(void) {
+    int i;
+    int len = 0;
+    scanf("%d ", &len);
+    int *tab = calloc(len, sizeof(int));
+    for (i = 0; i < len; i++)
+    {
+        int tmp = 0;
+        scanf("%d ", &tmp);
+        tab[i] = tmp;
+    }
+    printf("%d", plus_petit0(tab, len));
+    return 0;
 }
 
 
