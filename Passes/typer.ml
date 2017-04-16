@@ -278,7 +278,8 @@ let rec tyall t = match !t with
     if all then begin t := Typed (extract_typed t, loc); true end else false
   | Typed _ -> true
   | Unknown _ -> false
-
+  | PreTyped ( Type.Auto , _ ) -> assert false
+      
 let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
   let _ = tyall t1 in
   let _ = tyall t2 in
@@ -540,6 +541,9 @@ let collect_contraintes_instruction env instruction =
        let loc = Ast.PosMap.get i in
        match instruction with
        | Instr.Tag _ -> env
+       | Instr.Incr m | Instr.Decr m ->
+         let env, contrainte_mut = collect_contraintes_mutable (fun e acc -> e env) m env
+         in add_contrainte env contrainte_mut (ref (Typed (Type.integer, loc)))
        | Instr.Declare (var, ty, contrainte_expr, _) ->
          let ty = expand env ty loc in
          let env, contrainte_expr = contrainte_expr env in
@@ -571,6 +575,14 @@ let collect_contraintes_instruction env instruction =
                       (contrainte_integer, contrainte_e2) ::
                       env.contraintes}
          in List.fold_left(fun env f -> f env ty_ret) env li
+
+       | Instr.ClikeLoop (init, cond, incr, li) ->
+         let env, contrainte_cond = cond env in
+         let env = add_contrainte env contrainte_cond (ref (Typed (Type.bool, loc))) in
+         let env = List.fold_left(fun env f -> f env ty_ret) env init in
+         let env = List.fold_left(fun env f -> f env ty_ret) env incr in
+         let env = List.fold_left(fun env f -> f env ty_ret) env li in
+         env
        | Instr.While (contrainte_e, li) ->
          let env, contrainte_e = contrainte_e env in
          let contrainte_bool = ref (Typed (Type.bool, loc)) in
