@@ -1,7 +1,7 @@
 st(){
     a=`pwd`
     cd "$2"
-    cat `ls | grep "^\\([^.]*\\).${1}\$" ` | tr -d ' \n' | wc -c
+    cat `ls | grep "^\\([^.]*\\).${1}\$" ` | tr -d ' \n\t' | wc -c
     cd "$a"
 }
 
