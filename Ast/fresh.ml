@@ -50,6 +50,14 @@ let add s =
   bindings := StringSet.add s !bindings
 
 let fresh_init prog =
+  let addsetty t acc = match t with
+    | Type.Named n -> StringSet.add n acc
+    | Type.Array t | Type.Option t -> t acc
+    | Type.Tuple li -> List.fold_left (|>) acc li
+    | Type.Struct li -> List.fold_left (fun acc (name, f) -> StringSet.add name (f acc)) acc li
+    | Type.Enum l -> List.fold_left (fun a b -> StringSet.add b a) acc l
+    | Type.Void | Type.Bool | Type.Auto | Type.Integer | Type.Char | Type.String | Type.Lexems -> acc
+  in
   let addset acc i = Instr.Writer.Deep.fold
       (fun acc i ->
          match Instr.unfix i with
@@ -87,6 +95,10 @@ let fresh_init prog =
              | _ -> acc)
           acc params in
       let acc:StringSet.t = List.fold_left addset acc instrs in
+      acc
+    | Prog.DeclareType (name, t)->
+      let acc = StringSet.add name acc in
+      let acc = Type.Fixed.Deep.fold addsetty t acc in
       acc
     | _ -> acc
   in
