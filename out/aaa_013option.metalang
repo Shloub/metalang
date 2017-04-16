@@ -1,0 +1,8 @@
+def int default (option<int> opt)
+  return 0
+end
+
+main
+  print string "___\n"
+end
+

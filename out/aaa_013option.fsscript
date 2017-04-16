@@ -1,0 +1,21 @@
+type foo = {
+  mutable a : int;
+  mutable b : int option;
+  mutable c : int array option;
+  mutable d : int option array;
+  mutable e : int array;
+  mutable f : foo option;
+  mutable g : foo option array;
+  mutable h : foo array option;
+}
+
+let default0 (_a:int option) (_b:foo option) (_c:int option array) (_d:foo option array) (_e:int array option) (_f:foo array option) =
+  0
+
+let aa (_b:foo) =
+  
+  ()
+
+let () =
+  Printf.printf "___\n"
+ 

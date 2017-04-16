@@ -1,0 +1,27 @@
+
+record @foo
+  a : int
+  b : option<int>
+  c : option<array<int>>
+  d : array<option<int>>
+  e : array<int>
+  f : option<@foo>
+  g : array<option<@foo>>
+  h : option<array<@foo>>
+end
+
+def int default(option<int> a, option<@foo> b
+  , array<option<int>> c, array<option<@foo>> d
+  , option<array<int>> e, option<array<@foo>> f
+  )
+  return 0
+end
+
+
+def void aa(@foo b)
+end
+
+main
+  
+  print "___\n"
+end
