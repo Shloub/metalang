@@ -5,5 +5,6 @@ function default0(a, b, c, d, e, f){
 function aa(b){
     
 }
+var a = null;
 util.print("___\n");
 

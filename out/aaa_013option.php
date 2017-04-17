@@ -6,5 +6,6 @@ function default0($a, $b, &$c, &$d, $e, $f) {
 function aa(&$b) {
     
 }
+$a = null;
 echo "___\n";
 

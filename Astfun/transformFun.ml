@@ -71,6 +71,7 @@ let lief = function
   | A.Expr.Integer i -> F.Expr.Integer i
   | A.Expr.Bool b -> F.Expr.Bool b
   | A.Expr.Enum e -> F.Expr.Enum e
+  | A.Expr.Nil -> F.Expr.Nil
 
 let rec mutable_type tyenv t = match A.Type.unfix t with
   | A.Type.Integer -> false

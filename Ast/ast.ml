@@ -436,6 +436,7 @@ module Expr = struct
     | Integer of int
     | Bool of bool
     | Enum of string (** enumerateur *)
+    | Nil
 
   let pdebug_lief f = let open Format in function
       | Char c -> fprintf f "Char %C" c
@@ -443,6 +444,7 @@ module Expr = struct
       | Integer i -> fprintf f "Integer %i" i
       | Bool b -> fprintf f "Bool %b" b
       | Enum s -> fprintf f "Enum %S" s
+      | Nil -> fprintf f "Nil"
 
   type ('a, 'lex) tofix =
       BinOp of 'a * binop * 'a (** operations binaires *)
@@ -543,8 +545,8 @@ module Expr = struct
   (** {2 utils} *)
 
   let lief l = fix (Lief l)
-
   let bool b = lief (Bool b)
+  let nil () = lief Nil
 
   let enum e = lief (Enum e)
 

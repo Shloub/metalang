@@ -329,6 +329,14 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
       | _ -> unify env r1 (ref (Typed (ty, loc1)))
     end
   | PreTyped ((Type.Array r1), loc1), Typed (_, loc2) -> error_cty !t1 !t2 loc1 loc2
+  | PreTyped (Type.Option _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2 loc1 loc2
+  | PreTyped (Type.Option r1, loc1), Typed (Type.Fixed.F (_, Type.Option ty), loc2) ->
+    begin
+      match !r1 with
+      | Typed _ -> t1 := !t2; true
+      | _ -> unify env r1 (ref (Typed (ty, loc1)))
+    end
+  | PreTyped ((Type.Option r1), loc1), Typed (_, loc2) -> error_cty !t1 !t2 loc1 loc2
   | PreTyped (Type.Struct li, loc1), Typed (Type.Fixed.F (_, Type.Struct li2), loc2) ->
     let all = List.fold_left
         (fun all (name, t) ->
@@ -414,6 +422,9 @@ let contrainte_of_lief loc env = function
   | Expr.Enum en ->
     let (t, _) = StringMap.find en env.enum in (* TODO not found*)
     ref (Typed (t, loc) )
+  | Expr.Nil ->
+    let contrainte = ref (Unknown loc) in
+    ref (PreTyped (Type.Option contrainte, loc) )
 
 
 

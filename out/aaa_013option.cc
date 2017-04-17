@@ -22,6 +22,7 @@ void aa(foo * b) {
 }
 
 int main() {
+    int* a = nullptr;
     std::cout << "___\n";
 }
 

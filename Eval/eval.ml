@@ -81,6 +81,7 @@ type result =
   | String of string
   | Record of result array
   | Array of result array
+  | Option of result option
   | Lexems of Parser.token list
   | Tuple of result array
   | Nil
@@ -95,6 +96,7 @@ let typeof = function
   | Char _ -> "char"
   | String _ -> "string"
   | Record _ -> "record"
+  | Option _ -> "option"
   | Array _ -> "array"
   | Nil -> "Nil"
   | Lexems _ -> "Lexems"
@@ -409,6 +411,7 @@ module EvalF (IO : EvalIO) = struct
     | Expr.String s -> String s
     | Expr.Integer i -> Integer i
     | Expr.Bool b -> Bool b
+    | Expr.Nil -> Option None
     | Expr.Enum e ->
       let t = Typer.type_for_enum e env.tyenv in
       begin match Type.unfix t with

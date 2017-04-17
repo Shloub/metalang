@@ -22,6 +22,6 @@ def void aa(@foo b)
 end
 
 main
-  
+  def option<int> a = nil
   print "___\n"
 end

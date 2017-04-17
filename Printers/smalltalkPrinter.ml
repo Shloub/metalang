@@ -47,6 +47,7 @@ let print_lief prio f l =
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
   | Enum s -> fprintf f "#%s" s
+  | Nil -> fprintf f "nil"
 let print_op f op =
   let open Format in
   let open Expr in 

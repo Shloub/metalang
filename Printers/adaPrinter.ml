@@ -41,6 +41,7 @@ let print_lief prio f =
     else fprintf f "Character'Val(%d)" i in
   function
   | Char c -> pchar f c
+  | Nil -> fprintf f "Null"
   | Integer i ->
     if i < 0 then parens prio (1000) f "%i" i
     else fprintf f "%i" i

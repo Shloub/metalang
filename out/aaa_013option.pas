@@ -30,7 +30,10 @@ begin
 end;
 
 
+var
+  a : i;
 begin
+  a := Nil;
   Write('___'#10'');
 end.
 

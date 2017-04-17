@@ -40,6 +40,7 @@ let print_lief prio f l =
   | Bool true -> fprintf f "1"
   | Bool false -> fprintf f "0"
   | Char c -> clike_char f c
+  | Nil -> fprintf f "NULL"
   | x -> print_lief prio f x
 
 let print_mut conf prio f m =

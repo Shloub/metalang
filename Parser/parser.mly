@@ -34,7 +34,7 @@
 %token ADDON SUBON MULON DIVON INCR DECR
 %token ADD NEG MUL DIV MODULO
 %token TYPE_INT TYPE_AUTO TYPE_STRING TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_OPTION TYPE_VOID TYPE_LEXEMS
-%token TRUE FALSE
+%token TRUE FALSE NIL
 %token<int> INT
 %token<char> CHAR
 %token<string> STRING
@@ -78,6 +78,7 @@ main :
 value :
 | TRUE  { E.bool true }
 | FALSE { E.bool false }
+| NIL { E.nil () }
 | INT   { E.integer $1 }
 | CHAR  { E.char $1 }
 | STRING  { E.string $1 }

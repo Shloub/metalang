@@ -52,6 +52,7 @@ let config macros =
   in
   let print_lief prio f = function
     | Char c -> fprintf f "#%d" (int_of_char c)
+    | Nil -> fprintf f "Nil"
     | String i ->
       fprintf f "'";
       String.fold_left (fun () c ->

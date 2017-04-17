@@ -57,10 +57,12 @@ let rec string_of_lexem f = function
   | TYPE_CHAR -> Format.fprintf f "char "
   | TYPE_BOOL -> Format.fprintf f "bool "
   | TYPE_ARRAY -> Format.fprintf f "array "
+  | TYPE_OPTION -> Format.fprintf f "option "
   | TYPE_VOID -> Format.fprintf f "void "
   | TYPE_LEXEMS -> Format.fprintf f "lexems "
   | TRUE -> Format.fprintf f "true "
   | FALSE -> Format.fprintf f "false "
+  | NIL -> Format.fprintf f "nil "
   | INT i -> Format.fprintf f "%d " i
   | CHAR c -> Format.fprintf f "%C " c
   | STRING s -> Format.fprintf f "%S " s

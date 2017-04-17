@@ -24,6 +24,7 @@ public class aaa_013option
   
   public static void Main(String[] args)
   {
+    int? a = null;
     Console.Write("___\n");
   }
   

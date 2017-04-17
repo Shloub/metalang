@@ -111,6 +111,7 @@ let print_lief f =
     | Bool false -> fprintf f "false"
     | Enum e -> fprintf f "%s" e
     | Integer i -> fprintf f "%i" i
+    | Nil -> fprintf f "0"
 
 
 let print_expr0 tyenv macros e f prio_parent =

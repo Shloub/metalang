@@ -82,6 +82,7 @@ let print_lief f = let open Format in function
     | E.Bool false -> fprintf f "#f"
     | E.Enum s -> fprintf f "'%s" s
     | E.Binding s -> print_varname f s
+    | E.Nil -> fprintf f "null"
 
 let print_expr macros tyenv e f parent_operator =
   let open Ast.Expr in

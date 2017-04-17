@@ -453,6 +453,7 @@ and expr typerEnv side_effects macros p f e = match E.unfix e with
         | E.Bool false -> Format.fprintf f "False"
         | E.Enum s -> Format.fprintf f "%s" s
         | E.Binding s -> binding f s
+        | E.Nil -> Format.fprintf f "Nothing"
       end
     | E.Comment (s, c) -> comment (expr typerEnv side_effects macros p) f s c
     | E.If (e1, e2, e3) ->

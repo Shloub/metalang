@@ -29,6 +29,7 @@ void aa(foo * b) {
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int* a = NULL;
   printf("___\n");
   [pool drain];
   return 0;

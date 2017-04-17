@@ -18,6 +18,8 @@ func aa(b * foo) {
   
 }
 func main() {
+  var a *int = nil
+  _  = a
   fmt.Printf("___\n")
 }
 

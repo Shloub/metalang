@@ -72,6 +72,7 @@ let print_lief f l =
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
   | Enum s -> fprintf f "%s" s
+  | Nil -> fprintf f "None"
 
 let prio_arg = -105
 let prio_tuple = -103

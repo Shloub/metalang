@@ -19,7 +19,9 @@
   
 ))
 (progn
-  (princ "___
-")
+  (let ((a nil))
+    (princ "___
+"))
+    
 )
 

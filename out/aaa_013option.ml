@@ -17,5 +17,6 @@ let aa _b =
   ()
 
 let () =
- Printf.printf "___\n" 
+ let _a = None in
+  Printf.printf "___\n" 
  

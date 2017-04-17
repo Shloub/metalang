@@ -5,4 +5,5 @@ end
 def aa( b )
   
 end
+a = nil
 print "___\n"

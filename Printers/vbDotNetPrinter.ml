@@ -77,6 +77,7 @@ let print_lief tyenv prio f = function
   | Ast.Expr.Enum e ->
     let t = Typer.typename_for_enum e tyenv in
     Format.fprintf f "%s.%s" t e
+  | Ast.Expr.Nil -> Format.fprintf f "Nothing"
   | x -> Helper.print_lief prio f x
 
 let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold

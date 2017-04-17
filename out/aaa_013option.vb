@@ -19,6 +19,7 @@ Module aaa_013option
     
   End Sub
   Sub Main()
+    Dim a As Integer? = Nothing
     Console.Write("___" & Chr(10))
   End Sub
   

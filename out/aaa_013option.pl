@@ -9,6 +9,7 @@ sub aa{
   my($b) = @_;
   
 }
+my $a = nil;
 print "___\n";
 
 

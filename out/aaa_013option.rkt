@@ -12,6 +12,7 @@
 )
 
 (define main
-  (display "___\n")
+  (let ([a null])
+  (display "___\n"))
 )
 

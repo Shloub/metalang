@@ -45,6 +45,7 @@ let print_lief prio f l =
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
   | Enum s -> fprintf f "%s" s
+  | Nil -> fprintf f "nil"
 
 let print_mut conf prio f m = Mutable.Fixed.Deep.fold (print_mut0 "%a%a" "[%a]" "(*%a).%s" conf) m f prio
 

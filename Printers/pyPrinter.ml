@@ -43,6 +43,7 @@ let print_lief prio f l =
   | Enum e -> fprintf f "%S" e
   | Bool true -> fprintf f "True"
   | Bool false -> fprintf f "False"
+  | Nil -> fprintf f "None"
   | x -> print_lief prio f x
 
 let config macros =

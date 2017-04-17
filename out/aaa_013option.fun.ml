@@ -7,5 +7,6 @@ let aa b =
   ()
 
 let main =
+  let a = None in
   Printf.printf "%s" "___\n"
 

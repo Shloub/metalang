@@ -26,6 +26,7 @@ Object subclass: aaa_013option [
     
   ]
   main [
+    |a|a := nil.
     '___
 ' display.
     ]

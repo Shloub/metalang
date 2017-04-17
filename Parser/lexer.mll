@@ -136,6 +136,7 @@ rule token = parse
 | "@" { AT }
 
 (* value *)
+| "nil"  { NIL }
 | "true"  { TRUE }
 | "false" { FALSE }
 

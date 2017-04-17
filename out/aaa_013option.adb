@@ -46,6 +46,8 @@ begin
   
 end;
 
+  a : i;
 begin
+  a := Null;
   PString(new char_array'( To_C("___" & Character'Val(10))));
 end;

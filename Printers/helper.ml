@@ -267,6 +267,7 @@ let print_lief prio f l =
   | Bool true -> Format.fprintf f "true"
   | Bool false -> Format.fprintf f "false"
   | Enum s -> Format.fprintf f "%s" s
+  | Nil -> Format.fprintf f "null"
 
 let print_varname f = function
   | Ast.UserName v -> Format.fprintf f "%s" v

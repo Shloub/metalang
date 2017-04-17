@@ -6,4 +6,5 @@ function aa (b)
   
 end
 
+local a = null
 io.write("___\n")

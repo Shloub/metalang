@@ -22,6 +22,7 @@ object aaa_013option
   
   def main(args : Array[String])
   {
+    var a: Option[Int] = None;
     printf("___\n");
   }
   

@@ -36,6 +36,7 @@ open Helper
 
 let print_lief prio f = function
   | Expr.Char c -> unicode f c
+  | Expr.Nil -> Format.fprintf f "nullptr"
   | x -> print_lief prio f x
 
 let config print_mut macros = {

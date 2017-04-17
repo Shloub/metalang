@@ -52,6 +52,7 @@ let print_lief prio f l =
   | Bool true -> fprintf f "true"
   | Bool false -> fprintf f "false"
   | Enum s -> fprintf f "%S" s
+  | Nil -> fprintf f "null"
 
 let config macros = {
   prio_binop = prio_binop_equal;

@@ -23,6 +23,7 @@ public class aaa_013option
   }
   public static void main(String args[])
   {
+    Integer a = null;
     System.out.print("___\n");
   }
   

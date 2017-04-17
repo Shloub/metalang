@@ -20,6 +20,7 @@ end-struct foo%
 ;
 
 : main
+  0 { a }
   S\" ___\n" TYPE
   ;
 main

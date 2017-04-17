@@ -87,6 +87,7 @@ let print_lief f l =
   | Bool false -> fprintf f "nil"
   | Integer i -> fprintf f "%i" i
   | Enum e -> fprintf f "'%s" e
+  | Nil -> fprintf f "nil"
 
 let pcall f func li macros =
   let li = List.map snd li in

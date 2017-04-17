@@ -20,6 +20,7 @@ void aa(struct foo * b) {
     
 }
 int main(void) {
+    int* a = NULL;
     printf("___\n");
     return 0;
 }

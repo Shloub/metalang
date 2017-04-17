@@ -17,5 +17,6 @@ let aa (_b:foo) =
   ()
 
 let () =
+  let _a = None
   Printf.printf "___\n"
  

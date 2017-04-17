@@ -79,7 +79,9 @@ let print_expr macros e f prio_parent =
     | Bool true -> fprintf f "true"
     | Bool false -> fprintf f "false"
     | Enum s -> fprintf f "%s" s
-    | Binding s -> print_varname f s in
+    | Binding s -> print_varname f s
+    | Nil -> fprintf f "None"
+  in
   match e with
   | Skip -> parens prio_parent prio_apply f "Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ())"
   | UnOp (a, op) -> parens prio_parent prio_apply f "%s %a" (unopstr op) a prio_arg

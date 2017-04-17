@@ -19,5 +19,6 @@ void aa(Foo b)
   
 }
 
+Integer a = null
 print("___\n")
 

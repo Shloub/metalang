@@ -47,6 +47,7 @@ module Expr = struct
     | Bool of bool
     | Enum of string
     | Binding of Ast.varname
+    | Nil
 
   type formatPart =
     | IntFormat
