@@ -89,6 +89,7 @@ let print_expr macros tyenv e f parent_operator =
   let open AstFun.Expr in
   let open Format in
   match e with
+  | Just e -> e f parent_operator
   | Skip -> fprintf f "(mread-blank)"
   | BinOp(a, Diff, b) -> fprintf f "(not (eq? %a %a))" a None b None
   | UnOp (a, Not) -> fprintf f "(not %a)" a None

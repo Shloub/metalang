@@ -64,6 +64,7 @@ let side_effects : int -> (acc * effect Expr.tofix) -> (acc * effect) = fun i (a
     | Expr.Comment _
     | Expr.LetIn _
     | Expr.If _
+    | Expr.Just _
     | Expr.Block _ -> Expr.Fixed.Surface.fold  (||) EPure e
     | Expr.Skip
     | Expr.Apply _

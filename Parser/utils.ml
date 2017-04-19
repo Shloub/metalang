@@ -63,6 +63,7 @@ let rec string_of_lexem f = function
   | TRUE -> Format.fprintf f "true "
   | FALSE -> Format.fprintf f "false "
   | NIL -> Format.fprintf f "nil "
+  | JUST -> Format.fprintf f "some "
   | INT i -> Format.fprintf f "%d " i
   | CHAR c -> Format.fprintf f "%C " c
   | STRING s -> Format.fprintf f "%S " s

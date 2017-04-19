@@ -74,7 +74,6 @@ let next =
 (** the position in a file :
     ((a, b), (c, d)) means from line a char b to line c char d
 *)
-
 type location = ( string * (int * int ) * ( int * int ) )
 
 let default_location = "No File", (-1, -1), (-1, -1)
@@ -455,6 +454,7 @@ module Expr = struct
     | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
     | Tuple of 'a list
     | Record of (fieldname * 'a) list
+    | Just of 'a
 
   let rec equals0 cmpa cmplex a b =
     let rec cmpli li1 li2 = match li1, li2 with
@@ -471,6 +471,7 @@ module Expr = struct
     | Lexems _, Lexems _ -> assert false (* TODO *)
     | Tuple li1, Tuple li2 -> cmpli li1 li2
     | Record li1, Record li2 -> cmpli (List.map snd li1) (List.map snd li2)
+    | Just e1, Just e2 -> cmpa e1 e2
     | _ -> false
 
   let pdebug f = function
@@ -485,6 +486,7 @@ module Expr = struct
     | Tuple li -> Format.fprintf f "E.Tuple(%a)" punitlist li
     | Record li -> Format.fprintf f "E.Record(%a)" punitlist (List.map (fun (field, e) f () ->
         Format.fprintf f "(%S, %a)" field e ()) li)
+    | Just a -> Format.fprintf f "E.Just(%a)" a ()
 
   (** {2 parcours} *)
 
@@ -512,6 +514,7 @@ module Expr = struct
             ret (fun m -> Access m) <*> Mut.map f m
           | Lexems x -> ret (fun x -> Lexems x) <*> fold_left_map
                           (Lex.map (Arrow.carrow f (Arrow.arrow g))) x
+          | Just x -> ret (fun x -> Just x) <*> f x
       end
     end)
 
@@ -546,7 +549,9 @@ module Expr = struct
 
   let lief l = fix (Lief l)
   let bool b = lief (Bool b)
+
   let nil () = lief Nil
+  let just x = fix (Just x)
 
   let enum e = lief (Enum e)
 

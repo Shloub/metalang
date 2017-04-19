@@ -175,6 +175,7 @@ let pmacros f fmt t params code li param =
 let print_expr0 c e f prio_parent =
   let open Format in
   let open Ast.Expr in match e with
+  | Just e -> e f prio_parent (* compatible php, javascript, python, ruby, common lisp *)
   | BinOp (a, op, b) ->
     let prio, priol, prior = c.prio_binop op in
     parens prio_parent prio f "%a %a %a" a priol c.print_op op b prior

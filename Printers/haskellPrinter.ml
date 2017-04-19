@@ -370,6 +370,7 @@ and blockContent typerEnv side_effects macros f li =
 and block typerEnv side_effects macros p f li =
     parens p (fun_priority -1) f "do @[<v>%a@]" (blockContent typerEnv side_effects macros) li
 and expr typerEnv side_effects macros p f e = match E.unfix e with
+  | E.Just e -> parens p fun_priority f "Something %a" (expr typerEnv side_effects macros p) e
     | E.ApplyMacro (fun_, li) ->
       begin match Ast.BindingMap.find_opt fun_ macros with
         | None -> assert false

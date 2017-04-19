@@ -121,6 +121,7 @@ let print_expr0 tyenv macros e f prio_parent =
   | BinOp (a, op, b) -> fprintf f "%a %a %a" a () b () print_op op
   | UnOp (a, Not) -> fprintf f "%a INVERT" a ()
   | UnOp (a, Neg) -> fprintf f "%a NEGATE" a ()
+  | Just a -> fprintf f "%a HERE SWAP ," a ()
   | Lief l -> print_lief f l
   | Access m -> print_mut tyenv m f true
   | Call (func, li) ->

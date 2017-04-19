@@ -76,6 +76,7 @@ let print_expr used_variables refbindings macros e f p =
   let open Format in
   let open Ast.Expr in
   let print_expr0 e f prio_parent = match e with
+    | Just e -> parens prio_parent prio_apply f "Some %a" e prio_arg
     | BinOp (a, op, b) ->
       let prio, priol, prior = prio_binop op in
       parens prio_parent prio f "%a %a %a" a priol print_op op b prior

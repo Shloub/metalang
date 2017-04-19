@@ -83,6 +83,7 @@ let print_expr macros e f prio_parent =
     | Nil -> fprintf f "None"
   in
   match e with
+  | Just e -> parens prio_parent prio_apply f "Some %a" e prio_arg
   | Skip -> parens prio_parent prio_apply f "Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ())"
   | UnOp (a, op) -> parens prio_parent prio_apply f "%s %a" (unopstr op) a prio_arg
   | BinOp (a, op, b) ->

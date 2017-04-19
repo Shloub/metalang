@@ -186,6 +186,7 @@ and rename_instrs acc instrs =
 let rec map_e acc e =
   let annot = Expr.Fixed.annot e in
   match Expr.unfix e with
+  | Expr.Just e -> let addon, e = map_e acc e in addon, Expr.Just e |> Expr.Fixed.fixa annot
   | Expr.BinOp (e1, bop, e2) ->
     let addon1, e1 = map_e acc e1 in
     let addon2, e2 = map_e acc e2 in

@@ -34,7 +34,7 @@
 %token ADDON SUBON MULON DIVON INCR DECR
 %token ADD NEG MUL DIV MODULO
 %token TYPE_INT TYPE_AUTO TYPE_STRING TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_OPTION TYPE_VOID TYPE_LEXEMS
-%token TRUE FALSE NIL
+%token TRUE FALSE NIL JUST
 %token<int> INT
 %token<char> CHAR
 %token<string> STRING
@@ -127,6 +127,7 @@ expr :
   E.lexems $1 |> locate ( Ast.location ($startpos($1), $endpos($1)))
 }
 | RECORD affect_field* END {E.record $2 |> locate ( Ast.location ($startpos($1), $endpos($1)))}
+| JUST expr { E.just $2 |> locate ( Ast.location ($startpos($1), $endpos($2))) }
 ;
 
 mutabl :

@@ -294,6 +294,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
 let rec expr e =
   let e = A.Expr.Fixed.Surface.map expr (A.Expr.unfix e) in
   match e with
+  | A.Expr.Just e -> F.Expr.just e
   | A.Expr.UnOp (e, op) -> F.Expr.unop e op
   | A.Expr.BinOp (e1, op, e2) -> F.Expr.binop e1 op e2
   | A.Expr.Lief l -> F.Expr.lief (lief l)

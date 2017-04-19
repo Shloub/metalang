@@ -134,6 +134,7 @@ let print_expr0 macros tyenv (annot:int) e =
       | Tuple _
       | Lexems _ -> assert false
       | Record li -> p_record tyenv f li
+      | Just (_, e) -> e f None
     ) in annot, lambda
 
 let print_printable f = function

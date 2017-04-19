@@ -80,6 +80,7 @@ module Expr = struct
     | ArrayAccess of 'a * 'a list
     | ArrayAffect of 'a * 'a list * 'a
     | LetIn of Ast.varname * 'a * 'a
+    | Just of 'a
 
   module Fixed = Fix2(struct
 
@@ -119,6 +120,7 @@ module Expr = struct
           | ArrayAffect (tab, indexes, v) -> ret (fun tab indexes v -> ArrayAffect(tab, indexes, v)) <*> f tab <*> fold_left_map f indexes <*> f v
           | LetIn (binding, e, b) -> ret (fun e b -> LetIn (binding, e, b)) <*> f e <*> f b
           | MultiPrint (format, li) -> ret (fun li -> MultiPrint (format, li)) <*> fold_left_map f'f li
+          | Just e -> ret (fun e -> Just e) <*> f e
       end
     end)
 
@@ -129,6 +131,7 @@ module Expr = struct
 
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
   let letin name e1 e2 = fix (LetIn (name, e1, e2) )
+  let just e = fix (Just e)
   let lief l = fix (Lief l)
   let unit = lief (Unit)
   let error = lief (Error)

@@ -137,6 +137,7 @@ rule token = parse
 
 (* value *)
 | "nil"  { NIL }
+| "some"  { JUST }
 | "true"  { TRUE }
 | "false" { FALSE }
 

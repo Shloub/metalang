@@ -490,6 +490,8 @@ module EvalF (IO : EvalIO) = struct
     let loc = PosMap.get (Expr.Fixed.annot t) in
     let res x = Result x in
     Expr.Fixed.Deep.fold (function
+        | Expr.Just (Result r) -> Result (Option (Some r))
+        | Expr.Just (WithEnv r) -> WithEnv (fun execenv -> Option (Some (r execenv)))
         | Expr.Lief l -> precompile_lief env l |> res
         | Expr.BinOp (a, op, b) ->
           binop loc op a b

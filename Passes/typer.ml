@@ -511,6 +511,9 @@ let collect_contraintes_expr e env =
           let contrainte = (ref (Typed (Type.bool, loc))) in
           let env = add_contrainte env acontrainte contrainte in
           env, contrainte
+        | Expr.Just econtrainte ->
+          let contrainte = (ref (PreTyped (Type.Option econtrainte, loc))) in
+          env, contrainte
         | Expr.Lief l -> let c = contrainte_of_lief loc env l in  env, c
         | Expr.Lexems li -> (* TODO typer les insertions *)
           env, ref (Typed (Type.lexems, loc))
