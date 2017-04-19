@@ -124,10 +124,10 @@ metalang : main.native
 	cp _build/Main/$^ $@
 
 main.byte : $(COMPILER_SOURCES)
-	@ocamlbuild -tag debug Main/main.byte
+	@ocamlbuild -use-ocamlfind -tag debug Main/main.byte
 
 main.native : $(COMPILER_SOURCES)
-	@ocamlbuild Main/main.native
+	@ocamlbuild -use-ocamlfind Main/main.native
 
 # règles de génération des sources générées par les tests
 define GENERATION
@@ -340,10 +340,10 @@ testNotCompile : metalang out $(TESTSNOTCOMPILE)
 # règles diverses
 
 doc :
-	@ocamlbuild metalang.docdir/index.html
+	@ocamlbuild -use-ocamlfind metalang.docdir/index.html
 
 libmetalang.cma :
-	@ocamlbuild Main/libmetalang.cma
+	@ocamlbuild -use-ocamlfind Main/libmetalang.cma
 
 js/test.js : libmetalang.cma
 	ocamlc -I +js_of_ocaml -I _build/Main/ -pp "camlp4o js_of_ocaml/pa_js.cmo" str.cma libmetalang.cma js_of_ocaml.cma js/test.ml -o js/test.byte
