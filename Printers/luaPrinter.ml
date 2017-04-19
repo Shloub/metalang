@@ -29,7 +29,7 @@
     @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-open Stdlib
+open Ext
 open Helper
 open Ast
 let print_op f op = 

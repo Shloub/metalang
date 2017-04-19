@@ -1,6 +1,6 @@
 {
-	open Stdlib
-	open Lexing
+open Ext
+open Lexing
   let newline lexbuf =
 		let p = lexbuf.lex_curr_p in
     lexbuf.lex_curr_p <- { p with

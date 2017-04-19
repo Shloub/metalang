@@ -33,7 +33,7 @@
    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-open Stdlib
+open Ext
 
 module F = AstFun
 module A = Ast

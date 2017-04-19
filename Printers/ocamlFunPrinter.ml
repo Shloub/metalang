@@ -30,7 +30,7 @@
     @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-open Stdlib
+open Ext
 open Helper
 
 module E = AstFun.Expr

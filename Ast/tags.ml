@@ -31,7 +31,7 @@
     @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-open Stdlib
+open Ext
 
 let set_topLVL = ref StringSet.empty
 let set = ref StringSet.empty

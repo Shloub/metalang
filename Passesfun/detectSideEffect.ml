@@ -23,7 +23,7 @@
  *
  *)
 
-open Stdlib
+open Ext
 open AstFun
 
 (**

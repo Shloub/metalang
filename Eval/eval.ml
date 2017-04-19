@@ -33,7 +33,7 @@
 *)
 
 open Ast
-open Stdlib
+open Ext
 open Warner
 
 (** The environment functions used by evaluator.

@@ -1,11 +1,11 @@
 %{
-  open Stdlib
-	module E = Ast.Expr
-	module M = Ast.Mutable
-	module I = Ast.Instr
-	module T = Ast.Type
-	module P = Ast.Prog
 
+open Ext
+module E = Ast.Expr
+module M = Ast.Mutable
+module I = Ast.Instr
+module T = Ast.Type
+module P = Ast.Prog
 
   let locate pos e =
     let () = Ast.PosMap.add (E.Fixed.annot e) pos

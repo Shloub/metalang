@@ -32,7 +32,7 @@
 *)
 
 
-open Stdlib
+open Ext
 open Ast
 
 let benchmark = false

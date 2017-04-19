@@ -4,4 +4,4 @@
 true: annot, bin_annot
 true : use_menhir
 
-"Stdlib" or "Ast" or "Parser" or "Printers" or "Eval" or "Passes" or "Astfun" or "Passesfun" or "Main" : include
+"Ext" or "Ast" or "Parser" or "Printers" or "Eval" or "Passes" or "Astfun" or "Passesfun" or "Main" : include

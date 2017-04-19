@@ -31,7 +31,7 @@
 
 open Ast
 open Helper
-open Stdlib
+open Ext
 
 let ptype tyenv f t =
   let open Ast.Type in

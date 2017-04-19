@@ -31,7 +31,7 @@
    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-open Stdlib
+open Ext
 
 type varname = | UserName of string
                | InternalName of int

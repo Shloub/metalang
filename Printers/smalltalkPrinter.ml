@@ -31,7 +31,7 @@
 
 open Ast
 open Helper
-open Stdlib
+open Ext
 
 let prio_object = 1
 let prio_message = 3

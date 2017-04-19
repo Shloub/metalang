@@ -31,7 +31,7 @@
 *)
 
 open Ast
-open Stdlib
+open Ext
 open Helper
     
 let print_mut conf priority f m = Ast.Mutable.Fixed.Deep.fold
@@ -70,7 +70,7 @@ let config =
     print_lief;
     print_op;
     print_unop;
-    macros = Stdlib.StringMap.empty;
+    macros = StringMap.empty;
     print_mut;
   }
 

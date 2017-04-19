@@ -30,7 +30,7 @@
 *)
 
 open Ast
-open Stdlib
+open Ext
 open Helper
 let lang = "c"
 

@@ -29,7 +29,7 @@
     @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-open Stdlib
+open Ext
 
 let print_option (f : Format.formatter -> 'a -> unit) t obj =
   match obj with
