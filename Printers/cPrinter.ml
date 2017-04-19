@@ -75,7 +75,7 @@ let ptype tyenv f t =
   | Bool -> fprintf f (if option then "int*" else "int")
   | Char -> fprintf f (if option then "char*" else "char")
   | Named n -> begin match Typer.expand tyenv (Typer.byname n tyenv)
-                                  default_location |> unfix with
+                                  Location.default |> unfix with
     | Struct _ ->
       fprintf f "struct %s *" n
     | Enum _ ->

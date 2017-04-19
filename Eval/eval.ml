@@ -215,8 +215,7 @@ let eval_expr execenv (e : precompiledExpr) :  result = match e with
 
 (** throw a type error*)
 let tyerr loc =
-  raise (Error (fun f -> Format.fprintf f "Type error %a\n%!"
-                   ploc loc))
+  raise (Error (fun f -> Format.fprintf f "Type error %a\n%!" Ast.Location.pp loc))
 
 (** numeric operator process *)
 let num_op loc ( + ) ( +. ) a b =
@@ -466,7 +465,7 @@ module EvalF (IO : EvalIO) = struct
                 execenv.(out)
             with Not_found ->
               let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
-              raise (Error (fun f -> Format.fprintf f "Cannot find var %a %a\n" pvar v ploc loc))
+              raise (Error (fun f -> Format.fprintf f "Cannot find var %a %a\n" pvar v Ast.Location.pp loc))
           end
         | Mutable.Array (m, li) ->
           List.fold_left
@@ -573,7 +572,7 @@ module EvalF (IO : EvalIO) = struct
         with Not_found ->
           raise (Error (fun f ->
               let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
-              Format.fprintf f "Cannot find var %a %a\n" pvar v ploc loc ))
+              Format.fprintf f "Cannot find var %a %a\n" pvar v Ast.Location.pp loc ))
       end
     | Mutable.Array (m, li) ->
       let m, index = match List.rev li with

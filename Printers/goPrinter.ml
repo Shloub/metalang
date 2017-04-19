@@ -73,8 +73,7 @@ let ptype tyenv f ty =
     | Void ->  fprintf f ""
     | Bool -> fprintf f (if option then "*bool" else "bool")
     | Char -> fprintf f (if option then "*byte" else "byte")
-    | Named n -> begin match Typer.expand tyenv (Type.named n)
-                               default_location |> Type.unfix with
+    | Named n -> begin match Typer.expand tyenv (Type.named n) Ast.Location.default |> Type.unfix with
       | Type.Struct _ -> Format.fprintf f "* %s" n
       | Type.Enum _ -> Format.fprintf f "%s" n
       | _ -> assert false

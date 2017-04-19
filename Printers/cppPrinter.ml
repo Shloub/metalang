@@ -64,7 +64,7 @@ let ptype star tyenv f t =
   | Bool -> fprintf f (if option then "bool*" else "bool")
   | Char -> fprintf f (if option then "char*" else "char")
   | Named n -> if star then match Typer.expand tyenv (Typer.byname n tyenv)
-                                    default_location |> unfix with
+                                    Ast.Location.default |> unfix with
     | Struct _ -> fprintf f "%s *" n
     | Enum _ -> fprintf f (if option then "%s*" else "%s") n
     | _ -> assert false
@@ -239,7 +239,7 @@ let proloCppPrinter typerEnv f (prog: Utils.prog) =
       match Type.unfix t with
       | Type.Array a -> Format.fprintf f "%a&" (ptype false typerEnv) t
       | Type.Named n -> begin match Typer.expand typerEnv t
-                                      default_location |> Type.unfix with
+                                      Ast.Location.default |> Type.unfix with
         | Type.Struct _ -> Format.fprintf f "%a&" (ptype false typerEnv) t
         | _ -> ptype false typerEnv f t
         end

@@ -44,8 +44,7 @@ let ptype tyenv f t =
   | Bool -> fprintf f (if option then "int*" else "int")
   | Char -> fprintf f (if option then "char*" else "char")
   | Option a -> a f true
-  | Named n -> begin match Typer.expand tyenv (Typer.byname n tyenv)
-                             default_location |> Type.unfix with
+  | Named n -> begin match Typer.expand tyenv (Typer.byname n tyenv) Ast.Location.default |> Type.unfix with
     | Type.Struct _ -> Format.fprintf f "%s *" n
     | Type.Enum _ -> Format.fprintf f (if option then "%s*" else "%s") n
     | _ -> assert false

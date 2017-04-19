@@ -340,7 +340,7 @@ let warn_error_of_parse_error filename lexbuf =
   ))
 
 let parse_file parse filename =
-  Ast.parsed_file := filename;
+  Ast.Location.parsed_file := filename;
   let lexbuf = Lexing.from_channel (open_in filename) in
   try parse Lexer.token lexbuf
   with
@@ -349,7 +349,7 @@ let parse_file parse filename =
     warn_error_of_parse_error filename lexbuf
 
 let parse_string parse str =
-  Ast.parsed_file := "stdin";
+  Ast.Location.parsed_file := "stdin";
   let lexbuf = Lexing.from_string str in
   try parse Lexer.token lexbuf
   with

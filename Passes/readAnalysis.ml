@@ -88,7 +88,7 @@ let apply prog =
          | Type.Char | Type.Integer -> ()
          | _ -> raise (Warner.Error (fun f ->
              Format.fprintf f "Cannot read %s %a@\n"
-               (Type.type_t_to_string ty) Warner.ploc loc
+               (Type.type_t_to_string ty) Ast.Location.pp loc
            ))
       )
       reads_types_map in

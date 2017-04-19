@@ -179,7 +179,7 @@ let print_instr tyenv macros i =
                                              print_varname name
                                              (print_list
                                                 (fun t (fieldname, expr) ->
-                                                   fprintf f (match Typer.child_type_of_field tyenv fieldname Ast.default_location |> Type.unfix with
+                                                   fprintf f (match Typer.child_type_of_field tyenv fieldname Ast.Location.default |> Type.unfix with
                                                        | Type.String -> "%a %a ->%s 2!"
                                                        | _ -> "%a %a ->%s !")
                                                      expr () print_varname name fieldname

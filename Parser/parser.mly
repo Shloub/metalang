@@ -21,6 +21,15 @@
   let locatm pos e =
     let () = Ast.PosMap.add (M.Fixed.annot e) pos
     in e
+
+let makep p =
+    let line = p.Lexing.pos_lnum in
+    let cnum = p.Lexing.pos_cnum - p.Lexing.pos_bol - 1 in
+    Ast.Location.makep line cnum
+
+let makel a b =
+    Ast.Location.make (makep a) (makep b)
+
 %}
 %token<string> COMMENT
 %token MAIN IF THEN ELSE ELSIF END DO FOR TO WHILE RETURN TAG
@@ -86,19 +95,17 @@ value :
 ;
 
 typ :
-| TYPE_STRING { T.string  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| TYPE_INT { T.integer  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| TYPE_LEXEMS   { T.lexems  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| TYPE_AUTO { T.auto ()  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| TYPE_CHAR { T.char  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| TYPE_BOOL { T.bool  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| TYPE_ARRAY LOWER typ HIGHER { T.array $3  |> locatt  ( Ast.location ($startpos($1), $endpos($3))) }
-| TYPE_OPTION LOWER typ HIGHER { T.option $3  |> locatt  ( Ast.location ($startpos($1), $endpos($3))) }
-| TYPE_VOID { T.void |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| AT IDENT { T.named $2  |> locatt  ( Ast.location ($startpos($1), $endpos($2))) }
-| LEFT_PARENS li_typ {
-	T.tuple $2 |> locatt  ( Ast.location ($startpos($1), $endpos($2)))
-}
+| TYPE_STRING { T.string  |> locatt  ( makel $startpos($1) $endpos($1)) }
+| TYPE_INT { T.integer  |> locatt  ( makel $startpos($1) $endpos($1)) }
+| TYPE_LEXEMS   { T.lexems  |> locatt  ( makel $startpos($1) $endpos($1)) }
+| TYPE_AUTO { T.auto ()  |> locatt  ( makel $startpos($1) $endpos($1)) }
+| TYPE_CHAR { T.char  |> locatt  ( makel $startpos($1) $endpos($1)) }
+| TYPE_BOOL { T.bool  |> locatt  ( makel $startpos($1) $endpos($1)) }
+| TYPE_ARRAY LOWER typ HIGHER { T.array $3  |> locatt  ( makel $startpos($1) $endpos($3)) }
+| TYPE_OPTION LOWER typ HIGHER { T.option $3  |> locatt  ( makel $startpos($1) $endpos($3)) }
+| TYPE_VOID { T.void |> locatt  ( makel $startpos($1) $endpos($1)) }
+| AT IDENT { T.named $2  |> locatt  ( makel $startpos($1) $endpos($2)) }
+| LEFT_PARENS li_typ { T.tuple $2 |> locatt  ( makel $startpos($1) $endpos($2)) }
 ;
 
 li_typ :
@@ -107,36 +114,22 @@ li_typ :
 ;
 
 expr :
-| value { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
-| mutabl
-    { E.access $1 |>
-        locate ( Ast.location ($startpos($1), $endpos($1))) }
-| LEFT_PARENS expr RIGHT_PARENS
-    { $2 |> locate ( Ast.location ($startpos($1), $endpos($3))) }
-| unary_op  { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
-| binary_op { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
-| LEFT_PARENS exprs RIGHT_PARENS {
-  E.tuple $2 |> locate ( Ast.location ($startpos($1), $endpos($3)))
-}
-| IDENT LEFT_PARENS exprs RIGHT_PARENS
-{
-  E.call $1 $3
-    |> locate ( Ast.location ($startpos($1), $endpos($4)))
-}
-| LEXEMS {
-  E.lexems $1 |> locate ( Ast.location ($startpos($1), $endpos($1)))
-}
-| RECORD affect_field* END {E.record $2 |> locate ( Ast.location ($startpos($1), $endpos($1)))}
-| JUST expr { E.just $2 |> locate ( Ast.location ($startpos($1), $endpos($2))) }
+| value { $1 |> locate ( makel $startpos($1) $endpos($1)) }
+| mutabl { E.access $1 |> locate ( makel $startpos($1) $endpos($1)) }
+| LEFT_PARENS expr RIGHT_PARENS { $2 |> locate ( makel $startpos($1) $endpos($3)) }
+| unary_op  { $1 |> locate ( makel $startpos($1) $endpos($1)) }
+| binary_op { $1 |> locate ( makel $startpos($1) $endpos($1)) }
+| LEFT_PARENS exprs RIGHT_PARENS { E.tuple $2 |> locate ( makel $startpos($1) $endpos($3)) }
+| IDENT LEFT_PARENS exprs RIGHT_PARENS { E.call $1 $3 |> locate ( makel $startpos($1) $endpos($4)) }
+| LEXEMS { E.lexems $1 |> locate ( makel $startpos($1) $endpos($1)) }
+| RECORD affect_field* END {E.record $2 |> locate ( makel $startpos($1) $endpos($1))}
+| JUST expr { E.just $2 |> locate ( makel $startpos($1) $endpos($2)) }
 ;
 
 mutabl :
-| IDENT { M.var (Ast.UserName $1)  |> locatm ( Ast.location ($startpos($1), $endpos($1))) }
-| mutabl LEFT_BRACKET exprs RIGHT_BRACKET
-    { M.array $1 $3  |> locatm ( Ast.location ($startpos($1), $endpos($4))) }
-| mutabl DOT IDENT
-        { M.fix (M.Dot ($1, $3))
-            |> locatm ( Ast.location ($startpos($1), $endpos($3)))  }
+| IDENT { M.var (Ast.UserName $1)  |> locatm ( makel $startpos($1) $endpos($1)) }
+| mutabl LEFT_BRACKET exprs RIGHT_BRACKET { M.array $1 $3  |> locatm ( makel $startpos($1) $endpos($4)) }
+| mutabl DOT IDENT { M.fix (M.Dot ($1, $3)) |> locatm ( makel $startpos($1) $endpos($3))  }
 ;
 
 exprs :
@@ -181,47 +174,44 @@ affect_field :
 (*
 alloc_record :
 | DEF IDENT SET RECORD affect_field* END
-    { I.alloc_record $2 (T.auto ()  |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $5 }
+    { I.alloc_record $2 (T.auto ()  |> locatt  ( makel $startpos($1) $endpos($2)) ) $5 }
 | DEF typ IDENT SET RECORD affect_field* END
     { I.alloc_record $3 $2 $6 }
 ;
 *)
 typed_varnames :
-| IDENT RIGHT_PARENS { [(T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))), $1] }
-| IDENT COMMA typed_varnames { ((T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))), $1) :: $3 }
+| IDENT RIGHT_PARENS { [(T.auto () |> locatt  ( makel $startpos($1) $endpos($1))), $1] }
+| IDENT COMMA typed_varnames { ((T.auto () |> locatt  ( makel $startpos($1) $endpos($1))), $1) :: $3 }
 ;
 
 
 define_var :
-
-| DEF IDENT SET expr { I.declare (Ast.UserName $2) (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $4 I.default_declaration_option }
-| DEF USELESS IDENT SET expr { I.declare (Ast.UserName $3) (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3))) ) $5 I.useless_declaration_option }
+| DEF IDENT SET expr { I.declare (Ast.UserName $2) (T.auto () |> locatt  ( makel $startpos($1) $endpos($2)) ) $4 I.default_declaration_option }
+| DEF USELESS IDENT SET expr { I.declare (Ast.UserName $3) (T.auto () |> locatt  ( makel $startpos($1) $endpos($3)) ) $5 I.useless_declaration_option }
 | DEF typ IDENT SET expr { I.declare (Ast.UserName $3) $2 $5 I.default_declaration_option }
 | DEF USELESS typ IDENT SET expr { I.declare (Ast.UserName $4) $3 $6 I.useless_declaration_option }
 | DEF IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-    { I.alloc_array_lambda (Ast.UserName $2) (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $4 (Ast.UserName $7) $9
-      I.default_declaration_option
-    }
+  { I.alloc_array_lambda (Ast.UserName $2) (T.auto () |> locatt  (makel $startpos($1) $endpos($2))) $4 (Ast.UserName $7) $9 I.default_declaration_option }
 | DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-	{ match T.unfix $2 with
-	  | T.Array x -> I.alloc_array_lambda (Ast.UserName $3) x $5 (Ast.UserName $8) $10 I.default_declaration_option
-    | T.Auto -> I.alloc_array_lambda (Ast.UserName $3) $2 $5 (Ast.UserName $8) $10 I.default_declaration_option
-		| _ -> failwith "expected array"
-	}
+  { match T.unfix $2 with
+  | T.Array x -> I.alloc_array_lambda (Ast.UserName $3) x $5 (Ast.UserName $8) $10 I.default_declaration_option
+  | T.Auto -> I.alloc_array_lambda (Ast.UserName $3) $2 $5 (Ast.UserName $8) $10 I.default_declaration_option
+  | _ -> failwith "expected array"
+  }
 | DEF USELESS typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-	{ match T.unfix $3 with
-	  | T.Array x -> I.alloc_array_lambda (Ast.UserName $4) x $6  (Ast.UserName $9) $11 I.useless_declaration_option
-    | T.Auto -> I.alloc_array_lambda (Ast.UserName $4) $3 $6 (Ast.UserName $9) $11 I.useless_declaration_option
-		| _ -> failwith "expected array"
-	}
-| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) (Ast.UserName $3) I.default_declaration_option }
+  { match T.unfix $3 with
+  | T.Array x -> I.alloc_array_lambda (Ast.UserName $4) x $6  (Ast.UserName $9) $11 I.useless_declaration_option
+  | T.Auto -> I.alloc_array_lambda (Ast.UserName $4) $3 $6 (Ast.UserName $9) $11 I.useless_declaration_option
+  | _ -> failwith "expected array"
+  }
+| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( makel $startpos($1) $endpos($2))) (Ast.UserName $3) I.default_declaration_option }
 | DEF READ typ IDENT { I.readdecl $3 (Ast.UserName $4) I.default_declaration_option }
-| DEF USELESS READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3)))) (Ast.UserName $4) I.useless_declaration_option }
+| DEF USELESS READ IDENT { I.readdecl (T.auto () |> locatt  ( makel $startpos($1) $endpos($3))) (Ast.UserName $4) I.useless_declaration_option }
 | DEF USELESS READ typ IDENT { I.readdecl $4 (Ast.UserName $5) I.useless_declaration_option }
 | DEF USELESS LEFT_PARENS typed_varnames SET expr { I.untuple (List.map (fun (t, n) -> t, Ast.UserName n) $4) $6 I.useless_declaration_option }
 | DEF LEFT_PARENS typed_varnames SET expr { I.untuple (List.map (fun (t, n) -> t, Ast.UserName n) $3) $5 I.default_declaration_option }
 | DEF USELESS IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-    { I.alloc_array_lambda (Ast.UserName $3) (T.auto () |> locatt  ( Ast.location ($startpos($2), $endpos($3)))) $5 (Ast.UserName $8) $10  I.useless_declaration_option}
+  { I.alloc_array_lambda (Ast.UserName $3) (T.auto () |> locatt  ( makel $startpos($2) $endpos($3))) $5 (Ast.UserName $8) $10  I.useless_declaration_option}
 ;
 
 cond :
@@ -239,74 +229,56 @@ control_flow :
 ;
 
 instr :
-| TAG IDENT { I.tag $2 |> locati ( Ast.location ($startpos($1), $endpos($2))) }
-| UNQUOTE_START expr END_QUOTE {
-  I.unquote $2 |> locati ( Ast.location ($startpos($1), $endpos($3)))
-}
+| TAG IDENT { I.tag $2 |> locati ( makel $startpos($1) $endpos($2)) }
+| UNQUOTE_START expr END_QUOTE { I.unquote $2 |> locati ( makel $startpos($1) $endpos($3))}
 | COMMENT { I.comment $1 }
-| define_var { $1 |> locati ( Ast.location ($startpos($1), $endpos($1)))}
-| control_flow { $1 |> locati ( Ast.location ($startpos($1), $endpos($1))) }
-| mutabl SET expr { I.affect $1 $3
-                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
-                  }
+| define_var { $1 |> locati ( makel $startpos($1) $endpos($1))}
+| control_flow { $1 |> locati ( makel $startpos($1) $endpos($1)) }
+| mutabl SET expr { I.affect $1 $3 |> locati ( makel $startpos($1) $endpos($3)) }
 | mutabl ADDON expr { I.affect $1
                       (E.add (E.access $1
-                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
-                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+                                 |> locate ( makel $startpos($1) $endpos($1))
+                       ) $3 |> locate ( makel $startpos($1) $endpos($3))
                       )
-                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+                      |> locati ( makel $startpos($1) $endpos($3))
 }
 | mutabl SUBON expr { I.affect $1
                       (E.sub (E.access $1
-                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
-                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+                                 |> locate ( makel $startpos($1) $endpos($1))
+                       ) $3 |> locate ( makel $startpos($1) $endpos($3))
                       )
-                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+                      |> locati ( makel $startpos($1) $endpos($3))
 }
 | mutabl DIVON expr { I.affect $1
                       (E.div (E.access $1
-                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
-                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+                                 |> locate ( makel $startpos($1) $endpos($1))
+                       ) $3 |> locate ( makel $startpos($1) $endpos($3))
                       )
-                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+                      |> locati ( makel $startpos($1) $endpos($3))
 }
 | mutabl MULON expr { I.affect $1
-                      (E.mul (E.access $1
-                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
-                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
-                      )
-                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+                      (E.mul (E.access $1 |> locate ( makel $startpos($1) $endpos($1))
+                       ) $3 |> locate ( makel $startpos($1) $endpos($3)))
+                      |> locati ( makel $startpos($1) $endpos($3))
 }
 | mutabl INCR { I.affect $1
                       (E.add (E.access $1
-                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
-                       ) (E.integer 1 |> locate ( Ast.location ($startpos($2), $endpos($2))))
-                      )
-                      |> locati ( Ast.location ($startpos($1), $endpos($2)))
+                                 |> locate ( makel $startpos($1) $endpos($1))
+                       ) (E.integer 1 |> locate ( makel $startpos($2) $endpos($2))))
+                      |> locati ( makel $startpos($1) $endpos($2))
 }
 | mutabl DECR { I.affect $1
                       (E.sub (E.access $1
-                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
-                       ) (E.integer 1 |> locate ( Ast.location ($startpos($2), $endpos($2))))
+                                 |> locate ( makel $startpos($1) $endpos($1))
+                       ) (E.integer 1 |> locate ( makel $startpos($2) $endpos($2)))
                       )
-                      |> locati ( Ast.location ($startpos($1), $endpos($2)))
+                      |> locati ( makel $startpos($1) $endpos($2))
 }
-| READ typ mutabl { I.read $2 $3
-                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
-                  }
-| PRINT expr { I.print (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))
-) $2
-                 |> locati ( Ast.location ($startpos($1), $endpos($2)))
-             }
-| PRINT typ expr { I.print $2 $3
-                 |> locati ( Ast.location ($startpos($1), $endpos($3)))
-                 }
-| SKIP { I.stdin_sep ()
-       |> locati ( Ast.location ($startpos($1), $endpos($1)))
-       }
-(*| alloc_record { $1
-                   |> locati ( Ast.location ($startpos($1), $endpos($1)))
-               }
+| READ typ mutabl { I.read $2 $3 |> locati ( makel $startpos($1) $endpos($3)) }
+| PRINT expr { I.print (T.auto () |> locatt  ( makel $startpos($1) $endpos($1))) $2 |> locati ( makel $startpos($1) $endpos($2)) }
+| PRINT typ expr { I.print $2 $3 |> locati ( makel $startpos($1) $endpos($3)) }
+| SKIP { I.stdin_sep () |> locati ( makel $startpos($1) $endpos($1)) }
+(*| alloc_record { $1 |> locati ( makel $startpos($1) $endpos($1)) }
 *);
 
 instrs :
@@ -336,29 +308,17 @@ args_macro :
 define :
 | UNQUOTE_START expr END_QUOTE { P.unquote $2 }
 | COMMENT { P.comment $1 }
-| DEF USELESS typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
-	{ P.declarefun $4 $3 $6 $8 P.useless_declaration_option }
-| DEF typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
-	{ P.declarefun $3 $2 $5 $7 P.default_declaration_option }
-
-| MACRO typ IDENT LEFT_PARENS args_macro RIGHT_PARENS macro* END
-	{ P.macro $3 $2 $5 $7 }
-
-| RECORD AT IDENT decl_field* END
-    { P.DeclareType ($3, (T.struct_ $4 )) }
-| ENUM AT IDENT ENUM_FIELD* END
-    { P.DeclareType ($3, T.enum $4 ) }
-
+| DEF USELESS typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END { P.declarefun $4 $3 $6 $8 P.useless_declaration_option }
+| DEF typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END { P.declarefun $3 $2 $5 $7 P.default_declaration_option }
+| MACRO typ IDENT LEFT_PARENS args_macro RIGHT_PARENS macro* END { P.macro $3 $2 $5 $7 }
+| RECORD AT IDENT decl_field* END { P.DeclareType ($3, (T.struct_ $4 )) }
+| ENUM AT IDENT ENUM_FIELD* END { P.DeclareType ($3, T.enum $4 ) }
 | TAG IDENT define { Tags.tag_topLVL $2; $3 }
-
 ;
 
 decl_field :
 | IDENT COLON typ PERIOD? { $1, $3 }
 ;
-
-
-
 
 macro :
 | ident_language DO STRING PERIOD? { $1, $3 }

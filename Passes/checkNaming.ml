@@ -60,7 +60,7 @@ let pbinding f b = match b with
 
 let check_name_0 mem pp funname acc name loc =
   if mem name acc then
-    Warner.err funname (fun t () -> Format.fprintf t "%a is re-declared %a" pp name Warner.ploc loc)
+    Warner.err funname (fun t () -> Format.fprintf t "%a is re-declared %a" pp name Location.pp loc)
 
 let check_name_s0 funname acc name loc =
   check_name_0 StringSet.mem (fun f s -> Format.fprintf f "%S" s) funname acc name loc
@@ -112,25 +112,25 @@ let is_value funname acc name loc =
      not(BindingSet.mem name acc.parameters) &&
      not(BindingSet.mem name acc.array)
   then
-    Warner.err funname (fun t () -> Format.fprintf t "%a is not a local variable %a" pbinding name Warner.ploc loc)
+    Warner.err funname (fun t () -> Format.fprintf t "%a is not a local variable %a" pbinding name Ast.Location.pp loc)
 
 
 let is_local funname acc name loc =
   (* TODO if is parameter, change message *)
   if not(BindingSet.mem name acc.variables) then
-    Warner.err funname (fun t () -> Format.fprintf t "%a is not a local variable %a" pbinding name Warner.ploc loc)
+    Warner.err funname (fun t () -> Format.fprintf t "%a is not a local variable %a" pbinding name Ast.Location.pp loc)
 
 
 let is_array funname acc name loc =
   if not(BindingSet.mem name acc.array)
   && not( BindingSet.mem name acc.parameters)
   then
-    Warner.err funname (fun t () -> Format.fprintf t "%a is not an array %a" pbinding name Warner.ploc loc)
+    Warner.err funname (fun t () -> Format.fprintf t "%a is not an array %a" pbinding name Ast.Location.pp loc)
 
 let is_fun funname acc name loc =
   if not(StringSet.mem name acc.functions)
   then
-    Warner.err funname (fun t () -> Format.fprintf t "%s is not a function %a" name Warner.ploc loc)
+    Warner.err funname (fun t () -> Format.fprintf t "%s is not a function %a" name Ast.Location.pp loc)
 
 let rec check_mutable funname acc mut =
   let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in

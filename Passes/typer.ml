@@ -36,9 +36,9 @@ open Warner
 
 (** {2 Types} *)
 type typeContrainte =
-  | Unknown of Ast.location
-  | PreTyped of typeContrainte ref Type.tofix * Ast.location
-  | Typed of Type.t * Ast.location
+  | Unknown of Ast.Location.t
+  | PreTyped of typeContrainte ref Type.tofix * Ast.Location.t
+  | Typed of Type.t * Ast.Location.t
 
 type varType = typeContrainte ref
 
@@ -79,9 +79,9 @@ let type_of_field env field loc =
     let (_, t, _) = StringMap.find field env.fields in t
   with Not_found ->
     raise ( Error (fun f ->
-        Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
+        Format.fprintf f "Field %s is undefined %a\n%!" field Ast.Location.pp loc
       ))
-let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
+let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.Location.t)
   : (env * typeContrainte ref) =
 
   let fold env t = match Type.Fixed.unfix t with
@@ -134,12 +134,12 @@ let error_field_not_found loc name t =
       Format.fprintf f "Field %s is not found in %s %a\n%!"
         name
         (Type.type_t_to_string t)
-        ploc loc))
+        Ast.Location.pp loc))
 
 let error_function_not_found loc name =
   raise (Error (fun f -> Format.fprintf f "Function %s is not found in %a\n%!"
                    name
-                   ploc loc))
+                   Ast.Location.pp loc))
 
 let rec plistring f li =
   match li with
@@ -150,7 +150,7 @@ let rec plistring f li =
 let error_record_types lval lt loc =
   raise (Error (fun f -> Format.fprintf f "Fields does not match in %a\n%aagainst\n%a%!"
                    (* TODO show lists & diff *)
-                   ploc loc
+                   Ast.Location.pp loc
                    plistring lval
                    plistring lt))
 
@@ -158,14 +158,14 @@ let error_arrity funname l1 l2 loc =
   raise (Error (fun f ->
       Format.fprintf f "The function %s expects %d arguments, %d given %a.\n%!"
         funname l1 l2
-        ploc loc))
+        Ast.Location.pp loc))
 
 let error_ty t1 t2 loc1 loc2 =
   raise (Error (fun f  -> Format.fprintf f "Cannot unify %s %a and %s %a\n%!"
                    (Type.type_t_to_string t1)
-                   ploc loc1
+                   Ast.Location.pp loc1
                    (Type.type_t_to_string t2)
-                   ploc loc2))
+                   Ast.Location.pp loc2))
 
 let not_found name loc =
   raise (Error (fun f -> Format.fprintf f "Cannot find variable %a %a \n%!"
@@ -173,19 +173,19 @@ let not_found name loc =
                       | UserName u -> Format.fprintf f "%s" u
                       | InternalName i -> Format.fprintf f "internal(%d)" i
                    ) name
-                   ploc loc))
+                   Ast.Location.pp loc))
 
 let not_found_ty name loc =
   raise (Error (fun f -> Format.fprintf f "Cannot find type %s %a \n%!"
                    name
-                   ploc loc))
+                   Ast.Location.pp loc))
 
 let error_cty t1 t2 loc1 loc2 =
   raise (Error (fun f -> Format.fprintf f "Cannot unify %s %a and %s %a\n%!"
                    (contr2str t1)
-                   ploc loc1
+                   Ast.Location.pp loc1
                    (contr2str t2)
-                   ploc loc2))
+                   Ast.Location.pp loc2))
 
 (** {2 Types anti alias-ing}*)
 (* TODO passer loc en premier ou second parametre*)
@@ -207,7 +207,7 @@ let child_type_of_field env field loc =
     | _ -> raise Not_found
   with Not_found ->
     raise ( Error (fun f ->
-        Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
+        Format.fprintf f "Field %s is undefined %a\n%!" field Ast.Location.pp loc
       ))
 
 (** {2 Unify} *)
@@ -459,7 +459,7 @@ let collect_contraintes_mutable mapg mut =
            try StringMap.find name env.fields
            with Not_found ->
              raise ( Error (fun f ->
-                 Format.fprintf f "Field %s is undefined %a\n%!" name ploc tloc
+                 Format.fprintf f "Field %s is undefined %a\n%!" name Ast.Location.pp tloc
                ))
          in
          let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
@@ -752,7 +752,7 @@ let collect_contraintes_instruction env instruction =
                 contraintes = (contrainte_mut, contrainte_expr) ::
                               env.contraintes}) env li
        | Instr.Unquote li ->
-         raise (Error (fun f -> Format.fprintf f "There is still unquote near %a" ploc loc ))
+         raise (Error (fun f -> Format.fprintf f "There is still unquote near %a" Ast.Location.pp loc ))
     )
     collect_contraintes_expr instruction env
 

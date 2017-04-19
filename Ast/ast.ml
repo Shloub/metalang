@@ -74,28 +74,37 @@ let next =
 (** the position in a file :
     ((a, b), (c, d)) means from line a char b to line c char d
 *)
-type location = ( string * (int * int ) * ( int * int ) )
+module Location : sig
+  type t
+  type p
+  val default: t
+  val parsed_file : string ref
+  val makep : int -> int -> p
+  val merge : t -> t -> t
+  val make : p -> p -> t
+  val pp : Format.formatter -> t -> unit
+end = struct
+  type p = int * int
+  type t = ( string * p * p )
+  let default = "No File", (-1, -1), (-1, -1)
+  let parsed_file = ref ""
+  (** get a position from lexer (line, char) *)
+  let makep line cnum = line, cnum
+  let merge (f, a, _) (f2, _, b) = (f, a, b)
+  (** get a location from lexer *)
+  let make p1 p2 = (!parsed_file, p1, p2)
+    
+  let pp f (file, (l1, c1), (l2, c2)) =
+    if l1 = l2 then Format.fprintf f "(on %s:%d:%d-%d)" file l1 c1 c2
+    else Format.fprintf f "(file %s from %d:%d to %d:%d)" file l1 c1 l2 c2
 
-let default_location = "No File", (-1, -1), (-1, -1)
+end
 
-let parsed_file = ref ""
-
-(** get a position from lexer (line, char) *)
-let position p =
-  let line = p.Lexing.pos_lnum in
-  let cnum = p.Lexing.pos_cnum - p.Lexing.pos_bol - 1 in
-  (line, cnum)
-
-let merge_positions (f, a, _) (f2, _, b) = (f, a, b)
-
-(** get a location from lexer *)
-let location (p1, p2) =
-  (!parsed_file, position p1, position p2)
-
+  
 (** position map *)
 module PosMap : sig
-  val add : int -> location -> unit
-  val get : int -> location
+  val add : int -> Location.t -> unit
+  val get : int -> Location.t
   val mem : int -> bool
 end = struct
   let map = ref IntMap.empty
@@ -105,7 +114,7 @@ end = struct
   let get i =
     try
       IntMap.find i !map
-    with Not_found -> default_location
+    with Not_found -> Location.default
 end
 
 (** {2 Modules d'AST} *)

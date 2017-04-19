@@ -28,16 +28,6 @@
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)
 *)
-
-let ploc f (file, (l1, c1), (l2, c2)) =
-  if l1 = l2 then
-    Format.fprintf f "(on %s:%d:%d-%d)" file
-      l1 c1 c2
-  else
-    Format.fprintf f "(file %s from %d:%d to %d:%d)" file
-      l1 c1 l2 c2
-
-
 let loc_of li =
   match li with
   | hd::tl ->
@@ -45,8 +35,8 @@ let loc_of li =
     let b = List.hd (List.rev li) in
     let a = Ast.PosMap.get (Ast.Instr.Fixed.annot a) in
     let b = Ast.PosMap.get (Ast.Instr.Fixed.annot b) in
-    Ast.merge_positions a b
-  | [] -> Ast.default_location
+    Ast.Location.merge a b
+    | [] -> Ast.Location.default
 
 let warn funname msg =
   Format.fprintf Format.std_formatter

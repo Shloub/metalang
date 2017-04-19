@@ -55,7 +55,7 @@ let check_noreturn li =
   | None -> ()
   | Some loc ->
     raise ( Warner.Error (fun f ->
-        Format.fprintf f "return not expected %a" Warner.ploc loc
+        Format.fprintf f "return not expected %a" Ast.Location.pp loc
       ))
 
 let rec check_must_return li =
@@ -77,7 +77,7 @@ let rec check_alloc_inside loc li =
   match last_instrs with
   | [] ->
     raise ( Warner.Error (fun f ->
-        Format.fprintf f "return expected %a" Warner.ploc loc
+        Format.fprintf f "return expected %a" Ast.Location.pp loc
       ))
   | hd::tl ->
     let loc = Ast.PosMap.get (Instr.Fixed.annot hd) in
@@ -90,7 +90,7 @@ let rec check_alloc_inside loc li =
       check_alloc_inside loc li2;
     | _ ->
       raise ( Warner.Error (fun f ->
-          Format.fprintf f "return not expected %a" Warner.ploc loc
+          Format.fprintf f "return not expected %a" Ast.Location.pp loc
         ))
 
 let check_alloc li =
@@ -111,7 +111,7 @@ let check_fun = function
         | Type.Void -> check_noreturn instrs
         | _ -> if not (check_must_return instrs ) then
             raise ( Warner.Error (fun f ->
-                Format.fprintf f "in %a : not all control paths returns a value." Warner.ploc loc
+                Format.fprintf f "in %a : not all control paths returns a value." Ast.Location.pp loc
               ))
       end
     end

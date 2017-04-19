@@ -39,7 +39,7 @@ let  check ty loc =
   then
     raise (Warner.Error (fun f ->
         Format.fprintf f "Forbiden use of void type %a@\n"
-          Warner.ploc loc))
+          Ast.Location.pp loc))
 
 let collectDefReturn env li =
   let f () i =
