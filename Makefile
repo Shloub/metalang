@@ -21,7 +21,7 @@ green	= \033[0;32m
 yellow	= \033[0;33m
 
 unit:
-	ocamlbuild -use-ocamlfind Stdlib/unit.byte
+	ocamlbuild -use-ocamlfind Ext/unit.byte
 	./unit.byte
 
 lua	?=	lua5.1
