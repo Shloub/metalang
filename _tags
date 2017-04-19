@@ -1,21 +1,5 @@
-<Main/*.byte>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix,  use_passes, use_astfun, use_passesfun
-<Main/*.native>: use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix,  use_passes, use_astfun, use_passesfun
-<Main/*.cmo>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix,  use_passes, use_astfun, use_passesfun
-<Main/*.cmx>:   use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix,  use_passes, use_astfun, use_passesfun
-<Main/*.ml>: use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix,  use_passes, use_astfun, use_passesfun
-<Parser/*.ml>: use_str, use_stdlib, use_ast
-<Parser/*.cmx>: use_stdlib, use_ast
-<Parser/*.native>: use_stdlib, use_ast
-<Ast/*.ml>: use_str, use_stdlib
-<Ast/*.cmx>: use_stdlib
-<Passes/*.ml>: use_str, use_stdlib, use_ast
-<Passes/*.cmx>: use_stdlib, use_ast
-<Stdlib/*.ml>: use_str
-<Printers/*.ml>: use_stdlib, use_ast
-<Eval/*.cmx>: use_passes, use_ast
-<Main/*.native>: use_str
-<Stdlib/unit.byte>: use_str
-
+<Main/main.byte>: use_str, use_unix
+<Main/main.native>: use_str, use_unix
 
 true: annot, bin_annot
 true : use_menhir
