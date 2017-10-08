@@ -2,7 +2,9 @@ var util = require("util");
 var fs = require("fs");
 var current_char = null;
 function read_char0(){
-    return fs.readSync(process.stdin.fd, 1)[0];
+    var buf = Buffer.alloc(1);
+    fs.readSync(process.stdin.fd, buf, 0, 1)[0];
+    return buf.toString();
 }
 function read_int_(){
   if (current_char == null) current_char = read_char0();
