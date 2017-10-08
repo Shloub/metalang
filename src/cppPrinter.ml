@@ -63,9 +63,10 @@ let ptype star tyenv f t =
   | Option a -> a f true
   | Bool -> fprintf f (if option then "bool*" else "bool")
   | Char -> fprintf f (if option then "char*" else "char")
-  | Named n -> if star then match Typer.expand tyenv (Typer.byname n tyenv)
+  | Named n -> if star || option then match Typer.expand tyenv (Typer.byname n tyenv)
                                     Ast.Location.default |> unfix with
     | Struct _ -> fprintf f "%s *" n
+                    
     | Enum _ -> fprintf f (if option then "%s*" else "%s") n
     | _ -> assert false
     else fprintf f "%s" n
