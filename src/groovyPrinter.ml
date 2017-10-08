@@ -42,7 +42,7 @@ let print_lief tyenv prio f l =
   | String s -> string_nodolar f s
   | Enum e ->
     let t = Typer.typename_for_enum e tyenv in
-    fprintf f "%s.%s" (String.capitalize t) e
+    fprintf f "%s.%s" (String.capitalize_ascii t) e
   | x -> JavaPrinter.print_lief tyenv prio f x
 
 let print_mut conf prio f m = Mutable.Fixed.Deep.fold
@@ -78,7 +78,7 @@ let ptype f t =
     | Void ->  fprintf f "void"
     | Bool -> fprintf f (if option then "Boolean" else "boolean")
     | Char -> fprintf f (if option then "Char" else "char")
-    | Named n -> fprintf f "%s" (String.capitalize n)
+    | Named n -> fprintf f "%s" (String.capitalize_ascii n)
     | Enum _ -> fprintf f "an enum"
     | Struct li -> fprintf f "a struct"
     | Auto | Tuple _ | Lexems -> assert false
@@ -194,12 +194,12 @@ let prog typerEnv f prog =
              macros, (fun f ->
                match (Type.unfix t) with
                  Type.Struct li ->
-                 Format.fprintf f "@[<v 2>class %s {@\n%a@]@\n}" (String.capitalize name)
+                 Format.fprintf f "@[<v 2>class %s {@\n%a@]@\n}" (String.capitalize_ascii name)
                    (print_list
                       (fun f (name, type_) -> Format.fprintf f "%a %s" ptype type_ name)
                       sep_nl) li
                | Type.Enum li ->
-                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}" (String.capitalize name)
+                 Format.fprintf f "enum %s { @\n@[<v2>  %a@]}" (String.capitalize_ascii name)
                    (print_list (fun f e -> Format.fprintf f "%s" e) (sep "%a,@\n %a")) li
                | _ -> assert false
              ) :: li

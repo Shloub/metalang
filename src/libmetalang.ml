@@ -425,7 +425,7 @@ def @target_language current_language ()
   return LANG_%s
 end
 
-" (String.replace "." "_" (String.capitalize lang))
+" (String.replace "." "_" (String.capitalize_ascii lang))
 
 let make_prog stdlib filename lang =
   let progname = Filename.chop_extension $ Filename.basename filename in

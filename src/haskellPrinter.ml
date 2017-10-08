@@ -210,7 +210,7 @@ let punop f op = Format.fprintf f "%s" (unopstr op)
 let punopf f op = Format.fprintf f "%s" (unopstrf op)
 
 
-let tname f name = Format.fprintf f "%s" (String.capitalize name)
+let tname f name = Format.fprintf f "%s" (String.capitalize_ascii name)
 let ptype f t =
   let open Type in
   let open Format in

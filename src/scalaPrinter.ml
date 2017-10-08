@@ -101,7 +101,7 @@ let print_expr tyenv config e f p =
         | (field, _)::_ ->
           let t = Typer.typename_for_field field tyenv in
           fprintf f "new %s(%a)"
-            (String.capitalize t)
+            (String.capitalize_ascii t)
             (print_list
                (fun f (_fieldname, expr) -> expr f nop) sep_c
             )
@@ -122,7 +122,7 @@ let ptype f ty =
     | Void ->  fprintf f "Unit"
     | Bool -> fprintf f "Boolean"
     | Char -> fprintf f "Char"
-    | Named n -> fprintf f "%s" (String.capitalize n)
+    | Named n -> fprintf f "%s" (String.capitalize_ascii n)
     | Enum _ -> fprintf f "an enum"
     | Struct _ -> fprintf f "a struct"
     | Tuple li -> fprintf f "(%a)" (print_list (fun f x -> x f ()) sep_c) li
@@ -228,7 +228,7 @@ let header f prog =
       (if need_stdinsep then skip else "")
 
   let decl_type f name t =
-    let nameC = String.capitalize name in
+    let nameC = String.capitalize_ascii name in
     match (Type.unfix t) with
       Type.Struct li ->
       Format.fprintf f "class %s(%a){@\n@[<v 2>  %a@]@\n}@\n" nameC
