@@ -21,7 +21,7 @@ green	= \033[0;32m
 yellow	= \033[0;33m
 
 unit:
-	ocamlbuild -use-ocamlfind Ext/unit.byte
+	ocamlbuild -use-ocamlfind src/unit.byte
 	./unit.byte
 
 lua	?=	lua5.1
@@ -121,13 +121,13 @@ TMPFILES	:=\
 
 # Compilation de metalang.
 metalang : main.native
-	cp _build/Main/$^ $@
+	cp _build/src/$^ $@
 
 main.byte : $(COMPILER_SOURCES)
-	@ocamlbuild -use-ocamlfind -tag debug Main/main.byte
+	@ocamlbuild -use-ocamlfind -tag debug src/main.byte
 
 main.native : $(COMPILER_SOURCES)
-	@ocamlbuild -use-ocamlfind Main/main.native
+	@ocamlbuild -use-ocamlfind src/main.native
 
 # règles de génération des sources générées par les tests
 define GENERATION
@@ -343,10 +343,10 @@ doc :
 	@ocamlbuild -use-ocamlfind metalang.docdir/index.html
 
 libmetalang.cma :
-	@ocamlbuild -use-ocamlfind Main/libmetalang.cma
+	@ocamlbuild -use-ocamlfind src/libmetalang.cma
 
 js/test.js : libmetalang.cma
-	ocamlc -I +js_of_ocaml -I _build/Main/ -pp "camlp4o js_of_ocaml/pa_js.cmo" str.cma libmetalang.cma js_of_ocaml.cma js/test.ml -o js/test.byte
+	ocamlc -I +js_of_ocaml -I _build/src/ -pp "camlp4o js_of_ocaml/pa_js.cmo" str.cma libmetalang.cma js_of_ocaml.cma js/test.ml -o js/test.byte
 	js_of_ocaml js/test.byte
 	rm js/test.cmo js/test.cmi js/test.byte
 

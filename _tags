@@ -1,7 +1,7 @@
-<Main/main.byte>: use_str, use_unix
-<Main/main.native>: use_str, use_unix
+<src/main.byte>: use_str, use_unix
+<src/main.native>: use_str, use_unix
 
 true: annot, bin_annot
 true : use_menhir
 
-"Ext" or "Ast" or "Parser" or "Printers" or "Eval" or "Passes" or "Astfun" or "Passesfun" or "Main" : include
+"src": include
