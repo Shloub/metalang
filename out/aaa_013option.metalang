@@ -1,8 +1,25 @@
-def int default (option<int> opt)
+record foo int a;
+option<int> b;
+option<array<int>> c;
+array<option<int>> d;
+array<int> e;
+option<@foo> f;
+array<option<@foo>> g;
+option<array<@foo>> h;
+
+end
+
+def int default (option<int> a, option<@foo> b, array<option<int>>
+c, array<option<@foo>> d, option<array<int>> e, option<array<@foo>> f)
   return 0
 end
 
+def void aa (@foo b)
+  
+end
+
 main
+  def option<int> a = null
   print string "___\n"
 end
 
