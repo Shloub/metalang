@@ -434,15 +434,7 @@ Si un test plante à cause d'une passe précise et que vous souhaitez lancer un 
   make out/aaa_00hello.test
 
 Du point de vue des dossiers :
-* Ast contient essentiellement les principaux Ast de metalang ainsi qu'un outil obsolète de parcours d'Ast.
-* Eval contient l'évaluateur metalang
-* Astfun contient la définition d'un Ast fonctionnel utilisé par exemple pour haskell, racket et un des backend ocaml
-* Main contient le parser d'option et le programme principale du compilateur
-* Parser contient le lexer et le parser
-* Passes contient la plupart des passes de compilation (typer, renomage, transformations diverses)
-* Passesfun contient aussi des passes de compilation mais elles fonctionnent sur l'ast fonctionnel
-* Printers contient tous les backends
-* Stdlib contient une librairie standard et des tests unitaires
+* src contient tout le code source
 * tools contient essentiellement les modes vim et emacs
 * tests/demo contient du code metalang de présentation
 * tests/not_compile contient des tests qui ne doivent pas compiler

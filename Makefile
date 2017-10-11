@@ -140,6 +140,38 @@ out/%.$1 : tests/prog/%.metalang tests/prog/%.in metalang Stdlib/stdlib.metalang
 endef
 $(foreach i, metalang fsscript groovy fs scala metalang st lua rkt php cc cpp c py rb hs ml pl fun.ml adb pas vb cs js java m cl go, $(eval $(call GENERATION,$(i))))
 
+.PHONY: VERSIONS.rst
+VERSIONS.rst:
+	echo "compiler versions" > $@
+	echo "==========" >> $@
+	echo "" >> $@
+	echo -n "* " >> $@; ocaml -version >> $@
+	echo -n "* " >> $@; gcc --version | head -n 1 >> $@
+	echo -n "* " >> $@; g++ --version | head -n 1 >> $@
+	echo -n "* fpc " >> $@; fpc -i V | head -n 1 >> $@
+	echo -n "* " >> $@; gnatmake --version | head -n 1 >> $@
+	echo -n "* " >> $@; javac -version 2>> $@
+	echo -n "* java " >> $@; java -version 2>&1 | head -n 1 >> $@
+	echo -n "* " >> $@; mcs --version >> $@
+	echo -n "* " >> $@; vbnc /help | head -n 1 >> $@
+	echo -n "* " >> $@; fsharpc /help | head -n 1 >> $@
+	echo -n "* " >> $@; ghc --version | head -n 1 >> $@
+	echo -n "* " >> $@; mono --version | head -n 1 >> $@
+	echo -n "* " >> $@; go version >> $@
+	echo -n "* node " >> $@; node --version >> $@
+	echo -n "* " >> $@; lua -v 2>> $@
+	echo -n "* " >> $@; perl -v | grep -v "^$$" | head -n 1 >> $@
+	echo -n "* " >> $@; scala -version 2>> $@
+	echo -n "* " >> $@; php -v | head -n 1 >> $@
+	echo -n "* " >> $@; gforth -v 2>> $@
+	echo -n "* " >> $@; python --version 2>> $@
+	echo -n "* " >> $@; sbcl --version >> $@
+	echo -n "* gst " >> $@; gst --version | head -n 1 >> $@
+	echo -n "* " >> $@; ruby --version >> $@
+	echo -n "* " >> $@; racket --version >> $@
+	echo -n "* " >> $@; groovy -version >> $@
+
+
 # compilation dans les différents langages
 
 out/%.m.bin : out/%.m
