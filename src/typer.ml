@@ -179,6 +179,11 @@ let not_found_ty name loc =
   raise (Error (fun f -> Format.fprintf f "Cannot find type %s %a \n%!"
                    name
                    Ast.Location.pp loc))
+    
+let not_found_enum name loc =
+  raise (Error (fun f -> Format.fprintf f "Cannot find enum type with field %s %a \n%!"
+                   name
+                   Ast.Location.pp loc))
 
 let error_cty t1 t2 loc1 loc2 =
   raise (Error (fun f -> Format.fprintf f "Cannot unify %s %a and %s %a\n%!"
@@ -420,7 +425,9 @@ let contrainte_of_lief loc env = function
   | Expr.Bool _ ->
     ref (Typed (Type.bool, loc))
   | Expr.Enum en ->
-    let (t, _) = StringMap.find en env.enum in (* TODO not found*)
+    let (t, _) = try StringMap.find en env.enum
+      with Not_found -> not_found_enum en loc
+    in
     ref (Typed (t, loc) )
   | Expr.Nil ->
     let contrainte = ref (Unknown loc) in
